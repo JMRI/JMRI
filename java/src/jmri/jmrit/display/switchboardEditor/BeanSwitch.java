@@ -813,7 +813,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                             getSensor().setKnownState(jmri.Sensor.INACTIVE);
                         }
                     } catch (jmri.JmriException reason) {
-                        log.warn("Exception flipping sensor: {}", (Object) reason);
+                        log.warn("Exception flipping sensor", (Object) reason);
                     }
                     break;
                 default:

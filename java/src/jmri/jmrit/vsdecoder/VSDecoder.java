@@ -390,7 +390,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Store the actual position relative to the user's Origin locally.
         config.setPhysicalLocation(p);
         if (create_xy_series) {
-            log.info("{}: {}\t{}", this.getAddress(), (float) Math.round(p.x*10000)/10000, p.y);
+            log.info("setPosition {}: {}\t{}", this.getAddress(), (float) Math.round(p.x*10000)/10000, p.y);
         }
         log.debug("( {} ). Set Position: {}", this.getAddress(), p);
 

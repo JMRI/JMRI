@@ -566,7 +566,7 @@ public class CatalogPanel extends JPanel {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             _noMemory = true;
-            log.error("MemoryExceptionHandler: {}", e);
+            log.error("MemoryExceptionHandler", e);
         }
     }
 

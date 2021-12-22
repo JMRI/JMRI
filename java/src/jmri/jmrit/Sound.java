@@ -154,7 +154,7 @@ public class Sound {
     /** {@inheritDoc} */
     @Override
     @SuppressWarnings("deprecation") // Object.finalize
-    public void finalize() throws Throwable {
+    protected void finalize() throws Throwable {
         try {
             if (!streaming) {
                 clipRef.updateAndGet(clip -> {
@@ -277,7 +277,7 @@ public class Sound {
             line.open(format);
         } catch (LineUnavailableException ex) {
             // Handle the error.
-            log.error("error opening line: {}", ex);
+            log.error("error opening line", ex);
             return;
         }
         line.start();

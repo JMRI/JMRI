@@ -1447,7 +1447,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (log.isDebugEnabled()) {
             log.debug("filename list:");
             for (i = 0; i < sbox.length; i++) {
-                log.debug("      {}", sbox[i]);
+                log.debug("     name: {}", sbox[i]);
             }
         }
         return sbox;

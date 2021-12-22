@@ -110,7 +110,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
     // note that the opcode is part of the message, so we treat it
     // directly
-    // WARNING: use this only with opcodes that have a variable number 
+    // WARNING: use this only with opcodes that have a variable number
     // of arguments following included. Otherwise, just use setElement
     @Override
     public void setOpCode(int i) {
@@ -200,7 +200,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /**
      * Most messages are sent with a reply expected, but
      * we have a few that we treat as though the reply is always
-     * a broadcast message, because the reply usually comes to us 
+     * a broadcast message, because the reply usually comes to us
      * that way.
      * {@inheritDoc}
      */
@@ -247,10 +247,10 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return (msg);
     }
 
-    /* 
-     * The next group of routines are used by Feedback and/or turnout 
-     * control code.  These are used in multiple places within the code, 
-     * so they appear here. 
+    /*
+     * The next group of routines are used by Feedback and/or turnout
+     * control code.  These are used in multiple places within the code,
+     * so they appear here.
      */
 
     /**
@@ -278,7 +278,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else {
             loadr |= 0x88;
         }
-        // If we are sending a "throw" command, we set the LSB of the 
+        // If we are sending a "throw" command, we set the LSB of the
         // lower nibble on, otherwise, we leave it "off".
         if (pThrow) {
             loadr |= 0x01;
@@ -324,7 +324,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return l;
     }
 
-    /* 
+    /*
      * Next, we have some messages related to sending programming commands.
      */
 
@@ -445,7 +445,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(2, AH);
         m.setElement(3, AL);
         /* Element 4 is 0xEC + the upper two  bits of the 10 bit CV address.
-         NOTE: This is the track packet CV, not the human readable CV, so 
+         NOTE: This is the track packet CV, not the human readable CV, so
          its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
@@ -464,7 +464,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(2, AH);
         m.setElement(3, AL);
         /* Element 4 is 0xE4 + the upper two  bits of the 10 bit CV address.
-         NOTE: This is the track packet CV, not the human readable CV, so 
+         NOTE: This is the track packet CV, not the human readable CV, so
          its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
@@ -483,7 +483,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(2, AH);
         m.setElement(3, AL);
         /* Element 4 is 0xE8 + the upper two  bits of the 10 bit CV address.
-         NOTE: This is the track packet CV, not the human readable CV, so 
+         NOTE: This is the track packet CV, not the human readable CV, so
          its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
@@ -511,7 +511,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(2, AH);
         m.setElement(3, AL);
         /* Element 4 is 0xE8 + the upper two  bits of the 10 bit CV address.
-         NOTE: This is the track packet CV, not the human readable CV, so 
+         NOTE: This is the track packet CV, not the human readable CV, so
          its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
@@ -563,7 +563,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * @return message to dissolve a double header.
      */
     public static XNetMessage getDisolveDoubleHeaderMsg(int address) {
-        // All we have to do is call getBuildDoubleHeaderMsg with the 
+        // All we have to do is call getBuildDoubleHeaderMsg with the
         // second address as a zero
         return (getBuildDoubleHeaderMsg(address, 0));
     }
@@ -573,7 +573,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      *
      * @param consist the consist address (1-99)
      * @param address the locomotive address to add.
-     * @param isNormalDir tells us if the locomotive is going forward when 
+     * @param isNormalDir tells us if the locomotive is going forward when
      * the consist is going forward.
      * @return message to add address to consist.
      */
@@ -618,13 +618,13 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      */
 
     /**
-     * Given a locomotive address, search the database for the next 
+     * Given a locomotive address, search the database for the next
      * member.
      * (if the Address is zero start at the beginning of the database).
      *
      * @param address is the locomotive address
-     * @param searchForward indicates to search the database Forward if 
-     * true, or backwards if False 
+     * @param searchForward indicates to search the database Forward if
+     * true, or backwards if False
      * @return message to request next address.
      */
     public static XNetMessage getNextAddressOnStackMsg(int address, boolean searchForward) {
@@ -642,12 +642,12 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Given a consist address, search the database for the next Consist 
+     * Given a consist address, search the database for the next Consist
      * address.
      *
      * @param address is the consist address (in the range 1-99).
      * If the Address is zero start at the beginning of the database.
-     * @param searchForward indicates to search the database Forward if 
+     * @param searchForward indicates to search the database Forward if
      * true, or backwards if false
      * @return message to get next consist address.
      */
@@ -665,15 +665,15 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Given a consist and a locomotive address, search the database for 
+     * Given a consist and a locomotive address, search the database for
      * the next Locomotive in the consist.
      *
      * @param consist the consist address (1-99).
      * If the Consist Address is zero start at the begining of the database
      * @param address the locomotive address.
      * If the Address is zero start at the begining of the consist
-     * @param searchForward indicates to search the database Forward if 
-     * true, or backwards if False 
+     * @param searchForward indicates to search the database Forward if
+     * true, or backwards if False
      * @return  message to request next loco in consist.
      */
     public static XNetMessage getDBSearchMsgNextMULoco(int consist, int address, boolean searchForward) {
@@ -740,7 +740,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Given a locomotive address, request the function on/off state 
+     * Given a locomotive address, request the function on/off state
      * for functions 13-28
      *
      * @param address the locomotive address
@@ -797,7 +797,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * @param address the locomotive address
      * @param speedStepMode the speedstep mode see @jmri.DccThrottle
      *                       for possible values.
-     * @param speed a normalized speed value (a floating point number between 0 
+     * @param speed a normalized speed value (a floating point number between 0
      *              and 1).  A negative value indicates emergency stop.
      * @param isForward true for forward, false for reverse.
      * @return set speed and direction message.
@@ -1685,8 +1685,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)))
                             + " ";
                     if(log.isDebugEnabled()) {
-                        log.debug("{}", LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))); // address printed as: "1234" = OK
-                        log.debug(text); // address printed as: "1,234" = WRONG
+                        log.debug("LOCO_SPEED_27 {}", LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)), text);
+                        // address printed as: "1234" = OK
+                        // address printed as: "1,234" = WRONG
                     }
                     speed
                             = (((getElement(4) & 0x10) >> 4)

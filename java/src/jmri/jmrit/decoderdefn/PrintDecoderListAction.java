@@ -107,7 +107,7 @@ public class PrintDecoderListAction extends AbstractAction {
             String s = "\n           " + d.getFamily();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: {}", e);
+            log.error("Error printing", e);
         }
     }
 

@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * have listeners, etc.
  * <p>
  * The type letter used in the System Name is 'B' for 'Block'.
- * The default implementation is not system-specific, so a system letter 
+ * The default implementation is not system-specific, so a system letter
  * of 'I' is appropriate. This leads to system names like "IB201".
  * <p>
  * Issues:
@@ -137,7 +137,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     static final public int OCCUPIED = Sensor.ACTIVE;
     static final public int UNOCCUPIED = Sensor.INACTIVE;
-    
+
     /**
      * Undetected status, i.e a "Dark" block.
      * A Block with unknown status could be waiting on feedback from a Sensor,
@@ -146,7 +146,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * OBlocks use this constant in combination with other OBlock status flags.
      * Block uses this constant as initial status, also when a Sensor is unset
      * from the block.
-     * 
+     *
      */
     static final public int UNDETECTED = 0x100;  // bit coded, just in case; really should be enum
 
@@ -154,17 +154,17 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * No Curvature.
      */
     static final public int NONE = 0x00;
-    
+
     /**
      * Gradual Curvature.
      */
     static final public int GRADUAL = 0x01;
-    
+
     /**
      * Tight Curvature.
      */
     static final public int TIGHT = 0x02;
-    
+
     /**
      * Severe Curvature.
      */
@@ -197,7 +197,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
         return result;
     }
-    
+
     /**
      * Property name change fired when a Sensor is set to / removed from a Block.
      * The fired event includes
@@ -244,7 +244,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     /**
      * Set Block Occupancy Sensor.
      * If Sensor set, Adds PCL, sets Block Occupancy Status to Sensor.
-     * Block State PropertyChange Event will fire. 
+     * Block State PropertyChange Event will fire.
      * Does NOT route initial Sensor Status via goingUnknown() / goingActive() etc.
      * <p>
      * If Sensor null, removes PCL on previous Sensor, sets Block status to UNDETECTED.
@@ -291,7 +291,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * new value: Sensor Bean Object if being set, may be null if Sensor removed.
      */
     public final static String BLOCK_REPORTER_CHANGE = "BlockReporterChange"; // NOI18N
-    
+
     /**
      * Set the Reporter that should provide the data value for this block.
      * Fires propertyChange "BlockReporterChange" when changed.
@@ -329,7 +329,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public Reporter getReporter() {
         return _reporter;
     }
-    
+
     /**
      * Property name change fired when the Block reporting Current flag changes.
      * The fired event includes
@@ -443,7 +443,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         try {
             firePropertyChange("state", old, _current);
         } catch (Exception e) {
-            log.error("{} got exception during firePropertyChange({},{}) in thread {} {}: {}", getDisplayName(), old, _current,
+            log.error("{} got exception during firePropertyChange({},{}) in thread {} {}", getDisplayName(), old, _current,
                     Thread.currentThread().getName(), Thread.currentThread().getId(), e);
         }
     }
@@ -505,7 +505,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     /**
      * Add to the Block Deny List.
-     * 
+     *
      * The block deny list, is used by higher level code, to determine if
      * traffic/trains should be allowed to enter from an attached block, the
      * list only deals with blocks that access should be denied from.
@@ -589,7 +589,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * new value: new permissive status.
      */
     public final static String BLOCK_PERMISSIVE_CHANGE = "BlockPermissiveWorking"; // NOI18N
-    
+
     /**
      * Set Block as permissive.
      * Fires propertyChange "BlockPermissiveWorking" when changed.
@@ -601,7 +601,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             firePropertyChange(BLOCK_PERMISSIVE_CHANGE, !w, w); // NOI18N
         }
     }
-    
+
     private boolean _permissiveWorking = false;
 
     public float getSpeedLimit() {
@@ -642,7 +642,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * new value: new speed String.
      */
     public final static String BLOCK_SPEED_CHANGE = "BlockSpeedChange"; // NOI18N
-    
+
     /**
      * Set the Block Speed Name.
      * <p>
@@ -694,7 +694,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * new value: new Block Curvature Constant.
      */
     public final static String BLOCK_CURVATURE_CHANGE = "BlockCurvatureChange"; // NOI18N
-    
+
     /**
      * Set Block Curvature Constant.
      * Valid values :
@@ -718,7 +718,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public int getCurvature() {
         return _curvature;
     }
-    
+
     /**
      * Property name change fired when the Block Length changes.
      * The fired event includes
@@ -891,7 +891,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     private Instant _timeLastInactive;
-    
+
     /**
      * Handles Block sensor going INACTIVE: this block is empty
      */
@@ -1119,7 +1119,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * This allows the layout block to inform any listeners to the block 
+     * This allows the layout block to inform any listeners to the block
      * that the higher level layout block has been set to "useExtraColor" which is an
      * indication that it has been allocated to a section by the AutoDispatcher.
      * The value set is not retained in any form by the block,
@@ -1135,7 +1135,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     // If we have a Reporter that is also a PhysicalLocationReporter,
     // we will defer to that Reporter's methods.
     // Else we will assume a LocoNet style message to be parsed.
-    
+
     /**
      * Parse a given string and return the LocoAddress value that is presumed
      * stored within it based on this object's protocol. The Class Block

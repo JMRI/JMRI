@@ -254,7 +254,7 @@ public class GuiUtilBase {
             return new jmri.jmrit.XmlFile() {
             }.rootFromName(name);
         } catch (JDOMException | IOException e) {
-            log.error("Could not parse file \"{}\" due to: {}", name, e);
+            log.error("Could not parse file \"{}\" due to", name, e);
             return null;
         }
     }

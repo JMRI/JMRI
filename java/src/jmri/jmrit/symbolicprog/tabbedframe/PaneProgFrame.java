@@ -795,7 +795,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             log.debug("XML specifies modes: P {} DBi {} Dby {} R {} now {}", paged, directbit, directbyte, register, mProgrammer.getMode());
             log.debug("Programmer supports:");
             for (ProgrammingMode m : modes) {
-                log.debug("   {} {}", m.getStandardName(), m.toString());
+                log.debug(" mode: {} {}", m.getStandardName(), m.toString());
             }
         }
 

@@ -38,7 +38,7 @@ public final class CbusConstants {
     public static final int MTYP_CANCBUSIO = 7;
     public static final int MTYP_CANSERVOIO = 8;
     public static final int MTYP_CANSOLIO = 9;
-    
+
     /**
      * CBUS Opcodes
      */
@@ -213,10 +213,10 @@ public final class CbusConstants {
     public static final int CBUS_EXT_BOOT_ERROR = 0x00;
     public static final int CBUS_EXT_BOOT_OK = 0x01;
     public static final int CBUS_EXT_BOOTC = 0x02;
-    
+
     /**
      * Bootloader commands
-     * 
+     *
      * These are used in the data payload of bootloader control frames.
      */
     public static final int CBUS_BOOT_NOP = 0x00;
@@ -224,7 +224,7 @@ public final class CbusConstants {
     public static final int CBUS_BOOT_INIT = 0x02;
     public static final int CBUS_BOOT_CHECK = 0x03;
     public static final int CBUS_BOOT_TEST = 0x04;
-   
+
     /**
      * Programming modes
      */
@@ -263,7 +263,7 @@ public final class CbusConstants {
     public static final int EVENT_OFF = 1;
     public static final int EVENT_EITHER = 2;
     public static final int EVENT_NEITHER = 3;
-    
+
     /**
      * Event directions
      */
@@ -326,8 +326,8 @@ public final class CbusConstants {
     public static final int CBUS_F26 = 0x20;
     public static final int CBUS_F27 = 0x40;
     public static final int CBUS_F28 = 0x80;
-    
-    public static final int[] CBUS_FUNCTION_BITS = new int[]{ CBUS_F0,
+
+    static final int[] CBUS_FUNCTION_BITS = new int[]{ CBUS_F0,
         CBUS_F1, CBUS_F2, CBUS_F3, CBUS_F4, CBUS_F5, CBUS_F6, CBUS_F7,
         CBUS_F8, CBUS_F9, CBUS_F10, CBUS_F11, CBUS_F12, CBUS_F13, CBUS_F14,
         CBUS_F15, CBUS_F16, CBUS_F17, CBUS_F18, CBUS_F19, CBUS_F20, CBUS_F21,

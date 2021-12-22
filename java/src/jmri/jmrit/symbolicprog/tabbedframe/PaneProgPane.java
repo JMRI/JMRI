@@ -129,7 +129,7 @@ import org.slf4j.LoggerFactory;
  * executeRead -> readAll
  * activate readAll
  * readAll -> Programmer
- * activate Programmer 
+ * activate Programmer
  * readAll --> executeRead
  * deactivate readAll
  * executeRead --> nextRead
@@ -141,10 +141,10 @@ import org.slf4j.LoggerFactory;
  * Programmer -> propertyChange
  * activate propertyChange
  * note over propertyChange
- * if the first read failed, 
- * setup a second read of 
+ * if the first read failed,
+ * setup a second read of
  * the same value.
- * otherwise, setup a read of 
+ * otherwise, setup a read of
  * the next value.
  * end note
  * deactivate Programmer
@@ -160,7 +160,7 @@ import org.slf4j.LoggerFactory;
  * executeRead -> readAll
  * activate readAll
  * readAll -> Programmer
- * activate Programmer 
+ * activate Programmer
  * readAll --> executeRead
  * deactivate readAll
  * executeRead -> nextRead
@@ -171,10 +171,10 @@ import org.slf4j.LoggerFactory;
  * deactivate restartProgramming
  * replyWhileProgrammingVar --> propertyChange
  * deactivate replyWhileProgrammingVar
- * deactivate propertyChange 
+ * deactivate propertyChange
  * deactivate Programmer
  * == Callback triggered repeat occurs until no more values ==
- * @enduml 
+ * @enduml
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
@@ -1192,7 +1192,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         // to read again.
                     } else {
                         _programmingVar.setToWrite(true); // set the variable
-                        // to attempt another 
+                        // to attempt another
                         // write.
                     }
                 } else {
@@ -1805,6 +1805,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param globs       properties to configure the layout
      * @return a panel containing the group
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DP_DO_INSIDE_DO_PRIVILEGED") // setAccessible()
     public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
 
         List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes

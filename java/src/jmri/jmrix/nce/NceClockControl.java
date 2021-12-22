@@ -137,6 +137,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void reply(NceReply r) {
         log.trace("NceReply(len {}) waiting: {} watingForRead: {} waitingForCmdTime: {} waitingForCmd1224: {} waitingForCmdRatio: {} waitingForCmdStop: {} waitingForCmdStart: {}", r.getNumDataElements(), waiting, waitingForCmdRead, waitingForCmdTime, waitingForCmd1224, waitingForCmdRatio, waitingForCmdStop, waitingForCmdStart);
 
@@ -190,7 +192,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
             if (waitingForCmdStart) {
                 waitingForCmdStart = false;
                 if (r.getElement(0) != NceMessage.NCE_OKAY) {
-                    log.error("{}{}", Bundle.getMessage("LogNceClockStartCmdError"), r.getElement(0));
+                    log.error("waitingForCmdStart: {}{}", Bundle.getMessage("LogNceClockStartCmdError"), r.getElement(0));
                 }
                 return;
             }

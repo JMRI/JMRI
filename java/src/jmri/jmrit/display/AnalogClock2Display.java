@@ -230,7 +230,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
                     clock.userSetRate(r);
                     rate = r;
                 } catch (TimebaseRateException t) {
-                    log.error("TimebaseRateException for rate= {}. {}", r, t);
+                    log.error("TimebaseRateException for rate= {}", r, t);
                 }
             }
         });

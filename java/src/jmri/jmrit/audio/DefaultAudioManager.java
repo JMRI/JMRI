@@ -212,7 +212,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 Audio s = createNewAudio("IAL$", "Default Audio Listener");
                 register(s);
             } catch (AudioException ex) {
-                log.error("Error creating Default Audio Listener: {}", ex);
+                log.error("Error creating Default Audio Listener", ex);
             }
 
             // Register a shutdown task to ensure clean exit

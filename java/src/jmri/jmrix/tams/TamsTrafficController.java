@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on work by Bob Jacobsen and Kevin Dickerson
  * With support from Bob Jacobsen for which my thanks
- * 
+ *
  * @author Jan Boen
  */
 
@@ -38,10 +38,10 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     public TamsTrafficController() {
         super();
         log.debug("creating a new TamsTrafficController object");
-        log.debug("Just a silly change to force an staged change");        
+        log.debug("Just a silly change to force an staged change");
         // set as command station too
         jmri.InstanceManager.store(this, jmri.CommandStation.class);
-        super.setAllowUnexpectedReply(false);        
+        super.setAllowUnexpectedReply(false);
     }
 
     public void setAdapterMemo(TamsSystemConnectionMemo memo) {
@@ -66,7 +66,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
-    
+
     // The methods to implement the TamsInterface
     @Override
     public synchronized void addTamsListener(TamsListener l) {
@@ -277,12 +277,12 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         super.forwardToPort(tm, reply);
     }
 
-    protected static char replyType;
-    protected static boolean replyBinary;
-    protected static boolean replyOneByte;
-    protected static int replyLastByte;
-    protected static boolean unsolicitedSensorMessageSeen = false;
-    
+    static char replyType;
+    static boolean replyBinary;
+    static boolean replyOneByte;
+    static int replyLastByte;
+    static boolean unsolicitedSensorMessageSeen = false;
+
     @Override
     protected TamsMessage enterProgMode() {
         return null;

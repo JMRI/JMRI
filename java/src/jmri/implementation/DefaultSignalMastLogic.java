@@ -1167,7 +1167,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 try {
                     destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
                 } catch (Exception ex) {
-                    log.error("Error while creating Signal Logic {}", ex);
+                    log.error("Error while creating Signal Logic", ex);
                 }
             }
         }
@@ -1835,7 +1835,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             while (mastKeys.hasMoreElements()) {
                 SignalMast key = mastKeys.nextElement();
                 if (log.isDebugEnabled()) {
-                    log.debug("{} {} {}", key.getDisplayName(), key.getAspect(), autoMasts.get(key));
+                    log.debug("key {} {} {}", key.getDisplayName(), key.getAspect(), autoMasts.get(key));
                 }
                 if ((key.getAspect() != null) && (!key.getAspect().equals(autoMasts.get(key)))) {
                     if (isSignalMastIncluded(key)) {
@@ -1866,7 +1866,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
             for (Map.Entry<Block, Integer> entry : this.autoBlocks.entrySet()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("{} {} {}", entry.getKey().getDisplayName(), entry.getKey().getState(), entry.getValue());
+                    log.debug(" entry {} {} {}", entry.getKey().getDisplayName(), entry.getKey().getState(), entry.getValue());
                 }
                 if (entry.getKey().getState() != autoBlocks.get(entry.getKey())) {
                     if (isBlockIncluded(entry.getKey())) {
@@ -2710,13 +2710,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     if (isBlockIncluded(block)) {
                         if (log.isDebugEnabled()) {
                             log.debug("{} in manual block", destination.getDisplayName());
-                            log.debug("{}  {}", getBlockState(block), block.getState());
+                            log.debug("  state: {}  {}", getBlockState(block), block.getState());
                         }
                         checkState();
                     } else if (autoBlocks.containsKey(block)) {
                         if (log.isDebugEnabled()) {
                             log.debug("{} in auto block", destination.getDisplayName());
-                            log.debug("{}  {}", getAutoBlockState(block), block.getState());
+                            log.debug("  states: {}  {}", getAutoBlockState(block), block.getState());
                         }
                         checkState();
                     } else if (log.isDebugEnabled()) {

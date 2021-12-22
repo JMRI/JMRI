@@ -1817,7 +1817,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                         //last space and put in the vector as well as a line feed
                         endIndex = tokenPiece.lastIndexOf(" ") + 1;
                         if (log.isDebugEnabled()) {
-                            log.debug("/{}/ {} {}", tokenPiece, startIndex, endIndex);
+                            log.debug("tokenPiece /{}/ {} {}", tokenPiece, startIndex, endIndex);
                         }
                         textVector.addElement(tokenPiece.substring(0, endIndex));
                         textVector.addElement(newLine);

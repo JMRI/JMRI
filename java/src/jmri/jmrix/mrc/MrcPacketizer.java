@@ -108,9 +108,8 @@ public class MrcPacketizer extends MrcTrafficController {
                     log.debug("xmt list size {}", xmtList.size()); // NOI18N
                     Iterator<MrcMessage> iterator = xmtList.iterator();
                     while (iterator.hasNext()) {
-                        log.debug(iterator.next().toString());
+                        log.debug("  entry: {}",iterator.next().toString());
                     }
-                    log.debug("==");
                 }
             }
         } catch (RuntimeException e) {

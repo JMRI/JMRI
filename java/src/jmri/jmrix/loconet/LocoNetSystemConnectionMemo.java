@@ -367,7 +367,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     // yes, tagManager is static.  Tags can move between system connections.
     // when readers are not all on the same LocoNet
     // this manager is loaded on demand.
-    protected static TranspondingTagManager tagManager;
+    static TranspondingTagManager tagManager;
 
     static public TranspondingTagManager getIdTagManager() {
         synchronized (LocoNetSystemConnectionMemo.class) { // since tagManager can be null, can't synch on that

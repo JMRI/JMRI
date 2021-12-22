@@ -1202,7 +1202,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         // log.error("JDOM exception writing Train Info: "+jde);
         //}
         catch (java.io.IOException ioe) {
-            log.error("IO exception writing Train Info: {}", ioe);
+            log.error("IO exception writing Train Info", ioe);
         }
     }
 

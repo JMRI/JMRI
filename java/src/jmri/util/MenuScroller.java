@@ -520,7 +520,7 @@ public class MenuScroller
      */
     @Override
     @SuppressWarnings("deprecation") // Object.finalize
-    public void finalize() throws Throwable {
+    protected void finalize() throws Throwable {
         dispose();
     }
 

@@ -48,7 +48,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             }).forEachOrdered(itemModel -> {
                 tabbedTableArray.add(itemModel);
             });
-            
+
         } else {
             Manager<E> man = getManager();
             String manuName = ( man!=null ? man.getMemo().getUserName() : "Unknown Manager");
@@ -129,7 +129,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getDataTable().print(mode, headerFormat, footerFormat);
         } catch (java.awt.print.PrinterException e1) {
-            log.warn("error printing: {}", e1);
+            log.warn("error printing", e1);
         } catch (NullPointerException ex) {
             log.error("Trying to print returned a NPE error");
         }
@@ -227,20 +227,20 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
                     dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
                 });
             }
-            
+
             fireColumnsUpdated(); // init bottom buttons
             dataTable.getColumnModel().addColumnModelListener(this);
-            
+
         }
-        
+
         private final TriStateJCheckBox propertyVisible = new TriStateJCheckBox(Bundle.getMessage("ShowSystemSpecificProperties"));
-        
+
         /**
          * Notify the subclasses that column visibility has been updated,
          * or the table has finished loading.
-         * 
+         *
          * Sends notification to the tableAction with boolean array of column visibility.
-         * 
+         *
          */
         private void fireColumnsUpdated(){
             TableColumnModel model = dataTable.getColumnModel();
@@ -264,7 +264,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
                 setPropertyVisibleCheckbox(colsVisible);
             }
         }
-        
+
         /**
          * Updates the custom bean property columns checkbox.
          * @param colsVisible array of column visibility
@@ -279,7 +279,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
                 propertyVisible.setState(customColVisibility);
             }
         }
-        
+
         /**
          * {@inheritDoc}
          * A column is now visible.  fireColumnsUpdated()
@@ -288,7 +288,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         public void columnAdded(TableColumnModelEvent e) {
             fireColumnsUpdated();
         }
-        
+
         /**
          * {@inheritDoc}
          * A column is now hidden.  fireColumnsUpdated()
@@ -297,21 +297,21 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         public void columnRemoved(TableColumnModelEvent e) {
             fireColumnsUpdated();
         }
-        
+
         /**
          * {@inheritDoc}
          * Unused.
          */
         @Override
         public void columnMoved(TableColumnModelEvent e) {}
-        
+
         /**
          * {@inheritDoc}
          * Unused.
          */
         @Override
         public void columnSelectionChanged(ListSelectionEvent e) {}
-        
+
         /**
          * {@inheritDoc}
          * Unused.

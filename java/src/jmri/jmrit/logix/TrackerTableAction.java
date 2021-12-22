@@ -317,7 +317,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                        try {
                            tracker.hasPathInto(block);
                        } catch (JmriException je) {
-                           log.error("{} {}", tracker.getTrainName(), je.getMessage());
+                           log.error("Exception handling {}", tracker.getTrainName(), je.getMessage());
                            return;
                        }
                    }
@@ -357,7 +357,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                             break;
                     }
                 } catch (JmriException je) {
-                    log.error("{} {}", t.getTrainName(), je.getMessage());
+                    log.error("train: {} {}", t.getTrainName(), je.getMessage());
                 }
             }
             if (trackers.isEmpty()) {   // nobody has paths set.
