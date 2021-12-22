@@ -1,7 +1,8 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        Example scripts related to MQTT moved from jython directory to jython\MQTT directory.  This will require 
+        an update to any start-up actions that reference their location.
     </li>
     <li>
     </li>
