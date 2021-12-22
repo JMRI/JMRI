@@ -46,6 +46,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
 
     @Test
     public void testDialogUseExistingLight() throws SocketAlreadyConnectedException {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Light l1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
