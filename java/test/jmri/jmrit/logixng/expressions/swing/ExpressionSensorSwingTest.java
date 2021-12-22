@@ -63,8 +63,8 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         InstanceManager.getDefault(SensorManager.class).provide("IS2");
 
         jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
-                .createLogixNG("A logixNG with an empty conditionlNG");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
+                .createLogixNG("A logixNG with IQC12");
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC12", null);
 
         IfThenElse action = new IfThenElse("IQDA1", null);
         MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
@@ -74,7 +74,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         maleSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
         action.getChild(0).connect(maleSocket);
 
-        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
+        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC12", "Edit ? ", 1);
 
         new JComboBoxOperator(jdo, 0).setSelectedItem(s1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IsNot);

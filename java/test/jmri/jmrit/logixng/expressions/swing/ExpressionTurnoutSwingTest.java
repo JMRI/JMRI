@@ -70,8 +70,8 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
 
             try {
                 jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
-                        .createLogixNG("A logixNG with an empty conditionlNG");
-                conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
+                        .createLogixNG("A logixNG with IQC13");
+                conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC13", null);
 
                 IfThenElse action = new IfThenElse("IQDA1", null);
                 MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
@@ -86,7 +86,7 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
 
         });
 
-        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
+        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC13", "Edit ? ", 1);
 
         new JComboBoxOperator(jdo, 0).setSelectedItem(t1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IsNot);
