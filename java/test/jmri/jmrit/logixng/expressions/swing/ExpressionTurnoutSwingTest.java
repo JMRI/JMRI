@@ -68,6 +68,7 @@ public class ExpressionTurnoutSwingTest
 
     @Test
     public void testDialogUseExistingTurnout() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");

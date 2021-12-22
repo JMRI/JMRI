@@ -55,6 +55,7 @@ public class ActionSensorSwingTest
 
     @Test
     public void testDialogUseExistingSensor() throws SocketAlreadyConnectedException {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Sensor s1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
