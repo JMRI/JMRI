@@ -168,7 +168,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             return true;
 
         } catch (java.io.IOException | org.jdom2.JDOMException ex) {
-            log.debug("{}", ex);
+            log.debug("Exception checking file", ex);
             JOptionPane.showMessageDialog(who, Bundle.getMessage("ParseError"));
             return false;
         }

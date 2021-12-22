@@ -119,7 +119,7 @@ public class PortalIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
-        
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);
         Attribute a = element.getAttribute("scale");
@@ -139,7 +139,7 @@ public class PortalIconXml extends PositionableLabelXml {
             try {
                 deg = a.getIntValue();
             } catch (org.jdom2.DataConversionException dce) {
-                log.error("{} can't convert rotate {}", l.getNameString(), dce);
+                log.error("{} can't convert rotate", l.getNameString(), dce);
             }
         }
         l.setDegrees(deg);

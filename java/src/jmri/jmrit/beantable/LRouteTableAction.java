@@ -840,7 +840,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _systemName.setEnabled(true);
         _userName.setEnabled(true);
         _addFrame.setTitle(rbx.getString("LRouteAddTitle"));
-        
+
         _addFrame.setEscapeKeyClosesWindow(true);
         _addFrame.getRootPane().setDefaultButton(createButton);
     }
@@ -1322,7 +1322,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             try {
                 soundFile.setText(FileUtil.getPortableFilename(soundChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
-                log.error("exception setting sound file: {}", e);
+                log.error("exception setting sound file", e);
             }
         }
     }
@@ -1343,7 +1343,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             try {
                 scriptFile.setText(FileUtil.getPortableFilename(scriptChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
-                log.error("exception setting script file: {}", e);
+                log.error("exception setting script file", e);
             }
         }
     }

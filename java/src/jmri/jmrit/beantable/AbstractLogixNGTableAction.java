@@ -1094,7 +1094,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             FileUtil.appendTextToFile(file, tStr);
             FileUtil.appendTextToFile(file, textContent.getText());
         } catch (IOException e) {
-            log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
         }
     }
 

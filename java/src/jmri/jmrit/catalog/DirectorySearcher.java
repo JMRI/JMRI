@@ -227,7 +227,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"WA_NOT_IN_LOOP", "UW_UNCOND_WAIT"}, justification="Waiting for single possible event")
         private void getImageDirectory(File dir, String[] filter) {
             if (jmri.util.ThreadingUtil.isGUIThread() || jmri.util.ThreadingUtil.isLayoutThread()) log.error("getImageDirectory called on wrong thread");
-            
+
             File[] files = dir.listFiles();
             if (files == null || quit) {
                 // no sub directories
@@ -250,7 +250,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
                     } catch (InterruptedException ie) {
                         log.error("InterruptedException at _waitForSync {}", ie);
                     } catch (java.lang.IllegalArgumentException iae) {
-                        log.error("IllegalArgumentException {}", iae);
+                        log.error("Illegal argument getting Image Directory", iae);
                     }
                 }
             }

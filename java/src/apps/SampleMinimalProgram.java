@@ -74,7 +74,7 @@ public class SampleMinimalProgram {
                 org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.ERROR);
             }
         } catch (java.lang.NoSuchMethodError e) {
-            log.error("Exception starting logging: {}", e);
+            log.error("Exception starting logging", e);
         }
         // install default exception handler
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());

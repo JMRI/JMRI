@@ -197,7 +197,7 @@ public class InputWindow extends JPanel {
                 results = true;
 
             } catch (IOException e) {
-                log.error("Unhandled problem in loadFile: {}", e);
+                log.error("Unhandled problem in loadFile", e);
             }
         } else {
             results = true;   // We assume that as the file is null then the user has clicked cancel.
@@ -235,7 +235,7 @@ public class InputWindow extends JPanel {
                 results = true;
 
             } catch (HeadlessException | IOException e) {
-                log.error("Unhandled problem in storeFile: {}", e);
+                log.error("Unhandled problem in storeFile", e);
             }
         } else {
             results = true;   // If the file is null then the user has clicked cancel.

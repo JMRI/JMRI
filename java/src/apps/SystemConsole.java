@@ -196,7 +196,7 @@ public final class SystemConsole extends JTextArea {
                     // return until the frame layout is completed
                     SwingUtilities.invokeAndWait(this::createFrame);
                 } catch (InterruptedException | InvocationTargetException ex) {
-                    log.error("Exception creating system console frame: {}", ex);
+                    log.error("Exception creating system console frame", ex);
                 }
             }
             log.debug("Frame created");

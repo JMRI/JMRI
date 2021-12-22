@@ -60,7 +60,7 @@ public class DecoderFile extends XmlFile {
         _element = decoder;
 
         log.trace("Create DecoderFile with Family \"{}\" Model \"{}\"", family, model);
-        
+
         // store the default range of version id's
         setVersionRange(lowVersionID, highVersionID);
     }
@@ -538,7 +538,7 @@ public class DecoderFile extends XmlFile {
                     continue;
                 }
             } catch (DataConversionException ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception: {}", e.getAttribute("item"), ex);
+                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception", e.getAttribute("item"), ex);
             }
             // load each row
             variableModel.setConstant(e);

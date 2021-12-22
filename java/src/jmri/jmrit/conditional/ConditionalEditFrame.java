@@ -38,7 +38,7 @@ import jmri.util.table.ButtonRenderer;
  * Extracted from ConditionalEditList.
  * Allows ConditionalEditList to open alternate frame
  * for copying Conditionals.
- * 
+ *
  * @author Pete Cressman Copyright (C) 2020
  */
 public class ConditionalEditFrame extends ConditionalFrame {
@@ -119,7 +119,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
     ArrayList<String> _selectConditionalList = new ArrayList<>();
 
     // ------------------------------------------------------------------
-    
+
     ConditionalEditFrame(String title, Conditional conditional, ConditionalList parent) {
         super(title, conditional, parent);
         makeConditionalFrame(conditional);
@@ -403,7 +403,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
         // End of Action Consequents Section
 
         contentPane.add(_parent.makeBottomPanel());
-        
+
         // setup window closing listener
         this.addWindowListener(
                 new java.awt.event.WindowAdapter() {
@@ -735,7 +735,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
      * @return false if antecedent can't be validated
      */
     boolean validateAntecedent() {
-        return _parent.validateAntecedent(_logicType, _antecedentField.getText(), 
+        return _parent.validateAntecedent(_logicType, _antecedentField.getText(),
                 _variableList, _parent._curConditional);
     }
 
@@ -2758,7 +2758,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _longActionString.setText(FileUtil.getPortableFilename(currentChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException ex) {
                 if (log.isDebugEnabled()) {
-                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    log.error("exception setting file location", ex);  // NOI18N
                 }
                 _longActionString.setText("");
             }

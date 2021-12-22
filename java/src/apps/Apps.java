@@ -666,7 +666,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
         } catch (RuntimeException e) {
-            log.error("Unable to set JMRI property {} to {} due to execption {}", key, value, e);
+            log.error("Unable to set JMRI property {} to {} due to exception", key, value, e);
         }
     }
 

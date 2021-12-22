@@ -627,7 +627,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 && isStopping() && (_activeTrain.getStatus() == ActiveTrain.RUNNING)) {
             _needSetSpeed = true;
         }
-        
+
         // request next allocation if appropriate--Dispatcher must decide whether to allocate it and when
         if ((!InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) && ((_lastAllocatedSection == null)
                 || (_lastAllocatedSection.getNextSection() == as.getSection()))) {
@@ -825,7 +825,7 @@ public class AutoActiveTrain implements ThrottleListener {
         log.trace("Set Speed by Signal");
         if (_pausingActive || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
                 && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null)
-                && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) 
+                && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD)
                 || (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null
                 || (_activeTrain.getStatus() == ActiveTrain.WAITING && !_activeTrain.getStarted())))
                 || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
@@ -1147,7 +1147,7 @@ public class AutoActiveTrain implements ThrottleListener {
             } catch (NumberFormatException nx) {
                 try {
                     blockSpeed = InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(blockSpeedName);
-                    log.debug("{}: block speed from map for {} is {}",
+                    log.debug("{} {}: block speed from map for {} is {}",
                             _activeTrain.getTrainName(), block.getDisplayName(USERSYS), blockSpeedName,
                             blockSpeed);
                 } catch (Throwable ex) { // if _anything_ goes wrong, contain it

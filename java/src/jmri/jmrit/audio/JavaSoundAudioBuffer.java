@@ -171,7 +171,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         try {
             audioInputStream = AudioSystem.getAudioInputStream(file);
         } catch (UnsupportedAudioFileException ex) {
-            log.error("Unsupported audio file format when loading buffer:{}", ex);
+            log.error("Unsupported audio file format when loading buffer", ex);
             return false;
         } catch (IOException ex) {
             log.error("Error loading buffer:{}", ex);

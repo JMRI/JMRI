@@ -277,7 +277,7 @@ public class Sound {
             line.open(format);
         } catch (LineUnavailableException ex) {
             // Handle the error.
-            log.error("error opening line: {}", ex);
+            log.error("error opening line", ex);
             return;
         }
         line.start();

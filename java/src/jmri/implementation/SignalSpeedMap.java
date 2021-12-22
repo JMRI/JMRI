@@ -170,7 +170,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
                 }
             }
         } catch (org.jdom2.JDOMException e) {
-            log.error("error reading speed map elements due to: {}", e);
+            log.error("error reading speed map elements due to", e);
         }
     }
 
