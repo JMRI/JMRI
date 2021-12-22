@@ -503,6 +503,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * @see jmri.jmrix.loconet.AbstractBoardProgPanel#writeAll()
      * @param opswIndex  OpSw number
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void writeOne(int opswIndex) {
         // check the address
         try {
@@ -536,6 +538,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      *
      *@param m  incoming LocoNet message
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     @Override
     public void message(LocoNetMessage m) {
         if (log.isDebugEnabled()) {

@@ -192,12 +192,12 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
     synchronized void decodeRailComInfo(RailComPacket rc, int packetTypeCmd) {
         if (log.isDebugEnabled()) {
-            log.debug("{} {}", getDisplayName(), packetTypeCmd);
+            log.debug("{} packet type {}", getDisplayName(), packetTypeCmd);
         }
         addressp1found++;
         RailCom rcTag = null;
         if (log.isDebugEnabled()) {
-            log.debug("{} {}", this.getDisplayName(), super.getCurrentReport());
+            log.debug("decodeRailComInfo {} {}", this.getDisplayName(), super.getCurrentReport());
         }
         if (super.getCurrentReport() instanceof RailCom) {
             rcTag = (RailCom) super.getCurrentReport();

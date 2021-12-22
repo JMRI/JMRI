@@ -109,7 +109,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                log.debug("after message, new list size {}",idTags.size());
                int i = 0;
                for(Object id:idTags){
-                  log.debug("{}: {}",i++,id);
+                  log.debug("tag {}: {}",i++,id);
                }
             }
          }

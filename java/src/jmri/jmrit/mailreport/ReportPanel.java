@@ -254,7 +254,7 @@ public class ReportPanel extends JPanel {
             log.debug("server response:");
             boolean checkResponse = false;
             for (String line : response) {
-                log.debug("               :{}", line);
+                log.debug("         line: {}", line);
                 if (line.contains("<p>Message successfully sent!</p>")) {
                     checkResponse = true;
                 }

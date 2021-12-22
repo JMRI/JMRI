@@ -502,6 +502,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
 
     // kloc sent from throttle to command station to release loco, which will continue at current speed
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     private void processkloc(boolean messagein, int session) {
         int row=getrowfromsession(session);
         String messagedir;
@@ -594,7 +596,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             else if ((sm0) && (sm1)){
                 speedstep="28";
             }
-            log.debug("{} {}",messagedir,Bundle.getMessage("CNFO_STMOD",session,speedstep,servicemode,soundmode));
+            log.debug("processstmod {} {}",messagedir,Bundle.getMessage("CNFO_STMOD",session,speedstep,servicemode,soundmode));
             setValueAt(speedstep, row, SPEED_STEP_COLUMN);
         }
     }

@@ -820,7 +820,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 currentByteLocation++;
             }
             for (int i = 0; i < railCommDataForSensor.size(); i++) {
-                log.debug("{} {}", railCommDataForSensor.get(i).getDisplayName(), railCommDataForSensor.get(i).getPacketLength());
+                log.debug("railCommDataForSensor {} {}", railCommDataForSensor.get(i).getDisplayName(), railCommDataForSensor.get(i).getPacketLength());
                 int[] arraytemp = new int[railCommDataForSensor.get(i).getPacketLength()];
                 for (j = 0; j < railCommDataForSensor.get(i).getPacketLength(); j++) {
                     arraytemp[j] = 0xFF & r.getElement(currentByteLocation);
@@ -1133,7 +1133,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         return validateTrimmedMin1NumberSystemNameFormat(name,locale);
     }
-    
+
     @Override
     public void dispose() {
         stopPolling();
