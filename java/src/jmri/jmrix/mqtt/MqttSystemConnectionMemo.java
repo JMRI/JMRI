@@ -32,6 +32,9 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
 //        jmri.InstanceManager.setReporterManager(getReporterManager());
 
+        // prefix for MqttSignalMasts
+        MqttSignalMast.setSendTopicPrefix(getMqttAdapter().getOptionState("15"));
+
         register();
     }
 

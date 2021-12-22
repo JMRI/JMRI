@@ -41,9 +41,11 @@ public class TreeEditor extends TreeViewer {
     public enum EnableExecuteEvaluate { EnableExecuteEvaluate, DisableExecuteEvaluate }
 
 
-    private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
+    // There should only be one clipboard editor open at any time so this is static.
+    // This field must only be accessed on the GUI thread.
+    private static ClipboardEditor _clipboardEditor = null;
 
-    ClipboardEditor _clipboardEditor = null;
+    private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
 
     private JDialog _renameSocketDialog = null;
     private JDialog _selectItemTypeDialog = null;
@@ -1626,6 +1628,10 @@ public class TreeEditor extends TreeViewer {
                                         JOptionPane.ERROR_MESSAGE);
                             }
                             ThreadingUtil.runOnGUIEventually(() -> {
+                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
+                                    b.removePropertyChangeListener(_treePane);
+                                    b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                });
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                             });
@@ -1667,6 +1673,12 @@ public class TreeEditor extends TreeViewer {
                                             JOptionPane.ERROR_MESSAGE);
                                 });
                             }
+                            ThreadingUtil.runOnGUIEventually(() -> {
+                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
+                                    b.removePropertyChangeListener(_treePane);
+                                    b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                });
+                            });
                         });
 
                         _treePane._femaleRootSocket.registerListeners();
@@ -1699,6 +1711,13 @@ public class TreeEditor extends TreeViewer {
                                 log.error("item cannot be connected", ex);
                             }
                             ThreadingUtil.runOnGUIEventually(() -> {
+                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
+                                    // Remove the listener if it is already
+                                    // added so we don't end up with duplicate
+                                    // listeners.
+                                    b.removePropertyChangeListener(_treePane);
+                                    b.addPropertyChangeListener(_treePane);
+                                });
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                             });
