@@ -251,10 +251,10 @@ public class DataSource extends jmri.util.JmriJFrame {
             final byte endbyte = bytes[bytes.length - 1];
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: {}", e);
+            log.error("Exception on output", e);
         } catch (java.lang.InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: {}", e);
+            log.error("Interrupted output", e);
         }
     }
 
@@ -390,7 +390,7 @@ public class DataSource extends jmri.util.JmriJFrame {
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port {} in use, cannot open", p);
+        log.error("Port {} in use, cannot open", port, p);
     }
 
     DataInputStream serialStream = null;

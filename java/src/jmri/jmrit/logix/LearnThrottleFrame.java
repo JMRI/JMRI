@@ -162,7 +162,7 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
                     try {
                         powerMgr.setPower(PowerManager.ON);
                     } catch (JmriException e1) {
-                        log.error("Error when setting power {}", e1);
+                        log.error("Error when setting power", e1);
                     }
                 }
             });

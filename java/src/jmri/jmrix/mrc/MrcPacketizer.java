@@ -113,7 +113,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 }
             }
         } catch (RuntimeException e) {
-            log.warn("passing to xmit: unexpected exception: {}", e); // NOI18N
+            log.warn("passing to xmit: unexpected exception", e); // NOI18N
         }
     }
 

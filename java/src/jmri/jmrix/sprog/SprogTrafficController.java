@@ -258,7 +258,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         try {
             sendQueue.add(new MessageTuple(m, null));
         } catch (Exception e) {
-            log.error("Could not add message to queue {}", e);
+            log.error("Could not add message to queue", e);
         }
     }
 

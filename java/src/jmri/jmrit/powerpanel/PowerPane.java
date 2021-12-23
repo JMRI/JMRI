@@ -165,7 +165,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.ON);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power on {}", e);
+                log.error("Exception trying to turn power on", e);
             }
         }
     }
@@ -178,7 +178,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.OFF);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power off {}", e);
+                log.error("Exception trying to turn power off", e);
             }
         }
     }

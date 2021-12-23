@@ -103,7 +103,7 @@ public class SpeedProfilePanel extends JPanel {
                 _table.setDragEnabled(true);
             }
         } catch (ClassNotFoundException cnfe) {
-            log.error("SpeedProfilePanel unable to Drag and Drop {}",cnfe);
+            log.error("SpeedProfilePanel unable to Drag and Drop",cnfe);
         }
         add(_scrollPane);
         if (anomalies != null) {

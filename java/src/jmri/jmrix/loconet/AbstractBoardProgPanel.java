@@ -425,7 +425,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             status.setText(Bundle.getMessage("STATUS_INPUT_BAD"));
             JOptionPane.showMessageDialog(this, Bundle.getMessage("STATUS_INVALID_ADDRESS"),
                     Bundle.getMessage("STATUS_TYPE_ERROR"), JOptionPane.ERROR_MESSAGE);
-            log.error("{} {}", Bundle.getMessage("ERROR_PARSING_ADDRESS"), e);
+            log.error("{}", Bundle.getMessage("ERROR_PARSING_ADDRESS"), e);
             throw e;
         }
         // parsed OK, check range

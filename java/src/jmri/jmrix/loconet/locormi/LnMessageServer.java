@@ -55,7 +55,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
             log.debug("Register LocoNet Server Complete"); // NOI18N
         } catch (Exception ex) {
-            log.warn("LnMessageServer: {}", ex); // NOI18N
+            log.warn("LnMessageServer", ex); // NOI18N
         }
     }
 

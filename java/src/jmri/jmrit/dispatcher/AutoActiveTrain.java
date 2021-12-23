@@ -1208,8 +1208,11 @@ public class AutoActiveTrain implements ThrottleListener {
             // stopping by speed profile uses section length to stop
             setStopNow(true);
         } else if (_currentAllocatedSection.getLength()  < _maxTrainLength) {
-            log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow", _activeTrain.getTrainName(),
-                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
+            log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow({})",
+                    _activeTrain.getTrainName(),
+                    _currentAllocatedSection.getSection().getDisplayName(USERSYS),
+                    _currentAllocatedSection.getLength(),
+                    _maxTrainLength, _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
         } else if (_resistanceWheels) {

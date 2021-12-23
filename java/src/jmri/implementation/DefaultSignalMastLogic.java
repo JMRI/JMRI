@@ -73,7 +73,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 source.setAspect(stopAspect);
             }
         } catch (Exception ex) {
-            log.error("Error while creating Signal Logic {}", ex);
+            log.error("Error while creating Signal Logic", ex);
         }
     }
 
@@ -348,13 +348,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             displayName, sec, fwd, rev);
                     if (fwd != null && fwdEntryPoint != null) {
                         addSensor(fwd.getUserName(), Sensor.INACTIVE, sm);
-                        log.debug("Mast[{}] Sec[{}] Fwd[{}] fwdEP[{}] revEP[{}]",
+                        log.debug("Mast[{}] Sec[{}] Fwd[{}] fwdEP[{}]",
                                 displayName, sec, fwd,
                                 fwdEntryPoint.getBlock().getUserName());
 
                     } else if (rev != null && revEntryPoint != null) {
                         addSensor(rev.getUserName(), Sensor.INACTIVE, sm);
-                        log.debug("Mast[{}] Sec[{}] Rev [{}] fwdEP[{}] revEP[{}]",
+                        log.debug("Mast[{}] Sec[{}] Rev [{}] revEP[{}]",
                                 displayName, sec, rev,
                                 revEntryPoint.getBlock().getUserName());
 

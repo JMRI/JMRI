@@ -42,7 +42,7 @@ public class DefaultIdTagManagerXml extends XmlFile {
         try {
             writeFile(getDefaultIdTagFileName());
         } catch (FileNotFoundException ex) {
-            log.error("File not found while writing IdTag file, may not be complete: {}", (Object) ex);
+            log.error("File not found while writing IdTag file, may not be complete", ex);
         }
     }
 

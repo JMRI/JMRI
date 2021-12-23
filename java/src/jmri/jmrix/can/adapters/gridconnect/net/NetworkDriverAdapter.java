@@ -41,7 +41,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
             try {
                 tc.setCanId(Integer.parseInt(getOptionState("CANID")));
             } catch (Exception e) {
-                log.error("Cannot parse CAN ID - check your preference settings {}", e);
+                log.error("Cannot parse CAN ID - check your preference settings", e);
                 log.error("Now using default CAN ID");
             }
         } else if (getOptionState(option2Name).equals(ConfigurationManager.SPROGCBUS)) {
@@ -50,7 +50,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
             try {
                 tc.setCanId(Integer.parseInt(getOptionState("CANID")));
             } catch (Exception e) {
-                log.error("Cannot parse CAN ID - check your preference settings {}", e);
+                log.error("Cannot parse CAN ID - check your preference settings", e);
                 log.error("Now using default CAN ID");
             }
         } else {
@@ -63,7 +63,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         tc.connectPort(this);
         this.getSystemConnectionMemo().setProtocol(getOptionState(option2Name));
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         this.getSystemConnectionMemo().configureManagers();
         if (socketConn != null) {
             log.info("Connection complete with {}", socketConn.getInetAddress());
@@ -79,7 +79,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     public CanSystemConnectionMemo getSystemConnectionMemo() {
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-    
+
     /**
      * {@inheritDoc}
      */

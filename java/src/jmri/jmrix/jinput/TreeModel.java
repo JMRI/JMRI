@@ -80,7 +80,7 @@ public final class TreeModel extends DefaultTreeModel {
         try {
             insertNodeInto(pChild, pParent, index);
         } catch (IllegalArgumentException e) {
-            log.error("insertNode({}, {}) Exception {}", pChild, pParent, e);
+            log.error("insertNode({}, {})", pChild, pParent, e);
         }
         return pChild;
     }
@@ -300,10 +300,10 @@ public final class TreeModel extends DefaultTreeModel {
                     break;  // skip this controller
                 } catch (IllegalArgumentException e) {
                     // ignore components that throw IllegalArgumentExceptions
-                    log.error("insertNode({}, {}) Exception {}", deviceNode, controllerNode, e);
+                    log.error("insertNode({}, {}) Exception", deviceNode, controllerNode, e);
                 } catch (Exception e) {
                     // log all others
-                    log.error("Exception {}", e);
+                    log.error("Exception", e);
                 }
             }
         }

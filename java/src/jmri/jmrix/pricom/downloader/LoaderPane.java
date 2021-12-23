@@ -71,7 +71,7 @@ public class LoaderPane extends javax.swing.JPanel {
             try {
                 openPortButtonActionPerformed(evt);
             } catch (UnsatisfiedLinkError ex) {
-                log.error("Error while opening port. Did you select the right one?\n{}", ex);
+                log.error("Error while opening port. Did you select the right one?", ex);
             }
         });
 
@@ -143,7 +143,7 @@ public class LoaderPane extends javax.swing.JPanel {
             byte endbyte = 0x03;
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: {}", e);
+            log.error("Exception on output", e);
         }
     }
 
@@ -166,7 +166,7 @@ public class LoaderPane extends javax.swing.JPanel {
             try {
                 nibbleIncomingData();            // remove any pending chars in queue
             } catch (java.io.IOException e) {
-                log.warn("nibble: Exception: {}", e);
+                log.warn("nibble: Exception", e);
             }
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
@@ -442,7 +442,10 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}",
+                        portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(),
+                        activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(),
+                        activeSerialPort.isCD());
             }
 
             //opened = true;
@@ -454,7 +457,7 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port {} in use, cannot open", p);
+        log.error("Port {} in use, cannot open", port, p);
     }
 
     public LoaderPane() {
@@ -546,7 +549,7 @@ public class LoaderPane extends javax.swing.JPanel {
         try {
             pdiFile.open();
         } catch (IOException e) {
-            log.error("Error opening file: {}", e);
+            log.error("Error opening file", e);
         }
 
         comment.setText(pdiFile.getComment());
