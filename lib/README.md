@@ -274,9 +274,12 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
-##### xercesImpl.jar
-- version Xerces-J 2.11.0
-- from http://www.apache.org/dist/xerces/j/
+##### xercesImpl-2.12.0.jar
+- version Xerces-J 2.12.0
+- from Maven
+
+##### xml-apis-ext-1.3.04.jar
+- from Maven
 
 ##### usb-api-1.0.2.jar, usb4java-*.jar, libusb4java-*.jar
 - usb4java version 1.3.0
@@ -356,7 +359,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations.jar
+##### spotbugs-annotations-3.1.7.jar
 - From SpotBugs 3.1.7
 - Only needed at compile/build time, not runtime
 - http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
