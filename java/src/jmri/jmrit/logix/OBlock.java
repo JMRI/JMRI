@@ -58,29 +58,29 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         OutOfService(OUT_OF_SERVICE, "outOfService", Bundle.getMessage("outOfService")),
         Dark(UNDETECTED, "dark", Bundle.getMessage("dark")),
         TrackError(TRACK_ERROR, "powerError", Bundle.getMessage("powerError"));
-        
+
         private final int status;
         private final String name;
         private final String descr;
-        
+
         private static final Map<String, OBlockStatus> map = new HashMap<>();
         private static final Map<String, OBlockStatus> reverseMap = new HashMap<>();
-        
+
         private OBlockStatus(int status, String name, String descr) {
             this.status = status;
             this.name = name;
             this.descr = descr;
         }
-        
+
         public int getStatus() { return status; }
-        
+
         public String getName() { return name; }
-        
+
         public String getDescr() { return descr; }
-        
+
         public static OBlockStatus getByName(String name) { return map.get(name); }
         public static OBlockStatus getByDescr(String descr) { return reverseMap.get(descr); }
-        
+
         static {
             for (OBlockStatus oblockStatus : OBlockStatus.values()) {
                 map.put(oblockStatus.name, oblockStatus);
@@ -88,7 +88,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             }
         }
     }
-    
+
     /*
      * OBlock states:
      * NamedBean.UNKNOWN                 = 0x01
@@ -198,7 +198,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         // save the non-sensor states
         int saveState = getState() & ~(UNKNOWN | OCCUPIED | UNOCCUPIED | INCONSISTENT | UNDETECTED);
         if (newSensor == null || pName == null) {
-            setNamedSensor(null);                    
+            setNamedSensor(null);
         } else {
             setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, newSensor));
         }
@@ -874,8 +874,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             path.setTurnouts(0, true, lockState, true);
             firePropertyChange("pathState", 0, getState());
         }
-        log.debug("setPath: Path \"{}\" in OBlock \"{}\" {} set for warrant {}",
-                    pathName, getDisplayName(), warrant.getDisplayName());
+        log.debug("setPath: Path \"{}\" in OBlock \"{}\" set for warrant {}",
+                    pathName,
+                    getDisplayName(),
+                    warrant.getDisplayName());
         return msg;
     }
 

@@ -1052,7 +1052,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                         getSourceMast().setAspect(aspectSet);
                     });
                 } catch (Exception ex) {
-                    log.error("Exception while setting Signal Logic: {}", ex);
+                    log.error("Exception while setting Signal Logic", ex);
                 }
                 return;
             }
@@ -1156,7 +1156,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 try {
                     destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
                 } catch (Exception ex) {
-                    log.error("Error while creating Signal Logic {}", ex);
+                    log.error("Error while creating Signal Logic", ex);
                 }
             }
         }

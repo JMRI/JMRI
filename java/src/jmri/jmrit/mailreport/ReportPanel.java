@@ -302,7 +302,7 @@ public class ReportPanel extends JPanel {
                     try {
                         out.putNextEntry(new ZipEntry(directory + file.getName() + "/"));
                     } catch (IOException ex) {
-                        log.error("Exception when adding directory: {}", ex);
+                        log.error("Exception when adding directory", ex);
                     }
                     addDirectory(out, file, directory + file.getName() + "/");
                 } else {
@@ -330,9 +330,9 @@ public class ReportPanel extends JPanel {
                     log.debug("Skip file: {}{}", directory, file.getName());
                 }
             } catch (FileNotFoundException ex) {
-                log.error("Exception when adding file: {}", ex);
+                log.error("Exception when adding file", ex);
             } catch (IOException ex) {
-                log.error("Exception when adding file: {}", ex);
+                log.error("Exception when adding file", ex);
             }
         }
     }

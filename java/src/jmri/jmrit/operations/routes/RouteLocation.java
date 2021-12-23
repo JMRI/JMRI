@@ -120,11 +120,11 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         // property change not needed
         _sequenceNum = sequence;
     }
-    
+
     public int getBlockingOrder() {
         return _blockingOrder;
     }
-    
+
     public void setBlockingOrder(int order) {
         _blockingOrder = order;
     }
@@ -140,7 +140,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public String getComment() {
         return _comment;
     }
-    
+
     public void setCommentColor(Color color) {
         Color old = _commentColor;
         _commentColor = color;
@@ -148,19 +148,19 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
             setDirtyAndFirePropertyChange("RouteLocationCommentColor", old, color); // NOI18N
         }
     }
-    
+
     public Color getCommentColor() {
         return _commentColor;
     }
-    
+
     public String getFormatedColorComment() {
         return TrainCommon.formatColorString(getComment(), getCommentColor());
     }
-  
+
     public void setCommentTextColor(String color) {
         setCommentColor(ColorUtil.stringToColor(color));
     }
-    
+
     public String getCommentTextColor() {
         return ColorUtil.colorToColorName(getCommentColor());
     }
@@ -362,12 +362,12 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public String getDepartureTime() {
         return _departureTime;
     }
-    
+
     public String getDepartureTimeHour() {
         String[] time = getDepartureTime().split(":");
         return time[0];
     }
-    
+
     public String getDepartureTimeMinute() {
         String[] time = getDepartureTime().split(":");
         return time[1];
@@ -585,13 +585,13 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
             try {
                 _sequenceNum = Integer.parseInt(a.getValue());
             } catch (NumberFormatException ee) {
-                log.error("Route location ({}) sequence id isn't a valid number", getName(), a.getValue());
+                log.error("Route location ({}) sequence id isn't a valid number {}", getName(), a.getValue());
             }
         }
         if ((a = e.getAttribute(Xml.COMMENT_COLOR)) != null) {
             setCommentTextColor(a.getValue());
         }
-        
+
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = a.getValue();
         }

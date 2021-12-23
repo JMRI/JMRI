@@ -248,7 +248,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
                     try {
                         wait();
                     } catch (InterruptedException ie) {
-                        log.error("InterruptedException at _waitForSync {}", ie);
+                        log.error("InterruptedException at _waitForSync", ie);
                     } catch (java.lang.IllegalArgumentException iae) {
                         log.error("Illegal argument getting Image Directory", iae);
                     }

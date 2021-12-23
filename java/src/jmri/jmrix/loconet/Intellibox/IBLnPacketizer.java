@@ -178,11 +178,11 @@ public class IBLnPacketizer extends LnPacketizer {
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: {}", e);
+                    log.warn("run: unexpected LocoNetMessageException", e);
                 } // normally, we don't catch the unnamed Exception, but in this
                 // permanently running loop it seems wise.
                 catch (Exception e) {
-                    log.warn("run: unexpected Exception: {}", e);
+                    log.warn("run: unexpected Exception", e);
                 }
             } // end of permanent loop
         }

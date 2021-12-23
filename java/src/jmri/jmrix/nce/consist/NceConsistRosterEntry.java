@@ -578,7 +578,7 @@ public class NceConsistRosterEntry {
             }
             w.write(newLine, 0, 1);
         } catch (IOException e) {
-            log.error("Error printing ConsistRosterEntry: {}", e);
+            log.error("Error printing ConsistRosterEntry", e);
         }
     }
 

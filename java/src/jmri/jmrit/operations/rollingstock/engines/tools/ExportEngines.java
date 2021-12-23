@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  */
 public class ExportEngines extends XmlFile {
-    
+
     protected static final String LOCATION_TRACK_SEPARATOR = "-";
 
     public ExportEngines() {
@@ -57,7 +57,7 @@ public class ExportEngines extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete", e);
         }
     }
 

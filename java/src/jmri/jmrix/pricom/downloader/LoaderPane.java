@@ -172,7 +172,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 try {
                     handleIncomingData();
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: {}", e);
+                    log.warn("run: Exception", e);
                 }
             }
         }

@@ -63,7 +63,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
         try {
             Naming.unbind(serviceName);
         } catch (Exception ex) {
-            log.error("Exception during disable: {}", ex); // NOI18N
+            log.error("Exception during disable", ex); // NOI18N
         }
     }
 

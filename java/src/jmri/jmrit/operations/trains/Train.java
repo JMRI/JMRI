@@ -3349,7 +3349,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 try {
                     _trainIcon = editor.addTrainIcon(getIconName());
                 } catch (Exception e) {
-                    log.error("Error placing train ({}) icon on panel ({}) {}", getName(), Setup.getPanelName(), e);
+                    log.error("Error placing train ({}) icon on panel ({})", getName(), Setup.getPanelName(), e);
                     return;
                 }
                 _trainIcon.setTrain(this);

@@ -73,7 +73,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
-    
+
     private boolean _trace = false;         // trace warrant activity to log.info on the console
     private float _slowSpeedAssistance = 0.02f;
     /**
@@ -311,7 +311,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
                 xmlFile.writeXML(file, doc);
             }
         } catch (IOException eb) {
-            log.warn("Exception in storing warrant xml: {}", eb);
+            log.warn("Exception in storing warrant xml", eb);
         }
     }
 

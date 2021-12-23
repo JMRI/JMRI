@@ -102,7 +102,7 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
         _controlPanel.setSize(_controlPanel.getPreferredSize());
 
         int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5 + 11;   // = 192
-        int height = 9 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45        
+        int height = 9 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45
         _functionPanel = new LearnFunctionPanel(this);
         _functionPanel.setSize(width, height);
         _functionPanel.setVisible(true);
@@ -176,7 +176,7 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
                     try {
                         powerMgr.setPower(PowerManager.OFF);
                     } catch (JmriException e1) {
-                        log.error("Error when setting power {}", e1);
+                        log.error("Error when setting power", e1);
                     }
                 }
             });

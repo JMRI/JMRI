@@ -317,7 +317,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                        try {
                            tracker.hasPathInto(block);
                        } catch (JmriException je) {
-                           log.error("Exception handling {}", tracker.getTrainName(), je.getMessage());
+                           log.error("Exception handling {} {}", tracker.getTrainName(), je.getMessage());
                            return;
                        }
                    }

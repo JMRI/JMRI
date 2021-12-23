@@ -93,7 +93,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n{}", ex);
+                    log.error("Error while opening port.  Did you select the right one?", ex);
                 }
             }
         });

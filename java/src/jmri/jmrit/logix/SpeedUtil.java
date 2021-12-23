@@ -33,10 +33,10 @@ import org.slf4j.LoggerFactory;
  * throttle setting was usually done with an ad hoc "throttle factor".  When
  * created, the RosterSpeedProfile provides this needed conversion but
  * generally is not done by users for each of their locos.
- * 
- * Methods to dynamically determine a RosterSpeedProfile for each loco are 
+ *
+ * Methods to dynamically determine a RosterSpeedProfile for each loco are
  * implemented in this class.
- * 
+ *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2017
  *
  */
@@ -54,8 +54,8 @@ public class SpeedUtil {
 
     private RosterSpeedProfile _mergeProfile; // merge of existing Roster speeedProfile and session speeedProfile
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
-    private SignalSpeedMap _signalSpeedMap; 
-    private float _ma;  // milliseconds needed to increase speed by throttle step amount 
+    private SignalSpeedMap _signalSpeedMap;
+    private float _ma;  // milliseconds needed to increase speed by throttle step amount
     private float _md;  // milliseconds needed to decrease speed by throttle step amount
     private ArrayList<BlockSpeedInfo> _speedInfo; // map max speeds and occupation times of each block in route
 
@@ -68,7 +68,7 @@ public class SpeedUtil {
     protected SpeedUtil() {
         _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
-    
+
     /**
      * @return RosterEntry
      */
@@ -123,16 +123,16 @@ public class SpeedUtil {
         }
         return false;
     }
-    
+
     public DccLocoAddress getDccAddress() {
         if (_dccAddress == null) {
             if (_rosterEntry != null) {
                 _dccAddress = _rosterEntry.getDccLocoAddress();
             }
         }
-        return _dccAddress;            
+        return _dccAddress;
     }
-    
+
     protected String getAddress() {
         if (_dccAddress == null) {
             _dccAddress = getDccAddress();
@@ -148,7 +148,7 @@ public class SpeedUtil {
      * Warrant.setRunMode() about to run a warrant
      * WarrantFrame.setup() for an existing warrant
      * WarrantTableModel.cloneWarrant() when cloning an existing warrant
-     * 
+     *
      * @param dccAddr DccLocoAddress
      */
     protected void setDccAddress(DccLocoAddress dccAddr) {
@@ -179,11 +179,11 @@ public class SpeedUtil {
             protocol = LocoAddress.Protocol.DCC_SHORT;
         } else {
             try {
-                protocol = Protocol.getByPeopleName(type);                
+                protocol = Protocol.getByPeopleName(type);
             } catch (IllegalArgumentException iae) {
                 try {
                     type = type.toLowerCase();
-                    protocol = Protocol.getByShortName(type);                
+                    protocol = Protocol.getByShortName(type);
                 } catch (IllegalArgumentException e) {
                     _dccAddress = null;
                     return false;
@@ -227,7 +227,7 @@ public class SpeedUtil {
      * Called from:
      *    DefaultConditional.takeActionIfNeeded() - execute a setDccAddress action
      *    SpeedUtil.makeSpeedTree() - need to use track speeds
-     *    WarrantFrame.checkTrainId() - about to run, assures address is set 
+     *    WarrantFrame.checkTrainId() - about to run, assures address is set
      *    Warrantroute.getRoster() - selection form _rosterBox
      *    WarrantRoute.setAddress() - whatever is in _dccNumBox.getText()
      *    WarrantRoute.setTrainPanel() - whatever in _dccNumBox.getText()
@@ -331,7 +331,7 @@ public class SpeedUtil {
         float incr = getThrottleSpeedStepIncrement();  // step amount
         float time;
         if (increasing) {
-            time = _ma * Math.abs(delta) / incr;   // accelerating         
+            time = _ma * Math.abs(delta) / incr;   // accelerating
         } else {
             time = _md * Math.abs(delta) / incr;
         }
@@ -360,7 +360,7 @@ public class SpeedUtil {
     synchronized protected RosterSpeedProfile getMergeProfile() {
         if (_mergeProfile == null) {
             makeSpeedTree();
-            makeRampParameters();                
+            makeRampParameters();
         }
         return _mergeProfile;
     }
@@ -379,14 +379,14 @@ public class SpeedUtil {
                 _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
                 _signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR);
     }
-    
+
     private void makeRampParameters() {
         _rampTimeIncrement = getRampTimeIncrement();    // get a value if not already set
         _rampThrottleIncrement = getRampThrottleIncrement();
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
-        _ma = 10;  // acceleration momentum time 
+        _ma = 10;  // acceleration momentum time
         _md = 10;  // deceleration momentum time
         if (_rosterEntry!=null) {
             String fileName = Roster.getDefault().getRosterFilesLocation() + _rosterEntry.getFileName();
@@ -399,10 +399,10 @@ public class SpeedUtil {
                     return;
                 }
                 root = xmlFile.rootFromFile(file);
-            } catch (NullPointerException npe) { 
+            } catch (NullPointerException npe) {
                 return;
             } catch (IOException | JDOMException eb) {
-                log.error("Exception while loading warrant preferences: {}",eb);
+                log.error("Exception while loading warrant preferences",eb);
                 return;
             }
             if (root == null) {
@@ -473,11 +473,11 @@ public class SpeedUtil {
                 num = 0;
             }
         }
-        if (log.isTraceEnabled()) log.debug("getMomentumFactor for cv {} {}, num= {}", 
+        if (log.isTraceEnabled()) log.debug("getMomentumFactor for cv {} {}, num= {}",
                 cv.getAttribute("name"), attr, num);
         return num;
     }
-    
+
     // return milliseconds per one speed step
     private float getMomentumAdustment(Element cv) {
         Attribute attr = cv.getAttribute("value");
@@ -497,7 +497,7 @@ public class SpeedUtil {
                 cv.getAttribute("name"), attr, num);
         return num;
     }
-    
+
     protected boolean profileHasSpeedInfo() {
         RosterSpeedProfile speedProfile = getMergeProfile();
         if (speedProfile == null) {
@@ -569,7 +569,7 @@ public class SpeedUtil {
                 }
                 sEntry = mSpeeds.higherEntry(sKey);
             }
-            
+
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
             manager.setMergeProfile(_rosterId, _mergeProfile);
         }
@@ -676,8 +676,8 @@ public class SpeedUtil {
     }
 
     /**
-     * A a train's speed at a given throttle setting and time would travel a distance. 
-     * return the time it would take for the train at another throttle setting to 
+     * A a train's speed at a given throttle setting and time would travel a distance.
+     * return the time it would take for the train at another throttle setting to
      * travel the same distance.
      * @param speed a given throttle setting
      * @param time a given time
@@ -691,13 +691,13 @@ public class SpeedUtil {
             return time;
         }
     }
-    
+
     /**
      * Get the track speed in millimeters per millisecond (= meters/sec)
      * If SpeedProfile has no speed information an estimate is given using the WarrantPreferences
      * throttleFactor.
      * NOTE:  Call profileHasSpeedInfo() first to determine if a reliable speed is known.
-     * for a given throttle setting and direction. 
+     * for a given throttle setting and direction.
      * SpeedProfile returns 0 if it has no speed information
      * @param throttleSetting throttle setting
      * @return track speed in millimeters/millisecond (not mm/sec)
@@ -712,7 +712,7 @@ public class SpeedUtil {
         boolean isForward = getIsForward();
         RosterSpeedProfile speedProfile = getMergeProfile();
         // Note SpeedProfile uses millimeters per second.
-        float speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;            
+        float speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;
         if (speed <= 0.0f) {
             speed = speedProfile.getSpeed(throttleSetting, !isForward) / 1000;
         }
@@ -744,7 +744,7 @@ public class SpeedUtil {
     }
 
     /**
-     * Get distance traveled at a constant speed. If this is called at 
+     * Get distance traveled at a constant speed. If this is called at
      * a speed change the throttleSetting should be modified to reflect the
      * average speed over the time interval.
      * @param speedSetting Recorded (Normal) throttle setting
@@ -853,7 +853,7 @@ public class SpeedUtil {
      * Return the distance traveled at current speed after a speed change was made.
      * Takes into account the momentum configured for the decoder to change from
      * the previous speed to the current speed.  Assumes the velocity change is linear.
-     * 
+     *
      * @param prevSpeed throttle setting when speed changed to currSpeed
      * @param currSpeed throttle setting being set
      * @param speedTime elapsed time from when the speed change was made to now
@@ -890,7 +890,7 @@ public class SpeedUtil {
     /**
      * Just entered a new block at 'toTime'. Do the calculation of speed of the
      * previous block from when the previous block block was entered.
-     * 
+     *
      * Throttle changes within the block will cause different speeds.  We attempt
      * to accumulate these time and distances to calculate a weighted speed average.
      * See method speedChange() below.
@@ -963,7 +963,7 @@ public class SpeedUtil {
         if (isForward) {
             profile.setForwardSpeed(throttle, measuredSpeed, _throttle.getSpeedIncrement());
         } else {
-            profile.setReverseSpeed(throttle, measuredSpeed, _throttle.getSpeedIncrement());            
+            profile.setReverseSpeed(throttle, measuredSpeed, _throttle.getSpeedIncrement());
         }
     }
 
@@ -994,13 +994,13 @@ public class SpeedUtil {
                 }
             }
         }
-       return false; 
+       return false;
     }
     private void clearStats() {
         _timeAtSpeed = 0;
         _changetime = 0;
         _distanceTravelled = 0.0f;
-        _settingsTravelled = 0.0f;            
+        _settingsTravelled = 0.0f;
         _numchanges = 0;
     }
 
@@ -1030,7 +1030,7 @@ public class SpeedUtil {
                 _timeAtSpeed += elapsedTime;
             }
             if (log.isDebugEnabled()) {
-                log.debug("speedChange: dist={}, {}ms at speed {}. _distanceTravelled={} settingsTravelled={}, timeAtSpeed= {}", 
+                log.debug("speedChange: dist={}, {}ms at speed {}. _distanceTravelled={} settingsTravelled={}, timeAtSpeed= {}",
                         (throttleSetting * elapsedTime), elapsedTime, _distanceTravelled, throttleSetting, _settingsTravelled, _timeAtSpeed);
             }
         }

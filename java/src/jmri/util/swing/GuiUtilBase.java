@@ -108,7 +108,7 @@ public class GuiUtilBase {
                 log.warn("Did not find suitable ctor for {}{} icon", classname, icon != null ? " with" : " without");
                 return createEmptyMenuItem(icon, name);
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                log.warn("failed to load GUI adapter class: {} due to: {}", classname, e);
+                log.warn("failed to load GUI adapter class: {}", classname, e);
                 return createEmptyMenuItem(icon, name);
             }
         } else if (child.getChild("panel") != null) {
@@ -123,7 +123,7 @@ public class GuiUtilBase {
                 setParameters(act, parameters);
                 return act;
             } catch (Exception ex) {
-                log.warn("could not load toolbar adapter class: {} due to {}", child.getChild("panel").getText(), ex);
+                log.warn("could not load toolbar adapter class: {}", child.getChild("panel").getText(), ex);
                 return createEmptyMenuItem(icon, name);
             }
         } else if (child.getChild("help") != null) {

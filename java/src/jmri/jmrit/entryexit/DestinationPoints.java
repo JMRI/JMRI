@@ -862,9 +862,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         src.getStart().getBlock().goingInactive();
                     }
                 } catch (java.lang.NullPointerException e) {
-                    log.error("error in clear route A {}", e);  // NOI18N
+                    log.error("error in clear route A", e);  // NOI18N
                 } catch (JmriException e) {
-                    log.error("error in clear route A {}", e);  // NOI18N
+                    log.error("error in clear route A", e);  // NOI18N
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("{}  Going to clear routeDetails down {}", getUserName(), routeDetails.size());  // NOI18N

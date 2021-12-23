@@ -128,7 +128,7 @@ public class PortalIconXml extends PositionableLabelXml {
             try {
                 scale = a.getDoubleValue();
             } catch (org.jdom2.DataConversionException dce) {
-                log.error("{} can't convert scale {}", l.getNameString(), dce);
+                log.error("{} can't convert scale", l.getNameString(), dce);
             }
         }
         l.setScale(scale);

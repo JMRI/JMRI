@@ -55,7 +55,7 @@ public class SerialDriverAdapter extends SerialPortController {
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et);
+                log.info("failed to set serial timeout", et);
             }
 
             // get and save stream

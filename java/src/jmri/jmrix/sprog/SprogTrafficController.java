@@ -274,7 +274,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         try {
             sendQueue.add(new MessageTuple(m, replyTo));
         } catch (Exception e) {
-            log.error("Could not add message to queue {}", e);
+            log.error("Could not add message to queue", e);
         }
     }
 
@@ -453,7 +453,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 reply.setElement(i, char1);
 
             } catch (Exception e) {
-                log.warn("Exception in DATA_AVAILABLE state: {}", e);
+                log.warn("Exception in DATA_AVAILABLE state", e);
             }
             if (endReply(reply)) {
                 sendreply();

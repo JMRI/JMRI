@@ -221,7 +221,7 @@ public final class TreeModel extends DefaultTreeModel {
             try {
                 cNode = (UsbNode) insertNode(cNode, dRoot);
             } catch (IllegalArgumentException e) {
-                log.error("insertNode({}, {}) Exception {}", cNode, dRoot, e);
+                log.error("insertNode({}, {})", cNode, dRoot, e);
             }
             // Device (component) node
             String dname = component.getName() + " [" + component.getIdentifier().toString() + "]";
@@ -229,7 +229,7 @@ public final class TreeModel extends DefaultTreeModel {
             try {
                 dNode = (UsbNode) insertNode(dNode, cNode);
             } catch (IllegalArgumentException e) {
-                log.error("insertNode({}, {}) Exception {}", dNode, cNode, e);
+                log.error("insertNode({}, {})", dNode, cNode, e);
             }
 
             dNode.setValue(value);
@@ -265,7 +265,7 @@ public final class TreeModel extends DefaultTreeModel {
             } else {
                 log.error("Encountered Throwable while getting controllers", ex);
             }
-            
+
             // could not load some component(s)
             ca = null;
             return false;

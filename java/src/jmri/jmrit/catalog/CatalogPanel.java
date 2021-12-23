@@ -183,7 +183,7 @@ public class CatalogPanel extends JPanel {
                 _previewLabel.setText(setIcons());
             } catch (OutOfMemoryError oome) {
                 resetPanel();
-                log.debug("setIcons threw OutOfMemoryError {}", oome);
+                log.debug("setIcons threw OutOfMemoryError", oome);
             }
         } else {
             _previewLabel.setText(" ");

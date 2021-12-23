@@ -1685,7 +1685,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                             LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)))
                             + " ";
                     if(log.isDebugEnabled()) {
-                        log.debug("LOCO_SPEED_27 {}", LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)), text);
+                        log.debug("LOCO_SPEED_27 {} {}", LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)), text);
                         // address printed as: "1234" = OK
                         // address printed as: "1,234" = WRONG
                     }

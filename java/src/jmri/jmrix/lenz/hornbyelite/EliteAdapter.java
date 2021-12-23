@@ -56,7 +56,7 @@ public class EliteAdapter extends XNetSerialPortController {
                 log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: {}",et);
+                log.info("failed to set serial timeout",et);
             }
 
             // get and save stream

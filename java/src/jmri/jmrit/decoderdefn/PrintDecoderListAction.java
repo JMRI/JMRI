@@ -89,7 +89,7 @@ public class PrintDecoderListAction extends AbstractAction {
             String s = "\n                       " + d.getModel();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: {}", e);
+            log.error("Error printing", e);
         }
     }
 
@@ -98,7 +98,7 @@ public class PrintDecoderListAction extends AbstractAction {
             String s = "\n\n" + d.getMfg();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: {}", e);
+            log.error("Error printing", e);
         }
     }
 

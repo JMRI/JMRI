@@ -58,7 +58,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private final SpeedUtil _speedUtil;
     private OBlock _synchBlock = null;
     private Thread _checker = null;
-    
+
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -129,7 +129,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         wait(cmdWaitTime);
                     }
                 } catch (InterruptedException ie) {
-                    log.debug("InterruptedException during time wait {}", ie);
+                    log.debug("InterruptedException during time wait", ie);
                     _warrant.debugInfo();
                     Thread.currentThread().interrupt();
                 } catch (java.lang.IllegalArgumentException iae) {
@@ -1161,7 +1161,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     try {
                         _rampLockObject.wait(); // wait until notified by rampSpeedTo() calls quit()
                     } catch (InterruptedException ie) {
-                        log.debug("As expected {}", ie);
+                        log.debug("As expected", ie);
                     }
                 }
                 ready = false;

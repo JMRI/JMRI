@@ -474,7 +474,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         try {
             setAddress(256);
         } catch (Exception e) {
-            log.debug("{} {}", Bundle.getMessage("ERROR_WRITEALL_ABORTED"), e);
+            log.debug("{}", Bundle.getMessage("ERROR_WRITEALL_ABORTED"), e);
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
             status.setText(" "); // NOI18N
@@ -515,7 +515,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             setAddress(256);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
-                log.debug("{} {}", Bundle.getMessage("ERROR_WRITEONE_ABORTED"), e);
+                log.debug("{}", Bundle.getMessage("ERROR_WRITEONE_ABORTED"), e);
             }
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);

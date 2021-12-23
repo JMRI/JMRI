@@ -125,7 +125,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     public InternalMeterManager getMeterManager() {
         InternalMeterManager meterManager = (InternalMeterManager) classObjectMap.get(MeterManager.class);
         if (meterManager == null) {
-            log.debug("Create InternalMeterManager by request", getSystemPrefix());
+            log.debug("Create InternalMeterManager by request {}", getSystemPrefix());
             meterManager = new InternalMeterManager(this);
             // special due to ProxyManager support
             InstanceManager.setMeterManager(meterManager);
@@ -136,7 +136,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     public InternalStringIOManager getStringIOManager() {
         InternalStringIOManager stringIOManager = (InternalStringIOManager) classObjectMap.get(StringIOManager.class);
         if (stringIOManager == null) {
-            log.debug("Create InternalStringIOManager by request", getSystemPrefix());
+            log.debug("Create InternalStringIOManager by request {}", getSystemPrefix());
             stringIOManager = new InternalStringIOManager(this);
             // special due to ProxyManager support
             InstanceManager.setStringIOManager(stringIOManager);

@@ -101,7 +101,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
             log.warn("signalSpeeds file ({}) doesn't exist in XmlFile search path.", path);
             throw new IllegalArgumentException("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");
         } catch (org.jdom2.JDOMException | java.io.IOException e) {
-            log.error("error reading file \"{}\" due to: {}", path, e);
+            log.error("error reading file \"{}\" due to", path, e);
         }
     }
 
