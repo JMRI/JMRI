@@ -321,6 +321,11 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
 - Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
+##### OpenIDE Utilities
+- org-openide-util-RELEASE126.jar
+- org-openide-util-lookup-RELEASE126.jar
+- Downloaded from Maven Central 2021-12-21
+
 ##### PlantUML
 - plantuml.jar
     was from plantuml.org, now from https://github.com/plantuml/plantuml.git

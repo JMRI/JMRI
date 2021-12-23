@@ -187,8 +187,8 @@
         <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
-        <pathelement location="${libdir}/org-openide-util-RELEASE113.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE126.jar"/>
+        <pathelement location="${libdir}/org-openide-util-RELEASE126.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
         <pathelement location="${libdir}/batik-transcoder-1.14.jar"/>
         <pathelement location="${libdir}/batik-svg-dom-1.14.jar"/>
