@@ -98,9 +98,6 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
 
     @After
     public void tearDown() {
-        // Java 11 integration temporary - clear messages to get JUnit 5 traceback
-        jmri.util.JUnitAppender.clearBacklog(org.apache.log4j.Level.ERROR);  // REMOVE THIS!!!
-
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
