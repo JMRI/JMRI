@@ -533,10 +533,6 @@ public class DefaultConditional extends AbstractNamedBean
      * Only get here if a change in state has occurred when calculating this
      * Conditional
      */
-//    @SuppressWarnings({"deprecation", "fallthrough"})
-//    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
-//    // it's unfortunate that this is such a huge method, because these annotations
-//    // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {
         if (log.isTraceEnabled()) {
             log.trace("takeActionIfNeeded starts for {}", getSystemName());  // NOI18N
