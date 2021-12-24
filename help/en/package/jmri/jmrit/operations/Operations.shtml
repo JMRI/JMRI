@@ -3369,8 +3369,7 @@
       final sort by clicking on one of the column headings.
       <h3>Add, Find, Save Buttons</h3>
       There are three buttons located at the bottom of the Cars window. The "Add" button allows you
-      to add a car to your roster. The "Save" button stores the cars roster to a file. It also
-      saves the Cars window position and size, and any changes you made to the table widths. The
+      to add a car to your roster. The "Save" button stores the cars roster to a file. The
       "Find" button and the adjacent text window can be used to find a car by its road number. You
       can use the wild card "*" when entering a car number. For example if you want to find all
       cars with numbers that ended with 345, enter *345, and press find. Each time you press find,
