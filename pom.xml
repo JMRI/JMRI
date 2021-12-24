@@ -24,7 +24,7 @@
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.28</openlcb.version>
-        <netbeans.version>RELEASE113</netbeans.version>
+        <netbeans.version>RELEASE126</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
