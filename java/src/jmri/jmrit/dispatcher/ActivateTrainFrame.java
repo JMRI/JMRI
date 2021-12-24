@@ -1142,9 +1142,9 @@ public class ActivateTrainFrame extends JmriJFrame {
                     trainInfoToDialog(info);
                 }
             } catch (java.io.IOException ioe) {
-                log.error("IO Exception when reading train info file {}", ioe);
+                log.error("IO Exception when reading train info file", ioe);
             } catch (org.jdom2.JDOMException jde) {
-                log.error("JDOM Exception when reading train info file {}", jde);
+                log.error("JDOM Exception when reading train info file", jde);
             }
         }
         handleDelayStartClick(null);

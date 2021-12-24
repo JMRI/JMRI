@@ -58,7 +58,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private final SpeedUtil _speedUtil;
     private OBlock _synchBlock = null;
     private Thread _checker = null;
-    
+
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -82,7 +82,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             while (_idxSkipToSpeedCommand > _idxCurrentCommand) {
                 if (log.isDebugEnabled()) {
                     ThrottleSetting ts = _commands.get(_idxCurrentCommand);
-                    log.debug("{}: Skip Cmd #{}: {} Warrant {}", _warrant.getDisplayName(), _idxCurrentCommand+1, ts);
+                    log.debug("{}: Skip Cmd #{}: {} Warrant",
+                        _warrant.getDisplayName(), _idxCurrentCommand+1, ts);
                     // Note: command indexes biased from 0 to 1 to match Warrant display of commands.
                 }
                 _idxCurrentCommand++;
@@ -129,11 +130,11 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         wait(cmdWaitTime);
                     }
                 } catch (InterruptedException ie) {
-                    log.debug("InterruptedException during time wait {}", ie);
+                    log.debug("InterruptedException during time wait", ie);
                     _warrant.debugInfo();
                     Thread.currentThread().interrupt();
                 } catch (java.lang.IllegalArgumentException iae) {
-                    log.error("At time wait {}", iae);
+                    log.error("At time wait", iae);
                 }
             }
             if (_abort) {
@@ -168,7 +169,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         try {
                             wait(waittime);
                         } catch (InterruptedException ie) {
-                            log.debug("InterruptedException during _waitForSync {}", ie);
+                            log.debug("InterruptedException during _waitForSync", ie);
                             _warrant.debugInfo();
                             Thread.currentThread().interrupt();
                         }
@@ -215,7 +216,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 _warrant.getBlockAt(cmdBlockIdx).getDisplayName(), _idxCurrentCommand+1);
                         wait();
                     } catch (InterruptedException ie) {
-                        log.debug("InterruptedException during _atClear {}", ie);
+                        log.debug("InterruptedException during _atClear", ie);
                         _warrant.debugInfo();
                         Thread.currentThread().interrupt();
                     }
@@ -240,7 +241,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 _warrant.getBlockAt(cmdBlockIdx).getDisplayName());
                         wait();
                     } catch (InterruptedException ie) {
-                        log.debug("InterruptedException during _atHalt {}", ie);
+                        log.debug("InterruptedException during _atHalt", ie);
                         _warrant.debugInfo();
                         Thread.currentThread().interrupt();
                     }
@@ -711,7 +712,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             setWaitforClear(true);
         }
         if (log.isDebugEnabled())
-            log.debug("{}: setStop({}) speed={} scriptSpeed={}", _warrant.getDisplayName(), speed, _normalSpeed);
+            log.debug("setStop({}) speed={} scriptSpeed={}",
+                    _warrant.getDisplayName(), speed, _normalSpeed);
     }
 
     public int getRunState() {
@@ -1161,7 +1163,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     try {
                         _rampLockObject.wait(); // wait until notified by rampSpeedTo() calls quit()
                     } catch (InterruptedException ie) {
-                        log.debug("As expected {}", ie);
+                        log.debug("As expected", ie);
                     }
                 }
                 ready = false;

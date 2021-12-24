@@ -512,7 +512,7 @@ public class DecoderFile extends XmlFile {
                     continue;
                 }
             } catch (NumberFormatException | DataConversionException ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception: {}", e.getAttribute("item"), ex);
+                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception", e.getAttribute("item"), ex);
             }
             // load each row
             variableModel.setRow(nextCvStoreIndex++, e, _element == null ? null : this);

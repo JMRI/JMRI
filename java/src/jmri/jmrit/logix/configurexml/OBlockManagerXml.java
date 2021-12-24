@@ -309,7 +309,7 @@ public class OBlockManagerXml // extends XmlFile
                     block.setReporter(rep);
                 }
             } catch (Exception ex) {
-                log.error("No Reporter named \"{}\" found. threw exception: {}", name,  ex);
+                log.error("No Reporter named \"{}\" found. threw exception", name,  ex);
             }
             if (reporter.getAttribute("reportCurrent") != null) {
                 block.setReportingCurrent(reporter.getAttribute("reportCurrent").getValue().equals("true"));

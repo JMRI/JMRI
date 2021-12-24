@@ -127,7 +127,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         try {
             r.setBlockSpeed("Global"); // NOI18N
         } catch (JmriException ex) {
-            log.error("Unexpected exception", ex.getMessage());
+            log.error("Unexpected exception {}", ex.getMessage());
         }
         return r;
     }

@@ -1294,7 +1294,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: {}", ex);
+            log.error("DataConverstionException in setXml", ex);
             // in this case, recover by displaying the speed slider.
             this.setSpeedController(SLIDERDISPLAY);
         }

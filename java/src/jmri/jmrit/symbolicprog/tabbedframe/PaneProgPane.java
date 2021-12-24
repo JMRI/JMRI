@@ -2794,7 +2794,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // handle special cases
         } catch (IOException e) {
-            log.warn("error during printing: {}", e);
+            log.warn("error during printing", e);
         }
 
     }

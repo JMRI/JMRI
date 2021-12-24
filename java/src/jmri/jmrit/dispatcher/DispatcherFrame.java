@@ -122,10 +122,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 try {
                     info = tif.readTrainInfo(names[i]);
                 } catch (java.io.IOException ioe) {
-                    log.error("IO Exception when reading train info file {}: {}", names[i], ioe);
+                    log.error("IO Exception when reading train info file {}", names[i], ioe);
                     continue;
                 } catch (org.jdom2.JDOMException jde) {
-                    log.error("JDOM Exception when reading train info file {}: {}", names[i], jde);
+                    log.error("JDOM Exception when reading train info file {}", names[i], jde);
                     continue;
                 }
                 if (info != null && info.getLoadAtStartup()) {
@@ -185,10 +185,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             try {
                 info = tif.readTrainInfo(traininfoFileName);
             } catch (java.io.IOException ioe) {
-                log.error("IO Exception when reading train info file {}: {}", traininfoFileName, ioe);
+                log.error("IO Exception when reading train info file {}", traininfoFileName, ioe);
                 return -2;
             } catch (org.jdom2.JDOMException jde) {
-                log.error("JDOM Exception when reading train info file {}: {}", traininfoFileName, jde);
+                log.error("JDOM Exception when reading train info file {}", traininfoFileName, jde);
                 return -3;
             }
             return loadTrainFromTrainInfo(info, overRideType, overRideValue);

@@ -1109,7 +1109,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             });
         } catch (ProgrammerException e) {
-            log.warn("Exception during writeServiceModeCV: {}", e);
+            log.warn("Exception during writeServiceModeCV", e);
             return false;
         }
         // wait for the result
@@ -1146,7 +1146,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             });
         } catch (ProgrammerException e) {
-            log.warn("Exception during writeServiceModeCV: {}", e);
+            log.warn("Exception during writeServiceModeCV", e);
             return -1;
         }
         // wait for the result
@@ -1181,7 +1181,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             });
         } catch (ProgrammerException e) {
-            log.warn("Exception during writeServiceModeCV: {}", e);
+            log.warn("Exception during writeServiceModeCV", e);
             return false;
         }
         // wait for the result

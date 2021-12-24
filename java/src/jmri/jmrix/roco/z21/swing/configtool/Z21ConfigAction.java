@@ -42,7 +42,7 @@ public class Z21ConfigAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("Z21ConfigAction starting Z21ConfigFrame: Exception: {}",ex);
+            log.warn("Z21ConfigAction starting Z21ConfigFrame: ",ex);
         }
         f.setVisible(true);
 

@@ -1357,7 +1357,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             mRootElement = df.rootFromName(fullFilename);
         } catch (JDOMException
                 | IOException e) {
-            log.error("Exception while loading loco XML file: {} exception: {}", getFileName(), e);
+            log.error("Exception while loading loco XML file: {} exception", getFileName(), e);
         }
 
         try {
@@ -1739,7 +1739,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 w.write(newLine, 0, 1);
             }
         } catch (IOException e) {
-            log.error("Error printing RosterEntry: {}", e);
+            log.error("Error printing RosterEntry", e);
         }
     }
 
@@ -1767,7 +1767,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 k++;
             }
         } catch (IOException e) {
-            log.error("Error printing RosterEntry: {}", e);
+            log.error("Error printing RosterEntry", e);
         }
         return k;
     }

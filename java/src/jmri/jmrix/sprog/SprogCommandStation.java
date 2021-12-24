@@ -528,7 +528,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         try {
                             powerMgr.setPower(PowerManager.OFF);
                         } catch (JmriException ex) {
-                            log.error("Exception turning power off {}", ex);
+                            log.error("Exception turning power off", ex);
                         }
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
                             Bundle.getMessage("SprogCSTitle"), JOptionPane.ERROR_MESSAGE);

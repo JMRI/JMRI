@@ -55,7 +55,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
             try {
                 p.setPower(PowerManager.ON);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power on {}", e);
+                log.error("Exception trying to turn power on", e);
                 try {
                     sendErrorStatus();
                 } catch (IOException ie) {

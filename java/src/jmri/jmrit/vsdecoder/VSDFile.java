@@ -413,7 +413,7 @@ public class VSDFile extends ZipFile {
         String s = el.getChildText(name);
         if ((s != null) && (getFile(s) == null)) {
             missedFileName = s;
-            log.error("File {} for Element {} not found", s, name, el.getAttributeValue("name"));
+            log.error("File {} for Element {} not found {}", s, name, el.getAttributeValue("name"));
             return false;
         }
         return true;

@@ -49,10 +49,10 @@ public class ScaleConfigXML {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: {}", ex);  // NOI18N
+            log.error("File not found when writing", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("IO Exception when writing: {}", ex);  // NOI18N
+            log.error("IO Exception when writing", ex);  // NOI18N
             return false;
         }
 

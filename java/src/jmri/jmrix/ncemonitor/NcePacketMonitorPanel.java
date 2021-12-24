@@ -121,7 +121,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n{}", ex);
+                    log.error("Error while opening port.  Did you select the right one?", ex);
                 }
             }
         });
@@ -451,10 +451,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 ostream.write(endbyte);
             }
         } catch (IOException e) {
-            log.error("Exception on output: {}", e);
+            log.error("Exception on output", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: {}", e);
+            log.error("Interrupted output", e);
         }
     }
 
@@ -591,7 +591,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port {} in use, cannot open", p);
+        log.error("Port {} in use, cannot open", port, p);
     }
 
     DataInputStream serialStream = null;

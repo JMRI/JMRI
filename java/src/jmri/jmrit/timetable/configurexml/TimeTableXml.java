@@ -134,10 +134,10 @@ public class TimeTableXml {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: {}", ex);  // NOI18N
+            log.error("File not found when writing", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("IO Exception when writing: {}", ex);  // NOI18N
+            log.error("IO Exception when writing", ex);  // NOI18N
             return false;
         }
 
@@ -351,8 +351,10 @@ public class TimeTableXml {
                 int routeDuration = (route_duration == null) ? 0 : Integer.parseInt(route_duration.getValue());
                 Element train_notes = train.getChild("train_notes");  // NOI18N
                 String trainNotes = (train_notes == null) ? "" : train_notes.getValue();
-                log.debug("      Train: {} - {} - {} - {} - {} - {} - {} - {} - {}",  // NOI18N
-                        trainId, scheduleId, typeId, trainName, trainDesc, defaultSpeed, startTime, throttle, routeDuration, trainNotes);
+                log.debug("      Train: {} - {} - {} - {} - {} - {} - {} - {} - {} - {}",  // NOI18N
+                        trainId, scheduleId, typeId, trainName,
+                        trainDesc, defaultSpeed, startTime, throttle,
+                        routeDuration, trainNotes);
 
                 // Validate scheduleId
                 if (!checkScheduleIds.contains(scheduleId)) {
@@ -419,10 +421,10 @@ public class TimeTableXml {
                 dataMgr.addStop(stopId, newStop);
             }
         } catch (JDOMException ex) {
-            log.error("File invalid: {}", ex);  // NOI18N
+            log.error("File invalid", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("Error reading file: {}", ex);  // NOI18N
+            log.error("Error reading file", ex);  // NOI18N
             return false;
         }
 

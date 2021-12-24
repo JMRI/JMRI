@@ -68,7 +68,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                                 text.append(" Group Broadcast Cleanup NAK");
                                 break;
                             default:
-                                log.warn("Unhandled msg type: {}, getElement(5) & Constants.FLAG_MASK_MSGTYPE");
+                                log.warn("Unhandled msg type: {}", getElement(5) & Constants.FLAG_MASK_MSGTYPE);
                                 break;
                         }
                         text.append(" message,");

@@ -163,7 +163,7 @@ public class LnTurnout extends AbstractTurnout {
                     try {
                         sendSetOffMessage(state);
                     } catch (Exception e) {
-                        log.error("Exception occurred while sending delayed off to turnout: {}", e);
+                        log.error("Exception occurred while sending delayed off to turnout", e);
                     }
                 }
             };
@@ -267,7 +267,7 @@ public class LnTurnout extends AbstractTurnout {
                 newKnownState(state);
                 break;
             default:
-                break;                    
+                break;
         }
 
     }
@@ -277,28 +277,28 @@ public class LnTurnout extends AbstractTurnout {
             newKnownState(CLOSED);
         }
     }
-    
+
     private void setKnownStateFromOutputStateThrownReport() {
         newCommandedState(THROWN);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(THROWN);
         }
     }
-    
+
     private void setKnownStateFromOutputStateOddReport() {
         newCommandedState(CLOSED + THROWN);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(CLOSED + THROWN);
         }
     }
-    
+
     private void setKnownStateFromOutputStateReallyOddReport() {
         newCommandedState(0);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(0);
         }
     }
-    
+
     private void computeFromOutputStateReport(int sw2) {
         // LnConstants.OPC_SW_REP_INPUTS not set, these report outputs
         // sort out states
@@ -331,7 +331,7 @@ public class LnTurnout extends AbstractTurnout {
             computeFeedbackFromSwitchOnReport();
         }
     }
-    
+
     private void computeFeedbackFromSwitchOffReport() {
         // switch input closed (off)
         if (getFeedbackMode() == EXACT) {

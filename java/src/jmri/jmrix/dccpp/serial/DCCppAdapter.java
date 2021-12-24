@@ -62,7 +62,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et);
+                log.info("failed to set serial timeout", et);
             }
 
             // get and save stream

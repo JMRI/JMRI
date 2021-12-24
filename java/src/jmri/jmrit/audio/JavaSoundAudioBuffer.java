@@ -145,10 +145,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         try {
             audioInputStream = AudioSystem.getAudioInputStream(stream);
         } catch (UnsupportedAudioFileException ex) {
-            log.error("Unsupported audio file format when loading buffer:{}", ex);
+            log.error("Unsupported audio file format when loading buffer", ex);
             return false;
         } catch (IOException ex) {
-            log.error("Error loading buffer:{}", ex);
+            log.error("Error loading buffer", ex);
             return false;
         }
 
@@ -174,7 +174,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             log.error("Unsupported audio file format when loading buffer", ex);
             return false;
         } catch (IOException ex) {
-            log.error("Error loading buffer:{}", ex);
+            log.error("Error loading buffer", ex);
             return false;
         }
 
@@ -217,7 +217,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
                     totalBytesRead += bytesRead;
                 }
             } catch (IOException ex) {
-                log.error("Error when reading JavaSoundAudioBuffer ({}) {}", this.getSystemName(), ex);
+                log.error("Error when reading JavaSoundAudioBuffer ({})", this.getSystemName(), ex);
                 return false;
             }
 

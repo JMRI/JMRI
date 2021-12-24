@@ -985,7 +985,7 @@ public class TableFrames implements InternalFrameListener {
             try {
                 frame.setIcon(false);
             } catch (PropertyVetoException pve) {
-                log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon {}", blockSystemName, pve);
+                log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon", blockSystemName, pve);
             }
         }
         frame.moveToFront();

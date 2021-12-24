@@ -469,7 +469,7 @@ public class FunctionButton extends JToggleButton {
             }
             updateLnF();
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: {}", ex);
+            log.error("DataConverstionException in setXml", ex);
         }
     }
 

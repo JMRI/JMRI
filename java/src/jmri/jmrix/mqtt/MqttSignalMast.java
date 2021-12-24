@@ -37,7 +37,10 @@ public class MqttSignalMast extends AbstractSignalMast {
     }
 
     @Nonnull
-    public static String sendTopicPrefix = "track/signalmast/"; // for constructing topic; public for script access
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
+            justification = "Public accessibility for scripts that update the prefixes")
+    public static String sendTopicPrefix = "track/signalmast/"; // for constructing topic
+
     public static void setSendTopicPrefix(@Nonnull String prefix) {
         sendTopicPrefix = prefix;
         log.info("sendTopicPrefix set to {}", prefix);
