@@ -47,7 +47,7 @@ public class DefaultConditionalExecute {
                 }
             }
             t.setCommandedState(act);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
     
@@ -69,7 +69,7 @@ public class DefaultConditionalExecute {
             timer.setInitialDelay(value);
             action.setTimer(timer);
             action.startTimer();
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         } else {
             log.warn("timer already active on request to start delayed turnout action - {}", devName);
         }
@@ -89,7 +89,7 @@ public class DefaultConditionalExecute {
             }
 
             c.cancelTurnoutTimer(devName);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
     
@@ -110,7 +110,7 @@ public class DefaultConditionalExecute {
             } else if (act == Turnout.UNLOCKED) {
                 tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
     
@@ -119,7 +119,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
             h.setAppearance(action.getActionData());
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -128,7 +128,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
             h.setHeld(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -137,7 +137,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
             h.setHeld(false);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -146,7 +146,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
             h.setLit(false);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -155,7 +155,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
             h.setLit(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -164,7 +164,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Route name in action - " + action.getDeviceName());  // NOI18N
         } else {
             r.setRoute();
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -183,7 +183,7 @@ public class DefaultConditionalExecute {
             }
             try {
                 sn.setKnownState(act);
-                actionCount.set(actionCount.get() + 1);
+                increaseCounter(actionCount);
             } catch (JmriException e) {
                 log.warn("Exception setting Sensor {} in action", devName);  // NOI18N
             }
@@ -207,7 +207,7 @@ public class DefaultConditionalExecute {
             timer.setInitialDelay(delay);
             action.setTimer(timer);
             action.startTimer();
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         } else {
             log.warn("timer already active on request to start delayed sensor action - {}", devName);
         }
@@ -226,7 +226,7 @@ public class DefaultConditionalExecute {
             }
 
             c.cancelSensorTimer(devName);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -244,7 +244,7 @@ public class DefaultConditionalExecute {
                 }
             }
             lgt.setState(act);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -261,7 +261,7 @@ public class DefaultConditionalExecute {
                 } else {
                     lgt.setState(intensity > 0.5 ? Light.ON : Light.OFF);
                 }
-                actionCount.set(actionCount.get() + 1);
+                increaseCounter(actionCount);
             } catch (IllegalArgumentException e) {
                 errorList.add("Exception in set light intensity action - " + action.getDeviceName());  // NOI18N
             }
@@ -279,7 +279,7 @@ public class DefaultConditionalExecute {
                 if (lgt instanceof VariableLight) {
                     ((VariableLight)lgt).setTransitionTime(time );
                 }
-                actionCount.set(actionCount.get() + 1);
+                increaseCounter(actionCount);
             } catch (IllegalArgumentException e) {
                 errorList.add("Exception in set light transition time action - " + action.getDeviceName());  // NOI18N
             }
@@ -291,7 +291,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
         } else {
             m.setValue(action.getActionString());
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -303,7 +303,7 @@ public class DefaultConditionalExecute {
                 errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
             } else {
                 mTo.setValue(mFrom.getValue());
-                actionCount.set(actionCount.get() + 1);
+                increaseCounter(actionCount);
             }
         }
     }
@@ -314,7 +314,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
         } else {
             x.setEnabled(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -324,7 +324,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
         } else {
             x.setEnabled(false);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -342,14 +342,14 @@ public class DefaultConditionalExecute {
             if (sound != null) {
                 sound.play();
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
     void runScript(@Nonnull ConditionalAction action, String actionStr, @Nonnull Reference<Integer> actionCount) {
         if (!(actionStr.equals(""))) {
             JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(actionStr)));
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -360,17 +360,17 @@ public class DefaultConditionalExecute {
         date.setMinutes(action.getActionData() - ((action.getActionData() / 60) * 60));
         date.setSeconds(0);
         InstanceManager.getDefault(jmri.Timebase.class).userSetTime(date);
-        actionCount.set(actionCount.get() + 1);
+        increaseCounter(actionCount);
     }
 
     void startFastClock(@Nonnull Reference<Integer> actionCount) {
         InstanceManager.getDefault(jmri.Timebase.class).setRun(true);
-        actionCount.set(actionCount.get() + 1);
+        increaseCounter(actionCount);
     }
 
     void stopFastClock(@Nonnull Reference<Integer> actionCount) {
         InstanceManager.getDefault(jmri.Timebase.class).setRun(false);
-        actionCount.set(actionCount.get() + 1);
+        increaseCounter(actionCount);
     }
 
     void controlAudio(@Nonnull ConditionalAction action, String devName) {
@@ -442,7 +442,7 @@ public class DefaultConditionalExecute {
             } else {
                 log.error("Error getting default ScriptEngine");
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -454,7 +454,7 @@ public class DefaultConditionalExecute {
             if (msg != null) {
                 log.info("Warrant {} - {}", action.getDeviceName(), msg);  // NOI18N
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -463,7 +463,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
             w.deAllocate();
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -475,7 +475,7 @@ public class DefaultConditionalExecute {
             if (msg != null) {
                 log.info("Warrant {} unable to Set Route - {}", action.getDeviceName(), msg);  // NOI18N
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -486,7 +486,7 @@ public class DefaultConditionalExecute {
             if(!w.getSpeedUtil().setAddress(actionStr)) {
                 errorList.add("invalid train ID in action - " + action.getDeviceName());  // NOI18N
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -495,7 +495,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
             w.setTrainName(actionStr);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -509,7 +509,7 @@ public class DefaultConditionalExecute {
                 errorList.add("runAutoTrain error - " + err);  // NOI18N
                 w.stopWarrant(true, true);
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -524,7 +524,7 @@ public class DefaultConditionalExecute {
             if (err != null) {
                 errorList.add("runManualTrain error - " + err);  // NOI18N
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -535,7 +535,7 @@ public class DefaultConditionalExecute {
             if (!w.controlRunTrain(action.getActionData())) {
                 log.info("Train {} not running  - {}", w.getSpeedUtil().getRosterId(), devName);  // NOI18N
             }
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -544,7 +544,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
         } else {
             f.setAspect(actionStr);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -553,7 +553,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
         } else {
             f.setHeld(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -562,7 +562,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
         } else {
             f.setHeld(false);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -571,7 +571,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
             f.setLit(false);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -580,7 +580,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
             f.setLit(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -589,7 +589,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
             b.setValue(actionStr);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -598,7 +598,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
             b.setError(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -615,7 +615,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
             b.deAllocate(null);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -624,7 +624,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
             b.setOutOfService(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -633,7 +633,7 @@ public class DefaultConditionalExecute {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
             b.setOutOfService(false);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -643,7 +643,7 @@ public class DefaultConditionalExecute {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
         } else {
             dp.setEnabled(true);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -653,7 +653,7 @@ public class DefaultConditionalExecute {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
         } else {
             dp.setEnabled(false);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
     }
 
@@ -664,8 +664,14 @@ public class DefaultConditionalExecute {
         } else {
             jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
                     setSingleSegmentRoute(devName);
-            actionCount.set(actionCount.get() + 1);
+            increaseCounter(actionCount);
         }
+    }
+
+    private void increaseCounter(@Nonnull Reference<Integer> actionCount) {
+        // actionCount.get() is never null, but Spotbugs doesn't know that
+        Integer value = actionCount.get();
+        actionCount.set(value != null ? value+1 : 0);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalExecute.class);
