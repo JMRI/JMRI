@@ -7,7 +7,7 @@ package apps;
  *       Instead, when past its useful point, just comment out the body of the
  *       class so as to leave the code examples present.
  * <p>
- * Tests Nonnull, Nullable and CheckForNull from 
+ * Tests Nonnull, Nullable and CheckForNull from
  * javax.annotation annotations.
  * <p>
  * This has no main() because it's not expected to run:  Many methods will certainly
@@ -21,12 +21,12 @@ package apps;
  * <p>
  * The "ja" prefix means that javax annotations are used. "no" means un-annotated.
  * <p>
- * A previous version (Git SHA 4049c5d690) also had "fb" as a prefix 
+ * A previous version (Git SHA 4049c5d690) also had "fb" as a prefix
  * for using the edu.umd.cs.findbugs.annotations form of annotations.
  * There were found to work exactly the same as the (preferred) javax.annotation forms,
  * including when intermixed with each other.
  * <p>
- * The comments are the warnings thrown (and not thrown) by SpotBugs 3.1.9
+ * The comments are the warnings thrown (and not thrown) by SpotBugs 4.52
  * <p>
  * Summary: <ul>
  * <li>Parameter declaration handling:
@@ -51,9 +51,9 @@ package apps;
  *   <li>Return values without annotation are also not flagged when dereferenced.
  *   </ul>
  * </ul>
- * Bottom line:  When flagging return values, use @CheckForNull.  
+ * Bottom line:  When flagging return values, use @CheckForNull.
  * @see apps.CheckerFrameworkCheck
- * @author Bob Jacobsen 2016, 2019
+ * @author Bob Jacobsen 2016, 2019, 2021
  */
 public class FindBugsCheck {
 
@@ -61,10 +61,26 @@ public class FindBugsCheck {
         System.out.println("test "+this.getClass());
     }
 
- /* //  comment out the rest of the file to avoid SpotBugs counting these deliberate warnings
+ //  comment out the rest of the file to avoid SpotBugs counting these deliberate warnings
 
-    // Test no annotations 
-    
+/*
+
+    // Test runtime null checks
+    public void checkNullWithAssert(@javax.annotation.Nonnull FindBugsCheck param) {
+        assert param != null;
+        param.test();
+    }
+    public void checkNullWithObjects(@javax.annotation.Nonnull FindBugsCheck param) {
+        java.util.Objects.requireNonNull(param, "checking parameter for non-null");
+        param.test();
+    }
+    public void checkNullWithIf(@javax.annotation.Nonnull FindBugsCheck param) {
+        if (param == null) log.error("checking parameter for non-null");  // should be RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE: Redundant nullcheck of value known to be non-null
+        param.test();
+    }
+
+    // Test checking with no annotations
+
     public FindBugsCheck noAnnotationReturn() {
         return null;
     }
@@ -80,11 +96,11 @@ public class FindBugsCheck {
 
         noAnnotationParm(this);
         noAnnotationParm(null); // Null passed for non-null parameter NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS
-        
+
         noAnnotationParm(noAnnotationReturn()); // maybe should be flagged?
         p = noAnnotationReturn();
         noAnnotationParm(p);
-        
+
         noAnnotationParm(jaNonnullReturn());
         p = jaNonnullReturn();
         noAnnotationParm(p);
@@ -98,7 +114,7 @@ public class FindBugsCheck {
         noAnnotationParm(p);
     }
 
-    // Test Nonnull
+    // Test checking Nonnull annotations
 
     @javax.annotation.Nonnull public FindBugsCheck jaNonnullReturn() {
         return null; // may return null, but is declared @Nonnull NP_NONNULL_RETURN_VIOLATION
@@ -115,7 +131,7 @@ public class FindBugsCheck {
 
         jaNonNullParm(this);
         jaNonNullParm(null); // Null passed for non-null parameter NP_NONNULL_PARAM_VIOLATION
-        
+
         jaNonNullParm(noAnnotationReturn()); // should be flagged
         p = noAnnotationReturn();
         jaNonNullParm(p);
@@ -134,7 +150,7 @@ public class FindBugsCheck {
 
     }
 
-    // Test Nullable
+    // Test checking Nullable annotations
 
     @javax.annotation.Nullable public FindBugsCheck jaNullableReturn() {
         return null;
@@ -182,7 +198,7 @@ public class FindBugsCheck {
         FindBugsCheck p;
 
         jaCheckForNullReturn().test(); // Possible null pointer dereference NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
-        p = jaCheckForNullReturn(); 
+        p = jaCheckForNullReturn();
         if (p!=null) p.test();
 
         jaCheckForNullParm(this);
@@ -191,20 +207,22 @@ public class FindBugsCheck {
         jaCheckForNullParm(noAnnotationReturn());
         p = noAnnotationReturn();
         jaCheckForNullParm(p);
-        
+
         jaCheckForNullParm(jaNonnullReturn());
         p = jaNonnullReturn();
         jaCheckForNullParm(p);
-        
+
         jaCheckForNullParm(jaNullableReturn());
         p = jaNullableReturn();
         jaCheckForNullParm(p);
-        
+
         jaCheckForNullParm(jaCheckForNullReturn());
         p = jaCheckForNullReturn();
         jaCheckForNullParm(p);
     }
 
- */ // end of commenting out file
+*/
+ // end of commenting out file
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FindBugsCheck.class);
 }
