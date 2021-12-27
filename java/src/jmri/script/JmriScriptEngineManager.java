@@ -93,7 +93,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      */
     public JmriScriptEngineManager() {
         this.manager.getEngineFactories().stream().forEach(factory -> {
-            log.info("{} {} is provided by {} {}",
+            log.debug("{} {} is provided by {} {}",
                     factory.getLanguageName(),
                     factory.getLanguageVersion(),
                     factory.getEngineName(),
