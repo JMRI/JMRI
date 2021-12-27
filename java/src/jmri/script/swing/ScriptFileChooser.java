@@ -1,4 +1,4 @@
-package jmri.script;
+package jmri.script.swing;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class ScriptFileChooser extends JFileChooser {
         List<String> allExtensions = new ArrayList<>();
         HashMap<String, FileFilter> filters = new HashMap<>();
         List<String> filterNames = new ArrayList<>();
-        JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
+        jmri.script.JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
             List<String> extensions = factory.getExtensions();
             allExtensions.addAll(extensions);
             String name = this.fileForLanguage(factory.getLanguageName());

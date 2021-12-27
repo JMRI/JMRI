@@ -2,7 +2,7 @@ package jmri.util.startup;
 
 import javax.swing.JFileChooser;
 
-import jmri.script.ScriptFileChooser;
+import jmri.script.swing.ScriptFileChooser;
 
 import org.openide.util.lookup.ServiceProvider;
 
