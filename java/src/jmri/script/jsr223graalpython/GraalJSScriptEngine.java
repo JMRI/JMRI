@@ -82,7 +82,7 @@ import org.graalvm.polyglot.proxy.Proxy;
  */
 public final class GraalJSScriptEngine extends AbstractScriptEngine implements Compilable, Invocable, AutoCloseable {
 
-    private static final String ID = "js";
+    private static final String ID = "python";
     private static final String POLYGLOT_CONTEXT = "polyglot.context";
     private static final String OUT_SYMBOL = "$$internal.out$$";
     private static final String IN_SYMBOL = "$$internal.in$$";
@@ -453,16 +453,21 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
     }
 
     private Object eval(Source source, ScriptContext scriptContext) throws ScriptException {
+        log.debug("eval({},{}) called", source, scriptContext);
         GraalJSBindings engineBindings = getOrCreateGraalJSBindings(scriptContext);
         Context polyglotContext = engineBindings.getContext();
         updateDelegatingIOStreams(polyglotContext, scriptContext);
         try {
+            log.debug("   try evalCalled = {}", evalCalled);
             if (!evalCalled) {
                 jrunscriptInitWorkaround(source, polyglotContext);
             }
+            log.debug("    engineBindings");
             engineBindings.importGlobalBindings(scriptContext);
+            log.debug("    return polyglotContext");
             return polyglotContext.eval(source).as(Object.class);
         } catch (PolyglotException e) {
+            log.error("caught exception", e);
             throw toScriptException(e);
         } finally {
             evalCalled = true;

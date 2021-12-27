@@ -60,15 +60,16 @@ import org.openide.util.lookup.ServiceProvider;
 
 public final class GraalJSEngineFactory implements ScriptEngineFactory {
 
-    private static final String ENGINE_NAME = "Graal.js";
-    private static final String NAME = "javascript";
-    private static final String LANGUAGE = "ECMAScript";
-    private static final String LANGUAGE_VERSION = "ECMAScript 262 Edition 11";
+    private static final String ENGINE_NAME = "Graal.python";
+    private static final String NAME = "python";
+    private static final String LANGUAGE = "Python";
+    private static final String LANGUAGE_VERSION = "3";
 
-    private static final String[] NAMES = {"js", "JS", "JavaScript", "javascript", "ECMAScript", "ecmascript",
-                    "Graal.js", "graal.js", "Graal-js", "graal-js", "Graal.JS", "Graal-JS", "GraalJS", "GraalJSPolyglot"};
+    private static final String[] NAMES = {"py3", "Python", "python", "Python3", "python3",
+                    "Graal.python", "graal.python", "Graal-python", "graal-python",
+                    "Graal.Python", "Graal-Python", "GraalPython", "GraalPythonPolyglot"};
     private static final String[] MIME_TYPES = {"application/javascript", "application/ecmascript", "text/javascript", "text/ecmascript"};
-    private static final String[] EXTENSIONS = {"js", "mjs"};
+    private static final String[] EXTENSIONS = {"py3"};
 
     private static final String NASHORN_ENGINE_NAME = "Oracle Nashorn";
     private static final List<String> names;
@@ -240,7 +241,7 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
 
     @Override
     public String getProgram(final String... statements) {
-        log.debug("getEngineName() invoked");
+        log.trace("getEngineName() invoked");
         final StringBuilder sb = new StringBuilder();
 
         for (final String statement : statements) {

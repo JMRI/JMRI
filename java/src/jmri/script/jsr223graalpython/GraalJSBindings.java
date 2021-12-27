@@ -71,13 +71,13 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
     private ScriptContext engineScriptContext;
 
     GraalJSBindings(Context.Builder contextBuilder, ScriptContext scriptContext) {
-        log.debug("ctor(C.B, S) invoked");
+        log.trace("ctor(C.B, S) invoked");
         this.contextBuilder = contextBuilder;
         this.engineScriptContext = scriptContext;
     }
 
     GraalJSBindings(Context context, ScriptContext scriptContext) {
-        log.debug("ctor(C, S) invoked");
+        log.trace("ctor(C, S) invoked");
         this.context = context;
         initGlobal();
         this.engineScriptContext = scriptContext;
@@ -190,7 +190,7 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
         Bindings globalBindings = scriptContext.getBindings(ScriptContext.GLOBAL_SCOPE);
         if (globalBindings != null && !globalBindings.isEmpty() && this != globalBindings) {
             ProxyObject bindingsProxy = ProxyObject.fromMap(Collections.unmodifiableMap(globalBindings));
-            getContext().getBindings("js").getMember(SCRIPT_CONTEXT_GLOBAL_BINDINGS_IMPORT_FUNCTION_NAME).execute(bindingsProxy);
+            getContext().getBindings("python").getMember(SCRIPT_CONTEXT_GLOBAL_BINDINGS_IMPORT_FUNCTION_NAME).execute(bindingsProxy);
         }
     }
 
