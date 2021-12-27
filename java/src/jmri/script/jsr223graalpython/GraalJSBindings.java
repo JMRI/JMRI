@@ -71,11 +71,13 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
     private ScriptContext engineScriptContext;
 
     GraalJSBindings(Context.Builder contextBuilder, ScriptContext scriptContext) {
+        log.debug("ctor(C.B, S) invoked");
         this.contextBuilder = contextBuilder;
         this.engineScriptContext = scriptContext;
     }
 
     GraalJSBindings(Context context, ScriptContext scriptContext) {
+        log.debug("ctor(C, S) invoked");
         this.context = context;
         initGlobal();
         this.engineScriptContext = scriptContext;
@@ -196,4 +198,5 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
         engineScriptContext = scriptContext;
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GraalJSBindings.class);
 }

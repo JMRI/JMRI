@@ -113,11 +113,13 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
     private final Engine userDefinedEngine;
 
     public GraalJSEngineFactory() {
+        log.debug("ctor() invoked");
         this.defaultEngine = null; // lazy
         this.userDefinedEngine = null;
     }
 
     GraalJSEngineFactory(Engine engine) {
+        log.debug("ctor(Engine) invoked");
         this.userDefinedEngine = engine;
     }
 
@@ -129,6 +131,7 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
      * Returns the underlying polyglot engine.
      */
     public Engine getPolyglotEngine() {
+        log.debug("getPolyglotEngine() invoked");
         if (userDefinedEngine != null) {
             return userDefinedEngine;
         } else {
@@ -143,41 +146,49 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
 
     @Override
     public String getEngineName() {
+        log.debug("getEngineName() invoked, returns {}", ENGINE_NAME);
         return ENGINE_NAME;
     }
 
     @Override
     public String getEngineVersion() {
+        log.debug("getEngineVersion() invoked");
         return getPolyglotEngine().getVersion();
     }
 
     @Override
     public List<String> getExtensions() {
+        log.debug("getExtensions() invoked");
         return extensions;
     }
 
     @Override
     public List<String> getMimeTypes() {
+        log.debug("getMimeTypes() invoked");
         return mimeTypes;
     }
 
     @Override
     public List<String> getNames() {
+        log.debug("getNames() invoked");
         return names;
     }
 
     @Override
     public String getLanguageName() {
+        log.debug("getLanguageName() invoked");
         return LANGUAGE;
     }
 
     @Override
     public String getLanguageVersion() {
+        log.debug("getLanguageVersion() invoked");
         return LANGUAGE_VERSION;
     }
 
     @Override
     public Object getParameter(String key) {
+        log.debug("getParameter('{}') invoked", key);
         switch (key) {
             case ScriptEngine.NAME:
                 return NAME;
@@ -196,11 +207,13 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
 
     @Override
     public GraalJSScriptEngine getScriptEngine() {
+        log.debug("getEngineName() invoked");
         return new GraalJSScriptEngine(this);
     }
 
     @Override
     public String getMethodCallSyntax(final String obj, final String method, final String... args) {
+        log.debug("getEngineName() invoked");
         Objects.requireNonNull(obj);
         Objects.requireNonNull(method);
         final StringBuilder sb = new StringBuilder().append(obj).append('.').append(method).append('(');
@@ -221,11 +234,13 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
 
     @Override
     public String getOutputStatement(final String toDisplay) {
+        log.debug("getEngineName() invoked");
         return "print(" + toDisplay + ")";
     }
 
     @Override
     public String getProgram(final String... statements) {
+        log.debug("getEngineName() invoked");
         final StringBuilder sb = new StringBuilder();
 
         for (final String statement : statements) {
@@ -280,4 +295,6 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
             e.printStackTrace();
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GraalJSEngineFactory.class);
 }

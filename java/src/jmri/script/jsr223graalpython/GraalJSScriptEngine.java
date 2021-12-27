@@ -290,9 +290,11 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
 
     public GraalJSScriptEngine(GraalJSEngineFactory factory) {
         this(factory, factory.getPolyglotEngine(), null);
+        log.debug("ctor(Factory) invoked");
     }
 
     GraalJSScriptEngine(GraalJSEngineFactory factory, Engine engine, Context.Builder contextConfig) {
+        log.debug("ctor invoked");
         Engine engineToUse = engine;
         if (engineToUse == null) {
             engineToUse = Engine.newBuilder().allowExperimentalOptions(true).build();
@@ -344,6 +346,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      */
     @Override
     public void close() {
+        log.debug("close invoked");
         getPolyglotContext().close();
     }
 
@@ -351,6 +354,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      * Returns the polyglot engine associated with this script engine.
      */
     public Engine getPolyglotEngine() {
+        log.debug("getPolyglotEngine invoked");
         return factory.getPolyglotEngine();
     }
 
@@ -361,6 +365,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      *      context.
      */
     public Context getPolyglotContext() {
+        log.debug("getPolyglotContext invoked");
         return getPolyglotContext(context);
     }
 
@@ -718,6 +723,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      * @see #create(Engine, Context.Builder) to customize the configuration.
      */
     public static GraalJSScriptEngine create() {
+        log.debug("create invoked");
         return create(null, null);
     }
 
@@ -736,6 +742,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      *            context instances.
      */
     public static GraalJSScriptEngine create(Engine engine, Context.Builder newContextConfig) {
+        log.debug("create(stuff) invoked");
         return new GraalJSScriptEngine(null, engine, newContextConfig);
     }
 
@@ -787,4 +794,6 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
     private static IllegalArgumentException magicOptionValueErrorBool(String name, Object v) {
         return new IllegalArgumentException(String.format("failed to set graal-js option \"%s\": expected a boolean value, got \"%s\"", name, v));
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GraalJSScriptEngine.class);
 }
