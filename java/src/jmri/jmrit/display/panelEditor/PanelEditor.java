@@ -602,6 +602,8 @@ public class PanelEditor extends Editor implements ItemListener {
                 setHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
                 popup.addSeparator();
+                setLogixNGPositionableMenu(p, popup);
+                popup.addSeparator();
             }
 
             // Positionable items with defaults or using overrides

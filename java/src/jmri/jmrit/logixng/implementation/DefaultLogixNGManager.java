@@ -32,6 +32,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private boolean _isActive = false;
+    private final List<ConditionalNG> standaloneConditionalNGList = new ArrayList<>();
 
 
     public DefaultLogixNGManager() {
@@ -111,6 +112,16 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     }
 
     @Override
+    public ConditionalNG createStandaloneConditionalNG(String userName)
+            throws IllegalArgumentException {
+        ConditionalNG conditionalNG = new DefaultConditionalNG("IQC1", userName);
+        synchronized (this) {
+            standaloneConditionalNGList.add(conditionalNG);
+        }
+        return conditionalNG;
+    }
+
+    @Override
     public LogixNG getLogixNG(String name) {
         LogixNG x = getByUserName(name);
         if (x != null) {
@@ -143,6 +154,9 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         for (LogixNG logixNG : _tsys.values()) {
             logixNG.setup();
             result = result && logixNG.setParentForAllChildren(errors);
+        }
+        for (ConditionalNG conditionalNG : standaloneConditionalNGList) {
+            conditionalNG.setup();
         }
         for (Module module : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
             module.setup();
@@ -276,6 +290,15 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.unregisterListeners();
                 }
             });
+
+            for (ConditionalNG conditionalNG : standaloneConditionalNGList) {
+                if (conditionalNG.isActive()) {
+                    conditionalNG.registerListeners();
+                    conditionalNG.execute();
+                } else {
+                    conditionalNG.unregisterListeners();
+                }
+            }
         };
 
         if (runOnSeparateThread) new Thread(runnable).start();

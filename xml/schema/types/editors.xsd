@@ -15,6 +15,9 @@
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
             ">
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/positionable-logixng-data-4.99.2.xsd"/>
+
   <xs:annotation>
     <xs:documentation>
       Defines XML structures common to Layout Editor and Panel Editor
@@ -261,6 +264,7 @@
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -579,6 +583,7 @@
         <xs:element name="inactiveText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="unknownText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="inconsistentText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -750,6 +755,7 @@
             <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -779,6 +785,7 @@
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -819,6 +826,7 @@
           </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:all>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -880,6 +888,7 @@
         <xs:element name="inactive" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -973,6 +982,7 @@
         <xs:element name="flashlunar" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1041,6 +1051,7 @@
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG" type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1127,6 +1138,7 @@
         <xs:element name="thrown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1850,6 +1862,7 @@
         </xs:element>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:all>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1901,6 +1914,8 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="degrees" type="xs:integer"></xs:attribute>
@@ -2071,6 +2086,8 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="degrees" type="xs:integer"></xs:attribute>
@@ -2094,6 +2111,7 @@
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -2133,6 +2151,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="PositionableLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>

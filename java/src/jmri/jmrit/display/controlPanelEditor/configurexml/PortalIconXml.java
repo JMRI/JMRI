@@ -76,6 +76,8 @@ public class PortalIconXml extends PositionableLabelXml {
             }
         }
 
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml");
         return element;
     }
@@ -179,6 +181,8 @@ public class PortalIconXml extends PositionableLabelXml {
             ItemPalette.loadIcons();
             l.makeIconMap();
         }
+
+        loadLogixNG_Data(l, element);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class);

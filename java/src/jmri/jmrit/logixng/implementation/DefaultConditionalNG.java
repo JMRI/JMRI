@@ -266,6 +266,7 @@ public class DefaultConditionalNG extends AbstractBase
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    @Override
     public void setSocketSystemName(String systemName) {
         if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
             _femaleSocket.disconnect();
@@ -273,6 +274,7 @@ public class DefaultConditionalNG extends AbstractBase
         _socketSystemName = systemName;
     }
 
+    @Override
     public String getSocketSystemName() {
         return _socketSystemName;
     }

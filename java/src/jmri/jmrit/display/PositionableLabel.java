@@ -24,10 +24,13 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
+import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
@@ -69,6 +72,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _rotateText = false;
     private int _degrees;
 
+    private final ConditionalNG _conditionalNG;
+
     /**
      * Create a new Positionable Label.
      * @param s label string.
@@ -76,6 +81,8 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     public PositionableLabel(String s, @Nonnull Editor editor) {
         super(s);
+        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+        _conditionalNG = logixNG_Manager.createStandaloneConditionalNG(null);
         _editor = editor;
         _text = true;
         _unRotatedText = s;
@@ -87,6 +94,8 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public PositionableLabel(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s);
+        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+        _conditionalNG = logixNG_Manager.createStandaloneConditionalNG(null);
         _editor = editor;
         _icon = true;
         _namedIcon = s;
@@ -1238,6 +1247,12 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public jmri.NamedBean getNamedBean() {
         return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return _conditionalNG;
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);

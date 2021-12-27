@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
+import jmri.jmrit.logixng.ConditionalNG;
 
 /**
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
@@ -573,6 +574,12 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     @Override
     public jmri.NamedBean getNamedBean() {
         return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public ConditionalNG getConditionalNG() {
+        throw new UnsupportedOperationException("Not supported");
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class);

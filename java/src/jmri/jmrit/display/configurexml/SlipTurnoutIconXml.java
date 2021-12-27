@@ -80,6 +80,8 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         element.addContent(super.storeIcon("unknown", p.getUnknownIcon()));
         element.addContent(super.storeIcon("inconsistent", p.getInconsistentIcon()));
 
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SlipTurnoutIconXml");
 
         return element;
@@ -191,6 +193,9 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }

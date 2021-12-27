@@ -1631,7 +1631,9 @@ public class TreeEditor extends TreeViewer {
                             ThreadingUtil.runOnGUIEventually(() -> {
                                 _treePane._femaleRootSocket.forEntireTree((Base b) -> {
                                     b.removePropertyChangeListener(_treePane);
-                                    b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                    if (_clipboardEditor != null) {
+                                        b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                    }
                                 });
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());

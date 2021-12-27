@@ -50,6 +50,9 @@ public class LocoIconXml extends PositionableLabelXml {
         if (entry != null) {
             element.setAttribute("rosterentry", entry.getId());
         }
+
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LocoIconXml");
 
         return element;
@@ -117,6 +120,8 @@ public class LocoIconXml extends PositionableLabelXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MARKERS, element);
         loadTextInfo(l, element);
+
+        loadLogixNG_Data(l, element);
 
         l.init();  // to detect "background" color for use in Tracker, examine icon file 
     }

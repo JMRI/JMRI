@@ -14,6 +14,9 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.MaleSocket;
 
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -58,6 +61,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             element.setAttribute("icon", "yes");
             element.addContent(storeIcon("icon", (NamedIcon) p.getIcon()));
         }
+
+        storeLogixNG_Data(p, element);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
         return element;
@@ -193,6 +198,24 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         return element;
     }
 
+    public void storeLogixNG_Data(Positionable p, Element element) {
+        if (p.getConditionalNG() == null) return;
+        
+        FemaleSocket femaleSocket = p.getConditionalNG().getFemaleSocket();
+        if (p.getConditionalNG().getFemaleSocket() != null) {
+            Element logixNG_Element = new Element("LogixNG");
+            Element inlineSocketElement = new Element("InlineSocket");
+            inlineSocketElement.addContent(new Element("socketName").addContent(femaleSocket.getName()));
+            MaleSocket socket = femaleSocket.getConnectedSocket();
+            if (socket != null) {
+                inlineSocketElement.addContent(
+                        new Element("systemName").addContent(socket.getSystemName()));
+            }
+            logixNG_Element.addContent(inlineSocketElement);
+            element.addContent(logixNG_Element);
+        }
+    }
+
     @Override
     public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
@@ -287,6 +310,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             // This should never happen
             log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.LABELS, element);
     }
@@ -586,6 +612,22 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             log.debug("getNamedIcon: child element \"{}\" not found in element {}", childName, element.getName());
         }
         return icon;
+    }
+
+    public void loadLogixNG_Data(Positionable p, Element element) {
+        if (p.getConditionalNG() == null) return;
+        
+        Element logixNG_Element = element.getChild("LogixNG");
+        if (logixNG_Element == null) return;
+        Element logixNG_SocketNameElement = logixNG_Element.getChild("InlineSocket").getChild("socketName");
+        String logixNG_SocketName = logixNG_SocketNameElement.getTextTrim();
+        Element logixNG_SocketSystemNameElement = logixNG_Element.getChild("InlineSocket").getChild("systemName");
+        String logixNG_SocketSystemName = null;
+        if (logixNG_SocketSystemNameElement != null) {
+            logixNG_SocketSystemName = logixNG_SocketSystemNameElement.getTextTrim();
+        }
+        p.getConditionalNG().getFemaleSocket().setName(logixNG_SocketName);
+        p.getConditionalNG().setSocketSystemName(logixNG_SocketSystemName);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class);

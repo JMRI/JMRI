@@ -50,6 +50,8 @@ public class LinkingLabelXml extends PositionableLabelXml {
 
         element.addContent(new Element("url").addContent(p.getURL()));
 
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LinkingLabelXml");
         return element;
     }
@@ -142,6 +144,9 @@ public class LinkingLabelXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.LABELS, element);
     }

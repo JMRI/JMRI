@@ -11,6 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 import jmri.JmriException;
+import jmri.jmrit.logixng.ConditionalNG;
 
 /**
  * Defines display objects.
@@ -286,6 +287,12 @@ public interface Positionable extends Cloneable {
     void repaint();
 
     boolean requestFocusInWindow();
+
+    /**
+     * Get the ConditionalNG of this Positionable.
+     * @return the ConditionalNG or null if it have no ConditionalNG
+     */
+    public ConditionalNG getConditionalNG();
 
 
 

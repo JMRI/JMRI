@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Locale;
 
 import jmri.Manager;
@@ -35,6 +34,15 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @return a new LogixNG or null if unable to create
      */
     public LogixNG createLogixNG(String userName)
+            throws IllegalArgumentException;
+
+    /**
+     * Creates a standalone ConditionalNG that isn't owned by a LogixNG.
+     *
+     * @param userName the user name
+     * @return a new LogixNG or null if unable to create
+     */
+    public ConditionalNG createStandaloneConditionalNG(String userName)
             throws IllegalArgumentException;
 
     /**

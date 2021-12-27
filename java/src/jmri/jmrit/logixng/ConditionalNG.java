@@ -40,6 +40,10 @@ public interface ConditionalNG extends Base, NamedBean {
      */
     public FemaleDigitalActionSocket getFemaleSocket();
     
+    public void setSocketSystemName(String systemName);
+    
+    public String getSocketSystemName();
+    
     /**
      * Set whenether this ConditionalNG is enabled or disabled.
      * <P>

@@ -164,6 +164,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     // store panelMenu state so preference is retained on headless systems
     private boolean panelMenuIsVisible = true;
 
+    private boolean _inEditInlineConditionalNGMode = false;
+    private jmri.jmrit.logixng.tools.swing.PositionableEditor _inlineConditionalNGEdit;
+
     public Editor() {
     }
 
@@ -1330,6 +1333,65 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
 
         popup.add(CoordinateEdit.getIdEditAction(p, "EditId", this));
+    }
+
+    /**
+     * Check if edit of a conditional is in progress.
+     *
+     * @return true if this is the case, after showing dialog to user
+     */
+    private boolean checkEditConditionalNG() {
+        if (_inEditInlineConditionalNGMode) {
+            // Already editing a ConditionalNG, ask for completion of that edit
+            JOptionPane.showMessageDialog(_inlineConditionalNGEdit,
+                    Bundle.getMessage("Error_InlineConditionalNGInEditMode"), // NOI18N
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            _inlineConditionalNGEdit.setVisible(true);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Add a menu entry to edit Id of the Positionable item
+     *
+     * @param p     the item
+     * @param popup the menu to add the entry to
+     */
+    public void setLogixNGPositionableMenu(Positionable p, JPopupMenu popup) {
+        if (p.getDisplayLevel() == BKG) {
+            return;
+        }
+
+        JMenu logixNG_Menu = new JMenu("LogixNG");
+        popup.add(logixNG_Menu);
+
+        logixNG_Menu.add(new AbstractAction(Bundle.getMessage("LogixNG_Inline")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkEditConditionalNG()) return;
+
+                jmri.jmrit.logixng.tools.swing.PositionableEditor treeEdit =
+                        new jmri.jmrit.logixng.tools.swing.PositionableEditor(p);
+                treeEdit.initComponents();
+                treeEdit.addListener(() -> {
+                    _inEditInlineConditionalNGMode = false;
+                });
+                treeEdit.setVisible(true);
+                _inEditInlineConditionalNGMode = true;
+                _inlineConditionalNGEdit = treeEdit;
+//                treeEdit.addHelpMenu(
+//                        "package.jmri.jmrit.logixng.PositionableEditor", true);  // NOI18N
+            }
+        });
+/*
+        logixNG_Menu.add(new AbstractAction(Bundle.getMessage("LogixNG_Program")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+*/
     }
 
     /**

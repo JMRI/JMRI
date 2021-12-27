@@ -88,6 +88,8 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
             element.addContent(elem);
         }
 
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.IndicatorTrackIconXml");
 
         return element;
@@ -169,6 +171,9 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
