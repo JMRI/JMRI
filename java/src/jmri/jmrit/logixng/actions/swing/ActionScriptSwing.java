@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -42,7 +43,7 @@ public class ActionScriptSwing extends AbstractDigitalActionSwing {
     private JPanel _panelScriptTypeLocalVariable;
     private JPanel _panelScriptTypeFormula;
 
-    private JFileChooser scriptFileChooser;
+    private ScriptFileChooser scriptFileChooser;
     private JTextField _scriptTextField;
     private JTextField _scriptReferenceTextField;
     private JTextField _scriptLocalVariableTextField;
@@ -119,8 +120,7 @@ public class ActionScriptSwing extends AbstractDigitalActionSwing {
         _actionSelectFileButton.setMaximumSize(_actionSelectFileButton.getPreferredSize());
         _actionSelectFileButton.setToolTipText(Bundle.getMessage("FileButtonHint"));  // NOI18N
         _actionSelectFileButton.addActionListener((ActionEvent e) -> {
-            scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-            scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script files", "py")); // NOI18N
+            scriptFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
             scriptFileChooser.rescanCurrentDirectory();
             int retVal = scriptFileChooser.showOpenDialog(null);
             // handle selection or cancel
