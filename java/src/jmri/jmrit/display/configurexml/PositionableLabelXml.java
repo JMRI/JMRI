@@ -200,7 +200,10 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
 
     public void storeLogixNG_Data(Positionable p, Element element) {
         if (p.getConditionalNG() == null) return;
-        
+
+        // Don't save LogixNG data if socket is not connected
+        if (!p.getConditionalNG().getFemaleSocket().isConnected()) return;
+
         FemaleSocket femaleSocket = p.getConditionalNG().getFemaleSocket();
         if (p.getConditionalNG().getFemaleSocket() != null) {
             Element logixNG_Element = new Element("LogixNG");
@@ -616,7 +619,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
 
     public void loadLogixNG_Data(Positionable p, Element element) {
         if (p.getConditionalNG() == null) return;
-        
+
         Element logixNG_Element = element.getChild("LogixNG");
         if (logixNG_Element == null) return;
         Element logixNG_SocketNameElement = logixNG_Element.getChild("InlineSocket").getChild("socketName");
