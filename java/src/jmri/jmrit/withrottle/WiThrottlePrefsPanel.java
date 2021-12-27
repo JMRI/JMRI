@@ -59,6 +59,12 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JRadioButton wifiRB;
     JRadioButton dccRB;
 
+    //early defaults while creating panel
+    int eStopInitialValue = 10;
+    int eStopMinValue = 4;
+    int eStopMaxValue = 180;
+    int eStopStepSize = 2;
+
     WiThrottlePreferences localPrefs;
 
     public WiThrottlePrefsPanel() {
@@ -152,7 +158,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         eStopCB = new JCheckBox(Bundle.getMessage("LabelUseEStop"));
         eStopCB.setToolTipText(Bundle.getMessage("ToolTipUseEStop"));
-        SpinnerNumberModel spinMod = new SpinnerNumberModel(10, 4, 60, 2);
+        SpinnerNumberModel spinMod = new SpinnerNumberModel(eStopInitialValue, eStopMinValue, eStopMaxValue, eStopStepSize);
         delaySpinner = new JSpinner(spinMod);
         ((JSpinner.DefaultEditor) delaySpinner.getEditor()).getTextField().setEditable(false);
         panel.add(eStopCB);
