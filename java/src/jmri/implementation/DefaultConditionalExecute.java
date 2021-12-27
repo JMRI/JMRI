@@ -602,7 +602,7 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void clearBlockValue(@Nonnull ConditionalAction action, OBlock b, @Nonnull List<String> errorList) {
+    void clearBlockError(@Nonnull ConditionalAction action, OBlock b, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
