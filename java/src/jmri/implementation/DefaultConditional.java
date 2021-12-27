@@ -707,7 +707,7 @@ public class DefaultConditional extends AbstractNamedBean
                         conditionalExecute.setBlockError(action, (OBlock) nb, actionCount, errorList);
                         break;
                     case CLEAR_BLOCK_ERROR:
-                        conditionalExecute.clearBlockValue(action, (OBlock) nb, errorList);
+                        conditionalExecute.clearBlockError(action, (OBlock) nb, errorList);
                         break;
                     case DEALLOCATE_BLOCK:
                         conditionalExecute.deallocateBlock(action, (OBlock) nb, actionCount, errorList);
