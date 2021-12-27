@@ -121,7 +121,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     protected boolean routeDirty = false;  // true to fire reminder to save work
     private boolean showAll = true;   // false indicates show only included Turnouts
     private JFileChooser soundChooser = null;
-    private JFileChooser scriptChooser = null;
+    private ScriptFileChooser scriptChooser = null;
 
     public AbstractRouteAddEditFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
@@ -725,7 +725,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
      */
     private void setScriptPressed() {
         if (scriptChooser == null) {
-            scriptChooser = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+            scriptChooser = ScriptFileChooser();
         }
         scriptChooser.rescanCurrentDirectory();
         int retVal = scriptChooser.showOpenDialog(null);
