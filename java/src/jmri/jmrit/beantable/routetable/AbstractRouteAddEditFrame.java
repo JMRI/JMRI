@@ -7,9 +7,8 @@ import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.util.swing.JComboBoxUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -58,8 +57,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     // safe methods to set the above 4 static field values
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
-
-    private static final Logger log = LoggerFactory.getLogger(AbstractRouteAddEditFrame.class);
 
     static int ROW_HEIGHT;
     // This group will get runtime updates to system-specific contents at
@@ -725,7 +722,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
      */
     private void setScriptPressed() {
         if (scriptChooser == null) {
-            scriptChooser = ScriptFileChooser();
+            scriptChooser = new ScriptFileChooser();
         }
         scriptChooser.rescanCurrentDirectory();
         int retVal = scriptChooser.showOpenDialog(null);
@@ -917,4 +914,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         _routeTurnoutModel.dispose();
         this.dispose();
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractRouteAddEditFrame.class);
 }
