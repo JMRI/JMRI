@@ -375,11 +375,18 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      * {@link #create(Engine, org.graalvm.polyglot.Context.Builder)}.
      */
     public Context getPolyglotContext(ScriptContext ctxt) {
+        log.trace("getPolyglotContext with {}", ctxt);
         return getOrCreateGraalJSBindings(ctxt).getContext();
     }
 
     static Value evalInternal(Context context, String script) {
-        return context.eval(Source.newBuilder(ID, script, "internal-script").internal(true).buildLiteral());
+        log.trace("evalInternal with ID {} \"{}\", \"{}\"", ID, context, script);
+        try {
+            return context.eval(Source.newBuilder(ID, script, "internal-script").internal(true).buildLiteral());
+        } catch (Exception e) {
+            log.warn("exception in evalInternal", e);
+            return null;
+        }
     }
 
     @Override
@@ -497,6 +504,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
     }
 
     private GraalJSBindings getOrCreateGraalJSBindings(ScriptContext scriptContext) {
+        log.debug("getOrCreateGraalJSBindings invoked with {}", scriptContext);
         Bindings engineB = scriptContext.getBindings(ScriptContext.ENGINE_SCOPE);
         if (engineB instanceof GraalJSBindings) {
             return ((GraalJSBindings) engineB);
@@ -581,7 +589,10 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
     @Override
     public <T> T getInterface(Class<T> clasz) {
         checkInterface(clasz);
-        return getInterfaceInner(evalInternal(getPolyglotContext(), "this"), clasz);
+        log.trace("getInterface of {}", clasz);
+        var retval = getInterfaceInner(evalInternal(getPolyglotContext(), "locals()"), clasz); // was "this"
+        log.trace("  returns {}", retval);
+        return retval;
     }
 
     @Override
@@ -706,6 +717,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
                     writer.write(c);
                 }
                 charBuffer.clear();
+                writer.flush();  // was needed to get tests to actually print
             }
         }
 
@@ -774,9 +786,13 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      * Detects jrunscript "init.js" and installs a JSAdapter polyfill if needed.
      */
     private static void jrunscriptInitWorkaround(Source source, Context polyglotContext) {
+        log.trace("jrunscriptInitWorkaround with {}, {}", source, polyglotContext);
         if (source.getName().equals(JRUNSCRIPT_INIT_NAME)) {
+            log.trace("   passed 1st if with match on {}", source.getName());
             String initCode = source.getCharacters().toString();
+            log.trace("   creates initCode = {}", initCode);
             if (initCode.contains("jrunscript") && initCode.contains("JSAdapter") && !polyglotContext.getBindings(ID).hasMember("JSAdapter")) {
+                log.trace("        polyglotContext.eval {} {}", ID, JSADAPTER_POLYFILL);
                 polyglotContext.eval(ID, JSADAPTER_POLYFILL);
             }
         }

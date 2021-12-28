@@ -90,12 +90,16 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
     }
 
     private void initContext() {
+        log.trace("initContext");
         context = GraalJSScriptEngine.createDefaultContext(contextBuilder);
+        log.trace("  initContext created context {}", context);
         initGlobal();
     }
 
     private void initGlobal() {
-        this.global = GraalJSScriptEngine.evalInternal(context, "this").as(STRING_MAP);
+        log.trace("initGlobal with \"{}\"", context);
+        this.global = GraalJSScriptEngine.evalInternal(context, "locals()").as(STRING_MAP); // was "this"
+        log.trace("   defines {}", (this.global == null ? "<null>" : this.global.toString() ) );
     }
 
     private Value deletePropertyFunction() {
@@ -187,12 +191,16 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
     }
 
     void importGlobalBindings(ScriptContext scriptContext) {
-        Bindings globalBindings = scriptContext.getBindings(ScriptContext.GLOBAL_SCOPE);
-        if (globalBindings != null && !globalBindings.isEmpty() && this != globalBindings) {
-            ProxyObject bindingsProxy = ProxyObject.fromMap(Collections.unmodifiableMap(globalBindings));
-            getContext().getBindings("python").getMember(SCRIPT_CONTEXT_GLOBAL_BINDINGS_IMPORT_FUNCTION_NAME).execute(bindingsProxy);
-        }
-    }
+        // was originally there
+//         Bindings globalBindings = scriptContext.getBindings(ScriptContext.GLOBAL_SCOPE);
+//         if (globalBindings != null && !globalBindings.isEmpty() && this != globalBindings) {
+//             ProxyObject bindingsProxy = ProxyObject.fromMap(Collections.unmodifiableMap(globalBindings));
+//             getContext()
+//                 .getBindings("python")
+//                     .getMember(SCRIPT_CONTEXT_GLOBAL_BINDINGS_IMPORT_FUNCTION_NAME)
+//                         .execute(bindingsProxy);
+//         }
+     }
 
     void updateEngineScriptContext(ScriptContext scriptContext) {
         engineScriptContext = scriptContext;
