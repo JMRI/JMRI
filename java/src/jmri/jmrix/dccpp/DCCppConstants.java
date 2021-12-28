@@ -160,7 +160,7 @@ public final class DCCppConstants {
     public static final String PROGRAM_VERIFY_REGEX =      "\\s*v\\s*(\\d+)\\s*([-]*\\d+)\\s*";
     public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
-    public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*(.*)\\s+\\*$";
+    public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*([\\S\\s]*)\\*$"; //matches anything between leading and trailing asterisks, left-trimmed
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
     public static final String METER_REPLY_REGEX = " *c *(.+) +([\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";
