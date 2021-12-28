@@ -14,7 +14,7 @@ sm = jmri.InstanceManager.getNullableDefault(smc)
 if (sm == None) : raise AssertionError('No instance manager access')
 
 # check against simpler syntax
-#if (sm != sensors) : raise AssertionError('Not same SensorManager')
+if (sm != sensors) : raise AssertionError('Not same SensorManager')
 
 # use that manager to affect JMRI
 IS1 = sm.provideSensor("IS1")
