@@ -37,11 +37,14 @@ public class ScriptFileChooser extends JFileChooser {
         HashMap<String, FileFilter> filters = new HashMap<>();
         List<String> filterNames = new ArrayList<>();
         JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
-            List<String> extensions = factory.getExtensions();
-            allExtensions.addAll(extensions);
-            String name = this.fileForLanguage(factory.getLanguageName());
-            filterNames.add(name);
-            filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
+            String version = factory.getEngineVersion();
+            if (version != null) {
+                List<String> extensions = factory.getExtensions();
+                allExtensions.addAll(extensions);
+                String name = this.fileForLanguage(factory.getLanguageName());
+                filterNames.add(name);
+                filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
+            }
         });
         FileFilter allScripts = new FileNameExtensionFilter(Bundle.getMessage("allScripts"), allExtensions.toArray(new String[allExtensions.size()]));
         this.addChoosableFileFilter(allScripts);
@@ -56,6 +59,7 @@ public class ScriptFileChooser extends JFileChooser {
         try {
             return Bundle.getMessage(language);
         } catch (MissingResourceException ex) {
+            log.warn("Translation not found for language \"{}\"", language);
             if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
                 return language + " " + Bundle.getMessage("files");
             }
