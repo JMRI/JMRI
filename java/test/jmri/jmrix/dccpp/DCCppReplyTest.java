@@ -354,7 +354,13 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringDiagReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("* This is a test *");
-        Assert.assertEquals("Monitor string", "DIAG: This is a test", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "DIAG: This is a test ", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("*This is a test with a \nnewline*");
+        Assert.assertEquals("Monitor string", "DIAG: This is a test with a \nnewline", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("**");
+        Assert.assertEquals("Monitor string", "DIAG: ", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("*****");
+        Assert.assertEquals("Monitor string", "DIAG: ***", l.toMonitorString());
     }
 
     @Test
