@@ -34,7 +34,7 @@ public class SampleScriptTest {
         File[] files = (new File("jython/test")).listFiles((File a, String b) ->
                                 ( b.endsWith(".py") || b.endsWith(".py3") || b.endsWith(".js") )
                             );
-
+        Arrays.sort(files);  // process in known (alphanumeric) order
         return files != null ? Arrays.stream(files) : Stream.empty();
     }
 
