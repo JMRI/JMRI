@@ -57,6 +57,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.Version").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.JTextPaneAppender").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.EarlyInitializationPreferences").and()
+                                .doNotHaveFullyQualifiedName("jmri.script.jsr223graalpython.GraalJSEngineFactory").and()
                                 // generated code that we don't have enough control over
                                 .resideOutsideOfPackage("jmri.jmris.simpleserver..").and()
                                 .resideOutsideOfPackage("jmri.jmris.srcp..").and()
