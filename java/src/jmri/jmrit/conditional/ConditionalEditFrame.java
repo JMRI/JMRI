@@ -15,6 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
 
 import jmri.*;
+import jmri.script.swing.ScriptFileChooser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2712,7 +2713,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
     }
 
     JFileChooser sndFileChooser = null;
-    JFileChooser scriptFileChooser = null;
+    ScriptFileChooser scriptFileChooser = null;
     JFileChooser defaultFileChooser = null;
 
     /**
@@ -2736,8 +2737,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.Action.RUN_SCRIPT) {
             if (scriptFileChooser == null) {
-                scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-                scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script files", "py")); // NOI18N
+                scriptFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
             }
             currentChooser = scriptFileChooser;
         } else {

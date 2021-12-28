@@ -15,6 +15,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.Conditional.Operator;
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
@@ -1327,14 +1328,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
     }
 
-    JFileChooser scriptChooser = null;
+    ScriptFileChooser scriptChooser = null;
 
     /**
      * Set the script file
      */
     void setScriptPressed() {
         if (scriptChooser == null) {
-            scriptChooser = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+            scriptChooser = new ScriptFileChooser();
         }
         scriptChooser.rescanCurrentDirectory();
         int retVal = scriptChooser.showOpenDialog(null);
