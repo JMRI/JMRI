@@ -66,4 +66,6 @@ public class ScriptFileChooser extends JFileChooser {
             return language;
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptFileChooser.class);
 }
