@@ -28,7 +28,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.text.BadLocationException;
 import jmri.UserPreferencesManager;
 import jmri.script.JmriScriptEngineManager;
-import jmri.script.ScriptFileChooser;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.script.ScriptOutput;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
