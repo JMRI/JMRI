@@ -1,4 +1,4 @@
-print ("Python3Part1Test")
+print ("Python3Test")
 
 import jmri as jmri
 import java

@@ -1,4 +1,4 @@
-print ("JythonPart1Test")
+print ("JythonTest")
 
 import jmri as jmri
 import java
@@ -25,8 +25,8 @@ from jmri.jmrit.automat import AbstractAutomaton
 
 class Automat(AbstractAutomaton) :
     def init(self) :
-        print ("init in Python 3")
+        print ("init in Jython")
     def handle(self) :
-        print ("handle in Python 3")
+        print ("handle in Jython")
         return False
 Automat().start()

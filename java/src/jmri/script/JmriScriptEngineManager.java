@@ -93,27 +93,31 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      */
     public JmriScriptEngineManager() {
         this.manager.getEngineFactories().stream().forEach(factory -> {
-            log.debug("{} {} is provided by {} {}",
-                    factory.getLanguageName(),
-                    factory.getLanguageVersion(),
-                    factory.getEngineName(),
-                    factory.getEngineVersion());
-            String engineName = factory.getEngineName();
-            factory.getExtensions().stream().forEach(extension -> {
-                names.put(extension, engineName);
-                log.debug("\tExtension: {}", extension);
-            });
-            factory.getMimeTypes().stream().forEach(mimeType -> {
-                names.put(mimeType, engineName);
-                log.debug("\tMime type: {}", mimeType);
-            });
-            factory.getNames().stream().forEach(name -> {
-                names.put(name, engineName);
-                log.debug("\tNames: {}", name);
-            });
-            this.names.put(factory.getLanguageName(), engineName);
-            this.names.put(engineName, engineName);
-            this.factories.put(engineName, factory);
+            if (factory.getEngineVersion() != null) {
+                log.debug("{} {} is provided by {} {}",
+                        factory.getLanguageName(),
+                        factory.getLanguageVersion(),
+                        factory.getEngineName(),
+                        factory.getEngineVersion());
+                String engineName = factory.getEngineName();
+                factory.getExtensions().stream().forEach(extension -> {
+                    names.put(extension, engineName);
+                    log.debug("\tExtension: {}", extension);
+                });
+                factory.getMimeTypes().stream().forEach(mimeType -> {
+                    names.put(mimeType, engineName);
+                    log.debug("\tMime type: {}", mimeType);
+                });
+                factory.getNames().stream().forEach(name -> {
+                    names.put(name, engineName);
+                    log.debug("\tNames: {}", name);
+                });
+                this.names.put(factory.getLanguageName(), engineName);
+                this.names.put(engineName, engineName);
+                this.factories.put(engineName, factory);
+            } else {
+                log.debug("Skipping {} due to null version, i.e. not operational", factory.getEngineName());
+            }
         });
 
         // this should agree with help/en/html/tools/scripting/Start.shtml
