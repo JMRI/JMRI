@@ -31,7 +31,10 @@ public class SampleScriptTest {
      */
     @Nonnull
     public static Stream<File> testsFromDirectory() {
-        File[] files = (new File("jython/test")).listFiles((File a, String b) -> b.endsWith(".py"));
+        File[] files = (new File("jython/test")).listFiles((File a, String b) ->
+                                ( b.endsWith(".py") || b.endsWith(".py3") || b.endsWith(".js") )
+                            );
+
         return files != null ? Arrays.stream(files) : Stream.empty();
     }
 
