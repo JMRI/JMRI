@@ -1498,6 +1498,9 @@ public class JUnitUtil {
                  || name.startsWith("JmmDNS pool")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
                  || name.startsWith("SocketListener(")
+                 || name.startsWith("Libgraal")
+                 || name.startsWith("TruffleCompilerThread-")
+                 || ( name.startsWith("pool-") && name.endsWith("thread-1") )
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
                  || ( name.startsWith("SwingWorker-pool-1-thread-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
