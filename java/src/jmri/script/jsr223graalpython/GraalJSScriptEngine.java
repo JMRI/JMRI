@@ -257,7 +257,8 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
             if (val) {
                 updateForNashornCompatibilityMode(builder);
             }
-            return builder.option("js.nashorn-compat", String.valueOf(val));
+            // return builder.option("js.nashorn-compat", String.valueOf(val)); // was based on js.nashorn-compat
+            return builder.option("js.nashorn-compat", "true");  // force this to get allowAllAccess
         }
     }, new MagicBindingsOptionSetter() {
 
@@ -274,7 +275,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
 
     private static final EconomicSet<String> MAGIC_BINDINGS_OPTION_KEYS = EconomicSet.create();
     static final EconomicMap<String, MagicBindingsOptionSetter> MAGIC_BINDINGS_OPTION_MAP = EconomicMap.create();
-    private static final boolean NASHORN_COMPATIBILITY_MODE = Boolean.getBoolean(NASHORN_COMPATIBILITY_MODE_SYSTEM_PROPERTY);
+    private static final boolean NASHORN_COMPATIBILITY_MODE  = true; // wasBoolean.getBoolean(NASHORN_COMPATIBILITY_MODE_SYSTEM_PROPERTY);
 
     static {
         for (MagicBindingsOptionSetter setter : MAGIC_OPTION_SETTERS) {
@@ -332,7 +333,9 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
         DelegatingInputStream in = new DelegatingInputStream();
         DelegatingOutputStream out = new DelegatingOutputStream();
         DelegatingOutputStream err = new DelegatingOutputStream();
-        builder.in(in).out(out).err(err);
+        builder
+            .allowAllAccess(true)
+            .in(in).out(out).err(err);
         Context ctx = builder.build();
         ctx.getPolyglotBindings().putMember(OUT_SYMBOL, out);
         ctx.getPolyglotBindings().putMember(ERR_SYMBOL, err);
@@ -465,16 +468,16 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
         Context polyglotContext = engineBindings.getContext();
         updateDelegatingIOStreams(polyglotContext, scriptContext);
         try {
-            log.debug("   try evalCalled = {}", evalCalled);
+            log.trace("   try evalCalled = {}", evalCalled);
             if (!evalCalled) {
                 jrunscriptInitWorkaround(source, polyglotContext);
             }
-            log.debug("    engineBindings");
+            log.trace("    start engineBindings.importGlobalBindings");
             engineBindings.importGlobalBindings(scriptContext);
-            log.debug("    return polyglotContext");
+            log.trace("    return polyglotContext.eval(..)");
             return polyglotContext.eval(source).as(Object.class);
         } catch (PolyglotException e) {
-            log.error("caught exception", e);
+            log.warn("Exception in eval {}", e.getCause());
             throw toScriptException(e);
         } finally {
             evalCalled = true;

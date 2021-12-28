@@ -191,7 +191,7 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
     }
 
     void importGlobalBindings(ScriptContext scriptContext) {
-        // was originally there
+        // was originally there, NPE at end
 //         Bindings globalBindings = scriptContext.getBindings(ScriptContext.GLOBAL_SCOPE);
 //         if (globalBindings != null && !globalBindings.isEmpty() && this != globalBindings) {
 //             ProxyObject bindingsProxy = ProxyObject.fromMap(Collections.unmodifiableMap(globalBindings));

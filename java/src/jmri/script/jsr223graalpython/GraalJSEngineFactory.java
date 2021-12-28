@@ -125,7 +125,12 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
     }
 
     private static Engine createDefaultEngine() {
-        return Engine.newBuilder().allowExperimentalOptions(true).build();
+        return Engine.newBuilder()
+            .allowExperimentalOptions(true)
+            //.allowAllAccess(true) // no such method
+            //.option("polyglot.python.allowHostAccess", "true") // option not found
+            .option("python.EmulateJython", "true") // Jython-compatible class structure
+            .build();
     }
 
     /**
