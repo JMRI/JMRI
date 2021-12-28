@@ -278,7 +278,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testSetF22() {
         boolean f22 = false;
-        instance.setF21(f22);
+        instance.setF22(f22);
     }
 
     /**
