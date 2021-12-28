@@ -33,4 +33,5 @@ class Automat(AbstractAutomaton) :
 Automat().start()
 
 # prep to check for persistent context
-persistanceCheck = 27
+global pyPersistanceCheck
+pyPersistanceCheck = 27

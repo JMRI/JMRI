@@ -31,6 +31,9 @@ class Automat(AbstractAutomaton) :
         return False
 Automat().start()
 
-# prep to check for persistent context
+def jyCheck() :
+    print "definition still present"
+
+# prep to check for variables in perstent context
 global jyPersistanceCheck
 jyPersistanceCheck = 81
