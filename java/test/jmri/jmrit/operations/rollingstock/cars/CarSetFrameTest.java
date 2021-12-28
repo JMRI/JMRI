@@ -151,10 +151,6 @@ public class CarSetFrameTest extends OperationsTestCase {
         load.setName("car set frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonOK"));
 
         try {
