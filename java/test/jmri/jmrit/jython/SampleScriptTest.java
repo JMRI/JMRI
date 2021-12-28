@@ -1,12 +1,13 @@
 package jmri.jmrit.jython;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.*;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 
 import jmri.util.JUnitUtil;
+import jmri.script.JmriScriptEngineManager;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -31,9 +32,22 @@ public class SampleScriptTest {
      */
     @Nonnull
     public static Stream<File> testsFromDirectory() {
-        File[] files = (new File("jython/test")).listFiles((File a, String b) ->
-                                ( b.endsWith(".py") || b.endsWith(".py3") || b.endsWith(".js") )
-                            );
+
+        // first get a list of file suffixes
+        List<String> allExtensions = new ArrayList<>();
+        JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((var factory) -> {
+            if (factory.getEngineVersion() != null) {
+                List<String> extensions = factory.getExtensions();
+                allExtensions.addAll(extensions);
+            }
+        });
+
+        File[] files = (new File("jython/test")).listFiles((File a, String b) -> {
+                                for (var ext : allExtensions) {
+                                    if (b.endsWith(ext)) return true;
+                                }
+                                return false;
+                             });
         Arrays.sort(files);  // process in known (alphanumeric) order
         return files != null ? Arrays.stream(files) : Stream.empty();
     }
