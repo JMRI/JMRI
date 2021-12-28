@@ -221,8 +221,9 @@ public class FindBugsCheck {
         jaCheckForNullParm(p);
     }
 
-*/
- // end of commenting out file
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FindBugsCheck.class);
+
+*/
+ // end of commenting out file
 }
