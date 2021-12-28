@@ -995,7 +995,7 @@ public class DefaultConditional extends AbstractNamedBean
                             ScriptOutput.writeScript(getActionString(action));
                             // and execute
 
-                            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+                            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.JYTHON);
                             if (se!=null) {
                                 try {
                                     JmriScriptEngineManager.getDefault().eval(getActionString(action), se);

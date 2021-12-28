@@ -181,7 +181,7 @@ public class InputWindow extends JPanel {
                     languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactoryByExtension(Files.getFileExtension(file.getName())).getLanguageName());
                 } catch (ScriptException npe) {
                     log.error("Unable to identify script language for {}, assuming its Python.", file);
-                    languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactory(JmriScriptEngineManager.PYTHON).getLanguageName());
+                    languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactory(JmriScriptEngineManager.JYTHON).getLanguageName());
                 }
                 StringBuilder fileData = new StringBuilder(1024);
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {

@@ -50,8 +50,6 @@ import jmri.util.FileUtilSupport;
 import org.apache.commons.io.FilenameUtils;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide a manager for {@link javax.script.ScriptEngine}s. The following
@@ -78,12 +76,11 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     private final HashMap<String, ScriptEngine> engines = new HashMap<>();
     private final ScriptContext context;
 
-    private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
     // should be replaced with default context
     // package private for unit testing
     static final String JYTHON_DEFAULTS = "jmri_defaults.py";
     private static final String EXTENSION = "extension";
-    public static final String PYTHON = "jython";
+    public static final String JYTHON = "jython";
     private PythonInterpreter jython = null;
 
     /**
@@ -246,7 +243,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         if (!engines.containsKey(name)) {
             name = names.get(name);
             ScriptEngineFactory factory;
-            if (PYTHON.equals(name)) {
+            if (JYTHON.equals(name)) {
                 // Setup the default python engine to use the JMRI python
                 // properties
                 initializePython();
@@ -269,7 +266,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws javax.script.ScriptException if there is an error in the script.
      */
     public Object eval(String script, ScriptEngine engine) throws ScriptException {
-        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+        if (JYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             this.jython.exec(script);
             return null;
         }
@@ -374,7 +371,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     @CheckForNull
     private ScriptEngine getEngineOrEval(File file) throws ScriptException, IOException {
         ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
-        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+        if (JYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
                 this.jython.execfile(fi);
             }
@@ -496,7 +493,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * Python ScriptEngine.
      */
     public void initializePython() {
-        if (!this.engines.containsKey(PYTHON)) {
+        if (!this.engines.containsKey(JYTHON)) {
             initializePythonInterpreter(initializePythonState());
         }
     }
@@ -565,9 +562,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         // Create the interpreter
         try {
             log.debug("create interpreter");
-            ScriptEngine python = this.manager.getEngineByName(PYTHON);
+            ScriptEngine python = this.manager.getEngineByName(JYTHON);
             python.setContext(this.context);
-            engines.put(PYTHON, python);
+            engines.put(JYTHON, python);
             InputStream is = FileUtil.findInputStream(JYTHON_DEFAULTS,
                     FileUtil.getUserFilesPath(),
                     FileUtil.getProfilePath(),
@@ -608,4 +605,6 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         return new ScriptException(String.format("Could not find script engine%s for %s \"%s\" expected one of %s",
                 factory, type, key, expected));
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriScriptEngineManager.class);
 }
