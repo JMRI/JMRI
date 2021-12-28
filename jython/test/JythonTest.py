@@ -1,4 +1,4 @@
-print ("Python3Part1Test")
+print ("JythonPart1Test")
 
 import jmri as jmri
 import java
@@ -8,13 +8,12 @@ import java
 if (jmri.Turnout.THROWN != 4) : raise AssertionError('Constant THROWN not right')
 
 # access InstanceManager to get manager
-smc = java.type('jmri.SensorManager')
-sm = jmri.InstanceManager.getNullableDefault(smc)
+sm = jmri.InstanceManager.getNullableDefault(jmri.SensorManager)
 
 if (sm == None) : raise AssertionError('No instance manager access')
 
 # check against simpler syntax
-#if (sm != sensors) : raise AssertionError('Not same SensorManager')
+if (sm != sensors) : raise AssertionError('Not same SensorManager')
 
 # use that manager to affect JMRI
 IS1 = sm.provideSensor("IS1")
@@ -31,7 +30,3 @@ class Automat(AbstractAutomaton) :
         print ("handle in Python 3")
         return False
 Automat().start()
-
-# prep to check for persistent context
-global pyPersistanceCheck
-pyPersistanceCheck = 27
