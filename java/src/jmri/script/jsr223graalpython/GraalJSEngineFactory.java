@@ -158,8 +158,13 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
 
     @Override
     public String getEngineVersion() {
-        log.trace("getEngineVersion() invoked");
-        return getPolyglotEngine().getVersion();
+        try {
+            log.trace("getEngineVersion() invoked");
+            return getPolyglotEngine().getVersion();
+        } catch (NoClassDefFoundError e) {
+            log.debug("returning null due to no class found");
+            return null;
+        }
     }
 
     @Override
