@@ -257,8 +257,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
             if (val) {
                 updateForNashornCompatibilityMode(builder);
             }
-            // return builder.option("js.nashorn-compat", String.valueOf(val)); // was based on js.nashorn-compat
-            return builder.option("js.nashorn-compat", "true");  // force this to get allowAllAccess
+            return builder.option("js.nashorn-compat", String.valueOf(val));
         }
     }, new MagicBindingsOptionSetter() {
 
@@ -593,7 +592,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
     public <T> T getInterface(Class<T> clasz) {
         checkInterface(clasz);
         log.trace("getInterface of {}", clasz);
-        var retval = getInterfaceInner(evalInternal(getPolyglotContext(), "locals()"), clasz); // was "this"
+        var retval = getInterfaceInner(evalInternal(getPolyglotContext(), "locals()"), clasz); // was "this" in Javascript
         log.trace("  returns {}", retval);
         return retval;
     }
