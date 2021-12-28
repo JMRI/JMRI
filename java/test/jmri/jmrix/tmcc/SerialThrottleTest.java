@@ -39,7 +39,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of getSpeedIncrement method, of class AbstractThrottle.
      */
@@ -270,13 +270,73 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean f21 = false;
         instance.setF21(f21);
     }
-    
+
+    /**
+     * Test of setF22 method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testSetF22() {
+        boolean f22 = false;
+        instance.setF21(f22);
+    }
+
+    /**
+     * Test of setF23 method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testSetF23() {
+        boolean f23 = false;
+        instance.setF23(f23);
+    }
+
+    /**
+     * Test of setF21 method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testSetF24() {
+        boolean f24 = false;
+        instance.setF24(f24);
+    }
+
+    /**
+     * Test of setF21 method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testSetF25() {
+        boolean f25 = false;
+        instance.setF25(f25);
+    }
+
+    /**
+     * Test of setF21 method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testSetF26() {
+        boolean f26 = false;
+        instance.setF26(f26);
+    }
+
+    /**
+     * Test of setF21 method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testSetF27() {
+        boolean f27 = false;
+        instance.setF27(f27);
+    }
+
     @Test
     @Override
     public void testOutOfRangeSetFunction(){
         instance.setFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
-        
+
         instance.setFunction(29, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
