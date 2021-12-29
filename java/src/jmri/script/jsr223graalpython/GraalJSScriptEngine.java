@@ -366,6 +366,8 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      *
      * @see #getPolyglotContext(ScriptContext) to access the polyglot context of a particular
      *      context.
+     *
+     * @return polyglot Context from the `context` member variable
      */
     public Context getPolyglotContext() {
         log.debug("getPolyglotContext invoked");

@@ -1,7 +1,7 @@
 /**
  * Provides swing classes for JMRI's built in scripting support. Eventual
  * home of all of them.
- * <p>
+ *
  * @see jmri.jmrit.jython
  */
 // include empty DefaultAnnotation to avoid excessive recompilation
