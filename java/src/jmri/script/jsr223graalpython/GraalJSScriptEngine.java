@@ -485,7 +485,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
             log.trace("    return polyglotContext.eval(..)");
             return polyglotContext.eval(source).as(Object.class);
         } catch (PolyglotException e) {
-            log.warn("Exception in eval {}", e.getCause());
+            log.warn("Exception in eval", e.getCause());
             throw toScriptException(e);
         } finally {
             evalCalled = true;
