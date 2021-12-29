@@ -91,7 +91,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     public JmriScriptEngineManager() {
         this.manager.getEngineFactories().stream().forEach(factory -> {
             if (factory.getEngineVersion() != null) {
-                log.debug("{} {} is provided by {} {}",
+                log.trace("{} {} is provided by {} {}",
                         factory.getLanguageName(),
                         factory.getLanguageVersion(),
                         factory.getEngineName(),
@@ -99,21 +99,21 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                 String engineName = factory.getEngineName();
                 factory.getExtensions().stream().forEach(extension -> {
                     names.put(extension, engineName);
-                    log.debug("\tExtension: {}", extension);
+                    log.trace("\tExtension: {}", extension);
                 });
                 factory.getMimeTypes().stream().forEach(mimeType -> {
                     names.put(mimeType, engineName);
-                    log.debug("\tMime type: {}", mimeType);
+                    log.trace("\tMime type: {}", mimeType);
                 });
                 factory.getNames().stream().forEach(name -> {
                     names.put(name, engineName);
-                    log.debug("\tNames: {}", name);
+                    log.trace("\tNames: {}", name);
                 });
                 this.names.put(factory.getLanguageName(), engineName);
                 this.names.put(engineName, engineName);
                 this.factories.put(engineName, factory);
             } else {
-                log.debug("Skipping {} due to null version, i.e. not operational", factory.getEngineName());
+                log.debug("Skipping {} due to null version, i.e. not operational; do you have GraalVM installed?", factory.getEngineName());
             }
         });
 
@@ -161,7 +161,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         this.context = new SimpleScriptContext();
         this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
         this.context.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
-        log.debug("end init context {} bindings {}", context, bindings);
+        log.trace("end init context {} bindings {}", context, bindings);
     }
 
     /**

@@ -119,6 +119,7 @@
     -->
     <path id="runtime.class.path">
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
+        <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl-2.12.0.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
@@ -726,6 +727,18 @@
             <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>
+
+    <target name="graal-compile"
+            description="compile GraalVM-specific source; must currently have a GraalVM JDK active"
+            depends="init">
+        <!-- Compile the java code from ${source} into ${target} -->
+        <java-compile
+                javac.source="${graalsource}"
+                javac.target="${graaltarget}"
+                javac.deprecation="on"
+            />
+    </target>
+
 
     <target name="ci-compile-deprecations"
             description="compile source, omitting tests, warning on deprecations - for Jenkins CI"
