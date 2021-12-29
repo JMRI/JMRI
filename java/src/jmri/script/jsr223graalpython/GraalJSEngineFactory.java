@@ -135,6 +135,7 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
 
     /**
      * Returns the underlying polyglot engine.
+     * @return the underlying polyglot engine.
      */
     public Engine getPolyglotEngine() {
         log.trace("getPolyglotEngine() invoked");

@@ -354,6 +354,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
 
     /**
      * Returns the polyglot engine associated with this script engine.
+     * @return the polyglot engine associated with this script engine.
      */
     public Engine getPolyglotEngine() {
         log.debug("getPolyglotEngine invoked");
@@ -375,6 +376,8 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      * Returns the polyglot context associated with a ScriptContext. If the context is not yet
      * initialized then it will be initialized using the default context builder specified in
      * {@link #create(Engine, org.graalvm.polyglot.Context.Builder)}.
+     * @param ctxt Input to the creation
+     * @return a Context from the ScriptContext
      */
     public Context getPolyglotContext(ScriptContext ctxt) {
         log.trace("getPolyglotContext with {}", ctxt);
@@ -753,6 +756,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      * Creates a new GraalJSScriptEngine with default configuration.
      *
      * @see #create(Engine, Context.Builder) to customize the configuration.
+     * @return A new script engine created with null parameters
      */
     public static GraalJSScriptEngine create() {
         log.debug("create invoked");
@@ -772,6 +776,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
      * @param newContextConfig a base configuration to create new context instances or
      *            <code>null</code> if the default configuration should be used to construct new
      *            context instances.
+     * @return A new script engine
      */
     public static GraalJSScriptEngine create(Engine engine, Context.Builder newContextConfig) {
         log.debug("create(stuff) invoked");
