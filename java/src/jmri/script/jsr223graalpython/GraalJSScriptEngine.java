@@ -393,11 +393,13 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
 
     @Override
     public Bindings createBindings() {
+        log.debug("createBindings");
         return new GraalJSBindings(contextConfig, null);
     }
 
     @Override
     public void setBindings(Bindings bindings, int scope) {
+        log.debug("setBindings {} scope: {}", bindings, scope);
         if (scope == ScriptContext.ENGINE_SCOPE) {
             Bindings oldBindings = getBindings(scope);
             if (oldBindings instanceof GraalJSBindings) {
@@ -442,6 +444,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
     }
 
     private static Source createSource(String script, ScriptContext ctxt) throws ScriptException {
+        log.trace("createSource ctxt {}", ctxt);
         final Object val = ctxt.getAttribute(ScriptEngine.FILENAME);
         if (val == null) {
             return Source.newBuilder(ID, script, "<eval>").buildLiteral();
@@ -464,6 +467,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
     private Object eval(Source source, ScriptContext scriptContext) throws ScriptException {
         log.debug("eval({},{}) called", source, scriptContext);
         GraalJSBindings engineBindings = getOrCreateGraalJSBindings(scriptContext);
+        log.trace("   engineBindings {}", engineBindings);
         Context polyglotContext = engineBindings.getContext();
         updateDelegatingIOStreams(polyglotContext, scriptContext);
         try {
@@ -509,26 +513,33 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
         log.debug("getOrCreateGraalJSBindings invoked with {}", scriptContext);
         Bindings engineB = scriptContext.getBindings(ScriptContext.ENGINE_SCOPE);
         if (engineB instanceof GraalJSBindings) {
+            log.trace("   return engineB: {}", engineB);
             return ((GraalJSBindings) engineB);
         } else {
             GraalJSBindings bindings = new GraalJSBindings(createContext(engineB), scriptContext);
             bindings.putAll(engineB);
+            log.trace("   recreate bindings: {} engineB {}", bindings, engineB);
             return bindings;
         }
     }
 
     private Context createContext(Bindings engineB) {
+        log.debug("createContext bindings: {}", engineB);
         Object ctx = engineB.get(POLYGLOT_CONTEXT);
         if (!(ctx instanceof Context)) {
             Context.Builder builder = contextConfig;
+            log.trace("   invoking MAGIC_OPTION_SETTERS");
             for (MagicBindingsOptionSetter optionSetter : MAGIC_OPTION_SETTERS) {
+                log.trace("      optionSetter: {}", optionSetter);
                 Object value = engineB.get(optionSetter.getOptionKey());
                 if (value != null) {
+                    log.trace("         value: {}", value);
                     builder = optionSetter.setOption(builder, value);
                     engineB.remove(optionSetter.getOptionKey());
                 }
             }
             ctx = createDefaultContext(builder);
+            log.trace("   createDefaultContext returns {} for {}", ctx, POLYGLOT_CONTEXT);
             engineB.put(POLYGLOT_CONTEXT, ctx);
         }
         return (Context) ctx;
@@ -541,6 +552,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
 
     @Override
     public Object invokeMethod(Object thiz, String name, Object... args) throws ScriptException, NoSuchMethodException {
+        log.trace("invokeMethod {} {}", thiz, name);
         if (thiz == null) {
             throw new IllegalArgumentException("thiz is not a valid object.");
         }
@@ -564,6 +576,7 @@ public final class GraalJSScriptEngine extends AbstractScriptEngine implements C
 
     @Override
     public Object invokeFunction(String name, Object... args) throws ScriptException, NoSuchMethodException {
+        log.trace("invokeFunction {}", name);
         GraalJSBindings engineBindings = getOrCreateGraalJSBindings(context);
         engineBindings.importGlobalBindings(context);
         Value function = engineBindings.getContext().getBindings(ID).getMember(name);
