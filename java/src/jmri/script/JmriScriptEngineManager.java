@@ -160,6 +160,8 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("FileUtil", FileUtilSupport.getDefault());
         this.context = new SimpleScriptContext();
         this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
+        this.context.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
+        log.debug("end init context {} bindings {}", context, bindings);
     }
 
     /**
@@ -240,15 +242,17 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      */
     @CheckForNull
     public ScriptEngine getEngine(@CheckForNull String name) {
+        log.debug("getEngine(\"{}\")", name);
         if (!engines.containsKey(name)) {
             name = names.get(name);
             ScriptEngineFactory factory;
             if (JYTHON.equals(name)) {
                 // Setup the default python engine to use the JMRI python
                 // properties
+                log.trace("   initializePython");
                 initializePython();
             } else if ((factory = factories.get(name)) != null) {
-                log.debug("Create engine for {}", name);
+                log.trace("   Create engine for {} context {}", name, context);
                 ScriptEngine engine = factory.getScriptEngine();
                 engine.setContext(context);
                 engines.put(name, engine);
