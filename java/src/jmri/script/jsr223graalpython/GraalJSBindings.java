@@ -98,8 +98,10 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
 
     private void initGlobal() {
         log.trace("initGlobal with \"{}\"", context);
-        this.global = GraalJSScriptEngine.evalInternal(context, "locals()").as(STRING_MAP); // was "this"
-        log.trace("   defines {}", (this.global == null ? "<null>" : this.global.toString() ) );
+        var temp = GraalJSScriptEngine.evalInternal(context, "locals()");  // this line combined with next
+        log.trace("    temp: "+temp);
+        this.global = temp.as(STRING_MAP); // was "this"
+        log.trace("    defines  "+this.global);
     }
 
     private Value deletePropertyFunction() {
@@ -195,6 +197,7 @@ final class GraalJSBindings extends AbstractMap<String, Object> implements Bindi
 //         Bindings globalBindings = scriptContext.getBindings(ScriptContext.GLOBAL_SCOPE);
 //         if (globalBindings != null && !globalBindings.isEmpty() && this != globalBindings) {
 //             ProxyObject bindingsProxy = ProxyObject.fromMap(Collections.unmodifiableMap(globalBindings));
+//             log.trace("getBindings(python) {} type {}", getContext().getBindings("python"),  getContext().getBindings("python").getClass());
 //             getContext()
 //                 .getBindings("python")
 //                     .getMember(SCRIPT_CONTEXT_GLOBAL_BINDINGS_IMPORT_FUNCTION_NAME)
