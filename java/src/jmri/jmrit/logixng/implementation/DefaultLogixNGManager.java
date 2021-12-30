@@ -26,13 +26,13 @@ import org.apache.commons.lang3.mutable.MutableInt;
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultLogixNGManager extends AbstractManager<LogixNG>
-        implements LogixNG_Manager, PropertyChangeListener {
+        implements LogixNG_Manager {
 
 
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private boolean _isActive = false;
-    private final List<Runnable> _setupTasks = new ArrayList();
+    private final List<Runnable> _setupTasks = new ArrayList<>();
 
 
     public DefaultLogixNGManager() {

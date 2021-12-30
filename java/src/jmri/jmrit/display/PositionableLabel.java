@@ -1258,7 +1258,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         this._logixNG = logixNG;
     }
 
-    /** {@inheritDoc} */
     public void setLogixNG_SystemName(String systemName) {
         this._logixNG_SystemName = systemName;
     }
