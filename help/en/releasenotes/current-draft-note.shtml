@@ -571,5 +571,8 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>SpotBugs has been updated to 4.5.0</li>
+            <li>Initial
+                <a href="https://jmri.org/help/en/html/tools/scripting/Python3.shtml">Python 3 support</a>
+                is available.
         </ul>
 
