@@ -6,20 +6,11 @@ import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.function.Predicate;
 
 import javax.swing.*;
 
-import javax.swing.table.TableColumn;
-
 import jmri.*;
-import static jmri.jmrit.beantable.BeanTableDataModel.DELETECOL;
-import static jmri.jmrit.beantable.BeanTableDataModel.SYSNAMECOL;
-import static jmri.jmrit.beantable.BeanTableDataModel.USERNAMECOL;
-import static jmri.jmrit.beantable.BeanTableDataModel.VALUECOL;
-import jmri.jmrit.beantable.Bundle;
 import jmri.util.JmriJFrame;
-
 
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
