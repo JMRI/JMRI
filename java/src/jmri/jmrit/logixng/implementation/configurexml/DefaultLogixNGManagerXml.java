@@ -54,6 +54,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             for (LogixNG logixNG : tm.getNamedBeanSet()) {
                 log.debug("logixng system name is " + logixNG.getSystemName());  // NOI18N
                 boolean enabled = logixNG.isEnabled();
+                boolean inline = logixNG.isInline();
                 Element elem = new Element("LogixNG");  // NOI18N
                 elem.addContent(new Element("systemName").addContent(logixNG.getSystemName()));  // NOI18N
 
@@ -67,6 +68,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 elem.addContent(e);
 
                 elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
+                elem.setAttribute("inline", inline ? "yes" : "no");  // NOI18N
 
                 logixNGs.addContent(elem);
                 hasData = true;
@@ -176,24 +178,28 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
 
             String userName = getUserName(logixNG_Element);
 
-            String yesno = "";
+            String enabled = "";
             if (logixNGList.get(i).getAttribute("enabled") != null) {  // NOI18N
-                yesno = logixNG_Element.getAttribute("enabled").getValue();  // NOI18N
+                enabled = logixNG_Element.getAttribute("enabled").getValue();  // NOI18N
+            }
+            boolean inline = false;
+            if (logixNGList.get(i).getAttribute("inline") != null) {  // NOI18N
+                inline = "yes".equals(logixNG_Element.getAttribute("inline").getValue());  // NOI18N
             }
             log.debug("create logixng: (" + sysName + ")("  // NOI18N
                     + (userName == null ? "<null>" : userName) + ")");  // NOI18N
 
             // Create a new LogixNG but don't setup the initial tree.
-            DefaultLogixNG logixNG = (DefaultLogixNG)tm.createLogixNG(sysName, userName);
+            DefaultLogixNG logixNG = (DefaultLogixNG)tm.createLogixNG(sysName, userName, inline);
             if (logixNG != null) {
                 // load common part
                 loadCommon(logixNG, logixNGList.get(i));
 
                 // set enabled/disabled if attribute was present
-                if ((yesno != null) && (!yesno.equals(""))) {
-                    if (yesno.equals("yes")) {  // NOI18N
+                if ((enabled != null) && (!enabled.equals(""))) {
+                    if (enabled.equals("yes")) {  // NOI18N
                         logixNG.setEnabled(true);
-                    } else if (yesno.equals("no")) {  // NOI18N
+                    } else if (enabled.equals("no")) {  // NOI18N
                         logixNG.setEnabled(false);
                     }
                 }

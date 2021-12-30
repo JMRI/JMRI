@@ -29,7 +29,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
-import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
@@ -72,7 +72,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _rotateText = false;
     private int _degrees;
 
-    private final ConditionalNG _conditionalNG;
+    private LogixNG _logixNG;
+    private String _logixNG_SystemName;
 
     /**
      * Create a new Positionable Label.
@@ -81,8 +82,6 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     public PositionableLabel(String s, @Nonnull Editor editor) {
         super(s);
-        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        _conditionalNG = logixNG_Manager.createStandaloneConditionalNG(null);
         _editor = editor;
         _text = true;
         _unRotatedText = s;
@@ -94,8 +93,6 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public PositionableLabel(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s);
-        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        _conditionalNG = logixNG_Manager.createStandaloneConditionalNG(null);
         _editor = editor;
         _icon = true;
         _namedIcon = s;
@@ -1251,8 +1248,26 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     /** {@inheritDoc} */
     @Override
-    public ConditionalNG getConditionalNG() {
-        return _conditionalNG;
+    public LogixNG getLogixNG() {
+        return _logixNG;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG(LogixNG logixNG) {
+        this._logixNG = logixNG;
+    }
+
+    /** {@inheritDoc} */
+    public void setLogixNG_SystemName(String systemName) {
+        this._logixNG_SystemName = systemName;
+    }
+
+    public void setupLogixNG() {
+        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .getBySystemName(_logixNG_SystemName);
+//        jmri.util.ThreadingUtil.runOnGUI(() -> {_logixNG.setInline(true);});
+//        _logixNG.setEnabled(true);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);

@@ -27,6 +27,17 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
             throws IllegalArgumentException;
 
     /**
+     * Create a new LogixNG if the LogixNG does not exist.
+     *
+     * @param systemName the system name
+     * @param userName   the user name
+     * @param inline     true if this LogixNG is an inline LogixNG
+     * @return a new LogixNG or null if unable to create
+     */
+    public LogixNG createLogixNG(String systemName, String userName, boolean inline)
+            throws IllegalArgumentException;
+
+    /**
      * For use with User GUI, to allow the auto generation of systemNames, where
      * the user can optionally supply a username.
      *
@@ -37,12 +48,14 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
             throws IllegalArgumentException;
 
     /**
-     * Creates a standalone ConditionalNG that isn't owned by a LogixNG.
+     * For use with User GUI, to allow the auto generation of systemNames, where
+     * the user can optionally supply a username.
      *
-     * @param userName the user name
+     * @param userName  the user name
+     * @param inline    true if this LogixNG is an inline LogixNG
      * @return a new LogixNG or null if unable to create
      */
-    public ConditionalNG createStandaloneConditionalNG(String userName)
+    public LogixNG createLogixNG(String userName, boolean inline)
             throws IllegalArgumentException;
 
     /**
@@ -242,5 +255,11 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @return the manager
      */
     public Manager<? extends MaleSocket> getManager(String className);
+
+    /**
+     * Register a task to be run when setup LogixNGs
+     * @param task the task
+     */
+    public void registerSetupTask(Runnable task);
 
 }

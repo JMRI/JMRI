@@ -19,6 +19,8 @@ import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
@@ -57,6 +59,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     static public final int NUMCOLUMN = 5;
     protected List<String> sysNameList = null;
     private NamedBeanHandleManager nbMan;
+    private Predicate<? super T> filter;
 
     /**
      * Create a new Bean Table Data Model.
@@ -116,7 +119,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
             }
         }
-        sysNameList = getManager().getNamedBeanSet().stream().map(NamedBean::getSystemName).collect( java.util.stream.Collectors.toList() );
+        Stream<T> stream = getManager().getNamedBeanSet().stream();
+        if (filter != null) stream = stream.filter(filter);
+        sysNameList = stream.map(NamedBean::getSystemName).collect( java.util.stream.Collectors.toList() );
         // and add them back in
         for (String s : sysNameList) {
             // if object has been deleted, it's not here; ignore it
@@ -1440,6 +1445,23 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 return f;
             }
         }
+    }
+
+    /**
+     * Set the filter to select which beans to include in the table.
+     * @param filter the filter
+     */
+    public void setFilter(Predicate<? super T> filter) {
+        this.filter = filter;
+        updateNameList();
+    }
+
+    /**
+     * Get the filter to select which beans to include in the table.
+     * @return the filter
+     */
+    public Predicate<? super T> getFilter() {
+        return filter;
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);

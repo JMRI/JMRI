@@ -199,24 +199,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
 
     public void storeLogixNG_Data(Positionable p, Element element) {
-        if (p.getConditionalNG() == null) return;
+        if (p.getLogixNG() == null) return;
 
-        // Don't save LogixNG data if socket is not connected
-        if (!p.getConditionalNG().getFemaleSocket().isConnected()) return;
-
-        FemaleSocket femaleSocket = p.getConditionalNG().getFemaleSocket();
-        if (p.getConditionalNG().getFemaleSocket() != null) {
-            Element logixNG_Element = new Element("LogixNG");
-            Element inlineSocketElement = new Element("InlineSocket");
-            inlineSocketElement.addContent(new Element("socketName").addContent(femaleSocket.getName()));
-            MaleSocket socket = femaleSocket.getConnectedSocket();
-            if (socket != null) {
-                inlineSocketElement.addContent(
-                        new Element("systemName").addContent(socket.getSystemName()));
-            }
-            logixNG_Element.addContent(inlineSocketElement);
-            element.addContent(logixNG_Element);
-        }
+        // Don't save LogixNG data if we don't have any ConditionalNGs
+        if (p.getLogixNG().getNumConditionalNGs() == 0) return;
+        Element logixNG_Element = new Element("LogixNG");
+        logixNG_Element.addContent(new Element("InlineLogixNG_SystemName").addContent(p.getLogixNG().getSystemName()));
+        element.addContent(logixNG_Element);
     }
 
     @Override
@@ -618,19 +607,17 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
 
     public void loadLogixNG_Data(Positionable p, Element element) {
-        if (p.getConditionalNG() == null) return;
-
+        PositionableLabel pl = (PositionableLabel)p;
         Element logixNG_Element = element.getChild("LogixNG");
         if (logixNG_Element == null) return;
-        Element logixNG_SocketNameElement = logixNG_Element.getChild("InlineSocket").getChild("socketName");
-        String logixNG_SocketName = logixNG_SocketNameElement.getTextTrim();
-        Element logixNG_SocketSystemNameElement = logixNG_Element.getChild("InlineSocket").getChild("systemName");
-        String logixNG_SocketSystemName = null;
-        if (logixNG_SocketSystemNameElement != null) {
-            logixNG_SocketSystemName = logixNG_SocketSystemNameElement.getTextTrim();
+        Element inlineLogixNG = logixNG_Element.getChild("InlineLogixNG_SystemName");
+        if (inlineLogixNG != null) {
+            String systemName = inlineLogixNG.getTextTrim();
+            pl.setLogixNG_SystemName(systemName);
+            InstanceManager.getDefault(LogixNG_Manager.class).registerSetupTask(() -> {
+                pl.setupLogixNG();
+            });
         }
-        p.getConditionalNG().getFemaleSocket().setName(logixNG_SocketName);
-        p.getConditionalNG().setSocketSystemName(logixNG_SocketSystemName);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class);

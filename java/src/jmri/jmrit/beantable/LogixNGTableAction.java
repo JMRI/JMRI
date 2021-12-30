@@ -6,11 +6,18 @@ import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.function.Predicate;
 
 import javax.swing.*;
 
-import jmri.InstanceManager;
-import jmri.Manager;
+import javax.swing.table.TableColumn;
+
+import jmri.*;
+import static jmri.jmrit.beantable.BeanTableDataModel.DELETECOL;
+import static jmri.jmrit.beantable.BeanTableDataModel.SYSNAMECOL;
+import static jmri.jmrit.beantable.BeanTableDataModel.USERNAMECOL;
+import static jmri.jmrit.beantable.BeanTableDataModel.VALUECOL;
+import jmri.jmrit.beantable.Bundle;
 import jmri.util.JmriJFrame;
 
 
@@ -57,8 +64,14 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
     @Override
+    protected void createModel() {
+        super.createModel();
+        m.setFilter((LogixNG t) -> !t.isInline());
+    }
+
+    @Override
     protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableFrame<LogixNG> f, BeanTableDataModel<LogixNG> m, String sName) {
-        return new LogixNGEditor(f, m, sName);
+        return new LogixNGEditor(m, sName);
     }
 
     @Override

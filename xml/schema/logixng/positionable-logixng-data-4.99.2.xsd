@@ -35,16 +35,7 @@
 -->
       </xs:annotation>
       <xs:sequence>
-        
-        <xs:element name="InlineSocket" minOccurs="0" maxOccurs="1">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-            
+        <xs:element name="InlineLogixNG_SystemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
       </xs:sequence>
     </xs:complexType>
 

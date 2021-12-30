@@ -20,7 +20,6 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
-import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.JmriJFrame;
@@ -39,7 +38,6 @@ import jmri.util.table.ButtonRenderer;
  */
 public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
-    BeanTableFrame<LogixNG> beanTableFrame;
     BeanTableDataModel<LogixNG> beanTableDataModel;
 
     LogixNG_Manager _logixNG_Manager = null;
@@ -66,12 +64,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     /**
      * Create a new ConditionalNG List View editor.
      *
-     * @param f the bean table frame
      * @param m the bean table model
      * @param sName name of the LogixNG being edited
      */
-    public LogixNGEditor(BeanTableFrame<LogixNG> f, BeanTableDataModel<LogixNG> m, String sName) {
-        this.beanTableFrame = f;
+    public LogixNGEditor(BeanTableDataModel<LogixNG> m, String sName) {
         this.beanTableDataModel = m;
         _logixNG_Manager = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         _curLogixNG = _logixNG_Manager.getBySystemName(sName);
@@ -1149,7 +1145,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         return;
                     }
                     x.setUserName(value);
-                    beanTableDataModel.fireTableDataChanged();
+
+                    if (beanTableDataModel != null) {
+                        beanTableDataModel.fireTableDataChanged();
+                    }
                 }
             });
         }
@@ -1182,7 +1181,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         return;
                     }
                     x.setUserName(value);
-                    beanTableDataModel.fireTableDataChanged();
+
+                    if (beanTableDataModel != null) {
+                        beanTableDataModel.fireTableDataChanged();
+                    }
                 }
             });
         }

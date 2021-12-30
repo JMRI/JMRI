@@ -28,6 +28,8 @@ import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
+import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.Roster;
@@ -164,8 +166,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     // store panelMenu state so preference is retained on headless systems
     private boolean panelMenuIsVisible = true;
 
-    private boolean _inEditInlineConditionalNGMode = false;
-    private jmri.jmrit.logixng.tools.swing.PositionableEditor _inlineConditionalNGEdit;
+    private boolean _inEditInlineLogixNGMode = false;
+    private jmri.jmrit.logixng.tools.swing.LogixNGEditor _inlineLogixNGEdit;
 
     public Editor() {
     }
@@ -1341,13 +1343,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @return true if this is the case, after showing dialog to user
      */
     private boolean checkEditConditionalNG() {
-        if (_inEditInlineConditionalNGMode) {
-            // Already editing a ConditionalNG, ask for completion of that edit
-            JOptionPane.showMessageDialog(_inlineConditionalNGEdit,
-                    Bundle.getMessage("Error_InlineConditionalNGInEditMode"), // NOI18N
+        if (_inEditInlineLogixNGMode) {
+            // Already editing a LogixNG, ask for completion of that edit
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error_InlineLogixNGInEditMode"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
-            _inlineConditionalNGEdit.setVisible(true);
+            _inlineLogixNGEdit.bringToFront();
             return true;
         }
         return false;
@@ -1372,17 +1374,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             public void actionPerformed(ActionEvent e) {
                 if (checkEditConditionalNG()) return;
 
-                jmri.jmrit.logixng.tools.swing.PositionableEditor treeEdit =
-                        new jmri.jmrit.logixng.tools.swing.PositionableEditor(p);
-                treeEdit.initComponents();
-                treeEdit.addListener(() -> {
-                    _inEditInlineConditionalNGMode = false;
+                if (p.getLogixNG() == null) {
+                    LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                            .createLogixNG(null, true);
+                    logixNG.setEnabled(true);
+                    p.setLogixNG(logixNG);
+                }
+                jmri.jmrit.logixng.tools.swing.LogixNGEditor logixNGEditor =
+                        new jmri.jmrit.logixng.tools.swing.LogixNGEditor(null, p.getLogixNG().getSystemName());
+                logixNGEditor.addEditorEventListener((HashMap<String, String> data) -> {
+                    _inEditInlineLogixNGMode = false;
                 });
-                treeEdit.setVisible(true);
-                _inEditInlineConditionalNGMode = true;
-                _inlineConditionalNGEdit = treeEdit;
-//                treeEdit.addHelpMenu(
-//                        "package.jmri.jmrit.logixng.PositionableEditor", true);  // NOI18N
+                logixNGEditor.bringToFront();
+                _inEditInlineLogixNGMode = true;
+                _inlineLogixNGEdit = logixNGEditor;
             }
         });
 /*

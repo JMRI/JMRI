@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.LogixNG;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -365,7 +365,13 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     /** {@inheritDoc} */
     @Override
-    public ConditionalNG getConditionalNG() {
+    public LogixNG getLogixNG() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG(LogixNG logixNG) {
         throw new UnsupportedOperationException("Not supported");
     }
 

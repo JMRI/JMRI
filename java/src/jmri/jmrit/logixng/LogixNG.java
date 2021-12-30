@@ -10,6 +10,22 @@ import jmri.NamedBean;
  */
 public interface LogixNG extends Base, NamedBean {
 
+    public static final String PROPERTY_INLINE = "IsInline";
+
+    /**
+     * Sets whether this LogixNG is inline or not.
+     *
+     * @param inline true if the LogixNG is inline, false otherwise
+     */
+    public void setInline(boolean inline);
+
+    /**
+     * Determines whether this LogixNG is inline or not.
+     *
+     * @return true if the LogixNG is inline, false otherwise
+     */
+    public boolean isInline();
+
     /**
      * Set whenether this LogixNG is enabled or disabled.
      * <P>
