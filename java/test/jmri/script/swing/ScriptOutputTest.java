@@ -1,4 +1,4 @@
-package jmri.script;
+package jmri.script.swing;
 
 import jmri.util.JUnitUtil;
 

@@ -18,7 +18,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
-import jmri.script.ScriptOutput;
+import jmri.script.swing.ScriptOutput;
 
 /**
  * Helper class for DefaultConditional that executes the  actions of a
