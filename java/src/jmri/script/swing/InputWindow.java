@@ -1,4 +1,4 @@
-package jmri.jmrit.jython;
+package jmri.script.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
@@ -304,7 +304,7 @@ public class InputWindow extends JPanel {
         }
     }
 
-    void buttonPressed() {
+    public void buttonPressed() {  // public for testing
         ScriptOutput.writeScript(area.getText());
         try {
             String language = languageIDs.get(languages.getSelectedIndex());

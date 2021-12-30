@@ -1,5 +1,6 @@
-package jmri.jmrit.jython;
+package jmri.script.swing;
 
+import jmri.script.swing.InputWindowAction;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

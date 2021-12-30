@@ -138,7 +138,7 @@ public class AppsMainMenu {
         scriptMenu.add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));  // NOI18N
         scriptMenu.add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));  // NOI18N
         scriptMenu.add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));  // NOI18N
-        scriptMenu.add(new jmri.jmrit.jython.InputWindowAction(rb.getString("MenuItemScriptInput")));  // NOI18N
+        scriptMenu.add(new jmri.script.swing.InputWindowAction(rb.getString("MenuItemScriptInput")));  // NOI18N
         menuBar.add(scriptMenu);
     }
 

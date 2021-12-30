@@ -1,5 +1,8 @@
 package jmri.jmrit.jython;
 
+import jmri.script.swing.InputWindowAction;
+import jmri.script.swing.InputWindow;
+
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
