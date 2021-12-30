@@ -8,7 +8,7 @@
 # documentation of org.apache.log4j.PropertyConfigurator
 # or jmri.org/help/en/html/doc/Technical/Logging.shtml
 
-# This configures three appenders:  J, R and A1.  J and R
+# This configures three appenders:  J, R and A.  J and R
 # are used routinely; A is for debugging use.
 
 # The R appender writes all logging output to the tests.log
