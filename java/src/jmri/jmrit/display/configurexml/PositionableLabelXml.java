@@ -607,6 +607,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
 
     public void loadLogixNG_Data(Positionable p, Element element) {
+        if (!(p instanceof PositionableLabel)) {
+            throw new RuntimeException("p is not a PositionableLabel");
+        }
         PositionableLabel pl = (PositionableLabel)p;
         Element logixNG_Element = element.getChild("LogixNG");
         if (logixNG_Element == null) return;
