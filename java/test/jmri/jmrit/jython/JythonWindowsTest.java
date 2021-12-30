@@ -51,7 +51,7 @@ public class JythonWindowsTest {
 
         // error messages are a fail
         if (jmri.util.JUnitAppender.clearBacklog(org.apache.log4j.Level.WARN) != 0) {
-            Assert.fail("Emitted error messages caused test to fail");
+           Assert.fail("Emitted error messages caused test to fail");
         }
     }
 

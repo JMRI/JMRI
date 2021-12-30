@@ -53,6 +53,9 @@ public class InputWindow extends JPanel {
     private UserPreferencesManager pref;
     JLabel status;
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
+
+    List<String> languageNames = new ArrayList<>();
+    List<String> languageIDs = new ArrayList<>();
     JComboBox<String> languages = new JComboBox<>();
 
     JFileChooser userFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
@@ -105,12 +108,15 @@ public class InputWindow extends JPanel {
         js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(js, BorderLayout.CENTER);
 
-        List<String> languageNames = new ArrayList<>();
+        // get list of language names (to display) and IDs (for call)
         JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
             String version = factory.getEngineVersion();
             if (version != null) {
                 String name = this.fileForLanguage(factory.getLanguageName());
-                if (!languageNames.contains(name)) languageNames.add(name);
+                if (!languageNames.contains(name)) {
+                    languageNames.add(name);
+                    languageIDs.add(factory.getLanguageName());
+                }
             }
         });
 
@@ -301,7 +307,8 @@ public class InputWindow extends JPanel {
     void buttonPressed() {
         ScriptOutput.writeScript(area.getText());
         try {
-            JmriScriptEngineManager.getDefault().eval(area.getText(), JmriScriptEngineManager.getDefault().getEngineByName((String) languages.getSelectedItem()));
+            String language = languageIDs.get(languages.getSelectedIndex());
+            JmriScriptEngineManager.getDefault().eval(area.getText(), JmriScriptEngineManager.getDefault().getEngineByName(language));
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }

@@ -31,7 +31,7 @@ import jmri.util.swing.WindowInterface;
   */
 public class AppsMainMenu {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");      // Link for script menu items  // NOI18N
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.jython.Bundle");      // Link for script menu items  // NOI18N
     static Action prefsAction;
 
     public AppsMainMenu() {
