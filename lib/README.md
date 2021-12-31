@@ -56,6 +56,7 @@ which checks the dates of the control files to make sure they've benen updated w
 
 #####  batik*
     batik-js-1.8.jar is a "patched version of Rhino" needed for native-image closure with batik 1.4
+            https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-js/1.8
 
 ##### jetty-*.jar
 - version 9.4.28.v20200408
