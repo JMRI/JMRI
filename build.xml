@@ -1846,6 +1846,17 @@
         </jar>
     </target>
 
+    <target name="native-image" depends="jar" description="create native launchers">
+        <exec executable="native-image"
+              failonerror="true">
+            <arg value="--verbose"/>
+            <arg value="-cp"/><arg value="jmri.jar"/>
+            <arg value="-Djava.library.path=${arch.lib.path}"/>
+            <arg value="apps.PanelPro.PanelPro"/>
+            <arg value="PanelPro"/>
+        </exec>
+    </target>
+
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="1536m"
