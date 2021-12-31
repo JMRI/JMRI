@@ -38,6 +38,9 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(p);
 
+        // Address part
+        add(addressDataPane());
+
         // disabled aspects controls
         TitledBorder disableborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         disableborder.setTitle(Bundle.getMessage("DisableAspectsLabel"));
@@ -45,6 +48,26 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
         disabledAspectsScroll.setBorder(disableborder);
         add(disabledAspectsScroll);
     }
+
+    JPanel addressDataPane() {
+        JPanel p = new JPanel();
+
+        TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        //border.setTitle("Mast Number");
+        p.setBorder(border);
+
+         p.setLayout(new jmri.util.javaworld.GridLayout2(1, 2));
+
+        p.add(aspectAddressLabel);
+
+        aspectAddressField.setText(paddedNumber.format(MqttSignalMast.getLastRef() + 1));
+        aspectAddressField.setEnabled(true);
+        p.add(aspectAddressField);
+
+        return p;
+    }
+    JLabel aspectAddressLabel = new JLabel(Bundle.getMessage("MakeLabel", "Address number:"));
+    JTextField aspectAddressField = new JTextField(5);
 
     /** {@inheritDoc} */
     @Override
@@ -101,6 +124,15 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
             return;
         }
 
+        aspectAddressField.setEnabled(false);
+        String[] pieces = mast.getSystemName().split("\\(");
+        if (pieces.length == 2) {
+            String number = pieces[1].substring(1, pieces[1].length()-1); // starts with ($)
+            aspectAddressField.setText(number);
+        } else {
+            log.warn("not just one '(' in {}",mast.getSystemName());
+        }
+
         currentMast = (MqttSignalMast) mast;
         List<String> disabled = currentMast.getDisabledAspects();
         if (disabled != null) {
@@ -130,7 +162,7 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
             String name = "IF$mqm:"
                     + sigsysname
                     + ":" + mastname.substring(11, mastname.length() - 4);
-            name += "($" + (paddedNumber.format(MqttSignalMast.getLastRef() + 1)) + ")";
+            name += "($" + aspectAddressField.getText()+ ")";
             currentMast = new MqttSignalMast(name);
             if (!username.isEmpty()) {
                 currentMast.setUserName(username);
@@ -148,6 +180,10 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
             }
         }
         currentMast.setAllowUnLit(allowUnLit.isSelected());
+
+        // update to next option
+        aspectAddressField.setText((paddedNumber.format(MqttSignalMast.getLastRef() + 1)));
+
         log.trace("createMast {} {} {} end", sigsysname, mastname, username);
         return true;
     }
