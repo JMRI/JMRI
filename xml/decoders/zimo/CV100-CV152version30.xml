@@ -1539,49 +1539,49 @@
       <enumChoice choice="Gradual brake application over 1sec from Stop" value="1">
         <choice>Gradual brake application over 1sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 1 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 1 vteřinu před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 1 sekundu před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 1 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 2sec from Stop" value="2">
         <choice>Gradual brake application over 2sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 2 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 2 vteřiny před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 2 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 2 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 3sec from Stop" value="3">
         <choice>Gradual brake application over 3sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 3 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 3 vteřiny před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 3 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 3 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 4sec from Stop" value="4">
         <choice>Gradual brake application over 4sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 4 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 4 vteřiny před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 4 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 4 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 5sec from Stop" value="5">
         <choice>Gradual brake application over 5sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 5 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 5 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 5 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 5 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 6sec from Stop" value="6">
         <choice>Gradual brake application over 6sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 6 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 6 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 6 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 6 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 7sec from Stop" value="7">
         <choice>Gradual brake application over 7sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 7 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 7 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 7 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 7 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 8sec from Stop" value="8">
         <choice>Gradual brake application over 8sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 8 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 8 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 8 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 8 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Full brake application at Stop" value="2">
