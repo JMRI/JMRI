@@ -198,6 +198,7 @@
         <pathelement location="${libdir}/batik-ext-1.14.jar"/>
         <pathelement location="${libdir}/batik-xml-1.14.jar"/>
         <pathelement location="${libdir}/batik-bridge-1.14.jar"/>
+        <pathelement location="${libdir}/batik-js-1.8.jar"/>
         <pathelement location="${libdir}/batik-gvt-1.14.jar"/>
         <pathelement location="${libdir}/batik-script-1.14.jar"/>
         <pathelement location="${libdir}/batik-awt-util-1.14.jar"/>
@@ -1851,6 +1852,9 @@
               failonerror="true">
             <arg value="--verbose"/>
             <arg value="-cp"/><arg value="jmri.jar"/>
+<!--
+            <arg value="~~no-fallback"/>
+ -->
             <arg value="-Djava.library.path=${arch.lib.path}"/>
             <arg value="apps.PanelPro.PanelPro"/>
             <arg value="PanelPro"/>

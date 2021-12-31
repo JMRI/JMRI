@@ -54,6 +54,9 @@ which checks the dates of the control files to make sure they've benen updated w
 - provides Javadoc markers of API stability
 - from https://github.org/apiguardian-team/apiguardian
 
+#####  batik*
+    batik-js-1.8.jar is a "patched version of Rhino" needed for native-image closure with batik 1.4
+
 ##### jetty-*.jar
 - version 9.4.28.v20200408
 - provides the HTTP and WebSocket servers
