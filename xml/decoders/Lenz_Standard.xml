@@ -577,7 +577,7 @@
         <tooltip xml:lang="de">Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))</tooltip>
         <label xml:lang="cs">Frekvence blikání pro výstupy C a D</label>
         <comment xml:lang="cs">Meze 0-255</comment>
-        <tooltip xml:lang="cs">Rychlost blikání: výchozí hodnota = 1 vteřina, f = 1 / (0,03 * (1 + hodnota)), (255 = 0,13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</tooltip>
+        <tooltip xml:lang="cs">Rychlost blikání: výchozí hodnota = 1 sekunda, f = 1 / (0,03 × (1 + hodnota)), (255 = 0,13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</tooltip>
       </variable>
       <variable item="Toggle effect (outputs C/D) with F1" CV="64" mask="XXXXXXXV" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
