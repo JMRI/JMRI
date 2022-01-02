@@ -121,8 +121,15 @@
 
         <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
 
+        <li>Restart the program.</li>
+        
+        <li>Open <strong>Preferences &rArr; Defaults</strong>. Check the default connection 
+        and correct it as shown. Click "Save".</li>
+        
         <li>Restart the program. You should be up and running.</li>
       </ol>
+
+      <a href="Z21-defaults.png"><img src="Z21-defaults.png" width="779" height="384" alt="Z21 Defaults"></a>
 
       <h3 id="RocoZ21Simulator">Connecting to the Roco Z21 Simulator</h3>
 
@@ -139,7 +146,7 @@
 
         <li>Restart the program. You should be up and running.</li>
       </ol>
-
+      
       <h2 id="tools">JMRI z21/Z21 Tools</h2>
 
       <p>The following tools are available from the menu when this connection is active:</p>
