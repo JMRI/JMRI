@@ -1869,7 +1869,7 @@
             <!-- <arg value="~~allow-incomplete-classpath"/> --><!-- remove on macOS for partial image build -->
 
             <arg value="-cp"/><arg value="jmri.jar"/>
-            <arg value="-Xmx8g"/>
+            <arg value="-Jmx8g"/>
             <arg value="-Djava.security.policy=${libdir}/security.policy"/>
             <arg value="-Dapple.laf.useScreenMenuBar=true"/>
             <arg value="-Dapple.awt.graphics.UseQuartz=true"/>
