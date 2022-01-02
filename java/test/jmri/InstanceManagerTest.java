@@ -116,6 +116,11 @@ public class InstanceManagerTest {
                 InstanceManager.getList(PowerManager.class).get(0));
         Assert.assertEquals("retrieved 2nd PowerManager", m2,
                 InstanceManager.getList(PowerManager.class).get(1));
+
+        Assert.assertEquals("access by string",
+                InstanceManager.getList(PowerManager.class),
+                InstanceManager.getList("jmri.PowerManager")
+            );
     }
 
     @Test
@@ -132,6 +137,22 @@ public class InstanceManagerTest {
 
         Assert.assertEquals("retrieved same PowerManager", m1, m2);
         Assert.assertEquals("retrieved same TurnoutManager", t1, t2);
+
+        Assert.assertEquals("access by string",
+                InstanceManager.getDefault(PowerManager.class),
+                InstanceManager.getDefault("jmri.PowerManager")
+            );
+
+    }
+
+    @Test
+    public void testGetInstance() throws ClassNotFoundException {
+        // first check a predicate - Class.forName returns same object always
+        Assert.assertTrue("access by string",
+                Class.forName("jmri.PowerManager") == Class.forName("jmri.PowerManager")
+            );
+
+
     }
 
     @Test
