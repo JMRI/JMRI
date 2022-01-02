@@ -153,7 +153,7 @@ public final class InstanceManager {
      * {@link #store}.
      *
      * Intended for use with i.e. scripts where access to the class type is inconvenient.
-     * In Java code where typing is enforced, use {@link getList(Class)}.
+     * In Java code where typing is enforced, use {@link #getList(Class)}.
      *
      * @param className Fully qualified class name
      * @return A list of type Objects registered with the manager or an empty
@@ -260,7 +260,7 @@ public final class InstanceManager {
      * {@link #store(java.lang.Object, java.lang.Class) }.
      *
      * Intended for use with i.e. scripts where access to the class type is inconvenient.
-     * In Java code where typing is enforced, use {@link getDefault(Class)}.
+     * In Java code where typing is enforced, use {@link #getDefault(Class)}.
      *
      * <p>
      * Unless specifically set, the default is the last object stored, see the
@@ -321,7 +321,7 @@ public final class InstanceManager {
      * {@link #store(java.lang.Object, java.lang.Class) }.
      *
      * Intended for use with i.e. scripts where access to the class type is inconvenient.
-     * In Java code where typing is enforced, use {@link getNullableDefault(Class)}.
+     * In Java code where typing is enforced, use {@link #getNullableDefault(Class)}.
      * <p>
      * Unless specifically set, the default is the last object stored, see the
      * {@link #setDefault(java.lang.Class, java.lang.Object) } method.
