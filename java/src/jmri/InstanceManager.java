@@ -158,6 +158,7 @@ public final class InstanceManager {
      * @param className Fully qualified class name
      * @return A list of type Objects registered with the manager or an empty
      *         list.
+     * @throws IllegalArgumentException if the named class doesn't exist
      */
     @Nonnull
     public static List<Object> getList(@Nonnull String className) {
@@ -278,6 +279,7 @@ public final class InstanceManager {
      * @param className Fully qualified class name
      * @return The default object for type
      * @throws NullPointerException if no default object for type exists
+     * @throws IllegalArgumentException if the named class doesn't exist
      * @see #getNullableDefault(java.lang.Class)
      * @see #getOptionalDefault(java.lang.Class)
      */
@@ -336,6 +338,7 @@ public final class InstanceManager {
      *
      * @param className Fully qualified class name
      * @return The default object for type.
+     * @throws IllegalArgumentException if the named class doesn't exist
      * @see #getOptionalDefault(java.lang.Class)
      */
     @CheckForNull
@@ -870,6 +873,7 @@ public final class InstanceManager {
      * @param className Fully qualified class name
      * @return a list of registered instances with the manager or an empty
      *         list
+     * @throws IllegalArgumentException if the named class doesn't exist
      */
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull

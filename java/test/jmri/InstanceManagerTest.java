@@ -147,11 +147,12 @@ public class InstanceManagerTest {
 
     @Test
     public void testGetInstance() throws ClassNotFoundException {
-        // first check a predicate - Class.forName returns same object always
+        // for sync usage, check a predicate - Class.forName returns same object always
         Assert.assertTrue("access by string",
                 Class.forName("jmri.PowerManager") == Class.forName("jmri.PowerManager")
             );
-
+        // the rest of the checks are done via calls to getInstance
+        // embedded in various other tests
 
     }
 
