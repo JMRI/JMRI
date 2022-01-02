@@ -44,6 +44,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     JRadioButton _typeInternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTable"));
     ButtonGroup _buttonGroup = new ButtonGroup();
     JTextField _csvFileName = new JTextField(50);
+    JLabel _labelCsvTabSeparated = new JLabel(Bundle.getMessage("LogixNG_labelCsvTabSeparated"));
 
     /**
      * Create a LogixNGTableAction instance.
@@ -302,6 +303,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         panel99.setLayout(new BoxLayout(panel99, BoxLayout.Y_AXIS));
         panel99.add(_typeExternalTable, c);
         panel99.add(_typeInternalTable, c);
+        panel99.add(_labelCsvTabSeparated, c);
         panel98.add(panel99);
         contentPane.add(panel98);
 
