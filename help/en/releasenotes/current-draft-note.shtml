@@ -465,6 +465,8 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
+            <li>Added simpler accessors to InstanceManager for use in scripts. See
+                jython/test/InstanceManagerTest.py</li>
         </ul>
 
     <h3>Signals</h3>
