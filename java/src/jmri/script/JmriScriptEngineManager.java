@@ -50,8 +50,6 @@ import jmri.util.FileUtilSupport;
 import org.apache.commons.io.FilenameUtils;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide a manager for {@link javax.script.ScriptEngine}s. The following
@@ -78,12 +76,11 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     private final HashMap<String, ScriptEngine> engines = new HashMap<>();
     private final ScriptContext context;
 
-    private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
     // should be replaced with default context
     // package private for unit testing
     static final String JYTHON_DEFAULTS = "jmri_defaults.py";
     private static final String EXTENSION = "extension";
-    public static final String PYTHON = "jython";
+    public static final String JYTHON = "jython";
     private PythonInterpreter jython = null;
 
     /**
@@ -93,27 +90,31 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      */
     public JmriScriptEngineManager() {
         this.manager.getEngineFactories().stream().forEach(factory -> {
-            log.info("{} {} is provided by {} {}",
-                    factory.getLanguageName(),
-                    factory.getLanguageVersion(),
-                    factory.getEngineName(),
-                    factory.getEngineVersion());
-            String engineName = factory.getEngineName();
-            factory.getExtensions().stream().forEach(extension -> {
-                names.put(extension, engineName);
-                log.debug("\tExtension: {}", extension);
-            });
-            factory.getMimeTypes().stream().forEach(mimeType -> {
-                names.put(mimeType, engineName);
-                log.debug("\tMime type: {}", mimeType);
-            });
-            factory.getNames().stream().forEach(name -> {
-                names.put(name, engineName);
-                log.debug("\tNames: {}", name);
-            });
-            this.names.put(factory.getLanguageName(), engineName);
-            this.names.put(engineName, engineName);
-            this.factories.put(engineName, factory);
+            if (factory.getEngineVersion() != null) {
+                log.trace("{} {} is provided by {} {}",
+                        factory.getLanguageName(),
+                        factory.getLanguageVersion(),
+                        factory.getEngineName(),
+                        factory.getEngineVersion());
+                String engineName = factory.getEngineName();
+                factory.getExtensions().stream().forEach(extension -> {
+                    names.put(extension, engineName);
+                    log.trace("\tExtension: {}", extension);
+                });
+                factory.getMimeTypes().stream().forEach(mimeType -> {
+                    names.put(mimeType, engineName);
+                    log.trace("\tMime type: {}", mimeType);
+                });
+                factory.getNames().stream().forEach(name -> {
+                    names.put(name, engineName);
+                    log.trace("\tNames: {}", name);
+                });
+                this.names.put(factory.getLanguageName(), engineName);
+                this.names.put(engineName, engineName);
+                this.factories.put(engineName, factory);
+            } else {
+                log.debug("Skipping {} due to null version, i.e. not operational; do you have GraalVM installed?", factory.getEngineName());
+            }
         });
 
         // this should agree with help/en/html/tools/scripting/Start.shtml
@@ -159,6 +160,8 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("FileUtil", FileUtilSupport.getDefault());
         this.context = new SimpleScriptContext();
         this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
+        this.context.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
+        log.trace("end init context {} bindings {}", context, bindings);
     }
 
     /**
@@ -239,15 +242,17 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      */
     @CheckForNull
     public ScriptEngine getEngine(@CheckForNull String name) {
+        log.debug("getEngine(\"{}\")", name);
         if (!engines.containsKey(name)) {
             name = names.get(name);
             ScriptEngineFactory factory;
-            if (PYTHON.equals(name)) {
+            if (JYTHON.equals(name)) {
                 // Setup the default python engine to use the JMRI python
                 // properties
+                log.trace("   initializePython");
                 initializePython();
             } else if ((factory = factories.get(name)) != null) {
-                log.debug("Create engine for {}", name);
+                log.trace("   Create engine for {} context {}", name, context);
                 ScriptEngine engine = factory.getScriptEngine();
                 engine.setContext(context);
                 engines.put(name, engine);
@@ -265,7 +270,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws javax.script.ScriptException if there is an error in the script.
      */
     public Object eval(String script, ScriptEngine engine) throws ScriptException {
-        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+        if (JYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             this.jython.exec(script);
             return null;
         }
@@ -370,7 +375,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     @CheckForNull
     private ScriptEngine getEngineOrEval(File file) throws ScriptException, IOException {
         ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
-        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+        if (JYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
                 this.jython.execfile(fi);
             }
@@ -492,7 +497,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * Python ScriptEngine.
      */
     public void initializePython() {
-        if (!this.engines.containsKey(PYTHON)) {
+        if (!this.engines.containsKey(JYTHON)) {
             initializePythonInterpreter(initializePythonState());
         }
     }
@@ -561,9 +566,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         // Create the interpreter
         try {
             log.debug("create interpreter");
-            ScriptEngine python = this.manager.getEngineByName(PYTHON);
+            ScriptEngine python = this.manager.getEngineByName(JYTHON);
             python.setContext(this.context);
-            engines.put(PYTHON, python);
+            engines.put(JYTHON, python);
             InputStream is = FileUtil.findInputStream(JYTHON_DEFAULTS,
                     FileUtil.getUserFilesPath(),
                     FileUtil.getProfilePath(),
@@ -604,4 +609,6 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         return new ScriptException(String.format("Could not find script engine%s for %s \"%s\" expected one of %s",
                 factory, type, key, expected));
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriScriptEngineManager.class);
 }

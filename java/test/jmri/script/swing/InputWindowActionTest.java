@@ -1,5 +1,6 @@
-package jmri.script;
+package jmri.script.swing;
 
+import jmri.script.swing.InputWindowAction;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -9,11 +10,11 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ScriptOutputTest {
+public class InputWindowActionTest {
 
     @Test
     public void testCTor() {
-        ScriptOutput t = new ScriptOutput();
+        InputWindowAction t = new InputWindowAction();
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +28,6 @@ public class ScriptOutputTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScriptOutputTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(InputWindowActionTest.class);
 
 }

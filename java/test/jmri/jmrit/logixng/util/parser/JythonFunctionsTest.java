@@ -18,7 +18,7 @@ import org.junit.Test;
 
 /**
  * Test that you can create functions in Jython to be used by formula
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class JythonFunctionsTest {
@@ -26,7 +26,7 @@ public class JythonFunctionsTest {
     @Test
     public void testJythonFunction() throws ScriptException, ClassNotFoundException, NoSuchMethodException, SecurityException, ParserException, JmriException {
         jmri.script.JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
-        
+
         String myScript = ""
                 + "import jmri\n"
                 + "\n"
@@ -47,15 +47,15 @@ public class JythonFunctionsTest {
                 + "\n"
                 + "\n"
                 + "jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put(\"jythonTest\", MyFunction())\n";
-        
+
 //        System.out.format("%s%n", myScript);
-        
+
         AtomicBoolean exceptionIsThrown = new AtomicBoolean(false);
         Map<String, Variable> _variables = new HashMap<>();
         RecursiveDescentParser t = new RecursiveDescentParser(_variables);
-        
+
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
-        
+
         try {
             t.parseExpression("jythonTest(8)");
         } catch (FunctionNotExistsException e) {
@@ -64,14 +64,14 @@ public class JythonFunctionsTest {
             exceptionIsThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
-        
+
         // Load script
-        scriptEngineManager.eval(myScript, scriptEngineManager.getEngineByName(jmri.script.JmriScriptEngineManager.PYTHON));
-        
+        scriptEngineManager.eval(myScript, scriptEngineManager.getEngineByName(jmri.script.JmriScriptEngineManager.JYTHON));
+
         ExpressionNode exprNode = t.parseExpression("jythonTest(8)");
         Assert.assertEquals("expression matches", "Function:jythonTest(IntNumber:8)", exprNode.getDefinitionString());
         Assert.assertEquals("calculate is correct", 27.2, (Double)exprNode.calculate(symbolTable), 0.00001);
-        
+
         exceptionIsThrown.set(false);
         try {
             t.parseExpression("jythonTest()").calculate(symbolTable);
@@ -81,7 +81,7 @@ public class JythonFunctionsTest {
             exceptionIsThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
-        
+
         exceptionIsThrown.set(false);
         try {
             t.parseExpression("jythonTest(8,\"Hello\")").calculate(symbolTable);
@@ -92,7 +92,7 @@ public class JythonFunctionsTest {
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -111,5 +111,5 @@ public class JythonFunctionsTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

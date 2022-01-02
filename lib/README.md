@@ -48,6 +48,9 @@ which checks the dates of the control files to make sure they've benen updated w
         apps/JavaVersionCheckWindow.class
         % rm apps/*.class
 
+##### jmri.script.jsr223graalpython.jar
+- Encapsulation of GraalVM-specific code.
+- See java/graalvm/README.MD for build instructions
 
 ##### apiguardian-api-1.1.0.jar
 - version 1.1.0

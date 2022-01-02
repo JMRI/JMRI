@@ -1,4 +1,4 @@
-package jmri.jmrit.jython;
+package jmri.script.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.MissingResourceException;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 import javax.swing.JButton;
@@ -29,7 +31,7 @@ import javax.swing.text.BadLocationException;
 import jmri.UserPreferencesManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.swing.ScriptFileChooser;
-import jmri.script.ScriptOutput;
+import jmri.script.swing.ScriptOutput;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import org.python.google.common.io.Files;
@@ -51,6 +53,9 @@ public class InputWindow extends JPanel {
     private UserPreferencesManager pref;
     JLabel status;
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
+
+    List<String> languageNames = new ArrayList<>();
+    List<String> languageIDs = new ArrayList<>();
     JComboBox<String> languages = new JComboBox<>();
 
     JFileChooser userFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
@@ -103,11 +108,19 @@ public class InputWindow extends JPanel {
         js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(js, BorderLayout.CENTER);
 
-        ArrayList<String> names = new ArrayList<>();
+        // get list of language names (to display) and IDs (for call)
         JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
-            names.add(factory.getLanguageName());
+            String version = factory.getEngineVersion();
+            if (version != null) {
+                String name = this.fileForLanguage(factory.getLanguageName());
+                if (!languageNames.contains(name)) {
+                    languageNames.add(name);
+                    languageIDs.add(factory.getLanguageName());
+                }
+            }
         });
-        languages = new JComboBox<>(names.toArray(new String[names.size()]));
+
+        languages = new JComboBox<>(languageNames.toArray(new String[languageNames.size()]));
         if (pref.getComboBoxLastSelection(languageSelection) != null) {
             languages.setSelectedItem(pref.getComboBoxLastSelection(languageSelection));
         }
@@ -160,6 +173,18 @@ public class InputWindow extends JPanel {
 
     }
 
+    private String fileForLanguage(String language) {
+        try {
+            return Bundle.getMessage(language);
+        } catch (MissingResourceException ex) {
+            log.warn("Translation not found for language \"{}\"", language);
+            if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
+                return language + " " + Bundle.getMessage("files");
+            }
+            return language;
+        }
+    }
+
     // This helper function updates the status bar with the line number and column number.
     private void updateStatus(int linenumber, int columnnumber) {
         status.setText("    " + linenumber + ":" + columnnumber);
@@ -181,7 +206,7 @@ public class InputWindow extends JPanel {
                     languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactoryByExtension(Files.getFileExtension(file.getName())).getLanguageName());
                 } catch (ScriptException npe) {
                     log.error("Unable to identify script language for {}, assuming its Python.", file);
-                    languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactory(JmriScriptEngineManager.PYTHON).getLanguageName());
+                    languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactory(JmriScriptEngineManager.JYTHON).getLanguageName());
                 }
                 StringBuilder fileData = new StringBuilder(1024);
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -279,10 +304,11 @@ public class InputWindow extends JPanel {
         }
     }
 
-    void buttonPressed() {
+    public void buttonPressed() {  // public for testing
         ScriptOutput.writeScript(area.getText());
         try {
-            JmriScriptEngineManager.getDefault().eval(area.getText(), JmriScriptEngineManager.getDefault().getEngineByName((String) languages.getSelectedItem()));
+            String language = languageIDs.get(languages.getSelectedIndex());
+            JmriScriptEngineManager.getDefault().eval(area.getText(), JmriScriptEngineManager.getDefault().getEngineByName(language));
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }

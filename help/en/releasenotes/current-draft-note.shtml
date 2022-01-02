@@ -465,6 +465,9 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
+            <li>Initial
+                <a href="https://jmri.org/help/en/html/tools/scripting/Python3.shtml">Python 3 support</a>
+                is available.
         </ul>
 
     <h3>Signals</h3>

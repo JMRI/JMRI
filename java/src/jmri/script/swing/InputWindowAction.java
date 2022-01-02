@@ -1,9 +1,13 @@
-package jmri.jmrit.jython;
+package jmri.script.swing;
+
+import jmri.script.swing.InputWindow;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+
 import jmri.util.JmriJFrame;
 
 /**

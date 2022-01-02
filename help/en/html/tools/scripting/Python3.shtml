@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+ 	JMRI: Python 3 Introduction
+    </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI Python3 Scripting"> <!-- make these specific, always include JMRI -->
+    <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+
+    <div id="mBody">
+        <!--#include virtual="Sidebar.shtml" --> <!-- choose from local ("Sidebar.shtml") or global ("/Sidebar.shtml") -->
+    <div id="mainContent">
+
+	    <div id="teaser"> <!-- Optional -->
+		    <p>JMRI's support for Python 3 is under development.  We expect
+		       there to be changes before its production release in JMRI 5.</p>
+
+		    <p class="important"><span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.99.2.shtml">JMRI 4.99.2</a></span>
+		    	Python 3 support is only available in JMRI test release 4.99.2 or later.
+		    	Make sure to check the release notes of the JMRI version you're using!
+		    </p>
+	    </div> <!-- closes #teaser-->
+
+	    <!-- -------- -->
+	    <!-- Page TOC --> <!-- Optional -->
+	    <!-- -------- -->
+
+<!--
+	    <h1>Optional Table of Contents</h1>
+	    <p>For a complicated page - like a user guide or technical reference</p>
+	    <dl class="toc">
+		<dt><a href="#topic1">TOC entry 1</a></dt>
+		<dt><a href="#topic2">TOC entry 2</a></dt>
+		<dd>Some descriptive info about this TOC entry</dd>
+		<dt><a href="#topic3">TOC entry 3</a></dt>
+		<dd>
+		    <ol>
+		    <li>a list of sub items</li>
+		    <li>a list of sub items</li>
+		    <li>a list of sub items</li>
+		    <li>a list of sub items</li>
+		    </ol>
+		</dd>
+		<dt><a href="#topic4">TOC entry 4</a></dt>
+		<dd>Some info about this TOC entry</dd>
+	    </dl>
+	    <p>Alternatively, a simpler page may only need a simple TOC:</p>
+	    <ul class="snav">
+		<li><a href="#topic1">TOC entry 1</a></li>
+		<li><a href="#topic2">TOC entry 2</a></li>
+		<li><a href="#topic3">TOC entry 3</a></li>
+		<li><a href="#topic4">TOC entry 4</a></li>
+	    </ul>
+	    <p>Choose one (or neither) ...</p>
+ -->
+
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <h1>Python 3 Introduction</h1>
+		<div class="section">
+		    <h2>Getting Started</h2>
+
+            JMRI's Python 3 support is provided, in part,
+            by running on a
+            <a href="https://www.graalvm.org">GraalVM</a>
+            virtual machine instead of the usual
+            Java Runtime Environment.
+            The first step is to install a GraalVM on your computer.
+            <p>
+            To do that, follow
+            <a href="https://www.graalvm.org/docs/getting-started/#install-graalvm">the GraalVM install instructions</a>
+            to install a Java 11 version.
+            <p>
+            Once you do that and start JMRI, a "Python 3" choice should appear in the
+            language selector in the Script Input Window, and the file choosers for
+            running scripts should give you a similar choice.
+            <p>
+            Our convention is that Python 3 files use a .py3 extension.
+
+		</div>
+
+		<div class="section">
+		    <h2>Differences from Jython (Python 2.7) Syntax</h2>
+
+            <ul>
+            <li>Scripts should start with
+                <pre><code class="block">
+    import jmri as jmri
+    import java
+    exec( open("jython/jmri_bindings.py3").read() )
+            </code></pre>
+                The third line is the Py3 syntax to read and execute another script file.
+                In this case, it reads and executes the file that defines a number of
+                symbols like `THROWN``, `turnouts`, etc.
+            <li>
+                The syntax for getting a class reference has changed.  The only
+                place you're likely to see that is in InstanceManager calls.  They become:
+                <pre><code class="block">
+    manager = jmri.InstanceManager.getNullableDefault(java.type('jmri.MyManager'))
+            </code></pre>
+
+            <li>
+                Print statements need to have their value enclosed in parentheses:
+                <pre><code class="block">
+    print (123)
+            </code></pre>
+
+            <li>
+                Constants are not inherited:
+                You have to reference <code>DigitalIO.ON</code>, not <code>Light.ON</code>.
+
+            <li>
+                Unlike Jython, JMRI's Python 3 can address (almost) any of the
+                Python libraries you have installed on your computer.
+		</div>
+
+        <!--#include virtual="/Footer.shtml" -->
+
+    </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+    <script src="/js/main.js"></script>
+</body>
+</html>
