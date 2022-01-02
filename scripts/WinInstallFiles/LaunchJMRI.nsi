@@ -162,7 +162,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "(C) 1997-2021 JMRI Community" ; Copyright string
+!define COPYRIGHT  "(C) 1997-2022 JMRI Community" ; Copyright string
 !define VER        "0.1.27.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
@@ -330,7 +330,7 @@ Section "Main"
     ; -- Gotta love the spaghetti...
     SetErrors
     Goto FoundJavaInstallPoint
-    
+
   DisableAltLauncher:
     DetailPrint "Switching off alternate launcher..."
     StrCpy $ALTLAUNCH ${FLAG_NO}
@@ -601,7 +601,7 @@ Section "Main"
 
   ; -- Check the return code is 200 - if so, shutdown
   StrCmp $7 200 Shutdown
-  
+
   ; -- Check the return code is 210 - if so, reboot
   StrCmp $7 210 Reboot PreExit
 
@@ -775,7 +775,7 @@ Function ProcessParameters
   ; -- $1 already contains complete option with '--cp:p=' prefix
   StrCpy $P_CLASSPATH $1 "" 7 ; strip first 7 chars
   Return
-  
+
   optsNoAlt:
   StrCpy $ALTLAUNCH ${FLAG_NO}
   Return
