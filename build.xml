@@ -1864,11 +1864,20 @@
         <exec executable="native-image"
               failonerror="true">
             <arg value="--verbose"/>
+
+            <!-- <arg value="~~no-fallback"/> --> <!-- remove on macOS for partial image build -->
+            <!-- <arg value="~~allow-incomplete-classpath"/> --><!-- remove on macOS for partial image build -->
+
             <arg value="-cp"/><arg value="jmri.jar"/>
-<!--
-            <arg value="~~no-fallback"/>
- -->
-            <arg value="-Djava.library.path=${arch.lib.path}"/>
+            <arg value="-Djava.security.policy=${libdir}/security.policy"/>
+            <arg value="-Dapple.laf.useScreenMenuBar=true"/>
+            <arg value="-Dapple.awt.graphics.UseQuartz=true"/>
+            <arg value="-Dapple.awt.graphics.EnableQ2DX=true"/>
+            <arg value="-Dlog4j.ignoreTCL=true/"/>
+            <arg value="-Dfile.encoding=UTF-8"/>
+            <arg value="-Djava.library.path.:${arch.lib.path}:${libdir}"/>
+            <arg value="-Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/><!-- not in tests, left here for historical reasons -->
+
             <arg value="apps.PanelPro.PanelPro"/>
             <arg value="PanelPro"/>
         </exec>
