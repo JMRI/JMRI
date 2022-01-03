@@ -18,14 +18,14 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Define the copyright year for the output page
      In batch work via running Ant, this is defined
      via the build.xml file
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -39,7 +39,7 @@
      elements, which is what the apply-templates instruction does.
      We can also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='idtagtable'>
 <html>
 <head>

@@ -68,7 +68,7 @@
         <label>
           <text>Entered value multiplied by 0.4 seconds is the additional accel/decel</text>
           <text xml:lang="it">Il valore x 0,4 è il valore sommato a CV3 e CV4</text>
-          <text xml:lang="cs">zadaná hodnota vynásobená 0,4 vteřiny je další zrychlení/zpomalení</text>
+          <text xml:lang="cs">zadaná hodnota vynásobená 0,4 sekundy je další zrychlení/zpomalení</text>
           <text xml:lang="de">Der eingegebene Wert, multipliziert mit 0,4, wird den Werten in</text>
         </label>
         <label>
@@ -125,13 +125,13 @@
             <label>
               <text>1 = Normal recognition (0.5s)</text>
               <text xml:lang="it">1 = Normale (0,5 sec)</text>
-              <text xml:lang="cs">1 = Normální (0,5 vteřiny)</text>
+              <text xml:lang="cs">1 = Normální (0,5 sekundy)</text>
               <text xml:lang="de">1 = Normal (0,5 sec)</text>
             </label>
             <label>
               <text>2 = Slow recognition (1s)</text>
               <text xml:lang="it">2 = Bassa (1 sec)</text>
-              <text xml:lang="cs">2 = Pomalé rozpoznání (1 vteřina)</text>
+              <text xml:lang="cs">2 = Pomalé rozpoznání (1 sekunda)</text>
               <text xml:lang="de">2 = Langsam (1 sec)</text>
             </label>
           </column>
