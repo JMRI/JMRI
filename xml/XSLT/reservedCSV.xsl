@@ -6,7 +6,7 @@
 <!-- This made from the readme2html.xsl file of TestXSLT 2.7 -->
 
 
-<!-- This file is part of JMRI.  Copyright 2007-2013.                            -->
+<!-- This file is part of JMRI.  Copyright 2007-2013.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,13 +17,13 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use text output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
-<xsl:output method="text" encoding="ISO-8859-1" 
+<xsl:output method="text" encoding="ISO-8859-1"
 	indent="no"
 	omit-xml-declaration="yes"
 	standalone="no" />
@@ -47,7 +47,7 @@
 				<xsl:value-of select="@num" />
 				<xsl:text>"</xsl:text>
 			</xsl:for-each>
-	
+
 	<xsl:text>
 </xsl:text>  <!-- thats a newline with no whitespace -->
 
@@ -55,7 +55,7 @@
 
 <!-- Find family nodes, and process the files they reference -->
 <xsl:template match="familyList">
-	
+
 	<xsl:for-each select="family">
            <xsl:if test="not( @mfg = 'NMRA' )" >
 		<xsl:variable name="filename" select="@file" />
