@@ -29,6 +29,8 @@
       IT3, ..., IT10 to thrown. You can then use the <strong>For</strong> action to iterate from 1
       to 10 and to set each of these turnouts to thrown.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3>The Formula expressions</h3>
 
       <p>There are three expressions for formula: Analog Formula, Digital Formula and String
@@ -40,6 +42,8 @@
       a child E1 to which an expression Sensor is connected, you can use the result of the
       expression Sensor in the formula by the identifier E1 which points to the female socket and
       its connected expression.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h3>Operators</h3>
 
@@ -58,6 +62,18 @@
           </tr>
 
           <tr>
+            <td>v++<br>v--</td>
+            <td>post-increment<br>post-decrement</td>
+            <td>not associative</td>
+          </tr>
+
+          <tr>
+            <td>++v<br>--v</td>
+            <td>pre-increment<br>pre-decrement</td>
+            <td>right to left</td>
+          </tr>
+
+          <tr>
             <td>-</td>
             <td>unary minus</td>
             <td>right to left</td>
@@ -66,6 +82,12 @@
           <tr>
             <td>!</td>
             <td>unary logical NOT</td>
+            <td>right to left</td>
+          </tr>
+
+          <tr>
+            <td>~</td>
+            <td>unary bitwise NOT</td>
             <td>right to left</td>
           </tr>
 
@@ -80,6 +102,18 @@
             +</td>
             <td>additive<br>
             string concatenation</td>
+            <td>left to right</td>
+          </tr>
+
+          <tr>
+            <td>&lt;&lt;<br>
+            &gt;&gt;<br>
+            &gt;&gt;&gt;
+            </td>
+            <td>shift left<br>
+            shift right<br>
+            unsigned shift right
+            </td>
             <td>left to right</td>
           </tr>
 
@@ -117,7 +151,10 @@
 
           <tr>
             <td>= += -=<br>
-            *= /= %=</td>
+            *= /= %=<br>
+            &amp;= |= ^=<br>
+            &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;=
+            </td>
             <td>assignment</td>
             <td>right to left</td>
           </tr>
@@ -146,6 +183,8 @@
         "500"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3>Functions</h3>
 
       <p>Formula supports functions, like sin(x) and random(). Some functions takes one or several
@@ -167,6 +206,56 @@
       <p>For JMRI developers: The functions are defined in the package
       <em>jmri.jmrit.logixng.util.parser.functions</em> and each module has its own Java class.
       Each function is its own class that implements the <em>Function</em> interface.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Function Lists</h4>
+      <ul>
+        <li>Clock
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_clock.png"><img src=
+            "images/chapter9/functions_clock.png" alt="Chapter 9 clock functions"
+            width="435" height="44"></a>
+          </div>
+        </li>
+        <li>Convert
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_convert.png"><img src=
+            "images/chapter9/functions_convert.png" alt="Chapter 9 convert functions"
+            width="435" height="116"></a>
+          </div>
+        </li>
+        <li>Layout<span class="since">since 4.25.8</span>
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_layout.png"><img src=
+            "images/chapter9/functions_layout.png" alt="Chapter 9 layout functions"
+            width="435" height="296"></a>
+          </div>
+        </li>
+        <li>Math
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_math.png"><img src=
+            "images/chapter9/functions_math.png" alt="Chapter 9 math functions"
+            width="435" height="62"></a>
+          </div>
+        </li>
+        <li>NamedBean
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_named_bean.png"><img src=
+            "images/chapter9/functions_named_bean.png" alt="Chapter 9 named bean functions"
+            width="435" height="44"></a>
+          </div>
+        </li>
+        <li>String
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_string.png"><img src=
+            "images/chapter9/functions_string.png" alt="Chapter 9 string functions"
+            width="435" height="26"></a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Documentation of the functions</h4>
 
@@ -206,6 +295,8 @@
         <a href="images/chapter9/function_4.png"><img src="images/chapter9/function_4.png" alt=
         "Chapter 9 random functions" width="500" height="621"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h3>Advanced: Add new function with Jython</h3>
 
@@ -269,6 +360,8 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
         </pre>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Calculate the function</h4>
 
       <p>The function <strong>calculate</strong> takes a number of arguments as a
@@ -283,6 +376,8 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
 
       <p>We then do the calculation, which in this case multiplies the first argument with 3.4 and
       then returns the value.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Important!</h4>
 

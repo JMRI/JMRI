@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.ExpressionNodeIntegerNumber;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeString;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeTrue;
@@ -40,8 +41,10 @@ public class ConvertFunctionsTest {
     ExpressionNode expr0_95 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "0.95", 0));
     ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
     ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
-    ExpressionNode expr12 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12", 0));
-    ExpressionNode expr23 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "23", 0));
+    ExpressionNode expr12 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "12", 0));
+    ExpressionNode expr23 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "23", 0));
+    ExpressionNode expr2FA5 = new ExpressionNodeString(new Token(TokenType.NONE, "2FA5", 0));
+    ExpressionNode exprC352 = new ExpressionNodeString(new Token(TokenType.NONE, "c352", 0));
     
     
     private List<ExpressionNode> getParameterList(ExpressionNode... exprNodes) {
@@ -60,6 +63,97 @@ public class ConvertFunctionsTest {
                 Bundle.getMessage(Locale.CANADA, "WrongNumberOfParameters1", "sin"));
         // Test Bundle.retry(Locale, String)
         Assert.assertEquals("strings matches","Item",Bundle.getMessage("CategoryItem"));
+        
+        Assert.assertNotNull(Bundle.getMessage("Convert.isInt"));
+        Assert.assertNotNull(Bundle.getMessage("Convert.isFloat"));
+        Assert.assertNotNull(Bundle.getMessage("Convert.int"));
+        Assert.assertNotNull(Bundle.getMessage("Convert.float"));
+        Assert.assertNotNull(Bundle.getMessage("Convert.str_Descr"));
+        Assert.assertNotNull(Bundle.getMessage("Convert.hex2dec"));
+    }
+    
+    @Test
+    public void testIsIntFunction() throws Exception {
+        ConvertFunctions.IsIntFunction isIntFunction = new ConvertFunctions.IsIntFunction();
+        Assert.assertEquals("strings matches", "isInt", isIntFunction.getName());
+        Assert.assertEquals("strings matches", "isInt", new ConvertFunctions.IsIntFunction().getName());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            isIntFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_boolean_true)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_HELLO)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_RAD)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_DEG)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_0_34)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr0_34)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr0_95)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr12_34)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr25_46)));
+        Assert.assertTrue((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr12)));
+        Assert.assertTrue((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr23)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr2FA5)));
+        Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(exprC352)));
+        
+        // Test wrong number of parameters
+        hasThrown.set(false);
+        try {
+            isIntFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+    }
+    
+    @Test
+    public void testIsFloatFunction() throws Exception {
+        ConvertFunctions.IsFloatFunction isFloatFunction = new ConvertFunctions.IsFloatFunction();
+        Assert.assertEquals("strings matches", "isFloat", isFloatFunction.getName());
+        Assert.assertEquals("strings matches", "isFloat", new ConvertFunctions.IsFloatFunction().getName());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            isFloatFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_boolean_true)));
+        Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_HELLO)));
+        Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_RAD)));
+        Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_DEG)));
+        Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_0_34)));
+        Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr0_34)));
+        Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr0_95)));
+        Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr12_34)));
+        Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr25_46)));
+        Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr12)));
+        Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr23)));
+        Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr2FA5)));
+        Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(exprC352)));
+        
+        // Test wrong number of parameters
+        hasThrown.set(false);
+        try {
+            isFloatFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
     }
     
     @Test
@@ -87,6 +181,39 @@ public class ConvertFunctionsTest {
         hasThrown.set(false);
         try {
             intFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+    }
+    
+    @Test
+    public void testHex2DecFunction() throws Exception {
+        ConvertFunctions.Hex2DecFunction hex2DecFunction = new ConvertFunctions.Hex2DecFunction();
+        Assert.assertEquals("strings matches", "hex2dec", hex2DecFunction.getName());
+        Assert.assertEquals("strings matches", "hex2dec", new ConvertFunctions.Hex2DecFunction().getName());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            hex2DecFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertEquals("numbers are equal", 18L, hex2DecFunction.calculate(symbolTable, getParameterList(expr12)));
+        Assert.assertEquals("numbers are equal", 35L, hex2DecFunction.calculate(symbolTable, getParameterList(expr23)));
+        Assert.assertEquals("numbers are equal", 12197L, hex2DecFunction.calculate(symbolTable, getParameterList(expr2FA5)));
+        Assert.assertEquals("numbers are equal", 50002L, hex2DecFunction.calculate(symbolTable, getParameterList(exprC352)));
+        
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            hex2DecFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
         } catch (WrongNumberOfParametersException e) {
             hasThrown.set(true);
         }

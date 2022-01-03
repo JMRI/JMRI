@@ -225,6 +225,18 @@ public class ExpressionReporter extends AbstractDigitalExpression
                     throw new PropertyVetoException(Bundle.getMessage("Reporter_MemoryInUseVeto", getDisplayName()), e); // NOI18N
                 }
             }
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof Reporter) {
+                if (evt.getOldValue().equals(getReporter().getBean())) {
+                    removeReporter();
+                }
+            }
+
+            if (evt.getOldValue() instanceof Memory) {
+                if (evt.getOldValue().equals(getMemory().getBean())) {
+                    removeMemory();
+                }
+            }
         }
     }
 
@@ -370,7 +382,7 @@ public class ExpressionReporter extends AbstractDigitalExpression
                 break;
 
             default:
-                obj = null;
+                throw new IllegalArgumentException("_reporterValue has unknown value: "+_reporterValue.name());
         }
         String reporterValue = getString(obj);
         String otherValue = null;
@@ -528,7 +540,22 @@ public class ExpressionReporter extends AbstractDigitalExpression
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && (_reporterHandle != null)) {
-            _reporterHandle.getBean().addPropertyChangeListener("value", this);
+            switch (_reporterValue) {
+                case CurrentReport:
+                    _reporterHandle.getBean().addPropertyChangeListener("currentReport", this);
+                    break;
+
+                case LastReport:
+                    _reporterHandle.getBean().addPropertyChangeListener("lastReport", this);
+                    break;
+
+                case State:
+                    // No property change event is sent when state is changed for reports
+                    break;
+
+                default:
+                    // Do nothing
+            }
             if (_listenToMemory && (_memoryHandle != null)) {
                 _memoryHandle.getBean().addPropertyChangeListener("value", this);
             }
@@ -540,7 +567,8 @@ public class ExpressionReporter extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _reporterHandle.getBean().removePropertyChangeListener("value", this);
+            _reporterHandle.getBean().removePropertyChangeListener("currentReport", this);
+            _reporterHandle.getBean().removePropertyChangeListener("lastReport", this);
             if (_listenToMemory && (_memoryHandle != null)) {
                 _memoryHandle.getBean().removePropertyChangeListener("value", this);
             }

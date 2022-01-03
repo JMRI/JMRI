@@ -1,10 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -40,23 +37,18 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalManager;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Logix;
-import jmri.LogixManager;
-import jmri.Manager;
-import jmri.UserPreferencesManager;
+
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.conditional.ConditionalEditBase;
 import jmri.jmrit.conditional.ConditionalListEdit;
 import jmri.jmrit.conditional.ConditionalTreeEdit;
 import jmri.jmrit.conditional.ConditionalListCopy;
+import jmri.jmrit.logixng.tools.ImportLogix;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -222,6 +214,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
                     } else if (Bundle.getMessage("ButtonDelete").equals(value)) {  // NOI18N
                         deletePressed(sName);
+                    } else if (Bundle.getMessage("ButtonExportLogixToLogixNG").equals(value)) {  // NOI18N
+                        exportToLogixNGPressed(sName);
                     }
                 } else if (col == ENABLECOL) {
                     // alternate
@@ -299,6 +293,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
+                editCombo.addItem(Bundle.getMessage("ButtonExportLogixToLogixNG"));  // NOI18N
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
                 col.setCellEditor(new DefaultCellEditor(editCombo));
             }
@@ -1339,6 +1334,57 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         }
 
         f.setVisible(true);
+    }
+
+    /**
+     * Respond to the Export to LogixNG combo selection Logix window request.
+     *
+     * @param sName system name of bean to export
+     */
+    void exportToLogixNGPressed(String sName) {
+        if (!checkConditionalReferences(sName)) {
+            return;
+        }
+        final Logix logix = _logixManager.getBySystemName(sName);
+        if (logix == null) throw new NullPointerException("logix is null");
+
+        boolean error = false;
+        StringBuilder errorMessage = new StringBuilder("<html><table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">");
+        errorMessage.append("<tr><th>");
+        errorMessage.append(Bundle.getMessage("ColumnSystemName"));
+        errorMessage.append("</th><th>");
+        errorMessage.append(Bundle.getMessage("ColumnUserName"));
+        errorMessage.append("</th><th>");
+        errorMessage.append(Bundle.getMessage("ExportLogixColumnError"));
+        errorMessage.append("</th></tr>");
+
+        try {
+            ImportLogix importLogix = new ImportLogix(logix, true, true);
+            importLogix.doImport();
+        } catch (JmriException e) {
+            errorMessage.append("<tr><td>");
+            errorMessage.append(logix.getSystemName());
+            errorMessage.append("</td><td>");
+            errorMessage.append(logix.getUserName() != null ? logix.getUserName() : "");
+            errorMessage.append("</td><td>");
+            errorMessage.append(e.getMessage());
+            errorMessage.append("</td></tr>");
+            log.error("Error thrown: {}", e, e);
+            error = true;
+        }
+
+        if (!error) {
+            try {
+                ImportLogix importLogix = new ImportLogix(logix, true, false);
+                importLogix.doImport();
+                JOptionPane.showMessageDialog(f, Bundle.getMessage("LogixIsExported", logix.getDisplayName()), Bundle.getMessage("TitleLogixExportSuccess"), JOptionPane.INFORMATION_MESSAGE);
+            } catch (JmriException e) {
+                throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
+            }
+        } else {
+            errorMessage.append("</table></html>");
+            JOptionPane.showMessageDialog(f, errorMessage.toString(), Bundle.getMessage("TitleLogixExportError"), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**

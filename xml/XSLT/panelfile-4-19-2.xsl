@@ -5,7 +5,7 @@
 <!-- This version corresponds to the 2.9.6 schema update                    -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018.                 -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Define the copyright year for the output page
@@ -13,7 +13,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -31,14 +31,14 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='layout-config'>
 
 <html>
 	<head>
 		<title>JMRI panel file</title>
 	</head>
-	
+
 	<body>
 		<h2>JMRI panel file</h2>
 
@@ -341,7 +341,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     <xsl:if test="@class = 'jmri.jmrit.blockboss.configurexml.BlockBossLogicXml'" >
         <xsl:call-template name="signalelements"/>
     </xsl:if>
-    
+
     <xsl:if test="@class = 'jmri.configurexml.BlockManagerXml'" >
         <!-- Index through blocks elements -->
         <!-- each one becomes a table -->
@@ -365,7 +365,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                         <xsl:for-each select="sensor"><!-- is this clause actually necessary? -->
                         <xsl:value-of select="@systemName"/><br/>
                         </xsl:for-each>
-                        
+
                         <xsl:for-each select="occupancysensor">
                         <xsl:value-of select="."/><br/>
                         </xsl:for-each>
@@ -385,7 +385,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 <xsl:when test="( @todir = 8192 )" >Down</xsl:when>
                                 <xsl:otherwise><xsl:value-of select="@todir"/></xsl:otherwise>
                                 </xsl:choose></td>
-                            <td>to 
+                            <td>to
                                 <xsl:element name="a"><xsl:attribute name="href">#Block-<xsl:value-of select="@block"/></xsl:attribute><xsl:value-of select="@block"/></xsl:element>,
                                 </td>
                             <td><xsl:choose>
@@ -813,7 +813,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 		    <xsl:for-each select="conditionalAction">
 		        <xsl:call-template name="conditionalAction"/>
 		    </xsl:for-each>
-        </xsl:if>        
+        </xsl:if>
     </xsl:for-each>
 </xsl:template>
 
@@ -883,7 +883,7 @@ value="<xsl:value-of select="@dataString"/>"
     (none)
   </xsl:when>
   <xsl:when test="( @type = 2 )" >
-    Set Turnout "<xsl:value-of select="@systemName"/>" 
+    Set Turnout "<xsl:value-of select="@systemName"/>"
     to
     <xsl:choose>
         <xsl:when test='@data = 1'>
@@ -915,25 +915,25 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:when test='@data = 64'>Lunar</xsl:when>
         <xsl:when test='@data = 128'>Flashing Lunar</xsl:when>
         <xsl:otherwise>(<xsl:value-of select="@data"/>)</xsl:otherwise>
-    </xsl:choose>    
+    </xsl:choose>
   </xsl:when>
   <xsl:when test="( @type = 4 )" >
     Set Signal "<xsl:value-of select="@systemName"/>" Held
   </xsl:when>
   <xsl:when test="( @type = 5 )" >
-    Clear Signal "<xsl:value-of select="@systemName"/>" Held 
+    Clear Signal "<xsl:value-of select="@systemName"/>" Held
   </xsl:when>
   <xsl:when test="( @type = 6 )" >
-    Set Signal "<xsl:value-of select="@systemName"/>" Dark 
+    Set Signal "<xsl:value-of select="@systemName"/>" Dark
   </xsl:when>
   <xsl:when test="( @type = 7 )" >
-    Set Signal "<xsl:value-of select="@systemName"/>" Lit 
+    Set Signal "<xsl:value-of select="@systemName"/>" Lit
   </xsl:when>
   <xsl:when test="( @type = 8 )" >
-    Trigger Route "<xsl:value-of select="@systemName"/>" 
+    Trigger Route "<xsl:value-of select="@systemName"/>"
   </xsl:when>
   <xsl:when test="( @type = 9 )" >
-    Set Sensor "<xsl:value-of select="@systemName"/>" 
+    Set Sensor "<xsl:value-of select="@systemName"/>"
     to
     <xsl:choose>
         <xsl:when test='@data = 1'>
@@ -972,7 +972,7 @@ value="<xsl:value-of select="@dataString"/>"
     after <xsl:value-of select="@delay"/> second(s)
   </xsl:when>
   <xsl:when test="( @type = 11 )" >
-    Set Light "<xsl:value-of select="@systemName"/>" 
+    Set Light "<xsl:value-of select="@systemName"/>"
     <xsl:choose>
         <xsl:when test='@data = 1'>
             Unknown
@@ -990,7 +990,7 @@ value="<xsl:value-of select="@dataString"/>"
     </xsl:choose>
   </xsl:when>
   <xsl:when test="( @type = 12 )" >
-    Set Memory "<xsl:value-of select="@systemName"/>" 
+    Set Memory "<xsl:value-of select="@systemName"/>"
     to "<xsl:value-of select="@string"/>"
   </xsl:when>
   <xsl:when test="( @type = 13 )" >Enable Logix "<xsl:value-of select="@systemName"/>"</xsl:when>
@@ -1134,7 +1134,7 @@ Sensor Icon "<xsl:value-of select="@sensor"/>"<br/>
 </xsl:template>
 
 <xsl:template match="positionablelabel">
-Positionable Label 
+Positionable Label
 <xsl:choose>
   <xsl:when test="( @text != '' )" >
   text: "<xsl:value-of select="@text"/>"
@@ -1149,7 +1149,7 @@ Positionable Label
 </xsl:template>
 
 <xsl:template match="layoutturnout">
-Layout Turnout 
+Layout Turnout
  (
 <xsl:choose>
   <xsl:when test="( @type = 1 )" >RH</xsl:when>
@@ -1257,7 +1257,7 @@ paths:
 </xsl:template>
 
 <xsl:template match="indicatorturnouticon">
-Indicator Turnout Icon 
+Indicator Turnout Icon
 block="<xsl:value-of select="occupancyblock"/>"
 turnout="<xsl:value-of select="turnout"/>"
 paths:
@@ -1271,7 +1271,7 @@ Block Contents Icon block="<xsl:value-of select="@blockcontents"/>"
 </xsl:template>
 
 <xsl:template match="PortalIcon">
-Portal Icon 
+Portal Icon
 portalName="<xsl:value-of select="@portalName"/>"
 to Block Name="<xsl:value-of select="@toBlockName"/>"
 from Block Name="<xsl:value-of select="@fromBlockName"/>"
@@ -1294,7 +1294,7 @@ Light Icon "<xsl:value-of select="@light"/>"<br/>
 </xsl:template>
 
 <xsl:template match="multisensoricon">
-Multisensor Icon  
+Multisensor Icon
     <xsl:for-each select="active">"<xsl:value-of select="@sensor"/>" </xsl:for-each>
 <br/>
 </xsl:template>
@@ -1308,13 +1308,13 @@ Multisensor Icon
 <xsl:template match="filehistory">
     <!-- title first time -->
     <xsl:for-each select="..">
-      <xsl:choose>    
+      <xsl:choose>
         <xsl:when test="(name() != 'operation' )" >
             <h3>History</h3>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
-    
+
     <table border="1">
     <tr><th>Date</th><th>Operation</th><th></th></tr>
     <xsl:for-each select="operation">
