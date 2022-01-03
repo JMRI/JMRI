@@ -141,9 +141,6 @@ public class OBlockTest {
         
         b.setOutOfService(false);
         assertThat(b.setPath("path1", w1)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName()));
-        
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"PathName\" not found in block \"c\"."); 
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path1\" not set in block \"c\". Block not allocated."); 
     }
     
     @Test

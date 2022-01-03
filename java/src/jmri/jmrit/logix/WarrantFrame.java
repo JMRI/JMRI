@@ -185,7 +185,6 @@ public class WarrantFrame extends WarrantRoute {
         } else {
             setTrainName(warrant.getTrainName());
         }
-        _dirty = false;
     }
 
     private void init() {
@@ -230,7 +229,7 @@ public class WarrantFrame extends WarrantRoute {
             public void componentResized(ComponentEvent e) {
                 Component c = (Component)e.getSource();
                 int height = c.getHeight();
-                _viewPortDim.height = _rowHeight * 10 + height - 530;
+                _viewPortDim.height = (_rowHeight * 10) + height - 541;
                 _throttlePane.getViewport().setPreferredSize(_viewPortDim);
                 _throttlePane.invalidate();
                 _commandTable.invalidate();
@@ -239,23 +238,18 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     public boolean askClose() {
-        boolean ret = true;
         if (_dirty) {
             // if runMode != MODE_NONE, this is probably a panic shutdown. Don't halt it.
             if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("saveOrClose", _warrant.getDisplayName()),
                     Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                if (isRunning()) {
-                    ret = true;
+                if (!isRunning()) {
+                    save();
                 }
-                if (save()) {
-                    ret = true;
-                }
-                ret = false;
             }
         }
         _dirty = false;
-        return ret;
+        return true;
     }
  
     private JPanel makeTopPanel() {
@@ -804,8 +798,8 @@ public class WarrantFrame extends WarrantRoute {
         valueColumn.setCellEditor(new ValueCellEditor(new JTextField()));
 
         _throttlePane = new JScrollPane(_commandTable);
-        _rowHeight = _commandTable.getRowHeight();
         _viewPortDim = _commandTable.getPreferredSize();
+        _rowHeight = _commandTable.getRowHeight();
         _viewPortDim.height = _rowHeight * 10;
         _throttlePane.getViewport().setPreferredSize(_viewPortDim);
 
@@ -905,6 +899,7 @@ public class WarrantFrame extends WarrantRoute {
             }
         }
         _throttleCommands.remove(row);
+        _dirty = true;
         _commandModel.fireTableDataChanged();
     }
 
@@ -1049,8 +1044,13 @@ public class WarrantFrame extends WarrantRoute {
                                     i+1, cmd.toString(), valType.toString());
                         }
                         float f = ts.getValue().getFloat();
-                        if (f > 1 || f < 0) {
+                        if (f > 1) {
                             return Bundle.getMessage("badSpeed", f);
+                        } else if (f < 0) {    // EStop OK only in the last block
+                            OBlock blk = getOrders().get(getOrders().size()-1).getBlock();
+                            if (blk == null || !blk.getSystemName().equals(ts.getBeanSystemName())) {
+                                return Bundle.getMessage("badSpeed", f);
+                            }
                         }
                         break;
                     case NOOP:
@@ -1590,8 +1590,8 @@ public class WarrantFrame extends WarrantRoute {
      */
     private boolean save() {
         boolean fatal = false;
-        if (_dirty && isRunning()) {
-            return false;
+        if (isRunning()) {
+            fatal = true;
         }
         String msg = routeIsValid();
         if (msg != null) {
@@ -1677,6 +1677,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setShareRoute(_shareRouteBox.isSelected());
         _warrant.setAddTracker(_addTracker.isSelected());
         _warrant.setNoRamp(_noRampBox.isSelected());
+        _warrant.setHaltStart(_haltStartBox.isSelected());
         _warrant.setUserName(_userNameBox.getText());
 
         _warrant.setViaOrder(getViaBlockOrder());
@@ -2153,11 +2154,6 @@ public class WarrantFrame extends WarrantRoute {
                        }
                     }
                     switch (cmd) {
-                        case SPEED:
-                        case FORWARD:
-                            ts.setCommand(cmd);
-                            _dirty = true;
-                            break;
                         case FKEY:
                         case LATCHF:
                             class CellMaker implements Runnable {
@@ -2179,6 +2175,8 @@ public class WarrantFrame extends WarrantRoute {
                         case NOOP:
                             msg = Bundle.getMessage("cannotEnterNoop", cmd.toString());
                             break;
+                        case SPEED:
+                        case FORWARD:
                         case SET_SENSOR:
                         case WAIT_SENSOR:
                         case RUN_WARRANT:
@@ -2198,16 +2196,24 @@ public class WarrantFrame extends WarrantRoute {
                         msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
                         break;
                     }
-                    ts.setValue((String) value);
                     Command command = ts.getCommand();
                     if (command.equals(Command.NOOP)) {
                         msg = Bundle.getMessage("cannotChangeNoop");
                         break;
                     }
+                    try {
+                        CommandValue val = ThrottleSetting.getValueFromString(command, (String) value);                       
+                        if (!val.equals(ts.getValue())) {
+                            _dirty = true;
+                            ts.setValue(val);
+                       }
+                    } catch (jmri.JmriException je) {
+                        msg = je.getMessage();
+                        break;
+                    }
                     if (command.hasBlockName()) {
                         NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
                         ts.setNamedBeanHandle(bh);
-                        _dirty = true;
                     }
                     break;
                 case BLOCK_COLUMN:

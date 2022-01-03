@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.beans.PropertyChangeListener;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
@@ -122,12 +121,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     protected long _entryTime;       // time when block became occupied
     private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
-    // pathName keys a list of Blocks whose paths conflict with the path. These Blocks key
-    // a list of their conflicting paths.
-    // A conflicting path has a turnout that is shared with a 'pathName'
-    private final HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO
-            = new HashMap<>();
-    private boolean _ownsTOs = false;
     private Color _markerForeground = Color.WHITE;
     private Color _markerBackground = DEFAULT_FILL_COLOR;
     private Font _markerFont;
@@ -289,92 +282,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-     * This oblock shares a turnout (e.g. a crossover) with another oblock.
-     * Typically one JMRI turnout driving two switches where each switch is in a
-     * different block.
-     *
-     * @param key   a path in this block
-     * @param block another block
-     * @param path  a path in that block sharing a turnout with key
-     * @return true if path added
-     */
-    public boolean addSharedTurnout(OPath key, OBlock block, OPath path) {
-        List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(key.getName());
-        if (blockList != null) {
-            for (HashMap<OBlock, List<OPath>> map : blockList) {
-                for (Entry<OBlock, List<OPath>> entry : map.entrySet()) {
-                    OBlock b = entry.getKey();
-                    if (b.equals(block)) {
-                        List<OPath> pathList = entry.getValue();
-                        if (pathList.contains(path)) {
-                            return false;
-                        } else {
-                            pathList.add(path);
-                            log.debug("Block \"{}\" adds path for key \"{}\" (blockKey=\"{}\", path= \"{}\")", getDisplayName(), key.getName(), block.getDisplayName(), path.getName());
-                            return true;
-                        }
-                    } else {
-                        List<OPath> pathList = new ArrayList<>();
-                        pathList.add(path);
-                        map.put(block, pathList);
-                        log.debug("Block \"{}\" adds pathList for key \"{}\" (blockKey=\"{}\", path= \"{}\")", getDisplayName(), key.getName(), block.getDisplayName(), path.getName());
-                        return true;
-                    }
-                }
-            }
-            HashMap<OBlock, List<OPath>> map = new HashMap<>();
-            List<OPath> pathList = new ArrayList<>();
-            pathList.add(path);
-            map.put(block, pathList);
-            blockList.add(map);
-            return true;
-        } else {
-            List<OPath> pathList = new ArrayList<>();
-            pathList.add(path);
-            HashMap<OBlock, List<OPath>> map = new HashMap<>();
-            map.put(block, pathList);
-            blockList = new ArrayList<>();
-            blockList.add(map);
-            _sharedTO.put(key.getName(), blockList);
-            log.debug("Block \"{}\" adds _sharedTO entry for key \"{}\" (blockKey=\"{}\", path= \"{}\")",
-                    getDisplayName(), key.getName(), block.getDisplayName(), path.getName());
-            return true;
-        }
-    }
-
-    /**
-     * Called from setPath. looking for other warrants that may have allocated
-     * blocks that share TO's with this block.
-     * <p>
-     */
-    private String checkSharedTO() {
-        List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(_pathName);
-        if (blockList != null) {
-            Iterator<HashMap<OBlock, List<OPath>>> iter = blockList.iterator();
-            log.debug("Path \"{}\" in block \"{}\" has turnouts thrown from {} other blocks",
-                    _pathName, getDisplayName(), blockList.size());
-            while (iter.hasNext()) {
-                HashMap<OBlock, List<OPath>> map = iter.next();
-                for (Entry<OBlock, List<OPath>> entry : map.entrySet()) {
-                    OBlock block = entry.getKey();  // shared block
-                    // path in shared block
-                    for (OPath path : entry.getValue()) {
-                        // call sharing block to see if another warrant has allocated it
-                        String warrantName = block.isPathSet(path.getName());
-                        if (warrantName != null && !warrantName.equals(_warrant.getDisplayName())) {
-                            // another warrant has allocated a block using a common TO and it has precedence over _warrant
-                            _warrant.setShareTOBlock(block, this);
-                            return Bundle.getMessage("pathIsSet", _pathName, getDisplayName(), _warrant.getDisplayName(), path.getName(), block.getDisplayName(), warrantName);
-                        }   // else shared TO unallocated
-                    }
-                }
-            }
-        }
-        _ownsTOs = true;    // _warrant (this) has precedence over any subsequent warrants allocating shared blocks
-        return null;
-    }
-
-    /**
      * Another block sharing a turnout with this block queries whether turnout
      * is in use.
      *
@@ -418,7 +325,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 }
                 _pathName = null;
             }
-            _ownsTOs = false;
             _warrant = null;
             setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
             return true;
@@ -509,6 +415,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         log.error("\"{}\" type not found.  Update Conditional State Variable testing OBlock \"{}\" status",
                 getDisplayName(), statusName);
         return false;
+    }
+
+    public boolean isDark() {
+        return (getState() & OBlock.UNDETECTED) != 0;
     }
 
     /**
@@ -847,38 +757,25 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return Bundle.getMessage(ALLOCATED_TO_WARRANT,
                     _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
-        String msg = null;
         if (pathName == null || warrant == null) {
             return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
+        }
+        if (((getState() & OBlock.ALLOCATED) == 0)) {
+            return Bundle.getMessage("PathNotSet", pathName, getDisplayName());
         }
         pathName = pathName.trim();
         OPath path = getPathByName(pathName);
         if (path == null) {
-            msg = Bundle.getMessage("PathNotFound", pathName, getDisplayName());
-        }
-        if (msg == null && ((getState() & OBlock.ALLOCATED) == 0)) {
-            msg = Bundle.getMessage("PathNotSet", pathName, getDisplayName());
-        }
-        if (msg != null) {
-            log.warn(msg);
-            return msg;
+            return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
         }
         _pathName = pathName;
         _warrant = warrant;
-        if (!_ownsTOs) {
-            // If shared block owned by another warrant a callback to the warrant sets up a wait
-            // ignore shared TO message - No longer an issue 11/26/2020 pwc
-            // Let code remain for now.
-            msg = checkSharedTO();
-        }
-        if (msg == null && path != null) {  // _warrant has precedence - OK to throw
-            int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
-            path.setTurnouts(0, true, lockState, true);
-            firePropertyChange("pathState", 0, getState());
-        }
+        int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
+        path.setTurnouts(0, true, lockState, true);
+        firePropertyChange("pathState", 0, getState());
         log.debug("setPath: Path \"{}\" in OBlock \"{}\" {} set for warrant {}",
                     pathName, getDisplayName(), warrant.getDisplayName());
-        return msg;
+        return null;
     }
 
     /*

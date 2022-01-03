@@ -734,7 +734,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                         bean.getTrainName(), speed, name), Color.red, true);
             } else if (property.equals("OccupyOverrun")) {
                 String blkName = (String) e.getOldValue();
-                OBlock occuppier = (OBlock) e.getNewValue();
+                String occuppier = (String) e.getNewValue();
                 setFrameStatusText(Bundle.getMessage("OccupyOverrun",
                         bean.getTrainName(), blkName, occuppier), Color.red, true);
             } else if (property.equals("WarrantOverrun")) {

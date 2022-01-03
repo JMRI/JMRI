@@ -613,8 +613,6 @@ public class NXFrame extends WarrantRoute {
         } catch (java.text.ParseException pe) {
             return Bundle.getMessage("MustBeFloat", text);
         }
-        
-        _speedUtil.resetSpeedProfile();
         return null;
     }
 
