@@ -4,16 +4,16 @@
 
 <!-- Used when the roster file is displayed in a web browser through /roster/ -->
 
-<!-- This file is part of JMRI. Copyright 2012. -->
+<!-- This file is part of JMRI. Copyright 2009-2022.                       -->
 <!-- -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under -->
 <!-- the terms of version 2 of the GNU General Public License as published -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy    -->
 <!-- of this license. -->
 <!-- -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT   -->
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License  -->
 <!-- for more details. -->
 
 <xsl:stylesheet version="1.0"
@@ -24,7 +24,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 	<!-- Need to instruct the XSLT processor to use HTML output rules. See http://www.w3.org/TR/xslt#output
 		for more details -->
