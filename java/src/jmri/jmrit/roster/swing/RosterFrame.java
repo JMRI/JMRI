@@ -1170,8 +1170,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             updateDetails();
             rtable.moveTableViewToSelected();
         } else {
-            log.warn("Read address {}, but no such loco in roster", dccAddress); //"No roster entry found"
-            JOptionPane.showMessageDialog(this, "No roster entry found", "Address " + dccAddress + " was read from the decoder\nbut has not been found in the Roster", JOptionPane.INFORMATION_MESSAGE);
+            log.warn("Address {} Read, but no such loco in roster", dccAddress); //"No roster entry found"
+            JOptionPane.showMessageDialog(this, dccAddress + " was read from the decoder\nbut has not been found in the Roster", dccAddress + "No roster entry found", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
