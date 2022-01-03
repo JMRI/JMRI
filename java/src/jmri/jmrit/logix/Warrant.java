@@ -2624,8 +2624,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * is not immediate, then determine the proper time delay to start the speed
      * change.
      *
-     * @param signalChange speed change occurred at while traversing a block and
-     * there is not enough room for speed change
      * @return false on errors
      */
     private boolean setMovement() {
