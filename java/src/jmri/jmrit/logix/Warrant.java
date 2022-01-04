@@ -1077,6 +1077,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     getDisplayName(), idx, CNTRL_CMDS[idx], getTrainName(), RUN_STATE[runState],
                     getBlockAt(_idxCurrentOrder).getDisplayName());
         }
+        String msg = null;
         synchronized (this) {
             switch (idx) {
                 case RAMP_HALT:
@@ -1822,9 +1823,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         int time;
         if (_waitForBlock) {
-            time = 7000;
+            time = 5000;
         } else if (_waitForWarrant) {
-            time = 3000;
+            time = 2000;
         } else {
             time = 1000;
         }
@@ -2765,18 +2766,29 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         clearWaitFlags(false);
         // look ahead for speed type slower than current type, refresh flags
+        int idxSpeedChange;   // idxBlockOrder where speed changes before entry
+        String speedType;     // slowest speedType
 
-        String speedType = currentSpeedType;
-        int idxSpeedChange = _idxCurrentOrder;   // idxBlockOrder where speed changes before entry
-        while (!_speedUtil.secondGreaterThanFirst(speedType, currentSpeedType) && idxSpeedChange < _orders.size() - 1) {
-            idxSpeedChange++;
-            String s = getSpeedTypeForBlock(idxSpeedChange, false);  // speed for entry into next block
-            if (s != null) {
-                speedType = s;
-            }
+        OBlock block = getBlockAt(_idxCurrentOrder + 1);
+        _message = block.allocate(this);
+        if (_message != null) {
+            _waitForWarrant = true;
+            setStoppingBlock(block);
+            speedType = Stop;
+            idxSpeedChange = _idxCurrentOrder + 1;
+        } else {
+            speedType = currentSpeedType;
+            idxSpeedChange = _idxCurrentOrder;   // idxBlockOrder where speed changes before entry
+            while (!_speedUtil.secondGreaterThanFirst(speedType, currentSpeedType) && idxSpeedChange < _orders.size() - 1) {
+                idxSpeedChange++;
+                String s = getSpeedTypeForBlock(idxSpeedChange, false);  // speed for entry into next block
+                if (s != null) {
+                    speedType = s;
+                }
+            }            
+            block = getBlockAt(idxSpeedChange);
         }
 
-        OBlock block = getBlockAt(idxSpeedChange);
         // Now set stopping condition flags for blocks, if any
         if (_waitForBlock || _waitForWarrant) {
             setStoppingBlock(block);
@@ -2826,87 +2838,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         makespeedChange(availDist, changeDist, idxSpeedChange, speedType);
-/*        
-        // Must start the ramp in current block. ( at _idxCurrentOrder)
-        // find the time when ramp should start in this block, then use thread CommandDelay to start the ramp.
-        // Train must travel a deltaDist for a deltaTime to the start of the ramp.
-        // It travels at throttle settings of scriptSpeed(s) modified by currentSpeedType.
-        // trackSpeed(s) of these modified scriptSettings are computed from SpeedProfile
-        // waitThrottle is throttleSpeed when ramp is started. This may not be the scriptSpeed now
-        // Start with waitThrottle (modSetting) being at the entrance to the block.
-        // modSetting gives the current trackSpeed.
-        // accumulate the time and distance and determine the distance (changeDist) needed for entrance into 
-        // block (at idxSpeedChange) requiring speed change to speedType
-        // final ramp should modify waitSpeed to endSpeed and must end at the exit of end block (endBlockIdx)
-        BlockSpeedInfo blkSpeedInfo = _speedUtil.getBlockSpeedInfo(_idxCurrentOrder);
-
-        int cmdIdx = blkSpeedInfo.getFirstIndex();
-        int cmdEndIdx = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1).getLastIndex();
-        float scriptSpeed;  // script throttle setting
-        float modSetting;   // modified setting
-        float trackSpeed;   // mm/sec track speed at modSetting
-        float timeRatio; // time adjustment for current speed type.
-        if (_idxCurrentOrder == 0) {
-            scriptSpeed = 0;
-            modSetting = 0;
-            trackSpeed = 0;
-            timeRatio = 1;
-            changeDist = 0;
-        } else {
-            scriptSpeed = blkSpeedInfo.getEntranceSpeed();
-            modSetting = speedSetting;      // _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
-            trackSpeed = _speedUtil.getTrackSpeed(modSetting);
-            timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / trackSpeed;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("cmdIdx #{} to #{} at speedType \"{}\" modScriptSetting={} speedSetting={}, timeRatio={}",
-                    cmdIdx+1, cmdEndIdx+1, currentSpeedType, modSetting, speedSetting, timeRatio);
-            // command index numbers biased by 1
-        }
-        float accumTime = 0;    // accumulated time of commands up to ramp start
-        float accumDist = 0;
-        float remDist = availDist - changeDist;
-        float deltaTime;
-        if (trackSpeed > 0) {
-            deltaTime = remDist / trackSpeed;
-        } else {
-            // actually infinity (Float.MAX_VALUE) Must be a low value in case there are no speed changes
-            deltaTime = 100;
-        }
-        for (int i = cmdIdx; i <= cmdEndIdx; i++) {
-            ThrottleSetting ts = _commands.get(i);
-            accumDist += trackSpeed * ts.getTime() * timeRatio;
-            accumTime += ts.getTime() * timeRatio;
-            if (changeDist + accumDist >= availDist) {
-                float overDist = changeDist + accumDist - availDist;
-                if (trackSpeed <= 0) {
-                    log.error("Cannot ramp to \"{}\". trackSpeed= {} in block \"{}\".",
-                            speedType, trackSpeed, curBlock.getDisplayName());
-                }
-                accumTime -= overDist / trackSpeed;
-                deltaTime = accumTime;
-                break;
-            }
-            ThrottleSetting.CommandValue cmdVal = ts.getValue();
-            if (cmdVal.getType().equals(ThrottleSetting.ValueType.VAL_FLOAT)) {
-                scriptSpeed = cmdVal.getFloat();
-                changeDist = getEntranceDistance(scriptSpeed, idxSpeedChange, speedType);
-                modSetting = _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
-                trackSpeed = _speedUtil.getTrackSpeed(modSetting);
-                timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / trackSpeed;
-           }
-           log.debug("{}: cmd#{} accumTime= {} accumDist= {} changeDist= {}", getDisplayName(), i+1, accumTime, accumDist, changeDist);
-        }
-
-        int waitTime = Math.round(deltaTime);
-        if (log.isDebugEnabled()) {
-            log.debug("{}: RAMP waitTime={}, waitThrottle={}, availDist={}, enterLen={} for ramp start",
-                    getDisplayName(), waitTime, modSetting, availDist, changeDist);
-        }
-
-        waitTime -= 50;     // Subtract a bit to avoid last unwanted speed command
-        rampSpeedDelay(waitTime, speedType, modSetting, idxSpeedChange - 1);
-        */
         return true;
     }   // end setMovement
 

@@ -423,9 +423,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             return;
         }
         if (isRamping()) {
-            if (endSpeedType == _ramp._endSpeedType) {
+            if (endSpeedType.equals(_ramp._endSpeedType)) {
                 return; // already ramping to speedType
-            } else if (endSpeedType == _speedType){
+            } else if (endSpeedType.equals(_speedType)){
                 return; // already at speedType
             }
         }
