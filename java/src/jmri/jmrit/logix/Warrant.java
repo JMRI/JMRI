@@ -1077,7 +1077,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     getDisplayName(), idx, CNTRL_CMDS[idx], getTrainName(), RUN_STATE[runState],
                     getBlockAt(_idxCurrentOrder).getDisplayName());
         }
-        String msg = null;
+//        String msg = null;!!!
         synchronized (this) {
             switch (idx) {
                 case RAMP_HALT:
