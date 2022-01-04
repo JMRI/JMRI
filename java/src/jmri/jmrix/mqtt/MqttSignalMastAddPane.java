@@ -66,7 +66,7 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
 
         return p;
     }
-    JLabel aspectAddressLabel = new JLabel(Bundle.getMessage("MakeLabel", "Address number:"));
+    JLabel aspectAddressLabel = new JLabel(Bundle.getMessage("MakeLabel"));
     JTextField aspectAddressField = new JTextField(5);
 
     /** {@inheritDoc} */
