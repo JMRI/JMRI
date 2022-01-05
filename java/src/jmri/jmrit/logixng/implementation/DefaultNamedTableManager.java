@@ -49,18 +49,13 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     public NameValidity validSystemNameFormat(String systemName) {
         return LogixNG_Manager.validSystemNameFormat(
                 getSubSystemNamePrefix(), systemName);
-//        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
-//            return NameValidity.VALID;
-//        } else {
-//            return NameValidity.INVALID;
-//        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public NamedTable newCSVTable(String systemName, String userName, String fileName)
+    public NamedTable newTSVTable(String systemName, String userName, String fileName)
             throws IllegalArgumentException {
         
         // Check that NamedTable does not already exist
@@ -81,7 +76,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         }
         try {
             // NamedTable does not exist, create a new NamedTable
-            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, fileName, true);
+            x = AbstractNamedTable.loadTableFromTSV_File(systemName, userName, fileName, true);
         } catch (IOException ex) {
 //            Exceptions.printStackTrace(ex);
             log.error("Cannot load table due to I/O error", ex);
@@ -146,32 +141,32 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
      * {@inheritDoc}
      */
     @Override
-    public NamedTable loadTableFromCSVData(
+    public NamedTable loadTableFromTSVData(
             @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, true);
+        return AbstractNamedTable.loadTableFromTSV_Text(sys, user, text, true);
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public NamedTable loadTableFromCSV(
+    public NamedTable loadTableFromTSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull String fileName)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(sys, user, fileName, true);
+        return AbstractNamedTable.loadTableFromTSV_File(sys, user, fileName, true);
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public NamedTable loadTableFromCSV(
+    public NamedTable loadTableFromTSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(sys, user, file, true);
+        return AbstractNamedTable.loadTableFromTSV_File(sys, user, file, true);
     }
     
     /**
@@ -230,12 +225,12 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public void printTree(Locale locale, PrintWriter writer, String indent) {
         for (NamedTable namedTable : getNamedBeanSet()) {
-            if (namedTable instanceof DefaultCsvNamedTable) {
-                DefaultCsvNamedTable csvTable = (DefaultCsvNamedTable)namedTable;
+            if (namedTable instanceof DefaultTsvNamedTable) {
+                DefaultTsvNamedTable tsvTable = (DefaultTsvNamedTable)namedTable;
                 writer.append(String.format(
                         "Named table: System name: %s, User name: %s, File name: %s, Num rows: %d, Num columns: %d",
-                        csvTable.getSystemName(), csvTable.getUserName(),
-                        csvTable.getFileName(), csvTable.numRows(), csvTable.numColumns()));
+                        tsvTable.getSystemName(), tsvTable.getUserName(),
+                        tsvTable.getFileName(), tsvTable.numRows(), tsvTable.numColumns()));
             } if (namedTable != null) {
                 writer.append(String.format(
                         "Named table: System name: %s, User name: %s, Num rows: %d, Num columns: %d",

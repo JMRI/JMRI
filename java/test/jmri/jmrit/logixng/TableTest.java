@@ -147,12 +147,12 @@ public class TableTest {
         }
 
         @Override
-        public void storeTableAsCSV(File file) throws FileNotFoundException {
+        public void storeTableAsTSV(File file) throws FileNotFoundException {
             throw new UnsupportedOperationException("44Not supported.");
         }
 
         @Override
-        public void storeTableAsCSV(File file, String systemName, String userName) throws FileNotFoundException {
+        public void storeTableAsTSV(File file, String systemName, String userName) throws FileNotFoundException {
             throw new UnsupportedOperationException("55Not supported.");
         }
         

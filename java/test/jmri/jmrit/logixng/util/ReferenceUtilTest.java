@@ -22,7 +22,7 @@ public class ReferenceUtilTest {
 
     private MemoryManager _memoryManager;
     private NamedTableManager _tableManager;
-    private NamedTable yardTable;
+    private NamedTable _yardTable;
     
     // The system appropriate newline separator.
     private static final String _nl = System.getProperty("line.separator"); // NOI18N
@@ -115,7 +115,7 @@ public class ReferenceUtilTest {
         
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         
-        yardTable.setCell(null, "Other turnout");
+        _yardTable.setCell(null, "Other turnout");
         
         Assert.assertNull("Reference is correct",
                 ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout]}"));
@@ -379,7 +379,7 @@ public class ReferenceUtilTest {
     private void setupTables() {
         // Note that editors, like NetBeans, may insert spaces instead of tabs
         // when pressing the <Tab> key, which may be a problem when editing the
-        // CSV table data below, since the separator between columns must be a
+        // TSV table data below, since the separator between columns must be a
         // tab character.
         
         String yardTableData =
@@ -403,9 +403,9 @@ public class ReferenceUtilTest {
                 "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
                 "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
-        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData);
-        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData);
-        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData);
+        _yardTable = _tableManager.loadTableFromTSVData("IQT1", "Yard table", yardTableData);
+        _tableManager.loadTableFromTSVData("IQT2", "Turnout table", turnoutTableData);
+        _tableManager.loadTableFromTSVData("IQT3", "Other yard table", otherYardTableData);
     }
     
     // The minimal setup for log4J

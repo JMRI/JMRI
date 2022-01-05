@@ -72,7 +72,7 @@ import jmri.util.JmriJFrame;
     // ------------ NamedTable Variables ------------
     private JmriJFrame _editLogixNGFrame = null;
     private final JTextField editUserName = new JTextField(20);
-    private final JTextField editCsvTableName = new JTextField(40);
+    private final JTextField editTsvTableName = new JTextField(40);
 //    private JLabel status = new JLabel(" ");
 
     // ------------ ConditionalNG Variables ------------
@@ -105,18 +105,18 @@ import jmri.util.JmriJFrame;
         selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
         selectFileButton.setToolTipText(Bundle.getMessage("TableEdit_FileButtonHint"));  // NOI18N
         selectFileButton.addActionListener((ActionEvent e) -> {
-            JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
-            csvFileChooser.rescanCurrentDirectory();
-            int retVal = csvFileChooser.showOpenDialog(null);
+            JFileChooser tsvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+            tsvFileChooser.setFileFilter(new FileNameExtensionFilter("TSV / CSV files", "tsv", "csv", "txt")); // NOI18N
+            tsvFileChooser.rescanCurrentDirectory();
+            int retVal = tsvFileChooser.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 // set selected file location
                 try {
-                    editCsvTableName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
+                    editTsvTableName.setText(FileUtil.getPortableFilename(tsvFileChooser.getSelectedFile().getCanonicalPath()));
                 } catch (java.io.IOException ex) {
                     log.error("exception setting file location: {}", ex);  // NOI18N
-                    editCsvTableName.setText("");
+                    editTsvTableName.setText("");
                 }
             }
         });
@@ -168,27 +168,26 @@ import jmri.util.JmriJFrame;
             editUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
             contentPane.add(panel2);
 
-            boolean isCsvTable = _curTable instanceof DefaultCsvNamedTable;
+            boolean isTsvTable = _curTable instanceof DefaultTsvNamedTable;
 
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
             JLabel tableTypeLabel = new JLabel(Bundle.getMessage("TableEditor_TableType") + ": ");  // NOI18N
             panel3.add(tableTypeLabel);
             panel3.add(new JLabel(
-                    isCsvTable
-                            ? Bundle.getMessage("TableEditor_CsvFile")
+                    isTsvTable
+                            ? Bundle.getMessage("TableEditor_TsvFile")
                             : Bundle.getMessage("TableEditor_UnknownTableType")));
             contentPane.add(panel3);
 
-            if (isCsvTable) {
+            if (isTsvTable) {
                 JPanel panel4 = new JPanel();
                 panel4.setLayout(new FlowLayout());
                 JLabel tableFileNameLabel = new JLabel(Bundle.getMessage("TableEditor_FileName") + ": ");  // NOI18N
                 panel4.add(tableFileNameLabel);
-//                panel4.add(new JLabel(((DefaultCsvNamedTable)_curTable).getFileName()));
-                editCsvTableName.setText(((DefaultCsvNamedTable)_curTable).getFileName());
-                panel4.add(editCsvTableName);
-//                editCsvTableName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
+                editTsvTableName.setText(((DefaultTsvNamedTable)_curTable).getFileName());
+                panel4.add(editTsvTableName);
+//                editTsvTableName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
                 panel4.add(createFileChooser());
                 contentPane.add(panel4);
             }
@@ -387,19 +386,19 @@ import jmri.util.JmriJFrame;
             tableData.put("chgUname", uName);  // NOI18N
             fireEditorEvent();
         }
-        if (_curTable instanceof DefaultCsvNamedTable) {
-            String csvFileName = editCsvTableName.getText().trim();
+        if (_curTable instanceof DefaultTsvNamedTable) {
+            String tsvFileName = editTsvTableName.getText().trim();
 
             try {
                 // NamedTable does not exist, create a new NamedTable
-                AbstractNamedTable.loadTableFromCSV_File(
+                AbstractNamedTable.loadTableFromTSV_File(
                         "IQT1",     // Arbitrary LogixNG table name
 //                        InstanceManager.getDefault(NamedTableManager.class).getAutoSystemName(),
-                        null, csvFileName, false);
+                        null, tsvFileName, false);
             } catch (java.nio.file.NoSuchFileException ex) {
                 log.error("Cannot load table due since the file is not found", ex);
                 JOptionPane.showMessageDialog(_editLogixNGFrame,
-                        Bundle.getMessage("TableEditor_Error_FileNotFound", csvFileName),
+                        Bundle.getMessage("TableEditor_Error_FileNotFound", tsvFileName),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -419,7 +418,7 @@ import jmri.util.JmriJFrame;
                 return;
             }
 
-            ((DefaultCsvNamedTable)_curTable).setFileName(csvFileName);
+            ((DefaultTsvNamedTable)_curTable).setFileName(tsvFileName);
         }
         // complete update and activate NamedTable
         finishDone();

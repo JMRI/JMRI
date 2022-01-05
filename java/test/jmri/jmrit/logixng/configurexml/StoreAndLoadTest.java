@@ -139,7 +139,7 @@ public class StoreAndLoadTest {
         // Load table turnout_and_signals.csv
         jmri.jmrit.logixng.NamedTable csvTable =
                 InstanceManager.getDefault(NamedTableManager.class)
-                        .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
+                        .loadTableFromTSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         Assert.assertNotNull(csvTable);
 
         // Create module IQM1

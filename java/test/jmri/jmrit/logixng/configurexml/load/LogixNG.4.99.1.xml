@@ -80,7 +80,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="3:17 AM">
+    <memory value="2:00 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -150,7 +150,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Jan 04 03:17:41 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Dec 16 02:00:14 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -161,7 +161,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <name>My logixng thread</name>
     </Thread>
     <Thread>
-      <id>55</id>
+      <id>54</id>
       <name>My other logixng thread</name>
     </Thread>
     <LogixNG enabled="no">
@@ -267,7 +267,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ConditionalNG enabled="no">
       <systemName>IQC:AUTO:0004</systemName>
       <userName>A fourth empty conditionalNG</userName>
-      <thread>55</thread>
+      <thread>54</thread>
       <Socket>
         <socketName>A</socketName>
       </Socket>
@@ -299,10 +299,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ConditionalNG>
   </LogixNGConditionalNGs>
   <LogixNGTables class="jmri.jmrit.logixng.implementation.configurexml.DefaultNamedTableManagerXml">
-    <TsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultTsvNamedTableXml">
+    <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT1</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv</fileName>
-    </TsvTable>
+    </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
     <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
@@ -25347,9 +25347,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue Jan 04 03:17:42 CET 2022</date>
+      <date>Thu Dec 16 02:00:17 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.10ish+daniel+2022-01-04T02:16:19Z+R76dfa0d on Tue Jan 04 03:17:42 CET 2022-->
+  <!--Written by JMRI version 4.25.10ish+daniel+2021-12-16T00:58:43Z+R731dae6 on Thu Dec 16 02:00:17 CET 2021-->
 </layout-config>

@@ -138,25 +138,25 @@ public interface Table {
     public int getColumnNumber(String columnName) throws ColumnNotFoundException;
     
     /**
-     * Store the table to a CSV file.
-     * @param file the CSV file
+     * Store the table to a TSV file (TAB separated file, similar to a CSV file).
+     * @param file the TSV file
      * @throws java.io.FileNotFoundException if file not found
      */
-    public void storeTableAsCSV(@Nonnull File file)
+    public void storeTableAsTSV(@Nonnull File file)
             throws FileNotFoundException;
 
     /**
-     * Store the table to a CSV file.
+     * Store the table to a TSV file (TAB separated file, similar to a CSV file).
      * If system name and/or user name is not null, these values are used
      * instead of the tables own system name and user name. If no system name
      * and user name is given and the table is anonymous, no system name and
      * user name is stored in the file.
-     * @param file the CSV file
+     * @param file the TSV file
      * @param systemName the system name of the table
      * @param userName the user name of the table
      * @throws java.io.FileNotFoundException if file not found
      */
-    public void storeTableAsCSV(
+    public void storeTableAsTSV(
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
             throws FileNotFoundException;

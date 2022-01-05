@@ -94,16 +94,16 @@ public class DefaultAnonymousTable implements AnonymousTable {
      * {@inheritDoc}
      */
     @Override
-    public void storeTableAsCSV(@Nonnull File file)
+    public void storeTableAsTSV(@Nonnull File file)
             throws FileNotFoundException {
-        storeTableAsCSV(file, null, null);
+        storeTableAsTSV(file, null, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void storeTableAsCSV(
+    public void storeTableAsTSV(
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
             throws FileNotFoundException {

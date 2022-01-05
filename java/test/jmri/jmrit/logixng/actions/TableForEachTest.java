@@ -226,11 +226,11 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(false);
         
         // Load table turnout_and_signals.csv
-        NamedTable csvTable =
+        NamedTable tsvTable =
                 InstanceManager.getDefault(NamedTableManager.class)
-                        .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
+                        .loadTableFromTSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         
-        _tableForEach.setTable(csvTable);
+        _tableForEach.setTable(tsvTable);
         _tableForEach.setRowOrColumn(TableRowOrColumn.Column);
         _tableForEach.setRowOrColumnName("1");
         _tableForEach.setLocalVariableName("MyVariable");

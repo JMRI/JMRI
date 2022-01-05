@@ -222,8 +222,22 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        
+
+        <!-- This element exists for backwards compability for JMRI 4.26 -->
         <xs:element name="CsvTable" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="fileName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="class" type="classType" use="required"/>
+          </xs:complexType>
+        </xs:element>
+
+        <!-- This element, that replaces the CsvTable element, was added in JMRI 4.99.2 -->
+        <xs:element name="TsvTable" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>

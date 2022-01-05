@@ -1,0 +1,3 @@
+	Norra stationen	Östra stationen	Södra stationen	Västra stationen
+Vänstra växeln	IT101	IT201	IT301	IT401
+Högra växeln	IT102	IT202	IT302	IT402

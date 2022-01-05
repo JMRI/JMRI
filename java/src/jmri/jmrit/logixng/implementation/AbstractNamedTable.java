@@ -75,7 +75,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * Row 0 has the column names and column 0 has the row names.
      * @param systemName the system name
      * @param userName the user name
-     * @param fileName the file name of the CSV table
+     * @param fileName the file name of the TSV table
      * @param data the data in the table. Note that this data is not copied to
      * an new array but used by the table as is.
      */
@@ -95,7 +95,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
     
     @Nonnull
-    private static NamedTable loadFromCSV(
+    private static NamedTable loadFromTSV(
             @Nonnull String systemName, @CheckForNull String userName,
             @CheckForNull String fileName,
             @Nonnull List<String> lines,
@@ -114,26 +114,26 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         
         int numColumns = 0;
         
-        String[][] csvCells = new String[numRows+1][];
+        String[][] tsvCells = new String[numRows+1][];
         for (int rowCount = 0; rowCount < numRows+1; rowCount++) {
             String[] columns = lines.get(rowCount).split("\t");
             if (numColumns < columns.length) numColumns = columns.length;
-            csvCells[rowCount] = columns;
+            tsvCells[rowCount] = columns;
         }
         
         // Ensure all rows have same number of columns
         for (int rowCount = 0; rowCount < numRows+1; rowCount++) {
-            Object[] cells = csvCells[rowCount];
+            Object[] cells = tsvCells[rowCount];
             if (cells.length < numColumns) {
                 String[] newCells = new String[numColumns];
                 System.arraycopy(cells, 0, newCells, 0, cells.length);
-                csvCells[rowCount] = newCells;
+                tsvCells[rowCount] = newCells;
                 for (int i=cells.length; i < numColumns; i++) newCells[i] = "";
-                csvCells[rowCount] = newCells;
+                tsvCells[rowCount] = newCells;
             }
         }
         
-        NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells);
+        NamedTable table = new DefaultTsvNamedTable(systemName, userName, fileName, tsvCells);
         
         if (registerInManager) manager.register(table);
         
@@ -141,55 +141,55 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
     
     @Nonnull
-    public static NamedTable loadTableFromCSV_Text(
+    public static NamedTable loadTableFromTSV_Text(
             @Nonnull String systemName, @CheckForNull String userName,
             @Nonnull String text,
             boolean registerInManager)
             throws BadUserNameException, BadSystemNameException {
         
         List<String> lines = Arrays.asList(text.split("\\r?\\n",-1));
-        return loadFromCSV(systemName, userName, null, lines, registerInManager);
+        return loadFromTSV(systemName, userName, null, lines, registerInManager);
     }
     
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(
+    public static NamedTable loadTableFromTSV_File(
             @Nonnull String systemName, @CheckForNull String userName,
             @Nonnull String fileName, boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(systemName, userName, fileName, lines, registerInManager);
+        return loadFromTSV(systemName, userName, fileName, lines, registerInManager);
     }
     
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(
+    public static NamedTable loadTableFromTSV_File(
             @Nonnull String systemName, @CheckForNull String userName,
             @Nonnull File file, boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(systemName, userName, file.getPath(), lines, registerInManager);
+        return loadFromTSV(systemName, userName, file.getPath(), lines, registerInManager);
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public void storeTableAsCSV(@Nonnull File file)
+    public void storeTableAsTSV(@Nonnull File file)
             throws FileNotFoundException {
-        _internalTable.storeTableAsCSV(file, getSystemName(), getUserName());
+        _internalTable.storeTableAsTSV(file, getSystemName(), getUserName());
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public void storeTableAsCSV(
+    public void storeTableAsTSV(
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
             throws FileNotFoundException {
         
-        _internalTable.storeTableAsCSV(file, systemName, userName);
+        _internalTable.storeTableAsTSV(file, systemName, userName);
     }
     
     @Override

@@ -26,22 +26,22 @@ public interface NamedTableManager extends Manager<NamedTable> {
     public AnonymousTable newAnonymousTable(int numRows, int numColumns);
     
     /**
-     * Create a new CSV table.
+     * Create a new TSV table (TAB separated file, similar to a CSV file).
      * This table is stored in the manager but it's contents does only exists
-     * in the CSV file. If the CSV file is changed, the contents will be read
+     * in the TSV file. If the TSV file is changed, the contents will be read
      * on the next start of the program.
      * @param systemName the system name of the table
      * @param userName the user name of the table, or null if no user name
-     * @param fileName the file name of the CSV file
+     * @param fileName the file name of the TSV file
      * @return the new table
      */
-    public NamedTable newCSVTable(String systemName, String userName, String fileName);
+    public NamedTable newTSVTable(String systemName, String userName, String fileName);
     
     /**
      * Create a new internal named table.
      * This table is stored in the manager together with its contents. Note
      * that a big table will take a lot of space in the panel file since the
-     * storage of table data has a lot of overhead. For larger tables, a CSV
+     * storage of table data has a lot of overhead. For larger tables, a TSV
      * table is recommended.
      * @param systemName the system name of the table
      * @param userName the user name of the table, or null if no user name
@@ -52,38 +52,38 @@ public interface NamedTableManager extends Manager<NamedTable> {
     public NamedTable newInternalTable(String systemName, String userName, int numRows, int numColumns);
     
     /**
-     * Load a table from a CSV text.
+     * Load a table from a TSV text (TAB separated text, similar to a CSV text).
      * @param sys the system name of the new table
      * @param user the user name of the new table or null if no user name
-     * @param text the CSV text
+     * @param text the TSV text
      * @return the loaded table
      */
-    public NamedTable loadTableFromCSVData(
+    public NamedTable loadTableFromTSVData(
             @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException;
     
     /**
-     * Load a table from a CSV finle.
+     * Load a table from a TSV file (TAB separated file, similar to a CSV file).
      * @param sys the system name of the new table
      * @param user the user name of the new table or null if no user name
-     * @param fileName the file name of the CSV table
+     * @param fileName the file name of the TSV table
      * @return the loaded table
      * @throws java.io.IOException in case of an exception
      */
-    public NamedTable loadTableFromCSV(
+    public NamedTable loadTableFromTSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull String fileName)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**
-     * Load a table from a CSV finle.
-     * @param file the CSV file
+     * Load a table from a TSV file (TAB separated file, similar to a CSV file).
+     * @param file the TSV file
      * @param sys the system name of the new table
      * @param user the user name of the new table or null if no user name
      * @return the loaded table
      * @throws java.io.IOException in case of an exception
      */
-    public NamedTable loadTableFromCSV(
+    public NamedTable loadTableFromTSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
