@@ -28,9 +28,38 @@ public class DefaultNamedTableTest {
             "North yard | East yard | South yard | \n" +
             "Left turnoutIT101 | IT201 | IT301 | \n";
 
+    private static final String expectedExcelTable103 =
+            "IQT103\n" +
+            "North yard | East yard | South yard | \n" +
+            "Left turnoutIT101 | IT201 | IT301 | \n";
+
     private static final String expectedExcelTable101_SwedishCharacters = "";
 
     private static final String expectedExcelTable102_SwedishCharacters = "";
+
+    private static final String expectedExcelTable103_SwedishCharacters = "";
+
+
+    private static final String expectedLibreOfficeTable101 =
+            "IQT101\n" +
+            "North yard | East yard | South yard | \n" +
+            "Left turnoutIT101 | IT201 | IT301 | \n";
+
+    private static final String expectedLibreOfficeTable102 =
+            "IQT102\n" +
+            "North yard | East yard | South yard | \n" +
+            "Left turnoutIT101 | IT201 | IT301 | \n";
+
+    private static final String expectedLibreOfficeTable103 =
+            "IQT103\n" +
+            "North yard | East yard | South yard | \n" +
+            "Left turnoutIT101 | IT201 | IT301 | \n";
+
+    private static final String expectedLibreOfficeTable101_SwedishCharacters = "";
+
+    private static final String expectedLibreOfficeTable102_SwedishCharacters = "";
+
+    private static final String expectedLibreOfficeTable103_SwedishCharacters = "";
 
 
     private String getTableAsText(NamedTable table) {
@@ -81,6 +110,13 @@ public class DefaultNamedTableTest {
                 true);
         Assert.assertNotNull("exists", table);
         Assert.assertEquals(expectedExcelTable102, getTableAsText(table));
+
+        table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT103", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/ExcelTable.tsv"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedExcelTable103, getTableAsText(table));
     }
 
     @Ignore("This test currently fails due to non English characters")
@@ -99,6 +135,62 @@ public class DefaultNamedTableTest {
                 true);
         Assert.assertNotNull("exists", table);
         Assert.assertEquals(expectedExcelTable102_SwedishCharacters, getTableAsText(table));
+
+        table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT103", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/ExcelTable_SwedishCharacters.csv"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedExcelTable103_SwedishCharacters, getTableAsText(table));
+    }
+
+    @Test
+    public void testLibreOfficeTSVFiles() throws IOException {
+        NamedTable table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT101", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/LibreOfficeTable.txt"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedLibreOfficeTable101, getTableAsText(table));
+
+        table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT102", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/LibreOfficeTable.tsv"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedLibreOfficeTable102, getTableAsText(table));
+
+        table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT103", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/LibreOfficeTable.tsv"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedLibreOfficeTable103, getTableAsText(table));
+    }
+
+    @Ignore("This test currently fails due to non English characters")
+    @Test
+    public void testLibreOfficeTSVFilesSwedishCharacters() throws IOException {
+        NamedTable table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT101", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/LibreOfficeTable_SwedishCharacters.txt"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedLibreOfficeTable101_SwedishCharacters, getTableAsText(table));
+
+        table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT102", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/LibreOfficeTable_SwedishCharacters.tsv"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedLibreOfficeTable102_SwedishCharacters, getTableAsText(table));
+
+        table = AbstractNamedTable.loadTableFromTSV_File(
+                "IQT103", null,
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/LibreOfficeTable_SwedishCharacters.csv"),
+                true);
+        Assert.assertNotNull("exists", table);
+        Assert.assertEquals(expectedLibreOfficeTable103_SwedishCharacters, getTableAsText(table));
     }
 
     // The minimal setup for log4J
