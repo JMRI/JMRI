@@ -58,7 +58,7 @@
         </li>
       </ul>
 
-      <p>JMRI® requires that Java be installed:</p>
+      <p>JMRI® requires that <a href="../../../../java/index.shtml"><em>Java</em></a> be installed:</p>
 
       <ul>
         <li>Version 2.12 can run on any computer system that will run Java 1.5 through Java 8 (also
@@ -69,24 +69,24 @@
 
         <li>Version 3.10.1 requires Java 1.7 through Java 8.</li>
 
-        <li>Version 4.2 and later requires Java 8 through 11. <em>If your machine can run it, we recommend Java 11.</em></li>
+        <li>Version 4.2 thru 4.26 requires Java 8 or 11. <em>If your machine can run it, we recommend Java 11.</em></li>
         
       </ul>
 
-      <p class="noted"><span class="since"><strong>ALL JMRI VERSIONS</strong></span><strong>NOTE re Java 8 Version 311:  DO NOT INSTALL THIS VERSION.</strong>  
+      <p class="noted"><span class="since"><strong>Thru Version 25.4</strong></span><strong>NOTE re Java 8 Version 311:  DO NOT INSTALL THIS VERSION.</strong>  
       Errors have been reported which can be fixed by reverting to <a href="https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html"
-	    target="_blank">version 301 </a> or upgrading to Java 11. [As of 20 October 2021]</p>
-      
-      <p>As of JMRI 4.20, JMRI is only fully supported when running on the most current update
-      possible to the two most recent Java Long Term Support (LTS) releases (8 or 11 as of July
-      2020) and will receive "best effort" support on the latest Java release (14 as of July 2020).
-      Some problems encountered while using a Java version that is "best effort" may only be
-      addressable by using a supported version.</p>
+	    target="_blank">version 301 </a> or upgrading to Java 11. [As of 5 January 2022]</p>
 
-      <p>The JMRI project recommends Java from <a href="https://adoptopenjdk.net">AdoptOpenJDK</a>
-      or the operating system vendor unless using Windows 8 or older, in which case Java from
-      <a href="https://java.com">Oracle</a> is recommended. See the operating system-specific
-      installation guidance for further details.</p>
+      <ul>
+         <li>Version 4.99.x and beyond: REQUIRES <strong>JAVA 11 ONLY</strong>.  See <a href="../../../../java/index.shtml">our Java instructions</a>  
+         page on getting Java 11.<li>
+      </ul>
+      
+      <p>As of JMRI 4.20, JMRI is only fully supported when running on Java release 8 or 11.  As of JMRI 4.99.1, 
+      JMRI is only fully supported when running on Java release 11 as noted above.        
+      Some problems have been encountered while using a Java version that beyond Java 11 and support is offered 
+      only on a "best effort" basis.  Some issues may only be
+      addressable by using a supported version.</p>
 
       <h2 id="startprog">Starting the program</h2>
 
