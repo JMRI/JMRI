@@ -233,18 +233,20 @@ public class ImportLocations extends ImportRollingStock {
             }
             if (inputLine.length >= FIELD_ROAD_OPTION) {
                 // process road option - again use the words imported
+                log.info("the current road options is: ", thisTrack.getRoadOption());
                 String roadOptions = inputLine[FIELD_ROAD_OPTION].trim();
                 String optionValue = "";
                 if (roadOptions.length() > 0) {
                     if (roadOptions.startsWith(Bundle.getMessage("AcceptsAllRoads"))) {
-                        optionValue = Bundle.getMessage("AcceptsAllRoads");
+                        optionValue = Track.ALL_ROADS;
                     } else if (roadOptions.startsWith(Bundle.getMessage("AcceptOnly"))) {
-                        optionValue = Bundle.getMessage("AcceptOnly");
+                        optionValue = Track.INCLUDE_ROADS;
                     } else if (roadOptions.startsWith(Bundle.getMessage("Exclude"))) {
-                        optionValue = Bundle.getMessage("Exclude");
+                        optionValue = Track.EXCLUDE_ROADS;
                     }
                     thisTrack.setRoadOption(optionValue);
                     log.debug("setting the road options to {}", optionValue);
+                    log.info("road options is now: {}", thisTrack.getRoadOption());
                 }
             }
             // fields Pick UP Restrictions and Alternate Track Name are not used
