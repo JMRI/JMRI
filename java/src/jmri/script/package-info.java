@@ -14,9 +14,9 @@
  *    <li>JMRI 5 brings the beginning of support for the next
  *        generation of scripting support, specifically through
  *        <a href="https://www.graalvm.org/">GraalVM</a>.
- *        This is being done by migrating the internal
- *        structure of the
- *        {@link JmriScriptEngineManager} class.
+ *        This is being done as a first phase by wrapping
+ *        the GraalVM Python 3 interpreter so that it's usable by the
+ *        {@link jmri.script.JmriScriptEngineManager} class.
  *        For more information on this, see the associated
  *        <a href="README-WIP.txt">README-WIP.md</a> file.
  * </ul>
