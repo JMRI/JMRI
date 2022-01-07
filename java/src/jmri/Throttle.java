@@ -2,6 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import jmri.beans.PropertyChangeProvider;
 
@@ -235,6 +236,13 @@ public interface Throttle extends PropertyChangeProvider {
      * @param newState New Function State. True on, false off.
      */
     public abstract void setFunction(int functionNum, boolean newState);
+    
+    /**
+     * Set many Loco Functions and send to Layout.
+     * @param newStates A map of the Function Number, 0-28, and the new
+     *                  Function State, True on, false off, for that function.
+     */
+    public abstract void setFunctions(Map<Integer, Boolean> newStates);
     
     /**
      * Get Loco Function status.

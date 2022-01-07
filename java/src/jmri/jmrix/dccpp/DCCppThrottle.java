@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
@@ -309,15 +311,18 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             if (log.isDebugEnabled()) log.debug("changing speed from {} to {} for {}", this.getSpeedSetting(), newSpeedSetting, cab);
             super.setSpeedSetting(newSpeedSetting);
         }
+        
+        Map<Integer, Boolean> newStates = new HashMap<>();
         //check each function value for any changes, and update if so
         for (int i = 0; i <= 28; i++) {
             boolean newState = (newFunctionsString.charAt(i)=='1');
             if (this.getFunction(i) != newState) {
 //                log.debug(r.toMonitorString());
                 if (log.isDebugEnabled()) log.debug("changing F{} from {} to {} for {}", i, this.getFunction(i), newState, cab);                
-                super.setFunction(i,newState);
+                newStates.put(i, newState);
             }
         }
+        if (!newStates.isEmpty()) super.setFunctions(newStates);
     }
 
     private void handleThrottleReply(DCCppReply l) {

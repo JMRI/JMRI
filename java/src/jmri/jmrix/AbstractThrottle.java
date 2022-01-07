@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
 import jmri.LocoAddress;
@@ -431,6 +432,36 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         FUNCTION_BOOLEAN_ARRAY[functionNum] = newState;
         sendFunctionGroup(functionNum,false);
         firePropertyChange(Throttle.getFunctionString(functionNum), old, newState);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFunctions(Map<Integer, Boolean> newStates) {
+        // First update all the functions in the FUNCTION_BOOLEAN_ARRAY
+        for (Map.Entry<Integer, Boolean> entry : newStates.entrySet()) {
+            int functionNum = entry.getKey();
+            boolean newState = entry.getValue();
+            if (functionNum < 0 || functionNum > FUNCTION_BOOLEAN_ARRAY.length-1) {
+                log.warn("Unhandled set function number: {} {}", functionNum, this.getClass().getName());
+                continue;
+            }
+            FUNCTION_BOOLEAN_ARRAY[functionNum] = newState;
+        }
+        
+        // Then tell the layout and JMRI about it
+        for (Map.Entry<Integer, Boolean> entry : newStates.entrySet()) {
+            int functionNum = entry.getKey();
+            boolean newState = entry.getValue();
+            if (functionNum < 0 || functionNum > FUNCTION_BOOLEAN_ARRAY.length-1) {
+                // Don't log a warning here. We have already done that above.
+                continue;
+            }
+            boolean old = FUNCTION_BOOLEAN_ARRAY[functionNum];
+            sendFunctionGroup(functionNum,false);
+            firePropertyChange(Throttle.getFunctionString(functionNum), old, newState);
+        }
     }
 
     /**
