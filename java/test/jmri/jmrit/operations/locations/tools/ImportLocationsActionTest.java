@@ -78,10 +78,4 @@ public class ImportLocationsActionTest extends OperationsTestCase {
 
     }
 
-    @Test
-    public void testImportToPartial() {
-
-    }
-
-
 }

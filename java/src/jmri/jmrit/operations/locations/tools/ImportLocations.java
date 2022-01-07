@@ -20,15 +20,13 @@ import java.util.Locale;
 
 
 /**
- * This routine will import Locations from a CSV file into the operations database. The field order is: Location,
- * Track, Type, Length, Division, Serviced by Trains Traveling, Rolling Stock, Order, Road Option, Roads,
- * Load Option, Loads, Ship Load Option, Ships, Set Out Restrictions, Restrictions, Pick up Restrictions,
- * Restrictions, Schedule Name, Mode, Alternate Track, Pool name, Minimum, Track Blocking Order, Planned Pick Ups,
- * Track Destinations, Destinations, Swap default loads and empties, Empty cars with default loads,
- * Generate custom loads for spurs serviced by this train, Generate custom loads for any spur (multiple trains),
- * Generate custom loads for any staging track, Block cars by pick up location, Comment,
- * Comment when there is only pick ups, Comment when there is only set outs
- *
+ * This routine will import Locations from a CSV file into the operations database. The field order is: Location, Track,
+ * Type, Length, Division, Serviced by Trains Traveling, Rolling Stock, Order, Road Option, Roads, Load Option, Loads,
+ * Ship Load Option, Ships, Set Out Restrictions, Restrictions, Pick up Restrictions, Restrictions, Schedule Name, Mode,
+ * Alternate Track, Pool name, Minimum, Track Blocking Order, Planned Pick Ups, Track Destinations, Destinations, Swap
+ * default loads and empties, Empty cars with default loads, Generate custom loads for spurs serviced by this train,
+ * Generate custom loads for any spur (multiple trains), Generate custom loads for any staging track, Block cars by pick
+ * up location, Comment, Comment when there is only pick ups, Comment when there is only set outs
  */
 public class ImportLocations extends ImportRollingStock {
 
@@ -55,9 +53,9 @@ public class ImportLocations extends ImportRollingStock {
     private static final int FIELD_RESTRICTIONS_2 = 17;
     private static final int FIELD_SCHEDULE_NAME = 18;
     private static final int FIELD_SCHEDULE_MODE = 19;
-    private static final int FIELD_ALTERNATE_TRACK = 20;            // not used
-    private static final int FIELD_POOL_NAME = 21;                  //not used
-    private static final int FIELD_IGNORE_MINIMUM = 22;                    // not used
+    private static final int FIELD_ALTERNATE_TRACK = 20;
+    private static final int FIELD_POOL_NAME = 21;
+    private static final int FIELD_IGNORE_MINIMUM = 22;
     private static final int FIELD_TRACK_BLOCKING_ORDER = 23;
     private static final int FIELD_PLANNED_PICK_UPS = 24;
     private static final int FIELD_TRACK_DESTINATIONS = 25;
@@ -185,9 +183,8 @@ public class ImportLocations extends ImportRollingStock {
                 }
             }
             if (inputLine.length >= FIELD_SERVICED_BY) {
-                String fieldServicedBy = inputLine[FIELD_SERVICED_BY].trim();
                 // process direction string (a list of directions each ending with a semicolon)
-                String[] directions = fieldServicedBy.split("; ");
+                String[] directions = inputLine[FIELD_SERVICED_BY].split("; ");
                 log.debug("this track is serviced by {} directions", directions.length);
                 int trackDir = 0; // no direction yet
                 for (String dir : directions) {
@@ -201,7 +198,7 @@ public class ImportLocations extends ImportRollingStock {
                 if (inputLine[FIELD_ROLLING_STOCK].length() > 0) {
                     log.debug("Will be setting this location to accepting the following rolling stock: {}", inputLine[FIELD_ROLLING_STOCK]);
                     // first we need to remove all rolling stock, then add specific cars back
-                    for (String car: thisTrack.getTypeNames()) {
+                    for (String car : thisTrack.getTypeNames()) {
                         thisTrack.deleteTypeName(car);
                     }
                     String[] rollingStock = inputLine[FIELD_ROLLING_STOCK].split("; ");
@@ -221,7 +218,7 @@ public class ImportLocations extends ImportRollingStock {
                 }
             }
 
-            if (inputLine.length >= FIELD_ROADS ) {
+            if (inputLine.length >= FIELD_ROADS) {
                 log.debug("setting the road names to {}", inputLine[FIELD_ROADS]);
                 // note -- don't trim so the final semi-colon space remains on the last field
                 if (inputLine[FIELD_ROADS].length() > 0) {
@@ -247,7 +244,48 @@ public class ImportLocations extends ImportRollingStock {
                     log.debug("setting the road options to {}", optionValue);
                 }
             }
-            // fields Pick UP Restrictions and Alternate Track Name are not used
+            if (inputLine.length >= FIELD_LOAD_OPTION) {
+                String loadOptions = inputLine[FIELD_LOAD_OPTION].trim();
+                String optionValue = "";
+                if (loadOptions.length() > 0) {
+                    if (loadOptions.startsWith(Bundle.getMessage("ShipAll"))) {
+                        optionValue = Track.ALL_LOADS;
+                    } else if (loadOptions.startsWith(Bundle.getMessage("ShipOnly"))) {
+                        optionValue = Track.INCLUDE_ROADS;
+                    } else if (loadOptions.startsWith(Bundle.getMessage("Exclude"))) {
+                        optionValue = Track.EXCLUDE_LOADS;
+                    } else {
+                        log.debug("Locations Import Load option was not recognized: {} ", loadOptions);
+                    }
+                }
+
+            }
+            if (inputLine.length >= FIELD_LOADS) {
+                // process names of loads, again, don't trim first
+                if (inputLine[FIELD_LOADS].length() > 0) {
+                    String[] loads = inputLine[FIELD_LOADS].split("; ");
+                    log.debug("This locations is surviced by {} loads", loads.length);
+                    for (String load : loads) {
+                        thisTrack.addLoadName(load);
+                    }
+                }
+
+            }
+
+
+            if (inputLine.length >= FIELD_IGNORE_MINIMUM) {
+                String ignoreMin = inputLine[FIELD_IGNORE_MINIMUM].trim();
+                if (ignoreMin.length() > 0) {
+                    log.debug("setting the ignore minimum to {}", ignoreMin);
+                    Integer ignoreValue = null;
+                    try {
+                        ignoreValue = new Integer(ignoreMin);
+                        thisTrack.setBlockingOrder(ignoreValue);
+                    } catch (NumberFormatException exception) {
+                        log.debug("Exception converting the ignore minimum to a number - value was {}", ignoreMin);
+                    }
+                }
+            }
             if (inputLine.length >= FIELD_TRACK_BLOCKING_ORDER) {
                 String fieldTrackBlockingOrder = inputLine[FIELD_TRACK_BLOCKING_ORDER].trim();
                 if (fieldTrackBlockingOrder.length() > 0) {
@@ -261,6 +299,17 @@ public class ImportLocations extends ImportRollingStock {
                     }
                 }
             }
+            if (inputLine.length >= FIELD_PLANNED_PICK_UPS) {
+                String ignoreUsedLength = inputLine[FIELD_PLANNED_PICK_UPS].trim();
+                if (ignoreUsedLength.length() > 0) {
+                    try {
+                        Integer ignorePercentage = new Integer(ignoreUsedLength);
+                        thisTrack.setIgnoreUsedLengthPercentage( ignorePercentage);
+                    } catch (NumberFormatException exception) {
+                        log.debug("Exception converting field Ignore Used track Percentage - value was {}", ignoreUsedLength);
+                    }
+                }
+            }
             if (inputLine.length >= FIELD_COMMENT) {
                 String fieldComment = inputLine[FIELD_COMMENT].trim();
                 if (fieldComment.length() > 0) {
@@ -268,16 +317,23 @@ public class ImportLocations extends ImportRollingStock {
                     thisTrack.setComment(fieldComment);
                 }
             }
-            // fields Comment Both, Comment Pickup and Comment Setout are not set
+            if (inputLine.length >= FIELD_COMMENT_BOTH) {
+                String commentBoth = inputLine[FIELD_COMMENT_BOTH].trim();
+                thisTrack.setCommentBoth(commentBoth);
+            }
+            if (inputLine.length >= FIELD_COMMENT_PICKUPS) {
+                String commentPickups = inputLine[FIELD_COMMENT_PICKUPS].trim();
+                thisTrack.setCommentPickup(commentPickups);
+            }
+            if (inputLine.length >= FIELD_COMMENT_SETOUTS) {
+                String commentSetouts = inputLine[FIELD_COMMENT_SETOUTS].trim();
+                thisTrack.setCommentSetout(commentSetouts);
+            }
         }
         if (importOkay) {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"),
-                new Object[]{tracksAdded}), Bundle.getMessage("SuccessfulImport"),
-                JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}), Bundle.getMessage("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"),
-                            new Object[]{tracksAdded}), Bundle.getMessage("ImportFailed"),
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
         }
         fstatus.dispose();
     }
