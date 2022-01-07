@@ -25,6 +25,12 @@
 		    	Python 3 support is only available in JMRI test release 4.99.2 or later.
 		    	Make sure to check the release notes of the JMRI version you're using!
 		    </p>
+		    <p>
+		        Please note that Python 3 support is currently only available for macOS and Linux
+		        computers.  Some of the components it requires are not year available for Windows.
+		        We'll update to use them and make Windows support available as soon as thoe
+		        components are updated.
+		    </p>
 	    </div> <!-- closes #teaser-->
 
 	    <!-- -------- -->
@@ -104,8 +110,16 @@
                 The syntax for getting a class reference has changed.  The only
                 place you're likely to see that is in InstanceManager calls.  They become:
                 <pre><code class="block">
-    manager = jmri.InstanceManager.getNullableDefault(java.type('jmri.MyManager'))
-            </code></pre>
+    manager = jmri.InstanceManager.getNullableDefault('jmri.MyManager')
+                </code></pre>
+                (note quotes).  More generally, if you need access to a Java type
+                object for other purposes, you can get it with
+                <pre><code class="block">
+    java.type('jmri.MyManager')
+                </code></pre>
+                but we've provided a new version of InstanceManager.getDefault and
+                InstanceManager.getNullableDefault that takes the class name as
+                a parameter to make those common operations simpler.
 
             <li>
                 Print statements need to have their value enclosed in parentheses:
