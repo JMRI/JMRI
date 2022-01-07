@@ -30,8 +30,6 @@ import javax.swing.event.CaretEvent;
 import javax.swing.text.BadLocationException;
 import jmri.UserPreferencesManager;
 import jmri.script.JmriScriptEngineManager;
-import jmri.script.swing.ScriptFileChooser;
-import jmri.script.swing.ScriptOutput;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import org.python.google.common.io.Files;

@@ -1,7 +1,5 @@
 package jmri.script.swing;
 
-import jmri.script.swing.InputWindow;
-
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
