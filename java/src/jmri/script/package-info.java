@@ -16,7 +16,8 @@
  *        <a href="https://www.graalvm.org/">GraalVM</a>.
  *        This is being done as a first phase by wrapping
  *        the GraalVM Python 3 interpreter so that it's usable by the
- *        {@link jmri.script.JmriScriptEngineManager} class.
+ *        {@link jmri.script.JmriScriptEngineManager} class
+ *        and the jmri.script.jsr223graalpython package.
  *        For more information on this, see the associated
  *        <a href="README-WIP.txt">README-WIP.md</a> file.
  * </ul>
