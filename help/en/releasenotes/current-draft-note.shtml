@@ -468,6 +468,8 @@
             <li>Initial
                 <a href="https://jmri.org/help/en/html/tools/scripting/Python3.shtml">Python 3 support</a>
                 is available.
+            <li>Added simpler accessors to InstanceManager for use in scripts. See
+                jython/test/InstanceManagerTest.py</li>
         </ul>
 
     <h3>Signals</h3>
