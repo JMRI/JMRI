@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1189,8 +1190,8 @@ public class TrainBuilder extends TrainBuilderBase {
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                                new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
-                                        si.getReceiveLoadName(), status }));
+                                new Object[] { StringUtils.capitalize(track.getTrackTypeName()), track.getLocation().getName(), track.getName(),
+                                        car.toString(), si.getReceiveLoadName(), status }));
                 // restore car's load
                 car.setLoadName(oldCarLoad);
                 continue;
@@ -1623,8 +1624,8 @@ public class TrainBuilder extends TrainBuilderBase {
             if (!status.startsWith(Track.LENGTH) || !track.checkSchedule(car).equals(Track.OKAY)) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                                new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
-                                        car.getLoadName(), status }));
+                                new Object[] { StringUtils.capitalize(track.getTrackTypeName()), track.getLocation().getName(), track.getName(),
+                                        car.toString(), car.getLoadName(), status }));
                 return false;
             }
             if (track.getAlternateTrack() == null) {
@@ -1721,8 +1722,8 @@ public class TrainBuilder extends TrainBuilderBase {
         if (!status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                            new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
-                                    car.getLoadName(), status }));
+                            new Object[] { StringUtils.capitalize(track.getTrackTypeName()), track.getLocation().getName(), track.getName(),
+                                    car.toString(), car.getLoadName(), status }));
             return false;
         }
         if (!track.isSpaceAvailable(car)) {
@@ -1810,9 +1811,9 @@ public class TrainBuilder extends TrainBuilderBase {
                     !(status.contains(Track.CUSTOM) && status.contains(Track.LOAD))) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                                new Object[] { car.getFinalDestination().getName(),
-                                        car.getFinalDestinationTrack().getName(), car.toString(), car.getLoadName(),
-                                        status }));
+                                new Object[] { StringUtils.capitalize(car.getFinalDestinationTrack().getTrackTypeName()),
+                                        car.getFinalDestination().getName(), car.getFinalDestinationTrack().getName(),
+                                        car.toString(), car.getLoadName(), status }));
                 // is this car or kernel being sent to a track that is too short?
                 if (status.startsWith(Track.CAPACITY)) {
                     // track is too short for this car or kernel, can never go there
@@ -1882,8 +1883,8 @@ public class TrainBuilder extends TrainBuilderBase {
         if (car.getDestination() == null) {
             return false; // the only false return
         }
-        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"),
-                new Object[] { car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"), new Object[] {
+                car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
         if (rld == null) {
             // code check, router doesn't set a car's destination if not carried by train
