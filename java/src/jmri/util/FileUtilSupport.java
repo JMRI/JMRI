@@ -943,7 +943,7 @@ public class FileUtilSupport extends Bean {
                 String path2 = (new File(path1)).getParentFile().getPath();
                 try {
                     String loadingDir = java.net.URLDecoder.decode(path2, "UTF-8");
-                    log.trace("Program location from Classloader: ", loadingDir);
+                    log.trace("Program location from Classloader: {}", loadingDir);
                     if (loadingDir.endsWith("target")) {
                         loadingDir = loadingDir.substring(0, loadingDir.length()-6);
                     }
