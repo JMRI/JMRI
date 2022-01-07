@@ -184,7 +184,6 @@ public class ImportLocations extends ImportRollingStock {
                     log.debug("Setting this location to division {}", division);
                 }
             }
-            log.debug("Serviced by field is {}", inputLine[FIELD_SERVICED_BY]);
             if (inputLine.length >= FIELD_SERVICED_BY) {
                 String fieldServicedBy = inputLine[FIELD_SERVICED_BY].trim();
                 // process direction string (a list of directions each ending with a semicolon)
@@ -224,6 +223,7 @@ public class ImportLocations extends ImportRollingStock {
 
             if (inputLine.length >= FIELD_ROADS ) {
                 log.debug("setting the road names to {}", inputLine[FIELD_ROADS]);
+                // note -- don't trim so the final semi-colon space remains on the last field
                 if (inputLine[FIELD_ROADS].length() > 0) {
                     String[] roads = inputLine[FIELD_ROADS].split("; ");
                     for (String road : roads) {
@@ -233,7 +233,6 @@ public class ImportLocations extends ImportRollingStock {
             }
             if (inputLine.length >= FIELD_ROAD_OPTION) {
                 // process road option - again use the words imported
-                log.info("the current road options is: ", thisTrack.getRoadOption());
                 String roadOptions = inputLine[FIELD_ROAD_OPTION].trim();
                 String optionValue = "";
                 if (roadOptions.length() > 0) {
@@ -246,7 +245,6 @@ public class ImportLocations extends ImportRollingStock {
                     }
                     thisTrack.setRoadOption(optionValue);
                     log.debug("setting the road options to {}", optionValue);
-                    log.info("road options is now: {}", thisTrack.getRoadOption());
                 }
             }
             // fields Pick UP Restrictions and Alternate Track Name are not used
