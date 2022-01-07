@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?> 
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?>
 
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
@@ -25,7 +25,7 @@
   Provides build services for JMRI web pages
   </description>
 
-  <property name="jmri.copyright.year" value="1997-2021"/>
+  <property name="jmri.copyright.year" value="1997-2022"/>
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>
@@ -54,7 +54,7 @@
     <mkdir dir="${propertiesdir}"/>
   </target>
 
-  <target name="clean" 
+  <target name="clean"
   			description="remove results">
    <delete dir="${target}"/>
    <delete dir="${toDTD}"/>
@@ -67,48 +67,48 @@
     	<fileset dir="${fromDTD}" >
       		<include name="*.dtd"/>
     	</fileset>
-  	</copy> 
+  	</copy>
 	<copy todir="${target}" >
     	<fileset dir="${fromDTD}" >
       		<include name="decoderIndex-config.dtd"/>
       		<include name="decoder-config.dtd"/>
     	</fileset>
-  	</copy> 
+  	</copy>
   	<mkdir dir="xml"/>
 	<copy todir="xml" >
     	<fileset dir="${fromDTD}" >
       		<include name="decoderIndex-config.dtd"/>
     	</fileset>
-  	</copy> 
+  	</copy>
   </target>
-  
-  <target name="copyXML" 
+
+  <target name="copyXML"
   			description="ensure local XML file copies present where needed for processing">
 	<copy todir="${target}" >
     	<fileset dir="${xml}/decoders" >
       		<include name="*.xml"/>
       		<exclude name="0NMRA_test.xml" />
     	</fileset>
-  	</copy> 
+  	</copy>
 	<copy todir="${target}" >
     	<fileset dir="${xml}" >
       		<include name="decoderIndex.xml"/>
     	</fileset>
-  	</copy> 
+  	</copy>
 	<copy todir="${target}" >
     	<fileset dir=".">
       		<include name="interestingCVs.xml"/>
     	</fileset>
-  	</copy> 
+  	</copy>
   </target>
-  
-  <target name="csv" depends="init, copyDTD, copyXML, alldecodercsv, reservedcsv" 
+
+  <target name="csv" depends="init, copyDTD, copyXML, alldecodercsv, reservedcsv"
   			description="create CSV file listing CVs available on all decoders">
 	<copy todir="${target}" >
     	<fileset dir="." >
       		<include name="CSVindex.html"/>
     	</fileset>
-  	</copy> 
+  	</copy>
     <xslt  basedir="${target}"
     		destdir="${target}"
     		style="SizeAsCSV.xsl"
@@ -127,7 +127,7 @@
 	</xslt>
   </target>
 
-  <target name="alldecodercsv" depends="init, copyDTD, copyXML" 
+  <target name="alldecodercsv" depends="init, copyDTD, copyXML"
   			description="create CSV file listing CVs available on all decoders">
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -138,14 +138,14 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
-  <target name="reservedcsv" depends="init, copyDTD, copyXML" 
+
+  <target name="reservedcsv" depends="init, copyDTD, copyXML"
   			description="create CSV file listing reserved CVs used by decoders">
 	<copy todir="${target}" >
     	<fileset dir="." >
       		<include name="CSVindex.html"/>
     	</fileset>
-  	</copy> 
+  	</copy>
     <xslt  basedir="${target}"
     		destdir="${target}"
     		style="reservedCSV.xsl"
@@ -155,8 +155,8 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
-  <target name="index" depends="init, copyDTD, copyXML" 
+
+  <target name="index" depends="init, copyDTD, copyXML"
   			description="create a decoder index page">
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -167,8 +167,8 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
-  <target name="mfgs" depends="init, copyDTD, copyXML" 
+
+  <target name="mfgs" depends="init, copyDTD, copyXML"
   			description="create a manufacturer index page">
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -181,11 +181,11 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
+
   <!-- the following no longer works because it runs out of memeory making the page -->
   <!-- which is supposed to contain every CV for every decoder.  Maybe switch to -->
   <!-- a more column oriented form, showing who uses each CV on one page? -->
-  <target name="cvsummary" depends="init, copyDTD, copyXML" 
+  <target name="cvsummary" depends="init, copyDTD, copyXML"
   			description="create HTML page listing CVs available on all decoders">
     <echo message="setenv ANT_OPTS -Xmx1000M"/>
     <xslt  basedir="${target}"
@@ -197,7 +197,7 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
- <target name="selection" depends="init, copyDTD, copyXML" 
+ <target name="selection" depends="init, copyDTD, copyXML"
   			description="create HTML decoder selection guide listing various properties">
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -208,8 +208,8 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
-  <target name="models" depends="init, copyDTD, copyXML" 
+
+  <target name="models" depends="init, copyDTD, copyXML"
   			description="tranform definitions into web pages">
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -221,8 +221,8 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
-  <target name="id" depends="init, copyDTD, copyXML" 
+
+  <target name="id" depends="init, copyDTD, copyXML"
   			description="create a page on decoder selection">
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -234,8 +234,8 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
-  <target name="properties" depends="init, copyDTD, copyXML" 
+
+  <target name="properties" depends="init, copyDTD, copyXML"
   			description="tranform definitions into properties files">
     <xslt  basedir="${target}"
     		destdir="${propertiesdir}"
@@ -247,8 +247,8 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
-  <target name="testweb" depends="init, copyDTD, copyXML" 
+
+  <target name="testweb" depends="init, copyDTD, copyXML"
   			description="test a single web transform">
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -260,11 +260,11 @@
       <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
-  
+
 
   <target name="xslt" depends="init, models, index, selection, csv, id, properties"
   		description="run the whole sequence of processing" />
-  		
+
   <!-- This target requires access to the JMRI webserver -->
   <!-- so it's only for use by JMRI maintainers -->
   <target name="upload" description="Upload existing results to web site" >

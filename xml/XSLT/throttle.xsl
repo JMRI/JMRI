@@ -6,7 +6,7 @@
 <!-- This is just a basic implementation for debugging purposes, without -->
 <!-- any real attempt at formatting -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2018.                            -->
+<!-- This file is part of JMRI.  Copyright 2007-2022.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,7 +17,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
@@ -30,7 +30,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -38,14 +38,14 @@
      elements, which is what the apply-templates instruction does.
      We can also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='throttle-config'>
 
 <html>
 	<head>
 		<title>JMRI Throttle File</title>
 	</head>
-	
+
 	<body>
 		<h2>JMRI Throttle File</h2>
 
@@ -77,9 +77,9 @@ Size: <xsl:value-of select="@width"/>,<xsl:value-of select="@height"/><br/>
 <xsl:template match="ControlPanel">
 <h4>Control Panel</h4>
 <xsl:apply-templates/>
-displaySpeedSlider="<xsl:value-of select="@displaySpeedSlider"/>" 
-speedMode="<xsl:value-of select="@speedMode"/>" 
-trackSlider="<xsl:value-of select="@trackSlider"/>" 
+displaySpeedSlider="<xsl:value-of select="@displaySpeedSlider"/>"
+speedMode="<xsl:value-of select="@speedMode"/>"
+trackSlider="<xsl:value-of select="@trackSlider"/>"
 trackSliderMinInterval="<xsl:value-of select="@trackSliderMinInterval"/>"
 
 </xsl:template>
@@ -93,9 +93,9 @@ trackSliderMinInterval="<xsl:value-of select="@trackSliderMinInterval"/>"
 <xsl:template match="FunctionButton">
 Button
 id="<xsl:value-of select="@id"/>"
-text="<xsl:value-of select="@text"/>" 
-isLockable="<xsl:value-of select="@isLockable"/>" 
-isVisible="<xsl:value-of select="@isVisible"/>" 
+text="<xsl:value-of select="@text"/>"
+isLockable="<xsl:value-of select="@isLockable"/>"
+isVisible="<xsl:value-of select="@isVisible"/>"
 fontSize="<xsl:value-of select="@fontSize"/>"
 <br/>
 </xsl:template>
@@ -107,9 +107,9 @@ fontSize="<xsl:value-of select="@fontSize"/>"
 </xsl:template>
 
 <xsl:template match="dcclocoaddress">
-Loco address: 
+Loco address:
 number="<xsl:value-of select="@number"/>"
-longaddress="<xsl:value-of select="@longaddress"/>" 
+longaddress="<xsl:value-of select="@longaddress"/>"
 <br/>
 </xsl:template>
 

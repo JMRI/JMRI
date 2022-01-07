@@ -54,6 +54,7 @@
     </enumVal>
     <label>Loco front additional 3 function off</label>
     <label xml:lang="de">Lvor zusätzlich 3 aus</label>
+    <label xml:lang="cs">Vypnutí funkčních výstupů 3 vpřed lokomotivy</label>
   </variable>
   <variable CV="110" item="Function F0R option 4" mask="XXVVVXXX">
     <enumVal>
@@ -102,16 +103,19 @@
     </enumVal>
     <label>Loco rear additional 3 function off</label>
     <label xml:lang="de">Lrück zusätzlich 3 aus</label>
+    <label xml:lang="cs">Vypnutí funkčních výstupů 3 vzad lokomotivy</label>
   </variable>
   <variable CV="178" item="Analog Vstart" default="0">
     <decVal min="0" max="255"/>
     <label>Analog Vstart</label>
     <label xml:lang="de">Anfahrspannung Analog</label>
+    <label xml:lang="cs">Analog Rozjezdové napětí</label>
   </variable>
   <variable CV="179" item="Analog Vhigh" default="0">
     <decVal min="0" max="255"/>
     <label>Analog Vhigh</label>
     <label xml:lang="de">Geschwindigkeit Analog</label>
+    <label xml:lang="cs">Analog Maximální napětí</label>
   </variable>
   <variable CV="273" item="Delayed start after blow-off time" default="0">
     <decVal min="0" max="255"/>
@@ -227,5 +231,6 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Slower Steam Strokes</label>
     <label xml:lang="de">Langsamere Dampfschläge</label>
+    <label xml:lang="cs">Pomalé výfuky páry</label>
   </variable>
 </variables>

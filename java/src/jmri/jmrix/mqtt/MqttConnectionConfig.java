@@ -36,7 +36,7 @@ public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionCo
 
     @Override
     public String getInfo() {
-        return("MQTT");
+        return(adapter.getCurrentPortName());
     }
 
     @Override

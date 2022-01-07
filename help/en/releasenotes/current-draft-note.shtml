@@ -91,7 +91,8 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Native MQTT SignalMasts are available</li>
+                <li>Native MQTT SignalMasts are available.</li>
+                <li>Splash screen shows connection address</li>
             </ul>
 
         <h4>MRC</h4>
@@ -141,7 +142,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Enabled functions 23-27 in the throttle.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>

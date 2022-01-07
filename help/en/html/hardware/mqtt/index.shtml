@@ -194,12 +194,12 @@
 
       <ul>
         <li><strong>Sensors</strong>: JMRI expects to receive sensor state on the "Sensor receive
-        topic." It sends state on the "Sensor send topic" if a user changes sensor state by
+        topic." It sends state on the "Sensor send topic" if a user changes sensor state e.g. by
         clicking on a panel or table.</li>
 
         <li>
           <strong>Turnouts</strong>: JMRI sends on the "Turnout send topic" if a user commands a
-          turnout change by clicking on a panel or table. Additionally, if a Turnout has been
+          turnout change e.g. by clicking on a panel or table. Additionally, if a Turnout has been
           created in either the Direct mode or Monitoring mode (see <a href=
           "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">turnout
           documentation</a>), JMRI expects to received turnout state on the "Turnout receive
@@ -207,8 +207,23 @@
         </li>
 
         <li><strong>Lights</strong>: JMRI sends on the "Light send topic" if a user commands a
-        Light change by clicking on a panel or table. JMRI also acts on Light state messages sent
+        Light change e.g. by clicking on a panel or table. JMRI also acts on Light state messages sent
         from the layout on the "Light receive topic."</li>
+
+        <li><strong>Reporters</strong>Native MQTT Reports are not yet implemented.
+        Using a script to read from a JMRI reporter and send the content as MQTT
+        is one possible work around.
+        </li>
+
+        <li><strong>Signal Heads</strong>Native MQTT Signal Heads are not yet implemented.
+        You can use e.g. the Three Turnout Signal Head style with MQTT turnouts as a
+        work around. You can also write a script that sends the content of a virtual or other
+        Signal Head to the layout.
+        </li>
+
+        <li><strong>Signal Masts</strong>You can define MQTT Signal Masts which will send
+        their aspect when changed.  These do not receive anything from the layout.
+        </li>
 
         <li><strong>Last Will</strong>: JMRI can specify its last will message when it connects to
         a broker. The last will message is a normal MQTT message with a topic. The broker stores
@@ -221,7 +236,9 @@
 
       <p>All other messages, even on defined topics, are ignored by the standard JMRI processing.
       To avoid confusion, it is recommended that send and receive topics are set the same except
-      for advanced usage involving custom programmed layout microcontrollers. Any message topic,
+      for advanced usage involving custom programmed layout microcontrollers. </p>
+
+      <p>Any message topic,
       defined or custom, can be subscribed to and processed by a custom script.</p>
 
       <h3>Custom Topics</h3>
@@ -229,7 +246,7 @@
       <p>It is possible to use the JMRI MQTT capability to send and receive messages at any time on
       a topic of your own choosing via a script (<a href="#scripts">see below</a>). These messages
       can further be used to trigger <a href="../../tools/Logix.shtml">Logix,</a> populate <a href=
-      "../../tools/Memories.shtml">Memories</a> and then displayed on panels, or whatever purposes
+      "../../tools/Memories.shtml">Memories</a> and then display them on panels, or whatever purposes
       you find useful.</p>
 
       <p><a href="#top"><em><small>[Go to top of page]</small></em></a>

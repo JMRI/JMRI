@@ -250,6 +250,7 @@
           </label>
           <label>
             <text xml:lang="de">       200 Hz (bei Langsamfahrt) und 50 Hz an</text>
+            <text xml:lang="cs">       200 Hz (při pomalé jízdě) a 50 Hz</text>
           </label>
           <label>
             <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
@@ -266,7 +267,7 @@
           <label>
             <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
             <text xml:lang="it">(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp-</text>
-            <text xml:lang="cs">(131 + mantisa * 4) * 2 ^ exponent. Bity 0-4 = mantisa, Bity 5-7 = exponent</text>
+            <text xml:lang="cs">(131 + mantisa × 4) × 2 ^ exponent. Bity 0-4 = mantisa, Bity 5-7 = exponent</text>
             <text xml:lang="de">                    (131 + mantisse * 4) * 2 exp. Bit 0-4 = mantisse, Bit 5-7 = exp</text>
           </label>
         <label>
