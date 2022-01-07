@@ -592,7 +592,7 @@
     <label xml:lang="cs">Rychlostní kroky pro automatický výběh</label>
     <tooltip>Number of steps speed has to be reduced within 0.5 seconds for coasting effect</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Anzahl Fahrstufen (von 255) einstellen um die innerhalb von ca. 0,5s gebremst&lt;br&gt;werden muss damit der Diesel- Motor auf "Idle/Stand" abgesenkt wird.&lt;/html&gt;</tooltip>
-    <tooltip xml:lang="cs">Počet rychlostích kroků snížených za 0,5 vteřiny pro automatické spuštění výběhu</tooltip>
+    <tooltip xml:lang="cs">Počet rychlostích kroků snížených za 0,5 sekundy pro automatické spuštění výběhu</tooltip>
   </variable>
 </variables>
   

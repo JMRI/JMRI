@@ -56,7 +56,7 @@ import java.util.ResourceBundle;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author Bob Jacobsen Copyright 1997-2016
+ * @author Bob Jacobsen Copyright 1997-2022
  */
 public class Version {
 

@@ -96,7 +96,7 @@
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <label xml:lang="de">Aufenthaltsdauer bei Pendelbetrieb in Sekunden</label>
     <comment xml:lang="de">Wertebereich 0-255</comment>
-    <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce ve vteřinách</label>
+    <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce ve sekundách</label>
     <comment xml:lang="cs">Meze 0-255</comment>
     <label xml:lang="ca">Temps de parada del Push-Pull (0-255 segons)</label>
     <comment xml:lang="ca">Rang de 0-255</comment>

@@ -12,14 +12,17 @@
     <label>
       <text> </text>
       <text xml:lang="de">Die „km/h – Regelung“ ist ein alternatives Prinzip zum Fahren mit vorbildmäßigen Geschwindigkeiten</text>
+      <text xml:lang="cs">Ovládání "km/h" je alternativní princip k jízdě vzorovou rychlostí</text>
     </label>
     <label>
       <text> </text>
       <text xml:lang="de">in allen Betriebssituationen: die Fahrstufen des Reglers oder Fahrpultes (1 bis 126 im sogenannten</text>
+      <text xml:lang="cs">ve všech provozních situacích: úrovně rychlosti ovladače nebo dálkového ovladače</text>
     </label>
     <label>
       <text> </text>
       <text xml:lang="de">„128-Fahrstufen“-System) werden dabei direkt als km/h - Werte interpretiert.</text>
+      <text xml:lang="cs">(1 až 126 v tzv. systém "128 rychlostních stupňů") jsou interpretovány přímo jako hodnoty km/h.</text>
     </label>
     <label>
       <text> </text>
@@ -120,7 +123,7 @@
         <label>
           <text> Miles or Kilometres per hour per (128) Speed Step</text>
           <text xml:lang="it">Miglia o Kilometri all'ora per (128) Step di Velocità</text>
-          <text xml:lang="cs"> kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
+          <text xml:lang="cs">kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
           <text xml:lang="de">  km/h</text>
         </label>
       </column>
