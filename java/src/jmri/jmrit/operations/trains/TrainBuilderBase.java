@@ -2941,7 +2941,7 @@ public class TrainBuilderBase extends TrainCommon {
                 }
                 if (!stageTrack.isLoadNameAndCarTypeAccepted(load, car.getTypeName())) {
                     addLine(_buildReport, SEVEN,
-                            MessageFormat.format(Bundle.getMessage("BuildDestTrackNoLoad"), new Object[] {
+                            MessageFormat.format(Bundle.getMessage("buildDestTrackNoLoad"), new Object[] {
                                     stageTrack.getLocation().getName(), stageTrack.getName(), car.toString(), load, }));
                 }
                 if (!_train.isLoadNameAccepted(load, car.getTypeName())) {
