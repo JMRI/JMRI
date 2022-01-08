@@ -172,14 +172,13 @@ public class ImportLocations extends ImportRollingStock {
             if (trackLength != null) {
                 thisTrack.setLength(trackLength);
             }
-            if (inputLine.length >= FIELD_DIVISION) {
-                // division was included in import
-                String fieldDivision = inputLine[FIELD_DIVISION].trim();
-                if (fieldDivision.length() > 0) {
-                    Division division = divisionManager.newDivision(fieldDivision);
-                    location.setDivision(division);
-                    log.debug("Setting this location to division {}", division);
-                }
+            //if (inputLine.length >= FIELD_DIVISION) {
+            // division was included in import
+            String fieldDivision = inputLine[FIELD_DIVISION].trim();
+            if (fieldDivision.length() > 0) {
+                Division division = divisionManager.newDivision(fieldDivision);
+                location.setDivision(division);
+                log.debug("Setting this location to division {}", division);
             }
             if (inputLine.length >= FIELD_SERVICED_BY) {
                 // process direction string (a list of directions each ending with a semicolon)

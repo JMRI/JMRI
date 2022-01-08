@@ -91,7 +91,8 @@ public class ImportLocationsActionTest extends OperationsTestCase {
     }
 
     @Test
-    public void testImportToPartial() {
+    public void verifyFieldDivision() {
+        Assert.assertEquals("FIELD_DIVISION should be 4 unless the inputLine length is verified", 4, ImportLocations.FIELD_DIVISION);
 
     }
 
