@@ -53,6 +53,22 @@ public class ImportLocationsActionTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
         java.io.File file = new File(ExportLocations.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
+        int numberOfTracks = 0;
+        int numberOfLocations = 0;
+        for (Location thisLocation : locationManager.getList()) {
+            numberOfLocations++;
+            List<Track> trackList = thisLocation.getTracksList();
+            for (Track thisTrack : trackList) {
+                log.debug("this track is Location {} track {} ", thisLocation.getName(), thisTrack.getName());
+                thisLocation.deleteTrack(thisTrack);
+                numberOfTracks++;
+            }
+            locationManager.deregister(thisLocation);
+        }
+        OperationsXml.save();
+        // should have deleted all tracks now;
+        List<Location> emptyList = locationManager.getList();
+        Assert.assertEquals("Verify that delete was correct", 0, emptyList.size());
         Thread importThread = new ImportLocations() {
             @Override
             protected File getFile() {
@@ -74,8 +90,14 @@ public class ImportLocationsActionTest extends OperationsTestCase {
             log.debug("import was interrupted");
         }
          List<Location> newLocations = locationManager.getList();
-        Assert.assertEquals( "Expect to have 5 new locations", 5, newLocations.size());
+        Assert.assertEquals( "Expect to have 3 new locations", 3, newLocations.size());
 
     }
+
+    @Test
+    public void testImportToPartial() {
+
+    }
+
 
 }
