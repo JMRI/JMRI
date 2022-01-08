@@ -1,4 +1,4 @@
-package jmri.script;
+package jmri.script.swing;
 
 import java.io.IOException;
 import java.io.PipedReader;
@@ -6,6 +6,7 @@ import java.io.PipedWriter;
 import javax.script.ScriptContext;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.PipeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

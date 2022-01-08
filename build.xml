@@ -119,6 +119,7 @@
     -->
     <path id="runtime.class.path">
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
+        <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl-2.12.0.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
@@ -198,6 +199,7 @@
         <pathelement location="${libdir}/batik-ext-1.14.jar"/>
         <pathelement location="${libdir}/batik-xml-1.14.jar"/>
         <pathelement location="${libdir}/batik-bridge-1.14.jar"/>
+        <pathelement location="${libdir}/batik-js-1.8.jar"/>
         <pathelement location="${libdir}/batik-gvt-1.14.jar"/>
         <pathelement location="${libdir}/batik-script-1.14.jar"/>
         <pathelement location="${libdir}/batik-awt-util-1.14.jar"/>
@@ -726,6 +728,18 @@
             <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>
+
+    <target name="graal-compile"
+            description="compile GraalVM-specific source; must currently have a GraalVM JDK active"
+            depends="init">
+        <!-- Compile the java code from ${source} into ${target} -->
+        <java-compile
+                javac.source="${graalsource}"
+                javac.target="${graaltarget}"
+                javac.deprecation="on"
+            />
+    </target>
+
 
     <target name="ci-compile-deprecations"
             description="compile source, omitting tests, warning on deprecations - for Jenkins CI"
@@ -1844,6 +1858,29 @@
             </section>
           </manifest>
         </jar>
+    </target>
+
+    <target name="native-image" depends="jar" description="create native launchers">
+        <exec executable="native-image"
+              failonerror="true">
+            <arg value="--verbose"/>
+
+            <!-- <arg value="~~no-fallback"/> --> <!-- remove on macOS for partial image build -->
+            <!-- <arg value="~~allow-incomplete-classpath"/> --><!-- remove on macOS for partial image build -->
+
+            <arg value="-cp"/><arg value="jmri.jar"/>
+            <arg value="-Djava.security.policy=${libdir}/security.policy"/>
+            <arg value="-Dapple.laf.useScreenMenuBar=true"/>
+            <arg value="-Dapple.awt.graphics.UseQuartz=true"/>
+            <arg value="-Dapple.awt.graphics.EnableQ2DX=true"/>
+            <arg value="-Dlog4j.ignoreTCL=true/"/>
+            <arg value="-Dfile.encoding=UTF-8"/>
+            <arg value="-Djava.library.path.:${arch.lib.path}:${libdir}"/>
+            <arg value="-Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/><!-- not in tests, left here for historical reasons -->
+
+            <arg value="apps.PanelPro.PanelPro"/>
+            <arg value="PanelPro"/>
+        </exec>
     </target>
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">

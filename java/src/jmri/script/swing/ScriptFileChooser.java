@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.util.FileUtil;
+import jmri.script.JmriScriptEngineManager;
 
 /**
  *
@@ -36,12 +37,15 @@ public class ScriptFileChooser extends JFileChooser {
         List<String> allExtensions = new ArrayList<>();
         HashMap<String, FileFilter> filters = new HashMap<>();
         List<String> filterNames = new ArrayList<>();
-        jmri.script.JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
-            List<String> extensions = factory.getExtensions();
-            allExtensions.addAll(extensions);
-            String name = this.fileForLanguage(factory.getLanguageName());
-            filterNames.add(name);
-            filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
+        JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
+            String version = factory.getEngineVersion();
+            if (version != null) {
+                List<String> extensions = factory.getExtensions();
+                allExtensions.addAll(extensions);
+                String name = this.fileForLanguage(factory.getLanguageName());
+                filterNames.add(name);
+                filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
+            }
         });
         FileFilter allScripts = new FileNameExtensionFilter(Bundle.getMessage("allScripts"), allExtensions.toArray(new String[allExtensions.size()]));
         this.addChoosableFileFilter(allScripts);
@@ -56,10 +60,13 @@ public class ScriptFileChooser extends JFileChooser {
         try {
             return Bundle.getMessage(language);
         } catch (MissingResourceException ex) {
+            log.warn("Translation not found for language \"{}\"", language);
             if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
                 return language + " " + Bundle.getMessage("files");
             }
             return language;
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptFileChooser.class);
 }

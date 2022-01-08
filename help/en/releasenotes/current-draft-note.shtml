@@ -466,6 +466,9 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
+            <li>Initial
+                <a href="https://jmri.org/help/en/html/tools/scripting/Python3.shtml">Python 3 support</a>
+                is available for macOS and Linux.
             <li>Added simpler accessors to InstanceManager for use in scripts. See
                 jython/test/InstanceManagerTest.py</li>
         </ul>

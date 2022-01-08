@@ -936,7 +936,26 @@ public class FileUtilSupport extends Bean {
     @CheckReturnValue
     public String getProgramPath() {
         if (programPath == null) {
-            this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
+            if (System.getProperty("jmri.path.program") == null) {
+                log.debug("jmri.path.program property not set");
+                // find from jar or class files location
+                String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+                String path2 = (new File(path1)).getParentFile().getPath();
+                try {
+                    String loadingDir = java.net.URLDecoder.decode(path2, "UTF-8");
+                    log.trace("Program location from Classloader: {}", loadingDir);
+                    if (loadingDir.endsWith("target")) {
+                        loadingDir = loadingDir.substring(0, loadingDir.length()-6);
+                    }
+                     this.setProgramPath(loadingDir); // NOI18N
+               } catch (java.io.UnsupportedEncodingException e) {
+                    log.error("Unsupported URL when trying to locate program directory: {}", path2);
+                    // best guess
+                    this.setProgramPath("."); // NOI18N
+                }
+            } else {
+                this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
+            }
         }
         return programPath;
     }

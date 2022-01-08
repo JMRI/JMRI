@@ -35,7 +35,7 @@ public class JynstrumentFactory {
             path = parentPath;
         }
         String jyFile = path + File.separator + className + ".py";
-        ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+        ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.JYTHON);
         Jynstrument jyns;
         try {
             FileReader fr = new FileReader(jyFile);

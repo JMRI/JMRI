@@ -46,7 +46,7 @@ public class JmriScriptEngineManagerTest {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         assertNull(result);
         assertNull(manager.getBySystemName("IT1"));
-        ScriptEngine engine = jsem.getEngine(JmriScriptEngineManager.PYTHON);
+        ScriptEngine engine = jsem.getEngine(JmriScriptEngineManager.JYTHON);
         result = jsem.eval("turnouts.provideTurnout(\"1\")", engine);
         assertNotNull(result);
         assertNotNull(manager.getBySystemName("IT1"));
@@ -120,7 +120,7 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetEnginePython() {
-        assertNotNull(jsem.getEngine(JmriScriptEngineManager.PYTHON));
+        assertNotNull(jsem.getEngine(JmriScriptEngineManager.JYTHON));
     }
 
     @Test
@@ -190,7 +190,7 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetFactoryPython() {
-        assertNotNull(jsem.getFactory(JmriScriptEngineManager.PYTHON));
+        assertNotNull(jsem.getFactory(JmriScriptEngineManager.JYTHON));
     }
 
     @Test
