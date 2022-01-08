@@ -53,15 +53,11 @@ public class ImportLocationsActionTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
         java.io.File file = new File(ExportLocations.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
-        int numberOfTracks = 0;
-        int numberOfLocations = 0;
         for (Location thisLocation : locationManager.getList()) {
-            numberOfLocations++;
             List<Track> trackList = thisLocation.getTracksList();
             for (Track thisTrack : trackList) {
                 log.debug("this track is Location {} track {} ", thisLocation.getName(), thisTrack.getName());
                 thisLocation.deleteTrack(thisTrack);
-                numberOfTracks++;
             }
             locationManager.deregister(thisLocation);
         }
