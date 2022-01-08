@@ -42,7 +42,7 @@ public class ScriptFileChooser extends JFileChooser {
             if (version != null) {
                 List<String> extensions = factory.getExtensions();
                 allExtensions.addAll(extensions);
-                String name = this.fileForLanguage(factory.getLanguageName());
+                String name = this.fileForLanguage(factory.getEngineName() + "_" + factory.getLanguageName());
                 filterNames.add(name);
                 filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
             }
@@ -57,6 +57,7 @@ public class ScriptFileChooser extends JFileChooser {
     }
 
     private String fileForLanguage(String language) {
+        language = language.replaceAll("\\W+", "_");
         try {
             return Bundle.getMessage(language);
         } catch (MissingResourceException ex) {
