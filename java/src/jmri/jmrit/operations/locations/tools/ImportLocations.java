@@ -72,6 +72,7 @@ public class ImportLocations extends ImportRollingStock {
     protected static final int FIELD_COMMENT_PICKUPS = 36;            // not used
     protected static final int FIELD_COMMENT_SETOUTS = 37;            // not used
 
+    @Override
     public void run() {
         File file = getFile();
         if (file == null) {
@@ -85,7 +86,6 @@ public class ImportLocations extends ImportRollingStock {
 
         // read the import (CSV) file
         int lineNum = 0;
-        int locationsAdded = 0;
         int tracksAdded = 0;
         String line = " ";
         boolean importOkay = false;
@@ -134,7 +134,6 @@ public class ImportLocations extends ImportRollingStock {
             if (location == null) {
                 log.debug("adding location - " + fieldLocation);
                 location = locationManager.newLocation(fieldLocation);
-                locationsAdded++;
             }
             fieldTrack = inputLine[FIELD_TRACK];
             fieldLength = inputLine[FIELD_LENGTH].trim();
@@ -202,9 +201,7 @@ public class ImportLocations extends ImportRollingStock {
                         thisTrack.deleteTypeName(car);
                     }
                     String[] rollingStock = inputLine[FIELD_ROLLING_STOCK].split("; ");
-                    int itemNum = 0;
                     for (String typeName : rollingStock) {
-                        //log.debug("adding rolling stock (Item number {}) value of: {}", itemNum++, typeName);
                         thisTrack.addTypeName(typeName);
                     }
                 }
@@ -248,15 +245,16 @@ public class ImportLocations extends ImportRollingStock {
                 String loadOptions = inputLine[FIELD_LOAD_OPTION].trim();
                 String optionValue = "";
                 if (loadOptions.length() > 0) {
-                    if (loadOptions.startsWith(Bundle.getMessage("ShipAll"))) {
+                    if (loadOptions.startsWith(Bundle.getMessage("AcceptsAllLoads"))) {
                         optionValue = Track.ALL_LOADS;
-                    } else if (loadOptions.startsWith(Bundle.getMessage("ShipOnly"))) {
+                    } else if (loadOptions.startsWith(Bundle.getMessage("AcceptOnly"))) {
                         optionValue = Track.INCLUDE_ROADS;
                     } else if (loadOptions.startsWith(Bundle.getMessage("Exclude"))) {
                         optionValue = Track.EXCLUDE_LOADS;
                     } else {
                         log.debug("Locations Import Load option was not recognized: {} ", loadOptions);
                     }
+                    thisTrack.setLoadOption(optionValue);
                 }
 
             }

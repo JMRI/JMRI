@@ -38,7 +38,7 @@ public class ImportLocationsActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
         ExportLocations exportLoc = new ExportLocations();
-        JUnitOperationsUtil.loadFiveLocations();
+        JUnitOperationsUtil.createSevenNormalLocations();
         Thread exportThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -90,7 +90,7 @@ public class ImportLocationsActionTest extends OperationsTestCase {
             log.debug("import was interrupted");
         }
          List<Location> newLocations = locationManager.getList();
-        Assert.assertEquals( "Expect to have 3 new locations", 3, newLocations.size());
+        Assert.assertEquals( "Expect to have 7 new locations", 7, newLocations.size());
 
     }
 
