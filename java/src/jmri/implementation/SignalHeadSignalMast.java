@@ -18,14 +18,14 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF$shsm:basic:one-searchlight:(IH1)(IH2)
+ * IF$shsm:basic:one-searchlight(IH1)(IH2)
  * </pre>
  * The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$shsm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>(IH1)(IH2) - colon-separated list of names for SignalHeads
+ * <li>(IH1)(IH2) - List of signal head names in parentheses.  Note: There is no colon between the mast name and the head names.
  * </ul>
  * There was an older form where the SignalHead names were also colon separated:
  * IF$shsm:basic:one-searchlight:IH1:IH2 This was deprecated because colons appear in
