@@ -42,7 +42,7 @@ public class ScriptFileChooser extends JFileChooser {
             if (version != null) {
                 List<String> extensions = factory.getExtensions();
                 allExtensions.addAll(extensions);
-                String name = this.fileForLanguage(factory.getLanguageName());
+                String name = JmriScriptEngineManager.fileForLanguage(factory.getLanguageName());
                 filterNames.add(name);
                 filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
             }
@@ -54,18 +54,6 @@ public class ScriptFileChooser extends JFileChooser {
         });
         this.setFileFilter(allScripts);
         this.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    }
-
-    private String fileForLanguage(String language) {
-        try {
-            return Bundle.getMessage(language);
-        } catch (MissingResourceException ex) {
-            log.warn("Translation not found for language \"{}\"", language);
-            if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
-                return language + " " + Bundle.getMessage("files");
-            }
-            return language;
-        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptFileChooser.class);

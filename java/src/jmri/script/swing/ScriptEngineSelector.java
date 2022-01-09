@@ -34,7 +34,7 @@ public class ScriptEngineSelector extends JComboBox<String> {
         JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
             String version = factory.getEngineVersion();
             if (version != null) {
-                String name = fileForLanguage(factory.getLanguageName());
+                String name = JmriScriptEngineManager.fileForLanguage(factory.getLanguageName());
                 if (!languageNames.contains(name)) {
                     languageNames.add(name);
                     languageIDs.add(factory.getLanguageName());
@@ -76,17 +76,6 @@ public class ScriptEngineSelector extends JComboBox<String> {
     List<String> languageNames = new ArrayList<>();
     List<String> languageIDs = new ArrayList<>();
 
-    private static String fileForLanguage(String language) {
-        try {
-            return Bundle.getMessage(language);
-        } catch (MissingResourceException ex) {
-            log.warn("Translation not found for language \"{}\"", language);
-            if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
-                return language + " " + Bundle.getMessage("files");
-            }
-            return language;
-        }
-    }
 
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptEngineSelector.class);
