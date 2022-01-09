@@ -613,10 +613,14 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
 
     /**
      * Service routine to make engine-type strings to a human-readable prompt
-     * @param language codes from the engine
+     * @param engineName Self-provided name of the engine
+     * @param languageName Names of language supported by the engine
      * @returns Human readable string, i.e. Jython Files
      */
-    public static String fileForLanguage(String language) {
+    public static String fileForLanguage(String engineName, String languageName) {
+        String language = engineName+"_"+languageName;
+        language = language.replaceAll("\\W+", "_"); // drop white space to _
+
         try {
             return Bundle.getMessage(language);
         } catch (MissingResourceException ex) {

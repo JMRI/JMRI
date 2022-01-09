@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.MissingResourceException;
 import javax.script.ScriptEngineFactory;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -42,7 +41,7 @@ public class ScriptFileChooser extends JFileChooser {
             if (version != null) {
                 List<String> extensions = factory.getExtensions();
                 allExtensions.addAll(extensions);
-                String name = JmriScriptEngineManager.fileForLanguage(factory.getLanguageName());
+                String name = JmriScriptEngineManager.fileForLanguage(factory.getEngineName(), factory.getLanguageName());
                 filterNames.add(name);
                 filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
             }

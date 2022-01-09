@@ -2,7 +2,6 @@ package jmri.script.swing;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.MissingResourceException;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.script.ScriptEngine;
@@ -34,7 +33,7 @@ public class ScriptEngineSelector extends JComboBox<String> {
         JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
             String version = factory.getEngineVersion();
             if (version != null) {
-                String name = JmriScriptEngineManager.fileForLanguage(factory.getLanguageName());
+                String name = JmriScriptEngineManager.fileForLanguage(factory.getEngineName(), factory.getLanguageName());
                 if (!languageNames.contains(name)) {
                     languageNames.add(name);
                     languageIDs.add(factory.getLanguageName());
