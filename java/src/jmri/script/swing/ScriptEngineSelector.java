@@ -72,5 +72,5 @@ public class ScriptEngineSelector extends JComboBox<String> {
 
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptEngineSelector.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptEngineSelector.class);
 }
