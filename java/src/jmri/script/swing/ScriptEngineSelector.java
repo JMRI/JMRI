@@ -22,6 +22,7 @@ public class ScriptEngineSelector extends JComboBox<String> {
 
     /**
      * Obtain one of these; direct calls to ctor are not permitted
+     * @return a script engine selector
      */
     @Nonnull
     public static ScriptEngineSelector getScriptEngineSelector() {
@@ -52,6 +53,8 @@ public class ScriptEngineSelector extends JComboBox<String> {
 
     /**
      * Get the currently selected engine
+     * @return the engine
+     * @throws ScriptException if the script engine isn't available or an error occurs
      */
     @Nonnull
     public ScriptEngine getEngine() throws ScriptException {
