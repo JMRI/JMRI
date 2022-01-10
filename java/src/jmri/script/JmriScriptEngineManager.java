@@ -615,7 +615,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * Service routine to make engine-type strings to a human-readable prompt
      * @param engineName Self-provided name of the engine
      * @param languageName Names of language supported by the engine
-     * @returns Human readable string, i.e. Jython Files
+     * @return Human readable string, i.e. Jython Files
      */
     @Nonnull
     public static String fileForLanguage(@Nonnull String engineName, @Nonnull String languageName) {
