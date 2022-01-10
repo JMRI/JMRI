@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.MissingResourceException;
 import java.util.Properties;
 
 import javax.annotation.CheckForNull;
@@ -609,6 +610,29 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         return new ScriptException(String.format("Could not find script engine%s for %s \"%s\" expected one of %s",
                 factory, type, key, expected));
     }
+
+    /**
+     * Service routine to make engine-type strings to a human-readable prompt
+     * @param engineName Self-provided name of the engine
+     * @param languageName Names of language supported by the engine
+     * @return Human readable string, i.e. Jython Files
+     */
+    @Nonnull
+    public static String fileForLanguage(@Nonnull String engineName, @Nonnull String languageName) {
+        String language = engineName+"_"+languageName;
+        language = language.replaceAll("\\W+", "_"); // drop white space to _
+
+        try {
+            return Bundle.getMessage(language);
+        } catch (MissingResourceException ex) {
+            log.warn("Translation not found for language \"{}\"", language);
+            if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
+                return language + " " + Bundle.getMessage("files");
+            }
+            return language;
+        }
+    }
+
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriScriptEngineManager.class);
 }

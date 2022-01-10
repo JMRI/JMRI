@@ -19,7 +19,6 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,14 +32,12 @@ import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import org.python.google.common.io.Files;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * This Action runs creates a JFrame for sending input to the global jython
+ * A JFrame for sending input to the global jython
  * interpreter
  *
- * @author Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004, 2021, 2022
  */
 public class InputWindow extends JPanel {
 
@@ -52,9 +49,7 @@ public class InputWindow extends JPanel {
     JLabel status;
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
 
-    List<String> languageNames = new ArrayList<>();
-    List<String> languageIDs = new ArrayList<>();
-    JComboBox<String> languages = new JComboBox<>();
+    ScriptEngineSelector languages = ScriptEngineSelector.getScriptEngineSelector();
 
     JFileChooser userFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
 
@@ -106,19 +101,7 @@ public class InputWindow extends JPanel {
         js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(js, BorderLayout.CENTER);
 
-        // get list of language names (to display) and IDs (for call)
-        JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
-            String version = factory.getEngineVersion();
-            if (version != null) {
-                String name = this.fileForLanguage(factory.getLanguageName());
-                if (!languageNames.contains(name)) {
-                    languageNames.add(name);
-                    languageIDs.add(factory.getLanguageName());
-                }
-            }
-        });
-
-        languages = new JComboBox<>(languageNames.toArray(new String[languageNames.size()]));
+        // set the preferred language
         if (pref.getComboBoxLastSelection(languageSelection) != null) {
             languages.setSelectedItem(pref.getComboBoxLastSelection(languageSelection));
         }
@@ -169,18 +152,6 @@ public class InputWindow extends JPanel {
         int size = area.getFont().getSize();
         area.setFont(new Font("Monospaced", Font.PLAIN, size));
 
-    }
-
-    private String fileForLanguage(String language) {
-        try {
-            return Bundle.getMessage(language);
-        } catch (MissingResourceException ex) {
-            log.warn("Translation not found for language \"{}\"", language);
-            if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
-                return language + " " + Bundle.getMessage("files");
-            }
-            return language;
-        }
     }
 
     // This helper function updates the status bar with the line number and column number.
@@ -305,12 +276,15 @@ public class InputWindow extends JPanel {
     public void buttonPressed() {  // public for testing
         ScriptOutput.writeScript(area.getText());
         try {
-            String language = languageIDs.get(languages.getSelectedIndex());
-            JmriScriptEngineManager.getDefault().eval(area.getText(), JmriScriptEngineManager.getDefault().getEngineByName(language));
+            JmriScriptEngineManager
+                .getDefault()
+                .eval(
+                    area.getText(),
+                    languages.getEngine());
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InputWindow.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InputWindow.class);
 }
