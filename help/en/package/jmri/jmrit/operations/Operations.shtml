@@ -2804,7 +2804,8 @@
       otherwise you can have cars stranded on the classification/interchange track.</p>
 
       <p>You can if you wish control which destinations your C/I track can service. You can access
-      <a href="#TrackDestinations">Track Destinations</a> from the "Tools" menu.</p>
+      <a href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track destinations
+      tool also allows you to restrict the C/I track to cars that are being <a href="#CarRouting">routed</a>.</p>
 
       <p>The <a href="#BuildReports">build report</a> will provide a list of cars on the C/I track
       that were previously set out by a train using the same route, or aren't allowed to be pulled
@@ -3226,16 +3227,19 @@
       alternate track to the spur.</p>
 
       <h4 id="TrackDestinations">Track Destinations</h4>
-      You can control which destinations a classification/interchange (C/I) or staging track will
-      service. Under "Tools" in the edit track window for a C/I or staging track, the menu item
-      "Track Destinations" allows you to select which destinations are valid for the track.
-      <p>For C/I tracks there's an option to only accept cars with a final destination. This
-      prevents cars without a final destination from using the track. This is useful where the C/I
-      allowed track destinations are two or more trains away requiring the cars to be <a href="#CarRouting">routed</a>. Cars
-      without a final destination could be stranded on the C/I track if there isn't a train that
-      directly services at least one of the C/I destinations.</p>
+   You can control which destinations a classification/interchange (C/I) or staging track will
+   service. Under "Tools" in the edit track window for a C/I or staging track, the menu item "Track
+   Destinations" allows you to select which destinations are valid for the track.
 
-      <p>After you've selected the destinations that you want the track to service, you can use the
+   <p>
+    For C/I tracks there's an option to only accept cars with a final destination. This prevents
+    cars without a final destination from using the track. This is useful when you only want <a
+     href="#CarRouting">routed</a> cars to use the interchange. Note that cars without a final
+    destination (placed randomly on the C/I track) could be stranded on the track if there isn't a
+    train that directly services at least one of the C/I track destinations.
+   </p>
+
+   <p>After you've selected the destinations that you want the track to service, you can use the
       "Check Destinations" button to verify that all of the destinations you've selected can also
       service the same car types, roads, and loads as the track. The program will report each
       problem it encounters, you can continue checking by pressing the "OK" button, or "Cancel" if

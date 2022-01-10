@@ -816,7 +816,13 @@ public class Track extends PropertyChangeSupport {
      * @return rolling stock type names
      */
     public String[] getTypeNames() {
-        return _typeList.toArray(new String[0]);
+        List<String> list = new ArrayList<>();
+        for (String typeName : _typeList) {
+            if (_location.acceptsTypeName(typeName)) {
+                list.add(typeName);
+            }
+        }
+        return list.toArray(new String[0]);
     }
 
     private void setTypeNames(String[] types) {
