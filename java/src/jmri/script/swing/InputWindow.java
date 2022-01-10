@@ -276,7 +276,11 @@ public class InputWindow extends JPanel {
     public void buttonPressed() {  // public for testing
         ScriptOutput.writeScript(area.getText());
         try {
-            JmriScriptEngineManager.getDefault().eval(area.getText(), languages.getEngine());
+            JmriScriptEngineManager
+                .getDefault()
+                .eval(
+                    area.getText(),
+                    languages.getEngine());
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }

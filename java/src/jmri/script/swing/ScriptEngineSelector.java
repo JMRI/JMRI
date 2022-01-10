@@ -53,15 +53,10 @@ public class ScriptEngineSelector extends JComboBox<String> {
     /**
      * Get the currently selected engine
      */
-    @CheckForNull
-    public ScriptEngine getEngine() {
+    @Nonnull
+    public ScriptEngine getEngine() throws ScriptException {
         String language = languageIDs.get(getSelectedIndex());
-        try {
-            return JmriScriptEngineManager.getDefault().getEngineByName(language);
-        } catch (ScriptException ex) {
-            log.warn("could not allocate script engine", ex);
-            return null;
-        }
+        return JmriScriptEngineManager.getDefault().getEngineByName(language);
     }
 
     private ScriptEngineSelector() {
