@@ -90,7 +90,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     List<Car> carList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
-    String locationName = null; // only show cars with this location
+    public String locationName = null; // only show cars with this location
     public String trackName = null; // only show cars with this track
     JTable _table;
     CarsTableFrame _frame;
