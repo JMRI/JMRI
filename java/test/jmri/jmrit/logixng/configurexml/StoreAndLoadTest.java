@@ -18,6 +18,7 @@ import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
@@ -2182,15 +2183,23 @@ public class StoreAndLoadTest {
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        maleSocket.getChild(0).connect(
+        actionThrottle.getLocoAddressSocket().connect(
                 analogExpressionManager.registerExpression(
                         new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null)));
 
-        maleSocket.getChild(1).connect(
+        actionThrottle.getLocoSpeedSocket().connect(
                 analogExpressionManager.registerExpression(
                         new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null)));
 
-        maleSocket.getChild(2).connect(
+        actionThrottle.getLocoDirectionSocket().connect(
+                digitalExpressionManager.registerExpression(
+                        new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null)));
+
+        actionThrottle.getLocoFunctionSocket().connect(
+                analogExpressionManager.registerExpression(
+                        new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null)));
+
+        actionThrottle.getLocoFunctionOnOffSocket().connect(
                 digitalExpressionManager.registerExpression(
                         new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null)));
 
@@ -3666,6 +3675,9 @@ public class StoreAndLoadTest {
         if (cm == null) {
             log.error("Unable to get default configure manager");
         } else {
+            PrintTreeSettings printTreeSettings = new PrintTreeSettings();
+            printTreeSettings._printDisplayName = true;
+
             FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
             File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
             File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
@@ -3675,7 +3687,12 @@ public class StoreAndLoadTest {
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(stringWriter);
-            logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
+            logixNG_Manager.printTree(
+                    printTreeSettings,
+                    Locale.ENGLISH,
+                    printWriter,
+                    treeIndent,
+                    new MutableInt(0));
             final String originalTree = stringWriter.toString();
 
             boolean results = cm.storeUser(firstFile);
@@ -3787,7 +3804,12 @@ public class StoreAndLoadTest {
 
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
-                logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
+                logixNG_Manager.printTree(
+                        printTreeSettings,
+                        Locale.ENGLISH,
+                        printWriter,
+                        treeIndent,
+                        new MutableInt(0));
 
                 if (!originalTree.equals(stringWriter.toString())) {
                     log.error("--------------------------------------------");

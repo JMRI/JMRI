@@ -67,6 +67,10 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "   ?~ Speed%n" +
                 "      Socket not connected%n" +
                 "   ? Direction%n" +
+                "      Socket not connected%n" +
+                "   ?~ Function%n" +
+                "      Socket not connected%n" +
+                "   ? FunctionState%n" +
                 "      Socket not connected%n");
     }
 
@@ -82,6 +86,10 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "            ?~ Speed%n" +
                 "               Socket not connected%n" +
                 "            ? Direction%n" +
+                "               Socket not connected%n" +
+                "            ?~ Function%n" +
+                "               Socket not connected%n" +
+                "            ? FunctionState%n" +
                 "               Socket not connected%n");
     }
 
@@ -132,7 +140,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     public void testCtorAndSetup1() {
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
         Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
         expression.setLocoAddressSocketSystemName("IQAE52");
         expression.getChild(1).setName("ZH12");
@@ -201,14 +209,14 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(2).isConnected());
 
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
     }
 
     @Test
     public void testCtorAndSetup2() {
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
         Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
         expression.setLocoAddressSocketSystemName(null);
         expression.getChild(1).setName("ZH12");
@@ -273,7 +281,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(2).isConnected());
 
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
     }
 
     @Test
@@ -287,7 +295,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
         Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
         expression.setLocoAddressSocketSystemName("IQAE52");
         expression.getChild(1).setName("ZH12");
@@ -330,14 +338,14 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 //        Assert.assertEquals("child is correct bean",
 //                childSocket0,
 //                expression.getChild(0).getConnectedSocket());
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
 
         Assert.assertTrue("expression female socket is connected",
                 expression.getChild(1).isConnected());
 //        Assert.assertEquals("child is correct bean",
 //                childSocket1,
 //                expression.getChild(1).getConnectedSocket());
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
 
         Assert.assertTrue("expression female socket is connected",
                 expression.getChild(2).isConnected());
@@ -345,17 +353,17 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 //                childSocket2,
 //                expression.getChild(2).getConnectedSocket());
 
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
 
         // Try run setup() again. That should not cause any problems.
         expression.setup();
 
-        Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 3", 3 == actionThrottle.getChildCount());
+        Assert.assertTrue("getChildCount() returns 3", 5 == actionThrottle.getChildCount());
 
         Assert.assertNotNull("getChild(0) returns a non null value",
                 actionThrottle.getChild(0));
@@ -363,13 +371,17 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 actionThrottle.getChild(1));
         Assert.assertNotNull("getChild(2) returns a non null value",
                 actionThrottle.getChild(2));
+        Assert.assertNotNull("getChild(3) returns a non null value",
+                actionThrottle.getChild(3));
+        Assert.assertNotNull("getChild(4) returns a non null value",
+                actionThrottle.getChild(4));
 
         boolean hasThrown = false;
         try {
-            actionThrottle.getChild(3);
+            actionThrottle.getChild(5);
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
-            Assert.assertEquals("Error message is correct", "index has invalid value: 3", ex.getMessage());
+            Assert.assertEquals("Error message is correct", "index has invalid value: 5", ex.getMessage());
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
@@ -398,7 +410,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(new ExpressionSensor("IQDE1", null));
 
-        Assert.assertEquals("Num children is correct", 3, _base.getChildCount());
+        Assert.assertEquals("Num children is correct", 5, _base.getChildCount());
 
         // Socket LOCO_ADDRESS_SOCKET is loco address
         Assert.assertTrue("Child LOCO_ADDRESS_SOCKET supports analog male socket",
@@ -412,12 +424,20 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("Child LOCO_DIRECTION_SOCKET supports digital male socket",
                 _base.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).isCompatible(digitalExpressionMaleSocket));
 
+        // Socket LOCO_DIRECTION_SOCKET is loco direction
+        Assert.assertTrue("Child LOCO_FUNCTION_SOCKET supports analog male socket",
+                _base.getChild(ActionThrottle.LOCO_FUNCTION_SOCKET).isCompatible(analogExpressionMaleSocket));
+
+        // Socket LOCO_DIRECTION_SOCKET is loco direction
+        Assert.assertTrue("Child LOCO_FUNCTION_STATE_SOCKET supports digital male socket",
+                _base.getChild(ActionThrottle.LOCO_FUNCTION_ONOFF_SOCKET).isCompatible(digitalExpressionMaleSocket));
+
         boolean hasThrown = false;
         try {
-            _base.getChild(3);
+            _base.getChild(5);
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
-            Assert.assertTrue("Error message is correct", "index has invalid value: 3".equals(ex.getMessage()));
+            Assert.assertTrue("Error message is correct", "index has invalid value: 5".equals(ex.getMessage()));
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
@@ -638,7 +658,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     public void testConnectedDisconnected() throws SocketAlreadyConnectedException {
         _baseMaleSocket.setEnabled(false);
 
-        Assert.assertEquals("Num children is correct", 3, _base.getChildCount());
+        Assert.assertEquals("Num children is correct", 5, _base.getChildCount());
 
         MaleSocket analogExpressionMaleSocket =
                 InstanceManager.getDefault(AnalogExpressionManager.class)
