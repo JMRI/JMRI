@@ -116,7 +116,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         XNetMessage msg = XNetMessage.getCSVersionRequestMessage();
         //Then send to the controller
         tc.sendXNetMessage(msg, this);
-        /* Next, get the message to request the Computer Interface 
+        /* Next, get the message to request the Computer Interface
          Hardware/Software Version */
         XNetMessage msg2 = XNetMessage.getLIVersionRequestMessage();
         // Then send it to the controller
@@ -214,6 +214,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
             CSType.setText(Bundle.getMessage("CSTypeZ21"));
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_LOKMAUSII) {
             CSType.setText(Bundle.getMessage("CSTypeLokMaus"));
+        } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_LDH35) {
+            CSType.setText(Bundle.getMessage("CSTypeLDH35"));
         } else {
             CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
         }
