@@ -70,7 +70,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "      Socket not connected%n" +
                 "   ?~ Function%n" +
                 "      Socket not connected%n" +
-                "   ? FunctionState%n" +
+                "   ? FunctionOnOff%n" +
                 "      Socket not connected%n");
     }
 
@@ -89,7 +89,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "               Socket not connected%n" +
                 "            ?~ Function%n" +
                 "               Socket not connected%n" +
-                "            ? FunctionState%n" +
+                "            ? FunctionOnOff%n" +
                 "               Socket not connected%n");
     }
 
