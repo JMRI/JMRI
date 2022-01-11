@@ -42,7 +42,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extends VariableValue to represent a variable split across multiple CVs.
+ * Extends VariableValue to represent a variable split across multiple CVs with
+ * values from a pre-selected range each of which is associated with a text name
+ * (aka, a drop down)
  * <br>
  * The {@code mask} attribute represents the part of the value that's present in
  * each CV; higher-order bits are loaded to subsequent CVs.<br>
@@ -68,6 +70,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2004, 2013
  * @author Dave Heap Copyright (C) 2016, 2019
  * @author Egbert Broerse Copyright (C) 2020
+ * @author Jordan McBride Copyright (C) 2021
  */
 public class SplitEnumVariableValue extends VariableValue
         implements ActionListener, FocusListener {
@@ -106,7 +109,6 @@ public class SplitEnumVariableValue extends VariableValue
         mSecondCV = pSecondCV;
         _uppermask = uppermask;
 
-        // connect to the JTextField value
 
         log.debug("Variable={};comment={};cvName={};cvNum={};stdname={}", _name, comment, cvName, _cvNum, stdname);
 
@@ -321,6 +323,11 @@ public class SplitEnumVariableValue extends VariableValue
         super.setAvailable(a);
     }
     
+    /**
+     * Simple request getter for the CVs composing this variable
+     * <br>
+     * @return Array of CvValue for all of associated CVs
+     */
     @Override
     public CvValue[] usesCVs() {
         CvValue[] theseCvs = new CvValue[cvCount];
@@ -403,6 +410,11 @@ public class SplitEnumVariableValue extends VariableValue
     int cvCount = 0;
     int currentOffset = 0;
 
+    /**
+     * Get the first CV from the set used to define this variable
+     * <br>
+     * @return The legacy two-CV mask if {@code highCV} is specified.
+     */
     @Override
     public String getCvNum() {
         String retString = "";
@@ -421,7 +433,6 @@ public class SplitEnumVariableValue extends VariableValue
         return retString;
     }
 
-    // the connection is to cvNum and cvNum+1
     long _minVal;
     long _maxVal;
 
@@ -440,6 +451,7 @@ public class SplitEnumVariableValue extends VariableValue
         return (Long.toUnsignedString(v));
     }
 
+    /*
     int[] getCvValsFromTextField() {
         long newEntry;  // entered value
         try {
@@ -461,11 +473,12 @@ public class SplitEnumVariableValue extends VariableValue
         }
         return retVals;
     }
-
+    */
+    
     /**
      * Contains numeric-value specific code.
      * <br><br>
-     * Calculates new value for _textField and invokes
+     * Calculates new value for _enumField and invokes
      * {@link #setLongValue(long) setLongValue(newVal)} to make and notify the
      * change
      *
@@ -485,7 +498,7 @@ public class SplitEnumVariableValue extends VariableValue
     }
 
     /**
-     * Saves contents of _textField to oldContents.
+     * Saves selected item from _value (enumField) to oldContents.
      */
     void enterField() {
         oldContents =  String.valueOf(_value.getSelectedItem());
@@ -495,7 +508,7 @@ public class SplitEnumVariableValue extends VariableValue
     /**
      * Contains numeric-value specific code.
      * <br>
-     * firePropertyChange for "Value" with new and old contents of _textField
+     * firePropertyChange for "Value" with new and old contents of _enumField
      */
     void exitField(){
         // there may be a lost focus event left in the queue when disposed so protect
@@ -509,19 +522,18 @@ public class SplitEnumVariableValue extends VariableValue
             log.debug("_minVal={};_maxVal={};newFieldVal={}",
                     Long.toUnsignedString(_minVal), Long.toUnsignedString(_maxVal), Long.toUnsignedString(newFieldVal));
             if (Long.compareUnsigned(newFieldVal, _minVal) < 0 || Long.compareUnsigned(newFieldVal, _maxVal) > 0) {
-                //_value.setText(oldContents);
+            
             } else {
                 long newVal = (newFieldVal - mOffset) / mFactor;
                 long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
-                log.debug("Enter updatedTextField from exitField");
-                //updatedTextField();
                 prop.firePropertyChange("Value", oldVal, newVal);
             }
         }
     }
 
     boolean _fieldShrink = false;
-
+    
+    /*
     @Override
     void updatedTextField() {
         //log.debug("Variable='{}'; enter updatedTextField in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _textField.getText());
@@ -552,9 +564,10 @@ public class SplitEnumVariableValue extends VariableValue
         }
         log.debug("Variable={}; exit updatedTextField", _name);
     }
+    */
     
     void updatedDropDown() {
-        log.debug("Variable='{}'; enter updatedDropDown in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _value);
+        log.debug("Variable='{}'; enter updatedDropDown in {} with DropDownValue='{}'", _name, (this.getClass().getSimpleName()), _value);
         // called for new values in text field - set the CVs as needed
 
         int[] retVals = getCvValsFromSingleInt(getIntValue());
@@ -576,7 +589,7 @@ public class SplitEnumVariableValue extends VariableValue
                 thisCV.setValue(newCvVal);
             }
         }
-        log.debug("Variable={}; exit updatedTextField", _name);
+        log.debug("Variable={}; exit updatedDropDown", _name);
     }
     
     int[] getCvValsFromSingleInt(long newEntry) {
@@ -1138,13 +1151,11 @@ public class SplitEnumVariableValue extends VariableValue
         }
     }
 
-    // stored reference to the JTextField
-    //JTextField _textField = null;
-
-    /* Internal class extends a JTextField so that its color is consistent with
+    /* Internal class extends a JComboBox so that its color is consistent with
      * an underlying variable
      *
      * @author Bob Jacobsen   Copyright (C) 2001
+     * @author tweaked by Jordan McBride Copyright (C) 2021
      *
      */
     public static class VarComboBox extends JComboBox<String> {
