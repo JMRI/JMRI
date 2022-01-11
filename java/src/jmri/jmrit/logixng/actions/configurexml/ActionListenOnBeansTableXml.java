@@ -48,6 +48,9 @@ public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.Abst
         
         element.addContent(new Element("namedBeanType").addContent(p.getNamedBeanType().name()));
         
+        element.setAttribute("listenOnAllProperties",
+                p.getListenOnAllProperties()? "yes" : "no");  // NOI18N
+        
         return element;
     }
     
@@ -86,6 +89,13 @@ public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.Abst
         NamedBeanType namedBeanType =
                 NamedBeanType.valueOf(namedBeanTypeElement.getTextTrim());
         h.setNamedBeanType(namedBeanType);
+        
+        String listenOnAllProperties = "no";
+        attribute = shared.getAttribute("listenOnAllProperties");
+        if (attribute != null) {  // NOI18N
+            listenOnAllProperties = attribute.getValue();  // NOI18N
+        }
+        h.setListenOnAllProperties("yes".equals(listenOnAllProperties));
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

@@ -5,8 +5,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -24,7 +26,6 @@ public class ThrottlesPreferences {
     private boolean _useToolBar = true;
     private boolean _useFunctionIcon = false;
     private boolean _useLargeSpeedSlider = false;
-    private boolean _hideSpeedStepSelector = false;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
@@ -34,6 +35,7 @@ public class ThrottlesPreferences {
     private boolean _saveThrottleOnLayoutSave = true;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
+    private String _defaultThrottleFilePath = null;
     private ThrottlesPreferencesWindowKeyboardControls _tpwkc = new ThrottlesPreferencesWindowKeyboardControls();
     protected boolean dirty = false;
 
@@ -110,12 +112,13 @@ public class ThrottlesPreferences {
         if ((a = e.getAttribute("isUsingLargeSpeedSlider")) != null) {
             setUseLargeSpeedSlider(a.getValue().compareTo("true") == 0);
         }
-        if ((a = e.getAttribute("isHidingSpeedStepSelector")) != null) {
-            setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
-        }
         if (e.getChild("throttlesControls") != null) {
             this._tpwkc.load(e.getChild("throttlesControls"));
         }
+        if ((a = e.getAttribute("defaultThrottleFilePath")) != null) {
+            setDefaultThrottleFilePath(a.getValue());
+        }        
+        
         this.dirty = false;
     }
 
@@ -150,7 +153,7 @@ public class ThrottlesPreferences {
         e.setAttribute("isSilentSteal", "" + isSilentSteal());
         e.setAttribute("isSilentShare", "" + isSilentShare());
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
-        e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
+        e.setAttribute("defaultThrottleFilePath", "" + getDefaultThrottleFilePath());
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(this._tpwkc.store());
         e.setContent(children);
@@ -172,8 +175,8 @@ public class ThrottlesPreferences {
         setSilentSteal(tp.isSilentSteal());
         setSilentShare(tp.isSilentShare());
         setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
-        setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
         setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
+        setDefaultThrottleFilePath(tp.getDefaultThrottleFilePath());
         
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
@@ -358,17 +361,15 @@ public class ThrottlesPreferences {
     public boolean isUsingLargeSpeedSlider() {
         return _useLargeSpeedSlider;
     }
-    
-    
-    public void setHideSpeedStepSelector(boolean b) {
-        _hideSpeedStepSelector = b;
+            
+    public void setDefaultThrottleFilePath(String p) {
+        _defaultThrottleFilePath = p;
         this.dirty = true;
     }
     
-    public boolean isHidingSpeedStepSelector() {
-        return _hideSpeedStepSelector;
+    public String getDefaultThrottleFilePath() {
+        return _defaultThrottleFilePath;
     }
-    
     
     /**
      * @return the throttles keyboard controls preferences

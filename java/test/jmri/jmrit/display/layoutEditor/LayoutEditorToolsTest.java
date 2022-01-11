@@ -11,15 +11,13 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.*;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.rules.Timeout;
+
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.*;
 
@@ -29,14 +27,8 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author George Warner Copyright (C) 2019
  */
+@Timeout(10)
 public class LayoutEditorToolsTest {
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); //10 second timeout for methods in this test class.
-
-    //allow 2 retries of intermittent tests
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); //allow 2 retries
 
     private LayoutEditor layoutEditor = null;
     private LayoutEditorTools let = null;
@@ -658,12 +650,14 @@ public class LayoutEditorToolsTest {
             EditorFrameOperator operator = new EditorFrameOperator(layoutEditor);
             operator.closeFrameWithConfirmations();
             JUnitUtil.dispose(layoutEditor);
+            EditorFrameOperator.clearEditorFrameOperatorThreads();
         }
+
         InstanceManager.getDefault(LayoutBlockManager.class).dispose();
         InstanceManager.getDefault(SignalHeadManager.class).dispose();
         InstanceManager.getDefault(TurnoutManager.class).dispose();
         InstanceManager.getDefault(SensorManager.class).dispose();
-        
+
         let = null;
         layoutEditor = null;
         layoutBlocks = null;

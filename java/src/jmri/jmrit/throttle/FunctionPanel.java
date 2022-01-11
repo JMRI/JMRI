@@ -338,7 +338,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     if (needUpdate) {
                         functionButtons[i].updateLnF();
                     }
-                }                
+                }
             }
         }
     }
@@ -526,7 +526,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
 
+    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
 }

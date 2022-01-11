@@ -99,7 +99,7 @@ public class LocalVariableTableModel extends AbstractTableModel {
                 variable._name = (String) value;
                 break;
             case COLUMN_TYPE:
-                variable._initalValueType = (InitialValueType) value;
+                variable._initialValueType = (InitialValueType) value;
                 break;
             case COLUMN_DATA:
                 variable._initialValueData = (String) value;
@@ -121,7 +121,7 @@ public class LocalVariableTableModel extends AbstractTableModel {
             case COLUMN_NAME:
                 return _variables.get(rowIndex).getName();
             case COLUMN_TYPE:
-                return _variables.get(rowIndex).getInitalValueType();
+                return _variables.get(rowIndex).getInitialValueType();
             case COLUMN_DATA:
                 return _variables.get(rowIndex).getInitialValueData();
             case COLUMN_MENU:

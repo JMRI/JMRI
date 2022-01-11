@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -20,7 +21,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -29,8 +29,8 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(20)
 public class ImportRosterEngineActionTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
+    
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
     @Test
     public void testCTor() {
@@ -51,7 +51,8 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         jmri.util.JUnitUtil.waitFor(() -> {
             return run.getState().equals(Thread.State.WAITING);
         }, "wait for dialog");
-
+        
+        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(Bundle.getMessage("ImportFailed"), Bundle.getMessage("ButtonOK"));
 
         if (run != null) {
@@ -103,7 +104,8 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         jmri.util.JUnitUtil.waitFor(() -> {
             return run.getState().equals(Thread.State.WAITING);
         }, "wait for dialog");
-
+        
+        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
         if (run != null) {
@@ -160,7 +162,8 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         jmri.util.JUnitUtil.waitFor(() -> {
             return run.getState().equals(Thread.State.WAITING);
         }, "wait for dialog");
-
+        
+        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
         if (run != null) {
@@ -215,7 +218,8 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         jmri.util.JUnitUtil.waitFor(() -> {
             return run.getState().equals(Thread.State.WAITING);
         }, "wait for dialog");
-
+        
+        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(Bundle.getMessage("ImportFailed"), Bundle.getMessage("ButtonOK"));
 
         if (run != null) {

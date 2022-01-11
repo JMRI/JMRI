@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -207,6 +206,7 @@ public class Track extends PropertyChangeSupport {
     public static final String ALTERNATE_TRACK_CHANGED_PROPERTY = "trackAlternate"; // NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
     public static final String TRACK_REPORTER_PROPERTY = "trackReporterChange"; // NOI18N
+    public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -817,7 +817,13 @@ public class Track extends PropertyChangeSupport {
      * @return rolling stock type names
      */
     public String[] getTypeNames() {
-        return _typeList.toArray(new String[0]);
+        List<String> list = new ArrayList<>();
+        for (String typeName : _typeList) {
+            if (_location.acceptsTypeName(typeName)) {
+                list.add(typeName);
+            }
+        }
+        return list.toArray(new String[0]);
     }
 
     private void setTypeNames(String[] types) {
@@ -2511,7 +2517,7 @@ public class Track extends PropertyChangeSupport {
     public void setOnlyCarsWithFinalDestinationEnabled(boolean enable) {
         boolean old = _onlyCarsWithFD;
         _onlyCarsWithFD = enable;
-        setDirtyAndFirePropertyChange("onlyCarsWithFinalDestinations", old, enable);
+        setDirtyAndFirePropertyChange(ROUTED_CHANGED_PROPERTY, old, enable);
     }
 
     /**
@@ -2551,7 +2557,6 @@ public class Track extends PropertyChangeSupport {
      * @param e        Consist XML element
      * @param location The Location loading this track.
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Track(Element e, Location location) {
         _location = location;
         Attribute a;
@@ -2606,7 +2611,7 @@ public class Track extends PropertyChangeSupport {
         }
         // old way of reading track comment, see comments below for new format
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {
@@ -2869,7 +2874,6 @@ public class Track extends PropertyChangeSupport {
                 log.warn("Not able to find reader: {} for location ({})", a.getValue(), getName());
             }
         }
-
     }
 
     /**

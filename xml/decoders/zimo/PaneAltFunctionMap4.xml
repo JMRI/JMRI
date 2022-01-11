@@ -208,6 +208,7 @@
         <label>
           <text>  FO 1 </text>
           <text xml:lang="de">  FA1 </text>
+          <text xml:lang="cs">  FV 1 </text>
         </label>
         <label>
           <text> </text>
@@ -262,6 +263,7 @@
         <label>
           <text> FO 2 </text>
           <text xml:lang="de">  FA2 </text>
+          <text xml:lang="cs">  FV 2 </text>
         </label>
         <label>
           <text> </text>

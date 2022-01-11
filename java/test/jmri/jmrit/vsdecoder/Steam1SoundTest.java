@@ -16,7 +16,7 @@ public class Steam1SoundTest {
     public void testCTor() {
         Steam1Sound t = new Steam1Sound("test");
         Assert.assertNotNull("exists",t);
-    
+
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
@@ -28,6 +28,8 @@ public class Steam1SoundTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

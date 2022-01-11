@@ -90,7 +90,7 @@ public class DefaultSymbolTable implements SymbolTable {
     public Object getValue(String name) {
         Symbol symbol = _symbols.get(name);
         if (symbol == null) {
-            throw new IllegalArgumentException(String.format("Symbol '%s' does not exist in symbol table", name));
+            throw new SymbolNotFound(String.format("Symbol '%s' does not exist in symbol table", name));
         }
         return _stack.getValueAtIndex(_firstSymbolIndex + symbol.getIndex());
     }
@@ -153,7 +153,7 @@ public class DefaultSymbolTable implements SymbolTable {
                 throw new IllegalArgumentException("Symbol table already contains the variable " + symbol.getName());
             }
             
-            switch (variable.getInitalValueType()) {
+            switch (variable.getInitialValueType()) {
                 case None:
                     break;
                     
@@ -167,6 +167,51 @@ public class DefaultSymbolTable implements SymbolTable {
                     
                 case String:
                     initialValue = variable.getInitialValueData();
+                    break;
+                    
+                case Array:
+                    List<Object> array = new java.util.ArrayList<>();
+                    initialValue = array;
+                    String initialValueData = variable.getInitialValueData();
+                    if (!initialValueData.isEmpty()) {
+                        Object data = "";
+                        String[] parts = initialValueData.split(":", 2);
+                        if (parts.length > 1) {
+                            initialValueData = parts[0];
+                            if (Character.isDigit(parts[1].charAt(0))) {
+                                try {
+                                    data = Long.parseLong(parts[1]);
+                                } catch (NumberFormatException e) {
+                                    try {
+                                        data = Double.parseDouble(parts[1]);
+                                    } catch (NumberFormatException e2) {
+                                        throw new IllegalArgumentException("Data is not a number", e2);
+                                    }
+                                }
+                            } else if ((parts[1].charAt(0) == '"') && (parts[1].charAt(parts[1].length()-1) == '"')) {
+                                data = parts[1].substring(1,parts[1].length()-1);
+                            } else {
+                                // Assume initial value is a local variable
+                                data = symbolTable.getValue(parts[1]).toString();
+                            }
+                        }
+                        try {
+                            int count;
+                            if (Character.isDigit(initialValueData.charAt(0))) {
+                                count = Integer.parseInt(initialValueData);
+                            } else {
+                                // Assume size is a local variable
+                                count = Integer.parseInt(symbolTable.getValue(initialValueData).toString());
+                            }
+                            for (int i=0; i < count; i++) array.add(data);
+                        } catch (NumberFormatException e) {
+                            throw new IllegalArgumentException("Initial capacity is not an integer", e);
+                        }
+                    }
+                    break;
+                    
+                case Map:
+                    initialValue = new java.util.HashMap<>();
                     break;
                     
                 case LocalVariable:
@@ -196,8 +241,8 @@ public class DefaultSymbolTable implements SymbolTable {
                     break;
                     
                 default:
-                    log.error("definition._initalValueType has invalid value: {}", variable.getInitalValueType().name());
-                    throw new IllegalArgumentException("definition._initalValueType has invalid value: " + variable.getInitalValueType().name());
+                    log.error("definition._initialValueType has invalid value: {}", variable.getInitialValueType().name());
+                    throw new IllegalArgumentException("definition._initialValueType has invalid value: " + variable.getInitialValueType().name());
             }
             
 //            System.out.format("Add symbol: %s = %s%n", symbol.getName(), initialValue);

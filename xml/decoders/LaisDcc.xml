@@ -1280,7 +1280,7 @@
                 <label>Ditch Light Blink Rate Timing</label>
                 <label xml:lang="cs">Míra časování pomalého blikání světla</label>
                 <tooltip>1 second = about 12 (tbc)</tooltip>
-                <tooltip xml:lang="cs">1 vteřina = okolo 12 (bude upřesněno)</tooltip>
+                <tooltip xml:lang="cs">1 sekunda = okolo 12 (bude upřesněno)</tooltip>
             </variable>
 
             <variable CV="64" default="6" item="Global lighting option 2">

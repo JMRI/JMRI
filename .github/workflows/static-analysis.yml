@@ -39,4 +39,4 @@ jobs:
         # check properties
         mvn antrun:run -Danttarget=checkPropertiesFiles
         #run Architecture tests
-        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsTest test --file=pom.xml
+        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsCheck test --file=pom.xml

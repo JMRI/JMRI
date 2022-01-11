@@ -241,6 +241,28 @@ and distribute JMRI.
             java.util.ServiceLoader.load(OurServiceClass.class).forEach((ourServiceObject) -&gt; {
                  // access the service object via ourServiceObject
             });
+      </pre>
+
+    <a id="javascript"></a>
+    <a id="typescript"></a>
+    <h2>JavaScript and TypeScript Code</h2>
+
+    <p>JavaScript and TypeScript code for use by the web server should be put in the
+    <code>web/ts</code> directory.  This will be copied and/or compiled as needed
+    by the <code>ant typescript</code> target.  The results are put in the
+    <code>web/js</code> directory, which is where our web pages are served from via the
+    <a href="../../web/index.shtml">JMRI web server</a>.</p>
+
+    <p>To run the <code>ant typescript</code> target and compile the TypeScript files,
+    a TypeScript compiler needs to be installed on the computer. For more information
+    on TypeScript and how to install it, see the
+    <a href="https://www.typescriptlang.org/">TypeScript web page</a>.</p>
+
+    <p>JavaScript code can also be used for scripting.  By default, these should be put
+    into the <code>jython/</code> directory, though of course people can run scripts from
+    any location they choose.
+
+
 </pre><!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

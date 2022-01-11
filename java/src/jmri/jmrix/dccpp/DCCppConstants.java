@@ -100,9 +100,11 @@ public final class DCCppConstants {
     public static final char MADC_SUCCESS_REPLY = 'O';
     public static final char COMM_TYPE_REPLY = 'N';
     public static final char DIAG_REPLY      = '*';
+    public static final char LOCO_STATE_REPLY= 'l';
 
     // Message / Reply Regexes
-    public static final String THROTTLE_CMD_REGEX = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
+    public static final String THROTTLE_CMD_REGEX    = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
+    public static final String THROTTLE_V3_CMD_REGEX = "t\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t CAB SPEED DIR>
     public static final String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?"; // <f ADDR BYTE1 (BYTE2)>
     public static final String FUNCTION_V2_CMD_REGEX="F\\s*([0-9]{1,4})\\s*([0-9]){1,2}\\s*([1,0])\\s*"; // <F CAB FUNC STATE>
     public static final String FORGET_CAB_CMD_REGEX ="-\\s*([0-9]{0,4})\\s*"; // <- [CAB]>
@@ -122,6 +124,7 @@ public final class DCCppConstants {
     public static final String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*"; // <Z ID>
     public static final String OUTPUT_LIST_REGEX = "\\s*Z\\s*"; // <Z>
     public static final String QUERY_SENSOR_STATES_REGEX = "\\s*Q\\s*"; // <Q>
+    public static final String LOCO_STATE_REGEX = "\\s*l\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*"; // <l loco slot speedByte functions>
 
     public static final String WRITE_TO_EEPROM_REGEX = "E";
     public static final String CLEAR_EEPROM_REGEX = "e";
@@ -157,7 +160,7 @@ public final class DCCppConstants {
     public static final String PROGRAM_VERIFY_REGEX =      "\\s*v\\s*(\\d+)\\s*([-]*\\d+)\\s*";
     public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
-    public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*(.*)\\s+\\*$";
+    public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*([\\S\\s]*)\\*$"; //matches anything between leading and trailing asterisks, left-trimmed
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
     public static final String METER_REPLY_REGEX = " *c *(.+) +([\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";

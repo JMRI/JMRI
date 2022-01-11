@@ -184,6 +184,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttleWindows.forEach(frame -> {
             frame.applyPreferences();
         });
+        throttlesListPanel.applyPreferences();
     }
     
     private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);

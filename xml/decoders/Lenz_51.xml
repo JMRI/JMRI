@@ -300,6 +300,7 @@
         <label>Front light short-circuit</label>
         <label xml:lang="de">Frontlicht Kurzschluss</label>
         <label xml:lang="nl">Koplampen voor kortsluiting</label>
+        <label xml:lang="cs">Přední světla zkrat</label>
       </variable>
       <variable CV="30" mask="XXXXXVXX" item="Rear light Short">
         <enumVal>
@@ -323,6 +324,7 @@
         <label>Rear light short-circuit</label>
         <label xml:lang="de">Rücklicht-Kurzschluss</label>
         <label xml:lang="nl">Koplampen Achter kortsluiting</label>
+        <label xml:lang="cs">Zadní světla zkrat</label>
       </variable>
       <!-- CV60 -->
       <variable CV="60" item="EMF Enable" mask="XXXXXXXV" default="1">

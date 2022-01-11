@@ -534,6 +534,7 @@ public class CtcEditorSignalHeadsTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearBlockBossLogicThreads();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();

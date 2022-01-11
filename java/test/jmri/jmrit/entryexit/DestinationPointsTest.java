@@ -132,6 +132,9 @@ public class DestinationPointsTest {
 
     @AfterAll
     public static void tearDown() {
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.removeMatchingThreads("Routing stabilising timer");
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         tm = null;
         sm = null;

@@ -12,11 +12,16 @@ import org.junit.jupiter.api.*;
  * @author Lionel Jeanson
  */
 public class ThrottlesPreferencesWindowTest {
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
-        Assert.assertNotNull("exists", w);
+        try {
+            Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+            ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
+            Assert.assertNotNull("exists", w);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("IndexOutOfBoundsException\n"+e);
+        }
     }
 
     @BeforeEach

@@ -1989,7 +1989,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     // TODO future option to ignore train direction at last location in train's
     // route
-    private final boolean ignoreTrainDirectionIfLastLoc = false;
+//    private final boolean ignoreTrainDirectionIfLastLoc = false;
 
     // FIXME: ignoreTrainDirectionIfLastLoc has no way to become true, hence the if
     // statement using it below cannot ever be true
@@ -1999,9 +1999,9 @@ public class TrainBuilderBase extends TrainCommon {
             return true;
         }
         // is the destination the last location on the route?
-        if (ignoreTrainDirectionIfLastLoc && rld == _train.getTrainTerminatesRouteLocation()) {
-            return true; // yes, ignore train direction
-        }
+//        if (ignoreTrainDirectionIfLastLoc && rld == _train.getTrainTerminatesRouteLocation()) {
+//            return true; // yes, ignore train direction
+//        }
         // this location only services trains with these directions
         int serviceTrainDir = rld.getLocation().getTrainDirections();
         if (track != null) {
@@ -2941,7 +2941,7 @@ public class TrainBuilderBase extends TrainCommon {
                 }
                 if (!stageTrack.isLoadNameAndCarTypeAccepted(load, car.getTypeName())) {
                     addLine(_buildReport, SEVEN,
-                            MessageFormat.format(Bundle.getMessage("BuildDestTrackNoLoad"), new Object[] {
+                            MessageFormat.format(Bundle.getMessage("buildDestTrackNoLoad"), new Object[] {
                                     stageTrack.getLocation().getName(), stageTrack.getName(), car.toString(), load, }));
                 }
                 if (!_train.isLoadNameAccepted(load, car.getTypeName())) {

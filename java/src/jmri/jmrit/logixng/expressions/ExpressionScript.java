@@ -298,6 +298,9 @@ public class ExpressionScript extends AbstractDigitalExpression
         bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
         bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
         
+        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variable 'symbolTable'
+        
         bindings.put("result", result);     // Give the script access to the local variable 'result'
         
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
@@ -475,7 +478,7 @@ public class ExpressionScript extends AbstractDigitalExpression
                         scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
                                 .eval(theScript, bindings);
                     } catch (RuntimeException | ScriptException e) {
-                        log.warn("cannot execute script during registerListeners", e);
+                        log.warn("cannot execute script during unregisterListeners", e);
                     }
                 });
             }

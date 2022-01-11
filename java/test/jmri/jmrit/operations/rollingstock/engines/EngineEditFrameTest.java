@@ -21,7 +21,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -32,8 +31,6 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(10)
 public class EngineEditFrameTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries      
 
     @Test
     public void testClearRoadNumber() {
@@ -381,8 +378,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
         f.roadNumberTextField.setText("10345");
         f.roadComboBox.setSelectedItem("SP");
 
-        EngineManager cm = InstanceManager.getDefault(EngineManager.class);
-        Engine engine = cm.getByRoadAndNumber("SP", "10345");
+        EngineManager em = InstanceManager.getDefault(EngineManager.class);
+        Engine engine = em.getByRoadAndNumber("SP", "10345");
         Assert.assertNull("engine exists", engine);
 
         f.lengthComboBox.setSelectedIndex(4);
@@ -393,7 +390,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
         
-        engine = cm.getByRoadAndNumber("SP", "10345");
+        engine = em.getByRoadAndNumber("SP", "10345");
         Assert.assertNotNull("engine exists", engine);
 
         Assert.assertEquals("engine location", null, engine.getLocation());
@@ -428,12 +425,12 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // try to set engine to test spur, with a length of 0
         f.trackLocationBox.setSelectedIndex(2);
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-        
         // get response message
         String status = engine.setLocation(loc2, testSpur);
         Assert.assertFalse(status.equals(Track.OKAY));
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat
                 .format(Bundle.getMessage("rsOverride"), new Object[]{status}), Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(f);
@@ -442,7 +439,6 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // do it again, but say yes
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat
                 .format(Bundle.getMessage("rsOverride"), new Object[]{status}), Bundle.getMessage("ButtonYes"));
@@ -476,9 +472,9 @@ public class EngineEditFrameTest extends OperationsTestCase {
         f.commentTextField.setText("test Engine comment field");
         JemmyUtil.enterClickAndLeave(f.addButton);
 
-        EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
-        Assert.assertEquals("number of Engines", 5, cManager.getNumEntries());
-        Engine e6 = cManager.getByRoadAndNumber("SP", "6");
+        EngineManager em = InstanceManager.getDefault(EngineManager.class);
+        Assert.assertEquals("number of Engines", 5, em.getNumEntries());
+        Engine e6 = em.getByRoadAndNumber("SP", "6");
 
         Assert.assertNotNull("Engine exists", e6);
         Assert.assertEquals("Engine type", "SW8", e6.getModel());
@@ -494,7 +490,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.bUnitCheckBox);
 
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        Assert.assertEquals("number of Engines", 5, cManager.getNumEntries());
+        Assert.assertEquals("number of Engines", 5, em.getNumEntries());
         
         Assert.assertTrue(e6.isBunit());
         Assert.assertEquals("Blocking order", Engine.B_UNIT_BLOCKING, e6.getBlocking());
@@ -507,8 +503,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
         
         JUnitOperationsUtil.initOperationsData();
         
-        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = eManager.getByRoadAndNumber("PC", "5016");
+        EngineManager em = InstanceManager.getDefault(EngineManager.class);
+        Engine e1 = em.getByRoadAndNumber("PC", "5016");
         e1.setComment("Test engine Comment for E1");
         
         EngineLengths el = InstanceManager.getDefault(EngineLengths.class);
@@ -538,7 +534,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // test delete button
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("number of Engines", 3, eManager.getNumEntries());
+        Assert.assertEquals("number of Engines", 3, em.getNumEntries());
         JUnitUtil.dispose(f);
     }
     
@@ -546,9 +542,9 @@ public class EngineEditFrameTest extends OperationsTestCase {
     public void testAddNewRoadNo() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load engines
-        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+        EngineManager em = InstanceManager.getDefault(EngineManager.class);
 
-        Engine e1 = engineManager.getByRoadAndNumber("PC", "5524");
+        Engine e1 = em.getByRoadAndNumber("PC", "5524");
         e1.setRoadName("TEST_ROAD");
 
         EngineEditFrame f = new EngineEditFrame();
@@ -576,6 +572,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
         JUnitUtil.dispose(f);
     }
@@ -614,6 +611,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
         JUnitUtil.dispose(f);
     }
@@ -655,6 +653,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(EngineModels.class).containsName("TEST_MODEL"));
 
         // now answer yes to add model
@@ -679,6 +678,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(EngineModels.class).containsName("TEST_MODEL"));
 
         JUnitUtil.dispose(f);
@@ -719,6 +719,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(EngineTypes.class).containsName("TEST_TYPE"));
 
         // now answer yes to add type
@@ -743,10 +744,9 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(EngineTypes.class).containsName("TEST_TYPE"));
-
         JUnitUtil.dispose(f);
-
     }
     
     @Test
@@ -783,6 +783,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(EngineLengths.class).containsName("1234"));
 
         // now answer yes to add type
@@ -807,8 +808,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(EngineLengths.class).containsName("1234"));
-
         JUnitUtil.dispose(f);
     }
     
@@ -846,6 +847,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
         // now answer yes to add owner
@@ -870,8 +872,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
-
         JUnitUtil.dispose(f);
     }
     

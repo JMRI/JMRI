@@ -3,6 +3,7 @@ package jmri.jmrix.dccpp;
 import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 import java.util.regex.PatternSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -258,6 +259,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.DIAG_REPLY:
                 text = "DIAG: " + getValueString(1);
                 break;
+            case DCCppConstants.LOCO_STATE_REPLY:
+                text = "Loco State: Cab:"+ getCabInt();
+                text += " Slot:"         + getRegisterString();
+                text += " Dir:"          + getDirectionString();
+                text += " Speed:"        + getSpeedInt();
+                text += " F0-28:"        + getFunctionsString();
+                break;
             default:
                 text = "Unrecognized reply: '" + toString() + "'";
         }
@@ -505,6 +513,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.COMM_TYPE_REPLY:
                 r.myRegex = DCCppConstants.COMM_TYPE_REPLY_REGEX;
                 return(r);
+            case DCCppConstants.LOCO_STATE_REPLY:
+                r.myRegex = DCCppConstants.LOCO_STATE_REGEX;
+                return (r);
             default:
                 return(r);
         }
@@ -748,75 +759,114 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-     //------------------------------------------------------
-    // Helper methods for ThrottleReplies
+    // Helper methods for Throttle and LocoState Replies
 
-    public String getRegisterString() {
-        if (this.isThrottleReply()) {
-            return(this.getValueString(1));
+    public int getCabInt() {
+        if (this.isLocoStateReply()) {
+            return (this.getValueInt(1));
         } else {
             log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
-            return("0");
+            return (0);
         }
+    }
+
+    public int getSpeedByteInt() {
+        if (this.isLocoStateReply()) {
+            return (this.getValueInt(3));
+        } else {
+            log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return (0);
+        }
+    }
+
+    public int getFunctionsInt() {
+        if (this.isLocoStateReply()) {
+            return (this.getValueInt(4));
+        } else {
+            log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return (0);
+        }
+    }
+
+    public String getFunctionsString() {
+        if (this.isLocoStateReply()) {
+            return new StringBuilder(StringUtils.leftPad(Integer.toBinaryString(this.getValueInt(4)), 29, "0")).reverse().toString();
+        } else {
+            log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return ("not a locostate!");
+        }
+    }
+
+    public String getRegisterString() {
+        return String.valueOf(getRegisterInt());
     }
 
     public int getRegisterInt() {
         if (this.isThrottleReply()) {
-            return(this.getValueInt(1));
+            return (this.getValueInt(1));
+        } else if (this.isLocoStateReply()) {
+            return (this.getValueInt(2));
         } else {
             log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
-            return(0);
+            return (0);
         }
     }
 
     public String getSpeedString() {
-        if (this.isThrottleReply()) {
-            return(this.getValueString(2));
-            } else {
-                log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
-                return("0");
-        }
+        return String.valueOf(getSpeedInt());
     }
 
     public int getSpeedInt() {
         if (this.isThrottleReply()) {
-            return(this.getValueInt(2));
+            return (this.getValueInt(2));
+        } else if (this.isLocoStateReply()) {
+            int speed = this.getValueInt(3) & 0x7f; //drop direction bit
+            if (speed==1) return -1;     //special case for eStop
+            if (speed>1) return speed-1; //bump speeds down 1 due to eStop at 1
+            return 0;                    //stop is zero
         } else {
             log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
-            return(0);
+            return (0);
         }
+    }
+
+    public boolean isEStop() {
+        return getSpeedInt() == -1; 
     }
 
     public String getDirectionString() {
         // Will return "Forward" (true) or "Reverse" (false)
-        if (this.isThrottleReply()) {
-            return(this.getValueBool(3) ? "Forward" : "Reverse");
-        } else {
-            log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getOpCodeChar());
-            return("Not a Throttle");
-        }
+        return (getDirectionInt()==1 ? "Forward" : "Reverse");
     }
 
     public int getDirectionInt() {
         // Will return 1 (true) or 0 (false)
         if (this.isThrottleReply()) {
-            return(this.getValueInt(3));
+            return (this.getValueInt(3));
+        } else if (this.isLocoStateReply()) {
+            return this.getValueInt(3) >> 7;
         } else {
             log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getOpCodeChar());
-            return(0);
+            return (0);
         }
     }
 
     public boolean getDirectionBool() {
         // Will return true or false
         if (this.isThrottleReply()) {
-            return(this.getValueBool(3));
+            return (this.getValueBool(3));
+        } else if (this.isLocoStateReply()) {
+            return ((this.getValueInt(3)>>7)==1);
         } else {
             log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getOpCodeChar());
-            return(false);
+            return (false);
         }
     }
-
+    
+    public boolean getIsForward() {
+        return getDirectionBool();
+    }
+    
      //------------------------------------------------------
     // Helper methods for Turnout Replies
 
@@ -1442,7 +1492,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
     public boolean isCommTypeReply() { return(this.matches(DCCppConstants.COMM_TYPE_REPLY_REGEX)); }
     public boolean isWriteEepromReply() { return(this.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)); }
-
+    public boolean isLocoStateReply() { return (this.getOpCodeChar() == DCCppConstants.LOCO_STATE_REPLY); }
+    
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) ||
@@ -1463,7 +1514,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
-            (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX))
+            (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
+            (this.matches(DCCppConstants.LOCO_STATE_REGEX))
         ) {
             return(true);
         } else {

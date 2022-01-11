@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.27.0
+; - Updated "-CleanUp" so that old/error files are removed before installation in jython directory
+; -------------------------------------------------------------------------
 ; - Version 0.1.26.1
 ; - Remove Tools start menu items
 ; - Add support for Open JDK 8 Registry Keys
@@ -316,7 +319,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.26.1"                    ; Installer version
+!define INST_VER  "0.1.27.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -508,6 +511,14 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
  
+    ; -- Delete certain jython files that have been moved, or were entered erroneously, as of JMRI 4.21.3
+    Delete "$OUTDIR\jython\SetMqttOptions.py"
+    Delete "$OUTDIR\jython\SetMqttParser.py"
+    Delete "$OUTDIR\jython\SetMqttPrefix.py"
+    Delete "$OUTDIR\jython\ReceiveMqttMessage.py"
+    Delete "$OUTDIR\jython\SendMqttMessage.py"
+    Delete "$OUTDIR\jython\CmriBitsToBytes.jy"    
+
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
@@ -609,6 +620,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\resources\GreenPowerLED.gif"
     Delete "$OUTDIR\resources\RedPowerLED.gif"
     Delete "$OUTDIR\resources\YellowPowerLED.gif"
+        
 
     ; -- If the current install Start Menu folder exists, remove any
     ; --        predictably-named JMRI-related contents.

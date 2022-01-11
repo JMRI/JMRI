@@ -29,7 +29,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         repeaterList = new ArrayList<>();
         addListeners();
     }
-    
+
     final void addListeners(){
         InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
@@ -47,8 +47,8 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return 'F';
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      * Searches by UserName then SystemName.
      */
     @Override
@@ -72,6 +72,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         name.append(":");
         name.append(signalSystem);
         name.append(":");
+        name.append(mastName);
         for (String s : heads) {
             name.append("(");
             name.append(StringUtil.parenQuote(s));
@@ -86,8 +87,8 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     public SignalMast provideSignalMast(@Nonnull String name) throws IllegalArgumentException {
         SignalMast m = getSignalMast(name);
         if (m == null) {
-            // this should be replaced by a Service based approach, 
-            // perhaps along the lines of SignalMastAddPane, but 
+            // this should be replaced by a Service based approach,
+            // perhaps along the lines of SignalMastAddPane, but
             // for now we manually check types
             if (name.startsWith("IF$shsm")) {
                 m = new SignalHeadSignalMast(name);
@@ -225,7 +226,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     public SignalMast provide(String name) throws IllegalArgumentException {
         return provideSignalMast(name);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void dispose(){

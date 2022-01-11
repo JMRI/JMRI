@@ -1059,8 +1059,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    protected String getClassName() {
-        return LogixNGEditor.class.getName();
+    private String getClassName() {
+        // The class that is returned must have a default constructor,
+        // a constructor with no parameters.
+        return jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName();
     }
 
 

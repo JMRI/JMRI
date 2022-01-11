@@ -3,10 +3,11 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
 
-import jmri.JmriException;
 import jmri.util.*;
-import org.junit.*;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of PositionablePointView
@@ -15,9 +16,9 @@ import org.junit.*;
  */
 public class PositionablePointViewTest extends LayoutTrackViewTest {
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testGetCoordsCenter() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         PositionablePoint pp1 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
@@ -38,9 +39,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertEquals("getCoordsCenter equal to {666.6, 999.9}", point2, pp2v.getCoordsCenter());
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testSetCoords() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
@@ -55,9 +56,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertEquals("getCoordsCenter equal to {666.6, 999.9}", point2, ppv.getCoordsCenter());
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testScaleCoords() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
@@ -71,9 +72,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertEquals("getCoordsCenter equal to {2000.0, 3000.0}", pointX2, ppv.getCoordsCenter());
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testTranslateCoords() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
@@ -88,9 +89,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertEquals("getCoordsCenter equal to {999.9, 1444.3}", pointX2, ppv.getCoordsCenter());
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testGetBounds() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
@@ -103,9 +104,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertEquals("getBounds equal to {666.6, 999.9, 0.0, 0.0}", bounds, ppv.getBounds());
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testMaxWidthAndHeight() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
@@ -115,9 +116,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertNotNull("exists", pp);
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testFindHitPointType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D thePoint = new Point2D.Double(666.6, 999.9);
@@ -135,9 +136,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertTrue("pp.findHitPointType equals NONE", hitType == HitPointType.NONE);
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testGetCoordsForConnectionType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D thePoint = new Point2D.Double(666.6, 999.9);
@@ -157,11 +158,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     }
 
 
-    PositionablePoint pPoint;
-    PositionablePointView pPointV;
+    private PositionablePoint pPoint;
+    private PositionablePointView pPointV;
     
-    @Before
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
+    @Override
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -175,8 +177,9 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         }
     }
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
+    @Override
     public void tearDown() {
         pPoint = null;
         super.tearDown();

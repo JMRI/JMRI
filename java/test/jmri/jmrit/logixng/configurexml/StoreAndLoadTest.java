@@ -21,6 +21,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
@@ -39,6 +40,14 @@ public class StoreAndLoadTest {
 
 //    private AudioManager audioManager;
 
+    private NamedBeanReference getNamedBeanReference(
+            Collection<NamedBeanReference> collection, String name) {
+        for (NamedBeanReference ref : collection) {
+            if (name.equals(ref.getName())) return ref;
+        }
+        return null;
+    }
+    
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -463,7 +472,7 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.setBeanState(ActionLight.LightState.On);
         actionLight.setAddressing(NamedBeanAddressing.LocalVariable);
         actionLight.setFormula("\"IT\"+index");
         actionLight.setLocalVariable("index");
@@ -479,7 +488,7 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.setBeanState(ActionLight.LightState.Toggle);
         actionLight.setAddressing(NamedBeanAddressing.Formula);
         actionLight.setFormula("\"IT\"+index");
         actionLight.setLocalVariable("index");
@@ -495,7 +504,7 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.setBeanState(ActionLight.LightState.Intensity);
         actionLight.setAddressing(NamedBeanAddressing.Reference);
         actionLight.setFormula("\"IT\"+index");
         actionLight.setLocalVariable("index");
@@ -506,6 +515,27 @@ public class StoreAndLoadTest {
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        actionLight.setLight(light1);
+        actionLight.setBeanState(ActionLight.LightState.Interval);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        actionLight.setLight(light1);
+        actionLight.setBeanState(ActionLight.LightState.Unknown);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        actionLight.setLight(light1);
+        actionLight.setBeanState(ActionLight.LightState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -580,47 +610,138 @@ public class StoreAndLoadTest {
         actionListenOnBeans.addReference("Light:"+light1.getSystemName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        NamedBeanReference ref = getNamedBeanReference(actionListenOnBeans.getReferences(), light1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(light1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Light, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Light:"+light2.getUserName());
+        actionListenOnBeans.setLocalVariableNamedBean("localVariableNamedBean");
+        actionListenOnBeans.setLocalVariableEvent("localVariableEvent");
+        actionListenOnBeans.setLocalVariableNewValue("localVariableNewValue");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), light2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(light2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Light, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("Memory:"+memory1.getSystemName());
+        actionListenOnBeans.addReference("Memory:"+memory1.getSystemName()+":no");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), memory1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(memory1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Memory, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("Memory:"+memory2.getUserName());
+        actionListenOnBeans.addReference("Memory:"+memory2.getUserName()+":yes");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), memory2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(memory2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Memory, ref.getType());
+        Assert.assertTrue(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Sensor:"+sensor1.getSystemName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), sensor1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(sensor1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Sensor, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Sensor:"+sensor2.getUserName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), sensor2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(sensor2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Sensor, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Turnout:"+turnout1.getSystemName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), turnout1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(turnout1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("Turnout:"+turnout2.getUserName());
+        actionListenOnBeans.addReference("Turnout:"+turnout2.getUserName()+":yes");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), turnout2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(turnout2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
+        Assert.assertTrue(ref.getListenOnAllProperties());
+
+
+        ActionListenOnBeansTable actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setRowOrColumnName("Signal before");
+        actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Row);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
+        actionListenOnBeansTable.setListenOnAllProperties(false);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setRowOrColumnName("2");
+        actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Column);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
+        actionListenOnBeansTable.setListenOnAllProperties(true);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
+        actionListenOnBeansTable.setListenOnAllProperties(false);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
+        actionListenOnBeansTable.setListenOnAllProperties(true);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -972,7 +1093,7 @@ public class StoreAndLoadTest {
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
         actionSensor.setSensor(sensor1);
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.setBeanState(ActionSensor.SensorState.Active);
         actionSensor.setAddressing(NamedBeanAddressing.LocalVariable);
         actionSensor.setFormula("\"IT\"+index");
         actionSensor.setLocalVariable("index");
@@ -987,7 +1108,7 @@ public class StoreAndLoadTest {
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
         actionSensor.setSensor(sensor1);
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.setBeanState(ActionSensor.SensorState.Toggle);
         actionSensor.setAddressing(NamedBeanAddressing.Formula);
         actionSensor.setFormula("\"IT\"+index");
         actionSensor.setLocalVariable("index");
@@ -1002,7 +1123,7 @@ public class StoreAndLoadTest {
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
         actionSensor.setSensor(sensor1);
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.setBeanState(ActionSensor.SensorState.Unknown);
         actionSensor.setAddressing(NamedBeanAddressing.Reference);
         actionSensor.setFormula("\"IT\"+index");
         actionSensor.setLocalVariable("index");
@@ -1012,6 +1133,13 @@ public class StoreAndLoadTest {
         actionSensor.setStateLocalVariable("index2");
         actionSensor.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionSensor);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
+        actionSensor.setSensor(sensor1);
+        actionSensor.setBeanState(ActionSensor.SensorState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionSensor);
+        maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -1326,7 +1454,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
         actionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -1341,7 +1469,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Toggle);
         actionTurnout.setAddressing(NamedBeanAddressing.Formula);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -1356,7 +1484,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Unknown);
         actionTurnout.setAddressing(NamedBeanAddressing.Reference);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -1366,6 +1494,13 @@ public class StoreAndLoadTest {
         actionTurnout.setStateLocalVariable("index2");
         actionTurnout.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setTurnout(turnout1);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -1506,6 +1641,19 @@ public class StoreAndLoadTest {
         callModule.addParameter("Stu", InitialValueType.Reference, "{MyVar}", Module.ReturnValueType.LocalVariable, "SomeVar");
         callModule.addParameter("Vxy", InitialValueType.String, "Some string", Module.ReturnValueType.LocalVariable, "SomeVar");
         maleSocket = digitalActionManager.registerAction(callModule);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrit.logixng.actions.DigitalFormula actionFormula =
+                new jmri.jmrit.logixng.actions.DigitalFormula(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionFormula);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFormula = new jmri.jmrit.logixng.actions.DigitalFormula(digitalActionManager.getAutoSystemName(), null);
+        actionFormula.setComment("A comment");
+        actionFormula.setFormula("n + 1");
+        maleSocket = digitalActionManager.registerAction(actionFormula);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -1670,6 +1818,7 @@ public class StoreAndLoadTest {
         executeDelayed.setDelayAddressing(NamedBeanAddressing.Direct);
         executeDelayed.setDelay(100);
         executeDelayed.setResetIfAlreadyStarted(true);
+        executeDelayed.setUseIndividualTimers(false);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1678,6 +1827,7 @@ public class StoreAndLoadTest {
         executeDelayed.setDelayAddressing(NamedBeanAddressing.LocalVariable);
         executeDelayed.setDelayLocalVariable("MyVar");
         executeDelayed.setResetIfAlreadyStarted(true);
+        executeDelayed.setUseIndividualTimers(true);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1893,6 +2043,71 @@ public class StoreAndLoadTest {
         sequence.getChild(6).connect(maleSocket);
 
 
+        ShowDialog showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Ok);
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Ok);
+        showDialog.setLocalVariableForSelectedButton("myVar");
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("Some text");
+        showDialog.setFormatType(ShowDialog.FormatType.OnlyText);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        Or orTemp = new Or(digitalExpressionManager.getAutoSystemName(), null);
+        MaleSocket maleSocketOr = digitalExpressionManager.registerExpression(orTemp);
+        showDialog.getValidateSocket().connect(maleSocketOr);
+
+        LogLocalVariables logLocalVariablesTemp = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        MaleSocket maleSocketLogLocalVariables = digitalActionManager.registerAction(logLocalVariablesTemp);
+        showDialog.getExecuteSocket().connect(maleSocketLogLocalVariables);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Cancel);
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Yes);
+        showDialog.getEnabledButtons().add(ShowDialog.Button.No);
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("");
+        showDialog.setFormatType(ShowDialog.FormatType.CommaSeparatedList);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Memory, "IM1"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.No);
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("MyVar has the value %s");
+        showDialog.setFormatType(ShowDialog.FormatType.StringFormat);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Reference, "{MyVar}"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.No);
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("str(10): %s, 25: %d, IM1: %s, MyVar: %s");
+        showDialog.setFormatType(ShowDialog.FormatType.StringFormat);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Formula, "str(10)"));
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Formula, "25"));
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Memory, "IM1"));
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ShutdownComputer shutdownComputer =
                 new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
@@ -1979,6 +2194,40 @@ public class StoreAndLoadTest {
                 digitalExpressionManager.registerExpression(
                         new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null)));
 
+
+
+        Timeout timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(timeout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.Direct);
+        timeout.setDelay(100);
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.LocalVariable);
+        timeout.setDelayLocalVariable("MyVar");
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.Reference);
+        timeout.setDelayReference("{MyMemory}");
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.Formula);
+        timeout.setDelayFormula("MyVar + 10");
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
         TriggerRoute triggerRoute =
@@ -2997,16 +3246,16 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
-        jmri.jmrit.logixng.expressions.DigitalFormula formula =
+        jmri.jmrit.logixng.expressions.DigitalFormula expressionFormula =
                 new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
-        maleSocket = digitalExpressionManager.registerExpression(formula);
+        maleSocket = digitalExpressionManager.registerExpression(expressionFormula);
         maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
-        formula = new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
-        formula.setComment("A comment");
-        formula.setFormula("n + 1");
-        maleSocket = digitalExpressionManager.registerExpression(formula);
+        expressionFormula = new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
+        expressionFormula.setComment("A comment");
+        expressionFormula.setFormula("n + 1");
+        maleSocket = digitalExpressionManager.registerExpression(expressionFormula);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
@@ -3643,6 +3892,8 @@ public class StoreAndLoadTest {
         "32",           // Integer
         "41.429",       // FloatingNumber
         "My string",    // String
+        "",             // Array
+        "",             // Map
         "index",        // LocalVariable
         "IM2",          // Memory
         "{IM3}",        // Reference

@@ -26,6 +26,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     protected static final int THROTTLEIDLE = 0;  // Idle Throttle
     protected static final int THROTTLESPEEDSENT = 2;  // Sent speed/dir command to locomotive
     protected static final int THROTTLEFUNCSENT = 4;   // Sent a function command to locomotive.
+    private final float speedMultiplier = 1.0f / 126.0f; //used to convert from integer speed to what JMRI expects
 
     public int requestState = THROTTLEIDLE;
 
@@ -257,10 +258,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
         if (log.isDebugEnabled()) {
-            log.debug("Throttle {} - received message '{}'", getDccAddress(), l);
+            log.trace("Throttle {} - received message '{}'", getDccAddress(), l);
         }
         if (requestState == THROTTLEIDLE) {
-            log.debug("Current throttle status is THROTTLEIDLE");
+            log.trace("Current throttle status is THROTTLEIDLE");
             // We haven't sent anything, but we might be told someone else 
             // has taken over this address
             // For now, do nothing.
@@ -284,6 +285,39 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
         requestState=THROTTLEIDLE;
         sendQueuedMessage();
+    }
+
+    //check for any changes needed based on incoming LocoState reply for this throttle
+    //then make those changes directly to the parent throttle to avoid a message loop
+    protected void handleLocoState(DCCppReply r) {
+        int cab = r.getCabInt();
+        //insure this message belongs to this throttle (really shouldn't happen)        
+        if (this.address != cab) {
+            log.error("throttle {} incorrectly called for cab {}", this.address, cab);
+            return;
+        }
+
+        boolean newForward = r.getIsForward();
+        float newSpeedSetting = r.getSpeedInt() * speedMultiplier;
+        String newFunctionsString = r.getFunctionsString();
+        
+        if (this.getIsForward() != newForward) {
+            if (log.isDebugEnabled()) log.debug("changing forward from {} to {} for {}", this.getIsForward(), newForward, cab);
+            super.setIsForward(newForward);
+        }
+        if (Math.abs(this.getSpeedSetting() - newSpeedSetting) > 0.0001) { //avoid possible float precision errors
+            if (log.isDebugEnabled()) log.debug("changing speed from {} to {} for {}", this.getSpeedSetting(), newSpeedSetting, cab);
+            super.setSpeedSetting(newSpeedSetting);
+        }
+        //check each function value for any changes, and update if so
+        for (int i = 0; i <= 28; i++) {
+            boolean newState = (newFunctionsString.charAt(i)=='1');
+            if (this.getFunction(i) != newState) {
+//                log.debug(r.toMonitorString());
+                if (log.isDebugEnabled()) log.debug("changing F{} from {} to {} for {}", i, this.getFunction(i), newState, cab);                
+                super.updateFunction(i,newState);
+            }
+        }
     }
 
     private void handleThrottleReply(DCCppReply l) {
@@ -350,10 +384,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
         if (!requestList.isEmpty()) {
-            log.debug("sending message to traffic controller");
+            log.trace("sending message to traffic controller");
             // if the queue is not empty, remove the first message
             // from the queue, send the message, and set the state machine 
-            // to the requried state.
+            // to the requeried state.
             try {
                 msg = requestList.take();
             } catch (java.lang.InterruptedException ie) {
@@ -362,7 +396,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             requestState = msg.getState();
             tc.sendDCCppMessage(msg.getMsg(), this);
         } else {
-            log.debug("message queue empty");
+            log.trace("message queue empty");
             // if the queue is empty, set the state to idle.
             requestState = THROTTLEIDLE;
         }
@@ -370,7 +404,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     //function to queue a message
     synchronized protected void queueMessage(DCCppMessage m, int s) {
-        log.debug("adding message to message queue");
+        log.trace("adding message '{}' to message queue", m);
         // put the message in the queue
         RequestMessage msg = new RequestMessage(m, s);
         try {

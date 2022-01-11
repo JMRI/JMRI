@@ -155,10 +155,6 @@ public class CarsSetFrameTest extends OperationsTestCase {
         load.setName("car set frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonOK"));
 
         try {
@@ -167,6 +163,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // pressing "Save" when car has destination and train will cause dialog box to appear
         Assert.assertNotNull("car has destination", c3.getDestination());
         Assert.assertNotNull("car has destination track", c3.getDestinationTrack());

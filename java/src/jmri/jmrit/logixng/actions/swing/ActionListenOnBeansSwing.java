@@ -8,7 +8,6 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
@@ -28,11 +27,14 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
 
     private JTable _listenOnBeansTable;
     private ListenOnBeansTableModel _listenOnBeansTableModel;
+    private JTextField _localVariableNamedBean;
+    private JTextField _localVariableEvent;
+    private JTextField _localVariableNewValue;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && (! (object instanceof ActionListenOnBeans))) {
-            throw new IllegalArgumentException("object is not a Module: " + object.getClass().getName());
+            throw new IllegalArgumentException("object is not a ActionListenOnBeans: " + object.getClass().getName());
         }
         ActionListenOnBeans listenOnBeans = (ActionListenOnBeans)object;
         
@@ -89,6 +91,30 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
         tablePanel.add(scrollpane, BorderLayout.CENTER);
         panel.add(tablePanel);
         
+        JPanel localVariableNamedBeanPanel = new JPanel();
+        localVariableNamedBeanPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNamedBean")));
+        _localVariableNamedBean = new JTextField(20);
+        localVariableNamedBeanPanel.add(_localVariableNamedBean);
+        panel.add(localVariableNamedBeanPanel);
+        
+        JPanel localVariableNamedEventPanel = new JPanel();
+        localVariableNamedEventPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableEvent")));
+        _localVariableEvent = new JTextField(20);
+        localVariableNamedEventPanel.add(_localVariableEvent);
+        panel.add(localVariableNamedEventPanel);
+        
+        JPanel localVariableNewValuePanel = new JPanel();
+        localVariableNewValuePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNewValue")));
+        _localVariableNewValue = new JTextField(20);
+        localVariableNewValuePanel.add(_localVariableNewValue);
+        panel.add(localVariableNewValuePanel);
+        
+        if (listenOnBeans != null) {
+            _localVariableNamedBean.setText(listenOnBeans.getLocalVariableNamedBean());
+            _localVariableEvent.setText(listenOnBeans.getLocalVariableEvent());
+            _localVariableNewValue.setText(listenOnBeans.getLocalVariableNewValue());
+        }
+        
         // Add parameter
         JButton add = new JButton(Bundle.getMessage("ActionListenOnBeans_TableAddReference"));
         buttonPanel.add(add);
@@ -115,7 +141,7 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
     @Override
     public void updateObject(@Nonnull Base object) {
         if (! (object instanceof ActionListenOnBeans)) {
-            throw new IllegalArgumentException("object is not a Module: " + object.getClass().getName());
+            throw new IllegalArgumentException("object is not a ActionListenOnBeans: " + object.getClass().getName());
         }
         ActionListenOnBeans listenOnBeans = (ActionListenOnBeans)object;
         
@@ -127,6 +153,10 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
         for (NamedBeanReference reference : _listenOnBeansTableModel.getReferences()) {
             listenOnBeans.addReference(reference);
         }
+        
+        listenOnBeans.setLocalVariableNamedBean(_localVariableNamedBean.getText());
+        listenOnBeans.setLocalVariableEvent(_localVariableEvent.getText());
+        listenOnBeans.setLocalVariableNewValue(_localVariableNewValue.getText());
     }
     
     /** {@inheritDoc} */

@@ -76,6 +76,10 @@ public class SampleScriptTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.clearBlockBossLogicThreads();
+
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();

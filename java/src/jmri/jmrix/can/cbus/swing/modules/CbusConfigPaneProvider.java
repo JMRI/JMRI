@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.modules;
 import java.util.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JPanel;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
@@ -65,7 +64,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @param node the node to be edited
      * @return the edit frame
      */
-    abstract public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
+    abstract public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
 
     /**
      * Return string representation of the node
@@ -75,19 +74,6 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
     @Override
     final public String toString() {
         return getModuleType();
-    }
-    
-    /**
-     * CANSERVO8C and related modules only accept NV writes in learn mode.
-     * 
-     * This is used by the MERG FCU to update servo positions in "real time" in
-     * response to interaction with the GUI. The Node Manager can support this
-     * behaviour if this method is overridden.
-     * 
-     * @return true if node expects NV writes only in learn mode
-     */
-    public boolean nvWriteInLearn() {
-        return false;
     }
     
     /**
@@ -111,10 +97,15 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
         CbusConfigPaneProvider p = instanceMap.get(node.getName());
         if (p != null) {
             return p;
-        } else {
-            log.debug("node {} NN {} name {} gets unknown provider", node, node.getNodeNumber(), node.getName());
-            return new UnknownPaneProvider();
+        } else if (node.getResyncName() != null) {
+            // Get the saved name during a resync
+            p = instanceMap.get(node.getResyncName());
+            if (p != null) {
+                return p;
+            }
         }
+        log.info("node gets unknown provider: {}", node);
+        return new UnknownPaneProvider();
     }
 
     /**

@@ -23,7 +23,6 @@ import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -3487,8 +3486,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @param e Consist XML element
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for
-                                     // convertFromXmlComment()
     public Train(Element e) {
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -3807,7 +3804,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                               // wasn't saved
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
         if (getRoute() != null) {
             if ((a = e.getAttribute(Xml.CURRENT)) != null) {

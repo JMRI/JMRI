@@ -274,7 +274,7 @@ public class SpeedProfilePanel extends JPanel {
                 case STEP_COL:
                     return Bundle.getMessage("step");
                 case THROTTLE_COL:
-                    return Bundle.getMessage("throttlesetting");
+                    return Bundle.getMessage("throttle");
                 case FORWARD_SPEED_COL:
                     return Bundle.getMessage("forward");
                 case REVERSE_SPEED_COL:
@@ -295,7 +295,7 @@ public class SpeedProfilePanel extends JPanel {
                 case STEP_COL:
                     return new JTextField(3).getPreferredSize().width;
                 case THROTTLE_COL:
-                    return new JTextField(5).getPreferredSize().width;
+                    return new JTextField(6).getPreferredSize().width;
                 case FORWARD_SPEED_COL:
                 case REVERSE_SPEED_COL:
                     return new JTextField(8).getPreferredSize().width;

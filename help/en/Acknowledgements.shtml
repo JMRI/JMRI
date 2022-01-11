@@ -469,15 +469,19 @@
         <li>Freek Heite, who located some important XpressNet info</li>
 
         <li>Austin Hendrix, <!-- trainman419 -->
-         who improved how the throttle handles speed steps andimproved the quality of the code and
+        who improved how the throttle handles speed steps and improved the quality of the code and
         documentation.</li>
+
+        <li>Max Hearnden, <!-- MaxHearnden -->
+        who improved how local HTML help is handled.</li>
 
         <li>William Hipple, who registered the JMRI.org and DecoderPro.org domains for us</li>
 
         <li>Brett Hoffman, who provided support for zero-config ("Bonjour"-like) networking and
         WiFi access to throttles.</li>
 
-        <li>Osvaldo Hojvat provided definitions for several <a href="http://www.ldhtrenes.com.ar">
+        <li>Osvaldo Hojvat <!-- ohojvat -->
+          provided definitions for several <a href="http://www.ldhtrenes.com.ar">
           LDH</a> decoders
         </li>
 
@@ -918,8 +922,11 @@
         <li>Jim Thompson provided a sample script for handling messages from PM42 power
         controllers</li>
 
-        <li>Benny Tjäder, <-- etxbct -->
+        <li>Benny Tjäder, <!-- etxbct -->
         who provided the MQTT Last Will support and a Swedish signal system.
+
+        <li>Kenneth Tjøstheim, <!-- SeaU2 -->
+            who provided the Norway-2001 signal system</li>
 
         <li>Walter Thompson, who provided the ID information for the Lionel Challenger decoder and
         DS54 accessory decoder, updated lots of decoder definitions, improved many help pages, and

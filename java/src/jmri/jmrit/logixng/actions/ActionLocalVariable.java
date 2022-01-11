@@ -341,7 +341,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             if (_listenToMemory && (_memoryHandle != null)) {
-                _memoryHandle.getBean().addPropertyChangeListener("value", this);
+                _memoryHandle.getBean().removePropertyChangeListener("value", this);
             }
             _listenersAreRegistered = false;
         }

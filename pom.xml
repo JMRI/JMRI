@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.25.6-SNAPSHOT</version>
+    <version>4.25.10-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -19,7 +19,7 @@
         <cucumber.version>4.3.1</cucumber.version>
         <jetty.version>9.4.28.v20200408</jetty.version>
         <!-- this is a custom version, see lib/README.md -->
-        <jemmy.version>22-00c9f753cd0a</jemmy.version>
+        <jemmy.version>RELEASE125</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -510,7 +510,7 @@
                         <!-- exclude the archunit tests from automatic execution -->
                         <exclude>jmri.ArchitectureTest</exclude>
                         <!-- exclude the line endings tests from automatic execution -->
-                        <exclude>jmri.util.FileLineEndings</exclude>
+                        <exclude>jmri.util.FileLineEndingsCheck</exclude>
                         <!-- ignore since base classes for other tests -->
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
@@ -1558,7 +1558,7 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.external</groupId>
-            <artifactId>jemmy</artifactId>
+            <artifactId>jemmy-2.3.1.1</artifactId>
             <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
@@ -1668,8 +1668,12 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>mvnrepository.com</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
         <!--
-        Repository hosting libraries not available through maven.org
+        Local "repository" hosting libraries not available through maven.org
         -->
         <repository>
             <id>lib</id>
