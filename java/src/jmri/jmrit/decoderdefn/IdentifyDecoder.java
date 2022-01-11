@@ -159,8 +159,8 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
                 return true;
             }
             else{
-                statusUpdate("Read decoder product hash #1 CV 253");
-                readCV("253");
+                statusUpdate("Read decoder extended Version ID Low Byte");
+                readCV("111");
                 return false;
             }
         } else if (mfgID == 48) {  // Hornby
@@ -237,9 +237,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("49");
             return false;
         } else if (mfgID == 153) {  // TCS
-            productIDlowest = value;
-            statusUpdate("Read decoder product hash #2 CV 254");
-            readCV("254");
+            productIDlow = value;
+            statusUpdate("Read decoder extended Version ID Low Byte");
+            readCV("110");
             return false;
         }
         log.error("unexpected step 5 reached with value: {}", value);
@@ -264,10 +264,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("50");
             return false;
         } else if (mfgID == 153) {  // TCS
-            productIDlow = value;
-            statusUpdate("Read decoder product hash #3 CV 255");
-            readCV("255");
-            return false;
+            productIDhigh = value;
+            productID = (productIDhigh*256) + productIDlow;
+            return true;
         }
         log.error("unexpected step 6 reached with value: {}", value);
         return true;
@@ -288,12 +287,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productIDlowest = value;
             productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest;
             return true;
-        } else if (mfgID == 153) {  // TCS
-            productIDhigh = value;
-            statusUpdate("Read decoder product hash #4 CV 256");
-            readCV("256");
-            return false;
-        }
+        } 
         log.error("unexpected step 7 reached with value: {}", value);
         return true;
     }
@@ -309,10 +303,6 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read productID Byte 4");
             readCV("264");
             return false;
-        } else if (mfgID == 153) {  // TCS
-            productIDhighest = value;
-            productID = (productIDhighest*256*256*256) + (productIDhigh*256*256) + (productIDlow*256) + productIDlowest;
-            return true;
         }
         log.error("unexpected step 8 reached with value: {}", value);
         return true;
