@@ -94,7 +94,9 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after last leg").isEqualTo(block.getSensor().getDisplayName());
 
+        warrant.stopWarrant(true, false);
         // passed test - cleanup.  Do it here so failure leaves traces.
+        
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
@@ -260,6 +262,8 @@ public class LinkedWarrantTest {
         assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr)).withFailMessage("Train after fourth leg").isEqualTo(backEndSensor);
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
 
+        outWarrant.stopWarrant(true, false);
+        backWarrant.stopWarrant(true, false);
             // passed test - cleanup.  Do it here so failure leaves traces.
             JFrameOperator jfo = new JFrameOperator(tableFrame);
             jfo.requestClose();

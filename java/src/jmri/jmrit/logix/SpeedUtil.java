@@ -1020,7 +1020,7 @@ public class SpeedUtil {
             }
             if (log.isDebugEnabled()) {
                 log.debug("speedChange: dist={}, {}ms at speed {}. _distanceTravelled={} settingsTravelled={}, timeAtSpeed= {}", 
-                        (throttleSetting * elapsedTime), elapsedTime, _distanceTravelled, throttleSetting, _settingsTravelled, _timeAtSpeed);
+                        (throttleSetting * elapsedTime), elapsedTime, throttleSetting, _distanceTravelled, _settingsTravelled, _timeAtSpeed);
             }
         }
         _changetime = time;

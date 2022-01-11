@@ -105,7 +105,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     // static final public int DARK = 0x01;        // meaning: OBlock has no Sensor, same as UNKNOWN
 
     private static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
-    private static final String ALLOCATED_TO_WARRANT = "AllocatedToWarrant";
 
     public static String getLocalStatusName(String str) {
         return OBlockStatus.getByName(str).descr;
@@ -385,10 +384,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public void setState(int v) {
         int old = getState();
         super.setState(v);
-        // notify
         // override Block to get proper source to be recognized by listener in Web Server
-            //log.debug("OBLOCK.JAVA {} setState({})", getSystemName(), getState()); // used by CPE indicator track icons
-            firePropertyChange("state", old, getState());
+        //log.debug("OBLOCK.JAVA {} setState({})", getSystemName(), getState()); // used by CPE indicator track icons
+        firePropertyChange("state", old, getState());
     }
 
     /**
@@ -421,6 +419,23 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return (getState() & OBlock.UNDETECTED) != 0;
     }
 
+    public boolean isOccupied() {
+        return (getState() & OBlock.OCCUPIED) != 0;
+    }
+
+    public String occupiedBy() {
+        Warrant w = _warrant;
+        if (isOccupied()) {
+            if (w != null) {
+                return w.getTrainName();
+            } else {
+                return Bundle.getMessage("unknownTrain");
+            }
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Test that block is not occupied and not allocated
      *
@@ -446,7 +461,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         String msg = null;
         if (_warrant != null) {
             if (!warrant.equals(_warrant)) {
-                msg = Bundle.getMessage(ALLOCATED_TO_WARRANT,
+                msg = Bundle.getMessage("AllocatedToWarrant",
                         _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
             } else {
                 return null;
@@ -488,7 +503,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return null;
         } else if (_warrant != null) {
             // allocated to another warrant
-            return Bundle.getMessage(ALLOCATED_TO_WARRANT,
+            return Bundle.getMessage("AllocatedToWarrant",
                     _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
         if ((_pathName != null) && !_pathName.equals(pathName)) {
@@ -754,14 +769,15 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      */
     protected String setPath(String pathName, Warrant warrant) {
         if (_warrant != null && !_warrant.equals(warrant)) {
-            return Bundle.getMessage(ALLOCATED_TO_WARRANT,
+            return Bundle.getMessage("AllocatedToWarrant",
                     _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
-        if (pathName == null || warrant == null) {
+        if (pathName == null) {
             return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
         }
-        if (((getState() & OBlock.ALLOCATED) == 0)) {
-            return Bundle.getMessage("PathNotSet", pathName, getDisplayName());
+        String msg = allocate(warrant);
+        if (msg != null) {
+            return msg;
         }
         pathName = pathName.trim();
         OPath path = getPathByName(pathName);
@@ -769,7 +785,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
         }
         _pathName = pathName;
-        _warrant = warrant;
         int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
         path.setTurnouts(0, true, lockState, true);
         firePropertyChange("pathState", 0, getState());

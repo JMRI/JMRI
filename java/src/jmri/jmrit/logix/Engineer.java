@@ -51,7 +51,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private final List<ThrottleSetting> _commands;
     private Sensor _waitSensor;
     private int _sensorWaitState;
-    private Object _rampLockObject = new Object(); // used for synchronizing threads for _ramp
+    private Object _rampLockObject = new Object();
+    private Object _synchLockObject = new Object();
+    private Object _clearLockObject = new Object();
     private ThrottleRamp _ramp;
     private boolean _atHalt = false;
     private boolean _atClear = false;
@@ -148,62 +150,30 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 // When the next block goes active or a control command is made, a clear sync call
                 // will test these indexes again and can trigger a notify() to free the wait
 
-                _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
-                int _synchIdx = cmdBlockIdx;
-                boolean bumpedSpeed = false;
-                float speed = _throttle.getSpeedSetting();
-                if (log.isDebugEnabled()) {
-                    log.debug("{}: Wait for train to enter \"{}\".",
-                            _warrant.getDisplayName(), _synchBlock.getDisplayName());
-                }
-                _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
-                int waittime = 36000000;
-                float throttleIncrement = _speedUtil.getRampThrottleIncrement();
-                float useSpeedHelp = WarrantPreferences.getDefault().getSpeedAssistance();
-                if (speed < useSpeedHelp) {
-                        waittime = 10000;    // 10 seconds
-                }
-                while (_synchIdx > _warrant.getCurrentOrderIndex()) {
-                    synchronized (this) {
-                        try {
-                            wait(waittime);
-                        } catch (InterruptedException ie) {
-                            log.debug("InterruptedException during _waitForSync {}", ie);
-                            _warrant.debugInfo();
-                            Thread.currentThread().interrupt();
-                        }
-                        finally {
-                            _synchIdx = -1;
-                        }
+                synchronized (_synchLockObject) {
+                    _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
+                    _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
+                    if (log.isDebugEnabled()) {
+                        log.debug("{}: Wait for train to enter \"{}\".",
+                                _warrant.getDisplayName(), _synchBlock.getDisplayName());
                     }
-                    if (bumpedSpeed) {
-                        setSpeed(speed);
+                    try {
+                        _synchLockObject.wait();
+                    } catch (InterruptedException ie) {
+                        log.debug("InterruptedException during _waitForSync {}", ie);
+                        _warrant.debugInfo();
+                        Thread.currentThread().interrupt();
                     }
-                    if (speed < useSpeedHelp) {
-                        speed += throttleIncrement;
-                        bumpedSpeed = true;
-                    } else {
-                        waittime = 36000000;
-                         // no more speed increases. just wait 10 hours
-                    }
-                    if (_abort) {
-                        break;
+                    finally {
+                        _synchBlock = null;
                     }
                 }
-                if (bumpedSpeed) {
-                    // restore current speed
-                    int idx = _warrant.getCurrentOrderIndex();
-                    _normalSpeed = _speedUtil.getBlockSpeedInfo(idx).getEntranceSpeed();
-                    float entrySpeed = _speedUtil.modifySpeed(_speedUtil.getBlockSpeedInfo(idx).getEntranceSpeed(), _speedType);
-                    setSpeed(entrySpeed);
+                if (_abort) {
+                    break;
                 }
-                _synchBlock = null;
-            }
-            if (_abort) {
-                break;
             }
 
-            synchronized (this) {
+            synchronized (_clearLockObject) {
                 // block position and elapsed time are as expected, but track conditions
                 // such as signals or rogue occupancy requires waiting
                 if (_waitForClear) {
@@ -213,7 +183,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                             log.debug("{}: Waiting for clearance. _waitForClear= {} _halt= {} at block \"{}\" Cmd#{}.",
                                 _warrant.getDisplayName(), _waitForClear, _halt,
                                 _warrant.getBlockAt(cmdBlockIdx).getDisplayName(), _idxCurrentCommand+1);
-                        wait();
+                        _clearLockObject.wait();
                     } catch (InterruptedException ie) {
                         log.debug("InterruptedException during _atClear {}", ie);
                         _warrant.debugInfo();
@@ -372,6 +342,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         return _setRunOnET;
     }
 
+    protected OBlock getSynchBlock() {
+        return _synchBlock;
+    }
     /**
      * Called by the warrant when a the block ahead of a moving train goes occupied.
      * typically when this thread is on a timed wait. The call will free the wait.
@@ -379,24 +352,16 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      */
     protected void clearWaitForSync(OBlock block) {
         // block went active. if waiting on sync, clear it
-        if (log.isDebugEnabled()) {
-            log.debug("{}: clearWaitForSync from block \"{}\".",
-                    _warrant.getDisplayName(), block.getDisplayName());
-        }
-        boolean waitForSync = true;
-        if (block.equals(_synchBlock)) {    // && !_atClear && !_halt && !isRamping()) {
-            synchronized (this) {
-                notifyAll();
-                waitForSync = false;
-            }
-        } else if (_synchBlock != null) {
-            log.warn("{}: clearWaitForSync called from block \"{}\". _synchBlock = \"{}\"",
+        if (_synchBlock != null && !block.equals(_synchBlock)) {    // && !_atClear && !_halt && !isRamping()) {
+            log.error("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
                     _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
         }
+        synchronized (_synchLockObject) {
+            _synchLockObject.notifyAll();
+        }
         if (log.isDebugEnabled()) {
-            log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() {} called.  isRamping()={}",
-                    _warrant.getDisplayName(), block.getDisplayName(),
-                    (waitForSync ? "NOT":""), isRamping());
+            log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() called.  isRamping()={}",
+                    _warrant.getDisplayName(), block.getDisplayName(), isRamping());
         }
     }
 
@@ -414,28 +379,28 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      *        -1 if an end block is not specified.
      */
     protected synchronized void rampSpeedTo(String endSpeedType, int endBlockIdx) {
-        setWaitforClear(true);
-        if (endSpeedType.equals(Warrant.Stop) && getSpeedSetting() == 0.0f) {
-            return; // already stopped, do nothing
+        float speed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType);
+        if (log.isDebugEnabled()) {
+            log.debug("{}: rampSpeedTo: type= {}, throttle from {} to {}.",
+                _warrant.getDisplayName(), endSpeedType, getSpeedSetting(),
+                speed);
         }
         if (endSpeedType.equals(Warrant.EStop)) {
             setStop(true);
             return;
         }
+        if (endSpeedType.equals(Warrant.Stop) && getSpeedSetting() <= 0) {
+            setStop(false);
+            return; // already stopped, do nothing
+        }
         if (isRamping()) {
             if (endSpeedType.equals(_ramp._endSpeedType)) {
                 return; // already ramping to speedType
-            } else if (endSpeedType.equals(_speedType)){
-                return; // already at speedType
             }
+        } else if (endSpeedType.equals(_speedType)){
+            return; // already at speedType
         }
-
         synchronized (this) {
-            if (log.isDebugEnabled()) {
-                log.debug("{}: rampSpeedTo: type= {}, throttle from {} to {}.",
-                    _warrant.getDisplayName(), endSpeedType, getSpeedSetting(),
-                    _speedUtil.modifySpeed(_normalSpeed, endSpeedType));
-            }
             if (_ramp == null) {
                 _ramp = new ThrottleRamp();
                 _ramp.start();
@@ -463,6 +428,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             if (_ramp.isReady()) {
                 _ramp.setParameters(endSpeedType, endBlockIdx);
                 _ramp.holdRamp = false;
+                setWaitforClear(true);
                 synchronized (_rampLockObject) {
                     _rampLockObject.notifyAll(); // free wait at ThrottleRamp.run()
                     log.debug("{}: rampSpeedTo called notify _ramp.isReady()= {}", _warrant.getDisplayName(), _ramp.isReady());
@@ -487,14 +453,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * speeds aspects of signals when halts or other conditions have stopped the train.
      * If rampType is true return the absolute speed of the train, i.e. 'Stop' if
      * train is not moving.
-     * @param rampType  which speed type is wanted, current or pending ramp to speed
+     * @param actual  which speed type is wanted, absolute or allowed movement
      * @return speed type
      */
-    protected String getSpeedType(boolean rampType) {
-        if (rampType) {
-            if (isRamping()) {
+    protected String getSpeedType(boolean actual) {
+        if (actual) {
+            if (isRamping()) {   // return pending type
                 return _ramp._endSpeedType;
-            } else if (_waitForClear || _halt) {
+            }
+            if (_waitForClear || _halt) {
                 return Warrant.Stop;
             }
         }
@@ -510,6 +477,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (_ramp != null) {
             if (die) {
                 _ramp.quit(true);
+                _ramp.interrupt();
             } else {
                 if(!_ramp.isReady()) {
                     _ramp.quit(false);
@@ -572,18 +540,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (log.isDebugEnabled())  {
             log.debug("{}: setSpeedToType({}) speed={} scriptSpeed={}", _warrant.getDisplayName(), speedType, speed, _normalSpeed);
         }
-        if (speedType.equals(Warrant.EStop)) {
+        if (speed <= 0.0f || speedType.equals(getSpeedType(true))) {
+            return;
+        } else if (speedType.equals(Warrant.EStop)) {
             setStop(true);
             advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
         } else if (speedType.equals(Warrant.Stop)) {
             setStop(false);
             advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
-        } else if (speed <= 0.0f || (_ramp != null && _ramp._endSpeedType.equals(Warrant.Stop))) {
-            return;
         } else {
-            if (speedType.equals(getSpeedType(true))) {
-                return;
-            }
             _speedType = speedType;     // set speedType regardless
             setSpeedRatio(speedType);
         }
@@ -627,16 +592,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * Track condition override of throttle script.
      * @param wait true if train should stop
      */
-    private synchronized void setWaitforClear(boolean wait) {
+    protected void setWaitforClear(boolean wait) {
         if (log.isDebugEnabled())
             log.debug("{}: setWaitforClear({}): _atClear= {}, throttle speed= {}, _halt= {}",
                    _warrant.getDisplayName(), wait, _atClear,  getSpeedSetting(), _halt);
         if (!wait) {    // resume normal running
-            _waitForClear = false;
-            if (!_atHalt) {
-                if (log.isDebugEnabled())
-                    log.debug("setWaitforClear calls notify");
-                notifyAll();   // free wait at _atClear
+            synchronized (_clearLockObject) {
+                log.debug("setWaitforClear calls notify");
+                _waitForClear = false;
+                _clearLockObject.notifyAll();   // free wait at _atClear
             }
         } else {
             _waitForClear = true;
@@ -673,7 +637,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         info.append(", _abort= "); info.append(_abort);
         info.append("\n\t_speedType= \""); info.append(_speedType); info.append("\" SpeedState= ");
         info.append(getSpeedState().toString()); info.append("\n\tStack trace:");
-        for (StackTraceElement elem :getStackTrace()) {
+        for (StackTraceElement elem : getStackTrace()) {
             info.append("\n\t\t");
             info.append(elem.getClassName()); info.append("."); info.append(elem.getMethodName());
             info.append(", line "); info.append(elem.getLineNumber());
@@ -749,7 +713,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     }
     
     protected int getRunState() {
-        if (_stopPending) { //
+        if (_stopPending) {
             if (_halt) {
                 return Warrant.RAMP_HALT;
             }
@@ -776,6 +740,12 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             _abort =true;
         }
 
+        synchronized (_synchLockObject) {
+            _synchLockObject.notifyAll();
+        }
+        synchronized (_clearLockObject) {
+            _clearLockObject.notifyAll();
+        }
         synchronized (this) {
             notifyAll();
         }
@@ -1248,7 +1218,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
             CommandValue cmdVal = _currentCommand.getValue();
             long timeToSpeedCmd = getTimeToNextCommand();
-            _rampDown = endSpeed < speed;
+            _rampDown = endSpeed <= speed;
 
             if (log.isDebugEnabled()) {
                 log.debug("RAMP {} \"{}\" speed from {}, to {}, at EndBlock \"{}\" at Cmd#{} to Cmd#{}. timeToNextCmd= {}",
