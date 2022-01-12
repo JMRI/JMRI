@@ -17,7 +17,7 @@
 	<!-- version 1	Based on the "Soundtraxx_MC by Michael Mosher  - created to identify Bachmann 36-557 version -->
 <decoder>
     <family name="OEM Bachmann E-Z Command decoders" mfg="SoundTraxx (Throttle-Up)" lowVersionID="141" highVersionID="141">
-      <model model="Bachmann (soundTraxx MC1) 36-557" numOuts="4" numFns="14" connector="other" productID="MC1H10421P">
+      <model model="Bachmann (soundTraxx MC1) 36-557" numOuts="4" numFns="14" connector="other" productID="MC1H104P21">
         <versionCV highVersionID="81" lowVersionID="81"/>
 		<output name="1" label="Front light" maxcurrent="180 mA" connection="wire"/>
         <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire"/>
