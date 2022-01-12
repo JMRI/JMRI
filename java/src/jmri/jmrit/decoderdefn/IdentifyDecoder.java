@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * {@link #setOptionalCv(boolean flag) setOptionalCv()} and
  * {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
  * <li>TCS: (mfgID == 153) CV249 is physical hardware id, V5 and above use
- * CV253, CV254, CV255, and CV256 to identify specific sound sets and 
+ * CV110 and CV111 to identify specific sound sets and
  * features. New productID process triggers if (CV249 &gt; 175).</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
  * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
@@ -154,8 +154,8 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             writeCV("50", 4);
             return false;
         } else if (mfgID == 153) {  // TCS
+            productID = value;
             if(value < 175){ //check for pre-version 5 sound decoders
-                productID = value;
                 return true;
             }
             else{
@@ -265,7 +265,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return false;
         } else if (mfgID == 153) {  // TCS
             productIDhigh = value;
-            productID = (productIDhigh*256) + productIDlow;
+            productID = (productIDhigh*256*256*256) + (productIDlow*256*256) + (productID*256);
             return true;
         }
         log.error("unexpected step 6 reached with value: {}", value);
@@ -287,7 +287,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productIDlowest = value;
             productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest;
             return true;
-        } 
+        }
         log.error("unexpected step 7 reached with value: {}", value);
         return true;
     }
