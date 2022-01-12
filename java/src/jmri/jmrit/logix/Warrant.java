@@ -1926,9 +1926,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (okToRun()) {
             _message = getBlockOrderAt(_idxCurrentOrder).setPath(this);
             if (_message ==  null) {
-                if (speedType.equals(Stop)) {
-                    
-                }
                 cancelDelayRamp();
                 _engineer.rampSpeedTo(speedType, -1);
                 _curSignalAspect = null;
@@ -2167,6 +2164,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _engineer.clearWaitForSync(block); // Sync commands if train is faster than ET
         }
         fireRunStatus("blockChange", getBlockAt(activeIdx - 1), block);
+        if (_runMode == MODE_LEARN) {
+            return;
+        }
         // _idxCurrentOrder has been incremented. Warranted train has entered this block.
         // Do signals, speed etc.
         if (_idxCurrentOrder < _orders.size() - 1) {

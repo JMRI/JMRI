@@ -773,7 +773,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                     _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
         if (pathName == null) {
-            return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
+            return Bundle.getMessage("NoPaths", getDisplayName());
         }
         String msg = allocate(warrant);
         if (msg != null) {
