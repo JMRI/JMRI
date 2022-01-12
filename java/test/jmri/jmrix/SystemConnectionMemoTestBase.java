@@ -83,7 +83,7 @@ abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnec
 
     @Test
     public void testProvidesConsistManager() {
-        getTest(jmri.ReporterManager.class);
+        getTest(jmri.ConsistManager.class);
     }
 
     @Test
