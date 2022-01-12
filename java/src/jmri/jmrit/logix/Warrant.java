@@ -1152,11 +1152,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case STOP:
                     cancelDelayRamp();
                     _engineer.setSpeedToType(Stop); // sets _halt
+                    _engineer.setHalt(true);
                     ret = true;
                     break;
                 case ESTOP:
                     cancelDelayRamp();
                     _engineer.setSpeedToType(EStop); // E-stop & halt
+                    _engineer.setHalt(true);
                     ret = true;
                     break;
                 case DEBUG:
@@ -1206,9 +1208,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 return false;
             }
         }
+        BlockOrder bo = getBlockOrderAt(_idxCurrentOrder + 1);
+        _message = bo.setPath(this);    // checks for allocation etc.
+        if (_message != null) {
+            log.warn("Cannot reStartTrain train for warrant \"{}\" at block \"{}\" ahead. - msg = {}",
+                    getDisplayName(), bo.getBlock().getDisplayName(), _message);
+            return false;
+        }
         // OK, will do as it long as you own it, and you are where you think you are there.
         _engineer.setHalt(false);
-        _engineer.setWaitforClear(false);
+//        _engineer.setWaitforClear(false);
         clearWaitFlags(false);
         return restoreRunning(_engineer.getSpeedType(false));
     }
@@ -1766,7 +1775,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 if (setPathMessageOk(_idxProtectSignal)) {
                     // train is stopped. If occupied, it is a rogue
                     ThreadingUtil.runOnGUIDelayed(() -> {
-                        _engineer.setWaitforClear(false);
+//                        _engineer.setWaitforClear(false);
                         restoreRunning(speedType);
                     }, 2500);
                 } else {
@@ -1891,7 +1900,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             } else {
                 speedType = _engineer.getSpeedType(false);
             }
-            _engineer.setWaitforClear(false);
+//            _engineer.setWaitforClear(false);
             restoreRunning(speedType);
         }, time);
 

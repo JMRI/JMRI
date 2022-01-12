@@ -397,8 +397,8 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             if (endSpeedType.equals(_ramp._endSpeedType)) {
                 return; // already ramping to speedType
             }
-        } else if (endSpeedType.equals(_speedType)){
-            return; // already at speedType
+        } else if (speed == getSpeedSetting()){
+            return; // already at speedType speed
         }
         synchronized (this) {
             if (_ramp == null) {
@@ -451,13 +451,13 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     /**
      * Get the Speed type name. _speedType is the type when moving. Used to restore
      * speeds aspects of signals when halts or other conditions have stopped the train.
-     * If rampType is true return the absolute speed of the train, i.e. 'Stop' if
+     * If 'absolute' is true return the absolute speed of the train, i.e. 'Stop' if
      * train is not moving.
-     * @param actual  which speed type is wanted, absolute or allowed movement
+     * @param absolute  which speed type, absolute or allowed movement
      * @return speed type
      */
-    protected String getSpeedType(boolean actual) {
-        if (actual) {
+    protected String getSpeedType(boolean absolute) {
+        if (absolute) {
             if (isRamping()) {   // return pending type
                 return _ramp._endSpeedType;
             }
@@ -677,7 +677,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * Do not ramp.
      * @param eStop true for emergency stop
      */
-    protected synchronized void setStop(boolean eStop) {
+    private synchronized void setStop(boolean eStop) {
         float speed = _throttle.getSpeedSetting();
         if (speed > 0.0f) {
             cancelRamp(false);
