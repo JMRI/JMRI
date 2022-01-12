@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.7ish+heap+20210612T0324Z+R8f1b821 on Sat Jun 12 13:26:44 AEST 2021-->
-  <decoderIndex version="1058">
+  <!--Written by JMRI version 4.23.9ish+jake+20210713T0443Z+R9b0d600d89 on Tue Jul 13 00:44:04 EDT 2021-->
+  <decoderIndex version="1064">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -711,6 +711,82 @@
           <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
           <functionlabel num="11" lockable="true">Water Injector</functionlabel>
           <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
+          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
+          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+          <functionlabel num="22" lockable="true">Horn2</functionlabel>
+          <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
+          <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
+          <functionlabel num="25" lockable="true">Long Whistle</functionlabel>
+          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Paragon 4" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon4_Diesel.xml">
+        <model model="Diesel" numOuts="3" numFns="30" connector="9pin">
+          <versionCV lowVersionID="0" highVersionID="31" />
+          <output name="1" label="headlight" />
+          <output name="2" label="rearlight" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Compressor</functionlabel>
+          <functionlabel num="5" lockable="true">RPM Up</functionlabel>
+          <functionlabel num="6" lockable="true">RPM Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
+          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+          <functionlabel num="10" lockable="true">Cooling Fan</functionlabel>
+          <functionlabel num="11" lockable="true">Air Release</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+          <functionlabel num="14" lockable="true">Station Sounds</functionlabel>
+          <functionlabel num="15" lockable="true">Yard Sounds</functionlabel>
+          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+          <functionlabel num="22" lockable="true">Horn2</functionlabel>
+          <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
+          <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
+          <functionlabel num="25" lockable="true">Long Horn</functionlabel>
+          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Paragon 4" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon4_Steam.xml">
+        <model model="Steam" numOuts="3" numFns="30" connector="other">
+          <versionCV lowVersionID="32" highVersionID="63" />
+          <output name="1" label="headlight" />
+          <output name="2" label="rearlight" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
+          <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
+          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+          <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
+          <functionlabel num="11" lockable="true">Water Injector</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Set/Release</functionlabel>
           <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
           <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
           <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
@@ -8728,15 +8804,91 @@
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
         <model model="LokPilot 5 micro" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,7" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,8" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
         <model model="LokPilot 5 micro DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777391">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,7" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,8" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
         <model model="LokPilot 5 micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
+          <output name="1,35" label="|" />
+          <!-- suppress unused item -->
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <model model="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+          <output name="1,35" label="|" />
+          <!-- suppress unused item -->
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
@@ -8744,6 +8896,52 @@
         </model>
         <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
           <size length="51.8" width="25.4" height="14" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777406">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777407">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <model model="LokPilot 5 Fx micro" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
           <output name="1,37" label="|" />
@@ -8777,8 +8975,6 @@
           <output name="2,19" label="|" />
           <!-- suppress unused item -->
           <output name="2,20" label="|" />
-          <!-- suppress unused item -->
-          <output name="4,1" label="|" />
           <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
@@ -8815,33 +9011,15 @@
           <!-- suppress unused item -->
           <output name="2,20" label="|" />
           <!-- suppress unused item -->
-          <output name="4,1" label="|" />
-          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <model model="LokPilot 5 Fx micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554616">
-          <output name="1,37" label="|" />
-          <!-- suppress unused item -->
-          <output name="1,38" label="|" />
-          <!-- suppress unused item -->
-          <output name="1,39" label="|" />
-          <!-- suppress unused item -->
-          <output name="1,40" label="|" />
-          <!-- suppress unused item -->
-          <output name="4,1" label="|" />
+          <output name="1,35" label="|" />
           <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <model model="LokPilot 5 Fx micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554617">
-          <output name="1,37" label="|" />
-          <!-- suppress unused item -->
-          <output name="1,38" label="|" />
-          <!-- suppress unused item -->
-          <output name="1,39" label="|" />
-          <!-- suppress unused item -->
-          <output name="1,40" label="|" />
-          <!-- suppress unused item -->
-          <output name="4,1" label="|" />
+          <output name="1,35" label="|" />
           <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
@@ -9410,12 +9588,46 @@
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
         <model model="LokSound 5 micro" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554587">
+          <output name="1,35" label="|" />
+          <!-- suppress unused item -->
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
         <model model="LokSound 5 micro DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554590">
+          <output name="1,35" label="|" />
+          <!-- suppress unused item -->
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
         <model model="LokSound 5 micro DCC Direct" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
+          <output name="1,35" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <model model="LokSound 5 micro E24 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
@@ -9429,6 +9641,52 @@
         </model>
         <model model="LokSound 5 XL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokSound 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokSound 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554588">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
         <model model="LokSound 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
@@ -13951,13 +14209,22 @@
         <model model="BTLocobridge" lowVersionID="1" />
       </family>
       <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
-        <model model="Panel" lowVersionID="1" />
+        <model model="Panel" lowVersionID="1" productID="4" />
       </family>
       <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
-        <model model="Servo5" lowVersionID="1" />
+        <model model="Servo5" lowVersionID="1" productID="9" />
       </family>
-      <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal10, a LocoNet decoder for railway signals" file="MGP_Signal10.xml">
-        <model model="Signal10" lowVersionID="1" />
+      <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal, a LocoNet decoder control panels" file="MGP_Signal10.xml">
+        <model model="Signal10 SE" lowVersionID="1" productID="6" />
+        <model model="Signal10 DE" lowVersionID="1" productID="7" />
+        <model model="Signal10 DK" lowVersionID="1" productID="8" />
+        <model model="Signal10 CZ" lowVersionID="1" productID="11" />
+        <model model="Signal10 US" lowVersionID="1" productID="12" />
+        <model model="Signal10 NO" lowVersionID="1" productID="13" />
+        <model model="Signal10 NL" lowVersionID="1" productID="14" />
+      </family>
+      <family name="Switch5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Switch5, a LocoNet decoder for railway switches" file="MGP_Switch5.xml">
+        <model model="Switch5" lowVersionID="1" productID="9" />
       </family>
       <family name="MRC 14/28/128 step decoders" mfg="MRC" file="MRC_128step.xml">
         <model model="AD322" lowVersionID="32" formFactor="N" numOuts="4" numFns="6">
@@ -20979,8 +21246,32 @@
         <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="295" comment="Model 885020">
           <size length="69" width="30.5" height="14" units="mm" />
         </model>
-        <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" maxMotorCurrent="5mA" connector="DropIn" productID="373" comment="Model 885032">
+        <model model="TSU-BH1 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="343" comment="Model 885840">
+          <size length="97" width="16" height="7.7" units="mm" />
+        </model>
+        <model model="TSU-BH1 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="344" comment="Model 885841">
+          <size length="97" width="16" height="7.7" units="mm" />
+        </model>
+        <model model="TSU-BH1 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="345" comment="Model 885842">
+          <size length="97" width="16" height="7.7" units="mm" />
+        </model>
+        <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" maxMotorCurrent="500mA" connector="DropIn" productID="331" comment="Model 885032">
           <size length="55" width="13.8" height="3.2" units="mm" />
+        </model>
+        <model model="TSU-N18 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="333" comment="Model 885026">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="337" comment="Model 885030">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="334" comment="Model 885027">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="335" comment="Model 885028">
+          <size length="25" width="10.5" height="4.1" units="mm" />
+        </model>
+        <model model="TSU-N18 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="336" comment="Model 885029">
+          <size length="25" width="10.5" height="4.1" units="mm" />
         </model>
         <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
           <size length="74" width="17" height="5" units="mm" />
@@ -21214,11 +21505,14 @@
         <model model="TSU-21PNEM Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="298" comment="Model 886003">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
-        <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="330" comment="Model 886003">
+        <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="330" comment="Model 886803">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-4400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="299" comment="Model 886005">
           <size length="69" width="30.5" height="14" units="mm" />
+        </model>
+        <model model="TSU-N18 Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="338" comment="Model 886007">
+          <size length="25" width="10.5" height="4.1" units="mm" />
         </model>
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
@@ -21287,10 +21581,16 @@
         <model model="TSU-1100 Steam-2" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="315" comment="Model 884006">
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
+        <model model="TSU-1100 Big Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="339" comment="Model 884011">
+          <size length="27" width="10.5" height="5" units="mm" />
+        </model>
         <model model="TSU-2200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="273" comment="Model 884002">
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="316" comment="Model 884007">
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="TSU-2200 Big Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="340" comment="Model 884012">
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-21PNEM Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="274" comment="Model 884003">
@@ -21302,11 +21602,20 @@
         <model model="TSU-21PNEM8 Steam-2" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="324" comment="Model 884808">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
+        <model model="TSU-21PNEM8 Big Steam" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="341" comment="Model 884813">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
         <model model="TSU-4400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="275" comment="Model 884005">
           <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-4400 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="318" comment="Model 884009">
           <size length="69" width="30.5" height="14" units="mm" />
+        </model>
+        <model model="TSU-BH2 Steam-2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="342" comment="Model 884814">
+          <size length="45" width="28" height="7.5" units="mm" />
+        </model>
+        <model model="TSU-N18 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="332" comment="Model 884010">
+          <size length="25" width="10.5" height="4.1" units="mm" />
         </model>
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
@@ -21373,7 +21682,42 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Steam OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the - OEM - version Tsunami2 Steam decoders" file="SoundTraxx_Tsu2_Steam_OEM_Genesis.xml">
-        <model model="TSU-21PNEM Big Boy" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
+        <model model="TSU-21PNEM Big Boy, HO" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Whistle| ">
+          <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamo| ">
+          <label xml:lang="it">Dynamo| </label>
+        </output>
+        <output name="8" label="Short|Whistle">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Cylinder|Cocks">
+          <label xml:lang="it">Cilindro|Cazzi</label>
+        </output>
+        <output name="10" label="Water|Stop">
+          <label xml:lang="it">Acqua|Stop</label>
+        </output>
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="Brakes| " />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="983" comment="Model ATH04014">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <output name="3" label="  FX3  " />
@@ -28026,7 +28370,7 @@
           <size length="30" width="15.5" height="5" units="mm" />
         </model>
       </family>
-      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" file="TAMS_LD_42.xml">
+      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" highVersionID="62" file="TAMS_LD_42.xml">
         <model model="LD-G-42 (solder)" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" productID="41-04420">
           <!--without wires-->
           <output name="1" label="F0f|(White)" maxcurrent="300 mA">
@@ -28071,7 +28415,7 @@
           </output>
           <size length="21.8" width="17.2" height="4" units="mm" />
         </model>
-        <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="NEM652" productID="41-04422">
+        <model model="LD-G-42 NEM652" maxInputVolts="12-24V" maxMotorCurrent="1A" maxTotalCurrent="1.5A" numOuts="7" numFns="30" connector="NEM652" productID="41-04422" lowVersionID="14">
           <!-- NEM 652 -->
           <output name="1" label="F0f|(White)" maxcurrent="300 mA">
             <label xml:lang="de">F0f|(Weiss)</label>
@@ -30859,44 +31203,6 @@
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
         <model show="no" model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37" replacementModel="M1P-UK" replacementFamily="Jan 2000" />
-      </family>
-      <family name="WOWDiesel V5" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_TCS-Dev_w_splitEnumVal.xml">
-        <model model="V5SplitEnumValRev2" numOuts="8" numFns="28" maxMotorCurrent="1A (peak=2A)" connector="21pin" productID="200">
-          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
-          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
-          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="Brake" />
-          <size length="1.2" width="0.6" height="0.125" units="inches" />
-        </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">None</functionlabel>
-          <functionlabel num="1" lockable="true">Bell </functionlabel>
-          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
-          <functionlabel num="3" lockable="true">Exhaust Fan </functionlabel>
-          <functionlabel num="4" lockable="true">Dynamic Brake </functionlabel>
-          <functionlabel num="5" lockable="true">Horn Quill </functionlabel>
-          <functionlabel num="6" lockable="true">None</functionlabel>
-          <functionlabel num="7" lockable="true">None</functionlabel>
-          <functionlabel num="8" lockable="true">Prime Mover Ignition </functionlabel>
-          <functionlabel num="9" lockable="true">None</functionlabel>
-          <functionlabel num="10" lockable="true">Brake Squeal </functionlabel>
-          <functionlabel num="11" lockable="true">None</functionlabel>
-          <functionlabel num="12" lockable="true">Momentum </functionlabel>
-          <functionlabel num="13" lockable="true">None</functionlabel>
-          <functionlabel num="14" lockable="true">None</functionlabel>
-          <functionlabel num="15" lockable="true">None</functionlabel>
-          <functionlabel num="16" lockable="true">Crew Alert </functionlabel>
-          <functionlabel num="17" lockable="true">Manual Notch Down </functionlabel>
-          <functionlabel num="18" lockable="true">Manual Notch Up </functionlabel>
-        </functionlabels>
       </family>
       <family name="TCS 150 series decoders" mfg="Train Control Systems" file="TCS_TH150DP.xml">
         <model show="no" model="TH150DP" numOuts="5" numFns="6" replacementModel="DP5X" replacementFamily="Jan 2000">
