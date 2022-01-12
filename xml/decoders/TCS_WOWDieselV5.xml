@@ -2,7 +2,7 @@
   <version author="TCS" version="1" lastUpdated="20211215"/>
   <decoder>
     <family name="TCS" mfg="Train Control Systems" lowVersionID="5" highVersionID="5">
-      <model model="WOWDieselV5" numOuts="12" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="0">
+      <model model="WOWDieselV5" numOuts="12" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="51200">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
@@ -9146,11 +9146,11 @@
               </label><separator/><label>
                 <text> </text>
               </label>
-              
-              
+
+
   <row>
         <column>
-            <row> 
+            <row>
                   <display item="Function F0F effect generated"/><separator/>
                   <display item="Function F0R effect generated"/>
             </row>
@@ -9267,7 +9267,7 @@
               <label>
                  <text>Lighting Preset: 'Auto Mars'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="0">
               <display item="Lighting Preset 0 - Step 0 - Start Brightness">
@@ -9473,7 +9473,7 @@
               <label>
                  <text>Lighting Preset: 'Brake Lights'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="4">
               <display item="Lighting Preset 1 - Step 0 - Start Brightness">
@@ -9679,7 +9679,7 @@
               <label>
                  <text>Lighting Preset: 'Rotary Beacon (New Style)'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="8">
               <display item="Lighting Preset 2 - Step 0 - Start Brightness">
@@ -9885,7 +9885,7 @@
               <label>
                  <text>Lighting Preset: 'Constant Bright'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="12">
               <display item="Lighting Preset 3 - Step 0 - Start Brightness">
@@ -10091,7 +10091,7 @@
               <label>
                  <text>Lighting Preset: 'Flashing F.R.E.D.'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="16">
               <display item="Lighting Preset 4 - Step 0 - Start Brightness">
@@ -10297,7 +10297,7 @@
               <label>
                  <text>Lighting Preset: 'Constant Dim'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="20">
               <display item="Lighting Preset 5 - Step 0 - Start Brightness">
@@ -10503,7 +10503,7 @@
               <label>
                  <text>Lighting Preset: 'Ditch Light Side 2'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="24">
               <display item="Lighting Preset 6 - Step 0 - Start Brightness">
@@ -10709,7 +10709,7 @@
               <label>
                  <text>Lighting Preset: 'Ditch Light Side 1'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="28">
               <display item="Lighting Preset 7 - Step 0 - Start Brightness">
@@ -10915,7 +10915,7 @@
               <label>
                  <text>Lighting Preset: 'Single Pulse Strobe'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="32">
               <display item="Lighting Preset 8 - Step 0 - Start Brightness">
@@ -11121,7 +11121,7 @@
               <label>
                  <text>Lighting Preset: 'Firebox Flicker'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="36">
               <display item="Lighting Preset 9 - Step 0 - Start Brightness">
@@ -11327,7 +11327,7 @@
               <label>
                  <text>Lighting Preset: 'Custom Light 1'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="40">
               <display item="Lighting Preset 10 - Step 0 - Start Brightness">
@@ -11533,7 +11533,7 @@
               <label>
                  <text>Lighting Preset: 'Rotary Beacon (Old style)'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="44">
               <display item="Lighting Preset 11 - Step 0 - Start Brightness">
@@ -11739,7 +11739,7 @@
               <label>
                  <text>Lighting Preset: 'Gyra Light'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="48">
               <display item="Lighting Preset 12 - Step 0 - Start Brightness">
@@ -11945,7 +11945,7 @@
               <label>
                  <text>Lighting Preset: 'Double Pulse Strobe'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="52">
               <display item="Lighting Preset 13 - Step 0 - Start Brightness">
@@ -12151,7 +12151,7 @@
               <label>
                  <text>Lighting Preset: 'Mars Light'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="56">
               <display item="Lighting Preset 14 - Step 0 - Start Brightness">
@@ -12357,7 +12357,7 @@
               <label>
                  <text>Lighting Preset: 'Rule 17'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="60">
               <display item="Lighting Preset 15 - Step 0 - Start Brightness">
@@ -12563,7 +12563,7 @@
               <label>
                  <text>Lighting Preset: 'Custom Light 2'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="64">
               <display item="Lighting Preset 16 - Step 0 - Start Brightness">
