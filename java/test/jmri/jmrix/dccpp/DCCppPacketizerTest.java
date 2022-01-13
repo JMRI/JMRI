@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -120,6 +121,13 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
             log.warn("waitForReply saw an immediate return; is threading right?");
         }
         return i < 100;
+    }
+    
+    @Test
+    @Override
+    public void testPortReadyToSendNullController() {
+        super.testPortReadyToSendNullController();
+        JUnitAppender.suppressWarnMessageStartsWith("DCC++ port not ready to send");
     }
 
     @BeforeEach
