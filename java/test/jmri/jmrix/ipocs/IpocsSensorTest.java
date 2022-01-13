@@ -3,13 +3,14 @@ package jmri.jmrix.ipocs;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.Test;
-
 import jmri.jmrix.ipocs.protocol.Message;
 import jmri.jmrix.ipocs.protocol.enums.RqInputState;
 import jmri.jmrix.ipocs.protocol.packets.InputStatusPacket;
+import jmri.util.JUnitUtil;
 
-public class IpocsSensorTest {
+import org.junit.jupiter.api.*;
+
+public class IpocsSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
   @Test
   public void constructorTest() {
@@ -57,5 +58,41 @@ public class IpocsSensorTest {
     pkt.setState(RqInputState.Undefined);
     sensor.onMessage(client, msg);
   }
+
+    @Override
+    public int numListeners() {
+        return 0;
+    }
+
+    @Disabled("Test requires further development")
+    @Override
+    public void checkActiveMsgSent() {
+    }
+
+    @Disabled("Test requires further development")
+    @Override
+    public void checkInactiveMsgSent() {
+    }
+
+    @Disabled("Test requires further development")
+    @Override
+    public void checkStatusRequestMsgSent() {
+    }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        IpocsPortController portController = mock(IpocsPortController.class);
+        t  = new IpocsSensor(portController, "ES33", "Li91");
+    }
+
+    @AfterEach
+    @Override
+    public void tearDown() {
+        t.dispose();
+        t = null;
+        JUnitUtil.tearDown();
+    }
 
 }

@@ -299,7 +299,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
         boolean newForward = r.getIsForward();
         float newSpeedSetting = r.getSpeedInt() * speedMultiplier;
-//        String newFunctionsString = r.getFunctionsString();
+        String newFunctionsString = r.getFunctionsString();
         
         if (this.getIsForward() != newForward) {
             if (log.isDebugEnabled()) log.debug("changing forward from {} to {} for {}", this.getIsForward(), newForward, cab);
@@ -310,15 +310,14 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             super.setSpeedSetting(newSpeedSetting);
         }
         //check each function value for any changes, and update if so
-      //TODO: reenable the block below once the looping bug is eliminated
-//        for (int i = 0; i <= 28; i++) {
-//            boolean newState = (newFunctionsString.charAt(i)=='1');
-//            if (this.getFunction(i) != newState) {
+        for (int i = 0; i <= 28; i++) {
+            boolean newState = (newFunctionsString.charAt(i)=='1');
+            if (this.getFunction(i) != newState) {
 //                log.debug(r.toMonitorString());
-//                if (log.isDebugEnabled()) log.debug("changing F{} from {} to {} for {}", i, this.getFunction(i), newState, cab);                
-//                super.setFunction(i,newState);
-//            }
-//        }
+                if (log.isDebugEnabled()) log.debug("changing F{} from {} to {} for {}", i, this.getFunction(i), newState, cab);                
+                super.updateFunction(i,newState);
+            }
+        }
     }
 
     private void handleThrottleReply(DCCppReply l) {
