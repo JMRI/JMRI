@@ -83,6 +83,7 @@ public class LocationsTableFrame extends OperationsFrame {
         toolMenu.add(new ModifyLocationsCarLoadsAction());
         toolMenu.add(new ShowCarsByLocationAction(false, null, null));
         toolMenu.add(new ExportLocationsRosterAction());
+        toolMenu.add(new ImportLocationsRosterAction() );
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(null));
         }

@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
-
 import jmri.jmrix.ipocs.protocol.enums.RqAlarmState;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class AlarmPacketTest {
   private final byte[] testPacket = { 0x01, 0x23, 0x45, RqAlarmState.Transient.value, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x02 };
@@ -38,4 +39,15 @@ public class AlarmPacketTest {
     pkt.setParameter2(2);
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

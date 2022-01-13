@@ -315,7 +315,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             if (this.getFunction(i) != newState) {
 //                log.debug(r.toMonitorString());
                 if (log.isDebugEnabled()) log.debug("changing F{} from {} to {} for {}", i, this.getFunction(i), newState, cab);                
-                super.setFunction(i,newState);
+                super.updateFunction(i,newState);
             }
         }
     }
