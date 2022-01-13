@@ -1,8 +1,8 @@
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="TCS" version="1" lastUpdated="20211215"/>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="TCS" version="1" lastUpdated="20220113"/>
   <decoder>
-    <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5">
-      <model model="GP35" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="46592">
+    <family name="TCS" mfg="Train Control Systems" lowVersionID="5" highVersionID="5">
+      <model model="Bachmann GP35" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="46592">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
@@ -78,9 +78,8 @@
         </enumVal>
         <label>Select Prime Mover: </label>
       </variable>
-      <variable default="-1" item="Sound Option 4" CV="16.4.257">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 4" mask="VVVVVVVV XVVVVVVV" CV="16.4.(258,257)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -140,12 +139,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F0</label>
       </variable>
-      <variable default="3" item="Sound Option 5" CV="16.4.259">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="3" item="Sound Option 5" mask="VVVVVVVV XVVVVVVV" CV="16.4.(260,259)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -205,12 +203,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F1</label>
       </variable>
-      <variable default="54" item="Sound Option 6" CV="16.4.261">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="54" item="Sound Option 6" mask="VVVVVVVV XVVVVVVV" CV="16.4.(262,261)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -270,12 +267,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F2</label>
       </variable>
-      <variable default="70" item="Sound Option 7" CV="16.4.263">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="70" item="Sound Option 7" mask="VVVVVVVV XVVVVVVV" CV="16.4.(264,263)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -335,12 +331,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F3</label>
       </variable>
-      <variable default="62" item="Sound Option 8" CV="16.4.265">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="62" item="Sound Option 8" mask="VVVVVVVV XVVVVVVV" CV="16.4.(266,265)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -400,12 +395,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F4</label>
       </variable>
-      <variable default="9" item="Sound Option 9" CV="16.4.267">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="9" item="Sound Option 9" mask="VVVVVVVV XVVVVVVV" CV="16.4.(268,267)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -465,12 +459,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F5</label>
       </variable>
-      <variable default="159" item="Sound Option 10" CV="16.4.269">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="159" item="Sound Option 10" mask="VVVVVVVV XVVVVVVV" CV="16.4.(270,269)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -530,12 +523,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F6</label>
       </variable>
-      <variable default="-1" item="Sound Option 11" CV="16.4.271">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 11" mask="VVVVVVVV XVVVVVVV" CV="16.4.(272,271)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -595,12 +587,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F7</label>
       </variable>
-      <variable default="82" item="Sound Option 12" CV="16.4.273">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="82" item="Sound Option 12" mask="VVVVVVVV XVVVVVVV" CV="16.4.(274,273)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -660,12 +651,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F8</label>
       </variable>
-      <variable default="-1" item="Sound Option 13" CV="16.4.275">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 13" mask="VVVVVVVV XVVVVVVV" CV="16.4.(276,275)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -725,12 +715,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F9</label>
       </variable>
-      <variable default="79" item="Sound Option 14" CV="16.4.277">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="79" item="Sound Option 14" mask="VVVVVVVV XVVVVVVV" CV="16.4.(278,277)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -790,12 +779,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F10</label>
       </variable>
-      <variable default="78" item="Sound Option 15" CV="16.4.279">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="78" item="Sound Option 15" mask="VVVVVVVV XVVVVVVV" CV="16.4.(280,279)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -855,12 +843,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F11</label>
       </variable>
-      <variable default="39" item="Sound Option 16" CV="16.4.281">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="39" item="Sound Option 16" mask="VVVVVVVV XVVVVVVV" CV="16.4.(282,281)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -920,12 +907,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F12</label>
       </variable>
-      <variable default="40" item="Sound Option 17" CV="16.4.283">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="40" item="Sound Option 17" mask="VVVVVVVV XVVVVVVV" CV="16.4.(284,283)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -985,12 +971,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F13</label>
       </variable>
-      <variable default="8" item="Sound Option 18" CV="16.4.285">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="8" item="Sound Option 18" mask="VVVVVVVV XVVVVVVV" CV="16.4.(286,285)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1050,12 +1035,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F14</label>
       </variable>
-      <variable default="42" item="Sound Option 19" CV="16.4.287">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="42" item="Sound Option 19" mask="VVVVVVVV XVVVVVVV" CV="16.4.(288,287)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1115,12 +1099,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F15</label>
       </variable>
-      <variable default="80" item="Sound Option 20" CV="16.4.289">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="80" item="Sound Option 20" mask="VVVVVVVV XVVVVVVV" CV="16.4.(290,289)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1180,12 +1163,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F16</label>
       </variable>
-      <variable default="41" item="Sound Option 21" CV="16.4.291">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="41" item="Sound Option 21" mask="VVVVVVVV XVVVVVVV" CV="16.4.(292,291)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1245,12 +1227,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F17</label>
       </variable>
-      <variable default="83" item="Sound Option 22" CV="16.4.293">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="83" item="Sound Option 22" mask="VVVVVVVV XVVVVVVV" CV="16.4.(294,293)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1310,12 +1291,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F18</label>
       </variable>
-      <variable default="-1" item="Sound Option 23" CV="16.4.295">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 23" mask="VVVVVVVV XVVVVVVV" CV="16.4.(296,295)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1375,12 +1355,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F19</label>
       </variable>
-      <variable default="1" item="Sound Option 24" CV="16.4.297">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="1" item="Sound Option 24" mask="VVVVVVVV XVVVVVVV" CV="16.4.(298,297)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1440,12 +1419,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F20</label>
       </variable>
-      <variable default="46" item="Sound Option 25" CV="16.4.299">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="46" item="Sound Option 25" mask="VVVVVVVV XVVVVVVV" CV="16.4.(300,299)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1505,12 +1483,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F21</label>
       </variable>
-      <variable default="161" item="Sound Option 26" CV="16.4.301">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="161" item="Sound Option 26" mask="VVVVVVVV XVVVVVVV" CV="16.4.(302,301)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1570,12 +1547,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F22</label>
       </variable>
-      <variable default="177" item="Sound Option 27" CV="16.4.303">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="177" item="Sound Option 27" mask="VVVVVVVV XVVVVVVV" CV="16.4.(304,303)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1635,12 +1611,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F23</label>
       </variable>
-      <variable default="169" item="Sound Option 28" CV="16.4.305">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="169" item="Sound Option 28" mask="VVVVVVVV XVVVVVVV" CV="16.4.(306,305)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1700,12 +1675,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F24</label>
       </variable>
-      <variable default="185" item="Sound Option 29" CV="16.4.307">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="185" item="Sound Option 29" mask="VVVVVVVV XVVVVVVV" CV="16.4.(308,307)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1765,12 +1739,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F25</label>
       </variable>
-      <variable default="45" item="Sound Option 30" CV="16.4.309">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="45" item="Sound Option 30" mask="VVVVVVVV XVVVVVVV" CV="16.4.(310,309)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1830,12 +1803,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F26</label>
       </variable>
-      <variable default="-1" item="Sound Option 31" CV="16.4.311">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 31" mask="VVVVVVVV XVVVVVVV" CV="16.4.(312,311)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1895,12 +1867,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F27</label>
       </variable>
-      <variable default="84" item="Sound Option 32" CV="16.4.313">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="84" item="Sound Option 32" mask="VVVVVVVV XVVVVVVV" CV="16.4.(314,313)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -1960,12 +1931,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for F28</label>
       </variable>
-      <variable default="0" item="Sound Option 33" CV="16.4.315">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="0" item="Sound Option 33" mask="VVVVVVVV XVVVVVVV" CV="16.4.(316,315)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -2025,12 +1995,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for R1</label>
       </variable>
-      <variable default="2" item="Sound Option 34" CV="16.4.317">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="2" item="Sound Option 34" mask="VVVVVVVV XVVVVVVV" CV="16.4.(318,317)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -2090,12 +2059,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for R2</label>
       </variable>
-      <variable default="-1" item="Sound Option 35" CV="16.4.319">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 35" mask="VVVVVVVV XVVVVVVV" CV="16.4.(320,319)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -2155,12 +2123,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for R3</label>
       </variable>
-      <variable default="-1" item="Sound Option 36" CV="16.4.321">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 36" mask="VVVVVVVV XVVVVVVV" CV="16.4.(322,321)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -2220,12 +2187,11 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for R4</label>
       </variable>
-      <variable default="-1" item="Sound Option 37" CV="16.4.323">
-        <splitVal/>
-        <enumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable default="-1" item="Sound Option 37" mask="VVVVVVVV XVVVVVVV" CV="16.4.(324,323)">
+        <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor" value="0"/>
             <enumChoice choice="Air Spitter - U25B Air Spit" value="1"/>
@@ -2285,7 +2251,7 @@
             <enumChoice choice="Windshield Wipers - Windshield Wiper" value="185"/>
             <enumChoice choice="None" value="255"/>
           </enumChoiceGroup>
-        </enumVal>
+        </splitEnumVal>
         <label>Sound Mapping for TRIGGERED</label>
       </variable>
       <variable default="60" item="Sound Setting 23" CV="216">
@@ -2590,7 +2556,7 @@
       <variable default="0" item="Output 5 effect generated" mask="VVXXVVVV" CV="55" minOut="5">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -2623,7 +2589,7 @@
       <variable default="0" item="Output 4 effect generated" mask="VVXXVVVV" CV="54" minOut="4">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -2656,7 +2622,7 @@
       <variable default="0" item="Output 6 effect generated" mask="VVXXVVVV" CV="56" minOut="6">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -2689,7 +2655,7 @@
       <variable default="0" item="Function 1 effect generated" mask="VVXXVVVV" CV="51" minOut="1">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -2730,7 +2696,7 @@
       <variable default="0" item="Function F0R effect generated" mask="VVXXVVVV" CV="50">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -2755,7 +2721,7 @@
       <variable default="0" item="Output 3 effect generated" mask="VVXXVVVV" CV="53" minOut="3">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -2788,7 +2754,7 @@
       <variable default="0" item="Function 2 effect generated" mask="VVXXVVVV" CV="52" minOut="2">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -3711,7 +3677,7 @@
       <variable default="0" item="Function F0F effect generated" mask="VVXXVVVV" CV="49">
         <value>0</value>
         <enumVal>
-          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+          <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
             <enumChoice choice="Brake Lights" value="14"/>
             <enumChoice choice="Constant Bright" value="0"/>
@@ -8209,11 +8175,11 @@
               </label><separator/><label>
                 <text> </text>
               </label>
-
-
+              
+              
   <row>
         <column>
-            <row>
+            <row> 
                   <display item="Function F0F effect generated"/><separator/>
                   <display item="Function F0R effect generated"/>
             </row>
@@ -8330,7 +8296,7 @@
               <label>
                  <text>Lighting Preset: 'Auto Mars'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="0">
               <display item="Lighting Preset 0 - Step 0 - Start Brightness">
@@ -8536,7 +8502,7 @@
               <label>
                  <text>Lighting Preset: 'Brake Lights'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="4">
               <display item="Lighting Preset 1 - Step 0 - Start Brightness">
@@ -8742,7 +8708,7 @@
               <label>
                  <text>Lighting Preset: 'Rotary Beacon (New Style)'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="8">
               <display item="Lighting Preset 2 - Step 0 - Start Brightness">
@@ -8948,7 +8914,7 @@
               <label>
                  <text>Lighting Preset: 'Constant Bright'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="12">
               <display item="Lighting Preset 3 - Step 0 - Start Brightness">
@@ -9154,7 +9120,7 @@
               <label>
                  <text>Lighting Preset: 'Flashing F.R.E.D.'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="16">
               <display item="Lighting Preset 4 - Step 0 - Start Brightness">
@@ -9360,7 +9326,7 @@
               <label>
                  <text>Lighting Preset: 'Constant Dim'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="20">
               <display item="Lighting Preset 5 - Step 0 - Start Brightness">
@@ -9566,7 +9532,7 @@
               <label>
                  <text>Lighting Preset: 'Ditch Light Side 2'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="24">
               <display item="Lighting Preset 6 - Step 0 - Start Brightness">
@@ -9772,7 +9738,7 @@
               <label>
                  <text>Lighting Preset: 'Ditch Light Side 1'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="28">
               <display item="Lighting Preset 7 - Step 0 - Start Brightness">
@@ -9978,7 +9944,7 @@
               <label>
                  <text>Lighting Preset: 'Single Pulse Strobe'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="32">
               <display item="Lighting Preset 8 - Step 0 - Start Brightness">
@@ -10184,7 +10150,7 @@
               <label>
                  <text>Lighting Preset: 'Firebox Flicker'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="36">
               <display item="Lighting Preset 9 - Step 0 - Start Brightness">
@@ -10390,7 +10356,7 @@
               <label>
                  <text>Lighting Preset: 'Custom Light 1'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="40">
               <display item="Lighting Preset 10 - Step 0 - Start Brightness">
@@ -10596,7 +10562,7 @@
               <label>
                  <text>Lighting Preset: 'Rotary Beacon (Old style)'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="44">
               <display item="Lighting Preset 11 - Step 0 - Start Brightness">
@@ -10802,7 +10768,7 @@
               <label>
                  <text>Lighting Preset: 'Gyra Light'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="48">
               <display item="Lighting Preset 12 - Step 0 - Start Brightness">
@@ -11008,7 +10974,7 @@
               <label>
                  <text>Lighting Preset: 'Double Pulse Strobe'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="52">
               <display item="Lighting Preset 13 - Step 0 - Start Brightness">
@@ -11214,7 +11180,7 @@
               <label>
                  <text>Lighting Preset: 'Mars Light'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="56">
               <display item="Lighting Preset 14 - Step 0 - Start Brightness">
@@ -11420,7 +11386,7 @@
               <label>
                  <text>Lighting Preset: 'Rule 17'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="60">
               <display item="Lighting Preset 15 - Step 0 - Start Brightness">
@@ -11626,7 +11592,7 @@
               <label>
                  <text>Lighting Preset: 'Custom Light 2'</text>
               </label>
-
+              
            </griditem>
            <griditem gridx="1" gridy="64">
               <display item="Lighting Preset 16 - Step 0 - Start Brightness">
