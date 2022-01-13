@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
-
 import jmri.jmrix.ipocs.protocol.enums.RqPointsCommand;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class ThrowPointsPacketTest {
   private final byte[] testPacket = { RqPointsCommand.Left.value };
@@ -30,4 +31,15 @@ public class ThrowPointsPacketTest {
     pkt.setCommand(RqPointsCommand.Left);
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }
