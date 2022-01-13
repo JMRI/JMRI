@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.99ish+jake+20211218T1551Z+Rbf2ff18834 on Sat Dec 18 10:51:50 EST 2021-->
+  <!--Written by JMRI version 4.99.1plus+jake+20220113T2009Z+R6050d23171 on Thu Jan 13 15:09:26 EST 2022-->
   <decoderIndex version="1078">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -178,10 +178,18 @@
       <family name="NMRA standard CV definitions" mfg="NMRA" file="0NMRA.xml">
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <output name="4" label="Violet" connection="wire" />
+          <output name="1" label="White" connection="plug">
+            <label xml:lang="cs">Bílý</label>
+          </output>
+          <output name="2" label="Yellow" connection="plug">
+            <label xml:lang="cs">Žlutý</label>
+          </output>
+          <output name="3" label="Green" connection="wire">
+            <label xml:lang="cs">Zelený</label>
+          </output>
+          <output name="4" label="Violet" connection="wire">
+            <label xml:lang="cs">Fialový</label>
+          </output>
         </outputs>
         <model model="NMRA standard CV definitions" />
       </family>
@@ -2739,10 +2747,18 @@
         </model>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <output name="4" label="Violet" connection="wire" />
+          <output name="1" label="White" connection="plug">
+            <label xml:lang="cs">Bílý</label>
+          </output>
+          <output name="2" label="Yellow" connection="plug">
+            <label xml:lang="cs">Žlutý</label>
+          </output>
+          <output name="3" label="Green" connection="wire">
+            <label xml:lang="cs">Zelený</label>
+          </output>
+          <output name="4" label="Violet" connection="wire">
+            <label xml:lang="cs">Fialový</label>
+          </output>
         </outputs>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -9809,7 +9825,7 @@
         <model model="LokSound 5 XL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokSound 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
+        <model model="LokSound 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554629">
           <output name="1,37" label="|" />
           <!-- suppress unused item -->
           <output name="1,38" label="|" />
@@ -9832,7 +9848,7 @@
           <!-- suppress unused item -->
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554588">
+        <model model="LokSound 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554630">
           <output name="1,37" label="|" />
           <!-- suppress unused item -->
           <output name="1,38" label="|" />
@@ -13478,10 +13494,18 @@
         <model model="LGB 55020" />
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <output name="4" label="Violet" connection="wire" />
+          <output name="1" label="White" connection="plug">
+            <label xml:lang="cs">Bílý</label>
+          </output>
+          <output name="2" label="Yellow" connection="plug">
+            <label xml:lang="cs">Žlutý</label>
+          </output>
+          <output name="3" label="Green" connection="wire">
+            <label xml:lang="cs">Zelený</label>
+          </output>
+          <output name="4" label="Violet" connection="wire">
+            <label xml:lang="cs">Fialový</label>
+          </output>
         </outputs>
       </family>
       <family name="LGB MFX decoder" mfg="LGB" file="LGB_v3_MFX.xml">
@@ -21537,7 +21561,7 @@
         </model>
       </family>
       <family name="OEM Bachmann E-Z Command decoders" mfg="SoundTraxx (Throttle-Up)" lowVersionID="141" highVersionID="141" file="SoundTraxx_OEM_36-557_MC1.xml">
-        <model model="Bachmann (soundTraxx MC1) 36-557" numOuts="4" numFns="14" connector="other" productID="MC1H10421P">
+        <model model="Bachmann (soundTraxx MC1) 36-557" numOuts="4" numFns="14" connector="other" productID="MC1H104P21">
           <versionCV highVersionID="81" lowVersionID="81" />
           <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
           <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
@@ -22047,11 +22071,13 @@
         <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="907" comment="Model 8T0303.005" />
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B" />
         <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="873" comment="Model 8T0303.002" />
+        <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1014" comment="Model 8T030?.00?" />
         <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B" />
         <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B" />
         <model model="TSU-GN2208 SD75M" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="898" comment="Model 8T0301.005" />
         <model model="TSU-GN2208 SD80MAC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="935" comment="Model 8T0304.002" />
         <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="908" comment="Model 8T0305.001" />
+        <model model="TSU-GN2208 Dash 9-44CW" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="965" comment="Model 8T100?.00?" />
         <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B" />
         <model model="TSU-GN2208 ES40DC w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="921" comment="Model 8T1004.002" />
         <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001" />
@@ -48387,9 +48413,11 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <size length="8.2" width="5.7" height="2.0" units="mm" />
         </model>
@@ -48404,9 +48432,11 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <size length="8.2" width="5.7" height="2.0" units="mm" />
         </model>
@@ -48421,9 +48451,11 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <size length="8.2" width="5.7" height="2.0" units="mm" />
         </model>
@@ -48438,9 +48470,11 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <size length="8.2" width="5.7" height="2.0" units="mm" />
         </model>
@@ -48482,15 +48516,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <size length="8" width="8" height="2.4" units="mm" />
         </model>
@@ -48505,15 +48543,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <size length="8" width="8" height="2.4" units="mm" />
         </model>
@@ -48528,15 +48570,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <size length="8" width="8" height="2.4" units="mm" />
         </model>
@@ -48551,15 +48597,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <size length="13" width="9" height="2.5" units="mm" />
         </model>
@@ -48574,15 +48624,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <size length="13" width="9" height="2.5" units="mm" />
         </model>
@@ -48597,15 +48651,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <size length="13" width="9" height="2.5" units="mm" />
         </model>
@@ -48620,15 +48678,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <size length="13" width="9" height="2.5" units="mm" />
         </model>
@@ -48643,21 +48705,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5 (+5v)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6 (+5v)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="15" width="9.5" height="2.8" units="mm" />
         </model>
@@ -48672,15 +48740,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3|(+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4|(+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
@@ -48695,15 +48767,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3|(+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4|(+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
@@ -48718,15 +48794,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3|(+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4|(+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
@@ -48741,15 +48821,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3|(+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4|(+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
@@ -48764,15 +48848,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="16" width="9" height="2.5" units="mm" />
         </model>
@@ -48787,15 +48875,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="16" width="9" height="2.5" units="mm" />
         </model>
@@ -48810,15 +48902,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="16" width="9" height="2.5" units="mm" />
         </model>
@@ -48833,15 +48929,19 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="16" width="9" height="2.5" units="mm" />
         </model>
@@ -48856,21 +48956,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5 (+5v)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6 (+5v)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="8.5" height="3.5" units="mm" />
         </model>
@@ -48885,21 +48991,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5 (+5v)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6 (+5v)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="8.5" height="3.5" units="mm" />
         </model>
@@ -48914,21 +49026,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5 (+5v)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6 (+5v)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="8.5" height="3.5" units="mm" />
         </model>
@@ -48943,21 +49061,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5 (+5v)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6 (+5v)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="8.5" height="3.5" units="mm" />
         </model>
@@ -48972,21 +49096,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
@@ -49001,21 +49131,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
@@ -49030,21 +49166,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
@@ -49059,146 +49201,340 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
         <model model="MX631 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213,219">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="cs">FV 5 (+5V)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="cs">FV 6 (+5V)</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX631R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213,219">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="cs">FV 5 (+5V)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="cs">FV 6 (+5V)</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX631F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213,219">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="cs">FV 5 (+5V)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="cs">FV 6 (+5V)</label>
+          </output>
           <size length="20" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX632 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="cs">FV 8</label>
+          </output>
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX632R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="cs">FV 8</label>
+          </output>
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX632D version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="cs">FV 8</label>
+          </output>
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX632V version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="cs">FV 8</label>
+          </output>
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX632VD version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="cs">FV 8</label>
+          </output>
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX632W version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="cs">FV 8</label>
+          </output>
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX632WD version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="cs">FV 8</label>
+          </output>
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX633 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="133,237">
@@ -49212,27 +49548,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="22" width="15" height="3.5" units="mm" />
         </model>
@@ -49247,27 +49591,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="22" width="15" height="3.5" units="mm" />
         </model>
@@ -49282,27 +49634,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="22" width="15" height="3.5" units="mm" />
         </model>
@@ -49317,27 +49677,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="22" width="15" height="3.5" units="mm" />
         </model>
@@ -49352,27 +49720,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="22" width="15" height="3.5" units="mm" />
         </model>
@@ -49387,27 +49763,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -49422,27 +49798,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -49457,27 +49833,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -49492,27 +49868,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -49527,27 +49903,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -49562,27 +49938,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="26" width="15" height="4" units="mm" />
         </model>
@@ -49597,27 +49981,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="26" width="15" height="4" units="mm" />
         </model>
@@ -49632,27 +50024,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="26" width="15" height="4" units="mm" />
         </model>
@@ -49667,27 +50067,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="26" width="15" height="4" units="mm" />
         </model>
@@ -49702,27 +50110,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="26" width="15" height="4" units="mm" />
         </model>
@@ -49737,27 +50153,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <size length="26" width="15,5" height="4" units="mm" />
         </model>
@@ -49772,27 +50188,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <size length="26" width="15,5" height="4" units="mm" />
         </model>
@@ -49807,27 +50223,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <size length="26" width="15,5" height="4" units="mm" />
         </model>
@@ -49842,27 +50258,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <size length="26" width="15,5" height="4" units="mm" />
         </model>
@@ -49877,27 +50293,35 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <output name="9" label="FO 7">
             <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
           </output>
           <output name="10" label="FO 8">
             <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
           </output>
           <size length="22" width="15" height="3.5" units="mm" />
         </model>
@@ -49912,27 +50336,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -49947,42 +50371,60 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">FV 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX64D version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="206">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-          <output name="9" label="FO 7 (+5v)" />
-          <output name="10" label="FO 8 (+5v)" />
-          <output name="11" label="FO 9 (+5v)" />
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="cs">FV 5 (+5V)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="cs">FV 6 (+5V)</label>
+          </output>
+          <output name="9" label="FO 7 (+5v)">
+            <label xml:lang="cs">FV 7 (+5V)</label>
+          </output>
+          <output name="10" label="FO 8 (+5v)">
+            <label xml:lang="cs">FV 8 (+5V)</label>
+          </output>
+          <output name="11" label="FO 9 (+5v)">
+            <label xml:lang="cs">FV 9 (+5V)</label>
+          </output>
           <size length="32" width="16" height="6" units="mm" />
         </model>
       </family>
@@ -50522,54 +50964,69 @@
         <model model="MX658N18 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="25" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX659N18 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="190">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
           </output>
           <size length="20" width="9.5" height="3.5" units="mm" />
         </model>
         <model model="MX605 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="189">
           <output name="1" label="Front Light (MX605SL)">
             <label xml:lang="de">Lvor (MX605SL)</label>
+            <label xml:lang="cs">Přední světla (MX605SL)</label>
           </output>
           <output name="2" label="Rear Light (MX605SL)">
             <label xml:lang="de">Lrück (MX605SL)</label>
+            <label xml:lang="cs">Zadní světla (MX605SL)</label>
           </output>
           <output name="3" label="FO 1 (MX605FL)">
             <label xml:lang="de">FA1 (MX605FL)</label>
+            <label xml:lang="cs">FV 1 (MX605FL)</label>
           </output>
         </model>
       </family>

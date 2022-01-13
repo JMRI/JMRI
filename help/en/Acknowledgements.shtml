@@ -935,8 +935,9 @@
         DS54 accessory decoder, updated lots of decoder definitions, improved many help pages, and
         is an active jmriusers moderator.</li>
 
-        <li>Steve Todd, primary author of EngineDriver throttle for Android, adds scripts, helps
-        with web server, particularly client-side panels and updates Dispatcher</li>
+        <li>Steve Todd, primary author of EngineDriver throttle for Android, added scripts, helped
+        with web server (particularly client-side panels), updated Dispatcher, and enhanced the 
+        DCCpp connection to keep up with the DCC++EX rewrite and improvements.</li>
 
         <li>
           <a href="https://travis-ci.org">Travis-CI.org</a>, who provide a large part of our
