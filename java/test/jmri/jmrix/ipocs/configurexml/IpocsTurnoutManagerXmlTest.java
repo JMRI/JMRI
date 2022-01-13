@@ -2,38 +2,40 @@ package jmri.jmrix.ipocs.configurexml;
 
 import static org.mockito.Mockito.mock;
 
+import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
+
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 public class IpocsTurnoutManagerXmlTest {
 
-  @Test
-  public void testCtor() {
-    Assert.assertNotNull("IpocsSensorManagerXml constructor", new IpocsTurnoutManagerXml());
-  }
+    @Test
+    public void testCtor() {
+        Assert.assertNotNull("IpocsSensorManagerXml constructor", new IpocsTurnoutManagerXml());
+    }
 
-  @BeforeEach
-  public void setUp() {
-    jmri.util.JUnitUtil.setUp();
-  }
+    @Test
+    public void loadTest() {
+        Element element = mock(Element.class);
+        new IpocsTurnoutManagerXml().load(element, null);
+    }
 
-  @AfterEach
-  public void tearDown() {
-    jmri.util.JUnitUtil.tearDown();
-  }
+    @Test
+    public void setStoreelementClassTest() {
+        Element element = mock(Element.class);
+        new IpocsTurnoutManagerXml().setStoreElementClass(element);
+    }
 
-  @Test
-  public void loadTest() {
-    Element element = mock(Element.class);
-    new IpocsTurnoutManagerXml().load(element, null);
-   }
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
 
-   @Test
-   public void setStoreelementClassTest() {
-    Element element = mock(Element.class);
-    new IpocsTurnoutManagerXml().setStoreElementClass(element);
-   }
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }
