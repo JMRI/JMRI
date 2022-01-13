@@ -1217,7 +1217,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         // OK, will do as it long as you own it, and you are where you think you are there.
         _engineer.setHalt(false);
-//        _engineer.setWaitforClear(false);
         clearWaitFlags(false);
         return restoreRunning(_engineer.getSpeedType(false));
     }
@@ -1775,7 +1774,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 if (setPathMessageOk(_idxProtectSignal)) {
                     // train is stopped. If occupied, it is a rogue
                     ThreadingUtil.runOnGUIDelayed(() -> {
-//                        _engineer.setWaitforClear(false);
                         restoreRunning(speedType);
                     }, 2500);
                 } else {
@@ -1900,7 +1898,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             } else {
                 speedType = _engineer.getSpeedType(false);
             }
-//            _engineer.setWaitforClear(false);
             restoreRunning(speedType);
         }, time);
 
