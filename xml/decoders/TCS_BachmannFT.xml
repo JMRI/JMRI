@@ -1,5 +1,5 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version author="TCS" version="1" lastUpdated="20220113"/>
+  <version author="TCS" version="1" lastUpdated="20220114"/>
   <decoder>
     <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5">
       <model model="Sound Value FT" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="46336">
@@ -2554,7 +2554,6 @@
         <label>Accel 2 Starting Point</label>
       </variable>
       <variable default="0" item="Output 5 effect generated" mask="VVXXVVVV" CV="55" minOut="5">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -2587,7 +2586,6 @@
         <label>F5 (Pink/Purple) Directionality</label>
       </variable>
       <variable default="0" item="Output 4 effect generated" mask="VVXXVVVV" CV="54" minOut="4">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -2620,7 +2618,6 @@
         <label>              F4 (Pink) Directionality</label>
       </variable>
       <variable default="0" item="Output 6 effect generated" mask="VVXXVVVV" CV="56" minOut="6">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -2653,7 +2650,6 @@
         <label>              F6 (Brown/Green) Directionality</label>
       </variable>
       <variable default="0" item="Function 1 effect generated" mask="VVXXVVVV" CV="51" minOut="1">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -2694,7 +2690,6 @@
         <label>              F0R (Yellow) Directionality</label>
       </variable>
       <variable default="0" item="Function F0R effect generated" mask="VVXXVVVV" CV="50">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -2719,7 +2714,6 @@
         <label>              F0R (Yellow) Effect</label>
       </variable>
       <variable default="0" item="Output 3 effect generated" mask="VVXXVVVV" CV="53" minOut="3">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -2752,7 +2746,6 @@
         <label>F3 (Brown) Directionality</label>
       </variable>
       <variable default="0" item="Function 2 effect generated" mask="VVXXVVVV" CV="52" minOut="2">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -3675,7 +3668,6 @@
         <label>F0F (White) Directionality</label>
       </variable>
       <variable default="0" item="Function F0F effect generated" mask="VVXXVVVV" CV="49">
-        <value>0</value>
         <enumVal>
           <enumChoiceGroup xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
             <enumChoice choice="Auto Mars" value="13"/>
@@ -3848,512 +3840,512 @@
         <decVal/>
         <label>DC Mode Unregulated Supply Maximum Track Voltage</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_1" default="4" CV="16.2.(259,260)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_1" default="4" CV="16.2.(259,260)">
         <splitVal/>
         <label>Speed Step 1</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_2" default="20" CV="16.2.(261,262)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_2" default="20" CV="16.2.(261,262)">
         <splitVal/>
         <label>Speed Step 2</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_3" default="35" CV="16.2.(263,264)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_3" default="35" CV="16.2.(263,264)">
         <splitVal/>
         <label>Speed Step 3</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_4" default="47" CV="16.2.(265,266)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_4" default="47" CV="16.2.(265,266)">
         <splitVal/>
         <label>Speed Step 4</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_5" default="68" CV="16.2.(267,268)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_5" default="68" CV="16.2.(267,268)">
         <splitVal/>
         <label>Speed Step 5</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_6" default="90" CV="16.2.(269,270)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_6" default="90" CV="16.2.(269,270)">
         <splitVal/>
         <label>Speed Step 6</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_7" default="110" CV="16.2.(271,272)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_7" default="110" CV="16.2.(271,272)">
         <splitVal/>
         <label>Speed Step 7</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_8" default="146" CV="16.2.(273,274)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_8" default="146" CV="16.2.(273,274)">
         <splitVal/>
         <label>Speed Step 8</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_9" default="173" CV="16.2.(275,276)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_9" default="173" CV="16.2.(275,276)">
         <splitVal/>
         <label>Speed Step 9</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_10" default="200" CV="16.2.(277,278)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_10" default="200" CV="16.2.(277,278)">
         <splitVal/>
         <label>Speed Step 10</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_11" default="232" CV="16.2.(279,280)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_11" default="232" CV="16.2.(279,280)">
         <splitVal/>
         <label>Speed Step 11</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_12" default="284" CV="16.2.(281,282)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_12" default="284" CV="16.2.(281,282)">
         <splitVal/>
         <label>Speed Step 12</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_13" default="334" CV="16.2.(283,284)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_13" default="334" CV="16.2.(283,284)">
         <splitVal/>
         <label>Speed Step 13</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_14" default="360" CV="16.2.(285,286)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_14" default="360" CV="16.2.(285,286)">
         <splitVal/>
         <label>Speed Step 14</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_15" default="388" CV="16.2.(287,288)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_15" default="388" CV="16.2.(287,288)">
         <splitVal/>
         <label>Speed Step 15</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_16" default="386" CV="16.2.(289,290)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_16" default="386" CV="16.2.(289,290)">
         <splitVal/>
         <label>Speed Step 16</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_17" default="430" CV="16.2.(291,292)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_17" default="430" CV="16.2.(291,292)">
         <splitVal/>
         <label>Speed Step 17</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_18" default="470" CV="16.2.(293,294)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_18" default="470" CV="16.2.(293,294)">
         <splitVal/>
         <label>Speed Step 18</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_19" default="518" CV="16.2.(295,296)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_19" default="518" CV="16.2.(295,296)">
         <splitVal/>
         <label>Speed Step 19</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_20" default="540" CV="16.2.(297,298)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_20" default="540" CV="16.2.(297,298)">
         <splitVal/>
         <label>Speed Step 20</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_21" default="540" CV="16.2.(299,300)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_21" default="540" CV="16.2.(299,300)">
         <splitVal/>
         <label>Speed Step 21</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_22" default="540" CV="16.2.(301,302)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_22" default="540" CV="16.2.(301,302)">
         <splitVal/>
         <label>Speed Step 22</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_23" default="620" CV="16.2.(303,304)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_23" default="620" CV="16.2.(303,304)">
         <splitVal/>
         <label>Speed Step 23</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_24" default="620" CV="16.2.(305,306)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_24" default="620" CV="16.2.(305,306)">
         <splitVal/>
         <label>Speed Step 24</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_25" default="668" CV="16.2.(307,308)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_25" default="668" CV="16.2.(307,308)">
         <splitVal/>
         <label>Speed Step 25</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_26" default="692" CV="16.2.(309,310)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_26" default="692" CV="16.2.(309,310)">
         <splitVal/>
         <label>Speed Step 26</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_27" default="735" CV="16.2.(311,312)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_27" default="735" CV="16.2.(311,312)">
         <splitVal/>
         <label>Speed Step 27</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_28" default="735" CV="16.2.(313,314)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_28" default="735" CV="16.2.(313,314)">
         <splitVal/>
         <label>Speed Step 28</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_29" default="759" CV="16.2.(315,316)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_29" default="759" CV="16.2.(315,316)">
         <splitVal/>
         <label>Speed Step 29</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_30" default="803" CV="16.2.(317,318)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_30" default="803" CV="16.2.(317,318)">
         <splitVal/>
         <label>Speed Step 30</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_31" default="840" CV="16.2.(319,320)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_31" default="840" CV="16.2.(319,320)">
         <splitVal/>
         <label>Speed Step 31</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_32" default="863" CV="16.2.(321,322)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_32" default="863" CV="16.2.(321,322)">
         <splitVal/>
         <label>Speed Step 32</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_33" default="863" CV="16.2.(323,324)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_33" default="863" CV="16.2.(323,324)">
         <splitVal/>
         <label>Speed Step 33</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_34" default="917" CV="16.2.(325,326)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_34" default="917" CV="16.2.(325,326)">
         <splitVal/>
         <label>Speed Step 34</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_35" default="955" CV="16.2.(327,328)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_35" default="955" CV="16.2.(327,328)">
         <splitVal/>
         <label>Speed Step 35</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_36" default="975" CV="16.2.(329,330)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_36" default="975" CV="16.2.(329,330)">
         <splitVal/>
         <label>Speed Step 36</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_37" default="995" CV="16.2.(331,332)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_37" default="995" CV="16.2.(331,332)">
         <splitVal/>
         <label>Speed Step 37</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_38" default="1020" CV="16.2.(333,334)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_38" default="1020" CV="16.2.(333,334)">
         <splitVal/>
         <label>Speed Step 38</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_39" default="1056" CV="16.2.(335,336)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_39" default="1056" CV="16.2.(335,336)">
         <splitVal/>
         <label>Speed Step 39</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_40" default="1094" CV="16.2.(337,338)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_40" default="1094" CV="16.2.(337,338)">
         <splitVal/>
         <label>Speed Step 40</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_41" default="1120" CV="16.2.(339,340)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_41" default="1120" CV="16.2.(339,340)">
         <splitVal/>
         <label>Speed Step 41</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_42" default="1120" CV="16.2.(341,342)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_42" default="1120" CV="16.2.(341,342)">
         <splitVal/>
         <label>Speed Step 42</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_43" default="1165" CV="16.2.(343,344)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_43" default="1165" CV="16.2.(343,344)">
         <splitVal/>
         <label>Speed Step 43</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_44" default="1188" CV="16.2.(345,346)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_44" default="1188" CV="16.2.(345,346)">
         <splitVal/>
         <label>Speed Step 44</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_45" default="1210" CV="16.2.(347,348)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_45" default="1210" CV="16.2.(347,348)">
         <splitVal/>
         <label>Speed Step 45</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_46" default="1222" CV="16.2.(349,350)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_46" default="1222" CV="16.2.(349,350)">
         <splitVal/>
         <label>Speed Step 46</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_47" default="1278" CV="16.2.(351,352)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_47" default="1278" CV="16.2.(351,352)">
         <splitVal/>
         <label>Speed Step 47</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_48" default="1278" CV="16.2.(353,354)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_48" default="1278" CV="16.2.(353,354)">
         <splitVal/>
         <label>Speed Step 48</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_49" default="1325" CV="16.2.(355,356)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_49" default="1325" CV="16.2.(355,356)">
         <splitVal/>
         <label>Speed Step 49</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_50" default="1325" CV="16.2.(357,358)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_50" default="1325" CV="16.2.(357,358)">
         <splitVal/>
         <label>Speed Step 50</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_51" default="1362" CV="16.2.(359,360)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_51" default="1362" CV="16.2.(359,360)">
         <splitVal/>
         <label>Speed Step 51</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_52" default="1400" CV="16.2.(361,362)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_52" default="1400" CV="16.2.(361,362)">
         <splitVal/>
         <label>Speed Step 52</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_53" default="1441" CV="16.2.(363,364)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_53" default="1441" CV="16.2.(363,364)">
         <splitVal/>
         <label>Speed Step 53</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_54" default="1483" CV="16.2.(365,366)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_54" default="1483" CV="16.2.(365,366)">
         <splitVal/>
         <label>Speed Step 54</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_55" default="1483" CV="16.2.(367,368)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_55" default="1483" CV="16.2.(367,368)">
         <splitVal/>
         <label>Speed Step 55</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_56" default="1483" CV="16.2.(369,370)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_56" default="1483" CV="16.2.(369,370)">
         <splitVal/>
         <label>Speed Step 56</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_57" default="1535" CV="16.2.(371,372)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_57" default="1535" CV="16.2.(371,372)">
         <splitVal/>
         <label>Speed Step 57</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_58" default="1570" CV="16.2.(373,374)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_58" default="1570" CV="16.2.(373,374)">
         <splitVal/>
         <label>Speed Step 58</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_59" default="1590" CV="16.2.(375,376)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_59" default="1590" CV="16.2.(375,376)">
         <splitVal/>
         <label>Speed Step 59</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_60" default="1650" CV="16.2.(377,378)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_60" default="1650" CV="16.2.(377,378)">
         <splitVal/>
         <label>Speed Step 60</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_61" default="1650" CV="16.2.(379,380)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_61" default="1650" CV="16.2.(379,380)">
         <splitVal/>
         <label>Speed Step 61</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_62" default="1650" CV="16.2.(381,382)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_62" default="1650" CV="16.2.(381,382)">
         <splitVal/>
         <label>Speed Step 62</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_63" default="1650" CV="16.2.(383,384)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_63" default="1650" CV="16.2.(383,384)">
         <splitVal/>
         <label>Speed Step 63</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_64" default="1725" CV="16.2.(385,386)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_64" default="1725" CV="16.2.(385,386)">
         <splitVal/>
         <label>Speed Step 64</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_65" default="1712" CV="16.2.(387,388)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_65" default="1712" CV="16.2.(387,388)">
         <splitVal/>
         <label>Speed Step 65</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_66" default="1750" CV="16.2.(389,390)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_66" default="1750" CV="16.2.(389,390)">
         <splitVal/>
         <label>Speed Step 66</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_67" default="1772" CV="16.2.(391,392)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_67" default="1772" CV="16.2.(391,392)">
         <splitVal/>
         <label>Speed Step 67</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_68" default="1800" CV="16.2.(393,394)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_68" default="1800" CV="16.2.(393,394)">
         <splitVal/>
         <label>Speed Step 68</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_69" default="1822" CV="16.2.(395,396)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_69" default="1822" CV="16.2.(395,396)">
         <splitVal/>
         <label>Speed Step 69</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_70" default="1822" CV="16.2.(397,398)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_70" default="1822" CV="16.2.(397,398)">
         <splitVal/>
         <label>Speed Step 70</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_71" default="1822" CV="16.2.(399,400)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_71" default="1822" CV="16.2.(399,400)">
         <splitVal/>
         <label>Speed Step 71</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_72" default="1855" CV="16.2.(401,402)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_72" default="1855" CV="16.2.(401,402)">
         <splitVal/>
         <label>Speed Step 72</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_73" default="1876" CV="16.2.(403,404)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_73" default="1876" CV="16.2.(403,404)">
         <splitVal/>
         <label>Speed Step 73</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_74" default="1886" CV="16.2.(405,406)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_74" default="1886" CV="16.2.(405,406)">
         <splitVal/>
         <label>Speed Step 74</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_75" default="1886" CV="16.2.(407,408)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_75" default="1886" CV="16.2.(407,408)">
         <splitVal/>
         <label>Speed Step 75</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_76" default="1915" CV="16.2.(409,410)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_76" default="1915" CV="16.2.(409,410)">
         <splitVal/>
         <label>Speed Step 76</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_77" default="1881" CV="16.2.(411,412)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_77" default="1881" CV="16.2.(411,412)">
         <splitVal/>
         <label>Speed Step 77</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_78" default="1902" CV="16.2.(413,414)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_78" default="1902" CV="16.2.(413,414)">
         <splitVal/>
         <label>Speed Step 78</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_79" default="1930" CV="16.2.(415,416)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_79" default="1930" CV="16.2.(415,416)">
         <splitVal/>
         <label>Speed Step 79</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_80" default="2000" CV="16.2.(417,418)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_80" default="2000" CV="16.2.(417,418)">
         <splitVal/>
         <label>Speed Step 80</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_81" default="2014" CV="16.2.(419,420)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_81" default="2014" CV="16.2.(419,420)">
         <splitVal/>
         <label>Speed Step 81</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_82" default="2014" CV="16.2.(421,422)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_82" default="2014" CV="16.2.(421,422)">
         <splitVal/>
         <label>Speed Step 82</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_83" default="2025" CV="16.2.(423,424)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_83" default="2025" CV="16.2.(423,424)">
         <splitVal/>
         <label>Speed Step 83</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_84" default="2030" CV="16.2.(425,426)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_84" default="2030" CV="16.2.(425,426)">
         <splitVal/>
         <label>Speed Step 84</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_85" default="2059" CV="16.2.(427,428)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_85" default="2059" CV="16.2.(427,428)">
         <splitVal/>
         <label>Speed Step 85</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_86" default="2047" CV="16.2.(429,430)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_86" default="2047" CV="16.2.(429,430)">
         <splitVal/>
         <label>Speed Step 86</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_87" default="2059" CV="16.2.(431,432)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_87" default="2059" CV="16.2.(431,432)">
         <splitVal/>
         <label>Speed Step 87</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_88" default="2067" CV="16.2.(433,434)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_88" default="2067" CV="16.2.(433,434)">
         <splitVal/>
         <label>Speed Step 88</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_89" default="2076" CV="16.2.(435,436)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_89" default="2076" CV="16.2.(435,436)">
         <splitVal/>
         <label>Speed Step 89</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_90" default="2125" CV="16.2.(437,438)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_90" default="2125" CV="16.2.(437,438)">
         <splitVal/>
         <label>Speed Step 90</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_91" default="2102" CV="16.2.(439,440)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_91" default="2102" CV="16.2.(439,440)">
         <splitVal/>
         <label>Speed Step 91</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_92" default="2111" CV="16.2.(441,442)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_92" default="2111" CV="16.2.(441,442)">
         <splitVal/>
         <label>Speed Step 92</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_93" default="2120" CV="16.2.(443,444)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_93" default="2120" CV="16.2.(443,444)">
         <splitVal/>
         <label>Speed Step 93</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_94" default="2137" CV="16.2.(445,446)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_94" default="2137" CV="16.2.(445,446)">
         <splitVal/>
         <label>Speed Step 94</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_95" default="2180" CV="16.2.(447,448)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_95" default="2180" CV="16.2.(447,448)">
         <splitVal/>
         <label>Speed Step 95</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_96" default="2206" CV="16.2.(449,450)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_96" default="2206" CV="16.2.(449,450)">
         <splitVal/>
         <label>Speed Step 96</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_97" default="2206" CV="16.2.(451,452)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_97" default="2206" CV="16.2.(451,452)">
         <splitVal/>
         <label>Speed Step 97</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_98" default="2172" CV="16.2.(453,454)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_98" default="2172" CV="16.2.(453,454)">
         <splitVal/>
         <label>Speed Step 98</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_99" default="2198" CV="16.2.(455,456)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_99" default="2198" CV="16.2.(455,456)">
         <splitVal/>
         <label>Speed Step 99</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_100" default="2206" CV="16.2.(457,458)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_100" default="2206" CV="16.2.(457,458)">
         <splitVal/>
         <label>Speed Step 100</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_101" default="2206" CV="16.2.(459,460)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_101" default="2206" CV="16.2.(459,460)">
         <splitVal/>
         <label>Speed Step 101</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_102" default="2206" CV="16.2.(461,462)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_102" default="2206" CV="16.2.(461,462)">
         <splitVal/>
         <label>Speed Step 102</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_103" default="2250" CV="16.2.(463,464)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_103" default="2250" CV="16.2.(463,464)">
         <splitVal/>
         <label>Speed Step 103</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_104" default="2275" CV="16.2.(465,466)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_104" default="2275" CV="16.2.(465,466)">
         <splitVal/>
         <label>Speed Step 104</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_105" default="2275" CV="16.2.(467,468)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_105" default="2275" CV="16.2.(467,468)">
         <splitVal/>
         <label>Speed Step 105</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_106" default="2275" CV="16.2.(469,470)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_106" default="2275" CV="16.2.(469,470)">
         <splitVal/>
         <label>Speed Step 106</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_107" default="2284" CV="16.2.(471,472)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_107" default="2284" CV="16.2.(471,472)">
         <splitVal/>
         <label>Speed Step 107</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_108" default="2302" CV="16.2.(473,474)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_108" default="2302" CV="16.2.(473,474)">
         <splitVal/>
         <label>Speed Step 108</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_109" default="2302" CV="16.2.(475,476)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_109" default="2302" CV="16.2.(475,476)">
         <splitVal/>
         <label>Speed Step 109</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_110" default="2311" CV="16.2.(477,478)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_110" default="2311" CV="16.2.(477,478)">
         <splitVal/>
         <label>Speed Step 110</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_111" default="2330" CV="16.2.(479,480)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_111" default="2330" CV="16.2.(479,480)">
         <splitVal/>
         <label>Speed Step 111</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_112" default="2339" CV="16.2.(481,482)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_112" default="2339" CV="16.2.(481,482)">
         <splitVal/>
         <label>Speed Step 112</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_113" default="2358" CV="16.2.(483,484)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_113" default="2358" CV="16.2.(483,484)">
         <splitVal/>
         <label>Speed Step 113</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_114" default="2376" CV="16.2.(485,486)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_114" default="2376" CV="16.2.(485,486)">
         <splitVal/>
         <label>Speed Step 114</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_115" default="2386" CV="16.2.(487,488)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_115" default="2386" CV="16.2.(487,488)">
         <splitVal/>
         <label>Speed Step 115</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_116" default="2386" CV="16.2.(489,490)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_116" default="2386" CV="16.2.(489,490)">
         <splitVal/>
         <label>Speed Step 116</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_117" default="2423" CV="16.2.(491,492)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_117" default="2423" CV="16.2.(491,492)">
         <splitVal/>
         <label>Speed Step 117</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_118" default="2423" CV="16.2.(493,494)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_118" default="2423" CV="16.2.(493,494)">
         <splitVal/>
         <label>Speed Step 118</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_119" default="2423" CV="16.2.(495,496)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_119" default="2423" CV="16.2.(495,496)">
         <splitVal/>
         <label>Speed Step 119</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_120" default="2423" CV="16.2.(497,498)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_120" default="2423" CV="16.2.(497,498)">
         <splitVal/>
         <label>Speed Step 120</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_121" default="2423" CV="16.2.(499,500)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_121" default="2423" CV="16.2.(499,500)">
         <splitVal/>
         <label>Speed Step 121</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_122" default="2450" CV="16.2.(501,502)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_122" default="2450" CV="16.2.(501,502)">
         <splitVal/>
         <label>Speed Step 122</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_123" default="2459" CV="16.2.(503,504)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_123" default="2459" CV="16.2.(503,504)">
         <splitVal/>
         <label>Speed Step 123</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_124" default="2468" CV="16.2.(505,506)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_124" default="2468" CV="16.2.(505,506)">
         <splitVal/>
         <label>Speed Step 124</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_125" default="2485" CV="16.2.(507,508)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_125" default="2485" CV="16.2.(507,508)">
         <splitVal/>
         <label>Speed Step 125</label>
       </variable>
-      <variable mask="XXXXXXXXVVVVVVVV" item="Speed_Step_126" default="2525" CV="16.2.(509,510)">
+      <variable mask="XVVVVVVV VVVVVVVV" item="Speed_Step_126" default="2525" CV="16.2.(509,510)">
         <splitVal/>
         <label>Speed Step 126</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
-      <variable default="225" item="Lighting Preset 0 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.9.(509,510)">
+      <variable default="225" item="Lighting Preset 0 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.9.(509,510)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -4365,7 +4357,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="110" item="Lighting Preset 0 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(259,260)">
+      <variable default="110" item="Lighting Preset 0 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(259,260)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -4377,7 +4369,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="110" item="Lighting Preset 0 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(265,266)">
+      <variable default="110" item="Lighting Preset 0 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(265,266)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -4389,7 +4381,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="225" item="Lighting Preset 0 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(271,272)">
+      <variable default="225" item="Lighting Preset 0 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(271,272)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -4401,7 +4393,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 0 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(277,278)">
+      <variable default="0" item="Lighting Preset 0 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(277,278)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -4413,7 +4405,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 0 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(283,284)">
+      <variable default="0" item="Lighting Preset 0 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(283,284)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -4425,7 +4417,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 0 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(289,290)">
+      <variable default="0" item="Lighting Preset 0 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(289,290)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -4437,7 +4429,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 0 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(295,296)">
+      <variable default="0" item="Lighting Preset 0 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(295,296)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -4449,7 +4441,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 0 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(301,302)">
+      <variable default="0" item="Lighting Preset 0 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(301,302)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -4461,7 +4453,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 0 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(307,308)">
+      <variable default="500" item="Lighting Preset 0 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(307,308)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -4473,7 +4465,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="450" item="Lighting Preset 12 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(461,462)">
+      <variable default="450" item="Lighting Preset 12 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(461,462)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -4485,7 +4477,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="150" item="Lighting Preset 12 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(467,468)">
+      <variable default="150" item="Lighting Preset 12 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(467,468)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -4497,7 +4489,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="150" item="Lighting Preset 12 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(473,474)">
+      <variable default="150" item="Lighting Preset 12 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(473,474)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -4509,7 +4501,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="175" item="Lighting Preset 12 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(479,480)">
+      <variable default="175" item="Lighting Preset 12 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(479,480)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -4521,7 +4513,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 12 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(485,486)">
+      <variable default="0" item="Lighting Preset 12 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(485,486)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -4533,7 +4525,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 12 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(491,492)">
+      <variable default="0" item="Lighting Preset 12 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(491,492)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -4545,7 +4537,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 12 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(497,498)">
+      <variable default="0" item="Lighting Preset 12 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(497,498)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -4557,7 +4549,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 12 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(503,504)">
+      <variable default="0" item="Lighting Preset 12 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(503,504)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -4569,7 +4561,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 12 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(509,510)">
+      <variable default="0" item="Lighting Preset 12 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(509,510)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -4581,7 +4573,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 12 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(259,260)">
+      <variable default="0" item="Lighting Preset 12 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(259,260)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -4593,7 +4585,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="900" item="Lighting Preset 8 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(477,478)">
+      <variable default="900" item="Lighting Preset 8 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(477,478)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -4605,7 +4597,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="400" item="Lighting Preset 8 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(483,484)">
+      <variable default="400" item="Lighting Preset 8 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(483,484)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -4617,7 +4609,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(489,490)">
+      <variable default="0" item="Lighting Preset 8 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(489,490)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -4629,7 +4621,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(495,496)">
+      <variable default="0" item="Lighting Preset 8 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(495,496)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -4641,7 +4633,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(501,502)">
+      <variable default="0" item="Lighting Preset 8 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(501,502)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -4653,7 +4645,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(507,508)">
+      <variable default="0" item="Lighting Preset 8 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(507,508)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -4665,7 +4657,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(257,258)">
+      <variable default="0" item="Lighting Preset 8 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(257,258)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -4677,7 +4669,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(263,264)">
+      <variable default="0" item="Lighting Preset 8 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(263,264)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -4689,7 +4681,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(269,270)">
+      <variable default="0" item="Lighting Preset 8 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(269,270)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -4701,7 +4693,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 8 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(275,276)">
+      <variable default="0" item="Lighting Preset 8 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(275,276)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -4713,7 +4705,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="100" item="Lighting Preset 4 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(493,494)">
+      <variable default="100" item="Lighting Preset 4 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(493,494)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -4725,7 +4717,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="725" item="Lighting Preset 4 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(499,500)">
+      <variable default="725" item="Lighting Preset 4 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(499,500)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -4737,7 +4729,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="725" item="Lighting Preset 4 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(505,506)">
+      <variable default="725" item="Lighting Preset 4 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(505,506)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -4749,7 +4741,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 4 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(511,512)">
+      <variable default="0" item="Lighting Preset 4 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(511,512)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -4761,7 +4753,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 4 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(261,262)">
+      <variable default="0" item="Lighting Preset 4 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(261,262)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -4773,7 +4765,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 4 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(267,268)">
+      <variable default="0" item="Lighting Preset 4 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(267,268)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -4785,7 +4777,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 4 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(273,274)">
+      <variable default="0" item="Lighting Preset 4 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(273,274)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -4797,7 +4789,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 4 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(279,280)">
+      <variable default="0" item="Lighting Preset 4 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(279,280)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -4809,7 +4801,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 4 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(285,286)">
+      <variable default="0" item="Lighting Preset 4 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(285,286)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -4821,7 +4813,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 4 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(291,292)">
+      <variable default="500" item="Lighting Preset 4 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(291,292)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -4833,7 +4825,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 14 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(325,326)">
+      <variable default="50" item="Lighting Preset 14 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(325,326)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -4845,7 +4837,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="1000" item="Lighting Preset 14 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(331,332)">
+      <variable default="1000" item="Lighting Preset 14 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(331,332)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -4857,7 +4849,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(337,338)">
+      <variable default="0" item="Lighting Preset 14 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(337,338)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -4869,7 +4861,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(343,344)">
+      <variable default="0" item="Lighting Preset 14 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(343,344)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -4881,7 +4873,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(349,350)">
+      <variable default="0" item="Lighting Preset 14 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(349,350)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -4893,7 +4885,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(355,356)">
+      <variable default="0" item="Lighting Preset 14 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(355,356)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -4905,7 +4897,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(361,362)">
+      <variable default="0" item="Lighting Preset 14 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(361,362)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -4917,7 +4909,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(367,368)">
+      <variable default="0" item="Lighting Preset 14 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(367,368)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -4929,7 +4921,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(373,374)">
+      <variable default="0" item="Lighting Preset 14 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(373,374)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -4941,7 +4933,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 14 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(379,380)">
+      <variable default="0" item="Lighting Preset 14 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(379,380)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -4953,7 +4945,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 15 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(385,386)">
+      <variable default="50" item="Lighting Preset 15 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(385,386)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -4965,7 +4957,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="175" item="Lighting Preset 15 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(391,392)">
+      <variable default="175" item="Lighting Preset 15 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(391,392)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -4977,7 +4969,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 15 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(397,398)">
+      <variable default="50" item="Lighting Preset 15 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(397,398)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -4989,7 +4981,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="175" item="Lighting Preset 15 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(403,404)">
+      <variable default="175" item="Lighting Preset 15 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(403,404)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5001,7 +4993,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 15 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(409,410)">
+      <variable default="50" item="Lighting Preset 15 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(409,410)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5013,7 +5005,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="1000" item="Lighting Preset 15 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(415,416)">
+      <variable default="1000" item="Lighting Preset 15 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(415,416)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5025,7 +5017,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 15 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(421,422)">
+      <variable default="0" item="Lighting Preset 15 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(421,422)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5037,7 +5029,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 15 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(427,428)">
+      <variable default="0" item="Lighting Preset 15 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(427,428)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5049,7 +5041,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 15 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(433,434)">
+      <variable default="0" item="Lighting Preset 15 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(433,434)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5061,7 +5053,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 15 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(439,440)">
+      <variable default="0" item="Lighting Preset 15 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(439,440)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5073,7 +5065,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="225" item="Lighting Preset 10 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(341,342)">
+      <variable default="225" item="Lighting Preset 10 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(341,342)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5085,7 +5077,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="110" item="Lighting Preset 10 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(347,348)">
+      <variable default="110" item="Lighting Preset 10 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(347,348)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5097,7 +5089,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="110" item="Lighting Preset 10 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(353,354)">
+      <variable default="110" item="Lighting Preset 10 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(353,354)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5109,7 +5101,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="225" item="Lighting Preset 10 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(359,360)">
+      <variable default="225" item="Lighting Preset 10 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(359,360)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5121,7 +5113,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 10 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(365,366)">
+      <variable default="0" item="Lighting Preset 10 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(365,366)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5133,7 +5125,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 10 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(371,372)">
+      <variable default="0" item="Lighting Preset 10 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(371,372)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5145,7 +5137,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 10 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(377,378)">
+      <variable default="0" item="Lighting Preset 10 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(377,378)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5157,7 +5149,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 10 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(383,384)">
+      <variable default="0" item="Lighting Preset 10 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(383,384)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5169,7 +5161,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 10 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(389,390)">
+      <variable default="0" item="Lighting Preset 10 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(389,390)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5181,7 +5173,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 10 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(395,396)">
+      <variable default="0" item="Lighting Preset 10 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(395,396)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5193,7 +5185,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 6 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(357,358)">
+      <variable default="50" item="Lighting Preset 6 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(357,358)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5205,7 +5197,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="175" item="Lighting Preset 6 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(363,364)">
+      <variable default="175" item="Lighting Preset 6 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(363,364)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5217,7 +5209,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 6 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(369,370)">
+      <variable default="50" item="Lighting Preset 6 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(369,370)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5229,7 +5221,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="2000" item="Lighting Preset 6 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(375,376)">
+      <variable default="2000" item="Lighting Preset 6 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(375,376)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5241,7 +5233,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 6 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(381,382)">
+      <variable default="0" item="Lighting Preset 6 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(381,382)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5253,7 +5245,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 6 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(387,388)">
+      <variable default="0" item="Lighting Preset 6 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(387,388)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5265,7 +5257,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 6 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(393,394)">
+      <variable default="0" item="Lighting Preset 6 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(393,394)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5277,7 +5269,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 6 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(399,400)">
+      <variable default="0" item="Lighting Preset 6 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(399,400)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5289,7 +5281,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 6 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(405,406)">
+      <variable default="0" item="Lighting Preset 6 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(405,406)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5301,7 +5293,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 6 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(411,412)">
+      <variable default="0" item="Lighting Preset 6 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(411,412)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5313,7 +5305,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="1000" item="Lighting Preset 13 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(265,266)">
+      <variable default="1000" item="Lighting Preset 13 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(265,266)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5325,7 +5317,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(271,272)">
+      <variable default="0" item="Lighting Preset 13 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(271,272)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5337,7 +5329,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(277,278)">
+      <variable default="0" item="Lighting Preset 13 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(277,278)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5349,7 +5341,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(283,284)">
+      <variable default="0" item="Lighting Preset 13 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(283,284)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5361,7 +5353,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(289,290)">
+      <variable default="0" item="Lighting Preset 13 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(289,290)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5373,7 +5365,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(295,296)">
+      <variable default="0" item="Lighting Preset 13 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(295,296)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5385,7 +5377,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(301,302)">
+      <variable default="0" item="Lighting Preset 13 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(301,302)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5397,7 +5389,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(307,308)">
+      <variable default="0" item="Lighting Preset 13 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(307,308)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5409,7 +5401,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 13 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(313,314)">
+      <variable default="0" item="Lighting Preset 13 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(313,314)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5421,7 +5413,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="1000" item="Lighting Preset 13 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(319,320)">
+      <variable default="1000" item="Lighting Preset 13 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(319,320)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5433,7 +5425,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 3 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(433,434)">
+      <variable default="500" item="Lighting Preset 3 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(433,434)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5445,7 +5437,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(439,440)">
+      <variable default="0" item="Lighting Preset 3 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(439,440)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5457,7 +5449,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(445,446)">
+      <variable default="0" item="Lighting Preset 3 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(445,446)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5469,7 +5461,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(451,452)">
+      <variable default="0" item="Lighting Preset 3 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(451,452)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5481,7 +5473,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(457,458)">
+      <variable default="0" item="Lighting Preset 3 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(457,458)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5493,7 +5485,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(463,464)">
+      <variable default="0" item="Lighting Preset 3 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(463,464)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5505,7 +5497,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(469,470)">
+      <variable default="0" item="Lighting Preset 3 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(469,470)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5517,7 +5509,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(475,476)">
+      <variable default="0" item="Lighting Preset 3 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(475,476)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5529,7 +5521,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(481,482)">
+      <variable default="0" item="Lighting Preset 3 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(481,482)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5541,7 +5533,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 3 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(487,488)">
+      <variable default="0" item="Lighting Preset 3 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(487,488)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5553,7 +5545,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 2 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(373,374)">
+      <variable default="500" item="Lighting Preset 2 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(373,374)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5565,7 +5557,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(379,380)">
+      <variable default="0" item="Lighting Preset 2 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(379,380)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5577,7 +5569,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(385,386)">
+      <variable default="0" item="Lighting Preset 2 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(385,386)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5589,7 +5581,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(391,392)">
+      <variable default="0" item="Lighting Preset 2 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(391,392)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5601,7 +5593,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(397,398)">
+      <variable default="0" item="Lighting Preset 2 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(397,398)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5613,7 +5605,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(403,404)">
+      <variable default="0" item="Lighting Preset 2 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(403,404)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5625,7 +5617,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(409,410)">
+      <variable default="0" item="Lighting Preset 2 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(409,410)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5637,7 +5629,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(415,416)">
+      <variable default="0" item="Lighting Preset 2 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(415,416)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5649,7 +5641,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(421,422)">
+      <variable default="0" item="Lighting Preset 2 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(421,422)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5661,7 +5653,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 2 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(427,428)">
+      <variable default="0" item="Lighting Preset 2 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(427,428)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5673,7 +5665,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="125" item="Lighting Preset 7 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(417,418)">
+      <variable default="125" item="Lighting Preset 7 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(417,418)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5685,7 +5677,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="200" item="Lighting Preset 7 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(423,424)">
+      <variable default="200" item="Lighting Preset 7 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(423,424)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5697,7 +5689,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="125" item="Lighting Preset 7 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(429,430)">
+      <variable default="125" item="Lighting Preset 7 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(429,430)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5709,7 +5701,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 7 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(435,436)">
+      <variable default="0" item="Lighting Preset 7 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(435,436)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5721,7 +5713,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 7 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(441,442)">
+      <variable default="0" item="Lighting Preset 7 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(441,442)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5733,7 +5725,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 7 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(447,448)">
+      <variable default="0" item="Lighting Preset 7 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(447,448)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5745,7 +5737,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 7 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(453,454)">
+      <variable default="0" item="Lighting Preset 7 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(453,454)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5757,7 +5749,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 7 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(459,460)">
+      <variable default="0" item="Lighting Preset 7 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(459,460)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5769,7 +5761,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 7 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(465,466)">
+      <variable default="0" item="Lighting Preset 7 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(465,466)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5781,7 +5773,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 7 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(471,472)">
+      <variable default="0" item="Lighting Preset 7 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(471,472)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5793,7 +5785,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="100" item="Lighting Preset 9 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(281,282)">
+      <variable default="100" item="Lighting Preset 9 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(281,282)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5805,7 +5797,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="150" item="Lighting Preset 9 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(287,288)">
+      <variable default="150" item="Lighting Preset 9 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(287,288)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5817,7 +5809,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="120" item="Lighting Preset 9 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(293,294)">
+      <variable default="120" item="Lighting Preset 9 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(293,294)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5829,7 +5821,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="120" item="Lighting Preset 9 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(299,300)">
+      <variable default="120" item="Lighting Preset 9 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(299,300)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5841,7 +5833,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="150" item="Lighting Preset 9 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(305,306)">
+      <variable default="150" item="Lighting Preset 9 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(305,306)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5853,7 +5845,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="100" item="Lighting Preset 9 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(311,312)">
+      <variable default="100" item="Lighting Preset 9 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(311,312)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5865,7 +5857,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="200" item="Lighting Preset 9 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(317,318)">
+      <variable default="200" item="Lighting Preset 9 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(317,318)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5877,7 +5869,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 9 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(323,324)">
+      <variable default="0" item="Lighting Preset 9 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(323,324)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -5889,7 +5881,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 9 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(329,330)">
+      <variable default="0" item="Lighting Preset 9 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(329,330)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -5901,7 +5893,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 9 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(335,336)">
+      <variable default="0" item="Lighting Preset 9 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(335,336)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -5913,7 +5905,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="725" item="Lighting Preset 5 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(297,298)">
+      <variable default="725" item="Lighting Preset 5 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(297,298)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -5925,7 +5917,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="100" item="Lighting Preset 5 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(303,304)">
+      <variable default="100" item="Lighting Preset 5 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(303,304)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -5937,7 +5929,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="725" item="Lighting Preset 5 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(309,310)">
+      <variable default="725" item="Lighting Preset 5 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(309,310)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -5949,7 +5941,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 5 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(315,316)">
+      <variable default="0" item="Lighting Preset 5 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(315,316)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -5961,7 +5953,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 5 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(321,322)">
+      <variable default="0" item="Lighting Preset 5 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(321,322)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -5973,7 +5965,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 5 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(327,328)">
+      <variable default="0" item="Lighting Preset 5 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(327,328)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -5985,7 +5977,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 5 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(333,334)">
+      <variable default="0" item="Lighting Preset 5 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(333,334)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -5997,7 +5989,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 5 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(339,340)">
+      <variable default="0" item="Lighting Preset 5 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(339,340)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -6009,7 +6001,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 5 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(345,346)">
+      <variable default="0" item="Lighting Preset 5 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(345,346)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -6021,7 +6013,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 5 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.11.(351,352)">
+      <variable default="500" item="Lighting Preset 5 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.11.(351,352)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -6033,7 +6025,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 1 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(313,314)">
+      <variable default="500" item="Lighting Preset 1 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(313,314)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -6045,7 +6037,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(319,320)">
+      <variable default="0" item="Lighting Preset 1 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(319,320)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -6057,7 +6049,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(325,326)">
+      <variable default="0" item="Lighting Preset 1 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(325,326)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -6069,7 +6061,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(331,332)">
+      <variable default="0" item="Lighting Preset 1 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(331,332)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -6081,7 +6073,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(337,338)">
+      <variable default="0" item="Lighting Preset 1 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(337,338)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -6093,7 +6085,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(343,344)">
+      <variable default="0" item="Lighting Preset 1 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(343,344)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -6105,7 +6097,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(349,350)">
+      <variable default="0" item="Lighting Preset 1 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(349,350)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -6117,7 +6109,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(355,356)">
+      <variable default="0" item="Lighting Preset 1 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(355,356)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -6129,7 +6121,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 1 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(361,362)">
+      <variable default="0" item="Lighting Preset 1 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(361,362)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -6141,7 +6133,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 1 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.10.(367,368)">
+      <variable default="500" item="Lighting Preset 1 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.10.(367,368)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -6153,7 +6145,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="750" item="Lighting Preset 11 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(401,402)">
+      <variable default="750" item="Lighting Preset 11 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(401,402)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -6165,7 +6157,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="110" item="Lighting Preset 11 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(407,408)">
+      <variable default="110" item="Lighting Preset 11 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(407,408)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -6177,7 +6169,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="85" item="Lighting Preset 11 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(413,414)">
+      <variable default="85" item="Lighting Preset 11 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(413,414)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -6189,7 +6181,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="85" item="Lighting Preset 11 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(419,420)">
+      <variable default="85" item="Lighting Preset 11 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(419,420)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -6201,7 +6193,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="120" item="Lighting Preset 11 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(425,426)">
+      <variable default="120" item="Lighting Preset 11 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(425,426)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -6213,7 +6205,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 11 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(431,432)">
+      <variable default="0" item="Lighting Preset 11 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(431,432)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -6225,7 +6217,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 11 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(437,438)">
+      <variable default="0" item="Lighting Preset 11 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(437,438)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -6237,7 +6229,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 11 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(443,444)">
+      <variable default="0" item="Lighting Preset 11 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(443,444)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -6249,7 +6241,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 11 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(449,450)">
+      <variable default="0" item="Lighting Preset 11 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(449,450)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -6261,7 +6253,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 11 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.12.(455,456)">
+      <variable default="0" item="Lighting Preset 11 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.12.(455,456)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -6273,7 +6265,7 @@
         <decVal max="100"/>
         <label>Step 9: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 16 - Step 0 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(445,446)">
+      <variable default="500" item="Lighting Preset 16 - Step 0 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(445,446)">
         <splitVal/>
         <label>Step 0: Fade Rate</label>
       </variable>
@@ -6285,7 +6277,7 @@
         <decVal max="100"/>
         <label>Step 0: End Brightness</label>
       </variable>
-      <variable default="500" item="Lighting Preset 16 - Step 1 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(451,452)">
+      <variable default="500" item="Lighting Preset 16 - Step 1 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(451,452)">
         <splitVal/>
         <label>Step 1: Fade Rate</label>
       </variable>
@@ -6297,7 +6289,7 @@
         <decVal max="100"/>
         <label>Step 1: End Brightness</label>
       </variable>
-      <variable default="300" item="Lighting Preset 16 - Step 2 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(457,458)">
+      <variable default="300" item="Lighting Preset 16 - Step 2 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(457,458)">
         <splitVal/>
         <label>Step 2: Fade Rate</label>
       </variable>
@@ -6309,7 +6301,7 @@
         <decVal max="100"/>
         <label>Step 2: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 16 - Step 3 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(463,464)">
+      <variable default="50" item="Lighting Preset 16 - Step 3 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(463,464)">
         <splitVal/>
         <label>Step 3: Fade Rate</label>
       </variable>
@@ -6321,7 +6313,7 @@
         <decVal max="100"/>
         <label>Step 3: End Brightness</label>
       </variable>
-      <variable default="175" item="Lighting Preset 16 - Step 4 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(469,470)">
+      <variable default="175" item="Lighting Preset 16 - Step 4 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(469,470)">
         <splitVal/>
         <label>Step 4: Fade Rate</label>
       </variable>
@@ -6333,7 +6325,7 @@
         <decVal max="100"/>
         <label>Step 4: End Brightness</label>
       </variable>
-      <variable default="50" item="Lighting Preset 16 - Step 5 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(475,476)">
+      <variable default="50" item="Lighting Preset 16 - Step 5 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(475,476)">
         <splitVal/>
         <label>Step 5: Fade Rate</label>
       </variable>
@@ -6345,7 +6337,7 @@
         <decVal max="100"/>
         <label>Step 5: End Brightness</label>
       </variable>
-      <variable default="175" item="Lighting Preset 16 - Step 6 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(481,482)">
+      <variable default="175" item="Lighting Preset 16 - Step 6 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(481,482)">
         <splitVal/>
         <label>Step 6: Fade Rate</label>
       </variable>
@@ -6357,7 +6349,7 @@
         <decVal max="100"/>
         <label>Step 6: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 16 - Step 7 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(487,488)">
+      <variable default="0" item="Lighting Preset 16 - Step 7 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(487,488)">
         <splitVal/>
         <label>Step 7: Fade Rate</label>
       </variable>
@@ -6369,7 +6361,7 @@
         <decVal max="100"/>
         <label>Step 7: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 16 - Step 8 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(493,494)">
+      <variable default="0" item="Lighting Preset 16 - Step 8 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(493,494)">
         <splitVal/>
         <label>Step 8: Fade Rate</label>
       </variable>
@@ -6381,7 +6373,7 @@
         <decVal max="100"/>
         <label>Step 8: End Brightness</label>
       </variable>
-      <variable default="0" item="Lighting Preset 16 - Step 9 - Fade Rate" mask="XVVVVVVVVVVVVVVV" CV="16.13.(499,500)">
+      <variable default="0" item="Lighting Preset 16 - Step 9 - Fade Rate" mask="XVVVVVVV VVVVVVVV" CV="16.13.(499,500)">
         <splitVal/>
         <label>Step 9: Fade Rate</label>
       </variable>
@@ -6401,7 +6393,9 @@
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
   <pane>
     <name>TCS Speed Table</name>
-    <display item="Speed Table Definition" label="Select this button to use a Speed Table for Speed Control" layout="above" format="onradiobutton"/>
+    <row>
+      <display item="Speed Table Definition" label="Select this button to use a Speed Table for Speed Control" layout="above" format="onradiobutton"/>
+    </row>
     <column>
       <grid gridx="10" gridy="NEXT" weightx="1" anchor="LINE_END">
         <griditem gridx="0" gridy="0">
@@ -7039,7 +7033,9 @@
   </pane>
   <pane>
     <name>Function Map</name>
-    <display label="Use this pane to map a lighting output to a function button"/>
+    <row>
+      <display label="Use this pane to map a lighting output to a function button"/>
+    </row>
     <column>
       <grid gridx="10" gridy="NEXT" weightx="1" anchor="LINE_END">
         <griditem gridx="0" gridy="0">
@@ -8241,7 +8237,9 @@
 </pane>
   <pane xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>Adv. Lighting Effect Configuration</name>
+    <row>
     <display label="Use this to pane to customize the brightness, timing, and fade of individual light generators"/>
+    </row>
     <column>
         <grid gridx="10" gridy="NEXT" weightx="1">
                 <griditem gridx="0" gridy="0" gridwidth="2">
