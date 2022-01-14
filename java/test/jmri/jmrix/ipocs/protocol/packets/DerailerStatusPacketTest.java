@@ -5,10 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
-
 import jmri.jmrix.ipocs.protocol.enums.RqDerailerState;
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class DerailerStatusPacketTest {
   private final byte[] testPacket = { RqDerailerState.NonPassable.value, RqReleaseState.LocalControl.value, 0x01, 0x23 };
@@ -35,4 +36,14 @@ public class DerailerStatusPacketTest {
     pkt.setOperationTime((short)0x0123);
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

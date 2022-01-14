@@ -1,8 +1,6 @@
 package jmri.jmrix.ipocs;
 
-import jmri.LightManager;
-import jmri.SensorManager;
-import jmri.TurnoutManager;
+import jmri.*;
 
 /**
  *
@@ -12,18 +10,23 @@ import jmri.TurnoutManager;
 public class IpocsSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements jmri.jmrix.ConfiguringSystemConnectionMemo {
   private IpocsPortController portController;
 
-  public IpocsSystemConnectionMemo() {
-    super("P", "IPOCS");
-    jmri.InstanceManager.store(this, IpocsSystemConnectionMemo.class);
-  }
+    public IpocsSystemConnectionMemo() {
+        super("P", "IPOCS");
+        storeThisInstance();
+    }
+    
+    private void storeThisInstance(){
+        InstanceManager.store(this, IpocsSystemConnectionMemo.class);
+    }
 
-  @Override
-  public void configureManagers() {
-    jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-    jmri.InstanceManager.setLightManager(getLightManager());
-    jmri.InstanceManager.setSensorManager(getSensorManager());
-    register();
-  }
+    @Override
+    public void configureManagers() {
+        InstanceManager.setSensorManager(getSensorManager());
+        InstanceManager.setTurnoutManager(getTurnoutManager());
+        InstanceManager.setLightManager(getLightManager());
+    
+        register();
+    }
 
   @Override
   public <B extends jmri.NamedBean> java.util.Comparator<B> getNamedBeanComparator(final Class<B> type) {

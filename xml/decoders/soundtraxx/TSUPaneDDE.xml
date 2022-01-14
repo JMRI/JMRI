@@ -183,6 +183,18 @@
         <label>
           <text> </text>
         </label>
+        <row>
+          <display item="DDE Tracking Offset" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="DDE Tracking Offset" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
   </column>
