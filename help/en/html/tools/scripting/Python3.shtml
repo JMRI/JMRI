@@ -25,10 +25,14 @@
 		    	Python 3 support is only available in JMRI test release 4.99.2 or later.
 		    	Make sure to check the release notes of the JMRI version you're using!
 		    </p>
+		    <p class="important">
+		        This support is experimental; we may still encounter killer problems that we're not
+		        able to solve.  Please feel free to experiment with it, but don't i.e.
+		        write scripts that are critical to your railroad's operation using Python 3.
 		    <p>
 		        Please note that Python 3 support is currently only available for macOS and Linux
 		        computers.  Some of the components it requires are not year available for Windows.
-		        We'll update to use them and make Windows support available as soon as thoe
+		        We'll update to use them and make Windows support available as soon as those
 		        components are updated.
 		    </p>
 	    </div> <!-- closes #teaser-->
@@ -94,7 +98,7 @@
 		</div>
 
 		<div class="section">
-		    <h2>Differences from Jython (Python 2.7) Syntax</h2>
+		    <h2>Issues and differences from Jython (Python 2.7)</h2>
 
             <ul>
             <li>Scripts should start with
@@ -134,6 +138,32 @@
             <li>
                 Unlike Jython, JMRI's Python 3 can address (almost) any of the
                 Python libraries you have installed on your computer.
+
+            <li>
+                You can inherit a Python class from a Java class, i.e.
+                <pre><code class="block">
+class Automat(AbstractAutomaton) :
+    def init(self) :
+        print ("init in Python 3")
+    def handle(self) :
+        print ("handle in Python 3")
+        return False
+                </code></pre>
+                but when you're doing that you can't add any additional
+                methods to the new class.  This might require rethinking
+                how to connect Java class code to your own scripting code;
+                we hope to have some recommendations soon.
+
+            <li>There's a problem with the various
+                <code>wait</code> calls in <code>AbstractAutomaton</code>,
+                e.g. <code>waitMsec(..)</code> and similar,
+                that can result in JMRI locking up. We don't currently
+                have a workaround for this.
+
+            <li>The "syntax error" message doesn't tell you where the
+                error was found.  This is a real pain.
+
+          </ul>
 		</div>
 
         <!--#include virtual="/Footer.shtml" -->
