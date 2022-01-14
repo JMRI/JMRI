@@ -37,7 +37,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         storeCommon(p, element);
 
         Element e2 = new Element("LocoAddressSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        e2.addContent(new Element("socketName").addContent(p.getLocoAddressSocket().getName()));
         MaleSocket socket = p.getLocoAddressSocket().getConnectedSocket();
         String socketSystemName;
         if (socket != null) {
@@ -51,7 +51,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         element.addContent(e2);
 
         e2 = new Element("LocoSpeedSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
+        e2.addContent(new Element("socketName").addContent(p.getLocoSpeedSocket().getName()));
         socket = p.getLocoSpeedSocket().getConnectedSocket();
         if (socket != null) {
             socketSystemName = socket.getSystemName();
@@ -64,12 +64,38 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         element.addContent(e2);
 
         e2 = new Element("LocoDirectionSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
+        e2.addContent(new Element("socketName").addContent(p.getLocoDirectionSocket().getName()));
         socket = p.getLocoDirectionSocket().getConnectedSocket();
         if (socket != null) {
             socketSystemName = socket.getSystemName();
         } else {
             socketSystemName = p.getLocoDirectionSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
+
+        e2 = new Element("LocoFunctionSocket");
+        e2.addContent(new Element("socketName").addContent(p.getLocoFunctionSocket().getName()));
+        socket = p.getLocoFunctionSocket().getConnectedSocket();
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getLocoFunctionSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
+
+        e2 = new Element("LocoFunctionOnOffSocket");
+        e2.addContent(new Element("socketName").addContent(p.getLocoFunctionOnOffSocket().getName()));
+        socket = p.getLocoFunctionOnOffSocket().getConnectedSocket();
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getLocoFunctionOnOffSocketSystemName();
         }
         if (socketSystemName != null) {
             e2.addContent(new Element("systemName").addContent(socketSystemName));
@@ -107,6 +133,26 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         socketSystemName = shared.getChild("LocoDirectionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoDirectionSocketSystemName(socketSystemName.getTextTrim());
+        }
+        
+        Element locoFunctionSocket = shared.getChild("LocoFunctionSocket");
+        if (locoFunctionSocket != null) {
+            socketName = locoFunctionSocket.getChild("socketName");
+            h.getLocoFunctionSocket().setName(socketName.getTextTrim());
+            socketSystemName = locoFunctionSocket.getChild("systemName");
+            if (socketSystemName != null) {
+                h.setLocoFunctionSocketSystemName(socketSystemName.getTextTrim());
+            }
+        }
+        
+        Element locoFunctionOnOffSocket = shared.getChild("LocoFunctionOnOffSocket");
+        if (locoFunctionOnOffSocket != null) {
+            socketName = locoFunctionOnOffSocket.getChild("socketName");
+            h.getLocoFunctionOnOffSocket().setName(socketName.getTextTrim());
+            socketSystemName = locoFunctionOnOffSocket.getChild("systemName");
+            if (socketSystemName != null) {
+                h.setLocoFunctionOnOffSocketSystemName(socketSystemName.getTextTrim());
+            }
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
