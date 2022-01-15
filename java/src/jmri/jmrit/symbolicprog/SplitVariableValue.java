@@ -761,7 +761,7 @@ public class SplitVariableValue extends VariableValue
                         }
                     }
                 }
-            } else  if (_progState <= WRITING_FIRST) {  // writing CVs
+            } else {  // writing CVs
                 if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
                     if (Math.abs(_progState) < cvCount) {   // write next CV
                         _progState--;
