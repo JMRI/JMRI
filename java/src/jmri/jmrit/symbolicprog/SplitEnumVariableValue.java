@@ -701,7 +701,7 @@ public class SplitEnumVariableValue extends VariableValue
     public void setValue(int value) {
         if(value > 0){
             try {
-                long longVal = (long)value;
+                long longVal = value;
                 long val = longVal;
                 setLongValue(val);
             } catch (NumberFormatException e) {
@@ -732,7 +732,7 @@ public class SplitEnumVariableValue extends VariableValue
      */
     @Override
     public long getLongValue() {
-        return (long) _valueArray[_value.getSelectedIndex()];
+        return _valueArray[_value.getSelectedIndex()];
     }
 
     @Override
@@ -763,18 +763,13 @@ public class SplitEnumVariableValue extends VariableValue
     public void setLongValue(long value) {
         log.debug("Variable={}; enter setLongValue {}", _name, value);
         long oldVal;
-        int indexOfSelected;
         try {
             oldVal = (Long.parseLong((String)_value.getSelectedItem()) - mOffset) / mFactor;
         } catch (java.lang.NumberFormatException ex) {
             oldVal = -999;
         }
         log.debug("Variable={}; setValue with new value {} old value {}", _name, value, oldVal);
-            // Get number of items
-        int num = _value.getItemCount();
 
-        // Get items
-        ComboBoxModel completeObject = _value.getModel();
         int lengthOfArray = this._valueArray.length;
         
         for (int i = 0; i < lengthOfArray; i++) {
@@ -1140,8 +1135,6 @@ public class SplitEnumVariableValue extends VariableValue
                 
                 int intMax = (int)_maxVal;
                 CvValue cv = _cvMap.get(getCvNum());
-                String currentCVNum = getCvNum();
-                int cvVal = cv.getValue();
                 int newVal = getValueInCV(cv.getValue(), getMask(), intMax-1); // _maxVal value is count of possibles, i.e. radix
                 setValue(newVal);
                 break;
