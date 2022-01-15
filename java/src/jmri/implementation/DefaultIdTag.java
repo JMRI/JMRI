@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.CheckForNull;
 
@@ -42,6 +43,20 @@ public class DefaultIdTag extends AbstractIdTag {
     public DefaultIdTag(String systemName, String userName) {
         super(systemName, userName);
         setWhereLastSeen(null);
+    }
+
+    @Override
+    public int compareTo(NamedBean n2) {
+        Objects.requireNonNull(n2);
+        String o1 = this.getSystemName();
+        String o2 = n2.getSystemName();
+        int p1len = Manager.getSystemPrefixLength(o1);
+        int p2len = Manager.getSystemPrefixLength(o2);
+        int comp = o2.substring(0, p1len).compareTo(o2.substring(0, p2len));
+        if (comp != 0) 
+            return comp;
+        comp = o1.compareTo(o2);
+        return comp;
     }
 
     @Override
