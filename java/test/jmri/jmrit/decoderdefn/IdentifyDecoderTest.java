@@ -465,22 +465,27 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("step 3 reads CV ", 249, cvRead);
         Assert.assertEquals("running after 3 ", true, i.isRunning());
 
-        // simulate CV read complete on CV249, start 111
+        // simulate CV read complete on CV249, start 248
         i.programmingOpReply(176, 0);
-        Assert.assertEquals("step 4 reads CV ", 111, cvRead);
+        Assert.assertEquals("step 4 reads CV ", 248, cvRead);
         Assert.assertEquals("running after 4 ", true, i.isRunning());
         
-        // simulate CV read complete on CV253, start 110
+        // simulate CV read complete on CV248, start 111
         i.programmingOpReply(1, 0);
-        Assert.assertEquals("step 5 reads CV ", 110, cvRead);
+        Assert.assertEquals("step 5 reads CV 111", 111, cvRead);
         Assert.assertEquals("running after 5 ", true, i.isRunning());
+        
+        // simulate CV read complete on CV111, start 110
+        i.programmingOpReply(1, 0);
+        Assert.assertEquals("step 6 reads CV ", 110, cvRead);
+        Assert.assertEquals("running after 6 ", true, i.isRunning());
         
         // simulate CV read complete on CV110, start end
         i.programmingOpReply(2, 0);
 
         Assert.assertEquals("found mfg ID ", 153, i.mfgID);
         Assert.assertEquals("found model ID ", 5, i.modelID);
-        Assert.assertEquals("found product ID ", 33665024, i.productID);
+        Assert.assertEquals("found product ID ", 33620400, i.productID);
     }
     
         /**

@@ -154,13 +154,14 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             writeCV("50", 4);
             return false;
         } else if (mfgID == 153) {  // TCS
-            productID = value;
-            if(value < 175){ //check for pre-version 5 sound decoders
+            if(value < 129){ //check for mobile decoders
+                productID = value;
                 return true;
             }
             else{
-                statusUpdate("Read decoder extended Version ID Low Byte");
-                readCV("111");
+                productIDlowest = value;
+                statusUpdate("Read decoder sound version number");
+                readCV("248");
                 return false;
             }
         } else if (mfgID == 48) {  // Hornby
@@ -239,7 +240,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 153) {  // TCS
             productIDlow = value;
             statusUpdate("Read decoder extended Version ID Low Byte");
-            readCV("110");
+            readCV("111");
             return false;
         }
         log.error("unexpected step 5 reached with value: {}", value);
@@ -265,8 +266,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return false;
         } else if (mfgID == 153) {  // TCS
             productIDhigh = value;
-            productID = (productIDhigh*256*256*256) + (productIDlow*256*256) + (productID*256);
-            return true;
+            statusUpdate("Read decoder extended Version ID High Byte");
+            readCV("110");
+            return false;
         }
         log.error("unexpected step 6 reached with value: {}", value);
         return true;
@@ -286,6 +288,15 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 13) {  // DIY
             productIDlowest = value;
             productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest;
+            return true;
+        } else if (mfgID == 153) {  // TCS
+            productIDhighest = value;
+            if (((productIDlowest >= 129 && productIDlowest <= 135) && (productIDlow == 5))||(modelID >= 5)){
+                productID = productIDlowest+(productIDlow*256)+(productIDhigh*256*256)+(productIDhighest*256*256*256);
+            }
+            else{
+                productID = productIDlowest;
+            }
             return true;
         }
         log.error("unexpected step 7 reached with value: {}", value);
