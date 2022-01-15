@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
  * {@link #setOptionalCv(boolean flag) setOptionalCv()} and
  * {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
  * <li>TCS: (mfgID == 153) CV249 is physical hardware id, V5 and above use
- * CV110 and CV111 to identify specific sound sets and
- * features. New productID process triggers if (CV249 &gt; 175).</li>
+ * CV248, CV110 and CV111 to identify specific sound sets and
+ * features. New productID process triggers if (CV249 &gt; 128).</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
  * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
  * is low byte of ID</li>
