@@ -8,6 +8,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.SystemConnectionMemo;
@@ -375,6 +377,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return waitUntil;
     }
     
+    /**
+     * Removes SensorManager and SystemConnectionMemo change listeners.
+     * {@inheritDoc}
+     */
+    @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose(){
         memo.removePropertyChangeListener(pcl);
