@@ -92,16 +92,16 @@ public class ConvertFunctionsTest {
         
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_boolean_true)));
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_HELLO)));
-        JUnitAppender.suppressWarnMessageStartsWith("the string \"hello\" cannot be converted to a number");
+        JUnitAppender.assertWarnMessage("the string \"hello\" cannot be converted to a number");
         
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_RAD)));
-        JUnitAppender.suppressWarnMessageStartsWith("the string \"rad\" cannot be converted to a number");
+        JUnitAppender.assertWarnMessage("the string \"rad\" cannot be converted to a number");
         
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_DEG)));
-        JUnitAppender.suppressWarnMessageStartsWith("the string \"deg\" cannot be converted to a number");
+        JUnitAppender.assertWarnMessage("the string \"deg\" cannot be converted to a number");
         
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_0_34)));
-        JUnitAppender.suppressWarnMessageStartsWith("the string \"0.34\" cannot be converted to a number");
+        JUnitAppender.assertWarnMessage("the string \"0.34\" cannot be converted to a number");
         
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr0_34)));
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr0_95)));
@@ -110,10 +110,10 @@ public class ConvertFunctionsTest {
         Assert.assertTrue((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr12)));
         Assert.assertTrue((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr23)));
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr2FA5)));
-        JUnitAppender.suppressWarnMessageStartsWith("the string \"2FA5\" cannot be converted to a number");
+        JUnitAppender.assertWarnMessage("the string \"2FA5\" cannot be converted to a number");
         
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(exprC352)));
-        JUnitAppender.suppressWarnMessageStartsWith("the string \"c352\" cannot be converted to a number");
+        JUnitAppender.assertWarnMessage("the string \"c352\" cannot be converted to a number");
         
         // Test wrong number of parameters
         hasThrown.set(false);
