@@ -1,8 +1,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version author="TCS" version="1" lastUpdated="20220114"/>
+  <version author="TCS" version="1" lastUpdated="20220115"/>
   <decoder>
     <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5">
-      <model model="Sound Value FT" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="46336">
+      <model model="Sound Value FT" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="181">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
@@ -6393,712 +6393,722 @@
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
   <pane>
     <name>TCS Speed Table</name>
-    <row>
-      <display item="Speed Table Definition" label="Select this button to use a Speed Table for Speed Control" layout="above" format="onradiobutton"/>
-    </row>
     <column>
-      <grid gridx="10" gridy="NEXT" weightx="1" anchor="LINE_END">
-        <griditem gridx="0" gridy="0">
-          <display item="Speed_Step_1">
-            <label>SS1</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="0">
-          <display item="Speed_Step_2">
-            <label>SS2</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="0">
-          <display item="Speed_Step_3">
-            <label>SS3</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="0">
-          <display item="Speed_Step_4">
-            <label>SS4</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="0">
-          <display item="Speed_Step_5">
-            <label>SS5</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="0">
-          <display item="Speed_Step_6">
-            <label>SS6</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="0">
-          <display item="Speed_Step_7">
-            <label>SS7</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="0">
-          <display item="Speed_Step_8">
-            <label>SS8</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="0">
-          <display item="Speed_Step_9">
-            <label>SS9</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="0">
-          <display item="Speed_Step_10">
-            <label>SS10</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="1">
-          <display item="Speed_Step_11">
-            <label>SS11</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="1">
-          <display item="Speed_Step_12">
-            <label>SS12</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="1">
-          <display item="Speed_Step_13">
-            <label>SS13</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="1">
-          <display item="Speed_Step_14">
-            <label>SS14</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="1">
-          <display item="Speed_Step_15">
-            <label>SS15</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="1">
-          <display item="Speed_Step_16">
-            <label>SS16</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="1">
-          <display item="Speed_Step_17">
-            <label>SS17</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="1">
-          <display item="Speed_Step_18">
-            <label>SS18</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="1">
-          <display item="Speed_Step_19">
-            <label>SS19</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="1">
-          <display item="Speed_Step_20">
-            <label>SS20</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="2">
-          <display item="Speed_Step_21">
-            <label>SS21</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="2">
-          <display item="Speed_Step_22">
-            <label>SS22</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="2">
-          <display item="Speed_Step_23">
-            <label>SS23</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="2">
-          <display item="Speed_Step_24">
-            <label>SS24</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="2">
-          <display item="Speed_Step_25">
-            <label>SS25</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="2">
-          <display item="Speed_Step_26">
-            <label>SS26</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="2">
-          <display item="Speed_Step_27">
-            <label>SS27</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="2">
-          <display item="Speed_Step_28">
-            <label>SS28</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="2">
-          <display item="Speed_Step_29">
-            <label>SS29</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="2">
-          <display item="Speed_Step_30">
-            <label>SS30</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="3">
-          <display item="Speed_Step_31">
-            <label>SS31</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="3">
-          <display item="Speed_Step_32">
-            <label>SS32</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="3">
-          <display item="Speed_Step_33">
-            <label>SS33</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="3">
-          <display item="Speed_Step_34">
-            <label>SS34</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="3">
-          <display item="Speed_Step_35">
-            <label>SS35</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="3">
-          <display item="Speed_Step_36">
-            <label>SS36</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="3">
-          <display item="Speed_Step_37">
-            <label>SS37</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="3">
-          <display item="Speed_Step_38">
-            <label>SS38</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="3">
-          <display item="Speed_Step_39">
-            <label>SS39</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="3">
-          <display item="Speed_Step_40">
-            <label>SS40</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="4">
-          <display item="Speed_Step_41">
-            <label>SS41</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="4">
-          <display item="Speed_Step_42">
-            <label>SS42</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="4">
-          <display item="Speed_Step_43">
-            <label>SS43</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="4">
-          <display item="Speed_Step_44">
-            <label>SS44</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="4">
-          <display item="Speed_Step_45">
-            <label>SS45</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="4">
-          <display item="Speed_Step_46">
-            <label>SS46</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="4">
-          <display item="Speed_Step_47">
-            <label>SS47</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="4">
-          <display item="Speed_Step_48">
-            <label>SS48</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="4">
-          <display item="Speed_Step_49">
-            <label>SS49</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="4">
-          <display item="Speed_Step_50">
-            <label>SS50</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="5">
-          <display item="Speed_Step_51">
-            <label>SS51</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="5">
-          <display item="Speed_Step_52">
-            <label>SS52</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="5">
-          <display item="Speed_Step_53">
-            <label>SS53</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="5">
-          <display item="Speed_Step_54">
-            <label>SS54</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="5">
-          <display item="Speed_Step_55">
-            <label>SS55</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="5">
-          <display item="Speed_Step_56">
-            <label>SS56</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="5">
-          <display item="Speed_Step_57">
-            <label>SS57</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="5">
-          <display item="Speed_Step_58">
-            <label>SS58</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="5">
-          <display item="Speed_Step_59">
-            <label>SS59</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="5">
-          <display item="Speed_Step_60">
-            <label>SS60</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="6">
-          <display item="Speed_Step_61">
-            <label>SS61</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="6">
-          <display item="Speed_Step_62">
-            <label>SS62</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="6">
-          <display item="Speed_Step_63">
-            <label>SS63</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="6">
-          <display item="Speed_Step_64">
-            <label>SS64</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="6">
-          <display item="Speed_Step_65">
-            <label>SS65</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="6">
-          <display item="Speed_Step_66">
-            <label>SS66</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="6">
-          <display item="Speed_Step_67">
-            <label>SS67</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="6">
-          <display item="Speed_Step_68">
-            <label>SS68</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="6">
-          <display item="Speed_Step_69">
-            <label>SS69</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="6">
-          <display item="Speed_Step_70">
-            <label>SS70</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="7">
-          <display item="Speed_Step_71">
-            <label>SS71</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="7">
-          <display item="Speed_Step_72">
-            <label>SS72</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="7">
-          <display item="Speed_Step_73">
-            <label>SS73</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="7">
-          <display item="Speed_Step_74">
-            <label>SS74</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="7">
-          <display item="Speed_Step_75">
-            <label>SS75</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="7">
-          <display item="Speed_Step_76">
-            <label>SS76</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="7">
-          <display item="Speed_Step_77">
-            <label>SS77</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="7">
-          <display item="Speed_Step_78">
-            <label>SS78</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="7">
-          <display item="Speed_Step_79">
-            <label>SS79</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="7">
-          <display item="Speed_Step_80">
-            <label>SS80</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="8">
-          <display item="Speed_Step_81">
-            <label>SS81</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="8">
-          <display item="Speed_Step_82">
-            <label>SS82</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="8">
-          <display item="Speed_Step_83">
-            <label>SS83</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="8">
-          <display item="Speed_Step_84">
-            <label>SS84</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="8">
-          <display item="Speed_Step_85">
-            <label>SS85</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="8">
-          <display item="Speed_Step_86">
-            <label>SS86</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="8">
-          <display item="Speed_Step_87">
-            <label>SS87</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="8">
-          <display item="Speed_Step_88">
-            <label>SS88</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="8">
-          <display item="Speed_Step_89">
-            <label>SS89</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="8">
-          <display item="Speed_Step_90">
-            <label>SS90</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="9">
-          <display item="Speed_Step_91">
-            <label>SS91</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="9">
-          <display item="Speed_Step_92">
-            <label>SS92</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="9">
-          <display item="Speed_Step_93">
-            <label>SS93</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="9">
-          <display item="Speed_Step_94">
-            <label>SS94</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="9">
-          <display item="Speed_Step_95">
-            <label>SS95</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="9">
-          <display item="Speed_Step_96">
-            <label>SS96</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="9">
-          <display item="Speed_Step_97">
-            <label>SS97</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="9">
-          <display item="Speed_Step_98">
-            <label>SS98</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="9">
-          <display item="Speed_Step_99">
-            <label>SS99</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="9">
-          <display item="Speed_Step_100">
-            <label>SS100</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="10">
-          <display item="Speed_Step_101">
-            <label>SS101</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="10">
-          <display item="Speed_Step_102">
-            <label>SS102</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="10">
-          <display item="Speed_Step_103">
-            <label>SS103</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="10">
-          <display item="Speed_Step_104">
-            <label>SS104</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="10">
-          <display item="Speed_Step_105">
-            <label>SS105</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="10">
-          <display item="Speed_Step_106">
-            <label>SS106</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="10">
-          <display item="Speed_Step_107">
-            <label>SS107</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="10">
-          <display item="Speed_Step_108">
-            <label>SS108</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="10">
-          <display item="Speed_Step_109">
-            <label>SS109</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="10">
-          <display item="Speed_Step_110">
-            <label>SS110</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="11">
-          <display item="Speed_Step_111">
-            <label>SS111</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="11">
-          <display item="Speed_Step_112">
-            <label>SS112</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="11">
-          <display item="Speed_Step_113">
-            <label>SS113</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="11">
-          <display item="Speed_Step_114">
-            <label>SS114</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="11">
-          <display item="Speed_Step_115">
-            <label>SS115</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="11">
-          <display item="Speed_Step_116">
-            <label>SS116</label>
-          </display>
-        </griditem>
-        <griditem gridx="6" gridy="11">
-          <display item="Speed_Step_117">
-            <label>SS117</label>
-          </display>
-        </griditem>
-        <griditem gridx="7" gridy="11">
-          <display item="Speed_Step_118">
-            <label>SS118</label>
-          </display>
-        </griditem>
-        <griditem gridx="8" gridy="11">
-          <display item="Speed_Step_119">
-            <label>SS119</label>
-          </display>
-        </griditem>
-        <griditem gridx="9" gridy="11">
-          <display item="Speed_Step_120">
-            <label>SS120</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="12">
-          <display item="Speed_Step_121">
-            <label>SS121</label>
-          </display>
-        </griditem>
-        <griditem gridx="1" gridy="12">
-          <display item="Speed_Step_122">
-            <label>SS122</label>
-          </display>
-        </griditem>
-        <griditem gridx="2" gridy="12">
-          <display item="Speed_Step_123">
-            <label>SS123</label>
-          </display>
-        </griditem>
-        <griditem gridx="3" gridy="12">
-          <display item="Speed_Step_124">
-            <label>SS124</label>
-          </display>
-        </griditem>
-        <griditem gridx="4" gridy="12">
-          <display item="Speed_Step_125">
-            <label>SS125</label>
-          </display>
-        </griditem>
-        <griditem gridx="5" gridy="12">
-          <display item="Speed_Step_126">
-            <label>SS126</label>
-          </display>
-        </griditem>
-      </grid>
+      <row>
+        <display item="Speed Table Definition" label="Select this button to use a Speed Table for Speed Control" layout="above" format="onradiobutton"/>
+      </row>
+      <row>
+        <column>
+          <grid gridx="10" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <griditem gridx="0" gridy="0">
+              <display item="Speed_Step_1">
+                <label>SS1</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="0">
+              <display item="Speed_Step_2">
+                <label>SS2</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="0">
+              <display item="Speed_Step_3">
+                <label>SS3</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="0">
+              <display item="Speed_Step_4">
+                <label>SS4</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="0">
+              <display item="Speed_Step_5">
+                <label>SS5</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="0">
+              <display item="Speed_Step_6">
+                <label>SS6</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="0">
+              <display item="Speed_Step_7">
+                <label>SS7</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="0">
+              <display item="Speed_Step_8">
+                <label>SS8</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="0">
+              <display item="Speed_Step_9">
+                <label>SS9</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="0">
+              <display item="Speed_Step_10">
+                <label>SS10</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="1">
+              <display item="Speed_Step_11">
+                <label>SS11</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+              <display item="Speed_Step_12">
+                <label>SS12</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="1">
+              <display item="Speed_Step_13">
+                <label>SS13</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="1">
+              <display item="Speed_Step_14">
+                <label>SS14</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="1">
+              <display item="Speed_Step_15">
+                <label>SS15</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="1">
+              <display item="Speed_Step_16">
+                <label>SS16</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="1">
+              <display item="Speed_Step_17">
+                <label>SS17</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="1">
+              <display item="Speed_Step_18">
+                <label>SS18</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="1">
+              <display item="Speed_Step_19">
+                <label>SS19</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="1">
+              <display item="Speed_Step_20">
+                <label>SS20</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="2">
+              <display item="Speed_Step_21">
+                <label>SS21</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+              <display item="Speed_Step_22">
+                <label>SS22</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="2">
+              <display item="Speed_Step_23">
+                <label>SS23</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="2">
+              <display item="Speed_Step_24">
+                <label>SS24</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="2">
+              <display item="Speed_Step_25">
+                <label>SS25</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="2">
+              <display item="Speed_Step_26">
+                <label>SS26</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="2">
+              <display item="Speed_Step_27">
+                <label>SS27</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="2">
+              <display item="Speed_Step_28">
+                <label>SS28</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="2">
+              <display item="Speed_Step_29">
+                <label>SS29</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="2">
+              <display item="Speed_Step_30">
+                <label>SS30</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="3">
+              <display item="Speed_Step_31">
+                <label>SS31</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="3">
+              <display item="Speed_Step_32">
+                <label>SS32</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="3">
+              <display item="Speed_Step_33">
+                <label>SS33</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="3">
+              <display item="Speed_Step_34">
+                <label>SS34</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="3">
+              <display item="Speed_Step_35">
+                <label>SS35</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="3">
+              <display item="Speed_Step_36">
+                <label>SS36</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="3">
+              <display item="Speed_Step_37">
+                <label>SS37</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="3">
+              <display item="Speed_Step_38">
+                <label>SS38</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="3">
+              <display item="Speed_Step_39">
+                <label>SS39</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="3">
+              <display item="Speed_Step_40">
+                <label>SS40</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="4">
+              <display item="Speed_Step_41">
+                <label>SS41</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="4">
+              <display item="Speed_Step_42">
+                <label>SS42</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="4">
+              <display item="Speed_Step_43">
+                <label>SS43</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="4">
+              <display item="Speed_Step_44">
+                <label>SS44</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="4">
+              <display item="Speed_Step_45">
+                <label>SS45</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="4">
+              <display item="Speed_Step_46">
+                <label>SS46</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="4">
+              <display item="Speed_Step_47">
+                <label>SS47</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="4">
+              <display item="Speed_Step_48">
+                <label>SS48</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="4">
+              <display item="Speed_Step_49">
+                <label>SS49</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="4">
+              <display item="Speed_Step_50">
+                <label>SS50</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="5">
+              <display item="Speed_Step_51">
+                <label>SS51</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="5">
+              <display item="Speed_Step_52">
+                <label>SS52</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="5">
+              <display item="Speed_Step_53">
+                <label>SS53</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="5">
+              <display item="Speed_Step_54">
+                <label>SS54</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="5">
+              <display item="Speed_Step_55">
+                <label>SS55</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="5">
+              <display item="Speed_Step_56">
+                <label>SS56</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="5">
+              <display item="Speed_Step_57">
+                <label>SS57</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="5">
+              <display item="Speed_Step_58">
+                <label>SS58</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="5">
+              <display item="Speed_Step_59">
+                <label>SS59</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="5">
+              <display item="Speed_Step_60">
+                <label>SS60</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="6">
+              <display item="Speed_Step_61">
+                <label>SS61</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="6">
+              <display item="Speed_Step_62">
+                <label>SS62</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="6">
+              <display item="Speed_Step_63">
+                <label>SS63</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="6">
+              <display item="Speed_Step_64">
+                <label>SS64</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="6">
+              <display item="Speed_Step_65">
+                <label>SS65</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="6">
+              <display item="Speed_Step_66">
+                <label>SS66</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="6">
+              <display item="Speed_Step_67">
+                <label>SS67</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="6">
+              <display item="Speed_Step_68">
+                <label>SS68</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="6">
+              <display item="Speed_Step_69">
+                <label>SS69</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="6">
+              <display item="Speed_Step_70">
+                <label>SS70</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="7">
+              <display item="Speed_Step_71">
+                <label>SS71</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="7">
+              <display item="Speed_Step_72">
+                <label>SS72</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="7">
+              <display item="Speed_Step_73">
+                <label>SS73</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="7">
+              <display item="Speed_Step_74">
+                <label>SS74</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="7">
+              <display item="Speed_Step_75">
+                <label>SS75</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="7">
+              <display item="Speed_Step_76">
+                <label>SS76</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="7">
+              <display item="Speed_Step_77">
+                <label>SS77</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="7">
+              <display item="Speed_Step_78">
+                <label>SS78</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="7">
+              <display item="Speed_Step_79">
+                <label>SS79</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="7">
+              <display item="Speed_Step_80">
+                <label>SS80</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="8">
+              <display item="Speed_Step_81">
+                <label>SS81</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="8">
+              <display item="Speed_Step_82">
+                <label>SS82</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="8">
+              <display item="Speed_Step_83">
+                <label>SS83</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="8">
+              <display item="Speed_Step_84">
+                <label>SS84</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="8">
+              <display item="Speed_Step_85">
+                <label>SS85</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="8">
+              <display item="Speed_Step_86">
+                <label>SS86</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="8">
+              <display item="Speed_Step_87">
+                <label>SS87</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="8">
+              <display item="Speed_Step_88">
+                <label>SS88</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="8">
+              <display item="Speed_Step_89">
+                <label>SS89</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="8">
+              <display item="Speed_Step_90">
+                <label>SS90</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="9">
+              <display item="Speed_Step_91">
+                <label>SS91</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="9">
+              <display item="Speed_Step_92">
+                <label>SS92</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="9">
+              <display item="Speed_Step_93">
+                <label>SS93</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="9">
+              <display item="Speed_Step_94">
+                <label>SS94</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="9">
+              <display item="Speed_Step_95">
+                <label>SS95</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="9">
+              <display item="Speed_Step_96">
+                <label>SS96</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="9">
+              <display item="Speed_Step_97">
+                <label>SS97</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="9">
+              <display item="Speed_Step_98">
+                <label>SS98</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="9">
+              <display item="Speed_Step_99">
+                <label>SS99</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="9">
+              <display item="Speed_Step_100">
+                <label>SS100</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="10">
+              <display item="Speed_Step_101">
+                <label>SS101</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="10">
+              <display item="Speed_Step_102">
+                <label>SS102</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="10">
+              <display item="Speed_Step_103">
+                <label>SS103</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="10">
+              <display item="Speed_Step_104">
+                <label>SS104</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="10">
+              <display item="Speed_Step_105">
+                <label>SS105</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="10">
+              <display item="Speed_Step_106">
+                <label>SS106</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="10">
+              <display item="Speed_Step_107">
+                <label>SS107</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="10">
+              <display item="Speed_Step_108">
+                <label>SS108</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="10">
+              <display item="Speed_Step_109">
+                <label>SS109</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="10">
+              <display item="Speed_Step_110">
+                <label>SS110</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="11">
+              <display item="Speed_Step_111">
+                <label>SS111</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="11">
+              <display item="Speed_Step_112">
+                <label>SS112</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="11">
+              <display item="Speed_Step_113">
+                <label>SS113</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="11">
+              <display item="Speed_Step_114">
+                <label>SS114</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="11">
+              <display item="Speed_Step_115">
+                <label>SS115</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="11">
+              <display item="Speed_Step_116">
+                <label>SS116</label>
+              </display>
+            </griditem>
+            <griditem gridx="6" gridy="11">
+              <display item="Speed_Step_117">
+                <label>SS117</label>
+              </display>
+            </griditem>
+            <griditem gridx="7" gridy="11">
+              <display item="Speed_Step_118">
+                <label>SS118</label>
+              </display>
+            </griditem>
+            <griditem gridx="8" gridy="11">
+              <display item="Speed_Step_119">
+                <label>SS119</label>
+              </display>
+            </griditem>
+            <griditem gridx="9" gridy="11">
+              <display item="Speed_Step_120">
+                <label>SS120</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="12">
+              <display item="Speed_Step_121">
+                <label>SS121</label>
+              </display>
+            </griditem>
+            <griditem gridx="1" gridy="12">
+              <display item="Speed_Step_122">
+                <label>SS122</label>
+              </display>
+            </griditem>
+            <griditem gridx="2" gridy="12">
+              <display item="Speed_Step_123">
+                <label>SS123</label>
+              </display>
+            </griditem>
+            <griditem gridx="3" gridy="12">
+              <display item="Speed_Step_124">
+                <label>SS124</label>
+              </display>
+            </griditem>
+            <griditem gridx="4" gridy="12">
+              <display item="Speed_Step_125">
+                <label>SS125</label>
+              </display>
+            </griditem>
+            <griditem gridx="5" gridy="12">
+              <display item="Speed_Step_126">
+                <label>SS126</label>
+              </display>
+            </griditem>
+          </grid>
+        </column>
+      </row>
     </column>
   </pane>
   <pane>
     <name>Function Map</name>
-    <row>
-      <display label="Use this pane to map a lighting output to a function button"/>
-    </row>
     <column>
-      <grid gridx="10" gridy="NEXT" weightx="1" anchor="LINE_END">
-        <griditem gridx="0" gridy="0">
-          <display item="F0F_Map">
-            <label>F0F (Wire Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="1">
-          <display item="F0R_Map">
-            <label>F0R (Yellow Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="2">
-          <display item="F1_Map">
-            <label>F1 (Green Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="3">
-          <display item="F2_Map">
-            <label>F2 (Purple Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="4">
-          <display item="F3_Map">
-            <label>F3 (Brown Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="5">
-          <display item="F4_Map">
-            <label>F4 (Pink Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="6">
-          <display item="F5_Map">
-            <label>F5 (Pink/Purple Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="7">
-          <display item="F6_Map">
-            <label>F6 (Green/Brown Wire) Mapping: </label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="8">
-          <display item="Ditch_Blink_Map">
-            <label>Ditch Light Blink Mapping</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="9">
-          <display item="Dim_Map">
-            <label>Dim Mapping</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="10">
-          <display item="Audio_Assist_Map">
-            <label>Audio-Assist Mapping</label>
-          </display>
-        </griditem>
-        <griditem gridx="0" gridy="11">
-          <display item="Drive_Hold_Map">
-            <label>Drive Speed Lock Mapping</label>
-          </display>
-        </griditem>
-      </grid>
+      <row>
+        <label>
+          <text>Use this pane to map a lighting output to a function button</text>
+        </label>
+      </row>
+      <row>
+        <column>
+          <grid gridx="10" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <griditem gridx="0" gridy="0">
+              <display item="F0F_Map">
+                <label>F0F (Wire Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="1">
+              <display item="F0R_Map">
+                <label>F0R (Yellow Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="2">
+              <display item="F1_Map">
+                <label>F1 (Green Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="3">
+              <display item="F2_Map">
+                <label>F2 (Purple Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="4">
+              <display item="F3_Map">
+                <label>F3 (Brown Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="5">
+              <display item="F4_Map">
+                <label>F4 (Pink Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="6">
+              <display item="F5_Map">
+                <label>F5 (Pink/Purple Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="7">
+              <display item="F6_Map">
+                <label>F6 (Green/Brown Wire) Mapping: </label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="8">
+              <display item="Ditch_Blink_Map">
+                <label>Ditch Light Blink Mapping</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="9">
+              <display item="Dim_Map">
+                <label>Dim Mapping</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="10">
+              <display item="Audio_Assist_Map">
+                <label>Audio-Assist Mapping</label>
+              </display>
+            </griditem>
+            <griditem gridx="0" gridy="11">
+              <display item="Drive_Hold_Map">
+                <label>Drive Speed Lock Mapping</label>
+              </display>
+            </griditem>
+          </grid>
+        </column>
+      </row>
     </column>
   </pane>
   <pane xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
@@ -7824,312 +7834,366 @@
   <name xml:lang="it">Suoni</name>
   <name xml:lang="nl">Geluid</name>
   <column>
-    <display item="Sound Option 1"/>
-    <display item="Sound Option 2"/>
-    <display item="Sound Option 3"/>
-    <display item="Sound Option 4"/>
-    <display item="Sound Option 5"/>
-    <display item="Sound Option 6"/>
-    <display item="Sound Option 7"/>
-    <display item="Sound Option 8"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Option 9"/>
-    <display item="Sound Option 10"/>
-    <display item="Sound Option 11"/>
-    <display item="Sound Option 12"/>
-    <display item="Sound Option 13"/>
-    <display item="Sound Option 14"/>
-    <display item="Sound Option 15"/>
-    <display item="Sound Option 16"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Option 17"/>
-    <display item="Sound Option 18"/>
-    <display item="Sound Option 19"/>
-    <display item="Sound Option 20"/>
-    <display item="Sound Option 21"/>
-    <display item="Sound Option 22"/>
-    <display item="Sound Option 23"/>
-    <display item="Sound Option 24"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Option 25"/>
-    <display item="Sound Option 26"/>
-    <display item="Sound Option 27"/>
-    <display item="Sound Option 28"/>
-    <display item="Sound Option 29"/>
-    <display item="Sound Option 30"/>
-    <display item="Sound Option 31"/>
-    <display item="Sound Option 32"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Option 33"/>
-    <display item="Sound Option 34"/>
-    <display item="Sound Option 35"/>
-    <display item="Sound Option 36"/>
-    <display item="Sound Option 37"/>
-    <display item="Sound Option 38"/>
-    <display item="Sound Option 39"/>
-    <display item="Sound Option 40"/>
-  </column>
-  <column>
-    <display item="Sound Group 1 Control" format="checkbox"/>
-    <display item="Sound Group 1 Option 1"/>
-    <display item="Sound Group 1 Option 2"/>
-    <display item="Sound Group 1 Option 3"/>
-    <display item="Sound Group 1 Option 4"/>
-    <display item="Sound Group 1 Option 5"/>
-    <display item="Sound Group 1 Option 6"/>
-    <display item="Sound Group 1 Option 7"/>
-    <display item="Sound Group 1 Option 8"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Group 1 Option 9"/>
-    <display item="Sound Group 1 Option 10"/>
-    <display item="Sound Group 1 Option 11"/>
-    <display item="Sound Group 1 Option 12"/>
-    <display item="Sound Group 1 Option 13"/>
-    <display item="Sound Group 1 Option 14"/>
-    <display item="Sound Group 1 Option 15"/>
-    <display item="Sound Group 1 Option 16"/>
-  </column>
-  <column>
-    <display item="Sound Group 2 Control" format="checkbox"/>
-    <display item="Sound Group 2 Option 1"/>
-    <display item="Sound Group 2 Option 2"/>
-    <display item="Sound Group 2 Option 3"/>
-    <display item="Sound Group 2 Option 4"/>
-    <display item="Sound Group 2 Option 5"/>
-    <display item="Sound Group 2 Option 6"/>
-    <display item="Sound Group 2 Option 7"/>
-    <display item="Sound Group 2 Option 8"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Group 2 Option 9"/>
-    <display item="Sound Group 2 Option 10"/>
-    <display item="Sound Group 2 Option 11"/>
-    <display item="Sound Group 2 Option 12"/>
-    <display item="Sound Group 2 Option 13"/>
-    <display item="Sound Group 2 Option 14"/>
-    <display item="Sound Group 2 Option 15"/>
-    <display item="Sound Group 2 Option 16"/>
-  </column>
-  <column>
-    <display item="Sound Group 3 Control" format="checkbox"/>
     <row>
-      <display item="Sound Group 3 Option 1" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 1" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 3 Option 2" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 2" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 3 Option 3" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 3" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 3 Option 4" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 4" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 3 Option 5" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 5" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 3 Option 6" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 6" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 3 Option 7" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 7" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 3 Option 8" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 3 Option 8" layout="above" format="hslider"/>
-    </row>
-  </column>
-  <column>
-    <display item="Sound Group 4 Control" format="checkbox"/>
-    <row>
-      <display item="Sound Group 4 Option 1" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 1" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 4 Option 2" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 2" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 4 Option 3" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 3" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 4 Option 4" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 4" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 4 Option 5" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 5" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 4 Option 6" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 6" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 4 Option 7" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 7" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="Sound Group 4 Option 8" layout="above" label=""/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Sound Group 4 Option 8" layout="above" format="hslider"/>
-    </row>
-  </column>
-  <column>
-    <display item="Sound Group 5 Checkbox 1" format="checkbox"/>
-    <display item="Sound Group 5 Checkbox 2" format="checkbox"/>
-    <display item="Sound Group 5 Checkbox 3" format="checkbox"/>
-    <display item="Sound Group 5 Checkbox 4" format="checkbox"/>
-    <display item="Sound Group 5 Checkbox 5" format="checkbox"/>
-    <display item="Sound Group 5 Checkbox 6" format="checkbox"/>
-    <display item="Sound Group 5 Checkbox 7" format="checkbox"/>
-    <display item="Sound Group 5 Checkbox 8" format="checkbox"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Group 6 Checkbox 1" format="checkbox"/>
-    <display item="Sound Group 6 Random Freq 1"/>
-    <display item="Sound Group 6 Checkbox 2" format="checkbox"/>
-    <display item="Sound Group 6 Random Freq 2"/>
-    <display item="Sound Group 6 Checkbox 3" format="checkbox"/>
-    <display item="Sound Group 6 Random Freq 3"/>
-    <display item="Sound Group 6 Checkbox 4" format="checkbox"/>
-    <display item="Sound Group 6 Random Freq 4"/>
-    <display item="Sound Group 6 Random OA Timer"/>
-    <display item="Sound Group 6 Random Cutout"/>
-    <display item="Sound Group 6 Checkbox 5" format="checkbox"/>
-    <display item="Sound Group 6 Checkbox 6" format="checkbox"/>
-    <display item="Sound Group 6 Checkbox 7" format="checkbox"/>
-    <display item="Sound Group 6 Checkbox 8" format="checkbox"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Group 7 Checkbox 1" format="checkbox"/>
-    <display item="Sound Group 7 Checkbox 2" format="checkbox"/>
-    <display item="Sound Group 7 Checkbox 3" format="checkbox"/>
-    <display item="Sound Group 7 Checkbox 4" format="checkbox"/>
-    <display item="Sound Group 7 Checkbox 5" format="checkbox"/>
-    <display item="Sound Group 7 Checkbox 6" format="checkbox"/>
-    <display item="Sound Group 7 Checkbox 7" format="checkbox"/>
-    <display item="Sound Group 7 Checkbox 8" format="checkbox"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Sound Group 8 Checkbox 1" format="checkbox"/>
-    <display item="Sound Group 8 Dual Prime Mover Delay"/>
-    <display item="Sound Group 8 Checkbox 2" format="checkbox"/>
-    <display item="Sound Group 8 Checkbox 3" format="checkbox"/>
-    <display item="Sound Group 8 Checkbox 4" format="checkbox"/>
-    <display item="Sound Group 8 Checkbox 5" format="checkbox"/>
-    <display item="Sound Group 8 Checkbox 6" format="checkbox"/>
-    <display item="Sound Group 8 Checkbox 7" format="checkbox"/>
-    <display item="Sound Group 8 Checkbox 8" format="checkbox"/>
+        <column>
+            <row>
+                <separator/>
+            </row>
+            <row>
+                    <label>
+                        <text>&lt;html&gt;&lt;h2&gt;Warning: Issue with "Read Sheet(s)"&lt;/h2&gt;&lt;/html&gt;</text>
+                    </label>
+            </row>
+            <row>
+                    <label>
+                    <text> </text>
+                    </label>
+            </row>
+            <row>
+                    <label>
+                        <text>&lt;html&gt;&lt;em&gt;Due to an unresolved JMRI issue, use of "Read Sheet(s)" will show incorrect values for the majority of settings on this pane.&lt;/em&gt;&lt;/html&gt;</text>
+                    </label>
+            </row>
+            <row>
+                    <label>
+                    <text> </text>
+                    </label>
+             </row>
+            <row>
+                    <label>
+                        <text>&lt;html&gt;&lt;strong&gt;Workaround: Switch to "CVs" pane and "Read Full Sheet".&lt;/strong&gt;&lt;/html&gt;</text>
+                    </label>
+            </row>
+            <row>
+                    <label>
+                        <text> </text>
+                    </label>
+            </row>
+            <row>
+                    <label>
+                        <text>&lt;html&gt;The correct from-decoder values will then be shown in all panes and can be changed/written.&lt;/html&gt;</text>
+                    </label>
+            </row>
+            <row>
+                    <label>
+                        <text> </text>
+                    </label>
+            </row>
+            <row>
+                <separator/>
+            </row>
+        </column>
+      </row>
+      <row>
+      <column>
+        <display item="Sound Option 1"/>
+        <display item="Sound Option 2"/>
+        <display item="Sound Option 3"/>
+        <display item="Sound Option 4"/>
+        <display item="Sound Option 5"/>
+        <display item="Sound Option 6"/>
+        <display item="Sound Option 7"/>
+        <display item="Sound Option 8"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Option 9"/>
+        <display item="Sound Option 10"/>
+        <display item="Sound Option 11"/>
+        <display item="Sound Option 12"/>
+        <display item="Sound Option 13"/>
+        <display item="Sound Option 14"/>
+        <display item="Sound Option 15"/>
+        <display item="Sound Option 16"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Option 17"/>
+        <display item="Sound Option 18"/>
+        <display item="Sound Option 19"/>
+        <display item="Sound Option 20"/>
+        <display item="Sound Option 21"/>
+        <display item="Sound Option 22"/>
+        <display item="Sound Option 23"/>
+        <display item="Sound Option 24"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Option 25"/>
+        <display item="Sound Option 26"/>
+        <display item="Sound Option 27"/>
+        <display item="Sound Option 28"/>
+        <display item="Sound Option 29"/>
+        <display item="Sound Option 30"/>
+        <display item="Sound Option 31"/>
+        <display item="Sound Option 32"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Option 33"/>
+        <display item="Sound Option 34"/>
+        <display item="Sound Option 35"/>
+        <display item="Sound Option 36"/>
+        <display item="Sound Option 37"/>
+        <display item="Sound Option 38"/>
+        <display item="Sound Option 39"/>
+        <display item="Sound Option 40"/>
+      </column>
+      <column>
+        <display item="Sound Group 1 Control" format="checkbox"/>
+        <display item="Sound Group 1 Option 1"/>
+        <display item="Sound Group 1 Option 2"/>
+        <display item="Sound Group 1 Option 3"/>
+        <display item="Sound Group 1 Option 4"/>
+        <display item="Sound Group 1 Option 5"/>
+        <display item="Sound Group 1 Option 6"/>
+        <display item="Sound Group 1 Option 7"/>
+        <display item="Sound Group 1 Option 8"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Group 1 Option 9"/>
+        <display item="Sound Group 1 Option 10"/>
+        <display item="Sound Group 1 Option 11"/>
+        <display item="Sound Group 1 Option 12"/>
+        <display item="Sound Group 1 Option 13"/>
+        <display item="Sound Group 1 Option 14"/>
+        <display item="Sound Group 1 Option 15"/>
+        <display item="Sound Group 1 Option 16"/>
+      </column>
+      <column>
+        <display item="Sound Group 2 Control" format="checkbox"/>
+        <display item="Sound Group 2 Option 1"/>
+        <display item="Sound Group 2 Option 2"/>
+        <display item="Sound Group 2 Option 3"/>
+        <display item="Sound Group 2 Option 4"/>
+        <display item="Sound Group 2 Option 5"/>
+        <display item="Sound Group 2 Option 6"/>
+        <display item="Sound Group 2 Option 7"/>
+        <display item="Sound Group 2 Option 8"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Group 2 Option 9"/>
+        <display item="Sound Group 2 Option 10"/>
+        <display item="Sound Group 2 Option 11"/>
+        <display item="Sound Group 2 Option 12"/>
+        <display item="Sound Group 2 Option 13"/>
+        <display item="Sound Group 2 Option 14"/>
+        <display item="Sound Group 2 Option 15"/>
+        <display item="Sound Group 2 Option 16"/>
+      </column>
+      <column>
+        <display item="Sound Group 3 Control" format="checkbox"/>
+        <row>
+          <display item="Sound Group 3 Option 1" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 1" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 3 Option 2" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 2" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 3 Option 3" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 3" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 3 Option 4" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 4" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 3 Option 5" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 5" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 3 Option 6" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 6" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 3 Option 7" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 7" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 3 Option 8" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 3 Option 8" layout="above" format="hslider"/>
+        </row>
+      </column>
+      <column>
+        <display item="Sound Group 4 Control" format="checkbox"/>
+        <row>
+          <display item="Sound Group 4 Option 1" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 1" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 4 Option 2" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 2" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 4 Option 3" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 3" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 4 Option 4" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 4" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 4 Option 5" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 5" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 4 Option 6" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 6" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 4 Option 7" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 7" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Sound Group 4 Option 8" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Sound Group 4 Option 8" layout="above" format="hslider"/>
+        </row>
+      </column>
+      <column>
+        <display item="Sound Group 5 Checkbox 1" format="checkbox"/>
+        <display item="Sound Group 5 Checkbox 2" format="checkbox"/>
+        <display item="Sound Group 5 Checkbox 3" format="checkbox"/>
+        <display item="Sound Group 5 Checkbox 4" format="checkbox"/>
+        <display item="Sound Group 5 Checkbox 5" format="checkbox"/>
+        <display item="Sound Group 5 Checkbox 6" format="checkbox"/>
+        <display item="Sound Group 5 Checkbox 7" format="checkbox"/>
+        <display item="Sound Group 5 Checkbox 8" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Group 6 Checkbox 1" format="checkbox"/>
+        <display item="Sound Group 6 Random Freq 1"/>
+        <display item="Sound Group 6 Checkbox 2" format="checkbox"/>
+        <display item="Sound Group 6 Random Freq 2"/>
+        <display item="Sound Group 6 Checkbox 3" format="checkbox"/>
+        <display item="Sound Group 6 Random Freq 3"/>
+        <display item="Sound Group 6 Checkbox 4" format="checkbox"/>
+        <display item="Sound Group 6 Random Freq 4"/>
+        <display item="Sound Group 6 Random OA Timer"/>
+        <display item="Sound Group 6 Random Cutout"/>
+        <display item="Sound Group 6 Checkbox 5" format="checkbox"/>
+        <display item="Sound Group 6 Checkbox 6" format="checkbox"/>
+        <display item="Sound Group 6 Checkbox 7" format="checkbox"/>
+        <display item="Sound Group 6 Checkbox 8" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Group 7 Checkbox 1" format="checkbox"/>
+        <display item="Sound Group 7 Checkbox 2" format="checkbox"/>
+        <display item="Sound Group 7 Checkbox 3" format="checkbox"/>
+        <display item="Sound Group 7 Checkbox 4" format="checkbox"/>
+        <display item="Sound Group 7 Checkbox 5" format="checkbox"/>
+        <display item="Sound Group 7 Checkbox 6" format="checkbox"/>
+        <display item="Sound Group 7 Checkbox 7" format="checkbox"/>
+        <display item="Sound Group 7 Checkbox 8" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Group 8 Checkbox 1" format="checkbox"/>
+        <display item="Sound Group 8 Dual Prime Mover Delay"/>
+        <display item="Sound Group 8 Checkbox 2" format="checkbox"/>
+        <display item="Sound Group 8 Checkbox 3" format="checkbox"/>
+        <display item="Sound Group 8 Checkbox 4" format="checkbox"/>
+        <display item="Sound Group 8 Checkbox 5" format="checkbox"/>
+        <display item="Sound Group 8 Checkbox 6" format="checkbox"/>
+        <display item="Sound Group 8 Checkbox 7" format="checkbox"/>
+        <display item="Sound Group 8 Checkbox 8" format="checkbox"/>
+      </column>
+      </row>
   </column>
 </pane>
   <pane xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
@@ -8238,7 +8302,11 @@
   <pane xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>Adv. Lighting Effect Configuration</name>
     <row>
-    <display label="Use this to pane to customize the brightness, timing, and fade of individual light generators"/>
+        <label>
+            <text>
+            Use this to pane to customize the brightness, timing, and fade of individual light generators
+            </text>
+        </label>
     </row>
     <column>
         <grid gridx="10" gridy="NEXT" weightx="1">
