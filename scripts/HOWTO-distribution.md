@@ -273,7 +273,7 @@ For each, if it doesn't have the right milestone set, and is a change to the rel
         git push github
 ```
 
-- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom) (This did not entirely work in *.99.2)
+- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom) (This did not properly push the new branch in the .2 build, check that this time)
 
 ```
         ant make-test-release-branch
@@ -462,10 +462,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.2+Rf3d7151af8.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.2/JMRI.4.99.2+Rf3d7151af8.dmg) | 8b23919296ab511cca7b4220e6d578ac387936dfe93d420113b41c533920be39
-[JMRI.4.99.2+Rf3d7151af8.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.2/JMRI.4.99.2+Rf3d7151af8.exe) | eed2981cb418b3b6a57c84f4b1ed676fabbd3b21995043bf2c2a0c8ca38e946b
-[JMRI.4.99.2+Rf3d7151af8.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.2/JMRI.4.99.2+Rf3d7151af8.tgz) | 4e02ad171199e2498237d920cca90477849e1253b0775cbec930b937a6991449
-
+[JMRI.4.99.2+Racb4fb2437.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.2/JMRI.4.99.2+Racb4fb2437.dmg) | 04582d65f7a4376f2de5a49b20409feeaa1105ade81021b694538a25daf66a62
+[JMRI.4.99.2+Racb4fb2437.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.2/JMRI.4.99.2+Racb4fb2437.exe) | af95f08e5b94873085ce2282538daafca410408d483b549ac85ecc79e80607f3
+[JMRI.4.99.2+Racb4fb2437.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.2/JMRI.4.99.2+Racb4fb2437.tgz) | ce50c1dbf18168537c659d621297da4d31bfe42cfeaf7de3e2297cebc83494a7
 
 ```
 
