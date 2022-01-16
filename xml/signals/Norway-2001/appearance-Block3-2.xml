@@ -20,7 +20,7 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
-        <date>2021-11-08</date>
+        <date>2021-11-13</date>
         <authorinitials>KT</authorinitials>
         <revremark>Initial Version</revremark>
     </revision>
@@ -28,18 +28,18 @@
   
   <aspecttable>Norway-2001</aspecttable>
 
-  <name>Main 3-lamp over 2 lamp distant Signal</name>
+  <name>Block 3-lamp over 2 lamp distant Signal</name>
   
-  <description>This uses a head with green, red and green and a head with flashing orange and flashing green</description>
-  <description>Used in station area/exit on newer systems</description>
+  <description>This uses a head with green, flashing red and green and a head with flashing orange and flashing green</description>
+  <description>Used in blocks and minimum 200m before stations</description>
   
   <appearances>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>flashred</show>  
-      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3and2-20b.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20B.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3and2-20a.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20A.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear</aspectname>

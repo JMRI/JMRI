@@ -398,8 +398,16 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A single Logix can be imported to LogixNG. Se
-		  the section <i>Logix</i> for more information.</li>
+          <li>The action <i>Throttle</i> has been updated.
+          It now also has the child sockets <i>Function</i>
+          and <i>FunctionOnOff</i>. These are optional.
+          If both are connected, the Throttle action sets
+          or resets this function. The child <i>Function</i>
+          tells the function number and the child
+          <i>FunctionOnOff</i> tells if the function should
+          be On (True) or Off (False).</li>
+          <li>A single Logix can be imported to LogixNG. See
+          the section <i>Logix</i> for more information.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

@@ -140,10 +140,8 @@ public class OBlockTest {
         assertThat(b.getState()).withFailMessage("state not allocated, dark").isEqualTo(OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE);
         
         b.setOutOfService(false);
-        assertThat(b.setPath("path1", w1)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName()));
-        
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"PathName\" not found in block \"c\"."); 
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path1\" not set in block \"c\". Block not allocated."); 
+        Assert.assertNull(b.setPath("path1", w1));
+        Assert.assertTrue(b.isAllocatedTo(w1));
     }
     
     @Test
