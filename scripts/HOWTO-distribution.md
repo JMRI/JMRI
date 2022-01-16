@@ -264,12 +264,6 @@ For each, if it doesn't have the right milestone set, and is a change to the rel
         git pull
 ```
 
-- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom)
-
-```
-        ant make-test-release-branch
-```
-
 - Remove the 4.99.2 milestone on [unmerged PRs or [click here]](https://github.com/JMRI/JMRI/pulls?q=is%3Aopen+is%3Apr+milestone%3A4.99.2)
 
 - Update the &lt;version> element in pom.xml to say the next release:
@@ -277,6 +271,12 @@ For each, if it doesn't have the right milestone set, and is a change to the rel
         sed -i .bak s/4.99.2-SNAPSHOT/4.99.3-SNAPSHOT/g pom.xml
         git commit -m"for next release 4.99.3" pom.xml
         git push github
+```
+
+- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom) (This did not entirely work in *.99.2)
+
+```
+        ant make-test-release-branch
 ```
 
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
@@ -314,7 +314,7 @@ If you're developing any additional (post-4.99.2) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 4.99.2 release name at the top. Enter the 4.99.3 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 4.99.2 release name at the top. Enter the 4.99.1 most recent release at the bottom.  Click "OK"
 
 - Update
 
