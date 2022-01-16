@@ -170,7 +170,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public Editor(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
         setName(name);
-        _defaultToolTip = new ToolTip(null, 0, 0);
+        _defaultToolTip = new ToolTip(null, 0, 0, null);
         setVisible(false);
         InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
@@ -1364,7 +1364,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (p.getDisplayLevel() == BKG) {
             return;
         }
+
         JMenu edit = new JMenu(Bundle.getMessage("EditTooltip"));
+
         JCheckBoxMenuItem showToolTipItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowTooltip"));
         showToolTipItem.setSelected(p.showToolTip());
         showToolTipItem.addActionListener(new ActionListener() {
@@ -1383,7 +1385,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }.init(p, showToolTipItem));
         edit.add(showToolTipItem);
+
+        JCheckBoxMenuItem prependToolTipWithDisplayNameItem = new JCheckBoxMenuItem(Bundle.getMessage("PrependTooltipWithDisplayName"));
+        prependToolTipWithDisplayNameItem.setSelected(p.getToolTip().getPrependToolTipWithDisplayName());
+        prependToolTipWithDisplayNameItem.addActionListener(new ActionListener() {
+            Positionable comp;
+            JCheckBoxMenuItem checkBox;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comp.getToolTip().setPrependToolTipWithDisplayName(checkBox.isSelected());
+            }
+
+            ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
+                comp = pos;
+                checkBox = cb;
+                return this;
+            }
+        }.init(p, prependToolTipWithDisplayNameItem));
+        edit.add(prependToolTipWithDisplayNameItem);
+
         edit.add(CoordinateEdit.getToolTipEditAction(p));
+
         NamedBean bean = p.getNamedBean();
         if (bean != null) {
             edit.add(new AbstractAction(Bundle.getMessage("SetSysNameTooltip")) {
@@ -2626,10 +2649,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void showToolTip(Positionable selection, MouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        String txt = tip.getText();
-        if (txt == null || txt.isEmpty()) {
-            return;
-        }
+        String txt = tip.getTextToDisplay();
+        if (txt == null || txt.isEmpty()) return;
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         setToolTip(tip);
     }
