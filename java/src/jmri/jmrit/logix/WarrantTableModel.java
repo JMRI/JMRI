@@ -660,7 +660,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void fireCellUpdate(int row, int col) {
-        ThreadingUtil.runOnGUIEventually(()-> fireTableCellUpdated(row, col));
+        if (row < getRowCount()) {
+            ThreadingUtil.runOnGUIEventually(()-> fireTableCellUpdated(row, col));
+        }
     }
 
     private void fireTableUpdate() {
@@ -731,10 +733,15 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 setFrameStatusText(Bundle.getMessage("SignalOverrun",
                         bean.getTrainName(), speed, name), Color.red, true);
             } else if (property.equals("OccupyOverrun")) {
-                String name = (String) e.getOldValue();
-                String train = (String) e.getNewValue();
+                String blkName = (String) e.getOldValue();
+                String occuppier = (String) e.getNewValue();
                 setFrameStatusText(Bundle.getMessage("OccupyOverrun",
-                        bean.getTrainName(), train, name), Color.red, true);
+                        bean.getTrainName(), blkName, occuppier), Color.red, true);
+            } else if (property.equals("WarrantOverrun")) {
+                String blkName = (String) e.getOldValue();
+                OBlock warName = (OBlock) e.getNewValue();
+                setFrameStatusText(Bundle.getMessage("WarrantOverrun",
+                        bean.getTrainName(), blkName, warName), Color.red, true);
             } else if (property.equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();
@@ -748,26 +755,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                                 bean.getTrainName(), bean.getDisplayName()),
                                 myGreen, true);
                     }
-                } else if (oldMode == Warrant.MODE_NONE && newMode != Warrant.MODE_NONE) {
-                    // OK to run warrant, but look for problems ahead that may restrict extent of warrant
-                    // From here on messages are status information, not abort info
-                    String msg1 = bean.checkStartBlock();  // notify first block occupied by this train
-                    if (msg1 == null) {
-                        msg1 = "";
-                    } else if (msg1.equals("BlockDark")) {
-                        msg1 = Bundle.getMessage("startDark");
-                    } else if (msg1.equals("warnStart")) {
-                        msg1 = Bundle.getMessage("startUnoccupied");
-                    }
-                    String msg2 = bean.checkRoute();   // notify about occupation ahead
-                    if (msg2 == null) {
-                        msg2 = "";
-                    }
-                    setFrameStatusText(Bundle.getMessage("warrantStart",
-                            bean.getTrainName(), bean.getDisplayName(),
-                            bean.getCurrentBlockName(),
-                            Bundle.getMessage("startAppendage", msg1, msg2, Bundle.getMessage(Warrant.MODES[newMode]))),
-                            myGreen, true); 
                 } else if (oldMode != Warrant.MODE_NONE && newMode == Warrant.MODE_NONE) {
                     OBlock curBlock = bean.getCurrentBlockOrder().getBlock();
                     OBlock lastBlock = bean.getLastOrder().getBlock();
@@ -820,8 +807,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 if (e.getOldValue()==null) {
                     stateStr = Bundle.getMessage("engineerGone", blkName); 
                 } else {
-                    int runState = ((Integer) e.getOldValue()).intValue();
-                    stateStr = Bundle.getMessage(Warrant.RUN_STATE[runState], blkName);
+                    stateStr = ((String) e.getOldValue());
                 }
                 int newCntrl = ((Integer) e.getNewValue()).intValue();
                 setFrameStatusText(Bundle.getMessage("controlFailed",
