@@ -2656,10 +2656,6 @@
         <exec executable="git" failifexecutionfails="true">
             <arg value="push"/>
             <arg value="${jmri.repository.url}"/>
-            <arg value="${branch-name}"/>
-        </exec>
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="pull"/>
         </exec>
 
         <!-- return to ${release.branch} -->
