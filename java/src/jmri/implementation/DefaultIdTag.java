@@ -52,7 +52,7 @@ public class DefaultIdTag extends AbstractIdTag {
         String o2 = n2.getSystemName();
         int p1len = Manager.getSystemPrefixLength(o1);
         int p2len = Manager.getSystemPrefixLength(o2);
-        int comp = o2.substring(0, p1len).compareTo(o2.substring(0, p2len));
+        int comp = o1.substring(0, p1len).compareTo(o2.substring(0, p2len));
         if (comp != 0) 
             return comp;
         comp = o1.compareTo(o2);
