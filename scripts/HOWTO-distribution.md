@@ -202,7 +202,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
         diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.99-master.shtml | grep '^>'
 ```
 
-If there were, update the j11master
+   If there were, update the j11master
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
 ```
