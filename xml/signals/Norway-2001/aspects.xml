@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
-  <name>Norway2001</name>
+  <name>Norway-2001</name>
   <date>2021</date>
   <reference>Main 3-light, 2-lights and distance 2-light signals found in Wiki, Norwegian railway signaling.
 https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
@@ -44,38 +44,27 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
-      <dccAspect>0</dccAspect>
+      <dccAspect>31</dccAspect>
     </aspect>
 
     <aspect>
       <name>Stop</name>
       <rule>Rule 248</rule>
       <indication>Stop before the mast</indication>
-      <description>Red, Signal 20b, 3 and 2 lamp</description>
-      <comment>Station enter, exit</comment>
+      <description>Red, Signal 20b and flashred, 20a for Blocks</description>
+      <comment>Used in Stations and Blocks. Flashing for blocks</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
-      <dccAspect>20</dccAspect>
-    </aspect>
-    <aspect>
-      <name>BlockStop</name>
-      <rule>Rule 247</rule>
-      <indication>Stop 20 meter before the mast</indication>
-      <description>Flashing red, Signal 20A, 3 lamp</description>
-      <comment>Block signal and Station area enter</comment>
-      <speed>Stop</speed>
-      <speed2>Stop</speed2>
-      <route>Either</route>
-      <dccAspect>19</dccAspect>
+      <dccAspect>0</dccAspect>
     </aspect>
     <aspect>
       <name>Diverging</name>
       <rule>Rule 247</rule>
       <indication>Proceed on Diverging route</indication>
-      <description>One green, Signal 21, 3 and 2 lamp</description>
-      <comment>Station area enter, station enter, exit and block signal</comment>
-      <speed>Diverging</speed>
+      <description>1 green, Signal 21, 3 and 2 lamp</description>
+      <comment>Station exit and block signal</comment>
+      <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Diverging</route>
       <dccAspect>21</dccAspect>
@@ -84,8 +73,8 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
       <name>Clear</name>
       <rule>Rule 247</rule>
       <indication>Proceed, Signal 22, no diverging</indication>
-      <description>2 x green, 3 lamp</description>
-      <comment>Station area enter, station enter, exit and block signal</comment>
+      <description>2 green, 3 lamp</description>
+      <comment>Station area and block signal</comment>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
@@ -101,7 +90,7 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
       <indication>Proceed preparing to stop at next signal</indication>
       <description>2 Green over flashing orange, 3 lamp over 2 lamp signal 23</description>
       <comment>Block signal and Station area enter</comment>
-      <speed>Medium</speed>
+      <speed>Normal</speed>
       <speed2>Stop</speed2>
       <route>Normal</route>
       <dccAspect>5</dccAspect>
@@ -109,7 +98,7 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
     <aspect>
       <name>Clear Expect Clear</name>
       <indication>Proceed, expect clear at next signal</indication>
-      <description>2xGreen over flashing green, 3 lamp over 2 lamp Signal 24</description>
+      <description>2 Green over flashing green, 3 lamp over 2 lamp Signal 24</description>
       <comment>3 lamp over 2 lamp. signal</comment>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
@@ -119,10 +108,10 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
     <aspect>
       <name>Clear Expect Diverging</name>
       <indication>Proceed, expect diverging at next signal</indication>
-      <description>2xGreen over flashing orenge and green, 3 lamp over 2 lamp Signal 24</description>
+      <description>2 Green over flashing orenge and green, 3 lamp over 2 lamp Signal 24</description>
       <comment>3 lamp over 2 lamp. signal</comment>
-      <speed>Medium</speed>
-      <speed2>Diverging</speed2>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
       <route>Normal</route>
       <dccAspect>7</dccAspect>
     </aspect>
@@ -133,7 +122,7 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
       <indication>Proceed over diverging, expect stop at next signal</indication>
       <description>1 Green over flashing orange, 3 lamp over 2 lamp signal 23</description>
       <comment>3 lamp over 2 lamp. signal</comment>
-      <speed>Diverging</speed>
+      <speed>Medium</speed>
       <speed2>Stop</speed2>
       <route>Diverging</route>
       <dccAspect>8</dccAspect>
@@ -143,7 +132,7 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
       <indication>Proceed over diverging, expect clear at next signal</indication>
       <description>1 Green over flashing green, 3 lamp over 2 lamp signal 25</description>
       <comment>3 lamp over 2 lamp. signal</comment>
-      <speed>Diverging</speed>
+      <speed>Medium</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
       <dccAspect>9</dccAspect>
@@ -153,8 +142,8 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
       <indication>Proceed over diverging, preparing to diverge at next signal</indication>
       <description>1 Green over flashing orange and green, 3 lamp over 2 lamp signal 24</description>
       <comment>3 lamp over 2 lamp. signal</comment>
-      <speed>Diverging</speed>
-      <speed2>Diverging</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
       <dccAspect>10</dccAspect>
     </aspect>
@@ -178,7 +167,7 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
       <description>Green and orange flashing, Signal 24</description>
       <comment>Distant Signal</comment>
       <speed>Medium</speed>
-      <speed2>Diverging</speed2>
+      <speed2>Medium</speed2>
       <route>Normal</route>
       <dccAspect>24</dccAspect>
     </aspect>
@@ -205,6 +194,8 @@ https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
     <imagetype type="aspects"/>
   </imagetypes>
   <appearancefiles>
+    <appearancefile href="appearance-Block3.xml"/>
+    <appearancefile href="appearance-Block3-2.xml"/>
     <appearancefile href="appearance-Main3-2.xml"/>
     <appearancefile href="appearance-Main2-2.xml"/>
     <appearancefile href="appearance-Main3.xml"/>
