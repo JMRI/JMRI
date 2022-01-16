@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>handle new locoState reply to sync speed, dir and Fkeys</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -91,8 +91,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Native MQTT SignalMasts are available.</li>
-                <li>Splash screen shows connection address</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -142,7 +141,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>Enabled functions 23-27 in the throttle.</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -287,8 +286,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Genesis Diesel - add SD70ACU and Dash 9-44CW</li>
-		<li>TSU Genesis Steam - N Challenger add CV and change some default value per user request</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -396,16 +394,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action <i>Throttle</i> has been updated.
-          It now also has the child sockets <i>Function</i>
-          and <i>FunctionOnOff</i>. These are optional.
-          If both are connected, the Throttle action sets
-          or resets this function. The child <i>Function</i>
-          tells the function number and the child
-          <i>FunctionOnOff</i> tells if the function should
-          be On (True) or Off (False).</li>
-          <li>A single Logix can be imported to LogixNG. See
-          the section <i>Logix</i> for more information.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -475,12 +464,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
-            <li>Initial, very experimental,
-                <a href="https://jmri.org/help/en/html/tools/scripting/Python3.shtml">Python 3 support</a>
-                is available for macOS and Linux.
-            <li>Added simpler accessors to InstanceManager for use in Py3 scripts. See
-                jython/test/InstanceManagerTest.py</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -500,7 +484,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>Native MQTT masts are available</li>
+                <li></li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -586,6 +570,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>SpotBugs has been updated to 4.5.0</li>
+            <li></li>
         </ul>
 
