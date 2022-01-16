@@ -209,8 +209,8 @@ public class NXFrameTest {
         assertThat(warrant.getThrottleCommands().size()>5).withFailMessage("Num Comands").isTrue();
 
         String name = block.getDisplayName();
-        jmri.util.JUnitUtil.waitFor(
-            ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
+        jmri.util.JUnitUtil.waitFor(()->{
+            return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
             "Waiting message");
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         assertThat(sensor0).withFailMessage("Senor IS0 not found").isNotNull();
@@ -223,10 +223,9 @@ public class NXFrameTest {
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("atHalt", name).equals(warrant.getRunningMessage());
+            JUnitUtil.waitFor(200);
+            return Bundle.getMessage("RampHalt", warrant.getTrainName(), testblock.getDisplayName()).equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
-
-        assertThat(Bundle.getMessage("atHalt", block.getDisplayName())).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
@@ -338,31 +337,29 @@ public class NXFrameTest {
 
        // OBlock sensor names
         String[] route1 = {"OB1", "OB6", "OB3"};
-        OBlock block = _OBlockMgr.getOBlock("OB3");
+        final OBlock block3 = _OBlockMgr.getOBlock("OB3");
         // runtimes() in next line runs the train, then checks location
-        assertThat(runtimes(route1,_OBlockMgr).getDisplayName()).withFailMessage("Train in block OB3").isEqualTo(block.getSensor().getDisplayName());
+        assertThat(runtimes(route1,_OBlockMgr).getDisplayName()).withFailMessage("Train in block OB3").isEqualTo(block3.getSensor().getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
         JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return (m.startsWith("Halted in block"));
+            return (m.equals(Bundle.getMessage("RampHalt", warrant.getTrainName(), block3.getDisplayName())));
         }, "Train Halted");
 
         warrant.controlRunTrain(Warrant.RESUME);
-        JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
-
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.startsWith("Running in Block OB3") ||
+            return m.startsWith("At speed Normal") ||
                     m.startsWith("Overdue for arrival at block");
         }, "Train Resumed");
 
         String[] route2 = {"OB3", "OB7", "OB5"};
-        block = _OBlockMgr.getOBlock("OB5");
+        OBlock block5 = _OBlockMgr.getOBlock("OB5");
         // runtimes() in next line runs the train, then checks location
-        assertThat(runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block.getSensor().getDisplayName());
+        assertThat(runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block5.getSensor().getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);

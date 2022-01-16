@@ -98,61 +98,56 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         @Override
         public String getColumnName(int col) {
-            if (col == EDITCOL) {
-                return ""; // no heading on "Edit"
-            }
-            if (col == ENABLECOL) {
-                return enabledString;
-            } else {
-                return super.getColumnName(col);
+            switch (col) {
+                case EDITCOL:
+                    return ""; // no heading on "Edit"
+                case ENABLECOL:
+                    return enabledString;
+                default:
+                    return super.getColumnName(col);
             }
         }
 
         @Override
         public Class<?> getColumnClass(int col) {
-            if (col == EDITCOL) {
-                return JButton.class;
-            }
-            if (col == ENABLECOL) {
-                return Boolean.class;
-            } else {
-                return super.getColumnClass(col);
+            switch (col) {
+                case EDITCOL:
+                    return JButton.class;
+                case ENABLECOL:
+                    return Boolean.class;
+                default:
+                    return super.getColumnClass(col);
             }
         }
 
         @Override
         public int getPreferredWidth(int col) {
             // override default value for SystemName and UserName columns
-            if (col == SYSNAMECOL) {
-                return new JTextField(20).getPreferredSize().width;
-            }
-            if (col == USERNAMECOL) {
-                return new JTextField(25).getPreferredSize().width;
-            }
-            // not actually used due to the configDeleteColumn, setColumnToHoldButton, configureButton
-            if (col == EDITCOL) {
-                return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
-            }
-            // not actually used due to the configValueColumn, setColumnToHoldButton, configureButton
-            if (col == ENABLECOL) {
-                return new JTextField(5).getPreferredSize().width;
-            }
-            if (col == COMMENTCOL) {
-                return new JTextField(25).getPreferredSize().width;
-            } else {
-                return super.getPreferredWidth(col);
+            switch (col) {
+                case SYSNAMECOL:
+                    return new JTextField(20).getPreferredSize().width;
+                case USERNAMECOL:
+                case COMMENTCOL:
+                    return new JTextField(25).getPreferredSize().width;
+                case EDITCOL:
+                    // not actually used due to the configDeleteColumn, setColumnToHoldButton, configureButton
+                    return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
+                case ENABLECOL:
+                    // not actually used due to the configValueColumn, setColumnToHoldButton, configureButton
+                    return new JTextField(5).getPreferredSize().width;
+                default:
+                    return super.getPreferredWidth(col);
             }
         }
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (col == EDITCOL) {
-                return true;
-            }
-            if (col == ENABLECOL) {
-                return true;
-            } else {
-                return super.isCellEditable(row, col);
+            switch (col) {
+                case EDITCOL:
+                case ENABLECOL:
+                    return true;
+                default:
+                    return super.isCellEditable(row, col);
             }
         }
 

@@ -530,6 +530,7 @@ public class NXFrame extends WarrantRoute {
             mode = Warrant.MODE_RUN;
             warrant.setShareRoute(_shareRouteBox.isSelected());
             warrant.setAddTracker(_addTracker.isSelected());
+            warrant.setHaltStart(_haltStartBox.isSelected());
             msg = makeCommands(warrant);
         } else {
             mode = Warrant.MODE_MANUAL;
@@ -546,35 +547,6 @@ public class NXFrame extends WarrantRoute {
             if (msg != null) {
                 log.debug("WarrantTableFrame run warrant. msg= {} Remove warrant {}",msg,warrant.getDisplayName());
                 tableFrame.getModel().removeWarrant(warrant, false);
-            }
-        }
-
-        if (msg == null && mode == Warrant.MODE_RUN) {
-            if (_haltStartBox.isSelected()) {
-                class Halter implements Runnable {
-
-                    Warrant war;
-
-                    Halter(Warrant w) {
-                        war = w;
-                    }
-
-                    @Override
-                    public void run() {
-                        int limit = 0;
-                        try {
-                            // wait until _engineer is assigned so HALT can take effect
-                            while (!war.controlRunTrain(Warrant.HALT) && limit < 3000) {
-                                Thread.sleep(200);
-                                limit += 200;
-                            }
-                        } catch (InterruptedException e) {
-                            war.controlRunTrain(Warrant.HALT);
-                        }
-                    }
-                }
-                Halter h = new Halter(warrant);
-                jmri.util.ThreadingUtil.newThread(h).start();
             }
         }
         if (msg != null) {
@@ -641,8 +613,6 @@ public class NXFrame extends WarrantRoute {
         } catch (java.text.ParseException pe) {
             return Bundle.getMessage("MustBeFloat", text);
         }
-        
-        _speedUtil.resetSpeedProfile();
         return null;
     }
 

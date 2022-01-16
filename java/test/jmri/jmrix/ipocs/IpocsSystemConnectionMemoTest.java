@@ -42,6 +42,7 @@ public class IpocsSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
       when(scmm.isUserNameAvailable("IPOCS")).thenReturn(true);
       imMock.when(() -> jmri.InstanceManager.getDefault(SystemConnectionMemoManager.class)).thenReturn(scmm);
       imMock.when(() -> jmri.InstanceManager.sensorManagerInstance()).thenReturn(sm);
+      imMock.when(() -> jmri.InstanceManager.getDefault(SensorManager.class)).thenReturn(sm);
 
       IpocsSystemConnectionMemo memo = new IpocsSystemConnectionMemo();
       assertNotNull(memo);
