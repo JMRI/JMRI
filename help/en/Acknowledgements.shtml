@@ -631,6 +631,10 @@
 
         <li>John McAleely, who contributed Hornby and Bachmann decoder definitions</li>
 
+        <li>Jordan McBride, <!-- TCSDCC-Jordan -->
+        who worked on the TCS decoder identification, new split value variable form,
+        and TCS decoder definitions.
+
         <li>Greg McCartney, <!-- gpmccartney -->
            who provided a <a href="https://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk and
           Western signal definition</a>, the <a href=
@@ -936,7 +940,7 @@
         is an active jmriusers moderator.</li>
 
         <li>Steve Todd, primary author of EngineDriver throttle for Android, added scripts, helped
-        with web server (particularly client-side panels), updated Dispatcher, and enhanced the 
+        with web server (particularly client-side panels), updated Dispatcher, and enhanced the
         DCCpp connection to keep up with the DCC++EX rewrite and improvements.</li>
 
         <li>
@@ -978,6 +982,9 @@
         Monitor</li>
 
         <li>Jack Walton, who created the Lenz LE080 decoder definition</li>
+
+        <li>Steve Walton, <-- swalton00 -->
+        who fixed the tag sorting.
 
         <li>George Warner, who changed all the TextFields to editable comboboxes (with drop-down
         menus); added a 2nd turnout circle for slips and added left, right & bottom options for the
