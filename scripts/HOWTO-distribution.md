@@ -331,7 +331,7 @@ If you're developing any additional (post-4.99.2) changes that you want in the J
 ================================================================================
 ## Capture A Profile
 
-- On your local machine, open jvisualvm. (If you have multiple displays, you may have to disconnect them) Do
+- On your local machine, open jconsole. (If you have multiple displays, you may have to disconnect them) Do
 
 ```
         ant realclean tests
@@ -396,7 +396,7 @@ If somebody has merged their change into master (or it's branched from master la
 - If needed, remake the decoder index and helpfile meta data
 
 ====================================================================================
-## Create zipped .properties (experimental)
+## Create zipped .properties
 
 The following will take several minutes, so be patient:
 
@@ -521,7 +521,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 4.99.3". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.26 cycle. It's intended to be created from the `HEAD` of the `j11master` branch.
+This is the next release in the 5.0 cycle. It's intended to be created from the `HEAD` of the `j11master` branch.
 ```
 - Add the 4.99.3 milestone to the issue.
 
