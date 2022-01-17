@@ -37,8 +37,14 @@
 		</variable>	  
 		<variable item="Route {$routeIndex}, Switch {$swIndex}, Direction" CV="{$CV1+2}">
 			<enumVal>
-				<enumChoice choice="Thrown" value="0"/>
-				<enumChoice choice="Closed" value="1"/>
+				<enumChoice choice="Thrown" value="0">
+                                    <choice>Thrown</choice>
+                                    <choice xml:lang="cs">Do odbočky</choice>
+                                </enumChoice>
+				<enumChoice choice="Closed" value="1">
+                                    <choice>Closed</choice>
+                                    <choice xml:lang="cs">Přímo</choice>
+                                </enumChoice>
 			</enumVal>
 		</variable>
 
@@ -87,9 +93,11 @@
 		<!-- <label><text>Route <xsl:value-of select="$routeIndex"/>, Switch <xsl:value-of select="$swIndex"/></text></label> -->
         <display item="Route {$routeIndex}, Switch {$swIndex}, Address">
 			<label>Switch <xsl:value-of select="$swIndex"/>, Address  </label>
+			<label xml:lang="cs">Výhybka <xsl:value-of select="$swIndex"/>, Adresa</label>
 		</display>
         <display item="Route {$routeIndex}, Switch {$swIndex}, Direction">
 			<label>Switch <xsl:value-of select="$swIndex"/>, Direction</label>
+			<label xml:lang="cs">Výhybka <xsl:value-of select="$swIndex"/>, Směr</label>
 		</display>
 
 		<xsl:call-template name="RoutesSwInPane">
@@ -106,9 +114,12 @@
   <xsl:if test="5 >= $routeIndex">
   
 		<label><text>&#160;</text></label>
-		<label><text>Route <xsl:value-of select="$routeIndex"/></text></label>
+		<label><text>Route <xsl:value-of select="$routeIndex"/></text>
+                    <text xml:lang="cs">Trasa <xsl:value-of select="$routeIndex"/></text>
+                    </label>
         <display item="Route {$routeIndex}, Address">
 			<label>Route <xsl:value-of select="$routeIndex"/> Address</label>
+                        <label xml:lang="cs">Trasa <xsl:value-of select="$routeIndex"/> Adresa</label>
 		</display>
 
 		<xsl:call-template name="RoutesSwInPane">
@@ -127,6 +138,7 @@
 <xsl:template match="pane[name='RoutesPane']">
 	<pane>
 	<name>Routes</name>
+	<name xml:lang="cs">Trasy</name>
     <column>
 		<xsl:call-template name="RoutesInPane">
 		  <xsl:with-param name="routeIndex" select="1"/>
@@ -165,24 +177,48 @@
 		<variable item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Logic" CV="{$CV1}" mask="XXXXXXXV">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="OR" value="0"/>
-				<enumChoice choice="AND" value="1"/>
+				<enumChoice choice="OR" value="0">
+                                    <choice>OR</choice>
+                                    <choice xml:lang="cs">NEBO</choice>
+                                </enumChoice>
+				<enumChoice choice="AND" value="1">
+                                    <choice>AND</choice>
+                                    <choice xml:lang="cs">A ZÁROVEŇ</choice>
+                                </enumChoice>
 			</enumVal>
 		</variable>
 		<variable item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Status" CV="{$CV1}" mask="XXXXXXVX">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="0/Thrown/Free" value="0"/>
-				<enumChoice choice="1/Closed/Occupied" value="1"/>
+				<enumChoice choice="0/Thrown/Free" value="0">
+                                    <choice>0/Thrown/Free</choice>
+                                    <choice xml:lang="cs">0 / Do odbočky / Volno</choice>
+                                </enumChoice>
+				<enumChoice choice="1/Closed/Occupied" value="1">
+                                    <choice>1/Closed/Occupied</choice>
+                                    <choice xml:lang="cs">1 / Přímo / Obsazeno</choice>
+                                </enumChoice>
 			</enumVal>
 		</variable>
 		<variable item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Type" CV="{$CV1}" mask="XXXVVVXX">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="Not used" value="0"/>
-				<enumChoice choice="Switch status" value="2"/>
-				<enumChoice choice="Sensor" value="3"/>
-				<enumChoice choice="Other rule" value="4"/>
+				<enumChoice choice="Not used" value="0">
+                                    <choice>Not used</choice>
+                                    <choice xml:lang="cs">Nepoužito</choice>
+                                </enumChoice>
+				<enumChoice choice="Switch status" value="2">
+                                    <choice>Switch status</choice>
+                                    <choice xml:lang="cs">Poloha výhybky</choice>
+                                </enumChoice>
+				<enumChoice choice="Sensor" value="3">
+                                    <choice>Sensor</choice>
+                                    <choice xml:lang="cs">Snímač</choice>
+                                </enumChoice>
+				<enumChoice choice="Other rule" value="4">
+                                    <choice>Other rule</choice>
+                                    <choice xml:lang="cs">Jiné pravidlo</choice>
+                                </enumChoice>
 			</enumVal>
 		</variable>
 		<variable CV="{$CV1+1}" item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Address" default="0">
@@ -233,47 +269,95 @@
 		<variable item="Rule {$ruleIndex}, Active" CV="{$CV1}" mask="XXXXXXXV">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="Not used" value="0"/>
-				<enumChoice choice="Yes" value="1"/>
+				<enumChoice choice="Not used" value="0">
+                                    <choice>Not used</choice>
+                                    <choice xml:lang="cs">Nepoužito</choice>
+                                </enumChoice>
+				<enumChoice choice="Yes" value="1">
+                                    <choice>Yes</choice>
+                                    <choice xml:lang="cs">Ano</choice>
+                                </enumChoice>
 			</enumVal>
 		</variable>
 		<variable item="Rule {$ruleIndex}, Switch Number" CV="{$CV1}" mask="XXXXVVVX">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="No switch" value='0'/>
-				<enumChoice choice="Switch 1" value='1'/>
-				<enumChoice choice="Switch 2" value='2'/>
-				<enumChoice choice="Switch 3" value='3'/>
-				<enumChoice choice="Switch 4" value='4'/>
-				<enumChoice choice="Switch 5" value='5'/>
+				<enumChoice choice="No switch" value="0">
+                                    <choice>No switch</choice>
+                                    <choice xml:lang="cs">Žádná výhybka</choice>
+                                </enumChoice>
+				<enumChoice choice="Switch 1" value="1">
+                                    <choice>Switch 1</choice>
+                                    <choice xml:lang="cs">Výhybka 1</choice>
+                                </enumChoice>
+				<enumChoice choice="Switch 2" value="2">
+                                    <choice>Switch 2</choice>
+                                    <choice xml:lang="cs">Výhybka 2</choice>
+                                </enumChoice>
+				<enumChoice choice="Switch 3" value="3">
+                                    <choice>Switch 3</choice>
+                                    <choice xml:lang="cs">Výhybka 3</choice>
+                                </enumChoice>
+				<enumChoice choice="Switch 4" value="4">
+                                    <choice>Switch 4</choice>
+                                    <choice xml:lang="cs">Výhybka 4</choice>
+                                </enumChoice>
+				<enumChoice choice="Switch 5" value="5">
+                                    <choice>Switch 5</choice>
+                                    <choice xml:lang="cs">Výhybka 5</choice>
+                                </enumChoice>                                
 			</enumVal>
 		</variable>
 		<variable item="Rule {$ruleIndex}, Controlled status" CV="{$CV1}" mask="XXXVXXXX">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="Switch Thrown" value="0"/>
-				<enumChoice choice="Switch Closed" value="1"/>
+				<enumChoice choice="Switch Thrown" value="0">
+                                    <choice>Switch Thrown</choice>
+                                    <choice xml:lang="cs">Výhybka Do odbočky</choice>
+                                </enumChoice>
+				<enumChoice choice="Switch Closed" value="1">
+                                    <choice>Switch Closed</choice>
+                                    <choice xml:lang="cs">Výhybka Přímo</choice>
+                                </enumChoice>
 			</enumVal>
 		</variable>
 		<variable item="Rule {$ruleIndex}, Triggering" CV="{$CV1}" mask="XXVXXXXX">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="No active triggering" value="0"/>
-				<enumChoice choice="Triggers switch" value="1"/>
+				<enumChoice choice="No active triggering" value="0">
+                                    <choice>No active triggering</choice>
+                                    <choice xml:lang="cs">Spouštěč není aktivní</choice>
+                                </enumChoice>
+				<enumChoice choice="Triggers switch" value="1">
+                                    <choice>Triggers switch</choice>
+                                    <choice xml:lang="cs">Přestaví výhybku</choice>
+                                </enumChoice>                                
 			</enumVal>
 		</variable>
 		<variable item="Rule {$ruleIndex}, Mandatory" CV="{$CV1}" mask="XVXXXXXX">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="Not mandatory" value="0"/>
-				<enumChoice choice="Mandatory for switch state" value="1"/>
+    				<enumChoice choice="Not mandatory" value="0">
+                                    <choice>Not mandatory</choice>
+                                    <choice xml:lang="cs">Nepovinný</choice>
+                                </enumChoice>
+				<enumChoice choice="Mandatory for switch state" value="1">
+                                    <choice>Mandatory for switch state</choice>
+                                    <choice xml:lang="cs">Povinný pro přestavení výhybky</choice>
+                                </enumChoice>                                
 			</enumVal>
 		</variable>
 		<variable item="Rule {$ruleIndex}, Scope" CV="{$CV1}" mask="XVXXXXXX">
 			<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
 			<enumVal>
-				<enumChoice choice="Active only at true state" value="0"/>
-				<enumChoice choice="Active at both states" value="1"/>
+    				<enumChoice choice="Active only at true state" value="0">
+                                    <choice>Active only at true state</choice>
+                                    <choice xml:lang="cs">Aktivní pouze při stavu PRAVDA</choice>
+                                </enumChoice>
+				<enumChoice choice="Active at both states" value="1">
+                                    <choice>Active at both states</choice>
+                                    <choice xml:lang="cs">Aktivní v obou stavech</choice>
+                                </enumChoice>                                
 			</enumVal>
 		</variable>
 
@@ -307,15 +391,19 @@
 		<label><text>&#160;</text></label>
         <display item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Logic">
 			<label>Stmnt <xsl:value-of select="$stmntIndex"/>, Logic  </label>
+			<label xml:lang="cs">Výrok <xsl:value-of select="$stmntIndex"/>, Logika</label>
 		</display>
         <display item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Status">
 			<label>Stmnt <xsl:value-of select="$stmntIndex"/>, Status</label>
+			<label xml:lang="cs">Výrok <xsl:value-of select="$stmntIndex"/>, Stav</label>
 		</display>
         <display item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Type">
 			<label>Stmnt <xsl:value-of select="$stmntIndex"/>, Type  </label>
+			<label xml:lang="cs">Výrok <xsl:value-of select="$stmntIndex"/>, Typ</label>
 		</display>
         <display item="Rule {$ruleIndex}, Stmnt {$stmntIndex}, Address">
 			<label>Stmnt <xsl:value-of select="$stmntIndex"/>, Address</label>
+			<label xml:lang="cs">Výrok <xsl:value-of select="$stmntIndex"/>, Adresa</label>
 		</display>
 
 		<xsl:call-template name="RuleStmntsInPane">
@@ -340,13 +428,33 @@
   <xsl:if test="5 >= $ruleIndex">
   
 		<label><text>&#160;</text></label>
-		<label><text>- - - Rule <xsl:value-of select="$ruleIndex"/> - - - - - - - - - - - - - - - - - - - - - - - - - - -</text></label>
-        <display item="Rule {$ruleIndex}, Active"><label>Active</label></display>
-        <display item="Rule {$ruleIndex}, Switch Number"><label>Switch Number</label></display>
-        <display item="Rule {$ruleIndex}, Controlled status"><label>Controlled status</label></display>
-        <display item="Rule {$ruleIndex}, Triggering"><label>Triggering</label></display>
-        <display item="Rule {$ruleIndex}, Mandatory"><label>Mandatory</label></display>
-        <display item="Rule {$ruleIndex}, Scope"><label>Scope</label></display>
+		<label><text>- - - Rule <xsl:value-of select="$ruleIndex"/> - - - - - - - - - - - - - - - - - - - - - - - - - - -</text>
+                    <text xml:lang="cs">- - - Pravidlo <xsl:value-of select="$ruleIndex"/> - - - - - - - - - - - - - - - - - - - - - - - - - - -</text>
+                    </label>
+        <display item="Rule {$ruleIndex}, Active">
+            <label>Active</label>
+            <label xml:lang="cs">Aktivní</label>
+        </display>
+        <display item="Rule {$ruleIndex}, Switch Number">
+            <label>Switch Number</label>
+            <label xml:lang="cs">Číslo výhybky</label>
+        </display>
+        <display item="Rule {$ruleIndex}, Controlled status">
+            <label>Controlled status</label>
+            <label xml:lang="cs">Řízený stav</label>
+        </display>
+        <display item="Rule {$ruleIndex}, Triggering">
+            <label>Triggering</label>
+            <label xml:lang="cs">Spouštění</label>
+        </display>
+        <display item="Rule {$ruleIndex}, Mandatory">
+            <label>Mandatory</label>
+            <label xml:lang="cs">Povinnost</label>
+        </display>
+        <display item="Rule {$ruleIndex}, Scope">
+            <label>Scope</label>
+            <label xml:lang="cs">Rozsah</label>
+        </display>
 
 		<xsl:call-template name="RuleStmntsInPane">
 			<xsl:with-param name="ruleIndex" select="$ruleIndex"/>
@@ -364,6 +472,7 @@
 <xsl:template match="pane[name='RulesPane']">
 	<pane>
 	<name>Rules</name>
+        <name xml:lang="cs">Pravidla</name>
     <column>
 		<xsl:call-template name="RulesInPane">
 		  <xsl:with-param name="ruleIndex" select="1"/>
