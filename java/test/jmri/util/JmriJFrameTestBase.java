@@ -1,10 +1,9 @@
 package jmri.util;
 
-import java.awt.GraphicsEnvironment;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -16,15 +15,15 @@ abstract public class JmriJFrameTestBase {
 
     protected JmriJFrame frame = null;
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists",frame);
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testShowAndClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.initComponents();
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             frame.setVisible(true);
