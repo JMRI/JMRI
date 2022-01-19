@@ -15,13 +15,13 @@ abstract public class JmriJFrameTestBase {
 
     protected JmriJFrame frame = null;
 
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",frame);
     }
 
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testShowAndClose() {
         frame.initComponents();
