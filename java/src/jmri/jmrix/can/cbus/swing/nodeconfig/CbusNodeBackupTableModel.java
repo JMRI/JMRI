@@ -44,9 +44,7 @@ public class CbusNodeBackupTableModel extends javax.swing.table.AbstractTableMod
     @Override
     public void propertyChange(PropertyChangeEvent ev){
         if (ev.getPropertyName().equals("BACKUPS")) {
-            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
-                fireTableDataChanged();
-            });
+            fireTableDataChanged();
         }
     }
 

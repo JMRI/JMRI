@@ -37,7 +37,7 @@ public class CbusBasicNodeTableOperations extends CbusBasicNodeTable {
             setRequestNodeDisplay(node.getNodeNumber());
         }
         // notify the JTable object that a row has changed; do that in the Swing thread!
-        ThreadingUtil.runOnGUIEventually(() -> fireTableDataChanged() );
+        fireTableDataChanged();
     }
     
     /**
