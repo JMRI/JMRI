@@ -689,7 +689,7 @@ public class PositionablePropertiesUtil {
         "20", "24", "28", "32", "36"};
 
     javax.swing.JSpinner getSpinner(int value, String tooltip) {
-        SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 5000, 1);
+        SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 9999, 1);
         javax.swing.JSpinner spinX = new javax.swing.JSpinner(model);
         spinX.setValue(value);
         spinX.setToolTipText(tooltip);
