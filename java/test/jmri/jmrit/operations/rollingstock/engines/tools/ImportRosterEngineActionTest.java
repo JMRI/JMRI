@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,10 +7,9 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -30,30 +28,44 @@ import jmri.util.swing.JemmyUtil;
 @Timeout(20)
 public class ImportRosterEngineActionTest extends OperationsTestCase {
     
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ImportRosterEngineAction t = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", t);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testFailedImport() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testFailedImport SelectRosterGroup click OK Thread");
+        t1.start();
+        
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("ImportFailed"), Bundle.getMessage("ButtonOK"));
+        });
+        t2.setName("testFailedImport ImportFailed click OK Thread");
+        t2.start();
+        
         importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return run.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog");
         
-        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ImportFailed"), Bundle.getMessage("ButtonOK"));
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "SelectRosterGroup click OK did not happen");
+
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "ImportFailed click OK did not happen");
 
         if (run != null) {
             try {
@@ -64,9 +76,9 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         }
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testImport(@TempDir File rosterDir) throws IOException, FileNotFoundException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // copied from "RosterTest"
         // store files in random temp directory
@@ -97,17 +109,31 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
 
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testFailedImport SelectRosterGroup click OK Thread");
+        t1.start();
+        
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
+        });
+        t2.setName("testFailedImport SuccessfulImport click OK Thread");
+        t2.start();
+
         importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return run.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog");
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "SelectRosterGroup click OK did not happen");
         
-        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
-
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "SuccessfulImport click OK did not happen");
+        
         if (run != null) {
             try {
                 run.join();
@@ -124,9 +150,9 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         Assert.assertEquals("owner", "OwnerNameABC", e.getOwner());
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testImportNoModel(@TempDir File rosterDir) throws IOException, FileNotFoundException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // copied from "RosterTest"
         // store files in random temp directory
@@ -155,16 +181,30 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
 
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testImportNoModel SelectRosterGroup click OK Thread");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
+        });
+        t2.setName("testImportNoModel SuccessfulImport click OK Thread");
+        t2.start();
+
         importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return run.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog");
-        
-        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "SelectRosterGroup click OK did not happen");
+
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "SuccessfulImport click OK did not happen");
 
         if (run != null) {
             try {
@@ -180,9 +220,9 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         jmri.util.JUnitAppender.assertWarnMessage("Roster Id: Bob hasn't been assigned a model name");
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testImportNoRoadNumber(@TempDir File rosterDir) throws IOException, FileNotFoundException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // copied from "RosterTest"
         // store files in random temp directory
@@ -209,18 +249,31 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         e1.putAttribute("key b", "value b");
         r.addEntry(e1);
 
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testImportNoRoadNumber SelectRosterGroup click OK Thread");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("ImportFailed"), Bundle.getMessage("ButtonOK"));
+        });
+        t2.setName("testImportNoRoadNumber ImportFailed click OK Thread");
+        t2.start();
+
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
         importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return run.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog");
-        
-        JemmyUtil.pressDialogButton(rb.getString("SelectRosterGroup"), Bundle.getMessage("ButtonOK"));
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ImportFailed"), Bundle.getMessage("ButtonOK"));
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "SelectRosterGroup click OK did not happen");
+
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "ImportFailed click OK did not happen");
 
         if (run != null) {
             try {
