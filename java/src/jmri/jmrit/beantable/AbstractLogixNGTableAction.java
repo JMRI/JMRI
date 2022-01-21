@@ -1052,7 +1052,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logixNG system name.txt
-        userFileChooser.setSelectedFile(new File(_curNamedBean.getSystemName() + ".txt"));  // NOI18N
+        String suggestedFileName = _curNamedBean.getSystemName().replace(':', '_') + ".txt";
+        userFileChooser.setSelectedFile(new File(suggestedFileName));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1086,12 +1087,12 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 + (isEnabled(_curNamedBean)
                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-//        JTextArea textContent = buildConditionalListing();
-        JTextArea textContent = new JTextArea();
         try {
             // Add bean Header inforation first
             FileUtil.appendTextToFile(file, tStr);
-            FileUtil.appendTextToFile(file, textContent.getText());
+            FileUtil.appendTextToFile(file, "-".repeat(tStr.length()));
+            FileUtil.appendTextToFile(file, "");
+            FileUtil.appendTextToFile(file, _textContent.getText());
         } catch (IOException e) {
             log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
         }
