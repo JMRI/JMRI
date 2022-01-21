@@ -35,8 +35,8 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
             }
         }
 
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }

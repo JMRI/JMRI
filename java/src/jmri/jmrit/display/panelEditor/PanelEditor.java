@@ -201,9 +201,14 @@ public class PanelEditor extends Editor implements ItemListener {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
+                    String oldName = "";
+                    if (ancestor instanceof JFrame) {
+                        oldName = ((JFrame) ancestor).getTitle();
+                    }
                     // prompt for name
-                    String newName = JOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"));
-                    if (newName == null) {
+                    String newName = JOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
+                    if ((newName == null) || (oldName.equals(newName))) {
                         return;  // cancelled
                     }
                     if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
@@ -211,7 +216,6 @@ public class PanelEditor extends Editor implements ItemListener {
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
                     if (ancestor instanceof JFrame) {
                         ((JFrame) ancestor).setTitle(newName);
                     }

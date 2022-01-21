@@ -262,10 +262,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     public void updateFromNode( int arrayid, int col){
-        ThreadingUtil.runOnGUIEventually( ()->{
-            // fireTableCellUpdated(arrayid, col);
-            fireTableDataChanged();
-        });
+        fireTableDataChanged();
     }
     
     public boolean isTableLoaded(){

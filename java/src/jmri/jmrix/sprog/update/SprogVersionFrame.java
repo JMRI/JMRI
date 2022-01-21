@@ -46,5 +46,15 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         dispose();
     }
 
+    /**
+     * Removes SprogVersionListener.
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        _memo.getSprogVersionQuery().removeSprogVersionListener(this);
+        super.dispose();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SprogVersionFrame.class);
 }

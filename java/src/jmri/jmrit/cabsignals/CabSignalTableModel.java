@@ -335,9 +335,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             log.debug(" direction found, setting reverse.");
             b.setDirection(Path.reverseDirection(olddirection));
         }
-        jmri.util.ThreadingUtil.runOnGUI( ()->{
-            fireTableDataChanged();
-        });
+        fireTableDataChanged();
         log.debug("block {} now has direction {}", b.getUserName(), b.getDirection());
     }
 
