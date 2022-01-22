@@ -145,13 +145,13 @@ public class ToolTip {
 
     public String getTextToDisplay() {
         String tipText = _tip != null ? _tip.trim() : "";
-        if (_showDisplayName && (_positionable.getNamedBean() != null)) {
-            String name = _positionable.getNamedBean()
+        if (_positionable.getNamedBean() != null) {
+            String displayName = _positionable.getNamedBean()
                     .getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-            if (!tipText.isEmpty()) {
-                tipText = name + ": " + tipText;
-            } else {
-                tipText = name;
+            if (tipText.isEmpty()) {
+                tipText = displayName;
+            } else if (_showDisplayName) {
+                tipText = displayName + ": " + tipText;
             }
         }
         return tipText;
