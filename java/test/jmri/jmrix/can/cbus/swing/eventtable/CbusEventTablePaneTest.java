@@ -19,7 +19,7 @@ import jmri.jmrix.can.cbus.CbusTurnoutManager;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
-import jmri.util.swing.JmriPanel;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,10 +34,7 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
-// public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
-public class CbusEventTablePaneTest {
-    
-    // todo - re-extend from JmriPanelTest when junit5 compatible
+public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
@@ -293,28 +290,15 @@ public class CbusEventTablePaneTest {
     
     }
     
-    @Test
-    public void testGetHelpTarget(){
-        assertEquals( helpTarget, panel.getHelpTarget(), "help target");
-    }
-
-    @Test
-    public void testGetTitle(){
-        assertEquals( title, panel.getTitle(),"title");
-    }
-    
     @TempDir 
     protected Path tempDir;
 
     private CanSystemConnectionMemo memo; 
     private TrafficControllerScaffold tcis; 
     private CbusConfigurationManager configM;
-
-    protected JmriPanel panel = null;
-    protected String helpTarget = null;
-    protected String title = null;
     
     @BeforeEach
+    @Override
     public void setUp() {
         // super.setUp();
         JUnitUtil.setUp();
@@ -345,6 +329,7 @@ public class CbusEventTablePaneTest {
     
     
     @AfterEach
+    @Override
     public void tearDown() {
         // event model instance should have been created following init
         CbusEventTableDataModel dm = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
