@@ -524,7 +524,7 @@
         <decVal min="0" max="255"/>
         <label>Push-Pull stop time</label>
         <label xml:lang="ca">Temps de parada del Push-Pull</label>
-        <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce ve vteřinách</label>
+        <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce v sekundách</label>
         <label xml:lang="de">Aufenthaltsdauer bei Pendelbetrieb in Sekunden</label>
         <label xml:lang="it">Tempo di Stop Push-Pull</label>
         <label xml:lang="nl">Duur van de stop bij de pendeldienst in seconden</label>

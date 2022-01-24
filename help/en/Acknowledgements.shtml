@@ -469,8 +469,11 @@
         <li>Freek Heite, who located some important XpressNet info</li>
 
         <li>Austin Hendrix, <!-- trainman419 -->
-         who improved how the throttle handles speed steps andimproved the quality of the code and
+        who improved how the throttle handles speed steps and improved the quality of the code and
         documentation.</li>
+
+        <li>Max Hearnden, <!-- MaxHearnden -->
+        who improved how local HTML help is handled.</li>
 
         <li>William Hipple, who registered the JMRI.org and DecoderPro.org domains for us</li>
 
@@ -929,8 +932,9 @@
         DS54 accessory decoder, updated lots of decoder definitions, improved many help pages, and
         is an active jmriusers moderator.</li>
 
-        <li>Steve Todd, primary author of EngineDriver throttle for Android, adds scripts, helps
-        with web server, particularly client-side panels and updates Dispatcher</li>
+        <li>Steve Todd, primary author of EngineDriver throttle for Android, added scripts, helped
+        with web server (particularly client-side panels), updated Dispatcher, and enhanced the 
+        DCCpp connection to keep up with the DCC++EX rewrite and improvements.</li>
 
         <li>
           <a href="https://travis-ci.org">Travis-CI.org</a>, who provide a large part of our

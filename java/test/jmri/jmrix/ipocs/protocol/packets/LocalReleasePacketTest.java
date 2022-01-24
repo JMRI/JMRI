@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
-
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseCommand;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class LocalReleasePacketTest {
   private final byte[] testPacket = { RqReleaseCommand.LocalControl.value };
@@ -30,4 +31,14 @@ public class LocalReleasePacketTest {
     pkt.setCommand(RqReleaseCommand.LocalControl);
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

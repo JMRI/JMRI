@@ -209,7 +209,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
      * @param name appearance default name
      * @return speed from SignalHead Appearance name
      */
-    public String getAppearanceSpeed(@Nonnull String name) throws NumberFormatException {
+    public String getAppearanceSpeed(@Nonnull String name) {
         String speed = _headTable.get(name);
         log.debug("getAppearanceSpeed Appearance={}, speed={}", name, speed);
         return speed;

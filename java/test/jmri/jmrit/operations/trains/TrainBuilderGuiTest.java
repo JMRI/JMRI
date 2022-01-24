@@ -2,6 +2,10 @@ package jmri.jmrit.operations.trains;
 
 import java.text.MessageFormat;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -16,13 +20,9 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-
-import jmri.util.*;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -39,7 +39,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test prompt for which track in staging a train should depart on.
      */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testStagingPromptFrom() {
 
@@ -51,21 +51,22 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Train train2 = tmanager.getTrainById("2");
 
-        // should cause a prompt asking which track to use
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), Bundle.getMessage("ButtonOK"));
         });
-        build.setName("Build Train 2"); // NOI18N
+        t1.setName("testStagingPromptFrom Thread 1");
+        t1.start();
+
+        // should cause a prompt asking which track to use
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
+        });
+        build.setName("Build Train 2 OK"); // NOI18N
         build.start();
 
         JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), Bundle.getMessage("ButtonOK"));
+            return !t1.isAlive();
+        }, "Click OK in prompt asking which track to use did not happen");
 
         JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -76,20 +77,22 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         train2.reset();
 
         // now try the cancel option
-        Thread build2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), "Cancel");
         });
-        build2.setName("Build Train 2"); // NOI18N
+        t2.setName("testStagingPromptFrom Thread 2");
+        t2.start();
+
+        Thread build2 = new Thread(() -> {
+            new TrainBuilder().build(train2);
+        });
+        build2.setName("Build Train 2 Cancel"); // NOI18N
         build2.start();
 
         JUnitUtil.waitFor(() -> {
-            return build2.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), "Cancel");
+            return !t2.isAlive();
+        }, "Click Cancel in prompt asking which track to use did not happen");
 
         JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -103,30 +106,31 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test prompt selecting which track to use in staging.
      */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testStagingPromptTo() {
 
         JUnitOperationsUtil.initOperationsData();
         Setup.setStagingPromptToEnabled(true);
-        
+
         Train train2 = tmanager.getTrainById("2");
 
-        // should cause prompt for track into staging
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), Bundle.getMessage("ButtonOK"));
         });
-        build.setName("Build Train 2"); // NOI18N
+        t1.setName("testStagingPromptTo Thread 1");
+        t1.start();
+
+        // should cause prompt for track into staging
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
+        });
+        build.setName("Build Train 2 OK"); // NOI18N
         build.start();
 
         JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), Bundle.getMessage("ButtonOK"));
+            return !t1.isAlive();
+        }, "SelectArrivalTrack OK did not happen");
 
         JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -137,292 +141,299 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         train2.reset();
 
         // now try the cancel option
-        Thread build2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), "Cancel");
         });
-        build2.setName("Build Train 2"); // NOI18N
+        t2.setName("testStagingPromptTo Thread 2");
+        t2.start();
+        
+        Thread build2 = new Thread(() -> {
+            new TrainBuilder().build(train2);
+        });
+        build2.setName("Build Train 2 Cancel"); // NOI18N
         build2.start();
 
         JUnitUtil.waitFor(() -> {
-            return build2.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), "Cancel");
+            return !t2.isAlive();
+        }, "SelectArrivalTrack Cancel did not happen");
 
         JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
 
         Assert.assertFalse("Train status", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessage() {
 
         JUnitOperationsUtil.initOperationsData();
         // enable build failure messages
         tmanager.setBuildMessagesEnabled(true);
-        
+
         Train train2 = tmanager.getTrainById("2");
         // make train build fail by removing train's route
         train2.setRoute(null);
 
-        // should cause failure dialog to appear
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
-        });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
-
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
-        
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
-        
-        Assert.assertFalse("Train status", train2.isBuilt());
-    }
-    
-    /**
-     * Test warning message.
-     */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @Test
-    public void testWarningMessage() {
-
-        JUnitOperationsUtil.initOperationsData();
-        tmanager.setBuildMessagesEnabled(true);
-        
-        // cause 1 warning message
-        Setup.setCarRoutingEnabled(false);
-        
-        // Route Northend-NI-Southend
-        Train train2 = tmanager.getTrainById("2");
-
-        // should cause warning dialog to appear
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
-        });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
-
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        // dialog "Build report for train (SFF) has 1 warnings"
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildWarningMsg"),
-                new Object[]{train2.getName(), 1}), Bundle.getMessage("ButtonOK"));
-    }
-    
-    /**
-     * Test failure message when cars in staging are stuck there.
-     */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @Test
-    public void testBuildFailedMessageStagingA() {
-
-        JUnitOperationsUtil.initOperationsData();
-        tmanager.setBuildMessagesEnabled(true);
-        
-        Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
-        Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
-
-        Location northend = lmanager.getLocationById("1");
-
-        Track northendStaging1 = northend.getTrackById("1s1");
-
-        // Place Engines on Staging tracks
-        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(northend, northendStaging1));
-        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
-        
-        // 4 cars in staging, 2 cabooses, and 2 Boxcars
-        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
-        
-        // Route Northend-NI-Southend
-        Train train2 = tmanager.getTrainById("2");
-        train2.setNumberEngines("2");
-        Route route = train2.getRoute();
-        
-        // don't allow any drops in the train's route to cause build failure
-        RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
-        rlNI.setDropAllowed(false);
-        
-        // note that Cabooses ignore the drop restriction
-        RouteLocation rlSouthendStaging = route.getRouteLocationBySequenceNumber(3);
-        rlSouthendStaging.setDropAllowed(false);       
-
-        // should cause failure dialog to appear
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
-        });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
-
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        // dialog "remove cars from staging" or continue by pressing "OK"
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
-        
-        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-        
-        // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
-        
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
-        
-        Assert.assertFalse("Train status", train2.isBuilt());
-        
-        //confirm that the two cabooses are assigned to the train
-        Assert.assertEquals("Train assignment", train2, e1.getTrain());
-        Assert.assertEquals("Train assignment", train2, e2.getTrain());
-        Assert.assertEquals("Train assignment", train2, c1.getTrain());
-        Assert.assertEquals("Train assignment", train2, c2.getTrain());
-        
-        Assert.assertEquals("Train assignment", null, c3.getTrain());
-        Assert.assertEquals("Train assignment", null, c4.getTrain());
-        
-        Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
-        Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
-    }
-    
-    /**
-     * Test failure message when cars in staging are stuck there.
-     * Release cars and engines by train reset.
-     */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @Test
-    public void testBuildFailedMessageStagingB() {
-
-        JUnitOperationsUtil.initOperationsData();
-        tmanager.setBuildMessagesEnabled(true);
-        
-        Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
-        Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
-
-        Location northend = lmanager.getLocationById("1");
-
-        Track northendStaging1 = northend.getTrackById("1s1");
-
-        // Place Engines on Staging tracks
-        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(northend, northendStaging1));
-        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
-        
-        // 4 cars in staging, 2 cabooses, and 2 Boxcars
-        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
-        
-        // increase test code coverage by placing cars in a kernel
-        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("2 Boxcars");
-        c3.setKernel(k2);
-        c4.setKernel(k2);
-        
-        // Route Northend-NI-Southend
-        Train train2 = tmanager.getTrainById("2");
-        train2.setNumberEngines("2");
-        Route route = train2.getRoute();
-               
-        RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
-        rlNI.setDropAllowed(false);
-        
-        // note that Cabooses ignore the drop restriction
-        RouteLocation rlSouthendStaging = route.getRouteLocationBySequenceNumber(3);
-        rlSouthendStaging.setDropAllowed(false);       
-
         Thread t1 = new Thread(() -> {
-            // dialog "remove cars from staging" or continue by pressing "OK", press OK.
             JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
+                new Object[] { train2.getName(), train2.getDescription() }), Bundle.getMessage("ButtonOK"));
         });
-        t1.setName("Build Train 2 Dialog 1 Thread");
+        t1.setName("testBuildFailedMessage Thread 1");
         t1.start();
-        
-        Thread t2 = new Thread(() -> {
-            // prompt asks if cars are to be released from train by reset, press Yes.
-            JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
-        });
-        t2.setName("Build Train 2 Dialog 2 Thread");
-        t2.start();
-        
+
         // should cause failure dialog to appear
         Thread build = new Thread(() -> {
             new TrainBuilder().build(train2);
         });
         build.setName("Build Train 2"); // NOI18N
         build.start();
-        
+
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        }, "Build Train 2 Dialog 1 Thread did not close"); // dialog "remove cars from staging" or continue by pressing "OK"
+        }, "failure dialog click OK did not happen");
+
+        JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
+
+        Assert.assertFalse("Train status", train2.isBuilt());
+    }
+
+    /**
+     * Test warning message.
+     */
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testWarningMessage() {
+
+        JUnitOperationsUtil.initOperationsData();
+        tmanager.setBuildMessagesEnabled(true);
+
+        // cause 1 warning message
+        Setup.setCarRoutingEnabled(false);
+
+        // Route Northend-NI-Southend
+        Train train2 = tmanager.getTrainById("2");
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("buildWarningMsg"), new Object[] { train2.getName(), 1 }),
+                Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testWarningMessage Thread 1");
+        t1.start();
+        
+        // should cause warning dialog to appear
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
+        });
+        build.setName("Build Train 2"); // NOI18N
+        build.start();
+
+        // dialog "Build report for train (SFF) has 1 warnings"
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "failure dialog click OK did not happen");
         
         JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
+        Assert.assertTrue("Train status", train2.isBuilt());
+    }
+
+    /**
+     * Test failure message when cars in staging are stuck there.
+     */
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testBuildFailedMessageStagingA() {
+
+        JUnitOperationsUtil.initOperationsData();
+        tmanager.setBuildMessagesEnabled(true);
+
+        Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
+        Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
+
+        Location northend = lmanager.getLocationById("1");
+
+        Track northendStaging1 = northend.getTrackById("1s1");
+
+        // Place Engines on Staging tracks
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(northend, northendStaging1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
+
+        // 4 cars in staging, 2 cabooses, and 2 Boxcars
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+
+        // Route Northend-NI-Southend
+        Train train2 = tmanager.getTrainById("2");
+        train2.setNumberEngines("2");
+        Route route = train2.getRoute();
+
+        // don't allow any drops in the train's route to cause build failure
+        RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
+        rlNI.setDropAllowed(false);
+
+        // note that Cabooses ignore the drop restriction
+        RouteLocation rlSouthendStaging = route.getRouteLocationBySequenceNumber(3);
+        rlSouthendStaging.setDropAllowed(false);
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                new Object[] { train2.getName(), train2.getDescription() }), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testBuildFailedMessageStagingA Dialog Clicker 1");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
+        });
+        t2.setName("testBuildFailedMessageStagingA Dialog Clicker 2");
+        t2.start();
+
+        // should cause failure dialog to appear
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
+        });
+        build.setName("Build Train 2"); // NOI18N
+        build.start();
+
+        // dialog "remove cars from staging" or continue by pressing "OK"
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "remove cars from staging dialog click OK did not happen");
+
+        // next prompt asks if cars are to be released from train by reset
+        JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        }, "Build Train 2 Dialog 2 Thread did not close"); // asks if cars are to be released from train by reset
+        }, "released from train by reset dialog click no did not happen");
+
+        JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
+
+        Assert.assertFalse("Train status", train2.isBuilt());
+
+        // confirm that the two cabooses are assigned to the train
+        Assert.assertEquals("Train assignment", train2, e1.getTrain());
+        Assert.assertEquals("Train assignment", train2, e2.getTrain());
+        Assert.assertEquals("Train assignment", train2, c1.getTrain());
+        Assert.assertEquals("Train assignment", train2, c2.getTrain());
+
+        Assert.assertEquals("Train assignment", null, c3.getTrain());
+        Assert.assertEquals("Train assignment", null, c4.getTrain());
+
+        Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
+        Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
+    }
+
+    /**
+     * Test failure message when cars in staging are stuck there. Release cars and
+     * engines by train reset.
+     */
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testBuildFailedMessageStagingB() {
+
+        JUnitOperationsUtil.initOperationsData();
+        tmanager.setBuildMessagesEnabled(true);
+
+        Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
+        Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
+
+        Location northend = lmanager.getLocationById("1");
+
+        Track northendStaging1 = northend.getTrackById("1s1");
+
+        // Place Engines on Staging tracks
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(northend, northendStaging1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
+
+        // 4 cars in staging, 2 cabooses, and 2 Boxcars
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+
+        // increase test code coverage by placing cars in a kernel
+        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("2 Boxcars");
+        c3.setKernel(k2);
+        c4.setKernel(k2);
+
+        // Route Northend-NI-Southend
+        Train train2 = tmanager.getTrainById("2");
+        train2.setNumberEngines("2");
+        Route route = train2.getRoute();
+
+        RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
+        rlNI.setDropAllowed(false);
+
+        // note that Cabooses ignore the drop restriction
+        RouteLocation rlSouthendStaging = route.getRouteLocationBySequenceNumber(3);
+        rlSouthendStaging.setDropAllowed(false);
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                new Object[] { train2.getName(), train2.getDescription() }), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("remove cars from staging, click OK Thread");
+        t1.start();
         
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
+        });
+        t2.setName("cars are to be released from train by reset, click Yes Thread");
+        t2.start();
+        
+        // should cause failure dialogs to appear
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
+        });
+        build.setName("Build Train 2"); // NOI18N
+        build.start();
+
+        // dialog "remove cars from staging" or continue by pressing "OK", press OK.
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "remove cars from staging, click OK did not happen");
+
+        // prompt asks if cars are to be released from train by reset, press Yes.
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "cars are to be released from train by reset, click Yes did not happen");
+
         JUnitUtil.waitFor(() -> {
             return !build.isAlive();
         }, "wait for build to complete");
-        
+
         Assert.assertFalse("Train status", train2.isBuilt());
-        
-        //confirm that engines and cars are released from train
+
+        // confirm that engines and cars are released from train
         Assert.assertEquals("Train assignment", null, e1.getTrain());
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", null, c1.getTrain());
         Assert.assertEquals("Train assignment", null, c2.getTrain());
-        
+
         Assert.assertEquals("Train assignment", null, c3.getTrain());
         Assert.assertEquals("Train assignment", null, c4.getTrain());
-        
+
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
     }
-    
+
     /**
-     * Test failure message when cars in staging are stuck there.
-     * Remove stuck cars from staging.
+     * Test failure message when cars in staging are stuck there. Remove stuck cars
+     * from staging.
      */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingC() {
 
@@ -432,92 +443,91 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Location northend = lmanager.getLocationById("1");
 
         Track northendStaging1 = northend.getTrackById("1s1");
-        
+
         // 4 cars in staging, 2 cabooses, and 2 Boxcars
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
         Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
         Car c11 = JUnitOperationsUtil.createAndPlaceCar("A", "110", "Boxcar", "40", northendStaging1, 1);
-        
+
         // increase test code coverage by placing cars in a kernel
         Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("2 Boxcars");
         c3.setKernel(k2);
         c4.setKernel(k2);
-        
+
         // Route Northend-NI-Southend
         Train train2 = tmanager.getTrainById("2");
         Route route = train2.getRoute();
-               
+
         RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
         rlNI.setDropAllowed(false);
-        
+
         // note that Cabooses ignore the drop restriction
         RouteLocation rlSouthendStaging = route.getRouteLocationBySequenceNumber(3);
-        rlSouthendStaging.setDropAllowed(false);       
+        rlSouthendStaging.setDropAllowed(false);
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                        new Object[] { train2.getName(), train2.getDescription() }),
+                Bundle.getMessage("buttonRemoveCars"));
+        });
+        t1.setName("testBuildFailedMessageStagingC Dialog Clicker 1");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
+        });
+        t2.setName("testBuildFailedMessageStagingC Dialog Clicker 2");
+        t2.start();
 
         // should cause failure dialog to appear
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
         });
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
         // dialog "remove cars from staging" or continue by pressing "OK"
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("buttonRemoveCars"));
-        
-        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
         JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        },"wait for prompt");
-        
+            return !t1.isAlive();
+        }, "remove cars from staging, click remove did not happen");
+
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
-        
         JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
+            return !t2.isAlive();
+        }, "cars are to be released from train by reset, click yes did not happen");
+
+        JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.TERMINATED); // FAILED HERE
         }, "wait for build to complete");
-        
+
         Assert.assertFalse("Train status", train2.isBuilt());
-        
-        //confirm that engines and cars are released from train
+
+        // confirm that engines and cars are released from train
         Assert.assertEquals("Train assignment", null, c1.getTrain());
         Assert.assertEquals("Train assignment", null, c2.getTrain());
-        
+
         Assert.assertEquals("Train assignment", null, c3.getTrain());
         Assert.assertEquals("Train assignment", null, c4.getTrain());
-        
+
         Assert.assertEquals("Track assignment", null, c3.getTrack());
         Assert.assertEquals("Track assignment", null, c4.getTrack());
         Assert.assertEquals("Track assignment", null, c11.getTrack());
     }
-    
+
     /**
-     * Test failure message when build fails, release engines
-     * by reset. No cars in staging for this test.
+     * Test failure message when build fails, release engines by reset. No cars in
+     * staging for this test.
      */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingD() {
 
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
-        
+
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
         Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
         Engine e3 = emanager.getByRoadAndNumber("PC", "5524");
@@ -525,16 +535,16 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Location northend = lmanager.getLocationById("1");
         Track northendStaging1 = northend.getTrackById("1s1");
-        
+
         Location southend = lmanager.getLocationById("3");
         Track southendStaging1 = southend.getTrackById("3s1");
-        
+
         // 4 cars in staging, 2 cabooses, and 2 Boxcars
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
         Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
-        
+
         // remove cars from departure track
         c1.setLocation(null, null);
         c2.setLocation(null, null);
@@ -546,19 +556,29 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
         Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(northend, northendStaging1));
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(northend, northendStaging1));
-        
+
         // Route Northend-NI-Southend
         Train train2 = tmanager.getTrainById("2");
         train2.setNumberEngines("4");
-               
+
         southendStaging1.setLength(200); // make track too short for 4 locos
 
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                new Object[] { train2.getName(), train2.getDescription() }), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testBuildFailedMessageStagingD Dialog Clicker 1");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
+        });
+        t2.setName("testBuildFailedMessageStagingD Dialog Clicker 2");
+        t2.start();
+
         // should cause failure dialog to appear
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
         });
         build.setName("Build Train 2"); // NOI18N
         build.start();
@@ -568,48 +588,39 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         }, "wait for prompt");
 
         // dialog remove engines from staging or continue by pressing OK
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
-        
-        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
         JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        },"wait for prompt");
-        
+            return !t1.isAlive();
+        }, "remove cars from staging, click ok did not happen");
+
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
-        
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "cars are to be released from train by reset, click yes did not happen");
+
         JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
-        
+
         Assert.assertFalse("Train status", train2.isBuilt());
-        
-        //confirm that the two cabooses are assigned to the train
+
+        // confirm that the two cabooses are assigned to the train
         Assert.assertEquals("Train assignment", null, e1.getTrain());
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", null, e3.getTrain());
         Assert.assertEquals("Train assignment", null, e4.getTrain());
     }
-    
+
     /**
-     * Test failure message when build fails, Don't release engines
-     * by reset. No cars in staging for this test.
+     * Test failure message when build fails, Don't release engines by reset. No
+     * cars in staging for this test.
      */
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingE() {
 
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
-        
+
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
         Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
         Engine e3 = emanager.getByRoadAndNumber("PC", "5524");
@@ -617,16 +628,16 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Location northend = lmanager.getLocationById("1");
         Track northendStaging1 = northend.getTrackById("1s1");
-        
+
         Location southend = lmanager.getLocationById("3");
         Track southendStaging1 = southend.getTrackById("3s1");
-        
+
         // 4 cars in staging, 2 cabooses, and 2 Boxcars
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
         Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
-        
+
         // remove cars from departure track
         c1.setLocation(null, null);
         c2.setLocation(null, null);
@@ -638,54 +649,51 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
         Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(northend, northendStaging1));
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(northend, northendStaging1));
-        
+
         // Route Northend-NI-Southend
         Train train2 = tmanager.getTrainById("2");
         train2.setNumberEngines("4");
-               
+
         southendStaging1.setLength(200); // make track too short for 4 locos
 
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                new Object[] { train2.getName(), train2.getDescription() }), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("testBuildFailedMessageStagingE Dialog Clicker 1");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
+        });
+        t2.setName("testBuildFailedMessageStagingE Dialog Clicker 2");
+        t2.start();
+
         // should cause failure dialog to appear
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
         });
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
         // dialog remove engines from staging or continue by pressing OK
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
-        
-        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
         JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        },"wait for prompt");
-        
+            return !t1.isAlive();
+        }, "remove cars from staging, click ok did not happen");
+
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
-        
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "cars are to be released from train by reset, click no did not happen");
+
         JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
-        
+
         // only e3 and e4 have been assigned to train
         Assert.assertFalse("Train status", train2.isBuilt());
-        
-        //confirm that the two cabooses are assigned to the train
+
+        // confirm that the two cabooses are assigned to the train
         Assert.assertEquals("Train assignment", null, e1.getTrain());
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", train2, e3.getTrain());

@@ -91,11 +91,13 @@ abstract public class SprogUpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
-    /** 
+    /**
+     * Stops Timer.
      * {@inheritDoc}
      */
     @Override
     public void dispose() {
+        stopTimer();
         tc = null;
         _memo = null;
         super.dispose();

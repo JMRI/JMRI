@@ -248,7 +248,7 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
         // not existing so creating new
         CbusTableEvent newtabev = new CbusTableEvent(_memo,nn,en );
         _mainArray.add(newtabev);
-        ThreadingUtil.runOnGUIEventually(() -> fireTableDataChanged()); 
+        fireTableDataChanged();
         return newtabev;
     }
     

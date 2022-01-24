@@ -1,40 +1,19 @@
 package jmri.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.script.ScriptException;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.Sound;
-import jmri.jmrit.audio.AudioListener;
-import jmri.jmrit.audio.AudioSource;
-import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
-import jmri.script.JmriScriptEngineManager;
-import jmri.script.ScriptOutput;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class providing the basic logic of the Conditional interface.
@@ -49,12 +28,16 @@ public class DefaultConditional extends AbstractNamedBean
 
     static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");  // NOI18N
 
+    private final DefaultConditionalExecute conditionalExecute;
+
     public DefaultConditional(String systemName, String userName) {
         super(systemName, userName);
+        conditionalExecute = new DefaultConditionalExecute(this);
     }
 
     public DefaultConditional(String systemName) {
         super(systemName);
+        conditionalExecute = new DefaultConditionalExecute(this);
     }
 
     @Override
@@ -550,19 +533,13 @@ public class DefaultConditional extends AbstractNamedBean
      * Only get here if a change in state has occurred when calculating this
      * Conditional
      */
-    @SuppressWarnings({"deprecation", "fallthrough"})
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
-    // it's unfortunate that this is such a huge method, because these annotations
-    // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {
         if (log.isTraceEnabled()) {
             log.trace("takeActionIfNeeded starts for {}", getSystemName());  // NOI18N
         }
-        int actionCount = 0;
+        Reference<Integer> actionCount = new Reference<>(0);
         int actionNeeded = 0;
-        int act = 0;
-        int state = 0;
-        ArrayList<String> errorList = new ArrayList<>();
+        List<String> errorList = new ArrayList<>();
         // Use a local copy of state to guarantee the entire list of actions will be fired off
         // before a state change occurs that may block their completion.
         int currentState = _currentState;
@@ -578,17 +555,10 @@ public class DefaultConditional extends AbstractNamedBean
                     || (option == ACTION_OPTION_ON_CHANGE)) {
                 // need to take this action
                 actionNeeded++;
-                SignalHead h = null;
-                SignalMast f = null;
-                Logix x = null;
-                Light lgt = null;
-                Warrant w = null;
                 NamedBean nb = null;
                 if (action.getNamedBean() != null) {
                     nb = action.getNamedBean().getBean();
                 }
-                int value = 0;
-                Timer timer = null;
                 Conditional.Action type = action.getType();
                 String devName = getDeviceName(action);
                 if (devName == null) {
@@ -602,633 +572,160 @@ public class DefaultConditional extends AbstractNamedBean
                     case NONE:
                         break;
                     case SET_TURNOUT:
-                        Turnout t = (Turnout) nb;
-                        if (t == null) {
-                            errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            act = action.getActionData();
-                            if (act == Route.TOGGLE) {
-                                state = t.getKnownState();
-                                if (state == Turnout.CLOSED) {
-                                    act = Turnout.THROWN;
-                                } else {
-                                    act = Turnout.CLOSED;
-                                }
-                            }
-                            t.setCommandedState(act);
-                            actionCount++;
-                        }
+                        conditionalExecute.setTurnout(action, (Turnout) nb, actionCount, errorList);
                         break;
                     case RESET_DELAYED_TURNOUT:
-                        action.stopTimer();
-                    // fall through
+                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(i), true, devName);
+                        break;
                     case DELAYED_TURNOUT:
-                        if (!action.isTimerActive()) {
-                            // Create a timer if one does not exist
-                            timer = action.getTimer();
-                            if (timer == null) {
-                                action.setListener(new TimeTurnout(i));
-                                timer = new Timer(2000, action.getListener());
-                                timer.setRepeats(true);
-                            }
-                            // Start the Timer to set the turnout
-                            value = getMillisecondValue(action);
-                            if (value < 0) {
-                                break;
-                            }
-                            timer.setInitialDelay(value);
-                            action.setTimer(timer);
-                            action.startTimer();
-                            actionCount++;
-                        } else {
-                            log.warn("timer already active on request to start delayed turnout action - {}", devName);
-                        }
+                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(i), false, devName);
                         break;
                     case CANCEL_TURNOUT_TIMERS:
-                        ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
-                        java.util.Iterator<Conditional> iter = cmg.getNamedBeanSet().iterator();
-                        while (iter.hasNext()) {
-                            String sname = iter.next().getSystemName();
-                            
-                            Conditional c = cmg.getBySystemName(sname);
-                            if (c == null) {
-                                errorList.add("Conditional null during cancel turnout timers for "  // NOI18N
-                                        + action.getDeviceName());
-                                continue; // no more processing of this one
-                            }
-                            
-                            c.cancelTurnoutTimer(devName);
-                            actionCount++;
-                        }
+                        conditionalExecute.cancelTurnoutTimers(action, actionCount, errorList, devName);
                         break;
                     case LOCK_TURNOUT:
-                        Turnout tl = (Turnout) nb;
-                        if (tl == null) {
-                            errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            act = action.getActionData();
-                            if (act == Route.TOGGLE) {
-                                if (tl.getLocked(Turnout.CABLOCKOUT)) {
-                                    act = Turnout.UNLOCKED;
-                                } else {
-                                    act = Turnout.LOCKED;
-                                }
-                            }
-                            if (act == Turnout.LOCKED) {
-                                tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
-                            } else if (act == Turnout.UNLOCKED) {
-                                tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.lockTurnout(action, (Turnout) nb, actionCount, errorList);
                         break;
                     case SET_SIGNAL_APPEARANCE:
-                        h = (SignalHead) nb;
-                        if (h == null) {
-                            errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            h.setAppearance(action.getActionData());
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalAppearance(action, (SignalHead) nb, actionCount, errorList);
                         break;
                     case SET_SIGNAL_HELD:
-                        h = (SignalHead) nb;
-                        if (h == null) {
-                            errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            h.setHeld(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalHeld(action, (SignalHead) nb, actionCount, errorList);
                         break;
                     case CLEAR_SIGNAL_HELD:
-                        h = (SignalHead) nb;
-                        if (h == null) {
-                            errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            h.setHeld(false);
-                            actionCount++;
-                        }
+                        conditionalExecute.clearSignalHeld(action, (SignalHead) nb, actionCount, errorList);
                         break;
                     case SET_SIGNAL_DARK:
-                        h = (SignalHead) nb;
-                        if (h == null) {
-                            errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            h.setLit(false);
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalDark(action, (SignalHead) nb, actionCount, errorList);
                         break;
                     case SET_SIGNAL_LIT:
-                        h = (SignalHead) nb;
-                        if (h == null) {
-                            errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            h.setLit(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalLit(action, (SignalHead) nb, actionCount, errorList);
                         break;
                     case TRIGGER_ROUTE:
-                        Route r = (Route) nb;
-                        if (r == null) {
-                            errorList.add("invalid Route name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            r.setRoute();
-                            actionCount++;
-                        }
+                        conditionalExecute.triggerRoute(action, (Route) nb, actionCount, errorList);
                         break;
                     case SET_SENSOR:
-                        Sensor sn = (Sensor) nb;
-                        if (sn == null) {
-                            errorList.add("invalid Sensor name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            act = action.getActionData();
-                            if (act == Route.TOGGLE) {
-                                state = sn.getState();
-                                if (state == Sensor.ACTIVE) {
-                                    act = Sensor.INACTIVE;
-                                } else {
-                                    act = Sensor.ACTIVE;
-                                }
-                            }
-                            try {
-                                sn.setKnownState(act);
-                                actionCount++;
-                            } catch (JmriException e) {
-                                log.warn("Exception setting Sensor {} in action", devName);  // NOI18N
-                            }
-                        }
+                        conditionalExecute.setSensor(action, (Sensor) nb, actionCount, errorList, devName);
                         break;
                     case RESET_DELAYED_SENSOR:
-                        action.stopTimer();
-                    // fall through
+                        conditionalExecute.delayedSensor(action, actionCount, new TimeSensor(i), getMillisecondValue(action), true, devName);
+                        break;
                     case DELAYED_SENSOR:
-                        if (!action.isTimerActive()) {
-                            // Create a timer if one does not exist
-                            timer = action.getTimer();
-                            if (timer == null) {
-                                action.setListener(new TimeSensor(i));
-                                timer = new Timer(2000, action.getListener());
-                                timer.setRepeats(true);
-                            }
-                            // Start the Timer to set the turnout
-                            value = getMillisecondValue(action);
-                            if (value < 0) {
-                                break;
-                            }
-                            timer.setInitialDelay(value);
-                            action.setTimer(timer);
-                            action.startTimer();
-                            actionCount++;
-                        } else {
-                            log.warn("timer already active on request to start delayed sensor action - {}", devName);
-                        }
+                        conditionalExecute.delayedSensor(action, actionCount, new TimeSensor(i), getMillisecondValue(action), false, devName);
                         break;
                     case CANCEL_SENSOR_TIMERS:
-                        ConditionalManager cm = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
-                        java.util.Iterator<Conditional> itr = cm.getNamedBeanSet().iterator();
-                        while (itr.hasNext()) {
-                            String sname = itr.next().getSystemName();
-                            Conditional c = cm.getBySystemName(sname);
-                            if (c == null) {
-                                errorList.add("Conditional null during cancel sensor timers for "  // NOI18N
-                                        + action.getDeviceName());
-                                continue; // no more processing of this one
-                            }
-                            
-                            c.cancelSensorTimer(devName);
-                            actionCount++;
-                        }
+                        conditionalExecute.cancelSensorTimers(action, actionCount, errorList, devName);
                         break;
                     case SET_LIGHT:
-                        lgt = (Light) nb;
-                        if (lgt == null) {
-                            errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            act = action.getActionData();
-                            if (act == Route.TOGGLE) {
-                                state = lgt.getState();
-                                if (state == Light.ON) {
-                                    act = Light.OFF;
-                                } else {
-                                    act = Light.ON;
-                                }
-                            }
-                            lgt.setState(act);
-                            actionCount++;
-                        }
+                        conditionalExecute.setLight(action, (Light) nb, actionCount, errorList);
                         break;
                     case SET_LIGHT_INTENSITY:
-                        lgt = (Light) nb;
-                        if (lgt == null) {
-                            errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            try {
-                                value = getIntegerValue(action);
-                                if (value < 0) {
-                                    break;
-                                }
-                                if (lgt instanceof VariableLight) {
-                                    ((VariableLight)lgt).setTargetIntensity((value) / 100.0);
-                                } else {
-                                    lgt.setState(value > 0.5 ? Light.ON : Light.OFF);
-                                }
-                                actionCount++;
-                            } catch (IllegalArgumentException e) {
-                                errorList.add("Exception in set light intensity action - " + action.getDeviceName());  // NOI18N
-                            }
-                        }
+                        conditionalExecute.setLightIntensity(action, (Light) nb, getIntegerValue(action), actionCount, errorList);
                         break;
                     case SET_LIGHT_TRANSITION_TIME:
-                        lgt = (Light) nb;
-                        if (lgt == null) {
-                            errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            try {
-                                value = getIntegerValue(action);
-                                if (value < 0) {
-                                    break;
-                                }
-                                if (lgt instanceof VariableLight) {
-                                    ((VariableLight)lgt).setTransitionTime(value);
-                                }
-                                actionCount++;
-                            } catch (IllegalArgumentException e) {
-                                errorList.add("Exception in set light transition time action - " + action.getDeviceName());  // NOI18N
-                            }
-                        }
+                        conditionalExecute.setLightTransitionTime(action, (Light) nb, getIntegerValue(action), actionCount, errorList);
                         break;
                     case SET_MEMORY:
-                        Memory m = (Memory) nb;
-                        if (m == null) {
-                            errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            m.setValue(action.getActionString());
-                            actionCount++;
-                        }
+                        conditionalExecute.setMemory(action, (Memory) nb, actionCount, errorList);
                         break;
                     case COPY_MEMORY:
-                        Memory mFrom = (Memory) nb;
-                        if (mFrom == null) {
-                            errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            Memory mTo = getMemory(action.getActionString());
-                            if (mTo == null) {
-                                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
-                            } else {
-                                mTo.setValue(mFrom.getValue());
-                                actionCount++;
-                            }
-                        }
+                        conditionalExecute.copyMemory(action, (Memory) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
                         break;
                     case ENABLE_LOGIX:
-                        x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
-                        if (x == null) {
-                            errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            x.setEnabled(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.enableLogix(action, actionCount, errorList, devName);
                         break;
                     case DISABLE_LOGIX:
-                        x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
-                        if (x == null) {
-                            errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            x.setEnabled(false);
-                            actionCount++;
-                        }
+                        conditionalExecute.disableLogix(action, actionCount, errorList, devName);
                         break;
                     case PLAY_SOUND:
-                        String path = getActionString(action);
-                        if (!path.equals("")) {
-                            Sound sound = action.getSound();
-                            if (sound == null) {
-                                try {
-                                    sound = new Sound(path);
-                                } catch (NullPointerException ex) {
-                                    errorList.add("invalid path to sound: " + path);  // NOI18N
-                                }
-                            }
-                            if (sound != null) {
-                                sound.play();
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.playSound(action, getActionString(action), actionCount, errorList);
                         break;
                     case RUN_SCRIPT:
-                        if (!(getActionString(action).equals(""))) {
-                            JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(getActionString(action))));
-                            actionCount++;
-                        }
+                        conditionalExecute.runScript(action, getActionString(action), actionCount);
                         break;
                     case SET_FAST_CLOCK_TIME:
-                        Date date = InstanceManager.getDefault(jmri.Timebase.class).getTime();
-                        date.setHours(action.getActionData() / 60);
-                        date.setMinutes(action.getActionData() - ((action.getActionData() / 60) * 60));
-                        date.setSeconds(0);
-                        InstanceManager.getDefault(jmri.Timebase.class).userSetTime(date);
-                        actionCount++;
+                        conditionalExecute.setFastClockTime(action, actionCount);
                         break;
                     case START_FAST_CLOCK:
-                        InstanceManager.getDefault(jmri.Timebase.class).setRun(true);
-                        actionCount++;
+                        conditionalExecute.startFastClock(actionCount);
                         break;
                     case STOP_FAST_CLOCK:
-                        InstanceManager.getDefault(jmri.Timebase.class).setRun(false);
-                        actionCount++;
+                        conditionalExecute.stopFastClock(actionCount);
                         break;
                     case CONTROL_AUDIO:
-                        Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(devName);
-                        if (audio == null) {
-                            break;
-                        }
-                        if (audio.getSubType() == Audio.SOURCE) {
-                            AudioSource audioSource = (AudioSource) audio;
-                            switch (action.getActionData()) {
-                                case Audio.CMD_PLAY:
-                                    audioSource.play();
-                                    break;
-                                case Audio.CMD_STOP:
-                                    audioSource.stop();
-                                    break;
-                                case Audio.CMD_PLAY_TOGGLE:
-                                    audioSource.togglePlay();
-                                    break;
-                                case Audio.CMD_PAUSE:
-                                    audioSource.pause();
-                                    break;
-                                case Audio.CMD_RESUME:
-                                    audioSource.resume();
-                                    break;
-                                case Audio.CMD_PAUSE_TOGGLE:
-                                    audioSource.togglePause();
-                                    break;
-                                case Audio.CMD_REWIND:
-                                    audioSource.rewind();
-                                    break;
-                                case Audio.CMD_FADE_IN:
-                                    audioSource.fadeIn();
-                                    break;
-                                case Audio.CMD_FADE_OUT:
-                                    audioSource.fadeOut();
-                                    break;
-                                case Audio.CMD_RESET_POSITION:
-                                    audioSource.resetCurrentPosition();
-                                    break;
-                                default:
-                                    break;
-                            }
-                        } else if (audio.getSubType() == Audio.LISTENER) {
-                            AudioListener audioListener = (AudioListener) audio;
-                            switch (action.getActionData()) {
-                                case Audio.CMD_RESET_POSITION:
-                                    audioListener.resetCurrentPosition();
-                                    break;
-                                default:
-                                    break; // nothing needed for others
-                            }
-                        }
+                        conditionalExecute.controlAudio(action, devName);
                         break;
                     case JYTHON_COMMAND:
-                        if (!(getActionString(action).isEmpty())) {
-                            // add the text to the output frame
-                            ScriptOutput.writeScript(getActionString(action));
-                            // and execute
-                            
-                            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
-                            if (se!=null) {
-                                try {
-                                    JmriScriptEngineManager.getDefault().eval(getActionString(action), se);
-                                } catch (ScriptException ex) {
-                                    log.error("Error executing script:", ex);  // NOI18N
-                                }
-                            } else {
-                                log.error("Error getting default ScriptEngine");
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.jythonCommand(action, getActionString(action), actionCount);
                         break;
                     case ALLOCATE_WARRANT_ROUTE:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            String msg = w.allocateRoute(false, null);
-                            if (msg != null) {
-                                log.info("Warrant {} - {}", action.getDeviceName(), msg);  // NOI18N
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.allocateWarrantRoute(action, (Warrant) nb, actionCount, errorList);
                         break;
                     case DEALLOCATE_WARRANT_ROUTE:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            w.deAllocate();
-                            actionCount++;
-                        }
+                        conditionalExecute.deallocateWarrantRoute(action, (Warrant) nb, actionCount, errorList);
                         break;
                     case SET_ROUTE_TURNOUTS:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            String msg = w.setRoute(false, null);
-                            if (msg != null) {
-                                log.info("Warrant {} unable to Set Route - {}", action.getDeviceName(), msg);  // NOI18N
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.setRouteTurnouts(action, (Warrant) nb, actionCount, errorList);
                         break;
                     case THROTTLE_FACTOR:
                         log.info("Set warrant Throttle Factor deprecated - Use Warrrant Preferences");  // NOI18N
                         break;
                     case SET_TRAIN_ID:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            if(!w.getSpeedUtil().setAddress(getActionString(action))) {
-                                errorList.add("invalid train ID in action - " + action.getDeviceName());  // NOI18N
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.setTrainId(action, (Warrant) nb, getActionString(action), actionCount, errorList);
                         break;
                     case SET_TRAIN_NAME:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            w.setTrainName(getActionString(action));
-                            actionCount++;
-                        }
+                        conditionalExecute.setTrainName(action, (Warrant) nb, getActionString(action), actionCount, errorList);
                         break;
                     case AUTO_RUN_WARRANT:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getDefault();
-                            String err = frame.runTrain(w, Warrant.MODE_RUN);
-                            if (err != null) {
-                                errorList.add("runAutoTrain error - " + err);  // NOI18N
-                                w.stopWarrant(true, true);
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.autoRunWarrant(action, (Warrant) nb, actionCount, errorList);
                         break;
                     case MANUAL_RUN_WARRANT:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            String err = w.setRoute(false, null);
-                            if (err == null) {
-                                err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
-                            }
-                            if (err != null) {
-                                errorList.add("runManualTrain error - " + err);  // NOI18N
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.manualRunWarrant(action, (Warrant) nb, actionCount, errorList);
                         break;
                     case CONTROL_TRAIN:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            if (!w.controlRunTrain(action.getActionData())) {
-                                log.info("Train {} not running  - {}", w.getSpeedUtil().getRosterId(), devName);  // NOI18N
-                            }
-                            actionCount++;
-                        }
+                        conditionalExecute.controlTrain(action, (Warrant) nb, actionCount, errorList, devName);
                         break;
                     case SET_SIGNALMAST_ASPECT:
-                        f = (SignalMast) nb;
-                        if (f == null) {
-                            errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            f.setAspect(getActionString(action));
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalMastAspect(action, (SignalMast) nb, getActionString(action), actionCount, errorList);
                         break;
                     case SET_SIGNALMAST_HELD:
-                        f = (SignalMast) nb;
-                        if (f == null) {
-                            errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            f.setHeld(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalMastHeld(action, (SignalMast) nb, actionCount, errorList);
                         break;
                     case CLEAR_SIGNALMAST_HELD:
-                        f = (SignalMast) nb;
-                        if (f == null) {
-                            errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            f.setHeld(false);
-                            actionCount++;
-                        }
+                        conditionalExecute.clearSignalMastHeld(action, (SignalMast) nb, actionCount, errorList);
                         break;
                     case SET_SIGNALMAST_DARK:
-                        f = (SignalMast) nb;
-                        if (f == null) {
-                            errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            f.setLit(false);
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalMastDark(action, (SignalMast) nb, actionCount, errorList);
                         break;
                     case SET_SIGNALMAST_LIT:
-                        f = (SignalMast) nb;
-                        if (f == null) {
-                            errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            f.setLit(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.setSignalMastLit(action, (SignalMast) nb, actionCount, errorList);
                         break;
                     case SET_BLOCK_VALUE:
-                        OBlock b = (OBlock) nb;
-                        if (b == null) {
-                            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            b.setValue(getActionString(action));
-                            actionCount++;
-                        }
+                        conditionalExecute.setBlockValue(action, (OBlock) nb, getActionString(action), actionCount, errorList);
                         break;
                     case SET_BLOCK_ERROR:
-                        b = (OBlock) nb;
-                        if (b == null) {
-                            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            b.setError(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.setBlockError(action, (OBlock) nb, actionCount, errorList);
                         break;
                     case CLEAR_BLOCK_ERROR:
-                        b = (OBlock) nb;
-                        if (b == null) {
-                            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            b.setError(false);
-                        }
+                        conditionalExecute.clearBlockError(action, (OBlock) nb, errorList);
                         break;
                     case DEALLOCATE_BLOCK:
-                        b = (OBlock) nb;
-                        if (b == null) {
-                            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            b.deAllocate(null);
-                            actionCount++;
-                        }
+                        conditionalExecute.deallocateBlock(action, (OBlock) nb, actionCount, errorList);
                         break;
                     case SET_BLOCK_OUT_OF_SERVICE:
-                        b = (OBlock) nb;
-                        if (b == null) {
-                            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            b.setOutOfService(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.setBlockOutOfService(action, (OBlock) nb, actionCount, errorList);
                         break;
                     case SET_BLOCK_IN_SERVICE:
-                        b = (OBlock) nb;
-                        if (b == null) {
-                            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            b.setOutOfService(false);
-                            actionCount++;
-                        }
+                        conditionalExecute.setBlockInService(action, (OBlock) nb, actionCount, errorList);
                         break;
                     case SET_NXPAIR_ENABLED:
-                        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
-                        if (dp == null) {
-                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            dp.setEnabled(true);
-                            actionCount++;
-                        }
+                        conditionalExecute.setNXPairEnabled(action, actionCount, errorList, devName);
                         break;
                     case SET_NXPAIR_DISABLED:
-                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
-                        if (dp == null) {
-                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            dp.setEnabled(false);
-                            actionCount++;
-                        }
+                        conditionalExecute.setNXPairDisabled(action, actionCount, errorList, devName);
                         break;
                     case SET_NXPAIR_SEGMENT:
-                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
-                        if (dp == null) {
-                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
-                                    setSingleSegmentRoute(devName);
-                            actionCount++;
-                        }
+                        conditionalExecute.setNXPairSegment(action, actionCount, errorList, devName);
                         break;
                     default:
                         log.warn("takeActionIfNeeded drops through switch statement for action {} of {}", i, getSystemName());  // NOI18N
@@ -1576,5 +1073,5 @@ public class DefaultConditional extends AbstractNamedBean
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditional.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditional.class);
 }

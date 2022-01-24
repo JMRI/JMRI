@@ -91,7 +91,8 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Native MQTT SignalMasts are available.</li>
+                <li>Splash screen shows connection address</li>
             </ul>
 
         <h4>MRC</h4>
@@ -141,7 +142,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Enabled functions 23-27 in the throttle.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -286,7 +287,8 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>TSU2 Genesis Diesel - add SD70ACU and Dash 9-44CW</li>
+		<li>TSU Genesis Steam - N Challenger add CV and change some default value per user request</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -396,8 +398,16 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A single Logix can be imported to LogixNG. Se
-		  the section <i>Logix</i> for more information.</li>
+          <li>The action <i>Throttle</i> has been updated.
+          It now also has the child sockets <i>Function</i>
+          and <i>FunctionOnOff</i>. These are optional.
+          If both are connected, the Throttle action sets
+          or resets this function. The child <i>Function</i>
+          tells the function number and the child
+          <i>FunctionOnOff</i> tells if the function should
+          be On (True) or Off (False).</li>
+          <li>A single Logix can be imported to LogixNG. See
+          the section <i>Logix</i> for more information.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -467,7 +477,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -488,7 +498,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Native MQTT masts are available</li>
             </ul>
 
     	<h4>Signal Groups</h4>

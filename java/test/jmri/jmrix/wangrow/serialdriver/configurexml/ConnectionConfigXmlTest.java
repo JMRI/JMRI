@@ -5,6 +5,7 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 import jmri.jmrix.wangrow.serialdriver.ConnectionConfig;
+import jmri.util.JUnitAppender;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -15,6 +16,13 @@ import jmri.jmrix.wangrow.serialdriver.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
+    @Test
+    @Override
+    public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+        super.loadTest();
+        JUnitAppender.suppressWarnMessage("Couldn't find option \"Eprom\", can't set to \"2006 or later\"");
+    }
+    
     @BeforeEach
     @Override
     public void setUp() {

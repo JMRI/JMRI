@@ -2,40 +2,40 @@ package jmri.jmrix.ipocs.configurexml;
 
 import static org.mockito.Mockito.mock;
 
+import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
 
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 public class IpocsLightManagerXmlTest {
 
-  @Test
-  public void ConstructorTest() {
-    Assert.assertNotNull("IpocsLightManagerXml constructor", new IpocsLightManagerXml());
-  }
-
-  @BeforeEach
-  public void setUp() {
-    jmri.util.JUnitUtil.setUp();
-    jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-  }
-
-  @AfterEach
-  public void tearDown() {
-    jmri.util.JUnitUtil.tearDown();
-  }
+    @Test
+    public void ConstructorTest() {
+        Assert.assertNotNull("IpocsLightManagerXml constructor", new IpocsLightManagerXml());
+    }
   
-  @Test
-  public void loadTest() {
-    Element element = mock(Element.class);
-    new IpocsLightManagerXml().load(element, null);
-   }
+    @Test
+    public void loadTest() {
+        Element element = mock(Element.class);
+        new IpocsLightManagerXml().load(element, null);
+    }
 
-   @Test
-   public void setStoreelementClassTest() {
-    Element element = mock(Element.class);
-    new IpocsLightManagerXml().setStoreElementClass(element);
-   }
+    @Test
+    public void setStoreelementClassTest() {
+        Element element = mock(Element.class);
+        new IpocsLightManagerXml().setStoreElementClass(element);
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

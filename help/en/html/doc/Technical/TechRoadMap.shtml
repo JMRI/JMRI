@@ -138,6 +138,9 @@
       More information on Java releases and the operating systems that support them is on a
       <a href="JVMCapabilities.shtml">separate page</a>.
 
+      <p>Java installers are now available from multiple sources.  Our
+        <a href="/java/index.shtml">Java installer page</a> lists a number of them.
+
       <h2>Migration Notes</h2>
 
       <p>This is a section of notes for various code migrations that are in progress or

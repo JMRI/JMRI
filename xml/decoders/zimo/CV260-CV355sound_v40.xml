@@ -837,6 +837,7 @@
     <label xml:lang="cs">Klávesa zapíná/vypíná funkční zvuk</label>
     <tooltip>Defines the key that turns the function sounds (e.g. F2 bell) on or off.</tooltip>
     <tooltip xml:lang="de">Definieren einer Ein/Ausschalt-Taste für Sounds die den Funktionstasten zugeordnet sind; = 0: Funktionstastensounds immer aktiv</tooltip>
+    <tooltip xml:lang="cs">Definuje která klávesa přepíná funkci zvuku (např. F2 zvon) zapnuto/vypnuto.</tooltip>
   </variable>
   <variable item="Blow-off key" CV="312" default="4">
     <enumVal>
@@ -910,6 +911,7 @@
     <label xml:lang="cs">Klávesa pro odvodňovací ventil</label>
     <tooltip>Defines the key to play-back the blow-off sound manually</tooltip>
     <tooltip xml:lang="de">Definieren einer Funktions-Taste, mit welcher das Entwässerungs-Geräusch ausgelöst werden kann</tooltip>
+    <tooltip xml:lang="cs">Definuje která klávesa ručně spustí přehrání zvuku odvodňovacího ventilu</tooltip>
   </variable>
   <variable item="Mute key" CV="313" default="8">
     <enumVal>
@@ -1040,6 +1042,7 @@
     <label xml:lang="cs">Klávesa ztlumit</label>
     <tooltip>Defines key to fade in and out driving sounds</tooltip>
     <tooltip xml:lang="de">Alle Geräusche Aus-/Einblenden</tooltip>
+    <tooltip xml:lang="cs">Definuje která klávesa ztlumí běžící zvuk</tooltip>
   </variable>
   <variable item="Fade in/out time" CV="314" default="0" tooltip="Time of fade in 10ths of second. 0 is same as 10 (1sec).">
     <decVal min="0" max="255"/>
@@ -1224,6 +1227,7 @@
     <label xml:lang="cs">Doba přehrání spínací vstup 1</label>
     <tooltip>Seconds. 0 = Play sample back once (as recorded).</tooltip>
     <tooltip xml:lang="de">Zugeordneter Sound am S1 wird mit der definierten Dauer abgespielt</tooltip>
+    <tooltip xml:lang="cs">Sekundy. 0 = Jednou přehraje zvukový záznam (tak jak je nahrán).</tooltip>
   </variable>
   <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,210,224,227,230">
     <decVal min="0" max="255"/>
@@ -1508,6 +1512,8 @@
   
    <variable item="Brake Key Deceleration Rate" CV="349" default="0" tooltip="CV349, brake key time">
 	<decVal min="0" max="255"/>
+    <label>Brake Key Deceleration Rate</label>
+    <label xml:lang="cs">Klávesa brzdy míra zpomalení</label>
   </variable>
    
   
@@ -1522,15 +1528,19 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Second exhaust Fan and -steam</label>
     <label xml:lang="de">2. Rauch-Ventilator und -Heizung</label>
+    <label xml:lang="cs">Druhý ventilátor výfuku a -páry</label>
     <tooltip>CV348 bit 3</tooltip>
     <tooltip xml:lang="de">Mit CV348 Bit3=1 wird der 2. Rauch-Venti und die Heizung auf dem jeweils höheren Ausgang deaktiviert.</tooltip>
+    <tooltip xml:lang="cs">CV348 Bit3=1 deaktivuje druhý ventilátor výfuku a topení na vyšší výkon.</tooltip>
   </variable>
   <variable item="Brake squel suppressed" CV="348" default="0" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Brake squel can be suppressed with switch-over key</label>
     <label xml:lang="de">Bremsenquietschen mit Lokfahrtaste unterdrücken</label>
+    <label xml:lang="cs">Skřípění brzdy lze potlačit přepínacím tlačítkem</label>
     <tooltip>CV348 bit 4</tooltip>
     <tooltip xml:lang="de">Wenn CV348 Bit4=1 und Lokfahrtaste eingeschalten, Bremsenquietschen unterdrücken</tooltip>
+    <tooltip xml:lang="cs">CV348 Bit4=1 a tlačítko pohonu lokomotivy je zapnuté, tak se potlačí skřípění brzdy</tooltip>
   </variable>
 </variables>
 
@@ -1549,6 +1559,7 @@
     <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
     <tooltip>0 to 252, 25sec per unit</tooltip>
     <tooltip xml:lang="de">0 bis 252, 25 sec pro Einheit</tooltip>
+    <tooltip xml:lang="cs">0 až 252, 25 sekund na jednotku</tooltip>
   </variable>
   <variable item="Steam chuff frequency at speed step 1" CV="354" default="0">
     <decVal min="0" max="255"/>
@@ -1558,6 +1569,7 @@
     <label xml:lang="cs">Frekvence výfuků páry na prvním rychlostním stupni</label>
     <tooltip>0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV267</tooltip>
     <tooltip xml:lang="de">0 = kein Effekt, 1-127 = mehr Dampfschläge, 255-128 = weniger Dampfschläge relativ zu CV267</tooltip>
+    <tooltip xml:lang="cs">0 = bez efektu, 1 – 127 = více výfuků, 255 – 128 = méně výfuků ve srovnání s CV267</tooltip>
   </variable>
   <variable item="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>
