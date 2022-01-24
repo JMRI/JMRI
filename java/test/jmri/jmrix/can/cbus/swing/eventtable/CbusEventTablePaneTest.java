@@ -300,8 +300,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     @BeforeEach
     @Override
     public void setUp() {
-        // super.setUp();
-        JUnitUtil.setUp();
+        super.setUp();
         JUnitUtil.resetInstanceManager();
         title = Bundle.getMessage("EventTableTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
@@ -322,7 +321,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         
         configM = new CbusConfigurationManager(memo);
         
-        jmri.InstanceManager.setDefault(CbusPreferences.class,new CbusPreferences() );
+        InstanceManager.setDefault(CbusPreferences.class,new CbusPreferences() );
         
         panel = new CbusEventTablePane();
     }
@@ -344,7 +343,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         memo = null;
         tcis = null;
         JUnitUtil.resetWindows(false,false);
-        JUnitUtil.tearDown();
+        super.tearDown();
     }    
     
 }
