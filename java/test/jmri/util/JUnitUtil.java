@@ -1272,15 +1272,13 @@ public class JUnitUtil {
 
     /**
      * Use if the profile needs to be written to or cleared as part of the test.
-     * Suggested use in the {@link org.junit.Before} annotated method is:      <code>
-     *
-     * @Rule
-     * public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
+     * Suggested use in the {@link org.junit.jupiter.api.BeforeEach} annotated method is:      <code>
      *
      * @BeforeEach
-     * public void setUp() {
-     *     resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-     * }
+     * public void setUp(@org.junit.jupiter.api.io.TempDir File folder) throws java.io.IOException {
+     *     JUnitUtil.setUp();
+     *     jmri.profile.Profile profile = new jmri.profile.NullProfile(folder);
+     *     JUnitUtil.resetProfileManager(profile);
      * </code>
      *
      * @param profile the provided profile
