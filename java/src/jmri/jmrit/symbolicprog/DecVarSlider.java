@@ -20,7 +20,7 @@ public class DecVarSlider extends JSlider implements ChangeListener {
         super(new DefaultBoundedRangeModel(min, 0, min, max));
         _var = var;
 
-        this.getAccessibleContext().setAccessibleName(label());
+        this.getAccessibleContext().setAccessibleName(_var.label());
 
         // get the original color right
         setBackground(_var.getColor());
