@@ -1386,6 +1386,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }.init(p, showToolTipItem));
         edit.add(showToolTipItem);
 
+        edit.add(CoordinateEdit.getToolTipEditAction(p));
+
         JCheckBoxMenuItem prependToolTipWithDisplayNameItem = new JCheckBoxMenuItem(Bundle.getMessage("PrependTooltipWithDisplayName"));
         prependToolTipWithDisplayNameItem.setSelected(p.getToolTip().getPrependToolTipWithDisplayName());
         prependToolTipWithDisplayNameItem.addActionListener(new ActionListener() {
@@ -1405,34 +1407,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }.init(p, prependToolTipWithDisplayNameItem));
         edit.add(prependToolTipWithDisplayNameItem);
 
-        edit.add(CoordinateEdit.getToolTipEditAction(p));
-
-        NamedBean bean = p.getNamedBean();
-        if (bean != null) {
-            edit.add(new AbstractAction(Bundle.getMessage("SetSysNameTooltip")) {
-                Positionable comp;
-                NamedBean bean;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ToolTip tip = comp.getToolTip();
-                    if (tip != null) {
-                        String uName = bean.getUserName();
-                        String sName = bean.getSystemName();
-                        if (uName != null && uName.length() > 0) {
-                            sName = uName + "(" + sName + ")";
-                        }
-                        tip.setText(sName);
-                    }
-                }
-
-                AbstractAction init(Positionable pos, NamedBean b) {
-                    comp = pos;
-                    bean = b;
-                    return this;
-                }
-            }.init(p, bean));
-        }
         popup.add(edit);
     }
 
@@ -2649,8 +2623,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void showToolTip(Positionable selection, MouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        String txt = tip.getTextToDisplay();
-        if (txt == null || txt.isEmpty()) return;
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         setToolTip(tip);
     }

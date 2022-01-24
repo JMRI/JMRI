@@ -159,7 +159,6 @@ public class ToolTip {
 
     public void paint(Graphics2D g2d, double scale) {
         String tipText = getTextToDisplay();
-        if (tipText.isEmpty()) return;
         Color color = g2d.getColor();
         Font font = g2d.getFont();
         TextLayout tl = new TextLayout(tipText, _tFont, g2d.getFontRenderContext());
