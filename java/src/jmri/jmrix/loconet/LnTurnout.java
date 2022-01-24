@@ -273,14 +273,14 @@ public class LnTurnout extends AbstractTurnout {
     }
     private void setKnownStateFromOutputStateClosedReport() {
         newCommandedState(CLOSED);
-        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT || getFeedbackMode() == EXACT) {
             newKnownState(CLOSED);
         }
     }
     
     private void setKnownStateFromOutputStateThrownReport() {
         newCommandedState(THROWN);
-        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT || getFeedbackMode() == EXACT) {
             newKnownState(THROWN);
         }
     }
@@ -289,6 +289,8 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(CLOSED + THROWN);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(CLOSED + THROWN);
+        } else if (getFeedbackMode() == EXACT) {
+            newKnownState(INCONSISTENT);
         }
     }
     
@@ -296,6 +298,8 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(0);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(0);
+        } else if (getFeedbackMode() == EXACT) {
+            newKnownState(INCONSISTENT);
         }
     }
     
