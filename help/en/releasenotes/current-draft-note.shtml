@@ -347,7 +347,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added accessible names to the (simple)
+                variables displayed on programming panes.</li>
         </ul>
 
     <h3>CTC Tool</h3>
