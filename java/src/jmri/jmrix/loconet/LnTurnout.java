@@ -287,10 +287,8 @@ public class LnTurnout extends AbstractTurnout {
     
     private void setKnownStateFromOutputStateOddReport() {
         newCommandedState(CLOSED + THROWN);
-        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT || getFeedbackMode() == EXACT) {
             newKnownState(CLOSED + THROWN);
-        } else if (getFeedbackMode() == EXACT) {
-            newKnownState(INCONSISTENT);
         }
     }
     
