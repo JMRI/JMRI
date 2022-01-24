@@ -27,6 +27,7 @@ import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
+import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import org.junit.*;
@@ -140,7 +141,9 @@ public class StoreAndLoadTest {
         // Load table turnout_and_signals.csv
         jmri.jmrit.logixng.NamedTable csvTable =
                 InstanceManager.getDefault(NamedTableManager.class)
-                        .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
+                        .loadTableFromCSV("IQT1", null,
+                                "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv",
+                                CSVFormat.Predefined.TDF);
         Assert.assertNotNull(csvTable);
 
         // Create module IQM1

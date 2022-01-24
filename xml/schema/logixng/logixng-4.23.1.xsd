@@ -230,6 +230,24 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="fileName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="predefinedCvsFormat" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="Default"/>
+                    <xs:enumeration value="Excel"/>
+                    <xs:enumeration value="InformixUnload"/>
+                    <xs:enumeration value="InformixUnloadCsv"/>
+                    <xs:enumeration value="MongoDBCsv"/>
+                    <xs:enumeration value="MongoDBTsv"/>
+                    <xs:enumeration value="MySQL"/>
+                    <xs:enumeration value="Oracle"/>
+                    <xs:enumeration value="PostgreSQLCsv"/>
+                    <xs:enumeration value="PostgreSQLText"/>
+                    <xs:enumeration value="RFC4180"/>
+                    <xs:enumeration value="TDF"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
             <xs:attribute name="class" type="classType" use="required"/>
           </xs:complexType>

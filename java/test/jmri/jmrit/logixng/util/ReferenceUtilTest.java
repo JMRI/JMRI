@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.util;
 
+import java.io.IOException;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -8,6 +10,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
+import org.apache.commons.csv.CSVFormat;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -376,7 +379,7 @@ public class ReferenceUtilTest {
         }, IllegalArgumentException.class, "Memory 'Memory  abc' is not found");
     }
     
-    private void setupTables() {
+    private void setupTables() throws IOException {
         // Note that editors, like NetBeans, may insert spaces instead of tabs
         // when pressing the <Tab> key, which may be a problem when editing the
         // CSV table data below, since the separator between columns must be a
@@ -403,14 +406,14 @@ public class ReferenceUtilTest {
                 "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
                 "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
-        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData);
-        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData);
-        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData);
+        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData, CSVFormat.Predefined.TDF);
+        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData, CSVFormat.Predefined.TDF);
+        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData, CSVFormat.Predefined.TDF);
     }
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws IOException, IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();

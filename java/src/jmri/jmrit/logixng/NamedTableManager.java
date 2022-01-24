@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 
+import org.apache.commons.csv.CSVFormat;
+
 /**
  * A manager for a NamedTable
  * 
@@ -33,9 +35,31 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param systemName the system name of the table
      * @param userName the user name of the table, or null if no user name
      * @param fileName the file name of the CSV file
+     * @param csvFormat the format of the CSV file
      * @return the new table
      */
-    public NamedTable newCSVTable(String systemName, String userName, String fileName);
+    public NamedTable newCSVTable(
+            @Nonnull String systemName,
+            @CheckForNull String userName,
+            @Nonnull String fileName,
+            @Nonnull CSVFormat csvFormat);
+    
+    /**
+     * Create a new CSV table.
+     * This table is stored in the manager but it's contents does only exists
+     * in the CSV file. If the CSV file is changed, the contents will be read
+     * on the next start of the program.
+     * @param systemName the system name of the table
+     * @param userName the user name of the table, or null if no user name
+     * @param fileName the file name of the CSV file
+     * @param predefinedCsvFormat the format of the CSV file
+     * @return the new table
+     */
+    public NamedTable newCSVTable(
+            @Nonnull String systemName,
+            @CheckForNull String userName,
+            @Nonnull String fileName,
+            @Nonnull CSVFormat.Predefined predefinedCsvFormat);
     
     /**
      * Create a new internal named table.
@@ -56,36 +80,95 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param sys the system name of the new table
      * @param user the user name of the new table or null if no user name
      * @param text the CSV text
+     * @param csvFormat the format of the CSV text
      * @return the loaded table
+     * @throws java.io.IOException in case of an exception
      */
     public NamedTable loadTableFromCSVData(
-            @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException;
+            @Nonnull String sys,
+            @CheckForNull String user,
+            @Nonnull String text,
+            @Nonnull CSVFormat csvFormat)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
+    
+    /**
+     * Load a table from a CSV text.
+     * @param sys the system name of the new table
+     * @param user the user name of the new table or null if no user name
+     * @param text the CSV text
+     * @param predefinedCsvFormat the format of the CSV text
+     * @return the loaded table
+     * @throws java.io.IOException in case of an exception
+     */
+    public NamedTable loadTableFromCSVData(
+            @Nonnull String sys,
+            @CheckForNull String user,
+            @Nonnull String text,
+            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**
      * Load a table from a CSV finle.
      * @param sys the system name of the new table
      * @param user the user name of the new table or null if no user name
      * @param fileName the file name of the CSV table
+     * @param csvFormat the format of the CSV file
      * @return the loaded table
      * @throws java.io.IOException in case of an exception
      */
     public NamedTable loadTableFromCSV(
-            @Nonnull String sys, @CheckForNull String user,
-            @Nonnull String fileName)
+            @Nonnull String sys,
+            @CheckForNull String user,
+            @Nonnull String fileName,
+            @Nonnull CSVFormat csvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**
      * Load a table from a CSV finle.
-     * @param file the CSV file
      * @param sys the system name of the new table
      * @param user the user name of the new table or null if no user name
+     * @param fileName the file name of the CSV table
+     * @param predefinedCsvFormat the format of the CSV file
      * @return the loaded table
      * @throws java.io.IOException in case of an exception
      */
     public NamedTable loadTableFromCSV(
-            @Nonnull String sys, @CheckForNull String user,
-            @Nonnull File file)
+            @Nonnull String sys,
+            @CheckForNull String user,
+            @Nonnull String fileName,
+            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
+    
+    /**
+     * Load a table from a CSV finle.
+     * @param sys the system name of the new table
+     * @param user the user name of the new table or null if no user name
+     * @param file the CSV file
+     * @param csvFormat the format of the CSV file
+     * @return the loaded table
+     * @throws java.io.IOException in case of an exception
+     */
+    public NamedTable loadTableFromCSV(
+            @Nonnull String sys,
+            @CheckForNull String user,
+            @Nonnull File file,
+            @Nonnull CSVFormat csvFormat)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
+    
+    /**
+     * Load a table from a CSV finle.
+     * @param sys the system name of the new table
+     * @param user the user name of the new table or null if no user name
+     * @param file the CSV file
+     * @param predefinedCsvFormat the format of the CSV file
+     * @return the loaded table
+     * @throws java.io.IOException in case of an exception
+     */
+    public NamedTable loadTableFromCSV(
+            @Nonnull String sys,
+            @CheckForNull String user,
+            @Nonnull File file,
+            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**

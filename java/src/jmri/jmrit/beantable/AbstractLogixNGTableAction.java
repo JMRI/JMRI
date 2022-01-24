@@ -414,7 +414,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         if (!checkFlags(null)) {
             return;
         }
-        _showReminder = true;
+        if (!letUserSelectTypeToAdd()) return;
+        
         // make an Add bean Frame
         if (addLogixNGFrame == null) {
             String titleKey = getAddTitleKey();
@@ -432,6 +433,16 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
         });
+        
+        _showReminder = true;
+    }
+
+    /**
+     * If the user needs to do a selection when adding a new bean, override this method.
+     * @return true if success, false if abort
+     */
+    protected boolean letUserSelectTypeToAdd() {
+        return true;
     }
 
     protected abstract JPanel makeAddFrame(String titleId, String startMessageId);
@@ -453,7 +464,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     /**
      * Respond to the Cancel button in Add bean window.
      * <p>
- Note: Also get there if the user closes the Add bean window.
+     * Note: Also get there if the user closes the Add bean window.
      *
      * @param e The event heard
      */

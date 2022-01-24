@@ -27,6 +27,8 @@ import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
+import org.apache.commons.csv.CSVFormat;
+
 /**
  * Editor for LogixNG Tables
  *
@@ -391,11 +393,11 @@ import jmri.util.JmriJFrame;
             String csvFileName = editCsvTableName.getText().trim();
 
             try {
-                // NamedTable does not exist, create a new NamedTable
+                // Create a new NamedTable to verify the content of the table,
+                // but don't register it in the manager
                 AbstractNamedTable.loadTableFromCSV_File(
                         "IQT1",     // Arbitrary LogixNG table name
-//                        InstanceManager.getDefault(NamedTableManager.class).getAutoSystemName(),
-                        null, csvFileName, false);
+                        null, csvFileName, CSVFormat.Predefined.TDF, false);
             } catch (java.nio.file.NoSuchFileException ex) {
                 log.error("Cannot load table due since the file is not found", ex);
                 JOptionPane.showMessageDialog(_editLogixNGFrame,

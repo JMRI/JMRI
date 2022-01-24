@@ -7,7 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -21,6 +21,8 @@ import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.TableEditor;
+
+import org.apache.commons.csv.CSVFormat;
 
 /**
  * Swing action to create and register a LogixNG Table.
@@ -44,6 +46,9 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     JRadioButton _typeInternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTable"));
     ButtonGroup _buttonGroup = new ButtonGroup();
     JTextField _csvFileName = new JTextField(50);
+
+    private enum NewTableType { External, Internal };
+    private NewTableType _newTableType;
 
     /**
      * Create a LogixNGTableAction instance.
@@ -114,7 +119,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return null;
             }
             return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, fileName);
+                    .newCSVTable(systemName, userName, fileName, CSVFormat.Predefined.TDF);
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
@@ -122,8 +127,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             throw new RuntimeException("No table type selected");
         }
 
-//        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, userName);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -223,6 +227,68 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         return selectFileButton;
     }
 
+    @Override
+    protected boolean letUserSelectTypeToAdd() {
+        AtomicBoolean result = new AtomicBoolean(false);
+        
+        JDialog dialog = new JDialog(this.getFrame(), Bundle.getMessage("LogixNGTableTable_SelectTableType"), true);    // NOI18N
+        
+        Container contentPane = dialog.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+        _buttonGroup.add(_typeExternalTable);
+        _buttonGroup.add(_typeInternalTable);
+        _typeExternalTable.setSelected(true);
+        _typeInternalTable.setEnabled(false);
+
+        contentPane.add(new JLabel(Bundle.getMessage("LogixNGTableTable_SelectTableType")));    // NOI18N
+
+        contentPane.add(_typeExternalTable);
+        contentPane.add(_typeInternalTable);
+
+        // set up create and cancel buttons
+        JPanel panel5 = new JPanel();
+        panel5.setLayout(new FlowLayout());
+        
+        // Cancel
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
+        panel5.add(cancel);
+        cancel.addActionListener((evt) -> {
+            dialog.dispose();
+        });
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGButtonHint"));      // NOI18N
+        
+        // OK
+        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
+        panel5.add(ok);
+        ok.addActionListener((evt) -> {
+            _newTableType = null;
+            if (_typeExternalTable.isSelected()) _newTableType = NewTableType.External;
+            if (_typeInternalTable.isSelected()) _newTableType = NewTableType.Internal;
+            result.set(true);
+            dialog.dispose();
+        });
+//        ok.setToolTipText(Bundle.getMessage("CancelLogixNGButtonHint"));      // NOI18N
+
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                dispose();
+            }
+        });
+        contentPane.add(panel5);
+        
+        dialog.pack();
+        dialog.setVisible(true);
+        
+        if (result.get() && (addLogixNGFrame != null)) {
+            addLogixNGFrame.dispose();
+            addLogixNGFrame = null;
+        }
+        
+        return result.get();
+    }
+
     /**
      * Create or copy bean frame.
      *
@@ -269,14 +335,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 1;
         p.add(_addUserName, c);
 
-        c.gridy = 2;
-        createFileChooser();
-        p.add(createFileChooser(), c);
-
-        c.gridx = 2;        // make room for file selector
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        p.add(_csvFileName, c);
-
         c.gridwidth = 1;
         c.gridx = 2;
         c.gridy = 1;
@@ -286,16 +344,31 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 0;
         p.add(_autoSystemName, c);
 
+        if (_newTableType == NewTableType.External) {
+            c.gridx = 1;
+            c.gridy = 2;
+            createFileChooser();
+            p.add(createFileChooser(), c);
 
+            c.gridx = 2;        // make room for file selector
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            p.add(_csvFileName, c);
+        } else if (_newTableType == NewTableType.Internal) {
+            
+        } else {
+            throw new RuntimeException("Invalid table type: "+_newTableType.name());
+        }
+
+/*
         _buttonGroup.add(_typeExternalTable);
         _buttonGroup.add(_typeInternalTable);
         _typeExternalTable.setSelected(true);
         _typeInternalTable.setEnabled(false);
-
+*/
         _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
         contentPane.add(p);
-
+/*
         JPanel panel98 = new JPanel();
         panel98.setLayout(new FlowLayout());
         JPanel panel99 = new JPanel();
@@ -304,7 +377,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         panel99.add(_typeInternalTable, c);
         panel98.add(panel99);
         contentPane.add(panel98);
-
+*/
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
