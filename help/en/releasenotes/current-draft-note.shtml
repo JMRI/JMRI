@@ -425,13 +425,16 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Tooltips can now be edited in Panel Editor.</li>
+            <li>Tooltips can now have user name and display name
+            before the tooltip text.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Tooltips can now have user name and display name
+            before the tooltip text.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
