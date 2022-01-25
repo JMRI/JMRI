@@ -12,7 +12,7 @@ import jmri.implementation.SensorTurnoutOperator;
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 
     // This class can deal with explicit feedback modes
-    final int feedbackModes = AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR | AbstractTurnout.EXACT | AbstractTurnout.INDIRECT;
+    final int feedbackModes = AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR | AbstractTurnout.EXACT | AbstractTurnout.INDIRECT | AbstractTurnout.ALTERNATE ;
 
     /*
      * Default values and constraints.

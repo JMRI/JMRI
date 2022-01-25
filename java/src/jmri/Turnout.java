@@ -142,6 +142,13 @@ public interface Turnout extends DigitalIO {
     public static final int DELAYED = 128;
 
     /**
+     * Constant representing "alternate feedback method". In this case, the layout
+     * hardware can sense both positions of the turnout, which is used to set
+     * the known state. Hardware use OPS_SW_REP alternate message.
+     */
+    public static final int ALTERNATE = 256;
+
+    /**
      * Constant representing turnout lockout cab commands
      */
     public static final int CABLOCKOUT = 1;

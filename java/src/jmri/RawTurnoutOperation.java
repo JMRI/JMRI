@@ -16,7 +16,7 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
     // feedback modes.
     final int feedbackModes
             = Turnout.DIRECT | Turnout.EXACT | Turnout.INDIRECT
-            | Turnout.ONESENSOR | Turnout.TWOSENSOR;
+            | Turnout.ONESENSOR | Turnout.TWOSENSOR | Turnout.ALTERNATE ;
 
     /*
      * Default values and constraints.

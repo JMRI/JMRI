@@ -13,7 +13,7 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 
     // This class can deal with ANY feedback mode, although it may not be the best one
     final int feedbackModes
-            = AbstractTurnout.DIRECT | AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR | AbstractTurnout.INDIRECT | AbstractTurnout.EXACT | AbstractTurnout.MONITORING;
+            = AbstractTurnout.DIRECT | AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR | AbstractTurnout.INDIRECT | AbstractTurnout.EXACT | AbstractTurnout.MONITORING | AbstractTurnout.ALTERNATE ;
 
     /*
      * Default values and constraints.
