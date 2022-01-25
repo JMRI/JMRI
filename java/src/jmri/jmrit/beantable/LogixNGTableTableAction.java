@@ -14,13 +14,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.util.FileUtil;
-import jmri.util.JmriJFrame;
-
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.TableEditor;
+import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.BeanSelectPanel;
 
 import org.apache.commons.csv.CSVFormat;
 
@@ -42,12 +42,23 @@ import org.apache.commons.csv.CSVFormat;
  */
 public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTable> {
 
-    JRadioButton _typeExternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeExternalTable"));
-    JRadioButton _typeInternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTable"));
-    ButtonGroup _buttonGroup = new ButtonGroup();
-    JTextField _csvFileName = new JTextField(50);
+    private final JRadioButton _typeExternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeExternalTable"));
+    private final JRadioButton _typeInternalTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTable"));
+    private final JRadioButton _typeInternalTableBasedOfTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTableBasedOfTable"));
+    private final ButtonGroup _buttonGroup = new ButtonGroup();
 
-    private enum NewTableType { External, Internal };
+    private final JRadioButton _internalBasedTable_CopyTable = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTableBasedOfTable_CopyTable"));
+    private final JRadioButton _internalBasedTable_SameRowsAndColumns = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTableBasedOfTable_SameRowsAndColumns"));
+    private final JRadioButton _internalBasedTable_SameRows = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTableBasedOfTable_SameRows"));
+    private final JRadioButton _internalBasedTable_SameColumns = new JRadioButton(Bundle.getMessage("LogixNG_typeInternalTableBasedOfTable_SameColumns"));
+    private final ButtonGroup _internalBasedTable_ButtonGroup = new ButtonGroup();
+
+    private final JCheckBox _allowWrite = new JCheckBox(Bundle.getMessage("LogixNGTableTable_allowWrite"));
+    private final JTextField _csvFileName = new JTextField(50);
+    private final JCheckBox _storeTableDataInPanelFile = new JCheckBox(Bundle.getMessage("LogixNGTableTable_storeTableDataInPanelFile"));
+
+    private enum NewTableType { External, Internal, InternalBasedOfTable }
+    
     private NewTableType _newTableType;
 
     /**
@@ -238,13 +249,57 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
         _buttonGroup.add(_typeExternalTable);
         _buttonGroup.add(_typeInternalTable);
+        _buttonGroup.add(_typeInternalTableBasedOfTable);
+
         _typeExternalTable.setSelected(true);
         _typeInternalTable.setEnabled(false);
+        _typeInternalTableBasedOfTable.setEnabled(false);
 
         contentPane.add(new JLabel(Bundle.getMessage("LogixNGTableTable_SelectTableType")));    // NOI18N
 
         contentPane.add(_typeExternalTable);
         contentPane.add(_typeInternalTable);
+        contentPane.add(_typeInternalTableBasedOfTable);
+
+        JLabel _tableBeanLabel = new JLabel("Table to base on");
+        BeanSelectPanel<NamedTable> _tableBeanPanel =
+                new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+
+        _typeInternalTableBasedOfTable.addChangeListener((evt) -> {
+            _tableBeanLabel.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+            _tableBeanPanel.getBeanCombo().setEnabled(_typeInternalTableBasedOfTable.isSelected());
+            _internalBasedTable_CopyTable.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+            _internalBasedTable_SameRowsAndColumns.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+            _internalBasedTable_SameRows.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+            _internalBasedTable_SameColumns.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+        });
+        _tableBeanLabel.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+        _tableBeanPanel.getBeanCombo().setEnabled(_typeInternalTableBasedOfTable.isSelected());
+        _internalBasedTable_CopyTable.setSelected(true);
+        _internalBasedTable_CopyTable.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+        _internalBasedTable_SameRowsAndColumns.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+        _internalBasedTable_SameRows.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+        _internalBasedTable_SameColumns.setEnabled(_typeInternalTableBasedOfTable.isSelected());
+
+        JPanel panelInternalBasedTable = new JPanel();
+        panelInternalBasedTable.setLayout(new BoxLayout(panelInternalBasedTable, BoxLayout.Y_AXIS));
+        panelInternalBasedTable.setBorder(BorderFactory.createLineBorder(java.awt.Color.black));
+
+        JPanel panelInternalBasedTable_SelectTable = new JPanel();
+        panelInternalBasedTable_SelectTable.add(_tableBeanLabel);
+        _tableBeanLabel.setLabelFor(_tableBeanPanel);
+        panelInternalBasedTable_SelectTable.add(_tableBeanPanel);
+        panelInternalBasedTable.add(panelInternalBasedTable_SelectTable);
+
+        _internalBasedTable_ButtonGroup.add(_internalBasedTable_CopyTable);
+        _internalBasedTable_ButtonGroup.add(_internalBasedTable_SameRowsAndColumns);
+        _internalBasedTable_ButtonGroup.add(_internalBasedTable_SameRows);
+        _internalBasedTable_ButtonGroup.add(_internalBasedTable_SameColumns);
+        panelInternalBasedTable.add(_internalBasedTable_CopyTable);
+        panelInternalBasedTable.add(_internalBasedTable_SameRowsAndColumns);
+        panelInternalBasedTable.add(_internalBasedTable_SameRows);
+        panelInternalBasedTable.add(_internalBasedTable_SameColumns);
+        contentPane.add(panelInternalBasedTable);
 
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
@@ -265,6 +320,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             _newTableType = null;
             if (_typeExternalTable.isSelected()) _newTableType = NewTableType.External;
             if (_typeInternalTable.isSelected()) _newTableType = NewTableType.Internal;
+            if (_typeInternalTableBasedOfTable.isSelected()) _newTableType = NewTableType.InternalBasedOfTable;
             result.set(true);
             dialog.dispose();
         });
@@ -344,9 +400,19 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 0;
         p.add(_autoSystemName, c);
 
+        c.gridx = 1;
+        c.gridy = 2;
+        c.anchor = GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
+        p.add(_allowWrite, c);
+
         if (_newTableType == NewTableType.External) {
+            _allowWrite.setSelected(false);
+            _allowWrite.setEnabled(true);
+
             c.gridx = 1;
-            c.gridy = 2;
+            c.gridy = 3;
             createFileChooser();
             p.add(createFileChooser(), c);
 
@@ -354,7 +420,74 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             c.gridwidth = GridBagConstraints.REMAINDER;
             p.add(_csvFileName, c);
         } else if (_newTableType == NewTableType.Internal) {
-            
+            // For this table, allow write is always enabled
+            _allowWrite.setSelected(true);
+            _allowWrite.setEnabled(false);
+
+            c.gridx = 0;
+            c.gridy = 3;
+            c.weightx = 0.0;
+            c.anchor = GridBagConstraints.EAST;
+            c.fill = 0;
+
+            JLabel _numRowsLabel = new JLabel("Num rows, exluding header");
+            JLabel _numColumnsLabel = new JLabel("Num columns, exluding header");
+            JTextField _numRows = new JTextField(5);
+            JTextField _numColumns = new JTextField(5);
+
+            p.add(_numRowsLabel, c);
+            _numRowsLabel.setLabelFor(_numRows);
+            c.gridy = 4;
+            p.add(_numColumnsLabel, c);
+            _numColumnsLabel.setLabelFor(_numColumns);
+
+            c.gridx = 1;
+            c.gridy = 3;
+            c.anchor = GridBagConstraints.WEST;
+            c.weightx = 1.0;
+            c.fill = 0;
+            p.add(_numRows, c);
+            c.gridy = 4;
+            p.add(_numColumns, c);
+
+            c.gridx = 1;
+            c.gridy = 5;
+            c.anchor = GridBagConstraints.WEST;
+            c.weightx = 0.0;
+            c.fill = 0;
+            p.add(_storeTableDataInPanelFile, c);
+            _storeTableDataInPanelFile.setSelected(false);
+        } else if (_newTableType == NewTableType.InternalBasedOfTable) {
+            _allowWrite.setSelected(true);
+            _allowWrite.setEnabled(true);
+
+            c.gridx = 1;
+            c.gridy = 3;
+            c.anchor = GridBagConstraints.WEST;
+            c.weightx = 0.0;
+            c.fill = 0;
+            p.add(_storeTableDataInPanelFile, c);
+            _storeTableDataInPanelFile.setSelected(false);
+
+            c.gridx = 0;
+            c.gridy = 4;
+            c.weightx = 0.0;
+            c.anchor = GridBagConstraints.EAST;
+            c.fill = 0;
+
+            JLabel _tableBeanLabel = new JLabel("Table to base on");
+            BeanSelectPanel<NamedTable> _tableBeanPanel =
+                    new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+
+            p.add(_tableBeanLabel, c);
+            _tableBeanLabel.setLabelFor(_tableBeanPanel);
+
+            c.gridx = 1;
+            c.gridy = 4;
+            c.anchor = GridBagConstraints.WEST;
+            c.weightx = 0.0;
+            c.fill = 0;
+            p.add(_tableBeanPanel, c);
         } else {
             throw new RuntimeException("Invalid table type: "+_newTableType.name());
         }

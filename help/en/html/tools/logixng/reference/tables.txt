@@ -1,0 +1,29 @@
+LogixNG Tables
+
+There are three types of tables in LogixNG:
+
+* External tables
+  These tables are based on an external file, usually a CSV file (Comma Separated File, but it might be TAB separated as well).
+
+* Internal tables
+  These tables are stored in the panel file. It's optional if the table data should be stored in the panel file.
+
+* Internal tables based of a table
+  These tables are similar to internal tables, but their number of rows and/or columns are determined of another table.
+
+
+
+
+
+
+
+
+Example usage of "Internal table based of a table"
+
+If you have a CSV file with a number of rows and you want to have one or several LogixNGs working on a particular row,
+you can create an internal table based of the original CSV table, but there the internal table only has one row.
+
+You can then use a LogixNG action to copy one row from the original CSV table to the internal table and then have the
+LogixNGs working on this internal table.
+
+

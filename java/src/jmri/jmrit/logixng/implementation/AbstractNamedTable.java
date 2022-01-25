@@ -153,6 +153,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         
         if (registerInManager) manager.register(table);
         
+        csvFile.close();
+        
         return table;
     }
     
