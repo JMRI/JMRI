@@ -1,6 +1,7 @@
 package jmri.jmrix.rfid.swing.tagcarwin;
 
-import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 
 import javax.swing.*;
 import java.time.LocalTime;
@@ -9,21 +10,31 @@ public class TagCarItem {
     private String tag;
     private String road;
     private String carNumber;
-    private String location;
-    private String track;
+    private String locationName;
+    private Location locationValue;
+    private String trackName;
     private String train;
     private Integer trainPosition;
+    protected JComboBox<String> location;
 
-    public Car getCurrentCar() {
-        return currentCar;
+    public JComboBox<String> getLocationCombo() {
+        return location;
     }
 
-    public void setCurrentCar(Car currentCar) {
-        this.currentCar = currentCar;
+    public void setLocation(JComboBox<String> location) {
+        this.location = location;
     }
 
-    private Car currentCar;
+    public void setTrack(JComboBox<String> track) {
+        this.track = track;
+    }
 
+    public JComboBox<String> getTrackCombo() {
+        return track;
+    }
+
+    protected JComboBox<String> track;
+    private RollingStock currentCar;
     private String destination;
     private LocalTime lastSeen;
     private JButton action1 = null;
@@ -34,6 +45,14 @@ public class TagCarItem {
     public TagCarItem() {
         tagTime = LocalTime.now();
     }
+    public RollingStock getCurrentCar() {
+        return currentCar;
+    }
+
+    public void setCurrentCar(RollingStock currentCar) {
+        this.currentCar = currentCar;
+    }
+
 
     public TagCarItem(String newTag) {
         this.tag = newTag;
@@ -121,20 +140,28 @@ public class TagCarItem {
         this.carNumber = carNumber;
     }
 
-    public String getLocation() {
-        return location;
+    public Location getLocationValue() {
+        return this.locationValue;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocation(Location location) {
+        this.locationValue = location;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.locationName = location;
     }
 
     public String getTrack() {
-        return track;
+        return trackName;
     }
 
     public void setTrack(String track) {
-        this.track = track;
+        this.trackName = track;
     }
 
     public String getTrain() {

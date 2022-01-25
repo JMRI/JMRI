@@ -1,11 +1,19 @@
 package jmri.jmrix.rfid.swing.tagcarwin;
 
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalTime;
@@ -31,7 +39,20 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     private static final int ACTION2_COLUMN = 10;
     private static final int COLUMN_COUNT = ACTION2_COLUMN + 1;
     private final int[] tableColumn_widths = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
-    Vector<TagCarItem> tagList = new Vector<TagCarItem>();
+    List<TagCarItem> tagList = new Vector<TagCarItem>();
+    protected List<Location> locations;
+    protected List<Track> tracks;
+    private DefaultCellEditor locationCellEditor = null;
+    private DefaultCellEditor trackCellEditor = null;
+
+    public void showTimestamps(boolean showTimestamps) {
+        this.showTimestamps = showTimestamps;
+        XTableColumnModel tcm = (XTableColumnModel)tableParent.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), showTimestamps);
+        fireTableDataChanged();
+    }
+
+    protected boolean showTimestamps = false;
 
     public void setRowMax(int rowMax) {
         this.rowMax = rowMax;
@@ -39,14 +60,16 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
             while (tagList.size() > rowMax) {
                 tagList.remove(0);
             }
+            fireTableDataChanged();
         }
     }
 
     public void add(TagCarItem newItem) {
-        while (tagList.size() > rowMax) {
+        while (tagList.size() >= rowMax) {
             tagList.remove(0);
         }
         tagList.add(newItem);
+
         fireTableDataChanged();
     }
 
@@ -95,10 +118,13 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
             case TAG_COLUMN:
                 return current.getTag();
             case LOCATION_COLUMN:
-                if (current.getLocation() == null) {
+                if (current.getCurrentCar() == null) {
                     return "";
                 }
-                return current.getLocation();
+                if (current.getCurrentCar().getLocation() != null) {
+                    return current.getLocationCombo().getSelectedItem();
+                }
+                return current.getLocationName();
             case TRACK_COLUMN:
                 if (current.getTrack() == null) {
                     return "";
@@ -136,6 +162,58 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+   CarSetFrame csf = null;
+   CarEditFrame cef = null;
+
+   public void setValueAt(Object value, int row, int col) {
+       TagCarItem thisRowValue = tagList.get(row);
+       RollingStock car = thisRowValue.getCurrentCar();
+       switch (col) {
+           case LOCATION_COLUMN:
+               JComboBox<String>  thisCell = (JComboBox<String>) locationCellEditor.getComponent();
+               thisCell.removeAllItems();
+               for (Location location: locations) {
+                   thisCell.addItem(location.getName());
+               }
+               if (car != null) {
+                   if (car.getLocationName() != null ) {
+                       thisCell.setSelectedItem(car.getLocationName());
+                   }
+               }
+               break;
+           case TRACK_COLUMN:
+               JComboBox trackCell = (JComboBox) trackCellEditor.getComponent();
+
+               trackCell.removeAllItems();
+
+               break;
+           case ACTION1_COLUMN:
+               // set location
+               if (csf != null) {
+                   csf.dispose();
+               }
+               SwingUtilities.invokeLater( () -> {
+                   csf = new CarSetFrame();
+                   csf.initComponents();
+                   csf.loadCar((Car)car);
+               });
+               break;
+           case ACTION2_COLUMN:
+               if (cef != null) {
+                   cef.dispose();
+               }
+               SwingUtilities.invokeLater(()-> {
+                   cef = new CarEditFrame();
+                   cef.initComponents();
+                   cef.load((Car)car);
+               });
+               break;
+           default:
+               log.error("should not be setting value for column {}", Integer.toString(col));
+       }
+
+   }
+
     void initTable() {
         XTableColumnModel tcm = new XTableColumnModel();
         tableParent.setColumnModel(tcm);
@@ -146,8 +224,12 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(ACTION1_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(ACTION2_COLUMN).setCellRenderer(buttonRenderer);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), false);
-
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), showTimestamps);
+        locationCellEditor = new DefaultCellEditor(new JComboBox<String>());
+        trackCellEditor = new DefaultCellEditor(new JComboBox<String>());
+        tcm.getColumnByModelIndex(LOCATION_COLUMN).setCellEditor(locationCellEditor);
+        tcm.getColumnByModelIndex(TRACK_COLUMN).setCellEditor(trackCellEditor);
+        fireTableDataChanged();
     }
 
     @Override
@@ -185,6 +267,9 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         switch (col) {
             case TRAIN_POSITION_COLUMN:
                 return Integer.class;
+            case LOCATION_COLUMN:
+            case TRACK_COLUMN:
+                return JComboBox.class;
             case ACTION1_COLUMN:
             case ACTION2_COLUMN:
                 return JButton.class;
@@ -196,6 +281,8 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     @Override
     public boolean isCellEditable(int row, int col) {
        switch (col) {
+           case LOCATION_COLUMN:
+           case TRACK_COLUMN:
            case ACTION1_COLUMN:
            case ACTION2_COLUMN:
                return true;
@@ -203,5 +290,4 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
                return false;
        }
     }
-
 }

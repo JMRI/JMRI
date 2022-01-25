@@ -3,6 +3,9 @@ package jmri.jmrix.rfid.swing.tagcarwin;
 import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -13,12 +16,17 @@ import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.swing.RfidPanelInterface;
 import jmri.util.swing.JmriPanel;
+import org.python.antlr.ast.Num;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Vector;
 
 public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanelInterface  {
@@ -31,8 +39,8 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
     private Vector<RollingStock> lastTrainCars = new Vector<RollingStock>();
     private Train lastTrain = null;
 
-
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
     RfidSystemConnectionMemo memo = null;
 
     @Override
@@ -57,30 +65,60 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
             }
         }
         lastTagSeen = thisTag;
-        Car thisCar = findCarByTag(thisTag);
-        TagCarItem newCar = new TagCarItem(thisTag, LocalTime.now());
+        createNewItem(thisTag);
+    }
+
+    Vector<String> getLocationNames() {
+        Vector<String> returnValue = new Vector<String>();
+        HashSet<String> tempList = new HashSet<String>();
+        for (Location loc : locationManager.getList()) {
+            tempList.add(loc.getName());
+        }
+        Vector<String> intermediate = new Vector<>(tempList);
+        Collections.sort(intermediate);
+        return intermediate;
+    }
+
+    public Vector<String> getTrackNamesAt(Location location) {
+        Vector<String> retValue = new Vector<String>();
+        for (Track track: location.getTracksByIdList()) {
+            retValue.add(track.getName());
+        }
+        return retValue;
+    }
+
+    private TagCarItem createNewItem(String tag) {
+        TagCarItem newTag = new TagCarItem(tag, LocalTime.now());
+        RollingStock thisCar = findCarByTag(tag);
         if (thisCar != null) {
-            newCar.setRoad(thisCar.getRoadName());
-            newCar.setCarNumber(thisCar.getNumber());
-            newCar.setCurrentCar(thisCar);
-            if (thisCar.getLocation() != null) { 
-                newCar.setLocation(thisCar.getLocationName());
+            newTag.setRoad(thisCar.getRoadName());
+            newTag.setCarNumber(thisCar.getNumber());
+            newTag.setCurrentCar(thisCar);
+            newTag.location = new JComboBox<String>(getLocationNames());
+            if (thisCar.getLocation() != null) {
+                newTag.setLocation(thisCar.getLocation());
+                newTag.location.setSelectedItem(thisCar.getLocation().getName());
+                newTag.track = new JComboBox<String>();
                 if (thisCar.getTrackName() != null) {
-                    newCar.setTrack(thisCar.getTrackName());
+                    newTag.setTrack(thisCar.getTrackName());
+                    for (String item: getTrackNamesAt(thisCar.getLocation())) {
+                        newTag.track.addItem(item);
+                    }
                 }
             }
             if (thisCar.getTrainName() != null) {
-                newCar.setTrain(thisCar.getTrainName());
-                newCar.setTrainPosition(getCarTrainPosition(thisCar, thisCar.getTrain()));
-            }           
+                newTag.setTrain(thisCar.getTrainName());
+                newTag.setTrainPosition(getCarTrainPosition(thisCar, thisCar.getTrain()));
+            }
         } else {
-            newCar.setAction1(null);
-            newCar.setAction2(null);
+            newTag.setAction1(null);
+            newTag.setAction2(null);
         }
-        dataModel.add(newCar);
+        dataModel.add(newTag);
+        return newTag;
     }
 
-    public Car findCarByTag(String tag) {
+    public RollingStock findCarByTag(String tag) {
         for (Car thisCar : carManager.getByIdList()) {
             IdTag foundTag = thisCar.getIdTag();
             if (foundTag != null) {
@@ -94,7 +132,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         return null;
     }
 
-    public int getCarTrainPosition(Car thisCar, Train thisTrain) {
+    public int getCarTrainPosition(RollingStock thisCar, Train thisTrain) {
         String carRoad = thisCar.getRoadName();
         String carNumber = thisCar.getNumber();
         if (thisTrain == null) {
@@ -133,7 +171,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
         pm.setSimplePreferenceState(timeCheck, showTimestamps.isSelected());
         pm.setSimplePreferenceState(dupeCheck, showDuplicates.isSelected());
-        pm.setProperty(rowCountField, rowCountField, currentRowCount.toString());
+        pm.setProperty(rowCountField, rowCountField, rowCount.getText());
         super.dispose();
     }
 
@@ -152,7 +190,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         dataModel = new TableDataModel();
         tagMonitorTable = new JTable(dataModel);
         dataModel.setParent(tagMonitorTable);
-        dataModel.initTable();
+        dataModel.locations = locationManager.getLocationsByIdList();
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
         showTimestamps.setText(Bundle.getMessage("MonitorTimestamps"));
         showTimestamps.setVisible(true);
@@ -162,6 +200,9 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         showDuplicates.setVisible(true);
         showDuplicates.setToolTipText(Bundle.getMessage("MonitorDupesToolTip"));
         showDuplicates.setSelected(pm.getSimplePreferenceState(dupeCheck));
+        dataModel.showTimestamps = showTimestamps.isSelected();
+
+        dataModel.initTable();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JScrollPane tablePane = new JScrollPane(tagMonitorTable);
         tablePane.setPreferredSize(new Dimension(100, 600));
@@ -176,6 +217,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         } catch (NullPointerException nulls) {
             currentRowCount = 15;
         }
+        dataModel.setRowMax(currentRowCount);
         checkBoxPanel.setPreferredSize(new Dimension(400, 30));
         checkBoxPanel.setMaximumSize(new Dimension(600, 30));
         rowCount.setPreferredSize(new Dimension(40, 15));
@@ -187,6 +229,50 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         checkBoxPanel.add(showTimestamps);
         checkBoxPanel.add(showDuplicates);
         add(checkBoxPanel);
+        rowCount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!rowCount.getText().isEmpty()) {
+                    String text = rowCount.getText();
+                    try {
+                        int newValue = Integer.valueOf(text);
+                        if (newValue > 0 && newValue < 100) {
+                            setRowCount.setEnabled(true);
+                        } else {
+                            setRowCount.setEnabled(false);
+                        }
+                    } catch (NumberFormatException exception) {
+                        setRowCount.setEnabled(false);
+                    }
+                } else {
+                    setRowCount.setEnabled(false);
+                }
+            }
+        });
+        setRowCount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int newValue = Integer.valueOf(rowCount.getText());
+                    dataModel.setRowMax(newValue);
+                } catch (NumberFormatException exception) {
+                    log.error("error interpreting new number of lines");
+                }
+            }
+        });
+        ActionListener checkListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(showTimestamps)) {
+                    dataModel.showTimestamps(showTimestamps.isSelected());
+                    log.debug("switching show timestamps now");
+                } else if (e.getSource().equals(showDuplicates)) {
+                    log.debug("changing show duplicates now");
+                }
+            }
+        };
+        showDuplicates.addActionListener(checkListener);
+        showTimestamps.addActionListener(checkListener);
     }
 
 }
