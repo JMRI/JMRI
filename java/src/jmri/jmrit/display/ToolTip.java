@@ -145,20 +145,21 @@ public class ToolTip {
 
     public String getTextToDisplay() {
         String tipText = _tip != null ? _tip.trim() : "";
-        if (_positionable.getNamedBean() != null) {
-            String displayName = _positionable.getNamedBean()
-                    .getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-            if (tipText.isEmpty()) {
-                tipText = displayName;
-            } else if (_showDisplayName) {
-                tipText = displayName + ": " + tipText;
-            }
+        String displayName = _positionable.getNameString();
+
+        if (tipText.isEmpty()) {
+            tipText = displayName;
+        } else if (_showDisplayName) {
+            tipText = displayName + ": " + tipText;
         }
+
         return tipText;
     }
 
     public void paint(Graphics2D g2d, double scale) {
         String tipText = getTextToDisplay();
+        if (tipText.isEmpty()) return;
+
         Color color = g2d.getColor();
         Font font = g2d.getFont();
         TextLayout tl = new TextLayout(tipText, _tFont, g2d.getFontRenderContext());
