@@ -31,23 +31,23 @@ import org.junit.BeforeClass;
 @CucumberOptions(plugin = {"junit:cucumber-results.xml", "progress", "json:cucumber-results.json"},
         features = "java/acceptancetest/features/web",
         tags = {"not @webtest", "not @Disabled", "not @Ignore", "not @ignore"},
-        glue = {"jmri"})
+        glue = {"apps"})
 public class RunCucumberIT {
 
-    @BeforeClass
-    public static void beforeTests() {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initZeroConfServiceManager();
-    }
-
-    @AfterClass
-    public static void afterTests() {
-        BrowserFactory.CloseAllDriver();
-        JUnitUtil.resetZeroConfServiceManager();
-        JUnitUtil.clearShutDownManager();
-        JUnitUtil.tearDown();
-    }
+//     @BeforeClass
+//     public static void beforeTests() {
+//         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+//         JUnitUtil.setUp();
+//         JUnitUtil.resetProfileManager();
+//         JUnitUtil.initZeroConfServiceManager();
+//     }
+//
+//     @AfterClass
+//     public static void afterTests() {
+//         BrowserFactory.CloseAllDriver();
+//         JUnitUtil.resetZeroConfServiceManager();
+//         JUnitUtil.clearShutDownManager();
+//         JUnitUtil.tearDown();
+//     }
 
 }
