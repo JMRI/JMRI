@@ -34,20 +34,20 @@ import org.junit.BeforeClass;
         glue = {"apps"})
 public class RunCucumberIT {
 
-//     @BeforeClass
-//     public static void beforeTests() {
-//         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
-//         JUnitUtil.setUp();
-//         JUnitUtil.resetProfileManager();
-//         JUnitUtil.initZeroConfServiceManager();
-//     }
-//
-//     @AfterClass
-//     public static void afterTests() {
-//         BrowserFactory.CloseAllDriver();
-//         JUnitUtil.resetZeroConfServiceManager();
-//         JUnitUtil.clearShutDownManager();
-//         JUnitUtil.tearDown();
-//     }
+    @BeforeClass
+    public static void beforeTests() {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initZeroConfServiceManager();
+    }
+
+    @AfterClass
+    public static void afterTests() {
+        BrowserFactory.CloseAllDriver();
+        JUnitUtil.resetZeroConfServiceManager();
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.tearDown();
+    }
 
 }
