@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Panel Tooltips</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI help tooltips">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Panel Tooltips<span class="since">since 4.99.3</span></h1>
+
+      <p>A tooltip is a bit of information that is displayed when the mouse pauses over an item
+      on a panel.  The information can be the name of an icon, a short instruction, or some other
+      useful information.  The three main JMRI panel editors support tooltips for icons that relate
+      to JMRI components such as sensors, turnouts, etc.</p>
+
+      <h3>Overview</h3>
+
+      <p>The default <code>user name (system name)</code> tooltip does not store any data.  It uses the
+      current names when showing the tooltip.  This eliminates problems when user names are changed
+      or moved to a different system name.</p>
+
+      <p>Custom tooltips can be created.  This data is stored.  The custom content can have the
+      current <code>user name (system name)</code> information added to the front of the custom
+      tooltip.</p>
+
+      <p>Existing tooltip content is not automatically removed.  Depending on the age of the panel
+      and its icons, it may have old content.  The <strong>ClearTooltips.py</strong> script can be
+      run to clear the old tooltip content.  From the main PanelPro menu, select <strong>Scripting
+      &rArr; Run Script...</strong>.  The script is included with the JMRI install and it is
+      located in the <strong>jython</strong> directory.</p>
+
+      <h3>Editor Options</h3>
+      <p>Each editor has an option to enable or disabled tooltips for its panels.  Each tooltip also
+      has an option to show or not show its tooltip content.  This provides the ability to control
+      the tooltip process.  For example, a panel can have tooltips enabled but individual icons can
+      be set to not show a tooltip.  The reverse is also possible where tooltips are disabled for
+      the panel, but individual icons can be enabled.</p>
+
+      <dl>
+        <dt>Panel Editor</dt>
+        <dd>When the panel is in edit mode, use the <strong>Show Tooltips for all items</strong>
+        option to enable or disable tooltips for the panel.
+          <div style="margin-left: 2em">
+            <a href="images/Paneleditor.png"><img src="images/PanelEditor.png" alt="PE Tooltips"
+            width="387" height="370"></a>
+          </div>
+       </dd>
+
+        <dt>Control Panel Editor</dt>
+        <dd>When the panel is in edit mode, select the <strong>Options</strong> menu and use the
+        <strong>Show Tooltips for all items</strong> menu item to enable or disable tooltips for the
+          panel.
+          <div style="margin-left: 2em">
+            <a href="images/tooltips-cpe.png"><img src="images/tooltips-cpe.png" alt="CPE Tooltips"
+            width="347" height="142"></a>
+          </div>
+       </dd>
+
+        <dt >Layout Editor</dt>
+        <dd>The Layout Editor has several options for displaying tooltips.
+          <div style="margin-left: 2em">
+            <a href="images/tooltips-le.png"><img src="images/tooltips-le.png" alt="LE Tooltips"
+            width="469" height="182"></a>
+          </div>
+          Note: Layout Editor does not display tooltips for track components such as turnouts.
+          These are drawn using a set of lines.  They are not icons.
+       </dd>
+      </dl>
+
+      <h3>Tooltip Options</h3>
+
+      <p>The default tooltip shows the user name and system name of the related JMRI item.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/tooltips-default.png"><img src="images/tooltips-default.png" alt="Default tooltip"
+        width="149" height="52"></a>
+      </div>
+
+      <p>The icon context menu (right click) has an entry for <strong>Tooltips</strong> with 3 menu
+      items.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/tooltips-menu.png"><img src="images/tooltips-menu.png" alt="Tooltip menu"
+        width="611" height="81"></a>
+      </div>
+
+      <dl>
+        <dt>Show Tooltip</dt>
+        <dd>This is set active when tooltips are enabled for the panel and inactive when tooltips
+        are not enabled for the panel.  Click on the menu item to override the default value for
+        the selected icon.</dd>
+
+        <dt>Set Custom Tooltip...</dt>
+        <dd>The default tooltip displays the user name and system name for the object related to
+        the icon.  The custom tooltip item can be used to display a different value.  Enter the
+        text to be displayed in the window that opens when this item is clicked.  To revert to the
+        default text, remove the text from the window text field.</dd>
+
+        <dt>Prepend Display Name to custom tooltip</dt>
+        <dd>The default value will be added the beginning of the custom tooltip.   This makes it
+        possible to have both the default name and additional text.  For example:  <code>Sensor Name
+        (IS101): Used to trigger a Route</code>.</dd>
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
