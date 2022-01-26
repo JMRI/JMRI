@@ -379,7 +379,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+          <li>Use the actual turnout state for the turnout circle when that option is used.  This
+          corrects the color for turnouts using the continuing route option when set to thrown.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
