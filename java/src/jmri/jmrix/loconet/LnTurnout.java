@@ -54,7 +54,7 @@ public class LnTurnout extends AbstractTurnout {
 
         _number = number;
         // update feedback modes
-        _validFeedbackTypes |= MONITORING | EXACT | INDIRECT | ALTERNATE ;
+        _validFeedbackTypes |= MONITORING | EXACT | INDIRECT | LNALTERNATE ;
         _activeFeedbackType = MONITORING;
 
         // if needed, create the list of feedback mode
@@ -113,8 +113,8 @@ public class LnTurnout extends AbstractTurnout {
         tempModeValues[_validFeedbackNames.length + 1] = INDIRECT;
         tempModeNames[_validFeedbackNames.length + 2] = "EXACT"; // NOI18N
         tempModeValues[_validFeedbackNames.length + 2] = EXACT;
-        tempModeNames[_validFeedbackNames.length + 3] = "ALTERNATE"; // NOI18N
-        tempModeValues[_validFeedbackNames.length + 3] = ALTERNATE;
+        tempModeNames[_validFeedbackNames.length + 3] = "LNALTERNATE"; // NOI18N
+        tempModeValues[_validFeedbackNames.length + 3] = LNALTERNATE;
 
         modeNames = tempModeNames;
         modeValues = tempModeValues;
@@ -279,7 +279,7 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(CLOSED);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(CLOSED);
-        } else if (getFeedbackMode() == ALTERNATE) {
+        } else if (getFeedbackMode() == LNALTERNATE) {
             newKnownState(adjustStateForInversion(CLOSED));
         }
     }
@@ -288,7 +288,7 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(THROWN);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(THROWN);
-        } else if (getFeedbackMode() == ALTERNATE) {
+        } else if (getFeedbackMode() == LNALTERNATE) {
             newKnownState(adjustStateForInversion(THROWN));
         }
     }
@@ -304,7 +304,7 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(0);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(0);
-        } else if (getFeedbackMode() == ALTERNATE) {
+        } else if (getFeedbackMode() == LNALTERNATE) {
             newKnownState(INCONSISTENT);
         }
     }
