@@ -70,14 +70,14 @@ public class SplitEnumVariableValue extends VariableValue
         implements ActionListener, FocusListener {
 
     private static final int RETRY_COUNT = 2;
-    
+
     int atest = 1;
     private final List<JTree> trees = new ArrayList<>();
-    
+
     private final List<ComboCheckBox> comboCBs = new ArrayList<>();
     private final List<SplitEnumVariableValue.VarComboBox> comboVars = new ArrayList<>();
     private final List<ComboRadioButtons> comboRBs = new ArrayList<>();
-    
+
 
     public SplitEnumVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -202,7 +202,7 @@ public class SplitEnumVariableValue extends VariableValue
             _maxVal = getValueFromText(extra4);
         }
     }
-    
+
     public void nItems(int n) {
         _itemArray = new String[n];
         _pathArray = new TreePath[n];
@@ -210,7 +210,7 @@ public class SplitEnumVariableValue extends VariableValue
         _nstored = 0;
         log.debug("enumeration arrays size={}", n);
     }
-    
+
         /**
      * Create a new item in the enumeration, with an associated value one more
      * than the last item (or zero if this is the first one added)
@@ -243,9 +243,11 @@ public class SplitEnumVariableValue extends VariableValue
     public void endGroup() {
         treeNodes.removeLast();
     }
-    
+
     public void lastItem() {
         _value = new JComboBox<>(java.util.Arrays.copyOf(_itemArray, _nstored));
+        _value.getAccessibleContext().setAccessibleName(label());
+
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
@@ -264,9 +266,9 @@ public class SplitEnumVariableValue extends VariableValue
         cv2.addPropertyChangeListener(this);
         cv2.setState(CvValue.FROMFILE);
     }
-    
-    
-    
+
+
+
     @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
@@ -282,7 +284,7 @@ public class SplitEnumVariableValue extends VariableValue
     private int _nstored;
 
     Deque<DefaultMutableTreeNode> treeNodes = new ArrayDeque<>();
-    
+
     /**
      * Subclasses can override this to invoke further actions after cvList has
      * been built.
@@ -316,7 +318,7 @@ public class SplitEnumVariableValue extends VariableValue
         }
         super.setAvailable(a);
     }
-    
+
     /**
      * Simple request getter for the CVs composing this variable
      * <br>
@@ -468,7 +470,7 @@ public class SplitEnumVariableValue extends VariableValue
         return retVals;
     }
     */
-    
+
     /**
      * Contains numeric-value specific code.
      * <br><br>
@@ -516,7 +518,7 @@ public class SplitEnumVariableValue extends VariableValue
             log.debug("_minVal={};_maxVal={};newFieldVal={}",
                     Long.toUnsignedString(_minVal), Long.toUnsignedString(_maxVal), Long.toUnsignedString(newFieldVal));
             if (Long.compareUnsigned(newFieldVal, _minVal) < 0 || Long.compareUnsigned(newFieldVal, _maxVal) > 0) {
-            
+
             } else {
                 long newVal = (newFieldVal - mOffset) / mFactor;
                 long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
@@ -526,7 +528,7 @@ public class SplitEnumVariableValue extends VariableValue
     }
 
     boolean _fieldShrink = false;
-    
+
     /*
     @Override
     void updatedTextField() {
@@ -559,7 +561,7 @@ public class SplitEnumVariableValue extends VariableValue
         log.debug("Variable={}; exit updatedTextField", _name);
     }
     */
-    
+
     void updatedDropDown() {
         log.debug("Variable='{}'; enter updatedDropDown in {} with DropDownValue='{}'", _name, (this.getClass().getSimpleName()), _value);
         // called for new values in text field - set the CVs as needed
@@ -585,7 +587,7 @@ public class SplitEnumVariableValue extends VariableValue
         }
         log.debug("Variable={}; exit updatedDropDown", _name);
     }
-    
+
     int[] getCvValsFromSingleInt(long newEntry) {
         // calculate resulting number
         long newVal = (newEntry - mOffset) / mFactor;
@@ -600,7 +602,7 @@ public class SplitEnumVariableValue extends VariableValue
         }
         return retVals;
     }
-    
+
     /**
      * ActionListener implementation.
      * <p>
@@ -765,13 +767,13 @@ public class SplitEnumVariableValue extends VariableValue
         log.debug("Variable={}; setValue with new value {} old value {}", _name, value, oldVal);
 
         int lengthOfArray = this._valueArray.length;
-        
+
         for (int i = 0; i < lengthOfArray; i++) {
           if(this._valueArray[i] == value){
               _value.setSelectedIndex(i);
           }
         }
-       /*         
+       /*
         for (int i = 0; i < num; i++) {
           Object item = _value.getItemAt(i);
           if(Long.parseLong((String)item) == value){
@@ -803,13 +805,13 @@ public class SplitEnumVariableValue extends VariableValue
             log.debug("Variable={}; Set Color to defaultColor {}", _name, _defaultColor.toString());
             _value.setBackground(_defaultColor);
         }
-        
+
         // prop.firePropertyChange("Value", null, null);
     }
 
     int _columns = 1;
 
-    
+
        @Override
     public Component getNewRep(String format) {
         // sort on format type
@@ -866,8 +868,8 @@ public class SplitEnumVariableValue extends VariableValue
                 return b;
             }
         }
-    }   
-    
+    }
+
     protected void selectValue(int value) {
         if (_nstored > 0 && value != 0) {
             for (int i = 0; i < _nstored; i++) {
@@ -1126,7 +1128,7 @@ public class SplitEnumVariableValue extends VariableValue
                     }
                 }
                 setState(varState);
-                
+
                 int intMax = (int)_maxVal;
                 CvValue cv = _cvMap.get(getCvNum());
                 int newVal = getValueInCV(cv.getValue(), getMask(), intMax-1); // _maxVal value is count of possibles, i.e. radix
@@ -1230,7 +1232,7 @@ public class SplitEnumVariableValue extends VariableValue
             comboRBs.get(i).dispose();
         }
     }
-        
+
     static class TreeLeafNode extends DefaultMutableTreeNode {
 
         TreeLeafNode(String name, int index) {
@@ -1240,9 +1242,9 @@ public class SplitEnumVariableValue extends VariableValue
 
         int index;
     }
-    
 
-    
+
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SplitEnumVariableValue.class
             .getName());
