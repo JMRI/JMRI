@@ -365,7 +365,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         JPanel p = new JPanel();
-//        p.setLayout(new FlowLayout());
         p.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = 1;
@@ -418,31 +417,13 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             c.anchor = GridBagConstraints.EAST;
             p.add(new JLabel(Bundle.getMessage("LogixNG_CsvFileName")), c);
 
-//            JPanel ppp = new JPanel();
-//            ppp.setLayout(new FlowLayout());
             c.gridx = 1;
-//            c.anchor = GridBagConstraints.EAST;
             c.anchor = GridBagConstraints.WEST;
-//            c.anchor = 0;
-//            c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
-//            c.gridwidth = 2;
-//            ppp.add(createFileChooser());
-//            ppp.add(_csvFileName);
-//            p.add(ppp, c);
+            c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
             p.add(createFileChooser(), c);
-            c.gridx = 2;
-            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.gridx = 2;        // make room for file selector
             p.add(_csvFileName, c);
-//            c.fill = 0;
-
-//            c.gridx = 2;        // make room for file selector
-//            c.gridwidth = 2;
-//            c.anchor = GridBagConstraints.WEST;
-//            c.gridwidth = GridBagConstraints.REMAINDER;
-//            ppp.add(_csvFileName, c);
-//            c.gridwidth = 1;
-
-
+            c.fill = 0;
 
             c.gridx = 1;
             c.gridy = 4;
@@ -451,89 +432,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             c.gridwidth = GridBagConstraints.REMAINDER;
             CsvUtilPanel csvUtilPanel = new CsvUtilPanel(null, CSVFormat.Predefined.TDF);
             p.add(csvUtilPanel, c);
-//            c.gridwidth = 1;
 
-
-
-
-/*
-            JLabel _csvTypeLabel = new JLabel("Table type");
-            JLabel _delimiterLabel = new JLabel("Delimiter");
-            JLabel _escapeLabel = new JLabel("Escape");
-            JLabel _quoteLabel = new JLabel("Quote");
-            JLabel _recordSeparatorLabel = new JLabel("Record separator");
-            JCheckBox _ignoreSurrondingSpaces = new JCheckBox("Ignore surronding spaces");
-            JComboBox<CSVPredefinedFormat> _csvType = new JComboBox<>();
-            for (CSVPredefinedFormat format : CSVPredefinedFormat.getFormats()) {
-                _csvType.addItem(format);
-            }
-            JComboBox<CSVDelimiter> _delimiter = new JComboBox<>();
-            for (CSVDelimiter delimiter : CSVDelimiter.getDelimiters()) {
-                _delimiter.addItem(delimiter);
-            }
-            JComboBox<CSVEscape> _escape = new JComboBox<>();
-            for (CSVEscape escape : CSVEscape.getEscapes()) {
-                _escape.addItem(escape);
-            }
-            JComboBox<CSVQuote> _quote = new JComboBox<>();
-            for (CSVQuote escape : CSVQuote.getQuotes()) {
-                _quote.addItem(escape);
-            }
-            JComboBox<CSVRecordSeparator> _recordSeparator = new JComboBox<>();
-            for (CSVRecordSeparator escape : CSVRecordSeparator.getRecordSeparators()) {
-                _recordSeparator.addItem(escape);
-            }
-
-            c.gridx = 0;
-            c.gridy = 4;
-            c.anchor = GridBagConstraints.EAST;
-            p.add(_csvTypeLabel, c);
-            _csvTypeLabel.setLabelFor(_csvType);
-            c.gridx = 1;
-            c.anchor = GridBagConstraints.WEST;
-            p.add(_csvType, c);
-
-            c.gridx = 0;
-            c.gridy = 5;
-            c.anchor = GridBagConstraints.EAST;
-            p.add(_delimiterLabel, c);
-            _delimiterLabel.setLabelFor(_delimiterLabel);
-            c.gridx = 1;
-            c.anchor = GridBagConstraints.WEST;
-            p.add(_delimiter, c);
-
-            c.gridx = 0;
-            c.gridy = 6;
-            c.anchor = GridBagConstraints.EAST;
-            p.add(_recordSeparatorLabel, c);
-            _recordSeparatorLabel.setLabelFor(_recordSeparator);
-            c.gridx = 1;
-            c.anchor = GridBagConstraints.WEST;
-            p.add(_recordSeparator, c);
-
-            c.gridx = 0;
-            c.gridy = 7;
-            c.anchor = GridBagConstraints.EAST;
-            p.add(_escapeLabel, c);
-            _escapeLabel.setLabelFor(_escape);
-            c.gridx = 1;
-            c.anchor = GridBagConstraints.WEST;
-            p.add(_escape, c);
-
-            c.gridx = 0;
-            c.gridy = 8;
-            c.anchor = GridBagConstraints.EAST;
-            p.add(_quoteLabel, c);
-            _quoteLabel.setLabelFor(_quote);
-            c.gridx = 1;
-            c.anchor = GridBagConstraints.WEST;
-            p.add(_quote, c);
-
-            c.gridx = 1;
-            c.gridy = 9;
-            c.anchor = GridBagConstraints.WEST;
-            p.add(_ignoreSurrondingSpaces, c);
-*/
         } else if (_newTableType == NewTableType.Internal) {
             // For this table, allow write is always enabled
             _allowWrite.setSelected(true);
@@ -607,23 +506,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             throw new RuntimeException("Invalid table type: "+_newTableType.name());
         }
 
-/*
-        _buttonGroup.add(_typeExternalTable);
-        _buttonGroup.add(_typeInternalTable);
-        _typeExternalTable.setSelected(true);
-        _typeInternalTable.setEnabled(false);
-*/
         contentPane.add(p);
-/*
-        JPanel panel98 = new JPanel();
-        panel98.setLayout(new FlowLayout());
-        JPanel panel99 = new JPanel();
-        panel99.setLayout(new BoxLayout(panel99, BoxLayout.Y_AXIS));
-        panel99.add(_typeExternalTable, c);
-        panel99.add(_typeInternalTable, c);
-        panel98.add(panel99);
-        contentPane.add(panel98);
-*/
+
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
