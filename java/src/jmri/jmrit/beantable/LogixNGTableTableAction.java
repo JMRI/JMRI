@@ -18,6 +18,8 @@ import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.TableEditor;
+import jmri.util.CsvUtil.*;
+import jmri.util.swing.CsvUtilPanel;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectPanel;
@@ -252,8 +254,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         _buttonGroup.add(_typeInternalTableBasedOfTable);
 
         _typeExternalTable.setSelected(true);
-        _typeInternalTable.setEnabled(false);
-        _typeInternalTableBasedOfTable.setEnabled(false);
+//        _typeInternalTable.setEnabled(false);
+//        _typeInternalTableBasedOfTable.setEnabled(false);
 
         contentPane.add(new JLabel(Bundle.getMessage("LogixNGTableTable_SelectTableType")));    // NOI18N
 
@@ -362,9 +364,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        JPanel p;
-        p = new JPanel();
-        p.setLayout(new FlowLayout());
+        JPanel p = new JPanel();
+//        p.setLayout(new FlowLayout());
         p.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = 1;
@@ -379,8 +380,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 1;
         p.add(_userNameLabel, c);
         _userNameLabel.setLabelFor(_addUserName);
-        c.gridy = 2;
-        p.add(new JLabel(Bundle.getMessage("LogixNG_CsvFileName")), c);
+        _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
+        _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
 
         c.gridx = 1;
         c.gridy = 0;
@@ -406,19 +407,133 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.weightx = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
         p.add(_allowWrite, c);
+        c.fill = 0;
 
         if (_newTableType == NewTableType.External) {
             _allowWrite.setSelected(false);
             _allowWrite.setEnabled(true);
 
-            c.gridx = 1;
+            c.gridx = 0;
             c.gridy = 3;
-            createFileChooser();
-            p.add(createFileChooser(), c);
+            c.anchor = GridBagConstraints.EAST;
+            p.add(new JLabel(Bundle.getMessage("LogixNG_CsvFileName")), c);
 
-            c.gridx = 2;        // make room for file selector
+//            JPanel ppp = new JPanel();
+//            ppp.setLayout(new FlowLayout());
+            c.gridx = 1;
+//            c.anchor = GridBagConstraints.EAST;
+            c.anchor = GridBagConstraints.WEST;
+//            c.anchor = 0;
+//            c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
+//            c.gridwidth = 2;
+//            ppp.add(createFileChooser());
+//            ppp.add(_csvFileName);
+//            p.add(ppp, c);
+            p.add(createFileChooser(), c);
+            c.gridx = 2;
             c.gridwidth = GridBagConstraints.REMAINDER;
             p.add(_csvFileName, c);
+//            c.fill = 0;
+
+//            c.gridx = 2;        // make room for file selector
+//            c.gridwidth = 2;
+//            c.anchor = GridBagConstraints.WEST;
+//            c.gridwidth = GridBagConstraints.REMAINDER;
+//            ppp.add(_csvFileName, c);
+//            c.gridwidth = 1;
+
+
+
+            c.gridx = 1;
+            c.gridy = 4;
+            c.gridwidth = 1;
+            c.anchor = GridBagConstraints.WEST;
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            CsvUtilPanel csvUtilPanel = new CsvUtilPanel(null, CSVFormat.Predefined.TDF);
+            p.add(csvUtilPanel, c);
+//            c.gridwidth = 1;
+
+
+
+
+/*
+            JLabel _csvTypeLabel = new JLabel("Table type");
+            JLabel _delimiterLabel = new JLabel("Delimiter");
+            JLabel _escapeLabel = new JLabel("Escape");
+            JLabel _quoteLabel = new JLabel("Quote");
+            JLabel _recordSeparatorLabel = new JLabel("Record separator");
+            JCheckBox _ignoreSurrondingSpaces = new JCheckBox("Ignore surronding spaces");
+            JComboBox<CSVPredefinedFormat> _csvType = new JComboBox<>();
+            for (CSVPredefinedFormat format : CSVPredefinedFormat.getFormats()) {
+                _csvType.addItem(format);
+            }
+            JComboBox<CSVDelimiter> _delimiter = new JComboBox<>();
+            for (CSVDelimiter delimiter : CSVDelimiter.getDelimiters()) {
+                _delimiter.addItem(delimiter);
+            }
+            JComboBox<CSVEscape> _escape = new JComboBox<>();
+            for (CSVEscape escape : CSVEscape.getEscapes()) {
+                _escape.addItem(escape);
+            }
+            JComboBox<CSVQuote> _quote = new JComboBox<>();
+            for (CSVQuote escape : CSVQuote.getQuotes()) {
+                _quote.addItem(escape);
+            }
+            JComboBox<CSVRecordSeparator> _recordSeparator = new JComboBox<>();
+            for (CSVRecordSeparator escape : CSVRecordSeparator.getRecordSeparators()) {
+                _recordSeparator.addItem(escape);
+            }
+
+            c.gridx = 0;
+            c.gridy = 4;
+            c.anchor = GridBagConstraints.EAST;
+            p.add(_csvTypeLabel, c);
+            _csvTypeLabel.setLabelFor(_csvType);
+            c.gridx = 1;
+            c.anchor = GridBagConstraints.WEST;
+            p.add(_csvType, c);
+
+            c.gridx = 0;
+            c.gridy = 5;
+            c.anchor = GridBagConstraints.EAST;
+            p.add(_delimiterLabel, c);
+            _delimiterLabel.setLabelFor(_delimiterLabel);
+            c.gridx = 1;
+            c.anchor = GridBagConstraints.WEST;
+            p.add(_delimiter, c);
+
+            c.gridx = 0;
+            c.gridy = 6;
+            c.anchor = GridBagConstraints.EAST;
+            p.add(_recordSeparatorLabel, c);
+            _recordSeparatorLabel.setLabelFor(_recordSeparator);
+            c.gridx = 1;
+            c.anchor = GridBagConstraints.WEST;
+            p.add(_recordSeparator, c);
+
+            c.gridx = 0;
+            c.gridy = 7;
+            c.anchor = GridBagConstraints.EAST;
+            p.add(_escapeLabel, c);
+            _escapeLabel.setLabelFor(_escape);
+            c.gridx = 1;
+            c.anchor = GridBagConstraints.WEST;
+            p.add(_escape, c);
+
+            c.gridx = 0;
+            c.gridy = 8;
+            c.anchor = GridBagConstraints.EAST;
+            p.add(_quoteLabel, c);
+            _quoteLabel.setLabelFor(_quote);
+            c.gridx = 1;
+            c.anchor = GridBagConstraints.WEST;
+            p.add(_quote, c);
+
+            c.gridx = 1;
+            c.gridy = 9;
+            c.anchor = GridBagConstraints.WEST;
+            p.add(_ignoreSurrondingSpaces, c);
+*/
         } else if (_newTableType == NewTableType.Internal) {
             // For this table, allow write is always enabled
             _allowWrite.setSelected(true);
@@ -498,8 +613,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         _typeExternalTable.setSelected(true);
         _typeInternalTable.setEnabled(false);
 */
-        _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
-        _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
         contentPane.add(p);
 /*
         JPanel panel98 = new JPanel();
