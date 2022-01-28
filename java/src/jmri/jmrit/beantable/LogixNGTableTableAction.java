@@ -18,7 +18,7 @@ import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.TableEditor;
-import jmri.util.CsvUtil.*;
+import jmri.util.CsvUtil;
 import jmri.util.swing.CsvUtilPanel;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -132,7 +132,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return null;
             }
             return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, fileName, CSVFormat.Predefined.TDF);
+                    .newCSVTable(systemName, userName, fileName, CsvUtil.TDF_FORMAT);
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {

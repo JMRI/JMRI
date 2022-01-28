@@ -302,7 +302,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT1</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv</fileName>
-      <predefinedCvsFormat>TDF</predefinedCvsFormat>
+      <predefinedCvsFormat>TabSeparated</predefinedCvsFormat>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">

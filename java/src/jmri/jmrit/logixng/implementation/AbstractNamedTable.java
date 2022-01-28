@@ -16,6 +16,7 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
+import jmri.util.CsvUtil;
 import jmri.util.FileUtil;
 
 import org.apache.commons.csv.CSVFormat;
@@ -100,7 +101,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @CheckForNull String fileName,
             @Nonnull Reader reader,
             @CheckForNull CSVFormat csvFormat,
-            @CheckForNull CSVFormat.Predefined predefinedCsvFormat,
+            @CheckForNull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
             boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
@@ -113,49 +114,49 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             if (predefinedCsvFormat == null) {
                 throw new IllegalArgumentException("Both csvFormat and predefinedCsvFormat must not be null");
             }
-            format = predefinedCsvFormat.getFormat();
+            format = predefinedCsvFormat.getFormat().getFormat();
         } else if (predefinedCsvFormat != null) {
             throw new IllegalArgumentException("Either csvFormat or predefinedCsvFormat must not be null");
         }
-        CSVParser csvFile = new CSVParser(reader, format);
-        List<CSVRecord> records = csvFile.getRecords();
         
-        int numRows = records.size();
-        
-        String[][] csvCells = new String[numRows][];
-        
-        int numColumns = 0;
-        int rowCnt = 0;
-        for (CSVRecord record : records) {
-            if (record.size() > 0) {
-                if (numColumns < record.size()) numColumns = record.size();
-                csvCells[rowCnt] = new String[numColumns];
-                for (int col=0; col < record.size(); col++) {
-                    csvCells[rowCnt][col] = record.get(col);
+        try (CSVParser csvFile = new CSVParser(reader, format)) {
+            List<CSVRecord> records = csvFile.getRecords();
+
+            int numRows = records.size();
+
+            String[][] csvCells = new String[numRows][];
+
+            int numColumns = 0;
+            int rowCnt = 0;
+            for (CSVRecord record : records) {
+                if (record.size() > 0) {
+                    if (numColumns < record.size()) numColumns = record.size();
+                    csvCells[rowCnt] = new String[numColumns];
+                    for (int col=0; col < record.size(); col++) {
+                        csvCells[rowCnt][col] = record.get(col);
+                    }
+                }
+                rowCnt++;
+            }
+
+            // Ensure all rows have same number of columns
+            for (int rowCount = 0; rowCount < numRows; rowCount++) {
+                Object[] cells = csvCells[rowCount];
+                if (cells.length < numColumns) {
+                    String[] newCells = new String[numColumns];
+                    System.arraycopy(cells, 0, newCells, 0, cells.length);
+                    csvCells[rowCount] = newCells;
+                    for (int i=cells.length; i < numColumns; i++) newCells[i] = "";
+                    csvCells[rowCount] = newCells;
                 }
             }
-            rowCnt++;
+
+            NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells, csvFormat, predefinedCsvFormat);
+
+            if (registerInManager) manager.register(table);
+
+            return table;
         }
-        
-        // Ensure all rows have same number of columns
-        for (int rowCount = 0; rowCount < numRows; rowCount++) {
-            Object[] cells = csvCells[rowCount];
-            if (cells.length < numColumns) {
-                String[] newCells = new String[numColumns];
-                System.arraycopy(cells, 0, newCells, 0, cells.length);
-                csvCells[rowCount] = newCells;
-                for (int i=cells.length; i < numColumns; i++) newCells[i] = "";
-                csvCells[rowCount] = newCells;
-            }
-        }
-        
-        NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells, csvFormat, predefinedCsvFormat);
-        
-        if (registerInManager) manager.register(table);
-        
-        csvFile.close();
-        
-        return table;
     }
     
     @Nonnull
@@ -176,7 +177,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull String text,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat,
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
             boolean registerInManager)
             throws BadUserNameException, BadSystemNameException, IOException {
         
@@ -208,7 +209,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull String fileName,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat,
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
             boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
@@ -239,7 +240,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull File file,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat,
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
             boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         

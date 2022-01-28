@@ -13,34 +13,60 @@ import org.apache.commons.csv.CSVFormat;
  */
 public class CsvUtil {
 
+    public static final CsvUtil.CSVPredefinedFormat TDF_FORMAT = CsvUtil.CSVPredefinedFormat.getFormat(CSVFormat.Predefined.TDF);
+
     /**
      * Class that allows CSVFormat.Predefined to be listed in a JComboBox
      * together with the option "User defined".
      */
-    public static final class CSVPredefinedFormat {
+    public enum CSVPredefinedFormat {
+
+        UserDefined(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_UserDefined"), null, true),
+        Excel(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_Excel"), CSVFormat.Predefined.Excel, false),
+        TabSeparated(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_TabSeparated"), CSVFormat.Predefined.TDF, false);
+
         private final String _name;
         private final CSVFormat.Predefined _format;
+        private final boolean _userDefined;
         private static final List<CSVPredefinedFormat> _formats = new ArrayList<>();
-        
+
         static {
+            for (CSVPredefinedFormat f : CSVPredefinedFormat.values()) {
+                _formats.add(f);
+            }
+/*
             _formats.add(new CSVPredefinedFormat(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_UserDefined"), null));
             for (CSVFormat.Predefined f : CSVFormat.Predefined.values()) {
                 _formats.add(new CSVPredefinedFormat(f.name(), f));
             }
+*/
         }
 
-        private CSVPredefinedFormat(String name, CSVFormat.Predefined format) {
+        private CSVPredefinedFormat(String name, CSVFormat.Predefined format, boolean userDefined) {
             _name = name;
             _format = format;
+            _userDefined = userDefined;
+//            _formats.add(this);
         }
 
         public CSVFormat.Predefined getFormat() {
             return _format;
         }
 
+        public boolean isUserDefined() {
+            return _userDefined;
+        }
+
         @Override
         public String toString() {
             return _name;
+        }
+
+        public static CSVPredefinedFormat getFormat(CSVFormat.Predefined format) {
+            for (CSVPredefinedFormat f : _formats) {
+                if (f._format == format) return f;
+            }
+            throw new IllegalArgumentException("The format is an unknown format");
         }
 
         public static List<CSVPredefinedFormat> getFormats() {

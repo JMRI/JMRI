@@ -80,7 +80,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="5:43 PM">
+    <memory value="6:12 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -150,7 +150,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Jan 23 17:43:23 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jan 28 18:12:07 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -302,7 +302,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT1</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv</fileName>
-      <predefinedCvsFormat>TDF</predefinedCvsFormat>
+      <predefinedCvsFormat>TabSeparated</predefinedCvsFormat>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
@@ -25492,9 +25492,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sun Jan 23 17:43:28 CET 2022</date>
+      <date>Fri Jan 28 18:12:12 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.10ish+daniel+2022-01-23T16:42:54Z+R41f8580 on Sun Jan 23 17:43:28 CET 2022-->
+  <!--Written by JMRI version 4.25.10ish+daniel+2022-01-28T17:07:47Z+Rb28b41e on Fri Jan 28 18:12:12 CET 2022-->
 </layout-config>

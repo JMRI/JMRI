@@ -143,7 +143,7 @@ public class StoreAndLoadTest {
                 InstanceManager.getDefault(NamedTableManager.class)
                         .loadTableFromCSV("IQT1", null,
                                 "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv",
-                                CSVFormat.Predefined.TDF);
+                                CsvUtil.CSVPredefinedFormat.TabSeparated);
         Assert.assertNotNull(csvTable);
 
         // Create module IQM1

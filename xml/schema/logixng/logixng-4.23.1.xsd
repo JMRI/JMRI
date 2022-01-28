@@ -233,18 +233,9 @@
               <xs:element name="predefinedCvsFormat" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:enumeration value="Default"/>
+                    <xs:enumeration value="UserDefined"/>
                     <xs:enumeration value="Excel"/>
-                    <xs:enumeration value="InformixUnload"/>
-                    <xs:enumeration value="InformixUnloadCsv"/>
-                    <xs:enumeration value="MongoDBCsv"/>
-                    <xs:enumeration value="MongoDBTsv"/>
-                    <xs:enumeration value="MySQL"/>
-                    <xs:enumeration value="Oracle"/>
-                    <xs:enumeration value="PostgreSQLCsv"/>
-                    <xs:enumeration value="PostgreSQLText"/>
-                    <xs:enumeration value="RFC4180"/>
-                    <xs:enumeration value="TDF"/>
+                    <xs:enumeration value="TabSeparated"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

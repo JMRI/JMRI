@@ -110,7 +110,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull String fileName,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws IllegalArgumentException {
         
         // Check that NamedTable does not already exist
@@ -213,7 +213,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             @Nonnull String sys,
             @CheckForNull String user,
             @Nonnull String text,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, predefinedCsvFormat, true);
     }
@@ -237,7 +237,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     public NamedTable loadTableFromCSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull String fileName,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         return AbstractNamedTable.loadTableFromCSV_File(sys, user, fileName, predefinedCsvFormat, true);
     }
@@ -261,7 +261,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     public NamedTable loadTableFromCSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull File file,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         return AbstractNamedTable.loadTableFromCSV_File(sys, user, file, predefinedCsvFormat, true);
     }

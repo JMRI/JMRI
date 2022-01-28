@@ -7,6 +7,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.util.CsvUtil;
 
 import org.apache.commons.csv.CSVFormat;
 
@@ -59,7 +60,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull String fileName,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat);
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat);
     
     /**
      * Create a new internal named table.
@@ -104,7 +105,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
             @Nonnull String sys,
             @CheckForNull String user,
             @Nonnull String text,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**
@@ -136,7 +137,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
             @Nonnull String sys,
             @CheckForNull String user,
             @Nonnull String fileName,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**
@@ -168,7 +169,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
             @Nonnull String sys,
             @CheckForNull String user,
             @Nonnull File file,
-            @Nonnull CSVFormat.Predefined predefinedCsvFormat)
+            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**

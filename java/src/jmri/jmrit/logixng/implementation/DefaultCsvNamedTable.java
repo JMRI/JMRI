@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 
 import jmri.NamedBean.BadUserNameException;
 import jmri.NamedBean.BadSystemNameException;
+import jmri.util.CsvUtil;
 
 import org.apache.commons.csv.CSVFormat;
 
@@ -17,7 +18,7 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
 
     private String _fileName;
     private CSVFormat _csvFormat;
-    private CSVFormat.Predefined _predefinedCsvFormat;
+    private CsvUtil.CSVPredefinedFormat _predefinedCsvFormat;
     
     /**
      * Create a new named table.
@@ -34,7 +35,7 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
             @CheckForNull String fileName,
             @Nonnull Object[][] data,
             @CheckForNull CSVFormat csvFormat,
-            @CheckForNull CSVFormat.Predefined predefinedCsvFormat)
+            @CheckForNull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
             throws BadUserNameException, BadSystemNameException {
         super(sys,user,data);
         
@@ -59,11 +60,11 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
         this._csvFormat = csvFormat;
     }
     
-    public CSVFormat.Predefined getPredefinedCSVFormat() {
+    public CsvUtil.CSVPredefinedFormat getPredefinedCSVFormat() {
         return _predefinedCsvFormat;
     }
     
-    public void setPredefinedCSVFormat(@CheckForNull CSVFormat.Predefined csvFormat) {
+    public void setPredefinedCSVFormat(@CheckForNull CsvUtil.CSVPredefinedFormat csvFormat) {
         this._predefinedCsvFormat = csvFormat;
     }
     
