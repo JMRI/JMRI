@@ -14,7 +14,7 @@
         <perform xmlns="" class="jmri.util.startup.configurexml.PerformActionModelXml" name="apps.SystemConsoleAction" type="Action">
             <property name="systemPrefix" value=""/>
         </perform>
-        <!-- <perform xmlns="" class="jmri.util.startup.configurexml.PerformScriptModelXml" name="preference:jython/FollowJumpingPanel.py" type="ScriptFile"/> -->
+        <perform xmlns="" class="jmri.util.startup.configurexml.PerformScriptModelXml" name="preference:jython/FollowJumpingPanel.py" type="ScriptFile"/>
         <perform xmlns="" class="jmri.util.startup.configurexml.PerformFileModelXml" name="preference:Panels/jumping panels.xml" type="XmlFile"/>
     </startup>
 </auxiliary-configuration>
