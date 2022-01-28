@@ -330,7 +330,6 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                         lnSv2Mode = (mode == LnProgrammerManager.LOCONETSV2MODE);
                         lncvMode = (mode == LnProgrammerManager.LOCONETLNCVMODE);
                         getProgrammer().setMode(mode);
-                        System.out.println("mode "+mode);
                     }
                 }
                 setAddrParams();
