@@ -2942,7 +2942,7 @@ function $drawTurnout($widget) {
         if  (($widget.disableWhenOccupied !== "yes") || ($widget.occupancystate != ACTIVE)) {
             var $color = $gPanel.turnoutcirclecolor;
 
-            if (($widget.state != UNKNOWN) && ($widget.state != $widget.continuing)) {
+            if ($widget.state != CLOSED) {
                 $color = $gPanel.turnoutcirclethrowncolor;
             }
             if ($gPanel.turnoutfillcontrolcircles == "yes") {
