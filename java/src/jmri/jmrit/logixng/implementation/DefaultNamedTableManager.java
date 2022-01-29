@@ -135,7 +135,12 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         } catch (IOException ex) {
 //            Exceptions.printStackTrace(ex);
             log.error("Cannot load table due to I/O error", ex);
-            return null;
+            // Create an empty table so we at least can edit the table
+            Object[][] data = new Object[1][];
+            data[0] = new Object[1];
+            NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, data, null, predefinedCsvFormat);
+            InstanceManager.getDefault(NamedTableManager.class).register(table);
+            return table;
         }
         // save in the maps
         register(x);
