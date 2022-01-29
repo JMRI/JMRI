@@ -378,7 +378,12 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+          <li>Use the actual turnout state for the turnout circle when that option is used.  This
+          corrects the color for turnouts using the continuing route option when set to thrown.</li>
+
+          <li>Tooltip support for panel icons has been changed.
+          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
+          Tooltips</a> for details.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -413,13 +418,19 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+          <li>Tooltips can now be edited in Panel Editor.</li>
+
+          <li>Tooltip support for panel icons has been changed.
+          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
+          Tooltips</a> for details.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+          <li>Tooltip support for panel icons has been changed.
+          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
+          Tooltips</a> for details.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>

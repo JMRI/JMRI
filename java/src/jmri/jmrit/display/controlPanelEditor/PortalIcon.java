@@ -158,7 +158,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         }
         _portal = portal;
         _portal.addPropertyChangeListener(this);
-        setToolTip(new ToolTip(_portal.getDescription(), 0, 0));
+        setToolTip(new ToolTip(_portal.getDescription(), 0, 0, this));
     }
 
     public void setStatus(String status) {
