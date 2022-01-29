@@ -48,7 +48,7 @@ public class LayoutBlockTest {
 
         // Create an occupancy sensor
         SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        Sensor s = sm.provideSensor("IS123");
+        sm.provideSensor("IS123");
 
         // Get the referenced block and set its occupancy sensor
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
