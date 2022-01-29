@@ -43,6 +43,7 @@ import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.JTablePersistenceManager;
@@ -1738,7 +1739,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         //check here to see if block is already assigned to an allocated section;
-        if (getSignalType() == SIGNALMAST && checkBlocksNotInAllocatedSection(s, ar) != null) {
+        if (checkBlocksNotInAllocatedSection(s, ar) != null) {
             return null;
         }
         // Programming
@@ -2126,10 +2127,30 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
+     * returns a list of level crossings (0 to n) in a section.
+     */
+    private List<LevelXing> containedLevelXing(Section s) {
+        List<LevelXing> _levelXingList = new ArrayList<>();
+        if (s == null) {
+            log.error("null argument to 'containsLevelCrossing'");
+            return _levelXingList;
+        }
+        for (Block blk: s.getBlockList()) {
+            for (LevelXing temLevelXing: getLayoutEditor().getConnectivityUtil().getLevelCrossingsThisBlock(blk)) {
+                // it is returned if the block is in the crossing or connected to the crossing
+                // we only need it if it is in the crossing
+                if (temLevelXing.getLayoutBlockAC().getBlock() == blk || temLevelXing.getLayoutBlockBD().getBlock() == blk ) {
+                    _levelXingList.add(temLevelXing);
+                }
+            }
+        }
+        return _levelXingList;
+    }
+
+    /*
      * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
      */
     protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
-
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 List<Block> blas = as.getSection().getBlockList();
@@ -2171,6 +2192,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     }
                 } else {
                     bls = s.getBlockList();
+                    // Add Blocks in any XCrossing, dont add ones already in the list
+                    for ( LevelXing lx: containedLevelXing(s)) {
+                        Block bAC = lx.getLayoutBlockAC().getBlock();
+                        Block bBD = lx.getLayoutBlockBD().getBlock();
+                        if (!bls.contains(bAC)) {
+                            bls.add(bAC);
+                        }
+                        if (!bls.contains(bBD)) {
+                            bls.add(bBD);
+                        }
+                    }
                 }
 
                 for (Block b : bls) {

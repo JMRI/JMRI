@@ -371,7 +371,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         setupMenuBar();
 
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
-                Color.black, new Color(215, 225, 255), Color.black));
+                Color.black, new Color(215, 225, 255), Color.black, null));
 
         // setup help bar
         helpBar.setLayout(new BoxLayout(helpBar, BoxLayout.PAGE_AXIS));
@@ -8207,11 +8207,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             @Nonnull Positionable selection,
             @Nonnull MouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        String txt = tip.getText();
-        if ((txt != null) && !txt.isEmpty()) {
-            tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
-            setToolTip(tip);
-        }
+        tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
+        setToolTip(tip);
     }
 
     @Override

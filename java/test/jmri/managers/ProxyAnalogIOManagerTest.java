@@ -43,6 +43,7 @@ public class ProxyAnalogIOManagerTest {
     @Test
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
+        l = null; // save being re-disposed by afterEach
     }
 
     @Test
@@ -106,6 +107,8 @@ public class ProxyAnalogIOManagerTest {
         b = newAnalogIO("IV3", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
+
+        m.dispose();
     }
 
     @Test
@@ -229,7 +232,7 @@ public class ProxyAnalogIOManagerTest {
         l = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
 
         InstanceManager.setAnalogIOManager(l);
-        
+
         JUnitUtil.initInternalLightManager();
     }
 
@@ -242,6 +245,10 @@ public class ProxyAnalogIOManagerTest {
             for (var listener : timebase.getMinuteChangeListeners()) {
                 timebase.removeMinuteChangeListener(listener);
             }
+        }
+
+        if ( l != null ) {
+            l.dispose();
         }
 
         JUnitUtil.tearDown();

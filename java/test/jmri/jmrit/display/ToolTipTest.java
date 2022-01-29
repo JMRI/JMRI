@@ -13,7 +13,7 @@ public class ToolTipTest {
 
     @Test
     public void testCTor() {
-        ToolTip t = new ToolTip("Test",0,0);
+        ToolTip t = new ToolTip("Test",0,0,null);
         Assert.assertNotNull("exists",t);
     }
 
