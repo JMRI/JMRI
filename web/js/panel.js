@@ -208,7 +208,7 @@ function processPanelXML($returnedData, $success, $xhr) {
         $total = Number($gPanel.total);
         $rows = Number($gPanel.rows);
         if ($rows == 0) { // AutoRows set, automatically choose grid showing largest tiles using flexbox
-            $("#panel-area").css({display: "flex", 'flex-flow': "row wrap"})
+            $("#panel-area").css({'display': "flex", 'flex-flow': "row wrap"})
             $autoRows = 1;
             $rows = autoRows(window.screen.width, window.screen.height - 200); // use (mobile) screen size, leave space for header
             // check browser window (window.innerWidth) size vs whole screen (window.screen.width)
@@ -1042,8 +1042,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //draw the turntable
                             $drawTurntable($widget);
                             break;
-                        case "backgroundColor": // set background color of the panel itself
-                            $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
+                        case "backgroundColor": // set background color of the window
+                            $("body").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
                             break;
                         case "layoutShape" :
                             //log.log("#### Layout Shape ####");
