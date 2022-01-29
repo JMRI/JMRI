@@ -56,11 +56,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     boolean oldOpsAccyMode = false;
     boolean opsSigMode = false;
     boolean oldOpsSigMode = false;
-    boolean lnAttachedBoardMode = false;
+    boolean lnAttachedBoardMode = false;    // LOCONETOPSBOARD programming
     boolean oldLnAttachedBoardMode = false;
-    boolean lnSv2Mode = false;
+    boolean lnSv2Mode = false;              // LOCONETSV2MODE programming
     boolean oldLnSv2Mode = false;
-    boolean lncvMode = false;
+    boolean lncvMode = false;               // LOCONETLNCVMODE programming
     boolean oldLncvMode = false;
     boolean oldoffsetAddrCheckBox = false;
     transient volatile AddressedProgrammer programmer = null;
