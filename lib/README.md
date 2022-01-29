@@ -71,8 +71,8 @@ which checks the dates of the control files to make sure they've benen updated w
 - provides Apache Commons string utilities
 - from https://commons.apache.org/proper/commons-text/
 
-##### commons-csv-1.7.jar
-- version 1.7
+##### commons-csv-1.9.0.jar
+- version 1.9.0
 - provides Apache Commons CSV file parsing
 - from https://commons.apache.org/proper/commons-csv/
 
