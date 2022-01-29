@@ -15,14 +15,66 @@ public class TagCarItem {
     private String trackName;
     private String train;
     private Integer trainPosition;
-    protected JComboBox<String> location;
+    protected JComboBox<String> locationCombo;
+    protected JComboBox<String> track;
+    private RollingStock currentCar;
+    private String destination;
+    private LocalTime lastSeen;
+    private JButton action1 = null;
+    private JButton action2 = null;
+    private LocalTime tagTime;
+    private int repeatCount = 0;
+    private boolean locationUpdated = false;
+    private boolean trackUpdated = false;
+    private boolean readyToSetLocation = false;
+    private String tempLocation = null;
+    private String tempTrack = null;
+
+    public void setUpdatedLocation(String location, String track) {
+        tempLocation = location;
+        locationUpdated = true;
+        if (track != null) {
+            tempTrack = track;
+            trackUpdated = true;
+            readyToSetLocation = true;
+        } else {
+            readyToSetLocation = trackUpdated;
+        }
+    }
+
+    public void setUpdatedTrack(String thisTrack) {
+        tempTrack = thisTrack;
+        trackUpdated = true;
+        readyToSetLocation = locationUpdated;
+    }
+
+    public String getUpdatedLocation() {
+        return tempLocation;
+    }
+
+    public String getUpdatedTrack() {
+        return tempTrack;
+    }
+
+    public boolean isLocationReady() {
+        return readyToSetLocation;
+    }
+
+    public void resetTempValues() {
+        locationUpdated = false;
+        trackUpdated = false;
+        tempLocation = null;
+        tempTrack = null;
+    }
+
+
 
     public JComboBox<String> getLocationCombo() {
-        return location;
+        return locationCombo;
     }
 
     public void setLocation(JComboBox<String> location) {
-        this.location = location;
+        this.locationCombo = location;
     }
 
     public void setTrack(JComboBox<String> track) {
@@ -32,15 +84,6 @@ public class TagCarItem {
     public JComboBox<String> getTrackCombo() {
         return track;
     }
-
-    protected JComboBox<String> track;
-    private RollingStock currentCar;
-    private String destination;
-    private LocalTime lastSeen;
-    private JButton action1 = null;
-    private JButton action2 = null;
-    private LocalTime tagTime;
-    private int repeatCount = 0;
 
     public TagCarItem() {
         tagTime = LocalTime.now();
