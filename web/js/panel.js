@@ -1065,7 +1065,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                 case "switch" : // Switchboard BeanSwitches
                     // they have no x,y
                     $widget['styles'] = {}; // clear built-in styles
-                    $widget.styles['background-color'] = 'inherit'; // essential to color the switches
                     $widget['name'] = $widget.label; // normalize name from label
                     $widget['text'] = $widget.label; // use label as initial button text too
                     $widget.styles['width'] = $swWidth + "px";
@@ -1126,7 +1125,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                     if ($widget.connected == "true") {
                         $widget['text'] = $widget.text0; // add UNKNOWN state to label of connected switches
                         $widget.styles['border-color'] = "black"; //$widget['swColor' + UNKNOWN];
-                        $widget.classes += " " + $widget.jsonType + " clickable ";
+                        $widget.classes += " " + $widget.jsonType + " clickable connected";
                     }
 
                     $gWidgets[$widget.id] = $widget; // store widget in persistent array
@@ -1811,7 +1810,7 @@ var $setWidgetState = function($id, $newState, data) {
                 if ($widget.widgetType == "beanswitch" && isDefined($widget['shape'])) {
                     if ($widget.shape == "button") { // update div css
                         $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
-                        $('div#' + $id).css({"border-color": $widget['swColor' + $newState]});
+                        $('div#' + $id).css({"background-color": $widget['swColor' + $newState]});
                     } else { // icon, symbol, slider (drawing) are directly drawn on canvas
                         $widget.text = $widget['text' + $newState]; // set text in Widget to new state's text
                         $drawWidgetSymbol($id, $newState);
