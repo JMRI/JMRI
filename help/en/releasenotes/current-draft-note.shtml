@@ -385,6 +385,9 @@
           <li>Tooltip support for panel icons has been changed.
           See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
           Tooltips</a> for details.</li>
+
+          <li>Update the layout block occupancy sensor when the occupancy sensor for the related
+          block has been added, removed or changed to a different sensor.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
