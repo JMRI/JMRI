@@ -152,7 +152,7 @@ public class PanelEditor extends Editor implements ItemListener {
         super.setTargetPanel(null, makeFrame(name));
         super.setTargetPanelSize(400, 300);
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
-                Color.black, new Color(215, 225, 255), Color.black));
+                Color.black, new Color(215, 225, 255), Color.black, null));
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
 
@@ -201,9 +201,14 @@ public class PanelEditor extends Editor implements ItemListener {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
+                    String oldName = "";
+                    if (ancestor instanceof JFrame) {
+                        oldName = ((JFrame) ancestor).getTitle();
+                    }
                     // prompt for name
-                    String newName = JOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"));
-                    if (newName == null) {
+                    String newName = JOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
+                    if ((newName == null) || (oldName.equals(newName))) {
                         return;  // cancelled
                     }
                     if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
@@ -211,7 +216,6 @@ public class PanelEditor extends Editor implements ItemListener {
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
                     if (ancestor instanceof JFrame) {
                         ((JFrame) ancestor).setTitle(newName);
                     }
@@ -639,6 +643,7 @@ public class PanelEditor extends Editor implements ItemListener {
             // for Positionables with unique item settings
             p.showPopUp(popup);
 
+            setShowToolTipMenu(p, popup);
             setRemoveMenu(p, popup);
         } else {
             p.showPopUp(popup);

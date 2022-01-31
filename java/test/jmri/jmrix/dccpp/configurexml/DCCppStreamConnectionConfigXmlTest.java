@@ -31,9 +31,8 @@ public class DCCppStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.
                ((DCCppSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).dispose();
             }
         }
-
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }

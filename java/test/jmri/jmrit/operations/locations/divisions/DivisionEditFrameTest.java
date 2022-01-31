@@ -1,11 +1,10 @@
 package jmri.jmrit.operations.locations.divisions;
 
-import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -18,11 +17,12 @@ import jmri.util.swing.JemmyUtil;
  *
  * @author Daniel Boudreau Copyright (C) 2021
  */
+@Timeout(10)
 public class DivisionEditFrameTest extends OperationsTestCase {
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Division division = new Division("testId", "testName");
         Assert.assertNotNull("exists", division);
         DivisionEditFrame def = new DivisionEditFrame(division);
@@ -30,9 +30,9 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(def);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testSaveButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Division division = new Division("testId", "testName");
         Assert.assertNotNull("exists", division);
         DivisionEditFrame def = new DivisionEditFrame(division);
@@ -50,37 +50,55 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         Assert.assertNull("does not exist", f);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testSaveButtonErrors() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Division division = new Division("testId", "testName");
         Assert.assertNotNull("exists", division);
         DivisionEditFrame def = new DivisionEditFrame(division);
         Assert.assertNotNull("exists", def);
         def.commentTextField.setText("divisionComment");
         def.divisionNameTextField.setText("newDivisionNameABCDEFGHIJKLMNOPQ");
+
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(def, MessageFormat.format(
+                Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("click testSaveButtonErrors Thread 1");
+        t1.start();
+
         JemmyUtil.enterClickAndLeaveThreadSafe(def.saveDivisionButton);
         // new dialog window stating division name too long
-        JemmyUtil.pressDialogButton(def, MessageFormat.format(
-                Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
-        JemmyUtil.waitFor(def);
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click in dialogue didn't happen");
+
         Assert.assertEquals("Name", "testName", division.getName());
         Assert.assertEquals("Comment", "", division.getComment());
         // now test saving a division that already exists
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
         dm.newDivision("newDivisionName");
         def.divisionNameTextField.setText("newDivisionName");
+
+        Thread t2 = new Thread(() -> {
+             JemmyUtil.pressDialogButton(def, MessageFormat.format(
+                Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
+        });
+        t2.setName("click testSaveButtonErrors Thread 2");
+        t2.start();
+        
         JemmyUtil.enterClickAndLeaveThreadSafe(def.saveDivisionButton);
         // new dialog window stating division already exists
-        JemmyUtil.pressDialogButton(def, MessageFormat.format(
-                Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
-        JemmyUtil.waitFor(def);
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "Click in dialogue didn't happen");
+        
         JUnitUtil.dispose(def);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DivisionEditFrame def = new DivisionEditFrame(null);
         Assert.assertNotNull("exists", def);
         def.divisionNameTextField.setText("newDivisionName");
@@ -92,9 +110,9 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(def);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddButtonErrors() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DivisionEditFrame def = new DivisionEditFrame(null);
         Assert.assertNotNull("exists", def);
         def.divisionNameTextField.setText("   ");
@@ -122,9 +140,9 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(def);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDeleteButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
         Division division = dm.newDivision("testDivisionName");
         Assert.assertNotNull("exists", division);
@@ -148,9 +166,9 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(def);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDeleteButtonError() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
         Division division = dm.newDivision("testDivisionName");
         DivisionEditFrame def = new DivisionEditFrame(division);

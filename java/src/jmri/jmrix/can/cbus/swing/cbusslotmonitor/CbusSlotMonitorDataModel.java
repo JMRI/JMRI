@@ -268,10 +268,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         CbusSlotMonitorSession newSession = new CbusSlotMonitorSession(addr);
         
         _mainArray.add(newSession);
-        
-        ThreadingUtil.runOnGUI( ()->{
-            fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
-        });
+        fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
         return getRowCount()-1;
     }
     
