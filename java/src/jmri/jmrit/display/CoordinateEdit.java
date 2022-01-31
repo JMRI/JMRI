@@ -98,7 +98,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getToolTipEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetTooltip", "...")) {
+        return new AbstractAction(Bundle.getMessage("SetCustomTooltip", "...")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();

@@ -158,9 +158,9 @@ public class IndicatorTrackIcon extends PositionableIcon
             block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Track");
             setStatus(block, block.getState());
             displayState(_status);
-            setToolTip(new ToolTip(block.getDescription(), 0, 0));
+            setToolTip(new ToolTip(block.getDescription(), 0, 0, this));
         } else {
-            setToolTip(new ToolTip(null, 0, 0));
+            setToolTip(new ToolTip(null, 0, 0, this));
         }
     }
 

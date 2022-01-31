@@ -43,6 +43,7 @@ public class ProxyAnalogIOManagerTest {
     @Test
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
+        l = null; // save being re-disposed by afterEach
     }
 
     @Test
@@ -106,6 +107,8 @@ public class ProxyAnalogIOManagerTest {
         b = newAnalogIO("IV3", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
+
+        m.dispose();
     }
 
     @Test
@@ -234,6 +237,9 @@ public class ProxyAnalogIOManagerTest {
 
     @AfterEach
     public void tearDown() {
+        if ( l != null ) {
+            l.dispose();
+        }
         JUnitUtil.tearDown();
     }
 
