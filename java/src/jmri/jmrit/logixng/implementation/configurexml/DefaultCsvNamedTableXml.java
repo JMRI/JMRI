@@ -4,9 +4,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
- import jmri.util.JmriCsvFormat;
+import jmri.util.JmriCsvFormat;
+import jmri.util.configurexml.JmriCsvFormatXml;
 
-import org.apache.commons.csv.CSVFormat;
 import org.jdom2.Element;
 
 /**
@@ -19,7 +19,7 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
 
     public DefaultCsvNamedTableXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a DefaultCsvNamedTable
      *
@@ -33,34 +33,28 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         Element element = new Element("CsvTable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
-        
+
         element.addContent(new Element("fileName").addContent(p.getFileName()));
-//        element.addContent(new Element("cvsFormat").addContent(p.getCSVFormat().toString()));
-        element.addContent(new Element("predefinedCvsFormat").addContent(p.getCSVFormat().getCSVPredefinedFormat().name()));
-        
+        element.addContent(JmriCsvFormatXml.store(p.getCSVFormat()));
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         String fileName = shared.getChild("fileName").getTextTrim();
-        
-        JmriCsvFormat.CSVPredefinedFormat csvPredefinedFormat = JmriCsvFormat.CSVPredefinedFormat.TabSeparated;
-        Element cvsFormatElement = shared.getChild("predefinedCvsFormat");
-        if (cvsFormatElement != null) {
-            csvPredefinedFormat = JmriCsvFormat.CSVPredefinedFormat.valueOf(cvsFormatElement.getTextTrim());
-        }
-        JmriCsvFormat csvFormat = new JmriCsvFormat(csvPredefinedFormat);
+
+        JmriCsvFormat csvFormat = JmriCsvFormatXml.load(shared);
         NamedTable h = InstanceManager.getDefault(NamedTableManager.class).newCSVTable(sys, uname, fileName, csvFormat);
-        
+
         loadCommon(h, shared);
-        
+
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCsvNamedTableXml.class);
 }

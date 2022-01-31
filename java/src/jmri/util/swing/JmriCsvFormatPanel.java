@@ -10,13 +10,13 @@ import jmri.util.JmriCsvFormat;
 import org.apache.commons.csv.CSVFormat;
 
 /**
- * Panel that allows the selection of org.apache.commons.csv.CSVFormat.
+ * Panel to configure jmri.util.JmriCsvFormat.
  * 
  * @author Daniel Bergqvist (C) 2022
  */
-public class CsvUtilPanel extends JPanel {
+public class JmriCsvFormatPanel extends JPanel {
 
-    public CsvUtilPanel(JmriCsvFormat csvFormat) {
+    public JmriCsvFormatPanel(JmriCsvFormat csvFormat) {
 
         JPanel p = this;
         p.setBorder(BorderFactory.createLineBorder(java.awt.Color.black));

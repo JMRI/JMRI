@@ -19,7 +19,7 @@ import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.TableEditor;
 import jmri.util.JmriCsvFormat;
-import jmri.util.swing.CsvUtilPanel;
+import jmri.util.swing.JmriCsvFormatPanel;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectPanel;
@@ -428,7 +428,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             c.gridwidth = 1;
             c.anchor = GridBagConstraints.WEST;
             c.gridwidth = GridBagConstraints.REMAINDER;
-            CsvUtilPanel csvUtilPanel = new CsvUtilPanel(JmriCsvFormat.TAB_SEPARATED_FORMAT);
+            JmriCsvFormatPanel csvUtilPanel = new JmriCsvFormatPanel(JmriCsvFormat.TAB_SEPARATED_FORMAT);
             p.add(csvUtilPanel, c);
 
         } else if (_newTableType == NewTableType.Internal) {
