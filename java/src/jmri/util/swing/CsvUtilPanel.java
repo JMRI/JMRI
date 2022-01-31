@@ -55,8 +55,8 @@ public class CsvUtilPanel extends JPanel {
         _csvType.addActionListener((evt) -> {
             CsvUtil.CSVPredefinedFormat format = _csvType.getItemAt(_csvType.getSelectedIndex());
             if (format.getFormat() != null) {
-                CSVFormat f = format.getFormat().getFormat();
-                _delimiter.setSelectedItem(CsvUtil.CSVDelimiter.parse(f.getDelimiter()));
+                CSVFormat f = format.getFormat();
+                _delimiter.setSelectedItem(CsvUtil.CSVDelimiter.parse(f.getDelimiterString()));
                 _escape.setSelectedItem(CsvUtil.CSVEscape.parse(f.getEscapeCharacter()));
                 _quote.setSelectedItem(CsvUtil.CSVQuote.parse(f.getQuoteCharacter()));
                 _recordSeparator.setSelectedItem(CsvUtil.CSVRecordSeparator.parse(f.getRecordSeparator()));

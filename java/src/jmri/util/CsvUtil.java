@@ -22,11 +22,13 @@ public class CsvUtil {
     public enum CSVPredefinedFormat {
 
         UserDefined(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_UserDefined"), null, true),
-        Excel(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_Excel"), CSVFormat.Predefined.Excel, false),
+        Excel_CommaSeparated(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_Excel_CommaSeparated"), CSVFormat.Predefined.Excel, false),
+        Excel_SemicolonSeparated(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_Excel_SemicolonSeparated"), CSVFormat.Predefined.Excel, CSVDelimiter.parse(";")),
         TabSeparated(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_TabSeparated"), CSVFormat.Predefined.TDF, false);
 
         private final String _name;
         private final CSVFormat.Predefined _format;
+        private final CSVDelimiter _delimiter;
         private final boolean _userDefined;
         private static final List<CSVPredefinedFormat> _formats = new ArrayList<>();
 
@@ -34,23 +36,26 @@ public class CsvUtil {
             for (CSVPredefinedFormat f : CSVPredefinedFormat.values()) {
                 _formats.add(f);
             }
-/*
-            _formats.add(new CSVPredefinedFormat(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_UserDefined"), null));
-            for (CSVFormat.Predefined f : CSVFormat.Predefined.values()) {
-                _formats.add(new CSVPredefinedFormat(f.name(), f));
-            }
-*/
         }
 
         private CSVPredefinedFormat(String name, CSVFormat.Predefined format, boolean userDefined) {
             _name = name;
             _format = format;
             _userDefined = userDefined;
-//            _formats.add(this);
+            _delimiter = null;
         }
 
-        public CSVFormat.Predefined getFormat() {
-            return _format;
+        private CSVPredefinedFormat(String name, CSVFormat.Predefined format, CSVDelimiter delimiter) {
+            _name = name;
+            _format = format;
+            _delimiter = delimiter;
+            _userDefined = false;
+        }
+
+        public CSVFormat getFormat() {
+            CSVFormat.Builder b = CSVFormat.Builder.create(_format.getFormat());
+            if (_delimiter != null) b.setDelimiter(_delimiter._delimiterString);
+            return b.build();
         }
 
         public boolean isUserDefined() {
@@ -84,6 +89,7 @@ public class CsvUtil {
         
         static {
             _delimiters.add(new CSVDelimiter(Bundle.getMessage("CsvUtil_CSVDelimiter_Comma"), ","));
+            _delimiters.add(new CSVDelimiter(Bundle.getMessage("CsvUtil_CSVDelimiter_Semicolon"), ";"));
             _delimiters.add(new CSVDelimiter(Bundle.getMessage("CsvUtil_CSVDelimiter_VerticalLine"), "|"));
             _delimiters.add(new CSVDelimiter(Bundle.getMessage("CsvUtil_CSVDelimiter_Tab"), "\t"));
         }
@@ -100,16 +106,6 @@ public class CsvUtil {
         @Override
         public String toString() {
             return _name;
-        }
-
-        public static CSVDelimiter parse(char ch) {
-            for (CSVDelimiter delimiter : getDelimiters()) {
-                if ((delimiter._delimiterString.length() == 1)
-                        && (delimiter._delimiterString.charAt(0) == ch)) {
-                    return delimiter;
-                }
-            }
-            throw new IllegalArgumentException("The char '" + ch + "' is an unknown delimiter");
         }
 
         public static CSVDelimiter parse(String str) {
@@ -173,21 +169,21 @@ public class CsvUtil {
      */
     public static final class CSVQuote {
         private final String _name;
-        private final String _quoteString;
+        private final Character _quote;
         private static final List<CSVQuote> _quotes = new ArrayList<>();
         
         static {
-            _quotes.add(new CSVQuote(Bundle.getMessage("CsvUtil_CSVQuote_DoubleQuotes"), "\""));
+            _quotes.add(new CSVQuote(Bundle.getMessage("CsvUtil_CSVQuote_DoubleQuotes"), '\"'));
             _quotes.add(new CSVQuote(Bundle.getMessage("CsvUtil_CSVQuote_None"), null));
         }
 
-        private CSVQuote(String name, String quoteString) {
+        private CSVQuote(String name, Character quote) {
             _name = name;
-            _quoteString = quoteString;
+            _quote = quote;
         }
 
-        public String getQuote() {
-            return _quoteString;
+        public Character getQuote() {
+            return _quote;
         }
 
         @Override
@@ -196,19 +192,15 @@ public class CsvUtil {
         }
 
         public static CSVQuote parse(Character ch) {
-            String str = ch != null ? "" + ch : null;
-            return parse(str);
-        }
-
-        public static CSVQuote parse(String str) {
             for (CSVQuote delimiter : getQuotes()) {
-                if (delimiter._quoteString == null) {
-                    if (str == null) return delimiter;
-                } else if (delimiter._quoteString.equals(str)) {
+                if (delimiter._quote == null) {
+                    if (ch == null) return delimiter;
+                } else if (delimiter._quote.equals(ch)) {
                     return delimiter;
                 }
             }
-            throw new IllegalArgumentException("The string '" + str + "' is an unknown quote");
+            String str = ch != null ? ch.toString() : "null";
+            throw new IllegalArgumentException("The Character '" + str + "' is an unknown quote");
         }
 
         public static List<CSVQuote> getQuotes() {

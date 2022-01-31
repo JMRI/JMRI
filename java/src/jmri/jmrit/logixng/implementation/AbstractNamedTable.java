@@ -114,7 +114,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             if (predefinedCsvFormat == null) {
                 throw new IllegalArgumentException("Both csvFormat and predefinedCsvFormat must not be null");
             }
-            format = predefinedCsvFormat.getFormat().getFormat();
+            format = predefinedCsvFormat.getFormat();
         } else if (predefinedCsvFormat != null) {
             throw new IllegalArgumentException("Either csvFormat or predefinedCsvFormat must not be null");
         }
