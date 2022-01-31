@@ -5,7 +5,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import jmri.util.CsvUtil;
+import jmri.util.JmriCsvFormat;
 
 import org.apache.commons.csv.CSVFormat;
 
@@ -16,7 +16,7 @@ import org.apache.commons.csv.CSVFormat;
  */
 public class CsvUtilPanel extends JPanel {
 
-    public CsvUtilPanel(CSVFormat csvFormat, CSVFormat.Predefined predefinedCsvFormat) {
+    public CsvUtilPanel(JmriCsvFormat csvFormat) {
 
         JPanel p = this;
         p.setBorder(BorderFactory.createLineBorder(java.awt.Color.black));
@@ -31,35 +31,35 @@ public class CsvUtilPanel extends JPanel {
         JLabel _quoteLabel = new JLabel("Quote");
         JLabel _recordSeparatorLabel = new JLabel("Record separator");
         JCheckBox _ignoreSurrondingSpaces = new JCheckBox("Ignore surronding spaces");
-        JComboBox<CsvUtil.CSVPredefinedFormat> _csvType = new JComboBox<>();
-        for (CsvUtil.CSVPredefinedFormat format : CsvUtil.CSVPredefinedFormat.getFormats()) {
+        JComboBox<JmriCsvFormat.CSVPredefinedFormat> _csvType = new JComboBox<>();
+        for (JmriCsvFormat.CSVPredefinedFormat format : JmriCsvFormat.CSVPredefinedFormat.getFormats()) {
             _csvType.addItem(format);
         }
-        JComboBox<CsvUtil.CSVDelimiter> _delimiter = new JComboBox<>();
-        for (CsvUtil.CSVDelimiter delimiter : CsvUtil.CSVDelimiter.getDelimiters()) {
+        JComboBox<JmriCsvFormat.CSVDelimiter> _delimiter = new JComboBox<>();
+        for (JmriCsvFormat.CSVDelimiter delimiter : JmriCsvFormat.CSVDelimiter.getDelimiters()) {
             _delimiter.addItem(delimiter);
         }
-        JComboBox<CsvUtil.CSVEscape> _escape = new JComboBox<>();
-        for (CsvUtil.CSVEscape escape : CsvUtil.CSVEscape.getEscapes()) {
+        JComboBox<JmriCsvFormat.CSVEscape> _escape = new JComboBox<>();
+        for (JmriCsvFormat.CSVEscape escape : JmriCsvFormat.CSVEscape.getEscapes()) {
             _escape.addItem(escape);
         }
-        JComboBox<CsvUtil.CSVQuote> _quote = new JComboBox<>();
-        for (CsvUtil.CSVQuote escape : CsvUtil.CSVQuote.getQuotes()) {
+        JComboBox<JmriCsvFormat.CSVQuote> _quote = new JComboBox<>();
+        for (JmriCsvFormat.CSVQuote escape : JmriCsvFormat.CSVQuote.getQuotes()) {
             _quote.addItem(escape);
         }
-        JComboBox<CsvUtil.CSVRecordSeparator> _recordSeparator = new JComboBox<>();
-        for (CsvUtil.CSVRecordSeparator rs : CsvUtil.CSVRecordSeparator.getRecordSeparators()) {
+        JComboBox<JmriCsvFormat.CSVRecordSeparator> _recordSeparator = new JComboBox<>();
+        for (JmriCsvFormat.CSVRecordSeparator rs : JmriCsvFormat.CSVRecordSeparator.getRecordSeparators()) {
             _recordSeparator.addItem(rs);
         }
 
         _csvType.addActionListener((evt) -> {
-            CsvUtil.CSVPredefinedFormat format = _csvType.getItemAt(_csvType.getSelectedIndex());
+            JmriCsvFormat.CSVPredefinedFormat format = _csvType.getItemAt(_csvType.getSelectedIndex());
             if (format.getFormat() != null) {
                 CSVFormat f = format.getFormat();
-                _delimiter.setSelectedItem(CsvUtil.CSVDelimiter.parse(f.getDelimiterString()));
-                _escape.setSelectedItem(CsvUtil.CSVEscape.parse(f.getEscapeCharacter()));
-                _quote.setSelectedItem(CsvUtil.CSVQuote.parse(f.getQuoteCharacter()));
-                _recordSeparator.setSelectedItem(CsvUtil.CSVRecordSeparator.parse(f.getRecordSeparator()));
+                _delimiter.setSelectedItem(JmriCsvFormat.CSVDelimiter.parse(f.getDelimiterString()));
+                _escape.setSelectedItem(JmriCsvFormat.CSVEscape.parse(f.getEscapeCharacter()));
+                _quote.setSelectedItem(JmriCsvFormat.CSVQuote.parse(f.getQuoteCharacter()));
+                _recordSeparator.setSelectedItem(JmriCsvFormat.CSVRecordSeparator.parse(f.getRecordSeparator()));
                 _ignoreSurrondingSpaces.setSelected(f.getIgnoreSurroundingSpaces());
             }
         });

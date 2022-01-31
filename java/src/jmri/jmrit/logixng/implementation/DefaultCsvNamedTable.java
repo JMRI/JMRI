@@ -5,9 +5,7 @@ import javax.annotation.Nonnull;
 
 import jmri.NamedBean.BadUserNameException;
 import jmri.NamedBean.BadSystemNameException;
-import jmri.util.CsvUtil;
-
-import org.apache.commons.csv.CSVFormat;
+import jmri.util.JmriCsvFormat;
 
 /**
  * The default implementation of a NamedTable
@@ -17,8 +15,7 @@ import org.apache.commons.csv.CSVFormat;
 public class DefaultCsvNamedTable extends AbstractNamedTable {
 
     private String _fileName;
-    private CSVFormat _csvFormat;
-    private CsvUtil.CSVPredefinedFormat _predefinedCsvFormat;
+    private JmriCsvFormat _csvFormat;
     
     /**
      * Create a new named table.
@@ -26,22 +23,19 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
      * @param user the user name or null if no user name
      * @param fileName the file name of the CSV table
      * @param data the data in the table. Note that this data is not copied to
+     *             an new array but used by the table as is.
      * @param csvFormat the format of the CSV text
-     * @param predefinedCsvFormat the format of the CSV text
-     * an new array but used by the table as is.
      */
     public DefaultCsvNamedTable(
             @Nonnull String sys, @CheckForNull String user,
             @CheckForNull String fileName,
             @Nonnull Object[][] data,
-            @CheckForNull CSVFormat csvFormat,
-            @CheckForNull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
+            @Nonnull JmriCsvFormat csvFormat)
             throws BadUserNameException, BadSystemNameException {
         super(sys,user,data);
         
         _fileName = fileName;
         _csvFormat = csvFormat;
-        _predefinedCsvFormat = predefinedCsvFormat;
     }
     
     public String getFileName() {
@@ -52,20 +46,13 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
         this._fileName = fileName;
     }
     
-    public CSVFormat getCSVFormat() {
+    @Nonnull
+    public JmriCsvFormat getCSVFormat() {
         return _csvFormat;
     }
     
-    public void setCSVFormat(@CheckForNull CSVFormat csvFormat) {
+    public void setCSVFormat(@Nonnull JmriCsvFormat csvFormat) {
         this._csvFormat = csvFormat;
-    }
-    
-    public CsvUtil.CSVPredefinedFormat getPredefinedCSVFormat() {
-        return _predefinedCsvFormat;
-    }
-    
-    public void setPredefinedCSVFormat(@CheckForNull CsvUtil.CSVPredefinedFormat csvFormat) {
-        this._predefinedCsvFormat = csvFormat;
     }
     
 }

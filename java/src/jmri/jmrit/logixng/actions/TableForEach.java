@@ -200,7 +200,7 @@ public class TableForEach extends AbstractDigitalAction
             setTable(table);
         } else {
             removeTable();
-            log.error("turnout \"{}\" is not found", tableName);
+            log.error("table \"{}\" is not found", tableName);
         }
     }
     

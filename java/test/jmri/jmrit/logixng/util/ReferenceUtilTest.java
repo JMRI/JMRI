@@ -8,10 +8,9 @@ import jmri.MemoryManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
-import jmri.util.CsvUtil;
+import jmri.util.JmriCsvFormat;
 import jmri.util.JUnitUtil;
 
-import org.apache.commons.csv.CSVFormat;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -407,9 +406,9 @@ public class ReferenceUtilTest {
                 "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
                 "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
-        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData, CsvUtil.CSVPredefinedFormat.TabSeparated);
-        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData, CsvUtil.CSVPredefinedFormat.TabSeparated);
-        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData, CsvUtil.CSVPredefinedFormat.TabSeparated);
+        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData, JmriCsvFormat.TAB_SEPARATED_FORMAT);
+        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData, JmriCsvFormat.TAB_SEPARATED_FORMAT);
+        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData, JmriCsvFormat.TAB_SEPARATED_FORMAT);
     }
     
     // The minimal setup for log4J

@@ -16,10 +16,9 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
-import jmri.util.CsvUtil;
+import jmri.util.JmriCsvFormat;
 import jmri.util.FileUtil;
 
-import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
@@ -100,8 +99,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @CheckForNull String userName,
             @CheckForNull String fileName,
             @Nonnull Reader reader,
-            @CheckForNull CSVFormat csvFormat,
-            @CheckForNull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
+            @Nonnull JmriCsvFormat csvFormat,
             boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
@@ -109,17 +107,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         
         if (userName != null && userName.isEmpty()) userName = null;
         
-        CSVFormat format = csvFormat;
-        if (format == null) {
-            if (predefinedCsvFormat == null) {
-                throw new IllegalArgumentException("Both csvFormat and predefinedCsvFormat must not be null");
-            }
-            format = predefinedCsvFormat.getFormat();
-        } else if (predefinedCsvFormat != null) {
-            throw new IllegalArgumentException("Either csvFormat or predefinedCsvFormat must not be null");
-        }
-        
-        try (CSVParser csvFile = new CSVParser(reader, format)) {
+        try (CSVParser csvFile = new CSVParser(reader, csvFormat.getFormat())) {
             List<CSVRecord> records = csvFile.getRecords();
 
             int numRows = records.size();
@@ -151,7 +139,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
                 }
             }
 
-            NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells, csvFormat, predefinedCsvFormat);
+            NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells, csvFormat);
 
             if (registerInManager) manager.register(table);
 
@@ -164,25 +152,12 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull String text,
-            @Nonnull CSVFormat csvFormat,
+            @Nonnull JmriCsvFormat csvFormat,
             boolean registerInManager)
             throws BadUserNameException, BadSystemNameException, IOException {
         
         StringReader reader = new StringReader(text);
-        return loadFromCSV(systemName, userName, null, reader, csvFormat, null, registerInManager);
-    }
-    
-    @Nonnull
-    public static NamedTable loadTableFromCSV_Text(
-            @Nonnull String systemName,
-            @CheckForNull String userName,
-            @Nonnull String text,
-            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
-            boolean registerInManager)
-            throws BadUserNameException, BadSystemNameException, IOException {
-        
-        StringReader reader = new StringReader(text);
-        return loadFromCSV(systemName, userName, null, reader, null, predefinedCsvFormat, registerInManager);
+        return loadFromCSV(systemName, userName, null, reader, csvFormat, registerInManager);
     }
     
     @Nonnull
@@ -190,7 +165,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull String fileName,
-            @Nonnull CSVFormat csvFormat,
+            @Nonnull JmriCsvFormat csvFormat,
             boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
@@ -200,26 +175,6 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
                 fileName,
                 new FileReader(FileUtil.getFile(fileName)),
                 csvFormat,
-                null,
-                registerInManager);
-    }
-    
-    @Nonnull
-    public static NamedTable loadTableFromCSV_File(
-            @Nonnull String systemName,
-            @CheckForNull String userName,
-            @Nonnull String fileName,
-            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
-            boolean registerInManager)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        
-        return loadFromCSV(
-                systemName,
-                userName,
-                fileName,
-                new FileReader(FileUtil.getFile(fileName)),
-                null,
-                predefinedCsvFormat,
                 registerInManager);
     }
     
@@ -228,23 +183,11 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull File file,
-            @Nonnull CSVFormat csvFormat,
+            @Nonnull JmriCsvFormat csvFormat,
             boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
-        return loadFromCSV(systemName, userName, file.getPath(), new FileReader(file), csvFormat, null, registerInManager);
-    }
-    
-    @Nonnull
-    public static NamedTable loadTableFromCSV_File(
-            @Nonnull String systemName,
-            @CheckForNull String userName,
-            @Nonnull File file,
-            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat,
-            boolean registerInManager)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        
-        return loadFromCSV(systemName, userName, file.getPath(), new FileReader(file), null, predefinedCsvFormat, registerInManager);
+        return loadFromCSV(systemName, userName, file.getPath(), new FileReader(file), csvFormat, registerInManager);
     }
     
     /**

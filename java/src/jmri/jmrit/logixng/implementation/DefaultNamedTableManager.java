@@ -14,8 +14,6 @@ import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
-import org.apache.commons.csv.CSVFormat;
-
 /**
  * Class providing the basic logic of the NamedTable_Manager interface.
  * 
@@ -66,7 +64,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             @Nonnull String systemName,
             @CheckForNull String userName,
             @Nonnull String fileName,
-            @Nonnull CSVFormat csvFormat)
+            @Nonnull JmriCsvFormat csvFormat)
             throws IllegalArgumentException {
         
         // Check that NamedTable does not already exist
@@ -92,55 +90,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
 //            Exceptions.printStackTrace(ex);
             log.error("Cannot load table due to I/O error", ex);
             return null;
-        }
-        // save in the maps
-        register(x);
-        
-        // Keep track of the last created auto system name
-        updateAutoNumber(systemName);
-        
-        return x;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public NamedTable newCSVTable(
-            @Nonnull String systemName,
-            @CheckForNull String userName,
-            @Nonnull String fileName,
-            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
-            throws IllegalArgumentException {
-        
-        // Check that NamedTable does not already exist
-        NamedTable x;
-        if (userName != null && !userName.equals("")) {
-            x = getByUserName(userName);
-            if (x != null) {
-                return null;
-            }
-        }
-        x = getBySystemName(systemName);
-        if (x != null) {
-            return null;
-        }
-        // Check if system name is valid
-        if (this.validSystemNameFormat(systemName) != NameValidity.VALID) {
-            throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
-        }
-        try {
-            // NamedTable does not exist, create a new NamedTable
-            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, fileName, predefinedCsvFormat, true);
-        } catch (IOException ex) {
-//            Exceptions.printStackTrace(ex);
-            log.error("Cannot load table due to I/O error", ex);
-            // Create an empty table so we at least can edit the table
-            Object[][] data = new Object[1][];
-            data[0] = new Object[1];
-            NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, data, null, predefinedCsvFormat);
-            InstanceManager.getDefault(NamedTableManager.class).register(table);
-            return table;
         }
         // save in the maps
         register(x);
@@ -205,22 +154,9 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             @Nonnull String sys,
             @CheckForNull String user,
             @Nonnull String text,
-            @Nonnull CSVFormat csvFormat)
+            @Nonnull JmriCsvFormat csvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, csvFormat, true);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public NamedTable loadTableFromCSVData(
-            @Nonnull String sys,
-            @CheckForNull String user,
-            @Nonnull String text,
-            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, predefinedCsvFormat, true);
     }
     
     /**
@@ -230,7 +166,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     public NamedTable loadTableFromCSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull String fileName,
-            @Nonnull CSVFormat csvFormat)
+            @Nonnull JmriCsvFormat csvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         return AbstractNamedTable.loadTableFromCSV_File(sys, user, fileName, csvFormat, true);
     }
@@ -241,34 +177,10 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public NamedTable loadTableFromCSV(
             @Nonnull String sys, @CheckForNull String user,
-            @Nonnull String fileName,
-            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(sys, user, fileName, predefinedCsvFormat, true);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public NamedTable loadTableFromCSV(
-            @Nonnull String sys, @CheckForNull String user,
             @Nonnull File file,
-            @Nonnull CSVFormat csvFormat)
+            @Nonnull JmriCsvFormat csvFormat)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         return AbstractNamedTable.loadTableFromCSV_File(sys, user, file, csvFormat, true);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public NamedTable loadTableFromCSV(
-            @Nonnull String sys, @CheckForNull String user,
-            @Nonnull File file,
-            @Nonnull CsvUtil.CSVPredefinedFormat predefinedCsvFormat)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(sys, user, file, predefinedCsvFormat, true);
     }
     
     /**

@@ -13,7 +13,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.*;
 
-import org.apache.commons.csv.CSVFormat;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -230,7 +229,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(NamedTableManager.class)
                         .loadTableFromCSV("IQT1", null,
                                 "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv",
-                                CsvUtil.CSVPredefinedFormat.TabSeparated);
+                                JmriCsvFormat.TAB_SEPARATED_FORMAT);
         
         _tableForEach.setTable(csvTable);
         _tableForEach.setRowOrColumn(TableRowOrColumn.Column);

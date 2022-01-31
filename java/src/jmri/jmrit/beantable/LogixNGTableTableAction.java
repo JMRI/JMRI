@@ -18,13 +18,11 @@ import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.TableEditor;
-import jmri.util.CsvUtil;
+import jmri.util.JmriCsvFormat;
 import jmri.util.swing.CsvUtilPanel;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectPanel;
-
-import org.apache.commons.csv.CSVFormat;
 
 /**
  * Swing action to create and register a LogixNG Table.
@@ -132,7 +130,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return null;
             }
             return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, fileName, CsvUtil.TDF_FORMAT);
+                    .newCSVTable(systemName, userName, fileName, JmriCsvFormat.TAB_SEPARATED_FORMAT);
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
@@ -430,7 +428,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             c.gridwidth = 1;
             c.anchor = GridBagConstraints.WEST;
             c.gridwidth = GridBagConstraints.REMAINDER;
-            CsvUtilPanel csvUtilPanel = new CsvUtilPanel(null, CSVFormat.Predefined.TDF);
+            CsvUtilPanel csvUtilPanel = new CsvUtilPanel(JmriCsvFormat.TAB_SEPARATED_FORMAT);
             p.add(csvUtilPanel, c);
 
         } else if (_newTableType == NewTableType.Internal) {

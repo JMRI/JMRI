@@ -6,7 +6,6 @@ import java.io.IOException;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.util.*;
 
-import org.apache.commons.csv.CSVFormat;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +28,7 @@ public class DefaultNamedTableTest {
         NamedTable table = AbstractNamedTable.loadTableFromCSV_File(
                 "IQT1", null,
                 new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"),
-                CsvUtil.CSVPredefinedFormat.TabSeparated,
+                JmriCsvFormat.TAB_SEPARATED_FORMAT,
                 true);
         
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");

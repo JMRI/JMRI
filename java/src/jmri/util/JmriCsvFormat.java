@@ -7,21 +7,93 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 
 /**
- * Classes that aid working with org.apache.commons.csv.CSVFormat
+ * JmriCsvFormat is a helper class for org.apache.commons.csv.CSVFormat
  * 
  * @author Daniel Bergqvist (C) 2022
  */
-public class CsvUtil {
+public class JmriCsvFormat {
 
-    public static final CsvUtil.CSVPredefinedFormat TDF_FORMAT = CsvUtil.CSVPredefinedFormat.getFormat(CSVFormat.Predefined.TDF);
+    public static final JmriCsvFormat DEFAULT_CSV_FORMAT = new JmriCsvFormat();
+    public static final JmriCsvFormat TAB_SEPARATED_FORMAT = new JmriCsvFormat(CSVPredefinedFormat.getFormat(CSVFormat.Predefined.TDF));
+
+
+//    private static final CSVPredefinedFormat DEFAULT_FORMAT = CSVPredefinedFormat.getFormat(CSVFormat.Predefined.Default);
+//    private static final CSVPredefinedFormat TDF_FORMAT = CSVPredefinedFormat.getFormat(CSVFormat.Predefined.TDF);
+
+
+    private CSVPredefinedFormat _predefinedFormat;
+    private CSVDelimiter _delimiter;
+    private CSVEscape _escape;
+    private CSVQuote _quote;
+    private CSVRecordSeparator _recordSeparator;
+
+
+    public JmriCsvFormat() {
+        this(CSVPredefinedFormat.Default);
+    }
+
+    public JmriCsvFormat(CSVPredefinedFormat format) {
+        _predefinedFormat = format;
+    }
+
+    public CSVFormat getFormat() {
+        CSVFormat.Builder b = CSVFormat.Builder.create(_predefinedFormat.getFormat());
+        if (_delimiter != null) b.setDelimiter(_delimiter._delimiterString);
+        if (_escape != null) b.setEscape(_escape._escapeChar);
+        if (_quote != null) b.setQuote(_quote._quote);
+        if (_recordSeparator != null) b.setRecordSeparator(_recordSeparator._recordSeparatorString);
+        return b.build();
+    }
+
+    public CSVPredefinedFormat getCSVPredefinedFormat() {
+        return _predefinedFormat;
+    }
+
+    public void setCSVPredefinedFormat(CSVPredefinedFormat format) {
+        _predefinedFormat = format;
+    }
+
+    public CSVDelimiter getCSVDelimiter() {
+        return _delimiter;
+    }
+
+    public void setCSVDelimiter(CSVDelimiter delimiter) {
+        _delimiter = delimiter;
+    }
+
+    public CSVEscape getCSVEscape() {
+        return _escape;
+    }
+
+    public void setCSVEscape(CSVEscape escape) {
+        _escape = escape;
+    }
+
+    public CSVQuote getCSVQuote() {
+        return _quote;
+    }
+
+    public void setCSVQuote(CSVQuote quote) {
+        _quote = quote;
+    }
+
+    public CSVRecordSeparator getCSVRecordSeparator() {
+        return _recordSeparator;
+    }
+
+    public void setCSVRecordSeparator(CSVRecordSeparator recordSeparator) {
+        _recordSeparator = recordSeparator;
+    }
+
 
     /**
      * Class that allows CSVFormat.Predefined to be listed in a JComboBox
      * together with the option "User defined".
      */
-    public enum CSVPredefinedFormat {
+    public static enum CSVPredefinedFormat {
 
         UserDefined(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_UserDefined"), null, true),
+        Default(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_DefaultCommaSeparated"), CSVFormat.Predefined.Default, false),
         Excel_CommaSeparated(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_Excel_CommaSeparated"), CSVFormat.Predefined.Excel, false),
         Excel_SemicolonSeparated(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_Excel_SemicolonSeparated"), CSVFormat.Predefined.Excel, CSVDelimiter.parse(";")),
         TabSeparated(Bundle.getMessage("CsvUtil_CSVPredefinedFormat_TabSeparated"), CSVFormat.Predefined.TDF, false);

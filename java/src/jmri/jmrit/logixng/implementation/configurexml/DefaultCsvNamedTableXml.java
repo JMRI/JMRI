@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
-import jmri.util.CsvUtil;
+ import jmri.util.JmriCsvFormat;
 
 import org.apache.commons.csv.CSVFormat;
 import org.jdom2.Element;
@@ -38,7 +38,7 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         
         element.addContent(new Element("fileName").addContent(p.getFileName()));
 //        element.addContent(new Element("cvsFormat").addContent(p.getCSVFormat().toString()));
-        element.addContent(new Element("predefinedCvsFormat").addContent(p.getPredefinedCSVFormat().name()));
+        element.addContent(new Element("predefinedCvsFormat").addContent(p.getCSVFormat().getCSVPredefinedFormat().name()));
         
         return element;
     }
@@ -49,11 +49,12 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         String uname = getUserName(shared);
         String fileName = shared.getChild("fileName").getTextTrim();
         
-        CsvUtil.CSVPredefinedFormat csvFormat = CsvUtil.CSVPredefinedFormat.TabSeparated;
+        JmriCsvFormat.CSVPredefinedFormat csvPredefinedFormat = JmriCsvFormat.CSVPredefinedFormat.TabSeparated;
         Element cvsFormatElement = shared.getChild("predefinedCvsFormat");
         if (cvsFormatElement != null) {
-            csvFormat = CsvUtil.CSVPredefinedFormat.valueOf(cvsFormatElement.getTextTrim());
+            csvPredefinedFormat = JmriCsvFormat.CSVPredefinedFormat.valueOf(cvsFormatElement.getTextTrim());
         }
+        JmriCsvFormat csvFormat = new JmriCsvFormat(csvPredefinedFormat);
         NamedTable h = InstanceManager.getDefault(NamedTableManager.class).newCSVTable(sys, uname, fileName, csvFormat);
         
         loadCommon(h, shared);
