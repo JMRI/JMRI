@@ -32,7 +32,6 @@ import jmri.jmrit.ctc.NBHSignal;
 import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -94,7 +93,9 @@ public class CommonSubs {
                 }
             }
         }
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withRecordSeparator(null))) {
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(),
+                CSVFormat.Builder.create(CSVFormat.DEFAULT)
+                        .setQuote(null).setRecordSeparator(null).build())) {
             printer.printRecord(entries);
             return printer.getOut().toString();
         } catch (IOException ex) {
