@@ -23,7 +23,7 @@ public class EngineerTest {
         Engineer t = new Engineer(warrant, throttle);
         assertThat(t).withFailMessage("exists").isNotNull();
         t.stopRun(true, true);
-        JUnitAppender.assertErrorMessageStartsWith("Throttle Manager unavailable or cannot provide throttle. 5(S)");
+        JUnitAppender.assertErrorMessageStartsWith("AllTestWarrant releaseThrottle. Throttle Manager unavailable or cannot provide throttle. 5(S)");
         warrant.stopWarrant(true, true);
     }
 

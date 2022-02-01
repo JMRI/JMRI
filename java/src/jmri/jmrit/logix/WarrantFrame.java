@@ -1025,96 +1025,99 @@ public class WarrantFrame extends WarrantRoute {
     private String checkThrottleCommands() {
         if (_throttleCommands.size() <= getOrders().size() + 1) {
             return Bundle.getMessage("NoCommands", _warrant.getDisplayName());
-        } else {
-            for (int i=0; i<_throttleCommands.size(); i++) {
-                ThrottleSetting ts = _throttleCommands.get(i);
-                Command cmd = ts.getCommand();
-                CommandValue val = ts.getValue();
-                if (val==null || cmd==null) {
-                    return Bundle.getMessage("BadThrottleSetting", i+1);
-                }
-                ValueType valType = val.getType();
-                if (valType==null) {
-                    return Bundle.getMessage("BadThrottleSetting", i+1);
-                }
-                switch (cmd) {
-                    case SPEED:
-                        if (valType != ValueType.VAL_FLOAT) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        float f = ts.getValue().getFloat();
-                        if (f > 1) {
-                            return Bundle.getMessage("badSpeed", f);
-                        } else if (f < 0) {    // EStop OK only in the last block
-                            OBlock blk = getOrders().get(getOrders().size()-1).getBlock();
-                            if (blk == null || !blk.getSystemName().equals(ts.getBeanSystemName())) {
-                                return Bundle.getMessage("badSpeed", f);
-                            }
-                        }
-                        break;
-                    case NOOP:
-                        if (valType != ValueType.VAL_NOOP) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        break;
-                    case FORWARD:
-                        if (valType != ValueType.VAL_TRUE && valType != ValueType.VAL_FALSE) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        break;
-                    case FKEY:
-                    case LATCHF:
-                        if (valType != ValueType.VAL_ON && valType != ValueType.VAL_OFF) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        break;
-                    case SET_SENSOR:
-                    case WAIT_SENSOR:
-                        if (valType != ValueType.VAL_ACTIVE && valType != ValueType.VAL_INACTIVE) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        String msg = ts.getBeanDisplayName();
-                        if (msg == null) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
-                        if (msg != null) {
-                            return msg + '\n' + Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        break;
-                    case RUN_WARRANT:
-                        if (valType != ValueType.VAL_INT) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        msg = ts.getBeanDisplayName();
-                        if (msg == null) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
-                        if (msg != null) {
-                            return msg + '\n' + Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        break;
-                    case SPEEDSTEP:
-                        if (valType != ValueType.VAL_STEP) {
-                            return Bundle.getMessage("badThrottleCommand", 
-                                    i+1, cmd.toString(), valType.toString());
-                        }
-                        break;
-                    default:
-                        return Bundle.getMessage("BadThrottleSetting", i+1);
-                }
+        }
+        float lastSpeed = 0.0f;
+        for (int i=0; i<_throttleCommands.size(); i++) {
+            ThrottleSetting ts = _throttleCommands.get(i);
+            Command cmd = ts.getCommand();
+            CommandValue val = ts.getValue();
+            if (val==null || cmd==null) {
+                return Bundle.getMessage("BadThrottleSetting", i+1);
             }
+            ValueType valType = val.getType();
+            if (valType==null) {
+                return Bundle.getMessage("BadThrottleSetting", i+1);
+            }
+            switch (cmd) {
+                case SPEED:
+                    if (valType != ValueType.VAL_FLOAT) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    lastSpeed = ts.getValue().getFloat();
+                    if (lastSpeed > 1) {
+                        return Bundle.getMessage("badSpeed", lastSpeed);
+                    } else if (lastSpeed < 0) {    // EStop OK only in the last block
+                        OBlock blk = getOrders().get(getOrders().size()-1).getBlock();
+                        if (blk == null || !blk.getSystemName().equals(ts.getBeanSystemName())) {
+                            return Bundle.getMessage("badSpeed", lastSpeed);
+                        }
+                    }
+                    break;
+                case NOOP:
+                    if (valType != ValueType.VAL_NOOP) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    break;
+                case FORWARD:
+                    if (valType != ValueType.VAL_TRUE && valType != ValueType.VAL_FALSE) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    break;
+                case FKEY:
+                case LATCHF:
+                    if (valType != ValueType.VAL_ON && valType != ValueType.VAL_OFF) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    break;
+                case SET_SENSOR:
+                case WAIT_SENSOR:
+                    if (valType != ValueType.VAL_ACTIVE && valType != ValueType.VAL_INACTIVE) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    String msg = ts.getBeanDisplayName();
+                    if (msg == null) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
+                    if (msg != null) {
+                        return msg + '\n' + Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    break;
+                case RUN_WARRANT:
+                    if (valType != ValueType.VAL_INT) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    msg = ts.getBeanDisplayName();
+                    if (msg == null) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
+                    if (msg != null) {
+                        return msg + '\n' + Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    break;
+                case SPEEDSTEP:
+                    if (valType != ValueType.VAL_STEP) {
+                        return Bundle.getMessage("badThrottleCommand", 
+                                i+1, cmd.toString(), valType.toString());
+                    }
+                    break;
+                default:
+                    return Bundle.getMessage("BadThrottleSetting", i+1);
+            }
+        }
+        if (lastSpeed > 0.0f) {
+            return Bundle.getMessage("BadLastSpeed", lastSpeed);
         }
         return null;
     }
@@ -2198,7 +2201,6 @@ public class WarrantFrame extends WarrantRoute {
                     }
                     Command command = ts.getCommand();
                     if (command.equals(Command.NOOP)) {
-                        msg = Bundle.getMessage("cannotChangeNoop");
                         break;
                     }
                     try {
@@ -2228,7 +2230,10 @@ public class WarrantFrame extends WarrantRoute {
                     if (!command.hasBlockName()) {
                         msg = ts.setNamedBean(command, (String)value);
                     } else  if (command.equals(Command.NOOP)) {
-                        msg = Bundle.getMessage("cannotChangeBlock", (String) value);
+                        if (!((String)value).equals(ts.getBeanDisplayName())) {
+                            msg = Bundle.getMessage("cannotChangeBlock", (String) value);
+                            System.out.println("ts.getBeanDisplayName()= "+ts.getBeanDisplayName()+" value= "+value.toString());
+                        }
                     } else {
                         NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
                         if (bh != null) {
