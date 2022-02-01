@@ -2,8 +2,8 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Class for messages for a LAWICELL CAN hardware adapter.
@@ -161,7 +161,7 @@ public class Message extends AbstractMRMessage {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Message.class);
+    // private final static Logger log = LoggerFactory.getLogger(Message.class);
 }
 
 
