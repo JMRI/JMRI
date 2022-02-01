@@ -130,7 +130,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return null;
             }
             return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, fileName, JmriCsvFormat.TAB_SEPARATED_FORMAT);
+                    .newCSVTable(systemName, userName, fileName, JmriCsvFormat.createTabSeparatedFormat());
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
@@ -428,7 +428,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             c.gridwidth = 1;
             c.anchor = GridBagConstraints.WEST;
             c.gridwidth = GridBagConstraints.REMAINDER;
-            JmriCsvFormatPanel csvUtilPanel = new JmriCsvFormatPanel(JmriCsvFormat.TAB_SEPARATED_FORMAT);
+            JmriCsvFormatPanel csvUtilPanel = new JmriCsvFormatPanel(JmriCsvFormat.createTabSeparatedFormat());
             p.add(csvUtilPanel, c);
 
         } else if (_newTableType == NewTableType.Internal) {

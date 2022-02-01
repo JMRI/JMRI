@@ -406,9 +406,9 @@ public class ReferenceUtilTest {
                 "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
                 "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
-        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData, JmriCsvFormat.TAB_SEPARATED_FORMAT);
-        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData, JmriCsvFormat.TAB_SEPARATED_FORMAT);
-        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData, JmriCsvFormat.TAB_SEPARATED_FORMAT);
+        yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData, JmriCsvFormat.createTabSeparatedFormat());
+        _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData, JmriCsvFormat.createTabSeparatedFormat());
+        _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData, JmriCsvFormat.createTabSeparatedFormat());
     }
     
     // The minimal setup for log4J

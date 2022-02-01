@@ -229,7 +229,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(NamedTableManager.class)
                         .loadTableFromCSV("IQT1", null,
                                 "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv",
-                                JmriCsvFormat.TAB_SEPARATED_FORMAT);
+                                JmriCsvFormat.createTabSeparatedFormat());
         
         _tableForEach.setTable(csvTable);
         _tableForEach.setRowOrColumn(TableRowOrColumn.Column);

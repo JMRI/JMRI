@@ -13,19 +13,20 @@ import org.apache.commons.csv.CSVFormat;
  */
 public class JmriCsvFormat {
 
-    public static final JmriCsvFormat DEFAULT_CSV_FORMAT = new JmriCsvFormat();
-    public static final JmriCsvFormat TAB_SEPARATED_FORMAT = new JmriCsvFormat(CSVPredefinedFormat.getFormat(CSVFormat.Predefined.TDF));
-
-
-//    private static final CSVPredefinedFormat DEFAULT_FORMAT = CSVPredefinedFormat.getFormat(CSVFormat.Predefined.Default);
-//    private static final CSVPredefinedFormat TDF_FORMAT = CSVPredefinedFormat.getFormat(CSVFormat.Predefined.TDF);
-
-
     private CSVPredefinedFormat _predefinedFormat;
     private CSVDelimiter _delimiter;
     private CSVEscape _escape;
     private CSVQuote _quote;
     private CSVRecordSeparator _recordSeparator;
+
+
+    /**
+     * Create a new JmriCsvFormat which is TAB separated.
+     * @return the format
+     */
+    public static JmriCsvFormat createTabSeparatedFormat() {
+        return new JmriCsvFormat(CSVPredefinedFormat.getFormat(CSVFormat.Predefined.TDF));
+    }
 
 
     public JmriCsvFormat() {
