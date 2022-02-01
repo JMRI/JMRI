@@ -86,10 +86,10 @@ public class Message extends AbstractMRMessage {
 
     public void setExtended(boolean extended) {
         if (extended) { // extended
-            setElement(0, ( isRtR() ? 'R': 'T'));
+            setElement(0, ( isRtrSet() ? 'R': 'T'));
         } else {
             // standard
-            setElement(0, ( isRtR() ? 'r': 't'));
+            setElement(0, ( isRtrSet() ? 'r': 't'));
         }
     }
 
@@ -102,7 +102,7 @@ public class Message extends AbstractMRMessage {
         setExtended(isExtended()); // reset element 0.
     }
     
-    public boolean isRtR(){
+    public boolean isRtrSet(){
         return _isRTR;
     }
 
