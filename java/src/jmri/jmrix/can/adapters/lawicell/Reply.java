@@ -46,7 +46,7 @@ public class Reply extends AbstractMRReply {
         CanReply ret = new CanReply();
 
         ret.setExtended(isExtended());
-        ret.setRtr(isRtR());
+        ret.setRtr(isRtrSet());
 
         // Copy the header
         ret.setHeader(getHeader());
@@ -76,7 +76,7 @@ public class Reply extends AbstractMRReply {
         return _dataChars[0] == 'T' || _dataChars[0] == 'R';
     }
     
-    public boolean isRtR() {
+    public boolean isRtrSet() {
         return _dataChars[0] == 'r' || _dataChars[0] == 'R';
     }
 
