@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Lawicell devices - added RTR CAN Frame support.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -112,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Lawicell devices - added RTR CAN Frame support.</li>
             </ul>
 
         <h4>RFID</h4>
