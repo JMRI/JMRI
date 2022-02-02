@@ -35,8 +35,7 @@ public class SpurTableModel extends TrackTableModel {
         SwingUtilities.invokeLater(() -> {
             tef = new SpurEditFrame();
             Track spur = _tracksList.get(row);
-            tef.initComponents(_location, spur);
-            tef.setTitle(Bundle.getMessage("EditSpur"));
+            tef.initComponents(spur);
         });
     }
     
