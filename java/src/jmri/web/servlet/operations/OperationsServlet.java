@@ -173,7 +173,7 @@ public class OperationsServlet extends HttpServlet {
                     train.getIconName(),
                     StringEscapeUtils.escapeHtml4(train.getDescription()),
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
-                    StringEscapeUtils.escapeHtml4(TrainCommon.getTextColorString(train.getComment())),
+                    StringEscapeUtils.escapeHtml4(train.getComment()).replaceAll("\n", "<br>"),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
                     manifest.getLocations()
             ));
