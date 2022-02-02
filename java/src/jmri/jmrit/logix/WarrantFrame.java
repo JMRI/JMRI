@@ -2232,7 +2232,6 @@ public class WarrantFrame extends WarrantRoute {
                     } else  if (command.equals(Command.NOOP)) {
                         if (!((String)value).equals(ts.getBeanDisplayName())) {
                             msg = Bundle.getMessage("cannotChangeBlock", (String) value);
-                            System.out.println("ts.getBeanDisplayName()= "+ts.getBeanDisplayName()+" value= "+value.toString());
                         }
                     } else {
                         NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
