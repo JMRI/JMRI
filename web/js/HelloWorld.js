@@ -4,3 +4,4 @@
 // in that case, if you modify the .js file directly your work will be lost.
 let message = 'Hello, World!';
 console.log(message);
+// A comment to check whether we can detect an edit
