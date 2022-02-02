@@ -25,9 +25,16 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneVariableOperation;
     private BeanSelectPanel<Memory> _copyMemoryBeanPanel;
+    private JCheckBox _listenOnMemory;
+    private BeanSelectPanel<Block> _copyBlockBeanPanel;
+    private JCheckBox _listenOnBlock;
+    private BeanSelectPanel<Reporter> _copyReporterBeanPanel;
+    private JCheckBox _listenOnReporter;
     private JPanel _setToNull;
     private JPanel _setToConstant;
     private JPanel _copyMemory;
+    private JPanel _copyBlock;
+    private JPanel _copyReporter;
     private JPanel _copyVariable;
     private JPanel _calculateFormula;
     private JPanel _copyTableCell;
@@ -50,6 +57,8 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _setToNull = new JPanel();
         _setToConstant = new JPanel();
         _copyMemory = new JPanel();
+        _copyBlock = new JPanel();
+        _copyReporter = new JPanel();
         _copyTableCell = new JPanel();
         _copyVariable = new JPanel();
         _calculateFormula = new JPanel();
@@ -58,6 +67,8 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _tabbedPaneVariableOperation.addTab(VariableOperation.SetToString.toString(), _setToConstant);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyMemoryToVariable.toString(), _copyMemory);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyTableCellToVariable.toString(), _copyTableCell);
+        _tabbedPaneVariableOperation.addTab(VariableOperation.CopyBlockToVariable.toString(), _copyBlock);
+        _tabbedPaneVariableOperation.addTab(VariableOperation.CopyReporterToVariable.toString(), _copyReporter);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyVariableToVariable.toString(), _copyVariable);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CalculateFormula.toString(), _calculateFormula);
 
@@ -67,7 +78,19 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _setToConstant.add(_setToConstantTextField);
 
         _copyMemoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _listenOnMemory = new JCheckBox(Bundle.getMessage("ActionLocalVariable_ListenOnMemory"));
         _copyMemory.add(_copyMemoryBeanPanel);
+        _copyMemory.add(_listenOnMemory);
+
+        _copyBlockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(BlockManager.class), null);
+        _listenOnBlock = new JCheckBox(Bundle.getMessage("ActionLocalVariable_ListenOnBlock"));
+        _copyBlock.add(_copyBlockBeanPanel);
+        _copyBlock.add(_listenOnBlock);
+
+        _copyReporterBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(ReporterManager.class), null);
+        _listenOnReporter = new JCheckBox(Bundle.getMessage("ActionLocalVariable_ListenOnReporter"));
+        _copyReporter.add(_copyReporterBeanPanel);
+        _copyReporter.add(_listenOnReporter);
 
         _copyTableCellTextField = new JTextField(30);
         _copyTableCell.add(_copyTableCellTextField);
@@ -86,11 +109,19 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             if (action.getMemory() != null) {
                 _copyMemoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
             }
+            if (action.getBlock() != null) {
+                _copyBlockBeanPanel.setDefaultNamedBean(action.getBlock().getBean());
+            }
+            if (action.getReporter() != null) {
+                _copyReporterBeanPanel.setDefaultNamedBean(action.getReporter().getBean());
+            }
             switch (action.getVariableOperation()) {
                 case SetToNull: _tabbedPaneVariableOperation.setSelectedComponent(_setToNull); break;
                 case SetToString: _tabbedPaneVariableOperation.setSelectedComponent(_setToConstant); break;
                 case CopyMemoryToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyMemory); break;
                 case CopyTableCellToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyTableCell); break;
+                case CopyBlockToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyBlock); break;
+                case CopyReporterToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyReporter); break;
                 case CopyVariableToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyVariable); break;
                 case CalculateFormula: _tabbedPaneVariableOperation.setSelectedComponent(_calculateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getVariableOperation().name());
@@ -99,6 +130,10 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             _copyTableCellTextField.setText(ActionLocalVariable.convertTableReference(action.getOtherTableCell(), false));
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getFormula());
+            
+            _listenOnMemory.setSelected(action.getListenToMemory());
+            _listenOnBlock.setSelected(action.getListenToBlock());
+            _listenOnReporter.setSelected(action.getListenToReporter());
         }
 
         JComponent[] components = new JComponent[]{
@@ -121,6 +156,20 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory) {
             if (_copyMemoryBeanPanel.getNamedBean() == null) {
                 errorMessages.add(Bundle.getMessage("ActionLocalVariable_CopyErrorMemory"));
+            }
+        }
+
+         // If using the Block tab, validate the block variable selection.
+        if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyBlock) {
+            if (_copyBlockBeanPanel.getNamedBean() == null) {
+                errorMessages.add(Bundle.getMessage("ActionLocalVariable_CopyErrorBlock"));
+            }
+        }
+
+         // If using the Reporter tab, validate the reporter variable selection.
+        if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyReporter) {
+            if (_copyReporterBeanPanel.getNamedBean() == null) {
+                errorMessages.add(Bundle.getMessage("ActionLocalVariable_CopyErrorReporter"));
             }
         }
 
@@ -157,12 +206,34 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
         if (!_copyMemoryBeanPanel.isEmpty()
                 && (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory)) {
-            Memory otherMemory = _copyMemoryBeanPanel.getNamedBean();
-            if (otherMemory != null) {
+            Memory memory = _copyMemoryBeanPanel.getNamedBean();
+            if (memory != null) {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
+                                .getNamedBeanHandle(memory.getDisplayName(), memory);
                 action.setMemory(handle);
+            }
+        }
+
+        if (!_copyBlockBeanPanel.isEmpty()
+                && (_tabbedPaneVariableOperation.getSelectedComponent() == _copyBlock)) {
+            Block block = _copyBlockBeanPanel.getNamedBean();
+            if (block != null) {
+                NamedBeanHandle<Block> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(block.getDisplayName(), block);
+                action.setBlock(handle);
+            }
+        }
+
+        if (!_copyReporterBeanPanel.isEmpty()
+                && (_tabbedPaneVariableOperation.getSelectedComponent() == _copyReporter)) {
+            Reporter reporter = _copyReporterBeanPanel.getNamedBean();
+            if (reporter != null) {
+                NamedBeanHandle<Reporter> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(reporter.getDisplayName(), reporter);
+                action.setReporter(handle);
             }
         }
 
@@ -174,6 +245,10 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 action.setConstantValue(_setToConstantTextField.getText());
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory) {
                 action.setVariableOperation(VariableOperation.CopyMemoryToVariable);
+            } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyBlock) {
+                action.setVariableOperation(VariableOperation.CopyBlockToVariable);
+            } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyReporter) {
+                action.setVariableOperation(VariableOperation.CopyReporterToVariable);
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyTableCell) {
                 action.setVariableOperation(VariableOperation.CopyTableCellToVariable);
                 action.setOtherTableCell(ActionLocalVariable.convertTableReference(_copyTableCellTextField.getText(), true));
@@ -189,6 +264,10 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        action.setListenToMemory(_listenOnMemory.isSelected());
+        action.setListenToBlock(_listenOnBlock.isSelected());
+        action.setListenToReporter(_listenOnReporter.isSelected());
     }
 
     /** {@inheritDoc} */

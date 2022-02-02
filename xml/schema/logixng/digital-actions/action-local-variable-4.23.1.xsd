@@ -41,7 +41,36 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="memory" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="beanNameType">
+                      <xs:attribute name="listen" type="yesNoType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="block" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="beanNameType">
+                      <xs:attribute name="listen" type="yesNoType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="reporter" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="beanNameType">
+                      <xs:attribute name="listen" type="yesNoType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
 
               <xs:element name="variableOperation" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
@@ -51,6 +80,8 @@
                     <xs:enumeration value="CopyVariableToVariable"/>
                     <xs:enumeration value="CopyMemoryToVariable"/>
                     <xs:enumeration value="CopyTableCellToVariable"/>
+                    <xs:enumeration value="CopyBlockToVariable"/>
+                    <xs:enumeration value="CopyReporterToVariable"/>
                     <xs:enumeration value="CalculateFormula"/>
                   </xs:restriction>
                 </xs:simpleType>
