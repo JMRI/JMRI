@@ -1,21 +1,21 @@
 package jmri.jmrit.dispatcher;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import java.beans.PropertyChangeEvent;
@@ -74,12 +74,15 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         if (autoActiveTrain != null) {
             log.debug("Adding ActiveTrain[{}]",autoActiveTrain.getActiveTrain().getActiveTrainName());
             AutoTrainControl atn = new AutoTrainControl(autoActiveTrain);
-            contentPane.add(atn);
+            if (!trainsCanBeFloated.isSelected()) {
+                atn.componentJPanel.setFloatable(false);
+            }
+            trainsPanel.add(atn);
             atn.addPropertyChangeListener("terminated", (PropertyChangeEvent e) -> {
                 AutoTrainControl atnn = (AutoTrainControl) e.getSource();
                 // must be attached to make it really go away
                 ((BasicToolBarUI) atnn.componentJPanel.getUI()).setFloating(false,null);
-                contentPane.remove((AutoTrainControl) e.getSource());
+                trainsPanel.remove((AutoTrainControl) e.getSource());
                 pack();
             });
             // bit of overkill for when a floater floats and comes back.
@@ -109,39 +112,104 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     
     // variables for AutoTrains window
     protected JmriJFrame autoTrainsFrame = null;
-    private Container contentPane = null;
-    //This would be better refactored this all into a sub-class, rather than multiple arraylists.
-    // note: the following array lists are synchronized with _autoTrainsList
+    private JPanel trainsPanel;
+    private JScrollPane trainScrollPanel;
+    private JCheckBoxMenuItem frameHasScrollBars = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameUseScrollBars"));
+    private JCheckBoxMenuItem trainsCanBeFloated = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameAllowFloat"));
 
+    jmri.UserPreferencesManager prefMan;
+    
     private void initializeAutoTrainsWindow() {
+
+        prefMan = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        frameHasScrollBars.setSelected(prefMan.getSimplePreferenceState(hasScrollBars));
+        trainsCanBeFloated.setSelected(prefMan.getSimplePreferenceState(canFloat));
+
         autoTrainsFrame = this;
         autoTrainsFrame.setTitle(Bundle.getMessage("TitleAutoTrains"));
+        trainsPanel = new JPanel();
+        trainsPanel.setLayout(new BoxLayout(trainsPanel, BoxLayout.Y_AXIS));
         JMenuBar menuBar = new JMenuBar();
+        JMenu optMenu = new JMenu(Bundle.getMessage("MenuOptions")); // NOI18N
+        optMenu.add(frameHasScrollBars);
+        frameHasScrollBars.addActionListener(e -> {
+            setScrollBars();
+        });
+
+        optMenu.add(trainsCanBeFloated);
+        trainsCanBeFloated.addActionListener(e -> {
+            for (Object ob : trainsPanel.getComponents()) {
+                if (ob instanceof AutoTrainControl) {
+                    AutoTrainControl atnn = (AutoTrainControl) ob;
+                    if (trainsCanBeFloated.isSelected()) {
+                        atnn.componentJPanel.setFloatable(true);
+                    } else {
+                        // rejoin floating throttles before banning
+                        // floating.
+                        ((BasicToolBarUI) atnn.componentJPanel.getUI()).setFloating(false, null);
+                        atnn.componentJPanel.setFloatable(false);
+                    }
+                }
+            }
+        });
+        menuBar.add(optMenu);
+
         setJMenuBar(menuBar);
         autoTrainsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.AutoTrains", true);
-        contentPane = autoTrainsFrame.getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        trainsPanel.setLayout(new BoxLayout(trainsPanel, BoxLayout.Y_AXIS));
         JPanel pB = new JPanel();
         pB.setLayout(new FlowLayout());
         JButton stopAllButton = new JButton(Bundle.getMessage("StopAll"));
         pB.add(stopAllButton);
         stopAllButton.addActionListener(this::stopAllPressed);
         stopAllButton.setToolTipText(Bundle.getMessage("StopAllButtonHint"));
-        contentPane.add(pB);
-        contentPane.add(new JSeparator());
-        contentPane.addComponentListener(this);
+        trainsPanel.add(pB);
+        trainsPanel.add(new JSeparator());
+        trainsPanel.addComponentListener(this);
+        trainsPanel.setVisible(true);
+        trainsPanel.revalidate();
+        trainScrollPanel = new JScrollPane();
+        trainScrollPanel.getViewport().add(trainsPanel);
+        autoTrainsFrame.getContentPane().setLayout(new BoxLayout(autoTrainsFrame.getContentPane(), BoxLayout.Y_AXIS));
+        autoTrainsFrame.getContentPane().add(trainScrollPanel);
+        setScrollBars();
+        autoTrainsFrame.getContentPane().revalidate();
         autoTrainsFrame.pack();
         autoTrainsFrame.setVisible(true);
+
     }
     
+    private void setScrollBars() {
+        if (frameHasScrollBars.isSelected()) {
+            trainScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            trainScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            autoTrainsFrame.getContentPane().revalidate();
+        } else {
+            trainScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+            trainScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            autoTrainsFrame.getContentPane().revalidate();
+        }
+    }
+
     private void stopAllPressed(ActionEvent e) {
-        for (Object ob: contentPane.getComponents()) {
+        for (Object ob: autoTrainsFrame.getContentPane().getComponents()) {
             if (ob instanceof AutoTrainControl) {
                 ((AutoTrainControl) ob).stopAll();
             }
         }
     }
     
+    @Override
+    public void dispose() {
+        if (prefMan!=null) {
+            prefMan.setSimplePreferenceState(hasScrollBars, frameHasScrollBars.isSelected());
+            prefMan.setSimplePreferenceState(canFloat, trainsCanBeFloated.isSelected());
+        }
+        super.dispose();
+    }
+    String hasScrollBars = this.getClass().getName() + ".HasScrollBars"; // NOI18N
+    String canFloat = this.getClass().getName() + ".CanFloat"; // NOI18N
+
     class AutoTrainControl extends JPanel {
 
         public AutoTrainControl(AutoActiveTrain autoActiveTrain) {
@@ -214,9 +282,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 if (reverseButton.isVisible() && !throttle.getIsForward()) {
                     reverseButton.setSelected(throttle.getIsForward());
                 }
-
                 if (speedSlider.isVisible()) {
-                    speedSlider.setValue((int) throttle.getSpeedSetting() * 100);
+                    speedSlider.setValue((int)(throttle.getSpeedSetting() * 100.0f));
                 }
                 if (throttleStatus.isVisible()) {
                     throttleStatus.setText(sb.toString());
@@ -337,6 +404,11 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     autoActiveTrain.setTargetSpeed(0.0f);
                     autoActiveTrain.waitUntilStopped();
                     autoActiveTrain.getAutoEngineer().setHalt(false);
+                    if (throttle.getIsForward() ) {
+                        forwardButton.setSelected(true);
+                    } else {
+                        reverseButton.setSelected(true);
+                    }
                 }
 
             } else if (activeTrain.getMode() == ActiveTrain.MANUAL) {
@@ -356,24 +428,16 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             }
         }
 
-        public JPanel componentBase;
-        // public JPanel componentJPanel;
-        public JToolBar componentJPanel;
+        private JToolBar componentJPanel;
 
         private void drawComponent() {
 
-            componentBase = new JPanel();
-            componentBase.setLayout(new BorderLayout());
-            componentBase.setBorder(BorderFactory.createLineBorder(Color.black));
-
             componentJPanel = new JToolBar();
-            // componentJPanel = new JPanel();
             componentJPanel.setLayout(new FlowLayout());
-            componentJPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            // componentJPanel.setPreferredSize(new Dimension(500,100));
             componentJPanel.setFloatable(true);
 
             trainLabel = new JLabel(autoActiveTrain.getActiveTrain().getTrainName());
+            trainLabel.setVisible(true);
             componentJPanel.add(trainLabel);
             stopButton = new JButton(Bundle.getMessage("ResumeButton"));
             componentJPanel.add(stopButton);
@@ -409,10 +473,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             throttleStatus.setText("Speed Unknown");
             componentJPanel.add(throttleStatus);
             componentJPanel.revalidate();
-            componentBase.add(componentJPanel, BorderLayout.CENTER);
-            BasicToolBarUI ui = new BasicToolBarUI();
-            componentJPanel.setUI(ui);
-            add(componentBase);
+            add(componentJPanel, BorderLayout.EAST);
             pack();
         }
 
