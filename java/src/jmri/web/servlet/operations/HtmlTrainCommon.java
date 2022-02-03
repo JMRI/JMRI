@@ -313,13 +313,13 @@ public class HtmlTrainCommon extends TrainCommon {
                 // print the appropriate comment if there's one
                 if (pickup && setout && !track.getCommentBoth().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("TrackComments"), StringEscapeUtils
-                            .escapeHtml4(track.getCommentBoth())));
+                            .escapeHtml4(TrainCommon.getTextColorString(track.getCommentBoth()))));
                 } else if (pickup && !setout && !track.getCommentPickup().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("TrackComments"), StringEscapeUtils
-                            .escapeHtml4(track.getCommentPickup())));
+                            .escapeHtml4(TrainCommon.getTextColorString(track.getCommentPickup()))));
                 } else if (!pickup && setout && !track.getCommentSetout().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("TrackComments"), StringEscapeUtils
-                            .escapeHtml4(track.getCommentSetout())));
+                            .escapeHtml4(TrainCommon.getTextColorString(track.getCommentSetout()))));
                 }
             }
         }
