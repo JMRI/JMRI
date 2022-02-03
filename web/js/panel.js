@@ -563,15 +563,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                             // link to a JSON/named bean
                             // also for three way turnouts, see java/src/jmri/jmrit/display/SlipTurnoutIcon.java
                             // and java/src/jmri/jmrit/display/configurexml/SlipTurnoutIconXml.java
-                            $widget['name'] = $widget.slipicon; // normalize name
+                            $widget['name'] = $widget.id; // normalize name
                             $widget['slipicontype'] = $widget.turnoutType;
                             $widget['systemNameE'] = $widget.turnoutEast;
                             $widget['systemNameW'] = $widget.turnoutWest;
-                            $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('unknown').attr('url');
+                            $widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
+                            //$widget['icon' + UNKNOWN] = $(this).find('iconmap').find('unknown').attr('url');
                             $widget['icon' + INCONSISTENT] = $(this).find('iconmap').find('inconsistent').attr('url');
+                            //$widget['icon0'] = $(this).find('iconmap').find('lowerWestToLowerEast').attr('url');
+                            // reserved
                             $widget['icon5'] = $(this).find('iconmap').find('lowerWestToLowerEast').attr('url');
+                            $widget['icon9'] = $(this).find('iconmap').find('lowerWestToLowerEast').attr('url');
 
-                            switch ($widget.slipicontype) {
+                            switch ($widget.turnoutType) {
                                 // TODO set details, connect beans
                                 case "doubleSlip" : // default
                                     $widget['icon7'] = $(this).find('iconmap').find('upperWestToUpperEast').attr('url');
@@ -599,14 +603,14 @@ function processPanelXML($returnedData, $success, $xhr) {
 //                            $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
 //                            $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
 //                            //0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
-//                            $widget['rotation'] = $(this).find('icons').find('unknown-full').find('rotation').text() * 1;
-//                            $widget['degrees'] = ($(this).find('icons').find('unknown-full').attr('degrees') * 1) - ($widget.rotation * 90);
-//                            $widget['scale'] = $(this).find('icons').find('unknown-full').attr('scale');
+                            $widget['rotation'] = $(this).find('icons').find('unknown-full').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icons').find('unknown-full').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icons').find('unknown-full').attr('scale');
                             if ($widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            jmri.getTurnout($widget['systemNameE']);
-                            jmri.getTurnout($widget['systemNameW']);
+                            //jmri.getTurnout($widget['systemNameLE']);
+                            //jmri.getTurnout($widget['systemNameLW']);
                             break;
                     }
 
@@ -1471,6 +1475,7 @@ function $drawIcon($widget) {
         $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
         $state = $widget.state;
     }
+
     // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if (isDefined($widget['icon' + $indicator + $state])) {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
@@ -1682,8 +1687,18 @@ var $reDrawIcon = function($widget) {
         $state = (Ostate | $widget.state); // adds Turnout state back in to insert TO state = position icon
         if (isDefined($widget.name)) { // intended for indicatorturnouts to show they are not clickable
             $('img#' + $widget.id).attr('title', $widget.name + ((Ostate & 0x40) == OUT_OF_SERVICE ? " (off)" : ""));
-        // explain why not clickable TODO I18N tooltip for OOS + ERROR
+            // explain why not clickable TODO I18N tooltip for OOS + ERROR
         }
+    } else if ($widget.widgetType == "slipturnouticon") {
+        // adjust some states, as in Display/SlipTurnoutIcon#displayState(int state)
+        if ($widget.turnouttype == "threeway") {
+            switch ($state) {
+                case "5" :
+                    $state = 0;
+                    break;
+            }
+        }
+        // more? EBR
     } else {
         $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
         $state = $widget.state;
@@ -2062,6 +2077,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "indicatortrackicon" :
         case "indicatorturnouticon" :
         case "memoryicon" :
+        case "slipturnouticon" :
             return "icon";
             break;
         case 'layoutSlip' :
