@@ -972,8 +972,13 @@ public class PrintLocationsAction extends AbstractAction {
     }
 
     private String getDestinations(Track track) {
+        StringBuffer buf = new StringBuffer();
+        if (track.isOnlyCarsWithFinalDestinationEnabled()) {
+            buf.append(TAB + TAB + Bundle.getMessage("OnlyCarsWithFD"));
+            buf.append(NEW_LINE);
+        }
         if (track.getDestinationOption().equals(Track.ALL_DESTINATIONS)) {
-            return "";
+            return buf.toString();
         }
         String op = Bundle.getMessage(
                 "AcceptOnly") + " " + track.getDestinationListSize() + " " + Bundle.getMessage("Destinations") + ":";
@@ -985,7 +990,7 @@ public class PrintLocationsAction extends AbstractAction {
                     Bundle.getMessage("Destinations") +
                     ":";
         }
-        StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
+        buf.append(TAB + TAB + op + NEW_LINE + TAB + TAB);
         String[] destIds = track.getDestinationIds();
         int charCount = 0;
         for (String id : destIds) {

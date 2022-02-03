@@ -44,6 +44,10 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
         _division = division;
         // load manager
         divisionManager = InstanceManager.getDefault(DivisionManager.class);
+        initPanel();
+    }
+        
+    private void initPanel() {
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -89,12 +93,12 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
         addButtonAction(addDivisionButton);
         addButtonAction(saveDivisionButton);
 
-        enableButtons(division != null);
+        enableButtons(_division != null);
 
-        if (division != null) {
+        if (_division != null) {
             setTitle(Bundle.getMessage("EditDivision"));
-            divisionNameTextField.setText(division.getName());
-            commentTextField.setText(division.getComment());
+            divisionNameTextField.setText(_division.getName());
+            commentTextField.setText(_division.getComment());
         }
 
         // build menu

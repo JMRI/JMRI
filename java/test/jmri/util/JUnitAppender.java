@@ -342,12 +342,12 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
-     * Check that the next queued message was of Warn severity, and has a
-     * specific message. White space is ignored.
+     * Check that the next queued message was of Warn severity, and text
+     * is at start of this message. White space is ignored.
      * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
-     * @param msg the message to assert exists
+     * @param msg the message to assert starts with
      */
     public static void assertWarnMessageStartsWith(String msg) {
         if (list.isEmpty()) {
@@ -368,7 +368,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
         // check the remaining message, if any
         if (evt.getLevel() != Level.WARN) {
-            Assert.fail("Level mismatch when looking for ERROR message: \"" +
+            Assert.fail("Level mismatch when looking for WARN message: \"" +
                     msg +
                     "\" found \"" +
                     (String) evt.getMessage() +
@@ -436,7 +436,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * ignored.
      *
      * @param level the level at which to suppress the message
-     * @param msg   the message to suppress
+     * @param msg   text at start of the message to suppress
      */
     public static void suppressMessageStartsWith(Level level, String msg) {
         if (list.isEmpty()) {
@@ -492,7 +492,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * If there's a next matching message of Error severity, just ignore it. Not
      * an error if not present; mismatch is an error. White space is ignored.
      *
-     * @param msg the message to suppress
+     * @param msg text at start of the message to suppress
      */
     public static void suppressErrorMessageStartsWith(String msg) {
         suppressMessageStartsWith(Level.ERROR, msg);
@@ -512,7 +512,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * If there's a next matching message of Warn severity, just ignore it. Not
      * an error if not present; mismatch is an error. White space is ignored.
      *
-     * @param msg the message to suppress
+     * @param msg text at start of the message to suppress
      */
     public static void suppressWarnMessageStartsWith(String msg) {
         suppressMessageStartsWith(Level.WARN, msg);

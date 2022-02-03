@@ -14,7 +14,7 @@ import jmri.util.prefs.InitializationException;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of ManagerDefaultSelector
@@ -34,7 +34,6 @@ public class ManagerDefaultSelectorTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
@@ -77,9 +76,9 @@ public class ManagerDefaultSelectorTest {
         return memo;
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testSingleSystemPreferencesValid() throws InitializationException {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
 
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         // assert default state
@@ -126,13 +125,15 @@ public class ManagerDefaultSelectorTest {
         // loconet gone, auto internal is by itself, so OK
         Assert.assertTrue(mds.isPreferencesValid(profile));
 
+        loconet.getPowerManager().dispose();
+        loconet.getSensorManager().dispose();
         loconet.dispose();
 
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAuxInternalPreferencesValid() throws InitializationException {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
 
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
@@ -193,12 +194,14 @@ public class ManagerDefaultSelectorTest {
         // loconet gone, auto internal is by itself, so OK
         Assert.assertTrue(mds.isPreferencesValid(profile));
 
+        loconet.getPowerManager().dispose();
+        loconet.getSensorManager().dispose();
         loconet.dispose();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testTwoLoconetPreferencesValid() throws InitializationException {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
 
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
@@ -256,7 +259,12 @@ public class ManagerDefaultSelectorTest {
         // loconet and loconet2 gone, auto internal is by itself, so OK
         Assert.assertTrue(mds.isPreferencesValid(profile));
 
+        loconet.getPowerManager().dispose();
+        loconet.getSensorManager().dispose();
         loconet.dispose();
+
+        loconet2.getPowerManager().dispose();
+        loconet2.getSensorManager().dispose();
         loconet2.dispose();
     }
 

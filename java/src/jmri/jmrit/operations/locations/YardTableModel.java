@@ -35,8 +35,7 @@ public class YardTableModel extends TrackTableModel {
         SwingUtilities.invokeLater(() -> {
             tef = new YardEditFrame();
             Track yard = _tracksList.get(row);
-            tef.initComponents(_location, yard);
-            tef.setTitle(Bundle.getMessage("EditYard"));
+            tef.initComponents(yard);
         });
     }
     

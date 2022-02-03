@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Lawicell devices - added RTR CAN Frame support.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -112,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Lawicell devices - added RTR CAN Frame support.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -287,7 +287,8 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>TSU2 Genesis Diesel - add SD70ACU and Dash 9-44CW</li>
+		<li>TSU Genesis Steam - N Challenger add CV and change some default value per user request</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -378,7 +379,15 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+          <li>Use the actual turnout state for the turnout circle when that option is used.  This
+          corrects the color for turnouts using the continuing route option when set to thrown.</li>
+
+          <li>Tooltip support for panel icons has been changed.
+          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
+          Tooltips</a> for details.</li>
+
+          <li>Update the layout block occupancy sensor when the occupancy sensor for the related
+          block has been added, removed or changed to a different sensor.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -397,8 +406,16 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A single Logix can be imported to LogixNG. Se
-		  the section <i>Logix</i> for more information.</li>
+          <li>The action <i>Throttle</i> has been updated.
+          It now also has the child sockets <i>Function</i>
+          and <i>FunctionOnOff</i>. These are optional.
+          If both are connected, the Throttle action sets
+          or resets this function. The child <i>Function</i>
+          tells the function number and the child
+          <i>FunctionOnOff</i> tells if the function should
+          be On (True) or Off (False).</li>
+          <li>A single Logix can be imported to LogixNG. See
+          the section <i>Logix</i> for more information.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -416,13 +433,19 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+          <li>Tooltips can now be edited in Panel Editor.</li>
+
+          <li>Tooltip support for panel icons has been changed.
+          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
+          Tooltips</a> for details.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+          <li>Tooltip support for panel icons has been changed.
+          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
+          Tooltips</a> for details.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>

@@ -1241,7 +1241,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * Used to determine if there are any track destination restrictions at this
      * location.
      *
-     * @return True if there are road restrictions
+     * @return True if there are destination restrictions
      */
     public boolean hasDestinationRestrictions() {
         List<Track> tracks = getTracksList();

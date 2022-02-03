@@ -4,8 +4,6 @@ import javax.swing.BorderFactory;
 
 import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
 import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
-import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 
 /**
  * Frame for user edit of a yard
@@ -17,16 +15,20 @@ public class YardEditFrame extends TrackEditFrame {
     public YardEditFrame() {
         super(Bundle.getMessage("AddYard"));
     }
+    
+    @Override
+    public void initComponents(Track track) {
+        setTitle(Bundle.getMessage("EditYard"));
+        initComponents(track.getLocation(), track);
+    }
 
     @Override
     public void initComponents(Location location, Track track) {
         _type = Track.YARD;
         super.initComponents(location, track);
 
-        _toolMenu.add(new IgnoreUsedTrackAction(_track));
-        _toolMenu.add(new ChangeTrackTypeAction(this));
-        _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
-        _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
+        _toolMenu.insert(new IgnoreUsedTrackAction(_track), TOOL_MENU_OFFSET);
+        _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 1);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
 
         // override text strings for tracks
