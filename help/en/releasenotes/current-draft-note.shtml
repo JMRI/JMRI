@@ -361,7 +361,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix XCrossings allocation.</li>
+             <li>Improve AutoEngineer. Permit unlimited number of Auto Trains.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
