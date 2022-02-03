@@ -1,19 +1,20 @@
 package jmri.jmrix.rfid.swing.tagcarwin;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.table.TableCellEditor;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
@@ -24,7 +25,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-public class TableDataModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener, ItemListener {
+/**
+ * The table model for displaying rows of incoming RFID tags and associating them with cars
+ * and locations.  This is where most of the logic resides, though the actually rceiving of the table
+ * is done in the parent
+ *
+ * @author J. Scott Walton Copyright (C) 2022
+ */
+public class TableDataModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener, ItemListener, ActionListener {
 
     private static final Logger log = LoggerFactory.getLogger(TableDataModel.class);
 
@@ -48,11 +56,18 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
 
     protected List<String> locations;
     protected Hashtable<String, List<String>> trackLists;
-    private DefaultCellEditor locationCellEditor = null;
-    private DefaultCellEditor trackCellEditor = null;
     TagMonitorPane parentPane = null;
+    CarEditFrame cef;
+    AssociateFrame associateFrame;
 
-    public TableDataModel(LocationManager locationManager, TagMonitorPane parentPane) {
+    public void setForceSetLocation(boolean forceSetLocation) {
+        this.forceSetLocation = forceSetLocation;
+    }
+
+    boolean forceSetLocation = false;
+    private boolean addingRow = false;  // set true when in the middle of adding a row
+
+    public TableDataModel(TagMonitorPane parentPane) {
         super();
         this.parentPane = parentPane;
     }
@@ -90,7 +105,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         for (String loc : locations) {
             locationBox.addItem(loc);
         }
-        String locName = "";
+        String locName;
         if (car.getLocation() == null) {
             locationBox.setSelectedIndex(0);
             trackBox.addItem("");
@@ -134,8 +149,10 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public void add(TagCarItem newItem) {
+        addingRow = true;
         cleanTable(rowMax - 1, false);
         RollingStock newCar = newItem.getCurrentCar();
+        newItem.getAction1().addActionListener(this);
         if (newCar != null) {
             // only have a combo box if there is a car - need to build both combo boxes here
             JComboBox<String> carLocation = new JComboBox<>();
@@ -143,9 +160,12 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
             setCombos(carLocation, carTrack, newCar);
             newItem.setLocation(carLocation);
             newItem.setTrack(carTrack);
+            newItem.getAction2().addActionListener(this);
         }
         tagList.add(newItem);
+        parentPane.setMessageNormal("");
         fireTableDataChanged();
+        addingRow = false;
     }
 
     public void setLast(LocalTime newLast) {
@@ -173,7 +193,6 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
 
     @Override
     public int getColumnCount() {
-        log.debug("get column count called - returned {}",  Integer.toString(COLUMN_COUNT));
         return COLUMN_COUNT;
     }
 
@@ -224,11 +243,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 return current.getTrainPosition();
             case ACTION1_COLUMN:
-                if (current.getCurrentCar() != null) {
-                    return current.getAction1().getText();
-                } else {
-                    return "";
-                }
+                return current.getAction1().getText();
             case ACTION2_COLUMN:
                 if (current.getAction2() == null) {
                     return "";
@@ -239,9 +254,71 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    CarSetFrame csf = null;
-    CarEditFrame cef = null;
 
+
+    private void setCarLocation(RollingStock car, TagCarItem thisRow) {
+       if (car == null) {
+           log.error("attemmpting to set the location of a null car");
+       }
+        log.debug("Setting location of car {} - {}", car.getRoadName(), car.getNumber());
+        if (!thisRow.isLocationReady()) {
+            log.error("should not be here - this row is not yet ready");
+            return;
+        }
+        String retValue;
+        if (thisRow.getTempLocation().equals("")) {
+            // removing location from this car
+
+            retValue = car.setLocation(null, null);
+        } else {
+            // adding or replacing the location on this car
+            Location thisLocation = parentPane.locationManager.getLocationByName(thisRow.getTempLocation());
+            if (thisLocation == null) {
+                log.error("Did not find location identified in ComboBox - {}", thisRow.getTempLocation());
+                return;
+            }
+            Track thisTrack = null;
+            for (Track track : thisLocation.getTracksList()) {
+                if (track.getName().equals(thisRow.getTempTrack())) {
+                    thisTrack = track;
+                    break;
+                }
+            }
+            if (thisTrack == null) {
+                log.error("Did not find expected track at this location L - T -- {} - {}", thisRow.getTempLocation(), thisRow.getTempTrack());
+                return;
+            }
+            retValue = car.setLocation(thisLocation, thisTrack, forceSetLocation);
+        }
+        if (retValue.equals("okay")) {
+            parentPane.setMessageNormal(Bundle.getMessage("MonitorLocationSet"));
+            thisRow.resetTempValues();
+        } else {
+            parentPane.setMessageError("MonitorLocationFailed");
+        }
+    }
+
+    private void doEditCar(RollingStock thisCar) {
+        if (cef != null) {
+            cef.dispose();
+        }
+        SwingUtilities.invokeLater(() -> {
+            cef = new CarEditFrame();
+            cef.initComponents();
+            cef.load((Car) thisCar);
+        });
+       // tableParent.getCellEditor().stopCellEditing();
+    }
+
+    private void doSetTag(String thisTag, TagCarItem thisRow) {
+        // associate tag
+        if (associateFrame != null) {
+            associateFrame.dispose();
+        }
+        SwingUtilities.invokeLater(() -> new AssociateFrame(new AssociateTag(thisTag),
+                Bundle.getMessage("AssociateTitle") + " " + thisTag).initComponents());
+      //  tableParent.getCellEditor().stopCellEditing();
+    }
 
     public void setValueAt(Object value, int row, int col) {
         TagCarItem thisRowValue = tagList.get(row);
@@ -252,35 +329,35 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
                     log.debug("new value for Location column - {}", value);
                     locationItemUpdated(thisRowValue, (String) value);
                 }
+               // tableParent.getCellEditor().stopCellEditing();
                 break;
             case TRACK_COLUMN:
                 if (value instanceof String) {
                     trackItemUpdate(thisRowValue, (String) value);
                 }
+             //   tableParent.getCellEditor().stopCellEditing();
                 break;
             case ACTION1_COLUMN:
-                // set location
-                if (csf != null) {
-                    csf.dispose();
+ /*               if (car == null) {
+                    doSetTag(thisRowValue.getTag(), thisRowValue);
+
+                } else {
+                    // set location
+                    setCarLocation(thisRowValue.getCurrentCar(), thisRowValue);
                 }
-                SwingUtilities.invokeLater(() -> {
-                    csf = new CarSetFrame();
-                    csf.initComponents();
-                    csf.loadCar((Car) car);
-                });
-                break;
+                tableParent.getCellEditor().stopCellEditing();*/
+                log.debug("setValueAt for Action1 column");
+                return;
             case ACTION2_COLUMN:
-                if (cef != null) {
-                    cef.dispose();
+/*                if (thisRowValue.getCurrentCar() == null) {
+                    log.error("can't edit a null car");
+                    return;
                 }
-                SwingUtilities.invokeLater(() -> {
-                    cef = new CarEditFrame();
-                    cef.initComponents();
-                    cef.load((Car) car);
-                });
+                doEditCar(thisRowValue.getCurrentCar());*/
+                log.debug("setValueAt for Action2 column");
                 break;
             default:
-                log.error("should not be setting value for column {}", Integer.toString(col));
+                log.error("should not be setting value for column {}", col);
         }
 
     }
@@ -309,19 +386,20 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     private void buildLocationValues() {
-        locations = new ArrayList<String>();
-        trackLists = new Hashtable<String, List<String>>();
+        locations = new ArrayList<>();
+        trackLists = new Hashtable<>();
         for (Location loc : parentPane.locationManager.getList()) {
             locations.add(loc.getName());
             List<Track> listOfTracks = loc.getTracksByNameList(null);
-            List<String> tempTrack = new ArrayList<String>();
+            List<String> tempTrack = new ArrayList<>();
             tempTrack.add("");   // always have the empty list (not selected)
             for (Track thisTrack : listOfTracks) {
                 tempTrack.add(thisTrack.getName());
             }
+            java.util.Collections.sort(tempTrack);
             trackLists.put(loc.getName(), tempTrack);
         }
-
+        java.util.Collections.sort(locations);
 
     }
 
@@ -337,11 +415,12 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         tcm.getColumn(ACTION1_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(ACTION2_COLUMN).setCellRenderer(buttonRenderer);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), showTimestamps);
-        JComboBox<String> locationBox = new JComboBox<>();
-        locationCellEditor = new EditTrackCellEditor(this, locationBox);
-        trackCellEditor = new EditTrackCellEditor(this, new JComboBox<String>());
+        TableCellEditor locationCellEditor = new EditTrackCellEditor(this);
+        TableCellEditor trackCellEditor = new EditTrackCellEditor(this);
         tcm.getColumnByModelIndex(LOCATION_COLUMN).setCellEditor(locationCellEditor);
         tcm.getColumnByModelIndex(TRACK_COLUMN).setCellEditor(trackCellEditor);
+        tcm.getColumnByModelIndex(ACTION1_COLUMN).setCellEditor(new EditTrackCellEditor(this));
+        tcm.getColumnByModelIndex(ACTION2_COLUMN).setCellEditor(new EditTrackCellEditor(this));
         fireTableDataChanged();
     }
 
@@ -410,67 +489,116 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
                 return;
             }
             thisRow.setUpdatedLocation("", "");
+            thisRow.getTrackCombo().setEnabled(false);
         } else {
+            thisRow.getTrackCombo().removeItemListener(this);
             List<String> tracksHere = trackLists.get(newvalue);
-            thisRow.getTrackCombo().removeAll();
+            thisRow.getTrackCombo().removeAllItems();
+            thisRow.getTrackCombo().setEnabled(true);
             for (String thisTrack : tracksHere) {
                 thisRow.getTrackCombo().addItem(thisTrack);
             }
             if (tracksHere.size() == 2) {
                 thisRow.getTrackCombo().setSelectedIndex(1);
-                thisRow.setUpdatedLocation((String) newvalue, tracksHere.get(1));
+                thisRow.setUpdatedLocation(newvalue, tracksHere.get(1));
+                if (thisRow.isLocationReady()) {
+                    parentPane.setMessageNormal(Bundle.getMessage("MonitorReadyToSet"));
+                    thisRow.getAction1().setEnabled(true);
+                } else {
+                    parentPane.setMessageNormal("MonitorSetTrackMsg");
+                    thisRow.getAction1().setEnabled(false);
+                }
             } else {
-                thisRow.setUpdatedLocation((String) newvalue, "");
+                thisRow.setUpdatedLocation(newvalue, "");
+                parentPane.setMessageNormal(Bundle.getMessage("MonitorSetTrackMsg"));
+                thisRow.getAction1().setEnabled(false);
             }
+            thisRow.getTrackCombo().addItemListener(this);
         }
 
     }
 
     private void trackItemUpdate(TagCarItem thisRow, String newValue) {
         thisRow.setUpdatedTrack(newValue);
+        if (thisRow.isLocationReady()) {
+            parentPane.setMessageNormal(Bundle.getMessage("MonitorReadyToSet"));
+            thisRow.getAction1().setEnabled(true);
+        } else {
+            thisRow.getAction1().setEnabled(false);
+        }
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
         log.debug("item event fired for {} ", e.getItem());
-        Object eventSource = e.getSource();
-        if (e.getStateChange() != ItemEvent.SELECTED) {
+        if (addingRow || e.getStateChange() != ItemEvent.SELECTED) {
             // we only need to do something if the location of track was selected
             return;
         }
         for (TagCarItem thisRow : tagList) {
-            Object locCombo = thisRow.getLocationCombo();
-            Object trackCombo = thisRow.getTrackCombo();
-            if (e.getSource().equals(thisRow.getLocationCombo())) {
+           if (e.getSource().equals(thisRow.getLocationCombo())) {
                 locationItemUpdated(thisRow, (String) e.getItem());
             } else if (e.getSource().equals(thisRow.getTrackCombo())) {
                 trackItemUpdate(thisRow, (String) e.getItem());
+            } else {
+                log.error("got an ItemEvent for an unknown source");
             }
-            log.error("got an ItemEvent for an unknown source");
         }
     }
 
-    public class EditTrackCellEditor extends DefaultCellEditor {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+       log.debug("Got an action performed for a button");
+        for (TagCarItem thisRow : tagList) {
+            if (e.getSource().equals(thisRow.getAction1())) {
+                if (thisRow.getCurrentCar() == null) {
+                    doSetTag(thisRow.getTag(), thisRow);
+                } else {
+                    setCarLocation(thisRow.getCurrentCar(), thisRow);
+                }
+                return;
+            } else if (e.getSource().equals(thisRow.getAction2())) {
+                doEditCar(thisRow.getCurrentCar());
+                return;
+            }
+        }
+        log.error("Got an actionPerformed but dont recognize source");
+    }
 
-        private TableDataModel model = null;
+    public class EditTrackCellEditor extends AbstractCellEditor implements TableCellEditor {
 
-        public EditTrackCellEditor(TableDataModel model, JComboBox<String> comboBox) {
-            super(comboBox);
+        private TableDataModel model;
+        private Component value;
+
+        public EditTrackCellEditor(TableDataModel model) {
+            super();
             this.model = model;
         }
 
-        @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             if (model == null) {
                 log.error("was not called through the correct constructor - model is null");
             }
             if (column == TableDataModel.TRACK_COLUMN) {
+                this.value = model.tagList.get(row).getTrackCombo();
                 return model.getTrackRowEditor(table, value, isSelected, row, column);
             } else if (column == TableDataModel.LOCATION_COLUMN) {
+                this.value = model.tagList.get(row).getLocationCombo();
                 return model.getLocationRowEditor(table, value, isSelected, row, column);
+            } else if (column == TableDataModel.ACTION1_COLUMN) {
+                this.value = model.tagList.get(row).getAction1();
+                return model.tagList.get(row).getAction1();
+            } else if (column == TableDataModel.ACTION2_COLUMN) {
+                this.value = model.tagList.get(row).getAction2();
+                return model.tagList.get(row).getAction2();
             }
+            log.error("unable to determine column - returning null for table editor");
+            return null;
+        }
 
-            return super.getTableCellEditorComponent(table, value, isSelected, row, column);
+        @Override
+        public Object getCellEditorValue() {
+            return this.value;
         }
 
     }

@@ -1,11 +1,8 @@
 package jmri.jmrix.rfid.swing.tagcarwin;
 
-import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -23,21 +20,24 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Vector;
+import java.util.ArrayList;
 
+/**
+ * A monitor for RFID tags which shows the tag, a car (if there is a car associated with that tag).
+ * If there is no car, a button allows the user to assoicate a car. For those tags with cars,
+ * the user can set the location or edit the car.
+ *
+ * @author J. Scott Walton Copyright (C) 2022
+ */
 public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanelInterface, TableModelListener {
     private static final Logger log = LoggerFactory.getLogger(TagMonitorPane.class);
     // panel members
-    private JTable tagMonitorTable = null;
     TableDataModel dataModel = null;
     protected Integer currentRowCount = 15;
     private String lastTagSeen = "";
-    private Vector<RollingStock> lastTrainCars = new Vector<RollingStock>();
+    private final ArrayList<RollingStock> lastTrainCars = new ArrayList<>();
     private Train lastTrain = null;
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
@@ -47,7 +47,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
 
     /**
      * If the System Prefix is available, append it to the title to identify which reader this belongs to
-     * @return
+     * @return the title for this panel
      */
     @Override
     public String getTitle() {
@@ -60,7 +60,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
 
     /**
      * RFID typically don't send messages, so this is ignored
-     * @param m
+     * @param m the message received
      */
     @Override
     public void message(RfidMessage m) {
@@ -96,60 +96,42 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
      * Create most of the new row data
      * Look up the car, if found we add the car to row, and set up most of the data
      * the combo boxes will be added in the data model
-     * @param tag
-     * @return
+     * @param tag the value read from the RFID reader
+     * @return the row created to represent the row in the table
      */
     private TagCarItem createNewItem(String tag) {
         TagCarItem newTag = new TagCarItem(tag, LocalTime.now());
-        RollingStock thisCar = findCarByTag(tag);
+        Car thisCar = carManager.getByRfid(tag);
         JButton action1Button = new JButton();
+        JButton action2 = new JButton();
+        newTag.setAction2(action2);
+        newTag.setAction1(action1Button);
         if (thisCar != null) {
             newTag.setRoad(thisCar.getRoadName());
             newTag.setCarNumber(thisCar.getNumber());
             newTag.setCurrentCar(thisCar);
-            newTag.setAction1(action1Button);
             action1Button.setText(Bundle.getMessage("MonitorSetLocation"));
             action1Button.setEnabled(false); // not enabled until location is changed
-            JButton action2 = new JButton();
             action2.setText(Bundle.getMessage("MonitorEditCar"));
-            newTag.setAction2(action2);
+            action2.setEnabled(true);
             if (thisCar.getTrainName() != null) {
                 newTag.setTrain(thisCar.getTrainName());
                 newTag.setTrainPosition(getCarTrainPosition(thisCar, thisCar.getTrain()));
             }
         } else {
-            newTag.setAction1(action1Button);
-            action1Button.setText(Bundle.getMessage("MonitorAssoicate"));
-            newTag.setAction2(null);
+            action1Button.setText(Bundle.getMessage("MonitorAssociate"));
+            action2.setText("");
+            action1Button.setEnabled(true);
+            action2.setEnabled(false);
         }
         dataModel.add(newTag);
         return newTag;
     }
 
     /**
-     * Look up this car in the list of cars
-     * It could be a car or an Engine
-     * @param tag the String representing the RFID tag
-     * @return the entry which was found, or null for not found
-     */
-    public RollingStock findCarByTag(String tag) {
-        for (Car thisCar : carManager.getByIdList()) {
-            IdTag foundTag = thisCar.getIdTag();
-            if (foundTag != null) {
-                if (foundTag.toString().equals(tag)) {
-                    log.debug("car matched tag of {}", tag);
-                    return thisCar;
-                }
-            }
-        }
-        log.debug("no car found for tag {}", tag);
-        return null;
-    }
-
-    /**
      * If this car (engine or car) is in a train, determine what the car position is
-     * @param thisCar
-     * @param thisTrain
+     * @param thisCar the car we are looking for
+     * @param thisTrain the train to find it in
      * @return the position of car within the train
      */
     public int getCarTrainPosition(RollingStock thisCar, Train thisTrain) {
@@ -162,14 +144,15 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         log.debug("finding car {} {} in Train {}", carRoad, carNumber, thisTrain.getName());
         if (!thisTrain.equals(lastTrain)) {
             log.debug("new train - retrieving it");
-            lastTrainCars.removeAllElements();
+            lastTrain = thisTrain;
+            lastTrainCars.clear();
             lastTrainCars.addAll(carManager.getByTrainDestinationList(thisTrain));
         }
         int positionCounter = 0;
         for (RollingStock trainElement : lastTrainCars) {
             if (trainElement instanceof Car) {
                 positionCounter++;
-                if (carRoad.equals(trainElement.getRoadName().equals(carRoad) && carNumber.equals(trainElement.getNumber()))) {
+                if (trainElement.equals(thisCar)) {
                     return positionCounter;
                 }
             }
@@ -194,7 +177,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
 
     /**
      * Save the preferences for use later
-     * They will apply to all instances of this class (regardless of which connnections uses it)
+     * They will apply to all instances of this class (regardless of which connections use it)
      */
     @Override
     public void dispose() {
@@ -202,22 +185,37 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         pm.setSimplePreferenceState(timeCheck, showTimestamps.isSelected());
         pm.setSimplePreferenceState(dupeCheck, showDuplicates.isSelected());
         pm.setProperty(rowCountField, rowCountField, rowCount.getText());
+        pm.setSimplePreferenceState(forceSet, forceSetCar.isSelected());
         super.dispose();
     }
 
     /**
      * Replace the current message on the panel with a new one
-     * @param newMessage
+     * Also sets the color to black (in case it was set to read after an error)
+     * @param newMessage the message to be displayed at the bottom of the panel
      */
-    public void setMessage(String newMessage) {
+    public void setMessageNormal(String newMessage) {
+        panelMessage.setForeground(Color.BLACK);
+        panelMessage.setText(newMessage);
+    }
+
+    /**
+     * Set the message at the bottom of the panel and change the color to red to highlight it
+     * after an error has occurred
+     * @param newMessage the message to be displayed in RED
+     */
+    public void setMessageError(String newMessage) {
+        setForeground(Color.RED);
         panelMessage.setText(newMessage);
     }
 
     // elements for the UI
     protected JCheckBox showTimestamps = new JCheckBox();
     protected JCheckBox showDuplicates = new JCheckBox();
+    protected JCheckBox forceSetCar = new JCheckBox();
     protected String timeCheck = this.getClass().getName() + "Times";
     protected String dupeCheck = this.getClass().getName() + "Duplicates";
+    protected String forceSet = this.getClass().getName() + "ForceSet";
     protected JLabel rowCountLabel = new JLabel();
     protected JTextField rowCount = new JTextField();
     protected JButton setRowCount = new JButton();
@@ -226,8 +224,8 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
 
     @Override
     public void initComponents() {
-        dataModel = new TableDataModel(locationManager, this);
-        tagMonitorTable = new JTable(dataModel);
+        dataModel = new TableDataModel(this);
+        JTable tagMonitorTable = new JTable(dataModel);
         tagMonitorTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         tagMonitorTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         dataModel.setParent(tagMonitorTable);
@@ -240,7 +238,10 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         showDuplicates.setVisible(true);
         showDuplicates.setToolTipText(Bundle.getMessage("MonitorDupesToolTip"));
         showDuplicates.setSelected(pm.getSimplePreferenceState(dupeCheck));
+        forceSetCar.setText(Bundle.getMessage("MonitorForceSet"));
+        forceSetCar.setSelected(pm.getSimplePreferenceState(forceSet));
         dataModel.showTimestamps = showTimestamps.isSelected();
+        dataModel.setForceSetLocation(forceSetCar.isSelected());
 
         dataModel.initTable();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -278,46 +279,43 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         checkBoxPanel.add(showTimestamps);
         checkBoxPanel.add(showDuplicates);
         add(checkBoxPanel);
-        rowCount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!rowCount.getText().isEmpty()) {
-                    String text = rowCount.getText();
-                    try {
-                        int newValue = Integer.valueOf(text);
-                        if (newValue > 0 && newValue < 100) {
-                            setRowCount.setEnabled(true);
-                        } else {
-                            setRowCount.setEnabled(false);
-                        }
-                    } catch (NumberFormatException exception) {
+        rowCount.addActionListener(e -> {
+            if (!rowCount.getText().isEmpty()) {
+                String text = rowCount.getText();
+                try {
+                    int newValue = Integer.parseInt(text);
+                    if (newValue > 0 && newValue < 100) {
+                        setRowCount.setEnabled(true);
+                        setMessageNormal("");
+                    } else {
+                        setMessageError(Bundle.getMessage("MonitorRowCountError"));
                         setRowCount.setEnabled(false);
                     }
-                } else {
+                } catch (NumberFormatException exception) {
+                    setMessageError(Bundle.getMessage("MonitorRowCountError"));
                     setRowCount.setEnabled(false);
                 }
+            } else {
+                setMessageNormal("");
+                setRowCount.setEnabled(false);
             }
         });
-        setRowCount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    int newValue = Integer.valueOf(rowCount.getText());
-                    dataModel.setRowMax(newValue);
-                } catch (NumberFormatException exception) {
-                    log.error("error interpreting new number of lines");
-                }
+        setRowCount.addActionListener(e -> {
+            try {
+                int newValue = Integer.parseInt(rowCount.getText());
+                dataModel.setRowMax(newValue);
+                setMessageNormal("");
+            } catch (NumberFormatException exception) {
+                setMessageError(Bundle.getMessage("MonitorRowCountError"));
+                log.error("error interpreting new number of lines");
             }
         });
-        ActionListener checkListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(showTimestamps)) {
-                    dataModel.showTimestamps(showTimestamps.isSelected());
-                    log.debug("switching show timestamps now");
-                } else if (e.getSource().equals(showDuplicates)) {
-                    log.debug("changing show duplicates now");
-                }
+        ActionListener checkListener = e -> {
+            if (e.getSource().equals(showTimestamps)) {
+                dataModel.showTimestamps(showTimestamps.isSelected());
+                log.debug("switching show timestamps now");
+            } else if (e.getSource().equals(showDuplicates)) {
+                log.debug("changing show duplicates now");
             }
         };
         showDuplicates.addActionListener(checkListener);
@@ -329,7 +327,6 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
     public void tableChanged(TableModelEvent e) {
         if (e.getType() == TableModelEvent.UPDATE) {
             log.debug("table was updated");
-            int row = e.getFirstRow();
             int column = e.getColumn();
             if (column == TableDataModel.LOCATION_COLUMN) {
                 log.debug("Location was changed");

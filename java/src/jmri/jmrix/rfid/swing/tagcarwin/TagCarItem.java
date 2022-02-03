@@ -6,6 +6,12 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import javax.swing.*;
 import java.time.LocalTime;
 
+
+/**
+ * Element for working with incoming RFID tags
+ *
+ * @author J. Scott Walton Copyright (C) 2022
+ */
 public class TagCarItem {
     private String tag;
     private String road;
@@ -27,6 +33,7 @@ public class TagCarItem {
     private boolean locationUpdated = false;
     private boolean trackUpdated = false;
     private boolean readyToSetLocation = false;
+
     private String tempLocation = null;
     private String tempTrack = null;
 
@@ -214,5 +221,14 @@ public class TagCarItem {
     public void setTrain(String train) {
         this.train = train;
     }
+
+    public String getTempLocation() {
+        return tempLocation;
+    }
+
+    public String getTempTrack() {
+        return tempTrack;
+    }
+
 
 }
