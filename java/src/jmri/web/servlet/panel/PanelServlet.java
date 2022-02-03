@@ -8,7 +8,11 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
+
+import jmri.jmrit.display.IndicatorTrackIcon;
+import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.SlipTurnoutIcon;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -77,6 +81,32 @@ public class PanelServlet extends AbstractPanelServlet {
             log.debug("Panel has {} elements", contents.size());
             for (Positionable sub : contents) {
                 if (sub != null) {
+                    // start of special handling for SlipTurnoutIcon (STI), code adapted from ControlPanelEditorServlet
+                    Element e = new Element("temp");
+                    try {
+                        e = positionableElement(sub);
+                    } catch (Exception ex) {
+                        log.error("Error storing panel element: {}", ex, ex);
+                    }
+                    // where required, add special stuff to positionable here to use in Web Server
+//                    switch (e.getName()) {
+//                        case "slipturnouticon":
+//                            // if turnouts were set on icon, turnoutype and names for the turnouts were
+//                            // already copied to e as part of 'contents'
+//                            Element elem = new Element("oblocksysname");
+//                            int stitype = ((SlipTurnoutIcon) sub).getTurnoutType();
+//                            elem.addContent(stitype.toString());
+//                            e.setAttribute("turnoutType", "scissor");
+//                            log.debug("P-SERVLET STI = {}", stitype);
+//                            e.addContent(elem);
+//                            break;
+//                        case "":
+//                        default:
+//                            // nothing extra
+//                    }
+                    panel.addContent(e);
+                    // end of new section for SlipIcon
+
                     try {
                         panel.addContent(positionableElement(sub));
                     } catch (Exception ex) {

@@ -53,7 +53,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         setPopupUtility(null);
     }
 
-    // the associated Turnout object
+    // the associated Turnout objects
     private NamedBeanHandle<Turnout> namedTurnoutWest = null;
     private NamedBeanHandle<Turnout> namedTurnoutWestLower = null;
     private NamedBeanHandle<Turnout> namedTurnoutEast = null;
@@ -391,7 +391,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Get current state of attached turnouts This adds the two turnout states
      * together, however for the second turnout configured it will add 1 to the
-     * Closed state and 3 to the Thrown state. This helps to indentify which
+     * Closed state and 3 to the Thrown state. This helps to identify which
      * turnout is thrown and/or closed.
      * <p>
      * For a Scissor crossing that uses four turnouts, the code simply checks to
@@ -439,7 +439,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             return Turnout.UNKNOWN;
         }
         if ((turnoutType == SCISSOR) && (!singleSlipRoute)) {
-            //We simply need to check that the opposite turnout is set the same
+            //We simply need to check that the opposite turnout is set the same state
             if (namedTurnoutEastLower != null) {
                 if (getTurnout(LOWEREAST).getKnownState() == Turnout.UNKNOWN) {
                     return Turnout.UNKNOWN;
@@ -590,7 +590,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * @param state An integer value of the turnout states.
      */
     void displayState(int state) {
-        //This needs to be worked on
+        // TODO This needs to be worked on
         log.debug("{} displayState {}", getNameString(), state);
         updateSize();
         // we have to make some adjustments if we are using a single slip, three way point
@@ -617,7 +617,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 }
                 break;
             case SCISSOR:
-
                 //State 11 should not be allowed for a scissor.
                 switch (state) {
                     case 5:

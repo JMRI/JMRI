@@ -559,51 +559,57 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
-                        case "slipicon" : // added EBR 2022, adapted from turnouticon, no JSON/named bean
+                        case "slipturnouticon" : // added EBR 2022, adapted from indicatorturnouticon, no direct
+                            // link to a JSON/named bean
                             // also for three way turnouts, see java/src/jmri/jmrit/display/SlipTurnoutIcon.java
                             // and java/src/jmri/jmrit/display/configurexml/SlipTurnoutIconXml.java
                             $widget['name'] = $widget.slipicon; // normalize name
-                            $widget['slipType'] = $widget.turnoutType;
+                            $widget['slipicontype'] = $widget.turnoutType;
                             $widget['systemNameE'] = $widget.turnoutEast;
                             $widget['systemNameW'] = $widget.turnoutWest;
-                            $widget['slipRoute'] = $widget.singleSlipRoute;
-                            switch ($widget.slipType) {
-                            // TODO set the icons
-                                case "doubleSlip" : // default
+                            $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('unknown').attr('url');
+                            $widget['icon' + INCONSISTENT] = $(this).find('iconmap').find('inconsistent').attr('url');
+                            $widget['icon5'] = $(this).find('iconmap').find('lowerWestToLowerEast').attr('url');
 
+                            switch ($widget.slipicontype) {
+                                // TODO set details, connect beans
+                                case "doubleSlip" : // default
+                                    $widget['icon7'] = $(this).find('iconmap').find('upperWestToUpperEast').attr('url');
                                     break;
                                 case "singleSlip" :
+                                    $widget['slipRoute'] = $widget.singleSlipRoute;
                                     break;
                                 case "threeWay" :
-                                    //$widget.firstTurnoutExit
+                                    $widget['firstturnoutexit'] = $widget.firstTurnoutExit; // "upper" or "lower"
                                     break;
                                 case "scissor" :
-                                    if (!$widget['slipRoute']) {
-                                        $widget['systemNameLE'] = $widget.turnoutLowerEast
-                                        $widget['systemNameLW'] = $widget.turnoutLowerWest
+                                    if (isDefined($widget.turnoutLowerEast)) {
+                                        $widget['systemNameLE'] = $widget.turnoutLowerEast;
+                                        $widget['systemNameLW'] = $widget.turnoutLowerWest;
+                                        $widget['singleCrossOver'] = "false";
+                                        // connect now to prevent extra switch
+                                        jmri.getTurnout($widget['systemNameLE']);
+                                        jmri.getTurnout($widget['systemNameLW']);
+                                    } else {
+                                        $widget['singleCrossOver'] = "true";
                                     }
                                     break;
                             }
-
-                            $widget['systemNameC'] = $widget.systemNameA;
-                            $widget['systemNameD'] = $widget.systemNameB;
-                            $widget.jsonType = "turnout"; // JSON object type, not strictly required
-                            $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
-                            //0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
-                            $widget['icon1'] = $(this).find('icons').find('west').attr('url');
-                            $widget['icon2'] = $(this).find('icons').find('east').attr('url');
-                            $widget['icon4'] = $(this).find('icons').find('lower-west').attr('url');
-                            $widget['icon6'] = $(this).find('icons').find('upper-east').attr('url');
-                            $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
-                            $widget['rotation'] = $(this).find('icons').find('unknown-full').find('rotation').text() * 1;
-                            $widget['degrees'] = ($(this).find('icons').find('unknown-full').attr('degrees') * 1) - ($widget.rotation * 90);
-                            $widget['scale'] = $(this).find('icons').find('unknown-full').attr('scale');
+//                            $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
+//                            $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
+//                            $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
+//                            //0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
+//                            $widget['rotation'] = $(this).find('icons').find('unknown-full').find('rotation').text() * 1;
+//                            $widget['degrees'] = ($(this).find('icons').find('unknown-full').attr('degrees') * 1) - ($widget.rotation * 90);
+//                            $widget['scale'] = $(this).find('icons').find('unknown-full').attr('scale');
                             if ($widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            jmri.getTurnout($widget["systemNameA"]);
+                            jmri.getTurnout($widget['systemNameE']);
+                            jmri.getTurnout($widget['systemNameW']);
                             break;
                     }
+
                     $preloadWidgetImages($widget); //start loading all images
                     $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                     $gWidgets[$widget.id] = $widget; //store widget in persistent array
