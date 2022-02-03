@@ -134,6 +134,8 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     public TrackEditFrame(String title) {
         super(title);
     }
+    
+    protected abstract void initComponents(Track track);
 
     public void initComponents(Location location, Track track) {
         _location = location;

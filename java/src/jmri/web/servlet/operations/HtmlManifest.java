@@ -20,6 +20,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
@@ -81,7 +82,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
                 // add route comment
                 if (!location.path(JSON.COMMENT).textValue().trim().isEmpty()) {
-                    builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), location.path(JSON.COMMENT).textValue()));
+                    builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), 
+                            location.path(JSON.COMMENT).textValue().replaceAll("\n", "<br>")));
                 }
 
                 builder.append(getTrackComments(location.path(JsonOperations.TRACK), location.path(JsonOperations.CARS)));
@@ -213,7 +215,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                         if (Setup.isPrintLocationCommentsEnabled()
                                 && !routeLocation.getLocation().getComment().isEmpty()) {
                             builder.append(String.format(locale, strings.getProperty("LocationComment"),
-                                    StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment())));
+                                    StringEscapeUtils.escapeHtml4(TrainCommon.getTextColorString(routeLocation.getLocation().getComment()))));
                         }
                     }
                 }

@@ -32,6 +32,12 @@ public class StagingEditFrame extends TrackEditFrame {
     public StagingEditFrame() {
         super(Bundle.getMessage("AddStaging"));
     }
+    
+    @Override
+    public void initComponents(Track track) {
+        setTitle(Bundle.getMessage("EditStaging"));
+        initComponents(track.getLocation(), track);
+    }
 
     @Override
     public void initComponents(Location location, Track track) {
