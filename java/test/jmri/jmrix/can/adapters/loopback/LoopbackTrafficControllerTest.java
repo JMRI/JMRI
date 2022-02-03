@@ -40,9 +40,6 @@ public class LoopbackTrafficControllerTest extends jmri.jmrix.can.TrafficControl
     public void testInterfaceMethods() {
         LoopbackTrafficController ltc = (LoopbackTrafficController)tc;
         
-        Assertions.assertTrue(ltc.endNormalReply(null),"always end of reply");
-        JUnitAppender.assertErrorMessage("endNormalReply unexpected");
-        
         Assertions.assertTrue(ltc.endOfMessage(null),"always end of message");
         JUnitAppender.assertErrorMessage("endOfMessage unexpected");
         

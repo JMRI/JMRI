@@ -132,14 +132,6 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
         return true;
     }
 
-    /**
-     * Dummy; loopback doesn't parse serial messages.
-     */
-    boolean endNormalReply(AbstractMRReply r) {
-        log.error("endNormalReply unexpected");
-        return true;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(LoopbackTrafficController.class);
 
 }
