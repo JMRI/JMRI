@@ -134,7 +134,6 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
 
     /**
      * Dummy; loopback doesn't parse serial messages.
-     * {@inheritDoc}
      */
     boolean endNormalReply(AbstractMRReply r) {
         log.error("endNormalReply unexpected");
