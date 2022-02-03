@@ -109,7 +109,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             pack();
         }
     }
-    
+
     // variables for AutoTrains window
     protected JmriJFrame autoTrainsFrame = null;
     private JPanel trainsPanel;
@@ -118,7 +118,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private JCheckBoxMenuItem trainsCanBeFloated = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameAllowFloat"));
 
     jmri.UserPreferencesManager prefMan;
-    
+
     private void initializeAutoTrainsWindow() {
 
         prefMan = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -178,7 +178,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         autoTrainsFrame.setVisible(true);
 
     }
-    
+
     private void setScrollBars() {
         if (frameHasScrollBars.isSelected()) {
             trainScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -192,13 +192,13 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     }
 
     private void stopAllPressed(ActionEvent e) {
-        for (Object ob: autoTrainsFrame.getContentPane().getComponents()) {
+        for (Object ob: trainsPanel.getComponents()) {
             if (ob instanceof AutoTrainControl) {
                 ((AutoTrainControl) ob).stopAll();
             }
         }
     }
-    
+
     @Override
     public void dispose() {
         if (prefMan!=null) {
@@ -245,7 +245,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
         private JLabel trainLabel;
         private JLabel throttleStatus;
-        private JButton stopButton;
+        protected JButton stopButton;
         private JButton resumeAutoRunningButton;
         private JRadioButton forwardButton;
         private JRadioButton reverseButton;
@@ -297,9 +297,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
         private void handleActiveTrainListen(java.beans.PropertyChangeEvent e) {
             if (e.getNewValue() != null) {
-            log.info("Property[{}] newValue[{}]",e.getPropertyName(),((Integer) e.getNewValue()).intValue());
+            log.trace("Property[{}] newValue[{}]",e.getPropertyName(),((Integer) e.getNewValue()).intValue());
             } else {
-                log.info("Property[{}] newValue[{}]",e.getPropertyName(),"NULL");
+                log.trace("Property[{}] newValue[{}]",e.getPropertyName(),"NULL");
             }
             if (e.getPropertyName().equals("mode")) {
                 int newValue = ((Integer) e.getNewValue()).intValue();

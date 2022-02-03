@@ -1854,7 +1854,7 @@ public class AutoActiveTrain implements ThrottleListener {
         private float targetSpeed;
         private RosterEntry rosterEntry;
         private int throttleInterval;
-        
+
         public void setRamping(int ramping, int fullRampTime, int minThrottleInterval, int rampRate) {
             this.ramping = ramping;
             this.throttleInterval = minThrottleInterval;
@@ -1865,12 +1865,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         public  void setIsForward(boolean isForward) {
-            try {
-            log.info("Set Forward[{}]",isForward);
             throttle.setIsForward(isForward);
-            } catch (Exception ex) {
-                log.info("AHHH",ex);
-            }
         }
 
         public boolean getIsForward() {
@@ -2058,7 +2053,6 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         protected void setFunction(int cmdNum, boolean isSet) {
-            log.info("SetFunc fwd[{}]",getIsForward());
             throttle.setFunction(cmdNum, isSet);
         }
     }

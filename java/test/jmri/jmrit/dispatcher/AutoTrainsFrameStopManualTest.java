@@ -107,7 +107,10 @@ import java.nio.file.StandardCopyOption;
             // ****************************
             // Stop train with stop button, then resume
             // ****************************
-            JButtonOperator boStop = new JButtonOperator(atw, Bundle.getMessage("StopButton"));
+            // first instance is "Stop All Trains", we want "Stop", use index = 1
+            JButtonOperator boStop = new JButtonOperator(atw, Bundle.getMessage("StopButton"),1);
+            boStop.getActionCommand();
+            boStop.getSource();
             boStop.push();
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;

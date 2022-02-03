@@ -287,9 +287,6 @@ public class ActiveTrain implements PropertyChangeProvider {
         if ((status == RUNNING) || (status == PAUSED) || (status == WAITING) || (status == WORKING)
                 || (status == READY) || (status == STOPPED) || (status == DONE)) {
             if (mStatus != status) {
-                if (status == DONE) {
-                log.info("Fire");
-                }
                 int old = mStatus;
                 mStatus = status;
                 firePropertyChange("status", Integer.valueOf(old), Integer.valueOf(mStatus));
