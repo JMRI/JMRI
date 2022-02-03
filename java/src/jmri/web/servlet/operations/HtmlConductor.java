@@ -39,7 +39,7 @@ public class HtmlConductor extends HtmlTrainCommon {
         if (location == null) {
             return String.format(locale, FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale,
                     "ConductorSnippet.html"))), train.getIconName(), StringEscapeUtils.escapeHtml4(train
-                            .getDescription()), StringEscapeUtils.escapeHtml4(train.getComment()), Setup
+                            .getDescription()), StringEscapeUtils.escapeHtml4(TrainCommon.getTextColorString(train.getComment())), Setup
                     .isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "", strings
                     .getProperty("Terminated"), "", // terminated train has nothing to do // NOI18N
                     "", // engines in separate section
@@ -62,7 +62,7 @@ public class HtmlConductor extends HtmlTrainCommon {
 
         return String.format(locale, FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale,
                 "ConductorSnippet.html"))), train.getIconName(), StringEscapeUtils.escapeHtml4(train.getDescription()),
-                StringEscapeUtils.escapeHtml4(train.getComment()), Setup.isPrintRouteCommentsEnabled() ? train
+                StringEscapeUtils.escapeHtml4(TrainCommon.getTextColorString(train.getComment())), Setup.isPrintRouteCommentsEnabled() ? train
                         .getRoute().getComment() : "", getCurrentAndNextLocation(),
                 getLocationComments(),
                 pickupEngines(engineList, location), // engines in separate section
@@ -155,7 +155,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             // add location comment
             if (Setup.isPrintLocationCommentsEnabled() && !routeLocation.getLocation().getComment().isEmpty()) {
                 builder.append(String.format(locale, strings.getProperty("LocationComment"), StringEscapeUtils  // NOI18N
-                        .escapeHtml4(routeLocation.getLocation().getComment())));
+                        .escapeHtml4(TrainCommon.getTextColorString(routeLocation.getLocation().getComment()))));
             }
         }
 
@@ -232,7 +232,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                 // add location comment
                 if (Setup.isPrintLocationCommentsEnabled() && !routeLocation.getLocation().getComment().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("LocationComment"), StringEscapeUtils  // NOI18N
-                            .escapeHtml4(routeLocation.getLocation().getComment())));
+                            .escapeHtml4(TrainCommon.getTextColorString(routeLocation.getLocation().getComment()))));
                 }
             }
         } else {

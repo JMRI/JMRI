@@ -30,6 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
@@ -446,7 +447,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             }
         }
         location.setName(data.path(USERNAME).asText(location.getName()));
-        location.setComment(data.path(COMMENT).asText(location.getComment()));
+        location.setComment(data.path(COMMENT).asText(TrainCommon.getTextColorString(location.getComment())));
         return utilities.getLocation(location, locale);
     }
 
