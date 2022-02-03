@@ -559,6 +559,50 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
+                        case "slipicon" : // added EBR 2022, adapted from turnouticon, no JSON/named bean
+                            // also for three way turnouts, see java/src/jmri/jmrit/display/SlipTurnoutIcon.java
+                            // and java/src/jmri/jmrit/display/configurexml/SlipTurnoutIconXml.java
+                            $widget['name'] = $widget.slipicon; // normalize name
+                            $widget['slipType'] = $widget.turnoutType;
+                            $widget['systemNameE'] = $widget.turnoutEast;
+                            $widget['systemNameW'] = $widget.turnoutWest;
+                            $widget['slipRoute'] = $widget.singleSlipRoute;
+                            switch ($widget.slipType) {
+                            // TODO set the icons
+                                case "doubleSlip" : // default
+
+                                    break;
+                                case "singleSlip" :
+                                    break;
+                                case "threeWay" :
+                                    //$widget.firstTurnoutExit
+                                    break;
+                                case "scissor" :
+                                    if (!$widget['slipRoute']) {
+                                        $widget['systemNameLE'] = $widget.turnoutLowerEast
+                                        $widget['systemNameLW'] = $widget.turnoutLowerWest
+                                    }
+                                    break;
+                            }
+
+                            $widget['systemNameC'] = $widget.systemNameA;
+                            $widget['systemNameD'] = $widget.systemNameB;
+                            $widget.jsonType = "turnout"; // JSON object type, not strictly required
+                            $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+                            //0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
+                            $widget['icon1'] = $(this).find('icons').find('west').attr('url');
+                            $widget['icon2'] = $(this).find('icons').find('east').attr('url');
+                            $widget['icon4'] = $(this).find('icons').find('lower-west').attr('url');
+                            $widget['icon6'] = $(this).find('icons').find('upper-east').attr('url');
+                            $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('icons').find('unknown-full').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icons').find('unknown-full').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icons').find('unknown-full').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            jmri.getTurnout($widget["systemNameA"]);
+                            break;
                     }
                     $preloadWidgetImages($widget); //start loading all images
                     $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -415,7 +417,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             if (getTurnout(WEST).getKnownState() == Turnout.INCONSISTENT) {
                 return Turnout.INCONSISTENT;
             }
-            state = +getTurnout(WEST).getKnownState();
+            state = getTurnout(WEST).getKnownState();
         } else {
             return Turnout.UNKNOWN;
         }
@@ -471,7 +473,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Ipdate icon as state of turnout changes.
+     * Update icon as state of turnout changes.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -502,6 +504,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     @Override
+    @NonNull
     public String getNameString() {
         String name;
         if (namedTurnoutWest == null) {
@@ -701,8 +704,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Lower West to
-     * Upper East For a scissor crossing this the Left-hand crossing. For a 3
-     * Way turnout this is the Upper Exit.
+     * Upper East.
+     * For a scissor crossing this is the Left-hand crossing.
+     * For a 3 Way turnout this is the Upper Exit.
      *
      * @return localized description of route
      */
@@ -712,8 +716,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Upper West to
-     * Lower East. For a scissor crossing this the Right-hand crossing. For a 3
-     * Way turnout this is the Middle Exit.
+     * Lower East.
+     * For a scissor crossing this is the Right-hand crossing.
+     * For a 3 Way turnout this is the Middle Exit.
      *
      * @return localized description of route
      */
@@ -723,8 +728,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Lower West to
-     * Lower East. For a scissor crossing this the Straight (Normal) Route. For
-     * a 3 Way turnout this is the Lower Exit.
+     * Lower East.
+     * For a scissor crossing this is the Straight (Normal) Route.
+     * For a 3 Way turnout this is the Lower Exit.
      *
      * @return localized description of route
      */
@@ -734,8 +740,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Upper West to
-     * Upper East. For a scissor crossing this is not used. For a 3 Way turnout
-     * this is not used.
+     * Upper East.
+     * For a scissor crossing this is not used.
+     * For a 3 Way turnout this is not used.
      *
      * @return localized description of route
      */
@@ -1013,8 +1020,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Set the turnouts appropriate for Upper West to Lower East line in a Slip
-     * which is the equivalent a of right hand crossing in a scissors. With a
+     * Set the turnouts appropriate for Upper West to Lower East line in a Slip,
+     * which is the equivalent of the right hand crossing in a scissors. With a
      * three way turnout, this is also the middle route.
      */
     private void setUpperWestToLowerEast() {
@@ -1157,9 +1164,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         return true;
     }
 
-    // overide
     @Override
-    public boolean setTextEditMenu(JPopupMenu popup) {
+    public boolean setTextEditMenu(@NonNull JPopupMenu popup) {
         String popuptext = Bundle.getMessage("SetSlipText");
         if (turnoutType == THREEWAY) {
             popuptext = Bundle.getMessage("Set3WayText");
