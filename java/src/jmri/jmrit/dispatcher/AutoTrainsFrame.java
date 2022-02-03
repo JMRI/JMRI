@@ -297,7 +297,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
         private void handleActiveTrainListen(java.beans.PropertyChangeEvent e) {
             if (e.getNewValue() != null) {
-            log.trace("Property[{}] newValue[{}]",e.getPropertyName(),((Integer) e.getNewValue()).intValue());
+            log.trace("Property[{}] newValue[{}]",e.getPropertyName(),e.getNewValue());
             } else {
                 log.trace("Property[{}] newValue[{}]",e.getPropertyName(),"NULL");
             }
