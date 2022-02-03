@@ -59,6 +59,8 @@ import java.nio.file.StandardCopyOption;
             };
             // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
+            JUnitUtil.WAITFOR_DELAY_STEP = 20;  // more time for us less for the waitfor code...
+            
             WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
             // load layout file
