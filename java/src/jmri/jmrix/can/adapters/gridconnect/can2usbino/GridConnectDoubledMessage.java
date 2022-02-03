@@ -25,12 +25,15 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     public GridConnectDoubledMessage() {
         _nDataChars = 28;
         _dataChars = new int[_nDataChars];
-        setElement(0, '!');
+        GridConnectDoubledMessage.this.setElement(0, '!');
     }
 
     public GridConnectDoubledMessage(CanMessage m) {
         this();
+        addCanMessage(m);
+    }
 
+    private void addCanMessage(CanMessage m) {
         // Standard or extended frame
         setExtended(m.isExtended());
 
@@ -75,9 +78,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     @Override
     public void setData(int[] d) {
         int len = (d.length <= 24) ? d.length : 24;
-        for (int i = 0; i < len; i++) {
-            _dataChars[i] = d[i];
-        }
+        System.arraycopy(d, 0, _dataChars, 0, len);
     }
 
     @Override
@@ -91,7 +92,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
-    boolean extended;
+    private boolean extended;
 
     @Override
     public boolean isExtended() {
