@@ -27,6 +27,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.PhysicalLocation;
 
 /**
@@ -159,9 +160,9 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @param newLocation the location to copy to
      */
     public void copyLocation(Location newLocation) {
-        newLocation.setComment(getComment());
+        newLocation.setComment(getCommentWithColor());
         newLocation.setDefaultPrinterName(getDefaultPrinterName());
-        newLocation.setSwitchListComment(getSwitchListComment());
+        newLocation.setSwitchListComment(getSwitchListCommentWithColor());
         newLocation.setSwitchListEnabled(isSwitchListEnabled());
         newLocation.setTrainDirections(getTrainDirections());
         // TODO should we set the train icon coordinates?
@@ -674,8 +675,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             setDirtyAndFirePropertyChange("locationComment", old, comment); // NOI18N
         }
     }
-
+    
     public String getComment() {
+        return TrainCommon.getTextColorString(getCommentWithColor());
+    }
+
+    public String getCommentWithColor() {
         return _comment;
     }
 
@@ -686,8 +691,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             setDirtyAndFirePropertyChange(SWITCHLIST_COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
-
+    
     public String getSwitchListComment() {
+        return TrainCommon.getTextColorString(getSwitchListCommentWithColor());
+    }
+
+    public String getSwitchListCommentWithColor() {
         return _switchListComment;
     }
 
@@ -1554,8 +1563,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             e.setAttribute(Xml.PHYSICAL_LOCATION, getPhysicalLocation().toString());
         }
 
-        e.setAttribute(Xml.COMMENT, getComment());
-        e.setAttribute(Xml.SWITCH_LIST_COMMENT, getSwitchListComment());
+        e.setAttribute(Xml.COMMENT, getCommentWithColor());
+        e.setAttribute(Xml.SWITCH_LIST_COMMENT, getSwitchListCommentWithColor());
 
         List<Track> tracks = getTracksByIdList();
         for (Track track : tracks) {

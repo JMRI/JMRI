@@ -179,7 +179,7 @@ public class JsonUtil {
         data.put(JSON.USERNAME, location.getName());
         data.put(JSON.NAME, location.getId());
         data.put(JSON.LENGTH, location.getLength());
-        data.put(JSON.COMMENT, TrainCommon.getTextColorString(location.getComment()));
+        data.put(JSON.COMMENT, location.getComment());
         Reporter reporter = location.getReporter();
         data.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
         // note type defaults to all in-use rolling stock types
@@ -350,7 +350,7 @@ public class JsonUtil {
         data.put(JSON.NAME, train.getId());
         data.put(JSON.DEPARTURE_TIME, train.getFormatedDepartureTime());
         data.put(JSON.DESCRIPTION, train.getDescription());
-        data.put(JSON.COMMENT, TrainCommon.getTextColorString(train.getComment()));
+        data.put(JSON.COMMENT, train.getComment());
         if (train.getRoute() != null) {
             data.put(JSON.ROUTE, train.getRoute().getName());
             data.put(JSON.ROUTE_ID, train.getRoute().getId());
