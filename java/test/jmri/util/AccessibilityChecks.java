@@ -71,8 +71,6 @@ public class AccessibilityChecks {
     }
 
     private static String feedBack(Set<JComponent> components) {
-        log.warn("log:{} warn:{} fail:{}",logSystemOut,warnIssues,assertFail);
-        
         if (components.isEmpty()){
             return "";
         }
