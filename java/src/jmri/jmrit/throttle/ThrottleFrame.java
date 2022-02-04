@@ -895,6 +895,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             repaint();
         }
         throttleWindow.updateGUI();
+        if (addressPanel.getThrottle() == null) {
+            ThrottleWindowActions.toFront(addressPanel);
+        }
     }
 
     public void saveThrottle() {
@@ -918,8 +921,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
    
     public void activateNextJInternalFrame() {
         try {
-            activeFrame = (activeFrame + 1) % NUM_FRAMES;
-            frameList[activeFrame].setSelected(true);
+            int initialFrame = activeFrame; // avoid infinite loop
+            do {
+                activeFrame = (activeFrame + 1) % NUM_FRAMES;
+                frameList[activeFrame].setSelected(true);
+            } while ((frameList[activeFrame].isClosed() || frameList[activeFrame].isIcon() || (!frameList[activeFrame].isVisible())) && (initialFrame != activeFrame));
         } catch (PropertyVetoException ex) {
             log.warn("Exception selecting internal frame:{}", ex.getMessage());
         }
@@ -927,11 +933,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     
     public void activatePreviousJInternalFrame() {
         try {
-            activeFrame--;
-            if (activeFrame < 0) {
-                activeFrame = NUM_FRAMES - 1;
-            }
-            frameList[activeFrame].setSelected(true);
+            int initialFrame = activeFrame; // avoid infinite loop
+            do {
+                activeFrame--;
+                if (activeFrame < 0) {
+                    activeFrame = NUM_FRAMES - 1;
+                }
+                frameList[activeFrame].setSelected(true);
+            } while ((frameList[activeFrame].isClosed() || frameList[activeFrame].isIcon() || (!frameList[activeFrame].isVisible())) && (initialFrame != activeFrame));
         } catch (PropertyVetoException ex) {
             log.warn("Exception selecting internal frame:{}", ex.getMessage());
         }

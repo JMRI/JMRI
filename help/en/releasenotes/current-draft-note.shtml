@@ -550,7 +550,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Restored tab and shift+tab shortcuts to browse through throttles inner windows</li>
+            <li>Address Panel is now focused as a default when openning a new throttle</li>
         </ul>
 
     <h3>Timetable</h3>

@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.URIDrop;
 
 import org.jdom2.Element;
+import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +125,14 @@ public class ThrottleWindow extends JmriJFrame {
                         }
                     }
                 }
-            }
+            }@Override
+            public void windowOpened(WindowEvent e) {
+                try { // on initial open, force selection of address panel
+                    getCurrentThrottleFrame().getAddressPanel().setSelected(true);
+                } catch (PropertyVetoException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }            
         });
         updateGUI();
     }
@@ -725,6 +734,7 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     private void installInputsListenerOnAllComponents(Container c) {
+        c.setFocusTraversalKeysEnabled(false); // make tab and shift tab available
         if (! ( c instanceof JTextField)) {
             c.addMouseWheelListener(myInputsListener);
             c.setFocusable(false);
