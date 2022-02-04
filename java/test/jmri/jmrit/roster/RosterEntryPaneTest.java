@@ -201,4 +201,10 @@ public class RosterEntryPaneTest {
         Assert.assertTrue(p.checkDuplicate());
     }
 
+    @Test
+    public void testAccessibleContent() {
+        RosterEntryPane p = new RosterEntryPane(rOld);
+        jmri.util.AccessibilityChecks.check(p);
+    }
+
 }

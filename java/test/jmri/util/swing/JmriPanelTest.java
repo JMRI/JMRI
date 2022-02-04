@@ -27,6 +27,12 @@ public class JmriPanelTest {
     }
 
     @Test
+    public void testAccessibility() throws Exception{
+        panel.initComponents();
+        jmri.util.AccessibilityChecks.check(panel);
+    }
+
+    @Test
     public void testGetHelpTarget(){
         Assert.assertEquals("help target", helpTarget, panel.getHelpTarget());
     }
