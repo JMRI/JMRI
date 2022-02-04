@@ -604,6 +604,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Developers: The
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
+                has been updated.</li>
         </ul>
 
