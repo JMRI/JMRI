@@ -277,7 +277,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         pC.setLayout(new GridBagLayout());
         addItem(pC, commentScroller, 1, 0);
         if (_train != null) {
-            addItem(pC, OperationsPanel.getColorChooserPanel(_train.getComment(), commentColorChooser), 2, 0);
+            addItem(pC, OperationsPanel.getColorChooserPanel(_train.getCommentWithColor(), commentColorChooser), 2, 0);
         } else {
             addItem(pC, OperationsPanel.getColorChooserPanel("", commentColorChooser), 2, 0);
         }
@@ -332,7 +332,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             trainDescriptionTextField.setText(_train.getRawDescription());
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
-            commentTextArea.setText(TrainCommon.getTextColorString(_train.getComment()));
+            commentTextArea.setText(TrainCommon.getTextColorString(_train.getCommentWithColor()));
             cabooseRadioButton.setSelected(_train.isCabooseNeeded());
             fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();
@@ -517,7 +517,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (!_train.getName().equals(trainNameTextField.getText().trim()) ||
                 !_train.getRawDescription().equals(trainDescriptionTextField.getText()) ||
-                !_train.getComment().equals(
+                !_train.getCommentWithColor().equals(
                         TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()))) {
             _train.setModified(true);
         }

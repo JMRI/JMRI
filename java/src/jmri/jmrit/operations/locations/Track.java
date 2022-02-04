@@ -25,6 +25,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -240,9 +241,9 @@ public class Track extends PropertyChangeSupport {
         newTrack.setAlternateTrack(getAlternateTrack());
         newTrack.setBlockCarsEnabled(isBlockCarsEnabled());
         newTrack.setComment(getComment());
-        newTrack.setCommentBoth(getCommentBoth());
-        newTrack.setCommentPickup(getCommentPickup());
-        newTrack.setCommentSetout(getCommentSetout());
+        newTrack.setCommentBoth(getCommentBothWithColor());
+        newTrack.setCommentPickup(getCommentPickupWithColor());
+        newTrack.setCommentSetout(getCommentSetoutWithColor());
 
         newTrack.setDestinationOption(getDestinationOption());
         newTrack.setDestinationIds(getDestinationIds());
@@ -762,8 +763,12 @@ public class Track extends PropertyChangeSupport {
             setDirtyAndFirePropertyChange("trackCommentPickup", old, comment); // NOI18N
         }
     }
-
+    
     public String getCommentPickup() {
+        return TrainCommon.getTextColorString(getCommentPickupWithColor());
+    }
+
+    public String getCommentPickupWithColor() {
         return _commentPickup;
     }
 
@@ -774,8 +779,12 @@ public class Track extends PropertyChangeSupport {
             setDirtyAndFirePropertyChange("trackCommentSetout", old, comment); // NOI18N
         }
     }
-
+    
     public String getCommentSetout() {
+        return TrainCommon.getTextColorString(getCommentSetoutWithColor());
+    }
+
+    public String getCommentSetoutWithColor() {
         return _commentSetout;
     }
 
@@ -786,8 +795,12 @@ public class Track extends PropertyChangeSupport {
             setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
         }
     }
-
+    
     public String getCommentBoth() {
+        return TrainCommon.getTextColorString(getCommentBothWithColor());
+    }
+
+    public String getCommentBothWithColor() {
         return _commentBoth;
     }
 
@@ -3041,9 +3054,9 @@ public class Track extends PropertyChangeSupport {
         }
         // save manifest track comments if they exist
         if (!getComment().equals(NONE) ||
-                !getCommentBoth().equals(NONE) ||
-                !getCommentPickup().equals(NONE) ||
-                !getCommentSetout().equals(NONE)) {
+                !getCommentBothWithColor().equals(NONE) ||
+                !getCommentPickupWithColor().equals(NONE) ||
+                !getCommentSetoutWithColor().equals(NONE)) {
             Element comments = new Element(Xml.COMMENTS);
             Element track = new Element(Xml.TRACK);
             Element both = new Element(Xml.BOTH);
@@ -3060,9 +3073,9 @@ public class Track extends PropertyChangeSupport {
             comments.addContent(printSwitchList);
 
             track.setAttribute(Xml.COMMENT, getComment());
-            both.setAttribute(Xml.COMMENT, getCommentBoth());
-            pickup.setAttribute(Xml.COMMENT, getCommentPickup());
-            setout.setAttribute(Xml.COMMENT, getCommentSetout());
+            both.setAttribute(Xml.COMMENT, getCommentBothWithColor());
+            pickup.setAttribute(Xml.COMMENT, getCommentPickupWithColor());
+            setout.setAttribute(Xml.COMMENT, getCommentSetoutWithColor());
             printManifest.setAttribute(Xml.COMMENT, isPrintManifestCommentEnabled() ? Xml.TRUE : Xml.FALSE);
             printSwitchList.setAttribute(Xml.COMMENT, isPrintSwitchListCommentEnabled() ? Xml.TRUE : Xml.FALSE);
 

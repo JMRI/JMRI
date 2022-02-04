@@ -329,14 +329,14 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     }
                 }
                 if (pickup && !setout) {
-                    textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentPickup()));
-                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentPickup()));
+                    textTrackCommentWorkPane.setText(_track.getCommentPickup());
+                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentPickupWithColor()));
                 } else if (!pickup && setout) {
-                    textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentSetout()));
-                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentSetout()));
+                    textTrackCommentWorkPane.setText(_track.getCommentSetout());
+                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentSetoutWithColor()));
                 } else if (pickup && setout) {
-                    textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentBoth()));
-                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentBoth()));
+                    textTrackCommentWorkPane.setText(_track.getCommentBoth());
+                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentBothWithColor()));
                 }
                 textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().isEmpty());
                 pTrackPane.validate();

@@ -184,18 +184,18 @@ public class TrainCsvCommon extends TrainCommon {
                 }
                 // print the appropriate comment if there's one
                 // each comment can have multiple lines
-                if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
-                    String[] comments = track.getCommentBoth().split(NEW_LINE);
+                if (pickup && setout && !track.getCommentBothWithColor().equals(Track.NONE)) {
+                    String[] comments = track.getCommentBothWithColor().split(NEW_LINE);
                     for (String comment : comments) {
                         fileOut.printRecord("TKCB", Bundle.getMessage("csvTrackCommentBoth"), comment); // NOI18N
                     }
-                } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
-                    String[] comments = track.getCommentPickup().split(NEW_LINE);
+                } else if (pickup && !setout && !track.getCommentPickupWithColor().equals(Track.NONE)) {
+                    String[] comments = track.getCommentPickupWithColor().split(NEW_LINE);
                     for (String comment : comments) {
                         fileOut.printRecord("TKCP", Bundle.getMessage("csvTrackCommentPickUp"), comment); // NOI18N
                     }
-                } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
-                    String[] comments = track.getCommentSetout().split(NEW_LINE);
+                } else if (!pickup && setout && !track.getCommentSetoutWithColor().equals(Track.NONE)) {
+                    String[] comments = track.getCommentSetoutWithColor().split(NEW_LINE);
                     for (String comment : comments) {
                         fileOut.printRecord("TKCS", Bundle.getMessage("csvTrackCommentSetOut"), comment); // NOI18N
                     }

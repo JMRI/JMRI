@@ -400,7 +400,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             addItem(locationPanelCheckBoxes, status, 2, y);
 
             JButton button = new JButton(Bundle.getMessage("Add"));
-            if (!location.getSwitchListComment().equals(Location.NONE)) {
+            if (!location.getSwitchListCommentWithColor().isEmpty()) {
                 button.setText(Bundle.getMessage("ButtonEdit"));
             }
             button.setName(location.getName());
@@ -652,10 +652,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             pC.setLayout(new GridBagLayout());
             commentScroller.setMinimumSize(minScrollerDim);
             addItem(pC, commentScroller, 1, 0);
-            addItem(pC, OperationsPanel.getColorChooserPanel(location.getSwitchListComment(), commentColorChooser), 2, 0);
+            addItem(pC, OperationsPanel.getColorChooserPanel(location.getSwitchListCommentWithColor(), commentColorChooser), 2, 0);
             JScrollPane panelPane = new JScrollPane(pC);
 
-            commentTextArea.setText(TrainCommon.getTextColorString(location.getSwitchListComment()));
+            commentTextArea.setText(TrainCommon.getTextColorString(location.getSwitchListCommentWithColor()));
 
             JPanel pB = new JPanel();
             pB.setLayout(new GridBagLayout());
