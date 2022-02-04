@@ -33,8 +33,6 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
     private final JButton cancelButton = new JButton();
     private final DefaultListModel<String> roadListModel = new DefaultListModel<>();
     private final DefaultListModel<String> numberListModel = new DefaultListModel<>();
-//    private final JList<String> roadCombo = new JList<>(roadListModel);
-//    private final JList<String> numberCombo = new JList<>(numberListModel);
     private final JList<String> roadCombo = new JList<>(roadListModel);
     private final JList<String> numberCombo = new JList<>(numberListModel);
 
@@ -46,8 +44,8 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
     private final ArrayList<String> roadsWith = new ArrayList<>();
     private final Hashtable<String, List<String>> numbersWith = new Hashtable<>();
     private final Hashtable<String, List<String>> roadNumbers = new Hashtable<>();
-    CarManager carManager = InstanceManager.getDefault(CarManager.class);
-    IdTagManager tagManager = InstanceManager.getDefault(IdTagManager.class);
+    protected CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    protected IdTagManager tagManager = InstanceManager.getDefault(IdTagManager.class);
 
     public void setParentFrame(JmriJFrame parentFrame) {
         this.parentFrame = parentFrame;
@@ -58,7 +56,6 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
     public AssociateTag(String thisTag) {
         super();
         tag = thisTag;
-        this.parentFrame = parentFrame;
     }
 
 
@@ -79,102 +76,66 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         initRoads();
         this.setLayout(new GridBagLayout());
 
-        JLabel someText = new JLabel("This is some text");
-        this.add(someText, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(5, 5,5, 5), 6, 6));
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new GridBagLayout());
-        topPanel.setPreferredSize(new Dimension(350, 250));
-        topPanel.setMinimumSize(new Dimension(300, 200));
 
-        GridBagConstraints topPanelConstraints = new GridBagConstraints(0, 2, 3, 1, 0, 0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 10, 10, 10),
-                10, 10);
-        this.add(topPanel, topPanelConstraints);
 
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
         includeCars.setSelected(pm.getSimplePreferenceState(includeCarsString));
-        GridBagConstraints c1 = new GridBagConstraints();
-        c1.anchor = GridBagConstraints.LINE_START;
-        c1.fill = GridBagConstraints.BOTH;
-        c1.gridx = 0;
-        c1.gridy = 0;
         JScrollPane roadScroll = new JScrollPane();
         roadScroll.setMinimumSize(new Dimension(75, 75));
         roadScroll.setViewportView(roadCombo);
-        roadCombo.setVisibleRowCount(-1);
+        roadCombo.setVisibleRowCount(10);
         roadCombo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         roadCombo.setLayoutOrientation(JList.VERTICAL);
         roadCombo.addListSelectionListener(this);
         roadCombo.setMinimumSize(new Dimension(75, 75));
-        setRoads(roadListModel);
-        topPanel.add(roadScroll, c1);
+        roadCombo.setModel(roadListModel);
+        setRoads();
+        this.add(roadScroll, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0,
+                GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
+                new Insets(10, 10, 10, 10), 10, 10));
 
         JScrollPane numberScroll = new JScrollPane();
         numberScroll.setViewportView(numberCombo);
         numberScroll.setMinimumSize(new Dimension(75, 75));
         numberCombo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        numberCombo.setVisibleRowCount(-1);
+        numberCombo.setVisibleRowCount(10);
         numberCombo.setLayoutOrientation(JList.VERTICAL);
         numberCombo.setMinimumSize(new Dimension(75, 75));
         numberCombo.setEnabled(false);
-        GridBagConstraints c2 = new GridBagConstraints();
-        c2.anchor = GridBagConstraints.LINE_END;
-        c2.gridx = 3;
-        c2.gridy = 0;
-        c2.fill = GridBagConstraints.BOTH;
-        topPanel.add(numberScroll, c2);
-        this.add(topPanel);
-        GridBagConstraints c3 = new GridBagConstraints();
-        c3.anchor = GridBagConstraints.LINE_END;
-        c3.fill = GridBagConstraints.HORIZONTAL;
-        c3.gridx = 0;
-        c3.gridy = 2;
+        numberCombo.setModel(numberListModel);
+
+        this.add(numberScroll, new GridBagConstraints( 2, 0, 1, 2, 0.0, 0.0,
+                GridBagConstraints.LINE_END, GridBagConstraints.BOTH,
+                new Insets(10, 10, 10, 10), 10, 10));
         JLabel tagLabel = new JLabel();
         tagLabel.setText(Bundle.getMessage("AssociateTag"));
-        this.add(tagLabel, c3);
-
-        GridBagConstraints c4 = new GridBagConstraints();
-        c4.anchor = GridBagConstraints.LINE_START;
-        c4.fill = GridBagConstraints.HORIZONTAL;
-        c4.gridy = 2;
-        c4.gridx = 1;
+        this.add(tagLabel, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0,
+                GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL,
+                new Insets(5, 5, 5, 5), 5, 5));
         JLabel thisTag = new JLabel(tag);
-        this.add(thisTag,c4);
-
-        GridBagConstraints c5 = new GridBagConstraints();
-        c5.fill = GridBagConstraints.HORIZONTAL;
-        c5.gridx = 0;
-        c5.gridy = 3;
+        this.add(thisTag, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
+                GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+                new Insets(5, 5, 5, 5), 5, 5));
         includeCars.setText(Bundle.getMessage("AssociateIncludeAll"));
         includeCars.setToolTipText(Bundle.getMessage("AssociateAllToolTip"));
-        this.add(includeCars, c5);
-
-
-
-        GridBagConstraints c6 = new GridBagConstraints();
-        c6.fill = GridBagConstraints.NONE;
-        c6.gridy = 4;
-        c6.gridx = 0;
-        this.add(message, c6);
+        this.add(includeCars, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+                GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+                new Insets(5, 5, 5, 5), 0, 0));
+        this.add(message, new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0,
+                GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(10, 10, 10, 10), 5, 5));
 
         okayButton.setText(Bundle.getMessage("AssociateOkay"));
         okayButton.addActionListener(this);
         okayButton.setEnabled(false);
-        GridBagConstraints c7 = new GridBagConstraints();
-        c7.fill = GridBagConstraints.BOTH;
-        c7.gridx = 0;
-        c7.gridy = 5;
-        this.add(okayButton, c7);
-
+        this.add(okayButton, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0,
+                GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(20, 20, 20, 20), 10, 10));
         cancelButton.setText(Bundle.getMessage("AssociateCancel"));
         cancelButton.addActionListener(this);
-        GridBagConstraints c8 = new GridBagConstraints();
-        c8.fill = GridBagConstraints.BOTH;
-        c8.gridy = 5;
-        c8.gridx = 3;
-        this.add(cancelButton, c8);
+        this.add(cancelButton, new GridBagConstraints(2, 7, 1, 1, 0.0, 0.0,
+                GridBagConstraints.LINE_END, GridBagConstraints.NONE,
+                new Insets(20, 20, 20, 20), 10, 10));
 
         if (roadList.size() < 1 && !includeCars.isSelected()) {
             message.setText(Bundle.getMessage("AssociateNoRoads"));
@@ -220,8 +181,8 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         }
     }
 
-    private void setRoads(DefaultListModel<String> carInfo) {
-        carInfo.clear();
+    private void setRoads() {
+        roadListModel.clear();
         List<String> theList;
         if (includeCars.isSelected()) {
             theList = roadsWith;
@@ -229,7 +190,7 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
             theList = roadList;
         }
         for (String road : theList) {
-            carInfo.addElement(road);
+            roadListModel.addElement(road);
         }
     }
 
