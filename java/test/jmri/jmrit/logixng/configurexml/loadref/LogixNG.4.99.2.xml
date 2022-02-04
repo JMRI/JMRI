@@ -12809,7 +12809,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0057</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory>IM3</memory>
+      <memory listen="yes">IM3</memory>
       <variableOperation>CalculateFormula</variableOperation>
       <constant>1</constant>
       <otherTableCell />
@@ -12876,7 +12876,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0058</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory>IM3</memory>
+      <memory listen="yes">IM3</memory>
       <variableOperation>CopyMemoryToVariable</variableOperation>
       <constant>1</constant>
       <otherTableCell />
@@ -12943,7 +12943,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0059</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory>IM3</memory>
+      <memory listen="yes">IM3</memory>
       <variableOperation>CopyVariableToVariable</variableOperation>
       <constant>1</constant>
       <otherTableCell />
@@ -13010,7 +13010,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0060</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory>IM3</memory>
+      <memory listen="yes">IM3</memory>
       <variableOperation>SetToNull</variableOperation>
       <constant>1</constant>
       <otherTableCell />
@@ -13077,7 +13077,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0061</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory>IM3</memory>
+      <memory listen="yes">IM3</memory>
       <variableOperation>SetToString</variableOperation>
       <constant>1</constant>
       <otherTableCell />
