@@ -299,7 +299,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
         Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
         Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
-        Assert.assertEquals("t1 comment", "t1 comment", t1.getComment());
+        Assert.assertEquals("t1 comment", "t1 comment", t1.getCommentWithColor());
         Assert.assertEquals("t1 current location name", "Bedford", t1.getCurrentLocationName());
         Assert.assertEquals("t1 departure hour", "01", t1.getDepartureTimeHour());
         Assert.assertEquals("t1 departure minute", "35", t1.getDepartureTimeMinute());
@@ -352,7 +352,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
         Assert.assertEquals("t3 built start year", "1931", t3.getBuiltStartYear());
         Assert.assertEquals("t3 caboose roadr", "t3 caboose road", t3.getCabooseRoad());
-        Assert.assertEquals("t3 comment", "t3 comment", t3.getComment());
+        Assert.assertEquals("t3 comment", "t3 comment", t3.getCommentWithColor());
         Assert.assertEquals("t3 current location name", "Westford", t3.getCurrentLocationName());
         Assert.assertEquals("t3 departure hour", "04", t3.getDepartureTimeHour());
         Assert.assertEquals("t3 departure minute", "55", t3.getDepartureTimeMinute());
@@ -399,7 +399,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
         Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
         Assert.assertEquals("t5 caboose roadr", "t5 caboose road", t5.getCabooseRoad());
-        Assert.assertEquals("t5 comment", "t5 comment", t5.getComment());
+        Assert.assertEquals("t5 comment", "t5 comment", t5.getCommentWithColor());
         Assert.assertEquals("t5 current location name", "Arlington", t5.getCurrentLocationName());
         Assert.assertEquals("t5 departure hour", "23", t5.getDepartureTimeHour());
         Assert.assertEquals("t5 departure minute", "15", t5.getDepartureTimeMinute());
@@ -469,7 +469,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
         Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
         Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
-        Assert.assertEquals("t1 comment", "t1 comment", t1.getComment());
+        Assert.assertEquals("t1 comment", "t1 comment", t1.getCommentWithColor());
         Assert.assertEquals("t1 current location name", "Bedford", t1.getCurrentLocationName());
         Assert.assertEquals("t1 departure hour", "01", t1.getDepartureTimeHour());
         Assert.assertEquals("t1 departure minute", "35", t1.getDepartureTimeMinute());
@@ -522,7 +522,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
         Assert.assertEquals("t3 built start year", "1931", t3.getBuiltStartYear());
         Assert.assertEquals("t3 caboose roadr", "t3 caboose road", t3.getCabooseRoad());
-        Assert.assertEquals("t3 comment", "t3 comment", t3.getComment());
+        Assert.assertEquals("t3 comment", "t3 comment", t3.getCommentWithColor());
         Assert.assertEquals("t3 current location name", "Westford", t3.getCurrentLocationName());
         Assert.assertEquals("t3 departure hour", "04", t3.getDepartureTimeHour());
         Assert.assertEquals("t3 departure minute", "55", t3.getDepartureTimeMinute());
@@ -569,7 +569,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
         Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
         Assert.assertEquals("t5 caboose roadr", "t5 caboose road", t5.getCabooseRoad());
-        Assert.assertEquals("t5 comment", "t5 comment", t5.getComment());
+        Assert.assertEquals("t5 comment", "t5 comment", t5.getCommentWithColor());
         Assert.assertEquals("t5 current location name", "Arlington", t5.getCurrentLocationName());
         Assert.assertEquals("t5 departure hour", "23", t5.getDepartureTimeHour());
         Assert.assertEquals("t5 departure minute", "15", t5.getDepartureTimeMinute());
@@ -622,7 +622,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 built end year", "1950", t3.getBuiltEndYear());
         Assert.assertEquals("t3 built start year", "1925", t3.getBuiltStartYear());
         Assert.assertEquals("t3 caboose roadr", "t3 X caboose road", t3.getCabooseRoad());
-        Assert.assertEquals("t3 comment", "t3 X comment", t3.getComment());
+        Assert.assertEquals("t3 comment", "t3 X comment", t3.getCommentWithColor());
         Assert.assertEquals("t3 engine model", "t3 X engine model", t3.getEngineModel());
         Assert.assertEquals("t3 engine road", "t3 X engine road", t3.getEngineRoad());
         Assert.assertEquals("t3 load option", "t3 X load option", t3.getLoadOption());

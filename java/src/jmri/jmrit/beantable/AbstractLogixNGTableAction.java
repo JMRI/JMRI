@@ -44,6 +44,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
 
     private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
+    private static final ResourceBundle rbx2 = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
 
     // Browser Options
     static final String PRINT_LINE_NUMBERS_OPTION = "jmri.jmrit.logixng.PrintLineNumbers";
@@ -347,7 +348,13 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         menu = new JMenu(Bundle.getMessage("MenuTools"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_T);
 
-        JMenuItem item = new JMenuItem(Bundle.getMessage("OpenPickListTables"));  // NOI18N
+        JMenuItem item = new JMenuItem(rbx2.getString("MenuOpenClipboard"));  // NOI18N
+        item.addActionListener((ActionEvent e) -> {
+            jmri.jmrit.logixng.tools.swing.TreeEditor.openClipboard();
+        });
+        menu.add(item);
+
+        item = new JMenuItem(Bundle.getMessage("OpenPickListTables"));  // NOI18N
         item.addActionListener((ActionEvent e) -> {
             openPickListTable();
         });

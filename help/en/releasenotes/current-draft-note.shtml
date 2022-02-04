@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Lawicell devices - added RTR CAN Frame support.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -112,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Lawicell devices - added RTR CAN Frame support.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -416,6 +416,12 @@
           be On (True) or Off (False).</li>
           <li>A single Logix can be imported to LogixNG. See
           the section <i>Logix</i> for more information.</li>
+          <li>The action <i>Local Variable</i> now supports
+          <i>Block</i> and <i>Reporter</i>. For <i>Memory</i>,
+          <i>Block</i> and <i>Reporter</i>, there is a new
+          option <i>Listen</i> that selects whenether the
+          action should listen on changes for the <i>Memory</i>,
+          <i>Block</i> or <i>Reporter</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

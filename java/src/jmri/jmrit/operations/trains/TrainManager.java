@@ -825,7 +825,7 @@ public class TrainManager extends PropertyChangeSupport
         newTrain.setSendCarsToTerminalEnabled(train.isSendCarsToTerminalEnabled());
         newTrain.setServiceAllCarsWithFinalDestinationsEnabled(train.isServiceAllCarsWithFinalDestinationsEnabled());
         // comment
-        newTrain.setComment(train.getComment());
+        newTrain.setComment(train.getCommentWithColor());
         // description
         newTrain.setDescription(train.getRawDescription());
         return newTrain;

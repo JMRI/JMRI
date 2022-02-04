@@ -67,6 +67,8 @@ public class StoreAndLoadTest {
         Block block2 = InstanceManager.getDefault(BlockManager.class).provide("IB2");
         block2.setUserName("Some block");
         block1.setValue("Block 2 Value");
+        Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
+        reporter1.setReport("Reporter 1 Value");
         Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light1.setCommandedState(Light.OFF);
         Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
@@ -771,6 +773,34 @@ public class StoreAndLoadTest {
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
         actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setBlock(block1);
+        actionLocalVariable.setReporter(reporter1);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyBlockToVariable);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setBlock(block1);
+        actionLocalVariable.setReporter(reporter1);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyReporterToVariable);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setBlock(block1);
+        actionLocalVariable.setReporter(reporter1);
         actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
