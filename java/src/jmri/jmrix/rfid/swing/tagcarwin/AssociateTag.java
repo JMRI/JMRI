@@ -33,8 +33,12 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
     private final JButton cancelButton = new JButton();
     private final DefaultListModel<String> roadListModel = new DefaultListModel<>();
     private final DefaultListModel<String> numberListModel = new DefaultListModel<>();
+//    private final JList<String> roadCombo = new JList<>(roadListModel);
+//    private final JList<String> numberCombo = new JList<>(numberListModel);
     private final JList<String> roadCombo = new JList<>(roadListModel);
     private final JList<String> numberCombo = new JList<>(numberListModel);
+
+
     private final JCheckBox includeCars = new JCheckBox();
     private final JLabel message = new JLabel("");
     private final String includeCarsString = this.getClass().getName() + "IncludeAllCars";
@@ -73,12 +77,18 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
     public void initComponents() {
         log.debug("setting up the AssociateTag panel");
         initRoads();
+        this.setLayout(new GridBagLayout());
+
+        JLabel someText = new JLabel("This is some text");
+        this.add(someText, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(5, 5,5, 5), 6, 6));
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout());
+        topPanel.setLayout(new GridBagLayout());
         topPanel.setPreferredSize(new Dimension(350, 250));
         topPanel.setMinimumSize(new Dimension(300, 200));
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints topPanelConstraints = new GridBagConstraints(0, 0, 3, 1, 0, 0,
+
+        GridBagConstraints topPanelConstraints = new GridBagConstraints(0, 2, 3, 1, 0, 0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 10, 10, 10),
                 10, 10);
         this.add(topPanel, topPanelConstraints);
@@ -89,10 +99,10 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         c1.anchor = GridBagConstraints.LINE_START;
         c1.fill = GridBagConstraints.BOTH;
         c1.gridx = 0;
-        c1.gridy = 1;
+        c1.gridy = 0;
         JScrollPane roadScroll = new JScrollPane();
         roadScroll.setMinimumSize(new Dimension(75, 75));
-        roadScroll.add(roadCombo);
+        roadScroll.setViewportView(roadCombo);
         roadCombo.setVisibleRowCount(-1);
         roadCombo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         roadCombo.setLayoutOrientation(JList.VERTICAL);
@@ -102,7 +112,7 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         topPanel.add(roadScroll, c1);
 
         JScrollPane numberScroll = new JScrollPane();
-        numberScroll.add(numberCombo);
+        numberScroll.setViewportView(numberCombo);
         numberScroll.setMinimumSize(new Dimension(75, 75));
         numberCombo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         numberCombo.setVisibleRowCount(-1);
@@ -112,7 +122,7 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         GridBagConstraints c2 = new GridBagConstraints();
         c2.anchor = GridBagConstraints.LINE_END;
         c2.gridx = 3;
-        c2.gridy = 1;
+        c2.gridy = 0;
         c2.fill = GridBagConstraints.BOTH;
         topPanel.add(numberScroll, c2);
         this.add(topPanel);
