@@ -66,10 +66,10 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _tabbedPaneVariableOperation.addTab(VariableOperation.SetToNull.toString(), _setToNull);
         _tabbedPaneVariableOperation.addTab(VariableOperation.SetToString.toString(), _setToConstant);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyMemoryToVariable.toString(), _copyMemory);
-        _tabbedPaneVariableOperation.addTab(VariableOperation.CopyTableCellToVariable.toString(), _copyTableCell);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyBlockToVariable.toString(), _copyBlock);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyReporterToVariable.toString(), _copyReporter);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyVariableToVariable.toString(), _copyVariable);
+        _tabbedPaneVariableOperation.addTab(VariableOperation.CopyTableCellToVariable.toString(), _copyTableCell);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CalculateFormula.toString(), _calculateFormula);
 
         _setToNull.add(new JLabel("Null"));     // No I18N
