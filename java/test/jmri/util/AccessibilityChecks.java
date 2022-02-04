@@ -106,7 +106,7 @@ public class AccessibilityChecks {
         HashSet<JComponent> list = new HashSet<>();
         as.forEach(s -> {
             String accessibleContent = s.getAccessibleContext().getAccessibleName();
-            if (accessibleContent == null || accessibleContent.isBlank()) {
+            if (accessibleContent == null || accessibleContent.isEmpty()) {
                 list.add(s);
             }
         });
