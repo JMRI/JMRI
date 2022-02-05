@@ -129,7 +129,7 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
         tscf.commentTextArea.setText("Test Comment for Loc A");
         JemmyUtil.pressButton(jfoC, Bundle.getMessage("ButtonSave"));
         
-        Assert.assertEquals("Confirm comment", "Test Comment for Loc A", locA.getSwitchListComment());
+        Assert.assertEquals("Confirm comment", "Test Comment for Loc A", locA.getSwitchListCommentWithColor());
         
         // close comment window
         JemmyUtil.pressButton(jfoC, Bundle.getMessage("ButtonCancel"));

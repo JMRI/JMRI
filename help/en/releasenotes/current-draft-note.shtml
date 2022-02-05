@@ -361,7 +361,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix XCrossings allocation.</li>
+             <li>Improve AutoEngineer. Permit unlimited number of Auto Trains.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -416,6 +417,12 @@
           be On (True) or Off (False).</li>
           <li>A single Logix can be imported to LogixNG. See
           the section <i>Logix</i> for more information.</li>
+          <li>The action <i>Local Variable</i> now supports
+          <i>Block</i> and <i>Reporter</i>. For <i>Memory</i>,
+          <i>Block</i> and <i>Reporter</i>, there is a new
+          option <i>Listen</i> that selects whenether the
+          action should listen on changes for the <i>Memory</i>,
+          <i>Block</i> or <i>Reporter</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -580,7 +587,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Added a "TelnetTrain.py" example to run a train from the Python command line.</li>
         </ul>
 
    <h3>Web Server</h3>
@@ -598,6 +605,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Developers: The
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
+                has been updated.</li>
         </ul>
 
