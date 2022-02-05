@@ -112,7 +112,9 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
             newTag.setCurrentCar(thisCar);
             action1Button.setText(Bundle.getMessage("MonitorSetLocation"));
             action1Button.setEnabled(false); // not enabled until location is changed
+            action1Button.setToolTipText(Bundle.getMessage("MonitorSetLocToolTip"));
             action2.setText(Bundle.getMessage("MonitorEditCar"));
+            action2.setToolTipText(Bundle.getMessage("MonitorEditToolTip"));
             action2.setEnabled(true);
             if (thisCar.getTrainName() != null) {
                 newTag.setTrain(thisCar.getTrainName());
@@ -120,6 +122,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
             }
         } else {
             action1Button.setText(Bundle.getMessage("MonitorAssociate"));
+            action1Button.setToolTipText(Bundle.getMessage("MonitorAssociateToolTip"));
             action2.setText("");
             action1Button.setEnabled(true);
             action2.setEnabled(false);

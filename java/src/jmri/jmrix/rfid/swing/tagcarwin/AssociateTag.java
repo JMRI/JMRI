@@ -33,8 +33,8 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
     private final JButton cancelButton = new JButton();
     private final DefaultListModel<String> roadListModel = new DefaultListModel<>();
     private final DefaultListModel<String> numberListModel = new DefaultListModel<>();
-    private final JList<String> roadCombo = new JList<>(roadListModel);
-    private final JList<String> numberCombo = new JList<>(numberListModel);
+    private final JList<String> roadCombo = new JList<>();
+    private final JList<String> numberCombo = new JList<>();
 
 
     private final JCheckBox includeCars = new JCheckBox();
@@ -75,19 +75,20 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         log.debug("setting up the AssociateTag panel");
         initRoads();
         this.setLayout(new GridBagLayout());
-
+        this.setPreferredSize(new Dimension(400, 500));
+        this.setMinimumSize(new Dimension(400, 450));
 
 
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
         includeCars.setSelected(pm.getSimplePreferenceState(includeCarsString));
         JScrollPane roadScroll = new JScrollPane();
-        roadScroll.setMinimumSize(new Dimension(75, 75));
+        roadScroll.setMinimumSize(new Dimension(150, 250));
         roadScroll.setViewportView(roadCombo);
         roadCombo.setVisibleRowCount(10);
         roadCombo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         roadCombo.setLayoutOrientation(JList.VERTICAL);
         roadCombo.addListSelectionListener(this);
-        roadCombo.setMinimumSize(new Dimension(75, 75));
+        roadCombo.setMinimumSize(new Dimension(150, 250));
         roadCombo.setModel(roadListModel);
         setRoads();
         this.add(roadScroll, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0,
@@ -96,7 +97,7 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
 
         JScrollPane numberScroll = new JScrollPane();
         numberScroll.setViewportView(numberCombo);
-        numberScroll.setMinimumSize(new Dimension(75, 75));
+        numberScroll.setMinimumSize(new Dimension(150, 250));
         numberCombo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         numberCombo.setVisibleRowCount(10);
         numberCombo.setLayoutOrientation(JList.VERTICAL);
@@ -118,13 +119,16 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
                 new Insets(5, 5, 5, 5), 5, 5));
         includeCars.setText(Bundle.getMessage("AssociateIncludeAll"));
         includeCars.setToolTipText(Bundle.getMessage("AssociateAllToolTip"));
-        this.add(includeCars, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+        includeCars.addActionListener(this);
+        this.add(includeCars, new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0,
                 GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
                 new Insets(5, 5, 5, 5), 0, 0));
+        message.setMinimumSize(new Dimension(500,10));
         this.add(message, new GridBagConstraints(0, 6, 3, 1, 0.0, 0.0,
                 GridBagConstraints.LINE_START, GridBagConstraints.NONE,
                 new Insets(10, 10, 10, 10), 5, 5));
 
+        message.setText("  ");
         okayButton.setText(Bundle.getMessage("AssociateOkay"));
         okayButton.addActionListener(this);
         okayButton.setEnabled(false);
@@ -136,12 +140,22 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         this.add(cancelButton, new GridBagConstraints(2, 7, 1, 1, 0.0, 0.0,
                 GridBagConstraints.LINE_END, GridBagConstraints.NONE,
                 new Insets(20, 20, 20, 20), 10, 10));
-
-        if (roadList.size() < 1 && !includeCars.isSelected()) {
-            message.setText(Bundle.getMessage("AssociateNoRoads"));
-        } else if (roadList.size() == 1) {
-            doNumbers(roadList.get(0));
+        if (includeCars.isSelected()) {
+            if (roadsWith.size() < 1 ) {
+                message.setText(Bundle.getMessage("AssociateNoCars"));
+            } else if (roadsWith.size() == 1) {
+                roadCombo.setSelectedIndex(0);
+                doNumbers(roadsWith.get(0));
+            }
+        } else {
+            if (roadList.size() < 1 ) {
+                message.setText(Bundle.getMessage("AssociateNoRoads"));
+            } else if (roadList.size() == 1) {
+                roadCombo.setSelectedIndex(0);
+                doNumbers(roadList.get(0));
+            }
         }
+
     }
 
     private void initRoads() {
@@ -182,6 +196,11 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
     }
 
     private void setRoads() {
+        roadCombo.removeListSelectionListener(this);
+        numberCombo.removeListSelectionListener(this);
+        message.setText(" ");
+        numberListModel.clear(); // no numbers until we have a selected road
+        okayButton.setEnabled(false); // can't okay until we have selected both
         roadListModel.clear();
         List<String> theList;
         if (includeCars.isSelected()) {
@@ -191,6 +210,11 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         }
         for (String road : theList) {
             roadListModel.addElement(road);
+        }
+        roadCombo.addListSelectionListener(this);
+        if (theList.size() == 1) {
+            // we have only 1 item select it
+            roadCombo.setSelectedIndex(0);
         }
     }
 
@@ -213,12 +237,18 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
             tagManager.provideIdTag(tag);
             thisCar.setRfid(tag);
         }
-        } else if (!e.getSource().equals(cancelButton)){
-            log.error("got an action message which we don't recognize");
+        } else if (e.getSource().equals(cancelButton)){
+            log.debug("closing the Associate panel");
+            dispose();
+            parentFrame.dispose();
+        } else if (e.getSource().equals(includeCars)) {
+            log.debug("the includeCars checkbox is changing - rebuilding lists");
+            setRoads();
+        } else {
+            log.error("action performed for an unrecognized source");
             return;
         }
-        dispose();
-        parentFrame.dispose();
+
     }
 
     private void doNumbers(String road) {
@@ -230,6 +260,10 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         } else {
             numberList = roadNumbers.get(road);
         }
+        if (numberList == null) {
+            log.error("didn't find the road in the list");
+            return;
+        }
         for (String thisNumber : numberList) {
             numberListModel.addElement(thisNumber);
         }
@@ -237,7 +271,11 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         numberCombo.setEnabled(true);
         if (numberList.size() == 1) {
             numberCombo.setSelectedIndex(0);
+            message.setText(Bundle.getMessage("AssociateOkayReady"));
+        } else {
+            message.setText("  ");
         }
+
     }
 
 
@@ -250,19 +288,27 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         if (e.getSource().equals(roadCombo)) {
             numberCombo.setEnabled(false);
             numberCombo.removeListSelectionListener(this);
+            okayButton.setEnabled(false);
             if (roadCombo.getSelectedIndex() == -1) {
                 log.debug("no selection - turning off numbers combo");
+                message.setText(" ");
+                okayButton.setEnabled(false);
+                numberCombo.setEnabled(false);
+                numberListModel.clear();
             } else {
                 doNumbers(roadCombo.getSelectedValue());
+                message.setText(Bundle.getMessage("AssociateReady"));
                 numberCombo.addListSelectionListener(this);
                 numberCombo.setEnabled(true);
             }
         } else if (e.getSource().equals(numberCombo)) {
             if (numberCombo.getSelectedIndex() == -1 ) {
                 log.debug("road number was deselected - turning off okay button");
+                message.setText("  ");
                 okayButton.setEnabled(false);
             } {
                 okayButton.setEnabled(true);
+                message.setText(Bundle.getMessage("AssociateOkayReady"));
             }
         } else {
             log.error("don't recognize the source of the event");
