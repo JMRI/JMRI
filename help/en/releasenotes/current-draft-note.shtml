@@ -587,7 +587,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Added a "TelnetTrain.py" example to run a train from the Python command line.</li>
         </ul>
 
    <h3>Web Server</h3>
