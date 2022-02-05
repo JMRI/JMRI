@@ -113,9 +113,48 @@ import org.slf4j.LoggerFactory;
  * It is always stored here in millimeter units.
  * A length of 0.0 indicates no entry of length by the user.
  *
+ * <p><a href="doc-files/Block.png"><img src="doc-files/Block.png" alt="State diagram for train tracking" height="33%" width="33%"></a>
+ *
  * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
  * @author Dave Duchamp Copywright (C) 2009
  */
+
+/*
+ * @startuml jmri/doc-files/Block.png
+ * hide empty description
+ * note as N1 #E0E0FF
+ *     State diagram for tracking through sequential blocks with train
+ *     direction information. "Left" and "Right" refer to blocks on either
+ *     side. There's one state machine associated with each block.
+ *     Assumes never more than one train in a block, e.g. due to signals.
+ * end note
+ *
+ * state Empty
+ *
+ * state "Train >>>" as TR
+ *
+ * state "<<< Train" as TL
+ *
+ * [*] --> Empty
+ *
+ * TR -up-> Empty : Goes Unoccupied
+ * Empty -down-> TR : Goes Occupied & Left >>>
+ * note on link #FFAAAA: Copy Train From Left
+ *
+ * Empty -down-> TL : Goes Occupied & Right <<<
+ * note on link #FFAAAA: Copy Train From Right
+ * TL -up-> Empty : Goes Unoccupied
+
+ * TL -right-> TR : Tracked train changes direction to >>>
+ * TR -left-> TL : Tracked train changes direction to <<<
+ *
+ * state "Intervention Required" as IR
+ * note bottom of IR #FFAAAA : Something else needs to set Train ID and Direction in Block
+ *
+ * Empty -right-> IR : Goes Occupied & ! (Left >>> | Right <<<)
+ * @enduml
+ */
+
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
     /**
