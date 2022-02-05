@@ -31,27 +31,33 @@
 	<variable CV="2" item="Decoder Version" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Version No.</label>
+        <label xml:lang="cs">Verze SW</label>
 	  </variable>	  
       <variable CV="3" item="Serial Number" readOnly="yes" >
 		<splitVal highCV="4" upperMask="XXXXVVVV"/>
         <label>Decoder serial number</label>
+        <label xml:lang="cs">Sériové číslo</label>
       </variable>
       <variable CV="7" item="Manufacturer" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Id</label>
+        <label xml:lang="cs">ID výrobce</label>
       </variable>
       <variable CV="8" item="Developer Id" readOnly="yes" >
         <decVal/>
         <label>Developer Id</label>
+        <label xml:lang="cs">ID vývojáře</label>
       </variable>
       <variable CV="9" item="Product Id" readOnly="yes" >
         <decVal/>
         <label>Product Id</label>
+        <label xml:lang="cs">ID výrobku</label>
       </variable>
 
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
+                <label xml:lang="cs">Dlouhá adresa</label>
 	  </variable>	 
 	  
  	  
@@ -64,47 +70,67 @@
       <variable CV="24" item="Servo 1, Pulse length (* 0.1 sec)" >
         <decVal/>
         <label>Servo 1, Pulse length (* 0.1 sek)</label>
+        <label xml:lang="cs">Přestavník 1, Délka pulsu (× 0,1 s)</label>
       </variable>
 	<!-- <SV type="int1" name="Servo 2, Pulse length (* 0.1 sec)" svNumber="25" rw="1"/> -->
       <variable CV="25" item="Servo 2, Pulse length (* 0.1 sec)" >
         <decVal/>
         <label>Servo 2, Pulse length (* 0.1 sec)</label>
+        <label xml:lang="cs">Přestavník 2, Délka pulsu (× 0,1 s)</label>
       </variable>
 	<!-- <SV type="int1" name="Servo 3, Pulse length (* 0.1 sec)" svNumber="26" rw="1"/> -->
       <variable CV="26" item="Servo 3, Pulse length (* 0.1 sec)" >
         <decVal/>
         <label>Servo 3, Pulse length (* 0.1 sec)</label>
+        <label xml:lang="cs">Přestavník 3, Délka pulsu (× 0,1 s)</label>
       </variable>
 	<!-- <SV type="int1" name="Servo 4, Pulse length (* 0.1 sec)" svNumber="27" rw="1"/> -->
       <variable CV="27" item="Servo 4, Pulse length (* 0.1 sec)" >
         <decVal/>
         <label>Servo 4, Pulse length (* 0.1 sec)</label>
+        <label xml:lang="cs">Přestavník 4, Délka pulsu (× 0,1 s)</label>
       </variable>
 	<!-- <SV type="int1" name="Servo 5, Pulse length (* 0.1 sec)" svNumber="28" rw="1"/> -->
       <variable CV="28" item="Servo 5, Pulse length (* 0.1 sec)" >
         <decVal/>
         <label>Servo 5, Pulse length (* 0.1 sec)</label>
+        <label xml:lang="cs">Přestavník 5, Délka pulsu (× 0,1 s)</label>
       </variable>
 	<!-- <SV type="bits" start='0' length='1' name="Neutral output state" svNumber="29" rw="1"> -->
 	<variable item="Neutral output state" CV="29" mask="XXXXXXXV">
 		<enumVal>
-			<enumChoice choice="Switch output 0 if inactive" value="0"/>
-			<enumChoice choice="Switch output Vcc if inactive" value="1"/>
+			<enumChoice choice="Switch output 0 if inactive" value="0">
+                            <choice>Switch output 0 if inactive</choice>
+                            <choice xml:lang="cs">Pokud není aktivní tak výstup je 0</choice>
+                        </enumChoice>
+			<enumChoice choice="Switch output Vcc if inactive" value="1">
+                            <choice>Switch output Vcc if inactive</choice>
+                            <choice xml:lang="cs">Pokud není aktivní tak výstup je Vcc</choice>
+                        </enumChoice>
 		</enumVal>
 		<label>Neutral output state</label>
+                <label xml:lang="cs">Stav výstupu neutrální</label>
 	</variable>	  
 	<!-- <SV type="int1" name="Time between switching" svNumber="30" rw="1"/> -->
       <variable CV="30" item="Time between switching" >
         <decVal/>
         <label>Time between switching</label>
+        <label xml:lang="cs">Čas mezi přestavováním</label>
       </variable>
 	<!-- <SV type="bits" start='0' length='1' name="Type of buttons" svNumber="23" rw="1"> -->
 	<variable item="Type of buttons" CV="23" mask="XXXXXXXV">
 		<enumVal>
-			<enumChoice choice="Toggle" value="0"/>
-			<enumChoice choice="Switch" value="1"/>
+			<enumChoice choice="Toggle" value="0">
+                            <choice>Toggle</choice>
+                            <choice xml:lang="cs">Tlačítka</choice>
+                        </enumChoice>   
+			<enumChoice choice="Switch" value="1">
+                            <choice>Switch</choice>
+                            <choice xml:lang="cs">Přepínač</choice>
+                        </enumChoice>   
 		</enumVal>
 		<label>Type of buttons</label>
+		<label xml:lang="cs">Typ tlačítek</label>
 	</variable>
 
 	  <!--
@@ -116,38 +142,79 @@
 	 -->
 	<variable item="Servo 1 direction, Loconet" CV="39" mask="XXXXXXXV">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 1 direction, Loconet</label>
+		<label xml:lang="cs">Přestavník 1 směr, LocoNet</label>
 	</variable>
 	<variable item="Servo 2 direction, Loconet" CV="39" mask="XXXXXXVX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 2 direction, Loconet</label>
+		<label xml:lang="cs">Přestavník 2 směr, LocoNet</label>
 	</variable>
 	<variable item="Servo 3 direction, Loconet" CV="39" mask="XXXXXVXX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
+            </enumChoice>   
         </enumVal>
 		<label>Servo 3 direction, Loconet</label>
+		<label xml:lang="cs">Přestavník 3 směr, LocoNet</label>
 	</variable>
 	<variable item="Servo 4 direction, Loconet" CV="39" mask="XXXXVXXX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 4 direction, Loconet</label>
+		<label xml:lang="cs">Přestavník 4 směr, LocoNet</label>
 	</variable>
 	<variable item="Servo 5 direction, Loconet" CV="39" mask="XXXVXXXX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 5 direction, Loconet</label>
+		<label xml:lang="cs">Přestavník 5 směr, LocoNet</label>
 	</variable>
 
 
@@ -160,38 +227,73 @@
 	 -->
 	<variable item="Servo 1 direction, Switch" CV="41" mask="XXXXXXXV">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 1 direction, Switch</label>
+		<label xml:lang="cs">Přestavník 1 směr, Přepínač</label>
 	</variable>
 	<variable item="Servo 2 direction, Switch" CV="41" mask="XXXXXXVX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 2 direction, Switch</label>
+		<label xml:lang="cs">Přestavník 2 směr, Přepínač</label>
 	</variable>
 	<variable item="Servo 3 direction, Switch" CV="41" mask="XXXXXVXX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 3 direction, Switch</label>
+		<label xml:lang="cs">Přestavník 3 směr, Přepínač</label>
 	</variable>
 	<variable item="Servo 4 direction, Switch" CV="41" mask="XXXXVXXX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 4 direction, Switch</label>
+		<label xml:lang="cs">Přestavník 4 směr, Přepínač</label>
 	</variable>
 	<variable item="Servo 5 direction, Switch" CV="41" mask="XXXVXXXX">
         <enumVal>
-          <enumChoice choice="Normal" value="0"/>
-          <enumChoice choice="Opposite" value="1"/>
+          <enumChoice choice="Normal" value="0">
+                <choice>Normal</choice>
+                <choice xml:lang="cs">Normální</choice>
+            </enumChoice>   
+          <enumChoice choice="Opposite" value="1">
+                <choice>Opposite</choice>
+                <choice xml:lang="cs">Otočený</choice>
+            </enumChoice>   
         </enumVal>
 		<label>Servo 5 direction, Switch</label>
+		<label xml:lang="cs">Přestavník 5 směr, Přepínač</label>
 	</variable>
 
 	<!-- <array svNumber="172" name="Start Delay Servo" tip="" startIndex='1' length='5' rw='1' minVersion='6'>
@@ -201,55 +303,65 @@
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 1, from THROWN</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 1, z Do odbočky</label>
 	</variable>
 	<variable item="Start Delay Servo 1, from CLOSED" CV="172" mask="VVVVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 1, from CLOSED</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 1, z Přímo</label>
 	</variable>
 
 	<variable item="Start Delay Servo 2, from THROWN" CV="173" mask="XXXXVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 2, from THROWN</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 2, z Do odbočky</label>
 	</variable>
 	<variable item="Start Delay Servo 2, from CLOSED" CV="173" mask="VVVVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 2, from CLOSED</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 2, z Přímo</label>
 	</variable>
 
 	<variable item="Start Delay Servo 3, from THROWN" CV="174" mask="XXXXVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 3, from THROWN</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 3, z Do odbočky</label>
 	</variable>
 	<variable item="Start Delay Servo 3, from CLOSED" CV="174" mask="VVVVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 3, from CLOSED</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 3, z Přímo</label>
 	</variable>
 
 	<variable item="Start Delay Servo 4, from THROWN" CV="175" mask="XXXXVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 4, from THROWN</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 4, z Do odbočky</label>
 	</variable>
 	<variable item="Start Delay Servo 4, from CLOSED" CV="175" mask="VVVVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 4, from CLOSED</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 4, z Přímo</label>
 	</variable>
 
 	<variable item="Start Delay Servo 5, from THROWN" CV="176" mask="XXXXVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 5, from THROWN</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 5, z Do odbočky</label>
 	</variable>
 	<variable item="Start Delay Servo 5, from CLOSED" CV="176" mask="VVVVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <decVal/>
 		<label>Start Delay Servo 5, from CLOSED</label>
+		<label xml:lang="cs">Zpoždění startu přestavník 5, z Přímo</label>
 	</variable>
 
 	<!--  ^ ^ ^ ^ ^ ^ Sservo ^ ^ ^ ^ ^ ^ ^ -->
@@ -266,28 +378,61 @@
 	-->
 	<variable item="Feedback type" CV="42" mask="XXXXXXXV">
         <enumVal>
-          <enumChoice choice="Closed/Thrown only" value="0"/>
-          <enumChoice choice="C/T + unkown state info" value="1"/>
+          <enumChoice choice="Closed/Thrown only" value="0">
+                <choice>Closed/Thrown only</choice>
+                <choice xml:lang="cs">Pouze Přímo/Do odbočky</choice>
+            </enumChoice>   
+          <enumChoice choice="C/T + unkown state info" value="1">
+                <choice>C/T + unkown state info</choice>
+                <choice xml:lang="cs">P/O + neznámý stav</choice>
+            </enumChoice>   
         </enumVal>
 	</variable>
 	<variable item="Switch when button is" CV="43">
         <enumVal>
-          <enumChoice choice="Pressed" value="0"/>
-          <enumChoice choice="Released" value="1"/>
-          <enumChoice choice="Both" value="2"/>
+          <enumChoice choice="Pressed" value="0">
+                <choice>Pressed</choice>
+                <choice xml:lang="cs">Stisknuto</choice>
+            </enumChoice>   
+          <enumChoice choice="Released" value="1">
+                <choice>Released</choice>
+                <choice xml:lang="cs">Uvolněno</choice>
+            </enumChoice>   
+          <enumChoice choice="Both" value="2">
+                <choice>Both</choice>
+                <choice xml:lang="cs">Obojí</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Switch when button is</label>
+            <label xml:lang="cs">Přepnout když tlačítko je</label>
 	</variable>
 	<variable item="Send LN for Buttons" CV="44" mask="XXXXXXXV">
     	<enumVal>
-        <enumChoice choice="No" value="0"/>
-        <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
        	</enumVal>
+            <label>Send LN for Buttons</label>
+            <label xml:lang="cs">Odeslat stisk tlačítka do LocoNet</label>
 	</variable>
 	<variable item="LocoNet is connected" CV="44" mask="XXXXXXVX">
      	<enumVal>
-        <enumChoice choice="No" value="0"/>
-        <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
        	</enumVal>
+            <label>LocoNet is connected</label>
+            <label xml:lang="cs">LocoNet je připojen</label>
 	</variable>
 	<!--  ^ ^ ^ ^ ^ ^ Control ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
@@ -317,84 +462,173 @@
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="46" upperMask="XXXXXVVV"/>
 		<label>Lock Address</label>
+                <label xml:lang="cs">Adresa zámku</label>
 	  </variable>	  
 	<variable item="Lock switch 1" CV="47" mask="XXXXXXXV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock switch 1</label>
+            <label xml:lang="cs">Zámek výhybky 1</label>
 	</variable>
 	<variable item="Lock switch 2" CV="47" mask="XXXXXXVX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock switch 2</label>
+            <label xml:lang="cs">Zámek výhybky 2</label>
 	</variable>
 	<variable item="Lock switch 3" CV="47" mask="XXXXXVXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock switch 3</label>
+            <label xml:lang="cs">Zámek výhybky 3</label>
 	</variable>
 	<variable item="Lock switch 4" CV="47" mask="XXXXVXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock switch 4</label>
+            <label xml:lang="cs">Zámek výhybky 4</label>
 	</variable>
 	<variable item="Lock switch 5" CV="47" mask="XXXVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock switch 5</label>
+            <label xml:lang="cs">Zámek výhybky 5</label>
 	</variable>
 	<variable item="Lock all switches" CV="47" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>10</value></qualifier>
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock all switches</label>
+            <label xml:lang="cs">Zámek všech výhybek</label>
 	</variable>
 	
 	<variable item="Lock 1 in position" CV="48" mask="XXXXXXXV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="Thrown" value="0"/>
-          <enumChoice choice="Closed" value="1"/>
+            <enumChoice choice="Thrown" value="0">
+                <choice>Thrown</choice>
+                <choice xml:lang="cs">Do odbočky</choice>
+            </enumChoice>
+            <enumChoice choice="Closed" value="1">
+                <choice>Closed</choice>
+                <choice xml:lang="cs">Přímo</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock 1 in position</label>
+            <label xml:lang="cs">Zámek 1 v poloze</label>
 	</variable>
 	<variable item="Lock 2 in position" CV="48" mask="XXXXXXVX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="Thrown" value="0"/>
-          <enumChoice choice="Closed" value="1"/>
+            <enumChoice choice="Thrown" value="0">
+                <choice>Thrown</choice>
+                <choice xml:lang="cs">Do odbočky</choice>
+            </enumChoice>
+            <enumChoice choice="Closed" value="1">
+                <choice>Closed</choice>
+                <choice xml:lang="cs">Přímo</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock 2 in position</label>
+            <label xml:lang="cs">Zámek 2 v poloze</label>
 	</variable>
 	<variable item="Lock 3 in position" CV="48" mask="XXXXXVXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="Thrown" value="0"/>
-          <enumChoice choice="Closed" value="1"/>
+            <enumChoice choice="Thrown" value="0">
+                <choice>Thrown</choice>
+                <choice xml:lang="cs">Do odbočky</choice>
+            </enumChoice>
+            <enumChoice choice="Closed" value="1">
+                <choice>Closed</choice>
+                <choice xml:lang="cs">Přímo</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock 3 in position</label>
+            <label xml:lang="cs">Zámek 3 v poloze</label>
 	</variable>
 	<variable item="Lock 4 in position" CV="48" mask="XXXXVXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="Thrown" value="0"/>
-          <enumChoice choice="Closed" value="1"/>
+            <enumChoice choice="Thrown" value="0">
+                <choice>Thrown</choice>
+                <choice xml:lang="cs">Do odbočky</choice>
+            </enumChoice>
+            <enumChoice choice="Closed" value="1">
+                <choice>Closed</choice>
+                <choice xml:lang="cs">Přímo</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock 4 in position</label>
+            <label xml:lang="cs">Zámek 4 v poloze</label>
 	</variable>
 	<variable item="Lock 5 in position" CV="48" mask="XXXVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="Thrown" value="0"/>
-          <enumChoice choice="Closed" value="1"/>
+            <enumChoice choice="Thrown" value="0">
+                <choice>Thrown</choice>
+                <choice xml:lang="cs">Do odbočky</choice>
+            </enumChoice>
+            <enumChoice choice="Closed" value="1">
+                <choice>Closed</choice>
+                <choice xml:lang="cs">Přímo</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Lock 5 in position</label>
+            <label xml:lang="cs">Zámek 5 v poloze</label>
 	</variable>
 	<!-- ^ ^ ^ ^ ^ ^ Locking ^ ^ ^ ^ ^ ^ ^ -->
 	<!-- * * * * * * * * * * * * * * * * * -->
@@ -430,38 +664,72 @@
     <variable CV="49" item="Delay in routes (* 0.1 sec)" >
         <decVal/>
         <label>Delay in routes (* 0.1 sec)</label>
+        <label xml:lang="cs">Zpoždění v trase (× 0,1 s)</label>
     </variable>
 	<variable item="Input sensor, Value for occupied state" CV="178">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
         <enumVal>
-          <enumChoice choice="NORMAL, occupied at LOW" value="0"/>
-          <enumChoice choice="Occupied at HIGH" value="1"/>
+            <enumChoice choice="NORMAL, occupied at LOW" value="0">
+                <choice>NORMAL, occupied at LOW</choice>
+                <choice xml:lang="cs">NORMÁLNÍ, Obsazeno při LOW</choice>
+            </enumChoice>
+          <enumChoice choice="Occupied at HIGH" value="1">
+                <choice>Occupied at HIGH</choice>
+                <choice xml:lang="cs">Obsazeno při HIGH</choice>
+            </enumChoice>
         </enumVal>
+            <label>Input sensor, Value for occupied state</label>
+            <label xml:lang="cs">Vstup snímače, hodnota pro stav Obsazeno</label>
 	</variable>
 	<variable item="Input unconnected state" CV="179">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
         <enumVal>
-          <enumChoice choice="NORMAL, always high" value="0"/>
-          <enumChoice choice="undefined, floating state" value="1"/>
+            <enumChoice choice="NORMAL, always high" value="0">
+                <choice>NORMAL, always high</choice>
+                <choice xml:lang="cs">NORMÁLNÍ, vždy HIGH</choice>
+            </enumChoice>
+          <enumChoice choice="undefined, floating state" value="1">
+                <choice>undefined, floating state</choice>
+                <choice xml:lang="cs">nedefinováno, plovoucí stav</choice>
+            </enumChoice>
         </enumVal>
+            <label>Input unconnected state</label>
+            <label xml:lang="cs">Stav nepřipojeného vstupu</label>
 	</variable>
 	<variable item="Input use" CV="180">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="Switch buttons" value="0"/>
-		  <enumChoice choice="Internal switch status" value="1"/>
-          <enumChoice choice="Internal routes" value="2"/>
+          <enumChoice choice="Switch buttons" value="0">
+                    <choice>Switch buttons</choice>
+                    <choice xml:lang="cs">Tlačítka</choice>
+                </enumChoice>
+		  <enumChoice choice="Internal switch status" value="1">
+                    <choice>Internal switch status</choice>
+                    <choice xml:lang="cs">Stav interní výhybky</choice>
+                </enumChoice>          
+          <enumChoice choice="Internal routes" value="2">
+                    <choice>Internal routes</choice>
+                    <choice xml:lang="cs">Interní Trasy</choice>
+                </enumChoice>
          </enumVal>
+            <label>Input use</label>
+            <label xml:lang="cs">Použití vstupu</label>
 	</variable>
 	<variable CV="181" item="Status start address" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="182" upperMask="XXXXVVVV"/>
+            <label>Status start address</label>
+            <label xml:lang="cs">Počáteční adresa stavu</label>
 	</variable>	  
 	<variable CV="400" item="Sensor filter Pre (ms)" default="0">
 		<splitVal highCV="401" />
+            <label>Sensor filter Pre (ms)</label>
+            <label xml:lang="cs">Filtr zákmitů před Detekováno (ms)</label>
 	</variable>	  
 	<variable CV="402" item="Sensor filter Succ (ms)" default="0">
 		<splitVal highCV="403" />
+            <label>Sensor filter Succ (ms)</label>
+            <label xml:lang="cs">Filtr zákmitů po Detekováno (ms)</label>
 	</variable>
 
 	<!--  ^ ^ ^ ^ ^ ^ Special ^ ^ ^ ^ ^ ^ ^ -->
@@ -475,10 +743,21 @@
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Switch Closed" value="1"/>
-          <enumChoice choice="Switch Thrown" value="2"/>
+          <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Closed" value="1">
+                <choice>Switch Closed</choice>
+                <choice xml:lang="cs">Přepínač Přímo</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Thrown" value="2">
+                <choice>Switch Thrown</choice>
+                <choice xml:lang="cs">Přepínač Do odbočky</choice>
+          </enumChoice>
         </enumVal>
+            <label>Usage X1</label>
+            <label xml:lang="cs">Použití X1</label>
 	</variable>
 	<!-- <SV type="int1" name="Usage X1" svNumber="183" rw="1" minVersion='6'>
 			<v name="Not used" value='0'/>
@@ -490,117 +769,317 @@
 	<variable item="Usage X1 new" CV="183">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Switch Closed" value="1"/>
-          <enumChoice choice="Switch Thrown" value="2"/>
-          <enumChoice choice="Switch Toggle" value="3"/>
-          <enumChoice choice="Track Status" value="6"/>
-          <enumChoice choice="Track Status, opto X1/X3" value="15"/>
-          <enumChoice choice="Track Status, opto X1/X3 refelection" value="16"/>
+          <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Closed" value="1">
+                <choice>Switch Closed</choice>
+                <choice xml:lang="cs">Přepínač Přímo</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Thrown" value="2">
+                <choice>Switch Thrown</choice>
+                <choice xml:lang="cs">Přepínač Do odbočky</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Toggle" value="3">
+                <choice>Switch Toggle</choice>
+                <choice xml:lang="cs">Tlačítko</choice>
+          </enumChoice>
+          <enumChoice choice="Track Status" value="6">
+                <choice>Track Status</choice>
+                <choice xml:lang="cs">Stav koleje</choice>
+          </enumChoice>
+          <enumChoice choice="Track Status, opto X1/X3" value="15">
+              <choice>Track Status, opto X1/X3</choice>
+                <choice xml:lang="cs">Stav koleje, optický X1/X3</choice>
+          </enumChoice>
+          <enumChoice choice="Track Status, opto X1/X3 refelection" value="16">
+              <choice>Track Status, opto X1/X3 refelection</choice>
+                <choice xml:lang="cs">Stav kolej, optický X1/X3 odrazový</choice>
+          </enumChoice>
         </enumVal>
+            <label>Usage X1</label>
+            <label xml:lang="cs">Použití X1</label>
 	</variable>
 	<!-- <SV type="int2" name="Address X1" svNumber="184" minValue='1' maxValue='4096' rw="1" minVersion='3'/>  -->
 	<variable CV="184" item="Address X1" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="185" upperMask="XXXXVVVV"/>
+            <label>Address X1</label>
+            <label xml:lang="cs">Adresa X1</label>
 	</variable>	  
 
 	<variable item="Usage X2" CV="186">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Switch Closed" value="1"/>
-          <enumChoice choice="Switch Thrown" value="2"/>
+          <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Closed" value="1">
+                <choice>Switch Closed</choice>
+                <choice xml:lang="cs">Přepínač Přímo</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Thrown" value="2">
+                <choice>Switch Thrown</choice>
+                <choice xml:lang="cs">Přepínač Do odbočky</choice>
+          </enumChoice>
         </enumVal>
+            <label>Usage X2</label>
+            <label xml:lang="cs">Použití X2</label>
 	</variable>
 
 	<variable item="Usage X2 new" CV="186">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Switch Closed" value="1"/>
-          <enumChoice choice="Switch Thrown" value="2"/>
-          <enumChoice choice="Switch Toggle" value="3"/>
-          <enumChoice choice="Track Status" value="6"/>
-          <enumChoice choice="Track Status, opto X2/X4" value="15"/>
-          <enumChoice choice="Track Status, opto X2/X4 refelection" value="16"/>
+          <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Closed" value="1">
+                <choice>Switch Closed</choice>
+                <choice xml:lang="cs">Přepínač Přímo</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Thrown" value="2">
+                <choice>Switch Thrown</choice>
+                <choice xml:lang="cs">Přepínač Do odbočky</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Toggle" value="3">
+                <choice>Switch Toggle</choice>
+                <choice xml:lang="cs">Tlačítko</choice>
+          </enumChoice>
+          <enumChoice choice="Track Status" value="6">
+                <choice>Track Status</choice>
+                <choice xml:lang="cs">Stav koleje</choice>
+          </enumChoice>
+          <enumChoice choice="Track Status, opto X2/X4" value="15">
+              <choice>Track Status, opto X2/X4</choice>
+                <choice xml:lang="cs">Stav koleje, optický X2/X4</choice>
+          </enumChoice>
+          <enumChoice choice="Track Status, opto X2/X4 refelection" value="16">
+              <choice>Track Status, opto X2/X4 refelection</choice>
+                <choice xml:lang="cs">Stav kolej, optický X2/X4 odrazový</choice>
+          </enumChoice>
         </enumVal>
+            <label>Usage X2</label>
+            <label xml:lang="cs">Použití X2</label>
 	</variable>
 
 	<variable CV="187" item="Address X2" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="188" upperMask="XXXXVVVV"/>
+            <label>Address X2</label>
+            <label xml:lang="cs">Adresa X2</label>
 	</variable>	  
 
 	<variable item="Usage X3" CV="189">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Switch Closed" value="1"/>
-          <enumChoice choice="Switch Thrown" value="2"/>
-          <enumChoice choice="Lock LOCAL" value="4"/>
-          <enumChoice choice="Lock as Lock List" value="5"/>
-		  <enumChoice choice="Send Toggle" value="3"/>
-          <enumChoice choice="Track Status" value="6"/>
-          <enumChoice choice="Output, Servo sync Closed" value="20"/>
-          <enumChoice choice="Output, Servo sync Thrown" value="21"/>
-          <enumChoice choice="Output, Servo sync Unknown" value="22"/>
-          <enumChoice choice="Output, Relay sync" value="23"/>
-          <enumChoice choice="Output, Relay sync opposite" value="24"/>
+          <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Closed" value="1">
+                <choice>Switch Closed</choice>
+                <choice xml:lang="cs">Přepínač Přímo</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Thrown" value="2">
+                <choice>Switch Thrown</choice>
+                <choice xml:lang="cs">Přepínač Do odbočky</choice>
+          </enumChoice>
+          <enumChoice choice="Lock LOCAL" value="4">
+                <choice>Lock LOCAL</choice>
+                <choice xml:lang="cs">MÍSTNÍ zámek</choice>
+          </enumChoice>
+          <enumChoice choice="Lock as Lock List" value="5">
+                <choice>Lock as Lock List</choice>
+                <choice xml:lang="cs">Zámek jako seznam zámků</choice>
+          </enumChoice>
+            <enumChoice choice="Send Toggle" value="3">
+                <choice>Send Toggle</choice>
+                <choice xml:lang="cs">Tlačítko</choice>
+          </enumChoice>
+              <enumChoice choice="Track Status" value="6">
+                    <choice>Track Status</choice>
+                    <choice xml:lang="cs">Stav koleje</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Servo sync Closed" value='20'>
+                    <choice>Output, Servo sync Closed</choice>
+                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Servo sync Thrown" value='21'>
+                    <choice>Output, Servo sync Thrown</choice>
+                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Servo sync Unknown" value='22'>
+                    <choice>Output, Servo sync Unknown</choice>
+                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Neznámý</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Relay sync" value='23'>
+                    <choice>Output, Relay sync</choice>
+                    <choice xml:lang="cs">Výstup, Relé synchronizace</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Relay sync opposite" value='24'>
+                    <choice>Output, Relay sync opposite</choice>
+                    <choice xml:lang="cs">Výstup, Relé synchronizace otočený</choice>
+              </enumChoice>
         </enumVal>
+            <label>Usage X3</label>
+            <label xml:lang="cs">Použití X3</label>
 	</variable>
 	<variable item="Usage X3 new" CV="189">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-			<enumChoice choice="Not used" value="0"/>
-			<enumChoice choice="Switch Closed" value="1"/>
-			<enumChoice choice="Switch Thrown" value="2"/>
-			<enumChoice choice="Switch Toggle" value="3"/>
-			<enumChoice choice="Track Status" value="6"/>
-			<enumChoice choice="Lock LOCAL" value="4"/>
-			<enumChoice choice="Lock as Lock List" value="5"/>
-			<enumChoice choice="Output - Servo Sync CLOSED" value='20'/>
-			<enumChoice choice="Output - Servo Sync THROWN" value='21'/>
-			<enumChoice choice="Output - Servo Sync Not CLOSED" value='22'/>
-			<enumChoice choice="Output - Servo Sync Not THROWN" value='23'/>
-			<enumChoice choice="Output - Servo Sync Unknown" value='24'/>
-			<enumChoice choice="Output - Servo Sync Moving C-T" value='25'/>
-			<enumChoice choice="Output - Servo Sync Moving T-C" value='26'/>
-			<enumChoice choice="Output - Relay Sync" value='30'/>
-			<enumChoice choice="Output - Relay Sync Opposite" value='31'/>
-			<enumChoice choice="Output - Servo LocoNet controlled" value='18'/>
+              <enumChoice choice="Not used" value="0">
+                    <choice>Not used</choice>
+                    <choice xml:lang="cs">Nepoužito</choice>
+              </enumChoice>
+              <enumChoice choice="Switch Closed" value="1">
+                    <choice>Switch Closed</choice>
+                    <choice xml:lang="cs">Přepínač Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Switch Thrown" value="2">
+                    <choice>Switch Thrown</choice>
+                    <choice xml:lang="cs">Přepínač Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Switch Toggle" value="3">
+                    <choice>Switch Toggle</choice>
+                    <choice xml:lang="cs">Tlačítko</choice>
+              </enumChoice>
+              <enumChoice choice="Track Status" value="6">
+                    <choice>Track Status</choice>
+                    <choice xml:lang="cs">Stav koleje</choice>
+              </enumChoice>
+              <enumChoice choice="Lock LOCAL" value="4">
+                    <choice>Lock LOCAL</choice>
+                    <choice xml:lang="cs">MÍSTNÍ zámek</choice>
+              </enumChoice>
+              <enumChoice choice="Lock as Lock List" value="5">
+                    <choice>Lock as Lock List</choice>
+                    <choice xml:lang="cs">Zámek jako seznam zámků</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync CLOSED" value='20'>
+                    <choice>Output - Servo Sync CLOSED</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync THROWN" value='21'>
+                    <choice>Output - Servo Sync THROWN</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Not CLOSED" value='22'>
+                    <choice>Output - Servo Sync Not CLOSED</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Není Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Not THROWN" value='23'>
+                    <choice>Output - Servo Sync Not THROWN</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Není Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Unknown" value='24'>
+                    <choice>Output - Servo Sync Unknown</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Neznámý</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Moving C-T" value='25'>
+                    <choice>Output - Servo Sync Moving C-T</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Přestavování P→O</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Moving T-C" value='26'>
+                    <choice>Output - Servo Sync Moving T-C</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Přestavování O→P</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Relay Sync" value='30'>
+                    <choice>Output - Relay Sync</choice>
+                    <choice xml:lang="cs">Výstup - Relé Synchronizace</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Relay Sync Opposite" value='31'>
+                    <choice>Output - Relay Sync Opposite</choice>
+                    <choice xml:lang="cs">Výstup - Relé Synchronizace Otočený</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo LocoNet controlled" value='18'>
+                    <choice>Output - Servo LocoNet controlled</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník řízené LocoNet</choice>
+              </enumChoice>
         </enumVal>
+            <label>Usage X3</label>
+            <label xml:lang="cs">Použití X3</label>
 	</variable>
 	<variable CV="190" item="Address X3" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="191" upperMask="XXXXVVVV"/>
+            <label>Address X3</label>
+            <label xml:lang="cs">Adresa X3</label>
 	</variable>	 
 	<variable item="Active output X3" CV="191" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>12</value></qualifier>
         <enumVal>
-				<enumChoice choice="Active = 1" value='1'/>
-				<enumChoice choice="Active = 0" value='0'/>
+            <enumChoice choice="Active = 1" value='1'>
+                <choice>Active = 1</choice>
+                <choice xml:lang="cs">Aktivní = 1</choice>
+            </enumChoice>
+            <enumChoice choice="Active = 0" value='0'>
+                <choice>Active = 0</choice>
+                <choice xml:lang="cs">Aktivní = 0</choice>
+            </enumChoice>
         </enumVal>
+            <label>Active Output X3</label>
+            <label xml:lang="cs">Aktivní výstup X3</label>
     </variable>	
 	<variable item="Usage X4" CV="192">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Switch Closed" value="1"/>
-          <enumChoice choice="Switch Thrown" value="2"/>
-          <enumChoice choice="Lock LOCAL" value="4"/>
-          <enumChoice choice="Lock as Lock List" value="5"/>
-          <enumChoice choice="Send Toggle" value="3"/>
-          <enumChoice choice="Track Status" value="6"/>
-          <enumChoice choice="Output, Servo sync Closed" value="20"/>
-          <enumChoice choice="Output, Servo sync Thrown" value="21"/>
-          <enumChoice choice="Output, Servo sync Unknown" value="22"/>
-          <enumChoice choice="Output, Output relay sync" value="23"/>
-          <enumChoice choice="Output, Output relay sync opposite" value="24"/>
+          <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Closed" value="1">
+                <choice>Switch Closed</choice>
+                <choice xml:lang="cs">Přepínač Přímo</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Thrown" value="2">
+                <choice>Switch Thrown</choice>
+                <choice xml:lang="cs">Přepínač Do odbočky</choice>
+          </enumChoice>
+          <enumChoice choice="Lock LOCAL" value="4">
+                <choice>Lock LOCAL</choice>
+                <choice xml:lang="cs">MÍSTNÍ zámek</choice>
+          </enumChoice>
+          <enumChoice choice="Lock as Lock List" value="5">
+                <choice>Lock as Lock List</choice>
+                <choice xml:lang="cs">Zámek jako seznam zámků</choice>
+          </enumChoice>
+            <enumChoice choice="Send Toggle" value="3">
+                <choice>Send Toggle</choice>
+                <choice xml:lang="cs">Tlačítko</choice>
+          </enumChoice>
+              <enumChoice choice="Track Status" value="6">
+                    <choice>Track Status</choice>
+                    <choice xml:lang="cs">Stav koleje</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Servo sync Closed" value='20'>
+                    <choice>Output, Servo sync Closed</choice>
+                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Servo sync Thrown" value='21'>
+                    <choice>Output, Servo sync Thrown</choice>
+                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Servo sync Unknown" value='22'>
+                    <choice>Output, Servo sync Unknown</choice>
+                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Neznámý</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Relay sync" value='23'>
+                    <choice>Output, Relay sync</choice>
+                    <choice xml:lang="cs">Výstup, Relé synchronizace</choice>
+              </enumChoice>
+              <enumChoice choice="Output, Relay sync opposite" value='24'>
+                    <choice>Output, Relay sync opposite</choice>
+                    <choice xml:lang="cs">Výstup, Relé synchronizace otočený</choice>
+              </enumChoice>
         </enumVal>
+            <label>Usage X4</label>
+            <label xml:lang="cs">Použití X4</label>
 	</variable>
 	<variable item="Usage X4 new" CV="192">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
@@ -623,17 +1102,29 @@
 			<enumChoice choice="Output - Relay Sync Opposite" value='31'/>
 			<enumChoice choice="Output - Servo LocoNet controlled" value='18'/>
         </enumVal>
+            <label>Usage X4</label>
+            <label xml:lang="cs">Použití X4</label>
 	</variable>
 	<variable CV="193" item="Address X4" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="194" upperMask="XXXXVVVV"/>
+            <label>Address X4</label>
+            <label xml:lang="cs">Adresa X4</label>
 	</variable>	  
 	<variable item="Active output X4" CV="194" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>12</value></qualifier>
         <enumVal>
-				<enumChoice choice="Active = 1" value='1'/>
-				<enumChoice choice="Active = 0" value='0'/>
+            <enumChoice choice="Active = 1" value='1'>
+                <choice>Active = 1</choice>
+                <choice xml:lang="cs">Aktivní = 1</choice>
+            </enumChoice>
+            <enumChoice choice="Active = 0" value='0'>
+                <choice>Active = 0</choice>
+                <choice xml:lang="cs">Aktivní = 0</choice>
+            </enumChoice>
         </enumVal>
+            <label>Active Output X4</label>
+            <label xml:lang="cs">Aktivní výstup X4</label>
     </variable>	
 	<!-- ^ ^ ^ ^ ^ ^ Extra HW ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
@@ -654,120 +1145,220 @@
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 1</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 1</label>
 	</variable>
 	<variable item="Autoreturn, time, servo 1 new" CV="195" mask="XXVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 1</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 1</label>
     </variable>
 	<variable item="Autoreturn, time factor, servo 1" CV="195" mask="XVXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-				<enumChoice choice="*1" value='0'/>
-				<enumChoice choice="*10" value='1'/>
+            <enumChoice choice="*1" value='0'>
+                <choice>*1</choice>
+                <choice xml:lang="cs">×1</choice>
+            </enumChoice>   
+            <enumChoice choice="*10" value='1'>
+                <choice>*10</choice>
+                <choice xml:lang="cs">×10</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Autoreturn, time factor, servo 1</label>
+            <label xml:lang="cs">Automatický návrat, násobitel času, přestavník 1</label>
     </variable>
 	<variable item="Autoreturn, state, servo 1" CV="195" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
         <enumVal>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='0'/>
+				<enumChoice choice="Closed" value='1'>
+                                    <choice>Closed</choice>
+                                    <choice xml:lang="cs">Přímo</choice>
+                                </enumChoice>   
+				<enumChoice choice="Thrown" value='0'>
+                                    <choice>Thrown</choice>
+                                    <choice xml:lang="cs">Do odbočky</choice>
+                                </enumChoice>   
         </enumVal>
+            <label>Autoreturn, state, servo 1</label>
+            <label xml:lang="cs">Automatický návrat, poloha, přestavník 1</label>
     </variable>
 
 	<variable item="Autoreturn, time, servo 2" CV="196" mask="XVVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 2</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 2</label>
     </variable>
 	<variable item="Autoreturn, time, servo 2 new" CV="196" mask="XXVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 2</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 2</label>
     </variable>
 	<variable item="Autoreturn, time factor, servo 2" CV="196" mask="XVXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-				<enumChoice choice="*1" value='0'/>
-				<enumChoice choice="*10" value='1'/>
+            <enumChoice choice="*1" value='0'>
+                <choice>*1</choice>
+                <choice xml:lang="cs">×1</choice>
+            </enumChoice>   
+            <enumChoice choice="*10" value='1'>
+                <choice>*10</choice>
+                <choice xml:lang="cs">×10</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Autoreturn, time factor, servo 2</label>
+            <label xml:lang="cs">Automatický návrat, násobitel času, přestavník 2</label>
     </variable>
 	<variable item="Autoreturn, state, servo 2" CV="196" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
         <enumVal>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='0'/>
+				<enumChoice choice="Closed" value='1'>
+                                    <choice>Closed</choice>
+                                    <choice xml:lang="cs">Přímo</choice>
+                                </enumChoice>   
+				<enumChoice choice="Thrown" value='0'>
+                                    <choice>Thrown</choice>
+                                    <choice xml:lang="cs">Do odbočky</choice>
+                                </enumChoice>   
         </enumVal>
+            <label>Autoreturn, state, servo 2</label>
+            <label xml:lang="cs">Automatický návrat, poloha, přestavník 2</label>
     </variable>
 
 	<variable item="Autoreturn, time, servo 3" CV="197" mask="XVVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 3</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 3</label>
     </variable>
 	<variable item="Autoreturn, time, servo 3 new" CV="197" mask="XXVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 3</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 3</label>
     </variable>
 	<variable item="Autoreturn, time factor, servo 3" CV="197" mask="XVXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-				<enumChoice choice="*1" value='0'/>
-				<enumChoice choice="*10" value='1'/>
+            <enumChoice choice="*1" value='0'>
+                <choice>*1</choice>
+                <choice xml:lang="cs">×1</choice>
+            </enumChoice>   
+            <enumChoice choice="*10" value='1'>
+                <choice>*10</choice>
+                <choice xml:lang="cs">×10</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Autoreturn, time factor, servo 3</label>
+            <label xml:lang="cs">Automatický návrat, násobitel času, přestavník 3</label>
     </variable>
 	<variable item="Autoreturn, state, servo 3" CV="197" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
         <enumVal>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='0'/>
+				<enumChoice choice="Closed" value='1'>
+                                    <choice>Closed</choice>
+                                    <choice xml:lang="cs">Přímo</choice>
+                                </enumChoice>   
+				<enumChoice choice="Thrown" value='0'>
+                                    <choice>Thrown</choice>
+                                    <choice xml:lang="cs">Do odbočky</choice>
+                                </enumChoice>   
         </enumVal>
+            <label>Autoreturn, state, servo 3</label>
+            <label xml:lang="cs">Automatický návrat, poloha, přestavník 3</label>
     </variable>
 
 	<variable item="Autoreturn, time, servo 4" CV="198" mask="XVVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 4</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 4</label>
     </variable>
 	<variable item="Autoreturn, time, servo 4 new" CV="198" mask="XXVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 4</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 4</label>
     </variable>
 	<variable item="Autoreturn, time factor, servo 4" CV="198" mask="XVXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-				<enumChoice choice="*1" value='0'/>
-				<enumChoice choice="*10" value='1'/>
+            <enumChoice choice="*1" value='0'>
+                <choice>*1</choice>
+                <choice xml:lang="cs">×1</choice>
+            </enumChoice>   
+            <enumChoice choice="*10" value='1'>
+                <choice>*10</choice>
+                <choice xml:lang="cs">×10</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Autoreturn, time factor, servo 4</label>
+            <label xml:lang="cs">Automatický návrat, násobitel času, přestavník 4</label>
     </variable>
 	<variable item="Autoreturn, state, servo 4" CV="198" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
         <enumVal>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='0'/>
+				<enumChoice choice="Closed" value='1'>
+                                    <choice>Closed</choice>
+                                    <choice xml:lang="cs">Přímo</choice>
+                                </enumChoice>   
+				<enumChoice choice="Thrown" value='0'>
+                                    <choice>Thrown</choice>
+                                    <choice xml:lang="cs">Do odbočky</choice>
+                                </enumChoice>   
         </enumVal>
+            <label>Autoreturn, state, servo 4</label>
+            <label xml:lang="cs">Automatický návrat, poloha, přestavník 4</label>
     </variable>
 
 	<variable item="Autoreturn, time, servo 5" CV="199" mask="XVVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 5</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 5</label>
     </variable>
 	<variable item="Autoreturn, time, servo 5 new" CV="199" mask="XXVVVVVV">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
 		<decVal/>
+            <label>Autoreturn, time, servo 5</label>
+            <label xml:lang="cs">Automatický návrat, po čase, přestavník 5</label>
     </variable>
 	<variable item="Autoreturn, time factor, servo 5" CV="199" mask="XVXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-				<enumChoice choice="*1" value='0'/>
-				<enumChoice choice="*10" value='1'/>
+            <enumChoice choice="*1" value='0'>
+                <choice>*1</choice>
+                <choice xml:lang="cs">×1</choice>
+            </enumChoice>   
+            <enumChoice choice="*10" value='1'>
+                <choice>*10</choice>
+                <choice xml:lang="cs">×10</choice>
+            </enumChoice>   
         </enumVal>
+            <label>Autoreturn, time factor, servo 5</label>
+            <label xml:lang="cs">Automatický návrat, násobitel času, přestavník 5</label>
     </variable>
 	<variable item="Autoreturn, state, servo 5" CV="199" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
         <enumVal>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='0'/>
+				<enumChoice choice="Closed" value='1'>
+                                    <choice>Closed</choice>
+                                    <choice xml:lang="cs">Přímo</choice>
+                                </enumChoice>   
+				<enumChoice choice="Thrown" value='0'>
+                                    <choice>Thrown</choice>
+                                    <choice xml:lang="cs">Do odbočky</choice>
+                                </enumChoice>   
         </enumVal>
+            <label>Autoreturn, state, servo 5</label>
+            <label xml:lang="cs">Automatický návrat, poloha, přestavník 5</label>
     </variable>
 	<!--  ^ ^ ^ ^ ^ ^ Animation ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * * -->
@@ -795,132 +1386,322 @@
 	-->
 	<variable item="Secondary trigger 1, Type" CV="200" mask="XXXXXVVV" default="0">
         <enumVal>
-				<enumChoice choice="Not used" value='0'/>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='2'/>
-				<enumChoice choice="Both" value='3'/>
+              <enumChoice choice="Not used" value="0">
+                    <choice>Not used</choice>
+                    <choice xml:lang="cs">Nepoužito</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="1">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="2">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Both" value="3">
+                    <choice>Both</choice>
+                    <choice xml:lang="cs">Obojí</choice>
+              </enumChoice>
         </enumVal>
+            <label>Type</label>
+            <label xml:lang="cs">Typ</label>
     </variable>
 	<variable item="Secondary trigger 1, When" CV="200" mask="XXXXVXXX" default="0">
         <enumVal>
-				<enumChoice choice="Before move" value='0'/>
-				<enumChoice choice="After move" value='1'/>
+              <enumChoice choice="Before move" value="0">
+                    <choice>Before move</choice>
+                    <choice xml:lang="cs">Před přestavením</choice>
+              </enumChoice>
+              <enumChoice choice="After move" value="1">
+                    <choice>After move</choice>
+                    <choice xml:lang="cs">Po přestavením</choice>
+              </enumChoice>
         </enumVal>
+            <label>When</label>
+            <label xml:lang="cs">Kdy</label>
     </variable>
 	<variable item="Secondary trigger 1, Command" CV="201" default="0">
         <enumVal>
-				<enumChoice choice="Same" value='0'/>
-				<enumChoice choice="Opposite" value='1'/>
-				<enumChoice choice="Closed" value='2'/>
-				<enumChoice choice="Thrown" value='3'/>
+              <enumChoice choice="Same" value="0">
+                    <choice>Same</choice>
+                    <choice xml:lang="cs">Stejný</choice>
+              </enumChoice>
+              <enumChoice choice="Opposite" value="1">
+                    <choice>Opposite</choice>
+                    <choice xml:lang="cs">Otočený</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="2">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="3">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
         </enumVal>
+            <label>Command</label>
+            <label xml:lang="cs">Příkaz</label>
     </variable>
 	<variable CV="202" item="Secondary trigger 1, Controlled Address" default="0">
 		<splitVal highCV="203" upperMask="XXXXXVVV"/>
+            <label>Controlled Address</label>
+            <label xml:lang="cs">Řízená adresa</label>
 	</variable>	  
 
 	<variable item="Secondary trigger 2, Type" CV="204" mask="XXXXXVVV" default="0">
         <enumVal>
-				<enumChoice choice="Not used" value='0'/>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='2'/>
-				<enumChoice choice="Both" value='3'/>
+              <enumChoice choice="Not used" value="0">
+                    <choice>Not used</choice>
+                    <choice xml:lang="cs">Nepoužito</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="1">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="2">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Both" value="3">
+                    <choice>Both</choice>
+                    <choice xml:lang="cs">Obojí</choice>
+              </enumChoice>
         </enumVal>
+            <label>Type</label>
+            <label xml:lang="cs">Typ</label>
     </variable>
 	<variable item="Secondary trigger 2, When" CV="204" mask="XXXXVXXX" default="0">
         <enumVal>
-				<enumChoice choice="Before move" value='0'/>
-				<enumChoice choice="After move" value='1'/>
+              <enumChoice choice="Before move" value="0">
+                    <choice>Before move</choice>
+                    <choice xml:lang="cs">Před přestavením</choice>
+              </enumChoice>
+              <enumChoice choice="After move" value="1">
+                    <choice>After move</choice>
+                    <choice xml:lang="cs">Po přestavením</choice>
+              </enumChoice>
         </enumVal>
+            <label>When</label>
+            <label xml:lang="cs">Kdy</label>
     </variable>
 	<variable item="Secondary trigger 2, Command" CV="205" default="0">
         <enumVal>
-				<enumChoice choice="Same" value='0'/>
-				<enumChoice choice="Opposite" value='1'/>
-				<enumChoice choice="Closed" value='2'/>
-				<enumChoice choice="Thrown" value='3'/>
+              <enumChoice choice="Same" value="0">
+                    <choice>Same</choice>
+                    <choice xml:lang="cs">Stejný</choice>
+              </enumChoice>
+              <enumChoice choice="Opposite" value="1">
+                    <choice>Opposite</choice>
+                    <choice xml:lang="cs">Otočený</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="2">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="3">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
         </enumVal>
+            <label>Command</label>
+            <label xml:lang="cs">Příkaz</label>
     </variable>
 	<variable CV="206" item="Secondary trigger 2, Controlled Address" default="0">
 		<splitVal highCV="207" upperMask="XXXXXVVV"/>
+            <label>Controlled Address</label>
+            <label xml:lang="cs">Řízená adresa</label>
 	</variable>	  
 
 	<variable item="Secondary trigger 3, Type" CV="208" mask="XXXXXVVV" default="0">
         <enumVal>
-				<enumChoice choice="Not used" value='0'/>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='2'/>
-				<enumChoice choice="Both" value='3'/>
+              <enumChoice choice="Not used" value="0">
+                    <choice>Not used</choice>
+                    <choice xml:lang="cs">Nepoužito</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="1">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="2">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Both" value="3">
+                    <choice>Both</choice>
+                    <choice xml:lang="cs">Obojí</choice>
+              </enumChoice>
         </enumVal>
+            <label>Type</label>
+            <label xml:lang="cs">Typ</label>
     </variable>
 	<variable item="Secondary trigger 3, When" CV="208" mask="XXXXVXXX" default="0">
         <enumVal>
-				<enumChoice choice="Before move" value='0'/>
-				<enumChoice choice="After move" value='1'/>
+              <enumChoice choice="Before move" value="0">
+                    <choice>Before move</choice>
+                    <choice xml:lang="cs">Před přestavením</choice>
+              </enumChoice>
+              <enumChoice choice="After move" value="1">
+                    <choice>After move</choice>
+                    <choice xml:lang="cs">Po přestavením</choice>
+              </enumChoice>
         </enumVal>
+            <label>When</label>
+            <label xml:lang="cs">Kdy</label>
     </variable>
 	<variable item="Secondary trigger 3, Command" CV="209" default="0">
         <enumVal>
-				<enumChoice choice="Same" value='0'/>
-				<enumChoice choice="Opposite" value='1'/>
-				<enumChoice choice="Closed" value='2'/>
-				<enumChoice choice="Thrown" value='3'/>
+              <enumChoice choice="Same" value="0">
+                    <choice>Same</choice>
+                    <choice xml:lang="cs">Stejný</choice>
+              </enumChoice>
+              <enumChoice choice="Opposite" value="1">
+                    <choice>Opposite</choice>
+                    <choice xml:lang="cs">Otočený</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="2">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="3">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
         </enumVal>
+            <label>Command</label>
+            <label xml:lang="cs">Příkaz</label>
     </variable>
 	<variable CV="210" item="Secondary trigger 3, Controlled Address" default="0">
 		<splitVal highCV="211" upperMask="XXXXXVVV"/>
+            <label>Controlled Address</label>
+            <label xml:lang="cs">Řízená adresa</label>
 	</variable>	  
 
 	<variable item="Secondary trigger 4, Type" CV="212" mask="XXXXXVVV" default="0">
         <enumVal>
-				<enumChoice choice="Not used" value='0'/>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='2'/>
-				<enumChoice choice="Both" value='3'/>
+              <enumChoice choice="Not used" value="0">
+                    <choice>Not used</choice>
+                    <choice xml:lang="cs">Nepoužito</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="1">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="2">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Both" value="3">
+                    <choice>Both</choice>
+                    <choice xml:lang="cs">Obojí</choice>
+              </enumChoice>
         </enumVal>
+            <label>Type</label>
+            <label xml:lang="cs">Typ</label>
     </variable>
 	<variable item="Secondary trigger 4, When" CV="212" mask="XXXXVXXX" default="0">
         <enumVal>
-				<enumChoice choice="Before move" value='0'/>
-				<enumChoice choice="After move" value='1'/>
+              <enumChoice choice="Before move" value="0">
+                    <choice>Before move</choice>
+                    <choice xml:lang="cs">Před přestavením</choice>
+              </enumChoice>
+              <enumChoice choice="After move" value="1">
+                    <choice>After move</choice>
+                    <choice xml:lang="cs">Po přestavením</choice>
+              </enumChoice>
         </enumVal>
+            <label>When</label>
+            <label xml:lang="cs">Kdy</label>
     </variable>
 	<variable item="Secondary trigger 4, Command" CV="213" default="0">
         <enumVal>
-				<enumChoice choice="Same" value='0'/>
-				<enumChoice choice="Opposite" value='1'/>
-				<enumChoice choice="Closed" value='2'/>
-				<enumChoice choice="Thrown" value='3'/>
+              <enumChoice choice="Same" value="0">
+                    <choice>Same</choice>
+                    <choice xml:lang="cs">Stejný</choice>
+              </enumChoice>
+              <enumChoice choice="Opposite" value="1">
+                    <choice>Opposite</choice>
+                    <choice xml:lang="cs">Otočený</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="2">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="3">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
         </enumVal>
+            <label>Command</label>
+            <label xml:lang="cs">Příkaz</label>
     </variable>
 	<variable CV="214" item="Secondary trigger 4, Controlled Address" default="0">
 		<splitVal highCV="215" upperMask="XXXXXVVV"/>
+            <label>Controlled Address</label>
+            <label xml:lang="cs">Řízená adresa</label>
 	</variable>	  
 
 	<variable item="Secondary trigger 5, Type" CV="216" mask="XXXXXVVV" default="0">
         <enumVal>
-				<enumChoice choice="Not used" value='0'/>
-				<enumChoice choice="Closed" value='1'/>
-				<enumChoice choice="Thrown" value='2'/>
-				<enumChoice choice="Both" value='3'/>
+              <enumChoice choice="Not used" value="0">
+                    <choice>Not used</choice>
+                    <choice xml:lang="cs">Nepoužito</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="1">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="2">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Both" value="3">
+                    <choice>Both</choice>
+                    <choice xml:lang="cs">Obojí</choice>
+              </enumChoice>
         </enumVal>
+            <label>Type</label>
+            <label xml:lang="cs">Typ</label>
     </variable>
 	<variable item="Secondary trigger 5, When" CV="216" mask="XXXXVXXX" default="0">
         <enumVal>
-				<enumChoice choice="Before move" value='0'/>
-				<enumChoice choice="After move" value='1'/>
+              <enumChoice choice="Before move" value="0">
+                    <choice>Before move</choice>
+                    <choice xml:lang="cs">Před přestavením</choice>
+              </enumChoice>
+              <enumChoice choice="After move" value="1">
+                    <choice>After move</choice>
+                    <choice xml:lang="cs">Po přestavením</choice>
+              </enumChoice>
         </enumVal>
+            <label>When</label>
+            <label xml:lang="cs">Kdy</label>
     </variable>
 	<variable item="Secondary trigger 5, Command" CV="217" default="0">
         <enumVal>
-				<enumChoice choice="Same" value='0'/>
-				<enumChoice choice="Opposite" value='1'/>
-				<enumChoice choice="Closed" value='2'/>
-				<enumChoice choice="Thrown" value='3'/>
+              <enumChoice choice="Same" value="0">
+                    <choice>Same</choice>
+                    <choice xml:lang="cs">Stejný</choice>
+              </enumChoice>
+              <enumChoice choice="Opposite" value="1">
+                    <choice>Opposite</choice>
+                    <choice xml:lang="cs">Otočený</choice>
+              </enumChoice>
+              <enumChoice choice="Closed" value="2">
+                    <choice>Closed</choice>
+                    <choice xml:lang="cs">Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Thrown" value="3">
+                    <choice>Thrown</choice>
+                    <choice xml:lang="cs">Do odbočky</choice>
+              </enumChoice>
         </enumVal>
+            <label>Command</label>
+            <label xml:lang="cs">Příkaz</label>
     </variable>
 	<variable CV="218" item="Secondary trigger 5, Controlled Address" default="0">
 		<splitVal highCV="219" upperMask="XXXXXVVV"/>
+            <label>Controlled Address</label>
+            <label xml:lang="cs">Řízená adresa</label>
 	</variable>	  
 
 	<!-- ^ ^ ^ ^ ^ ^ Secondary triggers  ^ ^ ^ ^ ^ ^ -->
@@ -942,27 +1723,29 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
   <pane>
     <name>General decoder info</name>
+    <name xml:lang="cs">Všeobecné informace o dekodéru</name>
     <column>
       <label>
         <text>Address to decoder AND to first servo</text>
+        <text  xml:lang="cs">Adresa dekodéru a prvního přestavníku</text>
       </label>
       <display item="Short Address"/>
       <label>
         <text> </text>
       </label>
-      <display item="Decoder Version" label="Software Version"/>
+      <display item="Decoder Version"/>
       <label>
         <text> </text>
       </label>
-      <display item="Manufacturer Id" label="Manufacturer Id"/>
+      <display item="Manufacturer"/>
       <label>
         <text> </text>
       </label>
-      <display item="Developer Id" label="Developer Id"/>
+      <display item="Developer Id"/>
       <label>
         <text> </text>
       </label>
-      <display item="Product Id" label="Product Id"/>
+      <display item="Product Id"/>
       <label>
         <text> </text>
       </label>
@@ -971,44 +1754,61 @@
 
   <pane>
     <name>Servo</name>
+    <name xml:lang="cs">Přestavník</name>
     <column>
       <label>
         <text>Address to decoder AND to first servo</text>
+        <text xml:lang="cs">Adresa dekodéru a prvního přestavníku</text>
       </label>
       <display item="Short Address"/>
       <label><text> </text></label>
       <display item="Time between switching"/>
       <display item="Neutral output state"/>	  
       <label><text> </text></label>	  
-      <label><text>Servo 1</text></label>
+      <label>
+          <text>Servo 1</text>
+          <text xml:lang="cs">Přestavník 1</text>
+      </label>
       <display item="Servo 1, Pulse length (* 0.1 sec)"/>
       <display item="Servo 1 direction, Loconet"/>
       <display item="Servo 1 direction, Switch"/>
       <display item="Start Delay Servo 1, from THROWN"/>
       <display item="Start Delay Servo 1, from CLOSED"/>
       <label><text>  </text></label>
-      <label><text>Servo 2</text></label>
+      <label>
+          <text>Servo 2</text>
+          <text xml:lang="cs">Přestavník 2</text>
+      </label>
       <display item="Servo 2, Pulse length (* 0.1 sec)"/>
       <display item="Servo 2 direction, Loconet"/>
       <display item="Servo 2 direction, Switch"/>
       <display item="Start Delay Servo 2, from THROWN"/>
       <display item="Start Delay Servo 2, from CLOSED"/>
       <label><text>  </text></label>
-      <label><text>Servo 3</text></label>
+      <label>
+          <text>Servo 3</text>
+          <text xml:lang="cs">Přestavník 3</text>
+      </label>
       <display item="Servo 3, Pulse length (* 0.1 sec)"/>
       <display item="Servo 3 direction, Loconet"/>
       <display item="Servo 3 direction, Switch"/>
       <display item="Start Delay Servo 3, from THROWN"/>
       <display item="Start Delay Servo 3, from CLOSED"/>
       <label><text>  </text></label>
-      <label><text>Servo 4</text></label>
+      <label>
+          <text>Servo 4</text>
+          <text xml:lang="cs">Přestavník 4</text>
+      </label>
       <display item="Servo 4, Pulse length (* 0.1 sec)"/>
       <display item="Servo 4 direction, Loconet"/>
       <display item="Servo 4 direction, Switch"/>
       <display item="Start Delay Servo 4, from THROWN"/>
       <display item="Start Delay Servo 4, from CLOSED"/>
       <label><text>  </text></label>
-      <label><text>Servo 5</text></label>
+      <label>
+          <text>Servo 5</text>
+          <text xml:lang="cs">Přestavník 5</text>
+      </label>
       <display item="Servo 5, Pulse length (* 0.1 sec)"/>
       <display item="Servo 5 direction, Loconet"/>
       <display item="Servo 5 direction, Switch"/>
@@ -1020,6 +1820,7 @@
 
   <pane>
     <name>Control</name>
+    <name xml:lang="cs">Řízení</name>
     <column>
       <display item="Feedback type"/>
       <label>
@@ -1034,6 +1835,7 @@
 
   <pane>
     <name>Locking</name>
+    <name xml:lang="cs">Zamykání</name>
     <column>
       <display item="Lock Address"/>
       <label>
@@ -1062,6 +1864,7 @@
 
   <pane>
     <name>Sensor and Special</name>
+    <name xml:lang="cs">Snímače a ostatní</name>
     <column>
       <display item="Input use"/>
       <label><text> </text></label>
@@ -1079,35 +1882,37 @@
 
   <pane>
     <name>Extra HW connections</name>
+    <name xml:lang="cs">Doplňková HW připojení</name>
     <column>
       <display item="Usage X1"/>
-      <display item="Usage X1 new" label="Usage X1"/>
+      <display item="Usage X1 new"/>
       <display item="Address X1"/>
       <label>
         <text> </text>
       </label>
       <display item="Usage X2"/>
-      <display item="Usage X2 new" label="Usage X2"/>
+      <display item="Usage X2 new"/>
       <display item="Address X2"/>
       <label>
         <text> </text>
       </label>
       <display item="Usage X3"/>
-      <display item="Usage X3 new" label="Usage X3"/>
+      <display item="Usage X3 new"/>
       <display item="Address X3"/>
-      <display item="Active output X3" label="Active output X3"/>	  
+      <display item="Active output X3"/>	  
       <label>
         <text> </text>
       </label>
       <display item="Usage X4"/>
-      <display item="Usage X4 new" label="Usage X4"/>
+      <display item="Usage X4 new"/>
       <display item="Address X4"/>
-      <display item="Active output X4" label="Active output X4"/>
+      <display item="Active output X4"/>
     </column>
   </pane>
 
   <pane>
     <name>Animation</name>
+    <name xml:lang="cs">Samovrat</name>
     <column>
       <display item="Autoreturn, time, servo 1" label="Autoreturn, time, servo 1"/>
       <display item="Autoreturn, time, servo 1 new" label="Autoreturn, time, servo 1"/>
@@ -1146,9 +1951,11 @@
 
 <pane>
     <name>Secondary trigger</name>
+    <name xml:lang="cs">Podružný spouštěč</name>
     <column>
       <label>
         <text>Secondary trigger Servo 1</text>
+        <text xml:lang="cs">Podružný spouštěč Přestavník 1</text>
       </label>
       <display item="Secondary trigger 1, Type" label="Type"/>
       <display item="Secondary trigger 1, When" label="When"/>
@@ -1159,6 +1966,7 @@
       </label>
       <label>
         <text>Secondary trigger Servo 2</text>
+        <text xml:lang="cs">Podružný spouštěč Přestavník 2</text>
       </label>
       <display item="Secondary trigger 2, Type" label="Type"/>
       <display item="Secondary trigger 2, When" label="When"/>
@@ -1169,6 +1977,7 @@
       </label>
       <label>
         <text>Secondary trigger Servo 3</text>
+        <text xml:lang="cs">Podružný spouštěč Přestavník 3</text>
       </label>
       <display item="Secondary trigger 3, Type" label="Type"/>
       <display item="Secondary trigger 3, When" label="When"/>
@@ -1179,6 +1988,7 @@
       </label>
       <label>
         <text>Secondary trigger Servo 4</text>
+        <text xml:lang="cs">Podružný spouštěč Přestavník 4</text>
       </label>
       <display item="Secondary trigger 4, Type" label="Type"/>
       <display item="Secondary trigger 4, When" label="When"/>
@@ -1189,6 +1999,7 @@
       </label>
       <label>
         <text>Secondary trigger Servo 5</text>
+        <text xml:lang="cs">Podružný spouštěč Přestavník 5</text>
       </label>
       <display item="Secondary trigger 5, Type" label="Type"/>
       <display item="Secondary trigger 5, When" label="When"/>
