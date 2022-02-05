@@ -565,20 +565,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                             // and java/src/jmri/jmrit/display/configurexml/SlipTurnoutIconXml.java
                             $widget['name'] = $widget.id; // normalize name
                             $widget['slipicontype'] = $widget.turnoutType;
-                            $widget['systemNameE'] = $widget.turnoutEast;
-                            $widget['systemNameW'] = $widget.turnoutWest;
-                            $widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
-                            //$widget['icon' + UNKNOWN] = $(this).find('iconmap').find('unknown').attr('url');
-                            $widget['icon' + INCONSISTENT] = $(this).find('iconmap').find('inconsistent').attr('url');
-                            //$widget['icon0'] = $(this).find('iconmap').find('lowerWestToLowerEast').attr('url');
+                            //$widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
+                            $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
+                            $widget['icon' + INCONSISTENT] = $(this).find('inconsistent').attr('url');
+                            //$widget['icon0'] = $(this).find('lowerWestToLowerEast').attr('url');
                             // reserved
-                            $widget['icon5'] = $(this).find('iconmap').find('lowerWestToLowerEast').attr('url');
-                            $widget['icon9'] = $(this).find('iconmap').find('lowerWestToLowerEast').attr('url');
+                            $widget['icon5'] = $(this).find('lowerWestToLowerEast').attr('url');
+                            $widget['icon9'] = $(this).find('lowerWestToLowerEast').attr('url');
 
                             switch ($widget.turnoutType) {
                                 // TODO set details, connect beans
                                 case "doubleSlip" : // default
-                                    $widget['icon7'] = $(this).find('iconmap').find('upperWestToUpperEast').attr('url');
+                                    $widget['icon7'] = $(this).find('upperWestToUpperEast').attr('url');
                                     break;
                                 case "singleSlip" :
                                     $widget['slipRoute'] = $widget.singleSlipRoute;
@@ -588,29 +586,24 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     break;
                                 case "scissor" :
                                     if (isDefined($widget.turnoutLowerEast)) {
-                                        $widget['systemNameLE'] = $widget.turnoutLowerEast;
-                                        $widget['systemNameLW'] = $widget.turnoutLowerWest;
                                         $widget['singleCrossOver'] = "false";
-                                        // connect now to prevent extra switch
-                                        jmri.getTurnout($widget['systemNameLE']);
-                                        jmri.getTurnout($widget['systemNameLW']);
+                                        // connect now to prevent extra switch case
+                                        //jmri.getTurnout($widget['turnoutLowerEast']);
+                                        //jmri.getTurnout($widget['turnoutLowerWest']);
                                     } else {
                                         $widget['singleCrossOver'] = "true";
                                     }
                                     break;
                             }
-//                            $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
-//                            $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
-//                            $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
-//                            //0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
-                            $widget['rotation'] = $(this).find('icons').find('unknown-full').find('rotation').text() * 1;
-                            $widget['degrees'] = ($(this).find('icons').find('unknown-full').attr('degrees') * 1) - ($widget.rotation * 90);
-                            $widget['scale'] = $(this).find('icons').find('unknown-full').attr('scale');
+                            //0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
+                            $widget['rotation'] = $(this).find('lowerWestToLowerEast').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('lowerWestToLowerEast').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('lowerWestToLowerEast').attr('scale');
                             if ($widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            //jmri.getTurnout($widget['systemNameLE']);
-                            //jmri.getTurnout($widget['systemNameLW']);
+                            //jmri.getTurnout($widget['turnoutEast']);
+                            //jmri.getTurnout($widget['turnoutWest']);
                             break;
                     }
 
