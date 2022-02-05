@@ -258,7 +258,8 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
 
     private void setCarLocation(RollingStock car, TagCarItem thisRow) {
        if (car == null) {
-           log.error("attemmpting to set the location of a null car");
+           log.error("attempting to set the location of a null car");
+           return;
        }
         log.debug("Setting location of car {} - {}", car.getRoadName(), car.getNumber());
         if (!thisRow.isLocationReady()) {
@@ -317,43 +318,26 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         }
         SwingUtilities.invokeLater(() -> new AssociateFrame(new AssociateTag(thisTag),
                 Bundle.getMessage("AssociateTitle") + " " + thisTag).initComponents());
-      //  tableParent.getCellEditor().stopCellEditing();
     }
 
     public void setValueAt(Object value, int row, int col) {
         TagCarItem thisRowValue = tagList.get(row);
-        RollingStock car = thisRowValue.getCurrentCar();
-        switch (col) {
+         switch (col) {
             case LOCATION_COLUMN:
                 if (value instanceof String) {
                     log.debug("new value for Location column - {}", value);
                     locationItemUpdated(thisRowValue, (String) value);
                 }
-               // tableParent.getCellEditor().stopCellEditing();
                 break;
             case TRACK_COLUMN:
                 if (value instanceof String) {
                     trackItemUpdate(thisRowValue, (String) value);
                 }
-             //   tableParent.getCellEditor().stopCellEditing();
                 break;
             case ACTION1_COLUMN:
- /*               if (car == null) {
-                    doSetTag(thisRowValue.getTag(), thisRowValue);
-
-                } else {
-                    // set location
-                    setCarLocation(thisRowValue.getCurrentCar(), thisRowValue);
-                }
-                tableParent.getCellEditor().stopCellEditing();*/
                 log.debug("setValueAt for Action1 column");
                 return;
             case ACTION2_COLUMN:
-/*                if (thisRowValue.getCurrentCar() == null) {
-                    log.error("can't edit a null car");
-                    return;
-                }
-                doEditCar(thisRowValue.getCurrentCar());*/
                 log.debug("setValueAt for Action2 column");
                 break;
             default:
@@ -565,7 +549,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         log.error("Got an actionPerformed but dont recognize source");
     }
 
-    public class EditTrackCellEditor extends AbstractCellEditor implements TableCellEditor {
+    static class EditTrackCellEditor extends AbstractCellEditor implements TableCellEditor {
 
         private TableDataModel model;
         private Component value;
