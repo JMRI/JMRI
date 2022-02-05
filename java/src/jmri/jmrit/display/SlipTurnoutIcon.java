@@ -590,7 +590,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * @param state An integer value of the turnout states.
      */
     void displayState(int state) {
-        // TODO This needs to be worked on
+        // TODO This needs to be worked on. Update the slipturnouticon code in web/js/panel.js accordingly
         log.debug("{} displayState {}", getNameString(), state);
         updateSize();
         // we have to make some adjustments if we are using a single slip, three way point
@@ -653,7 +653,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     super.setIcon(unknown);
                 }
                 break;
-            case 5: //first closed, second closed
+            case 5: //first Closed, second Closed
                 if (isText()) {
                     super.setText(upperWestToLowerEastText);
                 }
@@ -677,7 +677,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     super.setIcon(upperWestToUpperEast);
                 }
                 break;
-            case 11: //first Thrown second Thrown
+            case 11: //first Thrown, second Thrown
                 if (isText()) {
                     super.setText(lowerWestToUpperEastText);
                 }

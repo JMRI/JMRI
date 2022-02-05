@@ -70,6 +70,11 @@ var RUNNING = 0x20;         // Oblock that running train has reached
 var OUT_OF_SERVICE = 0x40;  // Oblock that should not be used
 var TRACK_ERROR = 0x80;     // Oblock has Error
 
+var CLOSEDCLOSED = '5';     // constants for slipturnouticon
+var CLOSEDTHROWN = '7';
+var THROWNCLOSED = '9';
+var THROWNTHROWN = '11';
+
 var PT_CEN = ".POS_POINT";  // named constants for point types
 var PT_A = ".TURNOUT_A";
 var PT_B = ".TURNOUT_B";
@@ -559,22 +564,23 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
-                        case "slipturnouticon" : // added EBR 2022, adapted from indicatorturnouticon, no direct
-                            // link to a JSON/named bean
-                            // also for three way turnouts, see java/src/jmri/jmrit/display/SlipTurnoutIcon.java
+                        case "slipturnouticon" : // added EBR 2022, adapted from indicatorturnouticon
+                            // no direct link to a JSON/named bean (systemName = id)
+                            // also used for three way turnouts
+                            // see java/src/jmri/jmrit/display/SlipTurnoutIcon.java
                             // and java/src/jmri/jmrit/display/configurexml/SlipTurnoutIconXml.java
                             $widget['name'] = $widget.id; // normalize name
+                            $widget.jsonType = "turnout"; // JSON object type
                             $widget['slipicontype'] = $widget.turnoutType;
-                            //$widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
+                            // set icons
                             $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
                             $widget['icon' + INCONSISTENT] = $(this).find('inconsistent').attr('url');
-                            //$widget['icon0'] = $(this).find('lowerWestToLowerEast').attr('url');
-                            // reserved
-                            $widget['icon5'] = $(this).find('lowerWestToLowerEast').attr('url');
+                            $widget['icon5'] = $(this).find('upperWestToLowerEast').attr('url');
+                            //$widget['icon7']  only for doubleSlip, loaded later
                             $widget['icon9'] = $(this).find('lowerWestToLowerEast').attr('url');
+                            $widget['icon11'] = $(this).find('lowerWestToUpperEast').attr('url');
 
                             switch ($widget.turnoutType) {
-                                // TODO set details, connect beans
                                 case "doubleSlip" : // default
                                     $widget['icon7'] = $(this).find('upperWestToUpperEast').attr('url');
                                     break;
@@ -587,23 +593,23 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 case "scissor" :
                                     if (isDefined($widget.turnoutLowerEast)) {
                                         $widget['singleCrossOver'] = "false";
-                                        // connect now to prevent extra switch case
-                                        //jmri.getTurnout($widget['turnoutLowerEast']);
-                                        //jmri.getTurnout($widget['turnoutLowerWest']);
+                                        // connect 2 extra turnouts now to prevent extra switch case below
+                                        jmri.getTurnout($widget['turnoutLowerEast']);
+                                        jmri.getTurnout($widget['turnoutLowerWest']);
                                     } else {
                                         $widget['singleCrossOver'] = "true";
                                     }
                                     break;
                             }
-                            //0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
+
                             $widget['rotation'] = $(this).find('lowerWestToLowerEast').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('lowerWestToLowerEast').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('lowerWestToLowerEast').attr('scale');
                             if ($widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            //jmri.getTurnout($widget['turnoutEast']);
-                            //jmri.getTurnout($widget['turnoutWest']);
+                            jmri.getTurnout($widget['turnoutEast']);
+                            jmri.getTurnout($widget['turnoutWest']);
                             break;
                     }
 
@@ -1245,6 +1251,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             e.preventDefault(); //prevent double-firing (touch + click)
             sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
         });
+
         // Switchboard All Off/All On buttons
         $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
         $(".lightswitch#allOn").bind(UPEVENT, $handleClickAllOn); // all Lights On
@@ -1272,7 +1279,7 @@ function $handleClick(e) {
     //     $logProperties(this);
     // }
 
-    // special case for layoutSlips
+    // special case for LE layoutSlips
     if (this.className.startsWith('layoutSlip ')) {
         if (this.id.startsWith("SL") && (this.id.endsWith("r") || this.id.endsWith("l"))) {
             var slipID = this.id.slice(0, -1);
@@ -1311,7 +1318,8 @@ function $handleClick(e) {
         } else {
             log.log("$handleClick(e): unknown slip widget " + this.id);
             $logProperties(this);
-        }   // special case for layoutSlips
+        }
+    // special case for LE layoutTurntable
     } else if (this.className.startsWith('layoutturntable ')) {
         var $rayID = this.id;
         var $turntableID = $rayID.split(".")[0];
@@ -1330,6 +1338,11 @@ function $handleClick(e) {
                 }
             }
         });
+    // special handling of slipturnouticon, which has 2 turnouts EBR TODO
+    } else if (this.className.startsWith('slipturnouticon')) {
+        // store tO1 in systemName?
+
+
     } else {
         var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget); // determine next state from current state
@@ -1338,7 +1351,7 @@ function $handleClick(e) {
         if (isDefined($widget.turnoutB)) {
             sendElementChange($widget.jsonType, $widget.turnoutB, $newState);
         }
-        //used for crossover, layoutTurnout type 5
+        //used for crossover, LE layoutTurnout type 5
         if (isDefined($widget.secondturnoutname)) {
             //invert 2nd turnout if requested
             if ($widget.secondturnoutinverted == "true") {
@@ -1684,10 +1697,11 @@ var $reDrawIcon = function($widget) {
         }
     } else if ($widget.widgetType == "slipturnouticon") {
         // adjust some states, as in Display/SlipTurnoutIcon#displayState(int state)
+        $state = $widget.state;
         if ($widget.turnouttype == "threeway") {
             switch ($state) {
                 case "5" :
-                    $state = 0;
+                    $state = "0";
                     break;
             }
         }
@@ -2016,7 +2030,21 @@ var $getNextState = function($widget) {
                 break;
 
             }; //end of signalmasticon clickmode switch
-    } else {  // start with INACTIVE, then toggle to ACTIVE and back (same for turnout states: 2 <> 4
+
+    } else if ($widget.widgetType == 'slipturnouticon') { // special case for slipturnouticons EBR
+        switch ($widget.turnoutType) {          //   logic based on java/src/jmri/jmrit/display/SlipTurnoutIcon.java
+            case "doubleSlip" :
+                $nextState = ($widget.state == '11' ? '5' : $widget.state * 1 + 2);
+                break;
+            case "singleSlip" :
+            case "threeWay" :
+            case "scissor" :
+                $nextState = ($widget.state == '11' ? '5' : $widget.state * 1 + 2);
+                $nextState = ($widget.state == '7' ? '9' : $nextState);
+                break;
+            };
+
+    } else {  // start with INACTIVE, then toggle to ACTIVE and back (same for turnout states: 2 <> 4)
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
     }
 
