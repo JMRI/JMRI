@@ -175,14 +175,8 @@
                 <choice xml:lang="cs">Normální</choice>
             </enumChoice>   
           <enumChoice choice="Opposite" value="1">
-          <enumChoice choice="Normal" value="0">
-                <choice>Normal</choice>
-                <choice xml:lang="cs">Normální</choice>
-            </enumChoice>   
-          <enumChoice choice="Opposite" value="1">
                 <choice>Opposite</choice>
                 <choice xml:lang="cs">Otočený</choice>
-            </enumChoice>   
             </enumChoice>   
         </enumVal>
 		<label>Servo 3 direction, Loconet</label>
