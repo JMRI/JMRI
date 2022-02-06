@@ -107,10 +107,6 @@ log4j.category.org.jdom2.transform=SEVERE
 # log4j.category.jmri.jmrix=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.org.eclipse.jetty=INFO
-log4j.category.jmri.jmrix.rfid=DEBUG
-log4j.category.jmri.jmrix.rfid.swing=DEBUG
-log4j.category.jmri.jmrix.rfid.swing.tagcarwin=DEBUG
-
 
 #log4j.category.jmri.jmrit.display.layoutEditor=DEBUG
 #log4j.category.jmri.jmrit.display.layoutEditor.LayoutBlock=DEBUG
