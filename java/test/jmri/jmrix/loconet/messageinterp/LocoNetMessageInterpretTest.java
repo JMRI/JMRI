@@ -1673,6 +1673,9 @@ public class LocoNetMessageInterpretTest {
                 case 0x16:
                     s = "Digitrax DB220 host";
                     break;
+                case 0x1A:
+                    s = "Digitrax DCS210plus host";
+                    break;
                 case 0x1B:
                     s = "Digitrax DCS210 host";
                     break;
@@ -1697,14 +1700,26 @@ public class LocoNetMessageInterpretTest {
                 case 0x34:
                     s = "Digitrax DCS52 host";
                     break;
+                case 0x3E:
+                    s = "Digitrax DT602(x) host";
+                    break;
+                case 0x51:
+                    s = "Digitrax BXPA1 host";
+                    break;
                 case 0x58:
                     s = "Digitrax BXP88 host";
                     break;
                 case 0x5C:
                     s = "Digitrax UR92 host";
                     break;
+                case 0x5D:
+                    s = "Digitrax UR93 host";
+                    break;
                 case 0x63:
                     s = "Digitrax LNWI host";
+                    break;
+                case 0x74:
+                    s = "Digitrax DS74 host";
                     break;
                 default:
                     s = "Digitrax (unknown host device type "+i+")";
