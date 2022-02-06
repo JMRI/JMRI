@@ -271,9 +271,9 @@ public class ExportLocations extends XmlFile {
                             (track.isAddCustomLoadsAnyStagingTrackEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isBlockCarsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             track.getComment(),
-                            track.getCommentBoth(),
-                            track.getCommentPickup(),
-                            track.getCommentSetout());
+                            track.getCommentBothWithColor(),
+                            track.getCommentPickupWithColor(),
+                            track.getCommentSetoutWithColor());
                 }
             }
             fileOut.flush();

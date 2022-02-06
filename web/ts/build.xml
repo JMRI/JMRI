@@ -28,19 +28,11 @@
   <property name="jstarget" value="../js"/>
 
   <target name="typescript"
-        description="compile typescript"
-        depends="copy">
+        description="compile typescript">
     <exec executable="tsc"
           failonerror="true">
       <arg value="--strict"/><arg value="true"/>
     </exec>
-  </target>
-
-  <target name="copy"
-        description="copy-install JavaScript files">
-   <copy todir="${jstarget}/">
-        <fileset dir="." includes="*.js"/>
-    </copy>
   </target>
 
   <target name="clean"

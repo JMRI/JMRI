@@ -158,6 +158,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     public static final int AUTOMATIC = 0x02;   // requires mAutoRun to be "true" (auto trains only)
     public static final int MANUAL = 0x04;    // requires mAutoRun to be "true" (auto trains only)
     public static final int DISPATCHED = 0x08;
+    public static final int TERMINATED = 0x10; //terminated
 
     /**
      * Constants representing the source of the train information
@@ -297,7 +298,6 @@ public class ActiveTrain implements PropertyChangeProvider {
             log.error("Invalid ActiveTrain status - {}", status);
         }
     }
-
     public String getStatusText() {
         if (mStatus == RUNNING) {
             return Bundle.getMessage("RUNNING");
@@ -601,7 +601,7 @@ public class ActiveTrain implements PropertyChangeProvider {
 
     public void setMode(int mode) {
         if ((mode == AUTOMATIC) || (mode == MANUAL)
-                || (mode == DISPATCHED)) {
+                || (mode == DISPATCHED || mode == TERMINATED)) {
             int old = mMode;
             mMode = mode;
             firePropertyChange("mode", Integer.valueOf(old), Integer.valueOf(mMode));
@@ -617,6 +617,8 @@ public class ActiveTrain implements PropertyChangeProvider {
             return Bundle.getMessage("MANUAL");
         } else if (mMode == DISPATCHED) {
             return Bundle.getMessage("DISPATCHED");
+        } else if (mMode == TERMINATED) {
+            return Bundle.getMessage("TERMINATED");
         }
         return ("");
     }
@@ -1158,6 +1160,7 @@ public class ActiveTrain implements PropertyChangeProvider {
         if (getRestartSensor() != null && restartSensorListener != null) {
             getRestartSensor().removePropertyChangeListener(restartSensorListener);
         }
+        setMode(TERMINATED);
         mTransit.setState(Transit.IDLE);
     }
 
