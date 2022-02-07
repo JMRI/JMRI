@@ -2520,7 +2520,6 @@ public class TrainBuilder extends TrainBuilderBase {
     private void buildFailed(BuildFailedException e) {
         String msg = e.getMessage();
         _train.setBuildFailedMessage(msg);
-        _train.setStatusCode(Train.CODE_BUILD_FAILED);
         _train.setBuildFailed(true);
         log.debug(msg);
 
@@ -2549,17 +2548,24 @@ public class TrainBuilder extends TrainBuilderBase {
                         MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
                                 new Object[] { size, trainName }),
                         Bundle.getMessage("buildResetTrain"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
+                    _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             } else if ((size = engineManager.getList(_train).size()) > 0) {
                 if (JOptionPane.showConfirmDialog(null,
                         MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
                                 new Object[] { size, trainName }),
                         Bundle.getMessage("buildResetTrain"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
+                    _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             }
+        } else {
+            // build messages disabled
+            // remove cars and engines from this train via property change
+            _train.setStatusCode(Train.CODE_TRAIN_RESET);
         }
+        
+        _train.setStatusCode(Train.CODE_BUILD_FAILED);
+        
         if (_buildReport != null) {
             addLine(_buildReport, ONE, msg);
             // Write to disk and close buildReport

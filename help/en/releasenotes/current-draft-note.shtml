@@ -361,7 +361,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix XCrossings allocation.</li>
+             <li>Improve AutoEngineer. Permit unlimited number of Auto Trains.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -587,7 +588,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Added a "TelnetTrain.py" example to run a train from the Python command line.</li>
         </ul>
 
    <h3>Web Server</h3>
