@@ -584,17 +584,17 @@
 	</variable>
 	<variable item="Switch when button is" CV="43">
         <enumVal>
-          <enumChoice choice="pressed" value="0">
-                <choice>pressed</choice>
-                <choice xml:lang="cs">stisknuto</choice>
+          <enumChoice choice="Pressed" value="0">
+                <choice>Pressed</choice>
+                <choice xml:lang="cs">Stisknuto</choice>
             </enumChoice>   
-          <enumChoice choice="released" value="1">
-                <choice>released</choice>
-                <choice xml:lang="cs">uvolněno</choice>
+          <enumChoice choice="Released" value="1">
+                <choice>Released</choice>
+                <choice xml:lang="cs">Uvolněno</choice>
             </enumChoice>   
-          <enumChoice choice="both" value="1">
-                <choice>both</choice>
-                <choice xml:lang="cs">obojí</choice>
+          <enumChoice choice="Both" value="2">
+                <choice>Both</choice>
+                <choice xml:lang="cs">Obojí</choice>
             </enumChoice>   
         </enumVal>
             <label>Switch when button is</label>
@@ -1098,13 +1098,13 @@
                 <choice>Track Status</choice>
                 <choice xml:lang="cs">Stav koleje</choice>
           </enumChoice>
-          <enumChoice choice="Track Status, opto X1/X3" value="15">
-              <choice>Track Status, opto X1/X3</choice>
-                <choice xml:lang="cs">Stav koleje, optický X1/X3</choice>
+          <enumChoice choice="Track Status, opto X2/X4" value="15">
+              <choice>Track Status, opto X2/X4</choice>
+                <choice xml:lang="cs">Stav koleje, optický X2/X4</choice>
           </enumChoice>
-          <enumChoice choice="Track Status, opto X1/X3 refelection" value="16">
-              <choice>Track Status, opto X1/X3 refelection</choice>
-                <choice xml:lang="cs">Stav kolej, optický X1/X3 odrazový</choice>
+          <enumChoice choice="Track Status, opto X2/X4 refelection" value="16">
+              <choice>Track Status, opto X2/X4 refelection</choice>
+                <choice xml:lang="cs">Stav kolej, optický X2/X4 odrazový</choice>
           </enumChoice>
         </enumVal>
             <label>Usage X2</label>

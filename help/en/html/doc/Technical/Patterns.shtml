@@ -247,11 +247,14 @@ and distribute JMRI.
     <a id="typescript"></a>
     <h2>JavaScript and TypeScript Code</h2>
 
-    <p>JavaScript and TypeScript code for use by the web server should be put in the
-    <code>web/ts</code> directory.  This will be copied and/or compiled as needed
-    by the <code>ant typescript</code> target.  The results are put in the
+    <p>JavaScript code for use by the web server should be put in the
     <code>web/js</code> directory, which is where our web pages are served from via the
-    <a href="../../web/index.shtml">JMRI web server</a>.</p>
+    <a href="../../web/index.shtml">JMRI web server</a>.
+
+    <p>TypeScript code for use by the web server should be put in the
+    <code>web/ts</code> directory.  This will be compiled as needed
+    by the <code>ant typescript</code> target.  The results are put in the
+    <code>web/js</code> directory.</p>
 
     <p>To run the <code>ant typescript</code> target and compile the TypeScript files,
     a TypeScript compiler needs to be installed on the computer. For more information

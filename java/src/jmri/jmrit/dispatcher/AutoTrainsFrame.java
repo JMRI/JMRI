@@ -1,24 +1,32 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.Container;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import java.beans.PropertyChangeEvent;
 
-import jmri.DccThrottle;
+import javax.swing.JToolBar;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.plaf.basic.BasicToolBarUI;
+
 import jmri.Throttle;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,521 +54,489 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
     public AutoTrainsFrame(DispatcherFrame disp) {
         super(false, true);
-        _dispatcher = disp;
         initializeAutoTrainsWindow();
     }
 
     // instance variables
-    private final DispatcherFrame _dispatcher;
     private final ArrayList<AutoActiveTrain> _autoTrainsList = new ArrayList<>();
-    private final ArrayList<java.beans.PropertyChangeListener> _listeners = new ArrayList<>();
     //Keep track of throttle and listeners to update frame with their current state.
-    private final ArrayList<jmri.Throttle> _throttles = new ArrayList<>();
-    private final ArrayList<java.beans.PropertyChangeListener> _throttleListeners = new ArrayList<>();
 
     // accessor functions
     public ArrayList<AutoActiveTrain> getAutoTrainsList() {
         return _autoTrainsList;
     }
 
-    public void addAutoActiveTrain(AutoActiveTrain aat) {
-        if (aat != null) {
-            _autoTrainsList.add(aat);
-            java.beans.PropertyChangeListener throttleListener = this::handleThrottleChange;
-            _throttleListeners.add(throttleListener);
-
-            _throttles.add(null); //adds a place holder
-            //set up the throttle prior to attaching the listener to the ActiveTrain
-            setupThrottle(aat);
-
-            ActiveTrain at = aat.getActiveTrain();
-            java.beans.PropertyChangeListener listener;
-            at.addPropertyChangeListener(listener = this::handleActiveTrainChange);
-            _listeners.add(listener);
-
-            displayAutoTrains();
-        }
-    }
-
-    public void removeAutoActiveTrain(AutoActiveTrain aat) {
-        for (int i = 0; i < _autoTrainsList.size(); i++) {
-            if (_autoTrainsList.get(i) == aat) {
-                removeThrottleListener(aat);
-                _autoTrainsList.remove(i);
-                ActiveTrain at = aat.getActiveTrain();
-                at.removePropertyChangeListener(_listeners.get(i));
-                _throttles.remove(i);
-                _listeners.remove(i);
-                _throttleListeners.remove(i);
-                displayAutoTrains();
-                return;
+    /**
+     * Creates and initializes a new control of type AutoTrainControl
+     * @param autoActiveTrain the new train.
+     */
+    public void addAutoActiveTrain(AutoActiveTrain autoActiveTrain) {
+        if (autoActiveTrain != null) {
+            log.debug("Adding ActiveTrain[{}]",autoActiveTrain.getActiveTrain().getActiveTrainName());
+            AutoTrainControl atn = new AutoTrainControl(autoActiveTrain);
+            if (!trainsCanBeFloated.isSelected()) {
+                atn.componentJPanel.setFloatable(false);
             }
-        }
-    }
-
-    private void handleActiveTrainChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("mode")) {
-            handleChangeOfMode(e);
-        } else if (e.getPropertyName().equals("status")) {
-            handleChangeOfStatus(e);
-            handleChangeOfStatus(e);
-        }
-        displayAutoTrains();
-    }
-
-    private void handleChangeOfStatus(java.beans.PropertyChangeEvent e) {
-        if ((int) e.getOldValue() == ActiveTrain.WORKING) {
-            // put back listener
-            addThrottleListener(((ActiveTrain) e.getSource()).getAutoActiveTrain());
-        }
-    }
-
-    private synchronized void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
-        for (AutoActiveTrain aat : _autoTrainsList) {
-            if (aat.getActiveTrain() == e.getSource()) {
-                int newValue = (Integer) e.getNewValue();
-                int oldValue = (Integer) e.getOldValue();
-                if (newValue == ActiveTrain.DISPATCHED) {
-                    removeThrottleListener(aat);
-                } else if (oldValue == ActiveTrain.DISPATCHED) {
-                    setupThrottle(aat);
+            trainsPanel.add(atn);
+            atn.addPropertyChangeListener("terminated", (PropertyChangeEvent e) -> {
+                AutoTrainControl atnn = (AutoTrainControl) e.getSource();
+                // must be attached to make it really go away
+                ((BasicToolBarUI) atnn.componentJPanel.getUI()).setFloating(false,null);
+                trainsPanel.remove((AutoTrainControl) e.getSource());
+                pack();
+            });
+            // bit of overkill for when a floater floats and comes back.
+            atn.componentJPanel.addAncestorListener ( new AncestorListener ()
+            {
+                @Override
+                public void ancestorAdded ( AncestorEvent event )
+                {
+                    log.trace("ancestorAdded");
+                    pack();
                 }
-            }
-        }
-    }
-
-    private void setupThrottle(AutoActiveTrain aat) {
-        if (aat.getThrottle() != null) {
-            int index = _autoTrainsList.indexOf(aat);
-            if (_throttles.get(index) == null) {
-                _throttles.add(index, aat.getThrottle());
-                addThrottleListener(aat);
-            }
-        }
-        else {
-            log.debug("{}: No Throttle (yet)",aat.getActiveTrain().getTrainName());
-        }
-    }
-
-    private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
-        if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
-            return; //ignore if not speed or direction
-        }
-        DccThrottle thr = (DccThrottle) e.getSource();
-        int index = _throttles.indexOf(thr);
-        if (index == -1) {
-            jmri.Throttle waThrottle1 =  (Throttle) e.getSource();
-            int DDCAddress =  waThrottle1.getLocoAddress().getNumber() ;
-            log.trace("handleThrottleChange - using locoaddress [{}]", DDCAddress);
-            for (jmri.Throttle waThrottle  : _throttles ) {
-                if (waThrottle != null) {
-                    if ( DDCAddress == waThrottle.getLocoAddress().getNumber()) {
-                        index = _throttles.indexOf(waThrottle);
-                        if (index == -1) {
-                            log.warn("handleThrottleChange - cannot find throttle DCCAddress");
-                            return;
-                        }
-                    }
+                @Override
+                public void ancestorRemoved ( AncestorEvent event )
+                {
+                    log.trace("ancestorRemoved");
+                    pack();
                 }
-            }
-            if (index == -1) {
-                log.warn("handleThrottleChange - cannot find throttle index");
-                return;
-            }
-        }
-        JLabel status = _throttleStatus.get(index);
-        if (!status.isVisible()) {
-            return;
-        }
-        jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
-        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
-    }
-
-    private void updateStatusLabel(JLabel status, Object speed, Object forward) {
-        StringBuilder sb = new StringBuilder();
-        int spd = Math.round((Float) speed * 100);
-        sb.append("" + spd);
-        sb.append("% ");
-        if ((Boolean) forward) {
-            sb.append("(fwd)");
-        } else {
-            sb.append("(rev)");
-        }
-        status.setText(sb.toString());
-        autoTrainsFrame.pack();
-    }
-
-    private void addThrottleListener(AutoActiveTrain aat) {
-        int index = _autoTrainsList.indexOf(aat);
-        if (index == -1) {
-            return;
-        }
-        if (_throttles.get(index) != null) {
-            jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
-            jmri.InstanceManager.throttleManagerInstance().attachListener(addy, _throttleListeners.get(index));
-            JLabel status = _throttleStatus.get(index);
-            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
-        }
-    }
-
-    private void removeThrottleListener(AutoActiveTrain aat) {
-        int index = _autoTrainsList.indexOf(aat);
-        if (index == -1) {
-            return;
-        }
-        if (_throttles.get(index) != null) {
-            jmri.InstanceManager.throttleManagerInstance().removeListener(_throttles.get(index).getLocoAddress(), _throttleListeners.get(index));
+                @Override
+                public void ancestorMoved ( AncestorEvent event )
+                {
+                    // blank.
+                }
+              } );
+            pack();
         }
     }
 
     // variables for AutoTrains window
     protected JmriJFrame autoTrainsFrame = null;
-    private Container contentPane = null;
-    //This would be better refactored this all into a sub-class, rather than multiple arraylists.
-    // note: the following array lists are synchronized with _autoTrainsList
-    private final ArrayList<JPanel> _JPanels = new ArrayList<>();
-    private final ArrayList<JLabel> _throttleStatus = new ArrayList<>();
-    private final ArrayList<JLabel> _trainLabels = new ArrayList<>();
-    private final ArrayList<JButton> _stopButtons = new ArrayList<>();
-    private final ArrayList<JButton> _manualButtons = new ArrayList<>();
-    private final ArrayList<JButton> _resumeAutoRunningButtons = new ArrayList<>();
-    private final ArrayList<JRadioButton> _forwardButtons = new ArrayList<>();
-    private final ArrayList<JRadioButton> _reverseButtons = new ArrayList<>();
-    private final ArrayList<JSlider> _speedSliders = new ArrayList<>();
+    private JPanel trainsPanel;
+    private JScrollPane trainScrollPanel;
+    private JCheckBoxMenuItem frameHasScrollBars = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameUseScrollBars"));
+    private JCheckBoxMenuItem trainsCanBeFloated = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameAllowFloat"));
 
-    private final ArrayList<JSeparator> _separators = new ArrayList<>();
+    jmri.UserPreferencesManager prefMan;
 
     private void initializeAutoTrainsWindow() {
+
+        prefMan = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        frameHasScrollBars.setSelected(prefMan.getSimplePreferenceState(hasScrollBars));
+        trainsCanBeFloated.setSelected(prefMan.getSimplePreferenceState(canFloat));
+
         autoTrainsFrame = this;
         autoTrainsFrame.setTitle(Bundle.getMessage("TitleAutoTrains"));
+        trainsPanel = new JPanel();
+        trainsPanel.setLayout(new BoxLayout(trainsPanel, BoxLayout.Y_AXIS));
         JMenuBar menuBar = new JMenuBar();
+        JMenu optMenu = new JMenu(Bundle.getMessage("MenuOptions")); // NOI18N
+        optMenu.add(frameHasScrollBars);
+        frameHasScrollBars.addActionListener(e -> {
+            setScrollBars();
+        });
+
+        optMenu.add(trainsCanBeFloated);
+        trainsCanBeFloated.addActionListener(e -> {
+            for (Object ob : trainsPanel.getComponents()) {
+                if (ob instanceof AutoTrainControl) {
+                    AutoTrainControl atnn = (AutoTrainControl) ob;
+                    if (trainsCanBeFloated.isSelected()) {
+                        atnn.componentJPanel.setFloatable(true);
+                    } else {
+                        // rejoin floating throttles before banning
+                        // floating.
+                        ((BasicToolBarUI) atnn.componentJPanel.getUI()).setFloating(false, null);
+                        atnn.componentJPanel.setFloatable(false);
+                    }
+                }
+            }
+        });
+        menuBar.add(optMenu);
+
         setJMenuBar(menuBar);
         autoTrainsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.AutoTrains", true);
-        contentPane = autoTrainsFrame.getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        // set up 6 auto trains to size the panel
-        for (int i = 0; i < 6; i++) {
-            newTrainLine();
-            if (i == 0) {
-                _separators.get(i).setVisible(false);
-            }
-        }
-        contentPane.add(new JSeparator());
-        contentPane.add(new JSeparator());
+        trainsPanel.setLayout(new BoxLayout(trainsPanel, BoxLayout.Y_AXIS));
         JPanel pB = new JPanel();
         pB.setLayout(new FlowLayout());
         JButton stopAllButton = new JButton(Bundle.getMessage("StopAll"));
         pB.add(stopAllButton);
         stopAllButton.addActionListener(this::stopAllPressed);
         stopAllButton.setToolTipText(Bundle.getMessage("StopAllButtonHint"));
-        contentPane.add(pB);
+        trainsPanel.add(pB);
+        trainsPanel.add(new JSeparator());
+        trainsPanel.addComponentListener(this);
+        trainsPanel.setVisible(true);
+        trainsPanel.revalidate();
+        trainScrollPanel = new JScrollPane();
+        trainScrollPanel.getViewport().add(trainsPanel);
+        autoTrainsFrame.getContentPane().setLayout(new BoxLayout(autoTrainsFrame.getContentPane(), BoxLayout.Y_AXIS));
+        autoTrainsFrame.getContentPane().add(trainScrollPanel);
+        setScrollBars();
+        autoTrainsFrame.getContentPane().revalidate();
         autoTrainsFrame.pack();
-        placeWindow();
-        displayAutoTrains();
         autoTrainsFrame.setVisible(true);
+
     }
 
-    private void newSeparator() {
-        JSeparator sep = new JSeparator();
-        _separators.add(sep);
-        contentPane.add(sep);
-    }
-
-    private void newTrainLine() {
-        int i = _JPanels.size();
-        final String s = "" + i;
-        newSeparator();
-        JPanel px = new JPanel();
-        px.setLayout(new FlowLayout());
-        _JPanels.add(px);
-        JLabel tLabel = new JLabel("      ");
-        px.add(tLabel);
-        px.add(tLabel);
-        _trainLabels.add(tLabel);
-        JButton tStop = new JButton(Bundle.getMessage("ResumeButton"));
-        px.add(tStop);
-        _stopButtons.add(tStop);
-        tStop.addActionListener(e -> stopResume(s));
-        JButton tManual = new JButton(Bundle.getMessage("ToManualButton"));
-        px.add(tManual);
-        _manualButtons.add(tManual);
-        tManual.addActionListener(e -> manualAuto(s));
-        JButton tResumeAuto = new JButton(Bundle.getMessage("ResumeAutoButton"));
-        px.add(tResumeAuto);
-        _resumeAutoRunningButtons.add(tResumeAuto);
-        tResumeAuto.addActionListener(e -> resumeAutoOperation(s));
-        tResumeAuto.setVisible(false);
-        tResumeAuto.setToolTipText(Bundle.getMessage("ResumeAutoButtonHint"));
-        ButtonGroup directionGroup = new ButtonGroup();
-        JRadioButton fBut = new JRadioButton(Bundle.getMessage("ForwardRadio"));
-        px.add(fBut);
-        _forwardButtons.add(fBut);
-        fBut.addActionListener(e -> directionButton(s));
-        directionGroup.add(fBut);
-        JRadioButton rBut = new JRadioButton(Bundle.getMessage("ReverseRadio"));
-        px.add(rBut);
-        _reverseButtons.add(rBut);
-        rBut.addActionListener(e -> directionButton(s));
-        directionGroup.add(rBut);
-        JSlider sSlider = new JSlider(0, 100, 0);
-        px.add(sSlider);
-        _speedSliders.add(sSlider);
-        sSlider.addChangeListener(e -> {
-            int val = ((JSlider) (e.getSource())).getValue();
-            sliderChanged(s, val);
-        });
-
-        JLabel _throttle = new JLabel();
-        _throttle.setPreferredSize(new Dimension(100,20)); // prevent JFrame to resize on each % change
-        _throttle.setText("Speed Unknown");
-        _throttleStatus.add(_throttle);
-        px.add(_throttle);
-        contentPane.add(px);
-    }
-
-    private void placeWindow() {
-        // get size and placement of Dispatcher Window, screen size, and window size
-        Point dispPt = new Point(0, 0);
-        Dimension dispDim = new Dimension(0, 0);
-
-        if (_dispatcher.isShowing()) {
-            dispPt = _dispatcher.getLocationOnScreen();
-            dispDim = _dispatcher.getSize();
+    private void setScrollBars() {
+        if (frameHasScrollBars.isSelected()) {
+            trainScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            trainScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            autoTrainsFrame.getContentPane().revalidate();
+        } else {
+            trainScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+            trainScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            autoTrainsFrame.getContentPane().revalidate();
         }
-        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenHeight = screenDim.height - 120;
-        int screenWidth = screenDim.width - 20;
-        Dimension dim = getSize();
-        int width = dim.width;
-        int height = dim.height;
-        // place AutoTrains window to the right of Dispatcher window, if it will fit.
-        int upperLeftX = dispPt.x + dispDim.width;
-        int upperLeftY = 0;
-        if ((upperLeftX + width) > screenWidth) {
-            // won't fit, place it below Dispatcher window, if it will fit.
-            upperLeftX = 0;
-            upperLeftY = dispPt.y + dispDim.height;
-            if ((upperLeftY + height) > screenHeight) {
-                // if all else fails, place it at the upper left of the screen, and let the user adjust placement
-                upperLeftY = 0;
+    }
+
+    private void stopAllPressed(ActionEvent e) {
+        for (Object ob: trainsPanel.getComponents()) {
+            if (ob instanceof AutoTrainControl) {
+                ((AutoTrainControl) ob).stopAll();
             }
         }
-        setLocation(upperLeftX, upperLeftY);
     }
 
-    public void stopResume(String s) {
-        int index = getTrainIndex(s);
-        if (index >= 0) {
-            AutoActiveTrain aat = _autoTrainsList.get(index);
-            if (aat.getAutoEngineer() != null) {
-                ActiveTrain at = aat.getActiveTrain();
+    @Override
+    public void dispose() {
+        if (prefMan!=null) {
+            prefMan.setSimplePreferenceState(hasScrollBars, frameHasScrollBars.isSelected());
+            prefMan.setSimplePreferenceState(canFloat, trainsCanBeFloated.isSelected());
+        }
+        super.dispose();
+    }
+    String hasScrollBars = this.getClass().getName() + ".HasScrollBars"; // NOI18N
+    String canFloat = this.getClass().getName() + ".CanFloat"; // NOI18N
+
+    class AutoTrainControl extends JPanel {
+
+        public AutoTrainControl(AutoActiveTrain autoActiveTrain) {
+
+            this.autoActiveTrain = autoActiveTrain;
+            activeTrain = autoActiveTrain.getActiveTrain();
+            activeTrain.addPropertyChangeListener(activeTrainListener = new java.beans.PropertyChangeListener() {
+                @Override
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    handleActiveTrainListen(e);
+                }
+            });
+            rosterEntry = autoActiveTrain.getRosterEntry();
+            drawComponent();
+        }
+
+        protected void stopAll() {
+            if (activeTrain.getStatus() != ActiveTrain.STOPPED &&
+                    activeTrain.getStatus() != ActiveTrain.DONE) {
+                autoActiveTrain.getAutoEngineer().setHalt(true);
+                autoActiveTrain.saveSpeedAndDirection();
+                autoActiveTrain.setSavedStatus(activeTrain.getStatus());
+                activeTrain.setStatus(ActiveTrain.STOPPED);
+            }
+        }
+
+        private AutoActiveTrain autoActiveTrain = null;
+        private java.beans.PropertyChangeListener activeTrainListener = null;
+        private java.beans.PropertyChangeListener throttleListener = null;
+        private jmri.Throttle throttle = null;
+        private ActiveTrain activeTrain = null;
+        private RosterEntry rosterEntry = null;
+
+        private JLabel trainLabel;
+        private JLabel throttleStatus;
+        protected JButton stopButton;
+        private JButton resumeAutoRunningButton;
+        private JRadioButton forwardButton;
+        private JRadioButton reverseButton;
+        private JSlider speedSlider;
+        private JButton manualButton;
+
+        private void handleThrottleListen(java.beans.PropertyChangeEvent e) {
+            if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
+                return; // ignore if not speed or direction
+            }
+            updateThrottleDisplay();
+        }
+
+        private void updateThrottleDisplay() {
+            StringBuilder sb = new StringBuilder();
+            if (throttle != null) {
+                if (rosterEntry != null && rosterEntry.getSpeedProfile() != null) {
+                    sb.append("" +
+                            rosterEntry.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(
+                                    throttle.getSpeedSetting(),
+                                    throttle.getIsForward()));
+                } else {
+                    sb.append("" + Math.round(throttle.getSpeedSetting() * 100));
+                    sb.append("% ");
+                }
+                if (throttle.getIsForward()) {
+                    sb.append("(fwd)");
+                } else {
+                    sb.append("(rev)");
+                }
+                if (forwardButton.isVisible() && throttle.getIsForward()) {
+                    forwardButton.setSelected(throttle.getIsForward());
+                }
+                if (reverseButton.isVisible() && !throttle.getIsForward()) {
+                    reverseButton.setSelected(throttle.getIsForward());
+                }
+                if (speedSlider.isVisible()) {
+                    speedSlider.setValue((int)(throttle.getSpeedSetting() * 100.0f));
+                }
+                if (throttleStatus.isVisible()) {
+                    throttleStatus.setText(sb.toString());
+                }
+            } else {
+                if (throttleStatus.isVisible()) {
+                    throttleStatus.setText("No Throttle");
+                }
+            }
+        }
+
+        private void handleActiveTrainListen(java.beans.PropertyChangeEvent e) {
+            if (e.getNewValue() != null) {
+            log.trace("Property[{}] newValue[{}]",e.getPropertyName(),e.getNewValue());
+            } else {
+                log.trace("Property[{}] newValue[{}]",e.getPropertyName(),"NULL");
+            }
+            if (e.getPropertyName().equals("mode")) {
+                int newValue = ((Integer) e.getNewValue()).intValue();
+                if (newValue == ActiveTrain.DISPATCHED) {
+                    stopButton.setVisible(false);
+                    manualButton.setVisible(false);
+                    resumeAutoRunningButton.setVisible(true);
+                    forwardButton.setVisible(false);
+                    reverseButton.setVisible(false);
+                    speedSlider.setVisible(false);
+                    throttleStatus.setVisible(false);
+                    jmri.InstanceManager.throttleManagerInstance().removeListener(throttle.getLocoAddress(),
+                            throttleListener);
+                } else if (newValue == ActiveTrain.AUTOMATIC) {
+                    log.trace("[{}]:Set auto", autoActiveTrain.getActiveTrain().getActiveTrainName());
+                    if (throttle == null && autoActiveTrain.getThrottle() != null) {
+                        log.trace("[{}]:Set new throttle", autoActiveTrain.getActiveTrain().getActiveTrainName());
+                        throttle = autoActiveTrain.getThrottle();
+                        throttleListener = new java.beans.PropertyChangeListener() {
+                            @Override
+                            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                handleThrottleListen(e);
+                            }
+                        };
+                        throttle.addPropertyChangeListener(throttleListener);
+                        stopButton.setText(Bundle.getMessage("StopButton"));
+                        stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
+                        stopButton.setVisible(true);
+                        manualButton.setText(Bundle.getMessage("ToManualButton"));
+                        manualButton.setToolTipText(Bundle.getMessage("ToManualButtonHint"));
+                        manualButton.setVisible(true);
+                        resumeAutoRunningButton.setVisible(false);
+                        forwardButton.setVisible(false);
+                        reverseButton.setVisible(false);
+                        speedSlider.setVisible(false);
+                        throttleStatus.setVisible(true);
+                        updateThrottleDisplay();
+                    }
+                } else if ((int) e.getNewValue() == ActiveTrain.TERMINATED) {
+                    if (throttle != null && throttleListener != null) {
+                        throttle.removePropertyChangeListener(throttleListener);
+                        throttle = null;
+                    }
+                    activeTrain.removePropertyChangeListener(activeTrainListener);
+                    // please someone stop me before I do something silly
+                    firePropertyChange("terminated", null, null);
+                }
+            } else if (e.getPropertyName().equals("status")) {
+                log.debug("NewStatus[{}]", e.getNewValue());
+                if ((int) e.getNewValue() == ActiveTrain.STOPPED) {
+                    stopButton.setText(Bundle.getMessage("ResumeButton"));
+                    stopButton.setToolTipText(Bundle.getMessage("ResumeButtonHint"));
+                    stopButton.setVisible(true);
+                } else if ((int) e.getNewValue() == ActiveTrain.RUNNING ||
+                        (int) e.getNewValue() == ActiveTrain.WAITING) {
+                    log.trace("[{}]:Set auto STATUS RUNNING", autoActiveTrain.getActiveTrain().getActiveTrainName());
+                    if (throttle == null && autoActiveTrain.getThrottle() != null) {
+                        log.debug("[{}]:Set new throttle", autoActiveTrain.getActiveTrain().getActiveTrainName());
+                        throttle = autoActiveTrain.getThrottle();
+                        throttleListener = new java.beans.PropertyChangeListener() {
+                            @Override
+                            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                handleThrottleListen(e);
+                            }
+                        };
+                        throttle.addPropertyChangeListener(throttleListener);
+                    }
+                    stopButton.setText(Bundle.getMessage("StopButton"));
+                    stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
+                    stopButton.setVisible(true);
+                    manualButton.setText(Bundle.getMessage("ToManualButton"));
+                    manualButton.setToolTipText(Bundle.getMessage("ToManualButtonHint"));
+                    manualButton.setVisible(true);
+                    resumeAutoRunningButton.setVisible(false);
+                    forwardButton.setVisible(false);
+                    reverseButton.setVisible(false);
+                    speedSlider.setVisible(false);
+                    throttleStatus.setVisible(true);
+                    updateThrottleDisplay();
+                } else if ((int) e.getNewValue() == ActiveTrain.DONE) {
+                    stopButton.setText(Bundle.getMessage("RestartButton"));
+                    stopButton.setToolTipText(Bundle.getMessage("RestartButtonHint"));
+                    stopButton.setVisible(true);
+                } else {
+                    log.debug("Ignored newstatus[{}]", e.getNewValue());
+                }
+            }
+            pack();
+        }
+
+        public void manualAutoTrain() {
+            if (activeTrain.getMode() == ActiveTrain.AUTOMATIC) {
+                activeTrain.setMode(ActiveTrain.MANUAL);
+                manualButton.setText(Bundle.getMessage("ToAutoButton"));
+                manualButton.setToolTipText(Bundle.getMessage("ToAutoButtonHint"));
+                forwardButton.setVisible(true);
+                reverseButton.setVisible(true);
+                speedSlider.setVisible(true);
+                if (autoActiveTrain.getAutoEngineer() != null) {
+                    autoActiveTrain.saveSpeedAndDirection();
+                    autoActiveTrain.getAutoEngineer().setHalt(true);
+                    autoActiveTrain.setTargetSpeed(0.0f);
+                    autoActiveTrain.waitUntilStopped();
+                    autoActiveTrain.getAutoEngineer().setHalt(false);
+                    if (throttle.getIsForward() ) {
+                        forwardButton.setSelected(true);
+                    } else {
+                        reverseButton.setSelected(true);
+                    }
+                }
+
+            } else if (activeTrain.getMode() == ActiveTrain.MANUAL) {
+                activeTrain.setMode(ActiveTrain.AUTOMATIC);
+                manualButton.setText(Bundle.getMessage("ToManualButton"));
+                manualButton.setToolTipText(Bundle.getMessage("ToManualButtonHint"));
+                manualButton.setVisible(true);
+                forwardButton.setVisible(false);
+                reverseButton.setVisible(false);
+                speedSlider.setVisible(false);
+                autoActiveTrain.restoreSavedSpeedAndDirection();
+                // autoActiveTrain.setForward(!autoActiveTrain.getRunInReverse());
+                if ((activeTrain.getStatus() == ActiveTrain.RUNNING) ||
+                        (activeTrain.getStatus() == ActiveTrain.WAITING)) {
+                    autoActiveTrain.setSpeedBySignal();
+                }
+            }
+        }
+
+        private JToolBar componentJPanel;
+
+        private void drawComponent() {
+
+            componentJPanel = new JToolBar();
+            componentJPanel.setLayout(new FlowLayout());
+            componentJPanel.setFloatable(true);
+
+            trainLabel = new JLabel(autoActiveTrain.getActiveTrain().getTrainName());
+            trainLabel.setVisible(true);
+            componentJPanel.add(trainLabel);
+            stopButton = new JButton(Bundle.getMessage("ResumeButton"));
+            componentJPanel.add(stopButton);
+            stopButton.addActionListener(e -> stopResume());
+            manualButton = new JButton(Bundle.getMessage("ToManualButton"));
+            componentJPanel.add(manualButton);
+            manualButton.addActionListener(e -> manualAutoTrain());
+            resumeAutoRunningButton = new JButton(Bundle.getMessage("ResumeAutoButton"));
+            componentJPanel.add(resumeAutoRunningButton);
+            resumeAutoRunningButton.addActionListener(e -> resumeAutoOperation());
+            resumeAutoRunningButton.setVisible(false);
+            resumeAutoRunningButton.setToolTipText(Bundle.getMessage("ResumeAutoButtonHint"));
+            ButtonGroup directionGroup = new ButtonGroup();
+            forwardButton = new JRadioButton(Bundle.getMessage("ForwardRadio"));
+            componentJPanel.add(forwardButton);
+            forwardButton.addActionListener(e -> directionButton());
+            directionGroup.add(forwardButton);
+            reverseButton = new JRadioButton(Bundle.getMessage("ReverseRadio"));
+            componentJPanel.add(reverseButton);
+            reverseButton.addActionListener(e -> directionButton());
+            directionGroup.add(reverseButton);
+            speedSlider = new JSlider(0, 100, 0);
+            speedSlider.setPreferredSize(new Dimension(100, 20));
+            componentJPanel.add(speedSlider);
+            speedSlider.addChangeListener(e -> {
+                int val = ((JSlider) (e.getSource())).getValue();
+                sliderChanged(val);
+            });
+
+            throttleStatus = new JLabel();
+            // prevent JFrame to resize on each % change
+            throttleStatus.setPreferredSize(new Dimension(100, 20));
+            throttleStatus.setText("Speed Unknown");
+            componentJPanel.add(throttleStatus);
+            componentJPanel.revalidate();
+            add(componentJPanel, BorderLayout.EAST);
+            pack();
+        }
+
+        public void stopResume() {
+            if (autoActiveTrain.getAutoEngineer() != null) {
+                ActiveTrain at = autoActiveTrain.getActiveTrain();
                 if (at.getStatus() == ActiveTrain.STOPPED) {
-                    // resume
-                    aat.setEngineDirection();
-                    aat.getAutoEngineer().setHalt(false);
-                    aat.restoreSavedSpeedAndDirection();
-                    at.setStatus(aat.getSavedStatus());
-                    if ((at.getStatus() == ActiveTrain.RUNNING)
-                            || (at.getStatus() == ActiveTrain.WAITING)) {
-                        aat.setSpeedBySignal();
+                    log.trace("Train Is Stopped - Resume");
+                    autoActiveTrain.setEngineDirection();
+                    autoActiveTrain.getAutoEngineer().setHalt(false);
+                    autoActiveTrain.restoreSavedSpeedAndDirection();
+                    at.setStatus(autoActiveTrain.getSavedStatus());
+                    if ((at.getStatus() == ActiveTrain.RUNNING) || (at.getStatus() == ActiveTrain.WAITING)) {
+                        autoActiveTrain.setSpeedBySignal();
                     }
                 } else if (at.getStatus() == ActiveTrain.DONE) {
+                    log.trace("Train Is Done - Restart");
                     // restart
                     at.allocateAFresh();
                     at.restart();
                 } else {
+                    log.trace("Process As Stop");
                     // stop
-                    aat.getAutoEngineer().setHalt(true);
-                    aat.saveSpeedAndDirection();
-                    aat.setSavedStatus(at.getStatus());
+                    autoActiveTrain.getAutoEngineer().setHalt(true);
+                    autoActiveTrain.saveSpeedAndDirection();
+                    autoActiveTrain.setSavedStatus(at.getStatus());
                     at.setStatus(ActiveTrain.STOPPED);
                     if (at.getMode() == ActiveTrain.MANUAL) {
-                        _speedSliders.get(index).setValue(0);
+                        speedSlider.setValue(0);
                     }
                 }
             } else {
                 log.error("unexpected null autoEngineer");
             }
         }
-        displayAutoTrains();
-    }
 
-    public void manualAuto(String s) {
-        int index = getTrainIndex(s);
-        if (index >= 0) {
-            AutoActiveTrain aat = _autoTrainsList.get(index);
-            ActiveTrain at = aat.getActiveTrain();
-            // if train is AUTOMATIC mode, change it to MANUAL
-            if (at.getMode() == ActiveTrain.AUTOMATIC) {
-                at.setMode(ActiveTrain.MANUAL);
-                if (aat.getAutoEngineer() != null) {
-                    aat.saveSpeedAndDirection();
-                    aat.getAutoEngineer().setHalt(true);
-                    aat.setTargetSpeed(0.0f);
-                    aat.waitUntilStopped();
-                    aat.getAutoEngineer().setHalt(false);
 
-                }
-            } else if (at.getMode() == ActiveTrain.MANUAL) {
-                at.setMode(ActiveTrain.AUTOMATIC);
-                aat.restoreSavedSpeedAndDirection();
-                if ((at.getStatus() == ActiveTrain.RUNNING)
-                        || (at.getStatus() == ActiveTrain.WAITING)) {
-                    if (aat.getCurrentSignal() != null) {
-                    aat.setSpeedBySignal();
-                    }
-                }
-            }
+        public void resumeAutoOperation() {
+            autoActiveTrain.resumeAutomaticRunning();
         }
-        displayAutoTrains();
-    }
 
-    public void resumeAutoOperation(String s) {
-        int index = getTrainIndex(s);
-        if (index >= 0) {
-            AutoActiveTrain aat = _autoTrainsList.get(index);
-            aat.resumeAutomaticRunning();
-        }
-        displayAutoTrains();
-    }
-
-    public void directionButton(String s) {
-        int index = getTrainIndex(s);
-        if (index >= 0) {
-            AutoActiveTrain aat = _autoTrainsList.get(index);
-            ActiveTrain at = aat.getActiveTrain();
+        public void directionButton() {
+            ActiveTrain at = autoActiveTrain.getActiveTrain();
             if (at.getMode() == ActiveTrain.MANUAL) {
-                aat.setForward(_forwardButtons.get(index).isSelected());
+                autoActiveTrain.setForward(forwardButton.isSelected());
             } else {
-                log.warn("unexpected direction button change on line {}", s);
+                log.warn("unexpected direction button change on line {}", at.getTrainName());
             }
         }
-    }
 
-    public void sliderChanged(String s, int value) {
-        int index = getTrainIndex(s);
-        if (index >= 0) {
-            AutoActiveTrain aat = _autoTrainsList.get(index);
-            ActiveTrain at = aat.getActiveTrain();
+        public void sliderChanged(int value) {
+            ActiveTrain at = autoActiveTrain.getActiveTrain();
             if (at.getMode() == ActiveTrain.MANUAL) {
                 float speedValue = value;
                 speedValue = speedValue * 0.01f;
-                aat.getAutoEngineer().setSpeedImmediate(speedValue);
+                autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
             } else {
-                log.warn("unexpected slider change on line {}", s);
+                log.warn("unexpected slider change on line {}", at.getTrainName());
             }
         }
     }
 
-    private int getTrainIndex(String s) {
-        int index = -1;
-        try {
-            index = Integer.parseInt(s);
-        } catch (Exception e) {
-            log.warn("exception when parsing index from AutoTrains window - {}", s);
-        }
-        if ((index >= 0) && (index < _autoTrainsList.size())) {
-            return index;
-        }
-        log.error("bad train index in auto trains table {}", index);
-        return (-1);
-    }
-
-    public void stopAllPressed(ActionEvent e) {
-        for (AutoActiveTrain aat : _autoTrainsList) {
-            ActiveTrain at = aat.getActiveTrain();
-            if ((at.getStatus() != ActiveTrain.STOPPED) && (aat.getAutoEngineer() != null)) {
-                aat.getAutoEngineer().setHalt(true);
-                aat.saveSpeedAndDirection();
-                aat.setSavedStatus(at.getStatus());
-                at.setStatus(ActiveTrain.STOPPED);
-            }
-        }
-        displayAutoTrains();
-    }
-
-    protected void displayAutoTrains() {
-        // set up AutoTrains to display
-        while (_autoTrainsList.size() > _JPanels.size()) {
-            newTrainLine();
-        }
-        for (int i = 0; i < _autoTrainsList.size(); i++) {
-            AutoActiveTrain aat = _autoTrainsList.get(i);
-            if (aat != null) {
-                if (i > 0) {
-                    JSeparator sep = _separators.get(i);
-                    sep.setVisible(true);
-                }
-                JPanel panel = _JPanels.get(i);
-                panel.setVisible(true);
-                ActiveTrain at = aat.getActiveTrain();
-                JLabel tName = _trainLabels.get(i);
-                if (_throttles.get(i) != null) {
-                    updateStatusLabel(_throttleStatus.get(i),_throttles.get(i).getSpeedSetting(),_throttles.get(i).getIsForward());
-                } else {
-                    updateStatusLabel(_throttleStatus.get(i), 0.0f, true);
-                }
-                tName.setText(at.getTrainName());
-                JButton stopButton = _stopButtons.get(i);
-                if (at.getStatus() == ActiveTrain.STOPPED) {
-                    stopButton.setText(Bundle.getMessage("ResumeButton"));
-                    stopButton.setToolTipText(Bundle.getMessage("ResumeButtonHint"));
-                    _resumeAutoRunningButtons.get(i).setVisible(false);
-                } else if (at.getStatus() == ActiveTrain.DONE) {
-                    stopButton.setText(Bundle.getMessage("RestartButton"));
-                    stopButton.setToolTipText(Bundle.getMessage("RestartButtonHint"));
-                    _resumeAutoRunningButtons.get(i).setVisible(false);
-                } else if (at.getStatus() == ActiveTrain.WORKING) {
-                    stopButton.setVisible(false);
-                } else {
-                    stopButton.setText(Bundle.getMessage("StopButton"));
-                    stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
-                    stopButton.setVisible(true);
-                }
-                JButton manualButton = _manualButtons.get(i);
-                if (at.getMode() == ActiveTrain.AUTOMATIC) {
-                    manualButton.setText(Bundle.getMessage("ToManualButton"));
-                    manualButton.setToolTipText(Bundle.getMessage("ToManualButtonHint"));
-                    manualButton.setVisible(true);
-                    _resumeAutoRunningButtons.get(i).setVisible(false);
-                    _forwardButtons.get(i).setVisible(false);
-                    _reverseButtons.get(i).setVisible(false);
-                    _speedSliders.get(i).setVisible(false);
-                    _throttleStatus.get(i).setVisible(true);
-                } else if (at.getMode() == ActiveTrain.DISPATCHED) {
-                    manualButton.setVisible(false);
-                    _resumeAutoRunningButtons.get(i).setVisible(true);
-                    _forwardButtons.get(i).setVisible(false);
-                    _reverseButtons.get(i).setVisible(false);
-                    _speedSliders.get(i).setVisible(false);
-                    _throttleStatus.get(i).setVisible(false);
-                } else {
-                    manualButton.setText(Bundle.getMessage("ToAutoButton"));
-                    manualButton.setToolTipText(Bundle.getMessage("ToAutoButtonHint"));
-                    _forwardButtons.get(i).setVisible(true);
-                    _reverseButtons.get(i).setVisible(true);
-                    _speedSliders.get(i).setVisible(true);
-                    _throttleStatus.get(i).setVisible(false);
-                    _forwardButtons.get(i).setSelected(aat.getForward());
-                    _reverseButtons.get(i).setSelected(!aat.getForward());
-                    int speedValue = (int) (aat.getTargetSpeed() * 100.0f);
-                    _speedSliders.get(i).setValue(speedValue);
-                }
-            }
-        }
-        // clear unused item rows, if needed
-        for (int j = _autoTrainsList.size(); j < _JPanels.size(); j++) {
-            JPanel panel = _JPanels.get(j);
-            panel.setVisible(false);
-            JSeparator sep = _separators.get(j);
-            sep.setVisible(false);
-        }
-        autoTrainsFrame.pack();
-        autoTrainsFrame.setAutoRequestFocus(false);
-        autoTrainsFrame.setVisible(true);
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
+        private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
 

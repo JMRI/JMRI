@@ -509,7 +509,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(location.getId(), data.path(JSON.NAME).asText());
         assertEquals(location.getName(), data.path(JSON.USERNAME).asText());
         assertThat(data.path(JSON.COMMENT).isValueNode()).isTrue();
-        assertEquals(location.getComment(), data.path(JSON.COMMENT).asText());
+        assertEquals(location.getCommentWithColor(), data.path(JSON.COMMENT).asText());
         assertThat(data.path(JsonReporter.REPORTER).isValueNode()).isTrue();
         assertThat(data.path(JsonReporter.REPORTER).isNull()).isTrue();
         assertThat(data.path(JsonOperations.CAR_TYPE).isArray()).isTrue();

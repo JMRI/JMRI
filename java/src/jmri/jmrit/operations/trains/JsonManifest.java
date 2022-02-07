@@ -99,7 +99,7 @@ public class JsonManifest extends TrainCommon {
             }
             // add location comment and id
             ObjectNode locationNode = this.mapper.createObjectNode();
-            locationNode.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(TrainCommon.getTextColorString(routeLocation.getLocation().getComment())));
+            locationNode.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment()));
             locationNode.put(JSON.NAME, routeLocation.getLocation().getId());
             jsonLocation.set(JsonOperations.LOCATION, locationNode);
             jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getComment()));

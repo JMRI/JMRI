@@ -120,7 +120,7 @@ public class TrainTest extends OperationsTestCase {
         train1.setName("TESTNEWNAME");
         Assert.assertEquals("Train New Name", "TESTNEWNAME", train1.getName());
         train1.setComment("TESTCOMMENT");
-        Assert.assertEquals("Train Comment", "TESTCOMMENT", train1.getComment());
+        Assert.assertEquals("Train Comment", "TESTCOMMENT", train1.getCommentWithColor());
         train1.setDescription("TESTDESCRIPTION");
         Assert.assertEquals("Train Description", "TESTDESCRIPTION", train1.getDescription());
         train1.setCabooseRoad("TESTCABOOSEROAD");
@@ -1383,10 +1383,8 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertFalse("Train length test, can't service car with FRED", t1.isBuilt());
 
         // build failed after engines were assigned to train 1
-        Assert.assertEquals("Engine assignment ignores train length restrictions", t1, e1.getTrain());
-        Assert.assertEquals("Engine assignment ignores train length restrictions", t1, e2.getTrain());
-        Assert.assertEquals("Engine destination ignores train length restrictions", "Foxboro", e1.getDestinationName());
-        Assert.assertEquals("Engine destination ignores train length restrictions", "Foxboro", e2.getDestinationName());
+        Assert.assertEquals("Engine assignment ignores train length restrictions", null, e1.getTrain());
+        Assert.assertEquals("Engine assignment ignores train length restrictions", null, e2.getTrain());
 
         Assert.assertEquals("Check CP30 engine length", "56", e1.getLength());
         Assert.assertEquals("Check CP 200 length", "32", c2.getLength());
