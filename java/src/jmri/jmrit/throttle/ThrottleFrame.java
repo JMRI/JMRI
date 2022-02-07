@@ -891,12 +891,29 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public void componentShown(ComponentEvent e) {
         throttleWindow.setCurrentThrottleFrame(this);
         if (willSwitch) {
-            setEditMode(this.throttleWindow.getEditMode());
+            setEditMode(this.throttleWindow.isEditMode());
             repaint();
         }
         throttleWindow.updateGUI();
-        if (addressPanel.getThrottle() == null) {
-            ThrottleWindowActions.toFront(addressPanel);
+	// bring addresspanel to front if no allocated throttle
+        if (addressPanel.getThrottle() == null && throttleWindow.isEditMode()) {
+            if (!addressPanel.isVisible()) {
+                addressPanel.setVisible(true);
+            }            
+            if (addressPanel.isIcon()) {
+                try {
+                    addressPanel.setIcon(false);
+                } catch (PropertyVetoException ex) {
+                    log.debug("JInternalFrame uniconify, vetoed");
+                }
+            }
+            addressPanel.requestFocus();
+            addressPanel.toFront();
+            try {
+                addressPanel.setSelected(true);
+            } catch (java.beans.PropertyVetoException ex) {
+                log.debug("JInternalFrame selection, vetoed");
+            }
         }
     }
 

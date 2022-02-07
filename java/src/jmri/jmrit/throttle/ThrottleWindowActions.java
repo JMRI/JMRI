@@ -32,7 +32,7 @@ public abstract class ThrottleWindowActions implements PropertyChangeListener {
         tpwkc = InstanceManager.getDefault(ThrottlesPreferences.class).getThrottlesKeyboardControls();        
     }
               
-    public static void toFront(JInternalFrame jif) {
+    protected void toFront(JInternalFrame jif) {
         if (jif == null) {
             return;
         }

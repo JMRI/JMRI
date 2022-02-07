@@ -279,7 +279,7 @@ public class ThrottleWindow extends JmriJFrame {
         updateGUI();
     }
 
-    public boolean getEditMode() {
+    public boolean isEditMode() {
         return isEditMode;
     }
 
