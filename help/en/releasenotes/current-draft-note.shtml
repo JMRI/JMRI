@@ -117,7 +117,23 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>Updated: Tags are recorded in a table.
+                    If there is a Car (from OperationsPro) associated with this tag,
+                    the Road name and Car number are shown. The location and Track are
+                    shown in ComboBoxes which the user can set
+                    and then click on a button to set to the new Location and Track.
+                    Another button shows the Car in the Edit Car window.
+                    If there is no associated car, a button opens a window with a list of Road names.
+                    The user can select a road name and the second list shows all car numbers for that road.
+                    Once a car number has been selected a button sets the tag in that Car.
+                    By default the only visible road names and numbers are for cars that do not have a tag.
+                    A checkbox shows all cars, including those with tags.
+                <p>
+                    The window is opened from the "RFID" menu choice (there is one for each RFID connection).
+                    The first choice opens the standard Serial Monitor Pane.
+                    This new Pane is opened from the second choice.
+                    The help screen can be viewed from the monitor pane,
+                    or via a link in the Hardware RFID connection frame.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -386,7 +402,6 @@
           <li>Tooltip support for panel icons has been changed.
           See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
           Tooltips</a> for details.</li>
-
           <li>Update the layout block occupancy sensor when the occupancy sensor for the related
           block has been added, removed or changed to a different sensor.</li>
         </ul>
@@ -474,7 +489,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li></li>
+            <li>Inobu One provided new single-crossover icons and additional double-crossover USS icons.</li>
         </ul>
 
     <h3>Roster</h3>
