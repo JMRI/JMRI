@@ -1711,7 +1711,9 @@ public class WarrantFrame extends WarrantRoute {
     protected void close() {
         _dirty = false;
         clearTempWarrant();
-        stopRunTrain(true);
+        if (_warrant.getRunMode() != Warrant.MODE_NONE) {
+            stopRunTrain(true);
+        }
         closeProfileTable();
         dispose();
     }
