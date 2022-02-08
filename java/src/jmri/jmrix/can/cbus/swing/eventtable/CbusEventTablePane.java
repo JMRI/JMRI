@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.eventtable.*;
@@ -34,7 +35,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected CbusEventTableDataModel eventModel;
     protected JTable eventTable;
     protected CbusPreferences preferences;
-    private jmri.UserPreferencesManager p;
+    private UserPreferencesManager p;
     
     private CbusCreateBeanPane newBeanPanel;
     protected CbusNewEventPane neweventcontainer;
@@ -51,25 +52,30 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected final JMenu evJmMenu = new JMenu(Bundle.getMessage("latestEvCols")); // NOI18N
     protected final JMenu buttonMenu = new JMenu(Bundle.getMessage("buttonCols")); // NOI18N
     
-    private StayOpenCheckBoxItem showfilterpanel;
-    private StayOpenCheckBoxItem shownewevent;
-    private StayOpenCheckBoxItem showNewBeanPanel;
-    private StayOpenCheckBoxItem showSendEventPanel;
+    private final StayOpenCheckBoxItem showfilterpanel;
+    private final StayOpenCheckBoxItem shownewevent;
+    private final StayOpenCheckBoxItem showNewBeanPanel;
+    private final StayOpenCheckBoxItem showSendEventPanel;
 
     private final XTableColumnModel tcm;
     
     public CbusEventTablePane() {
         super();
         tcm = new XTableColumnModel();
+        showNewBeanPanel = new StayOpenCheckBoxItem(Bundle.getMessage("NewTsl")); // NOI18N
+        shownewevent = new StayOpenCheckBoxItem((Bundle.getMessage("NewEvent"))); // NOI18N
+        showfilterpanel = new StayOpenCheckBoxItem(Bundle.getMessage("FilterSurround")); // NOI18N
+        showSendEventPanel = new StayOpenCheckBoxItem(Bundle.getMessage("ButtonSendEvent")); // NOI18N
+        
+        p = InstanceManager.getDefault(UserPreferencesManager.class);
     }
     
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        
+
         preferences = InstanceManager.getDefault(CbusPreferences.class);
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        
+
         CbusEventTableDataModel.checkCreateNewEventModel(memo);
         eventModel = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
         
@@ -210,19 +216,15 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     
         JMenu displayMenu = new JMenu(Bundle.getMessage("Display")); // NOI18N
         
-        showNewBeanPanel = new StayOpenCheckBoxItem(Bundle.getMessage("NewTsl")); // NOI18N
         showNewBeanPanel.addActionListener((ActionEvent e) ->
             newBeanPanel.setVisible(showNewBeanPanel.isSelected()) );
         
-        shownewevent = new StayOpenCheckBoxItem((Bundle.getMessage("NewEvent"))); // NOI18N
         shownewevent.addActionListener((ActionEvent e) ->
             neweventcontainer.setVisible(shownewevent.isSelected()) );
         
-        showfilterpanel = new StayOpenCheckBoxItem(Bundle.getMessage("FilterSurround")); // NOI18N
         showfilterpanel.addActionListener((ActionEvent e) -> 
             filterpanel.setVisible(showfilterpanel.isSelected()) );
 
-        showSendEventPanel = new StayOpenCheckBoxItem(Bundle.getMessage("ButtonSendEvent")); // NOI18N
         showSendEventPanel.addActionListener((ActionEvent e) ->
             sendPane.setVisible(showSendEventPanel.isSelected()) );
         

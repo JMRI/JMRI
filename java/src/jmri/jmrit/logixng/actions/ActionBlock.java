@@ -325,7 +325,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         }
     }
 
-    private String getNewData() throws JmriException {
+    private Object getNewData() throws JmriException {
 
         switch (_dataAddressing) {
             case Direct:
@@ -337,14 +337,12 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
+                return symbolTable.getValue(_dataLocalVariable);
 
             case Formula:
                 return _dataExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _dataExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
+                        ? _dataExpressionNode.calculate(
+                                getConditionalNG().getSymbolTable())
                         : null;
 
             default:

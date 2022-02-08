@@ -159,7 +159,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setScroll(SCROLL_BOTH);
         scrollBoth.setSelected(true);
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
-                Color.black, new Color(255, 250, 210), Color.black));
+                Color.black, new Color(255, 250, 210), Color.black, null));
         // register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {

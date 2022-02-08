@@ -547,7 +547,8 @@
         <li><strong>Show Icon tooltips</strong> - This submenu allows you to select whether icon
         tooltips are displayed when in Edit Mode and when not in Edit Mode. When the mouse is
         hovered over an icon, and tooltips are on, the name of the icon is displayed while the
-        mouse remains over the icon. Drawn track items do not have tooltips.</li>
+        mouse remains over the icon. Drawn track items do not have tooltips.  See
+        <a href="Tooltips.shtml">Tooltips</a> for more information.</li>
 
         <li><strong>Show Help Bar in Edit Mode</strong> - If this item is checked, the help bar is
         displayed when the tool bar is displayed.</li>
