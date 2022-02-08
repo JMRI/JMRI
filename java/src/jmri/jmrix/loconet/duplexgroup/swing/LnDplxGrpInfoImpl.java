@@ -7,6 +7,7 @@ import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.util.StringUtil;
 
 /**
  * Provides a low-level interface to Digitrax Duplex Group Identity information.
@@ -73,7 +74,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
 
     private static final boolean limitPasswordToNumericCharacters = false;
     private LocoNetSystemConnectionMemo memo;
-    private Integer numUr92;
+    private Integer numUr92CompatibleType;
     private javax.swing.Timer swingTmrIplQuery;
     private javax.swing.Timer swingTmrDuplexInfoQuery;
     private boolean waitingForIplReply;
@@ -93,7 +94,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         // connect to the LnTrafficController
         connect(memo.getLnTrafficController());
 
-        numUr92 = 0;        // assume 0 UR92 devices available
+        numUr92CompatibleType = 0;        // assume 0 UR92 devices available
         waitingForIplReply = false;
 
         swingTmrIplQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
@@ -103,8 +104,8 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                 waitingForIplReply = false;
                 int oldvalue = 9999;
                 int newvalue = 0;
-                if (numUr92 > 0) {
-                    newvalue = numUr92;
+                if (numUr92CompatibleType > 0) {
+                    newvalue = numUr92CompatibleType;
                     thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
                     invalidateDataAndQueryDuplexInfo();
                 } else {
@@ -124,7 +125,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                     gotQueryReply = false;
                 } else {
                     thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoQueryResponse"); // NOI18N
-                    numUr92 = 0;
+                    numUr92CompatibleType = 0;
                     int oldvalue = 9999;
                     int newvalue = 0;
                     thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
@@ -768,8 +769,8 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
 
     /**
      * Interprets a received LocoNet message. If message is an IPL report of
-     * attached IPL-capable equipment, check to see if it reports a UR92 device
-     * as attached. If so, increment count of UR92 devices. Else ignore.
+     * attached IPL-capable equipment, check to see if it reports a UR92/UR93/LNWI device
+     * as attached. If so, increment count of devices. Else ignore.
      *
      * @return true if message is an IPL device report indicating a UR92
      *         present, else return false.
@@ -777,9 +778,12 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE",
                 justification = "False positive on the implied local variable in numUr92++")
     private boolean handleMessageIplResult(LocoNetMessage m) {
-        if (LnIPLImplementation.isIplUr92IdentityReportMessage(m)) {
-            numUr92++;
-            thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, "", " ");
+        if (LnIPLImplementation.isIplUr92IdentityReportMessage(m) ||
+                LnIPLImplementation.isIplUr93IdentityReportMessage(m) ||
+                LnIPLImplementation.isIplLnwiIdentityReportMessage(m)) {
+            numUr92CompatibleType++;
+            thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", " ");
+            thisone.firePropertyChange(DPLX_IPL_DEVICE_DETAILS, "", new BasicIPLDeviceInfo(m));
             waitingForIplReply = false;
 
             return true;
@@ -817,6 +821,9 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             gr_password = extractDuplexGroupPassword(m);
             gr_ch = extractDuplexGroupChannel(m);
             gr_id = extractDuplexGroupID(m);
+            // always report details to table
+            thisone.firePropertyChange(DPLX_IPL_DEVICE_RESPONSE_DETAILS, "", 
+                    new BasicIPLDeviceResponseInfo(gr_name,Integer.toString(gr_ch) + " (WiFi " + Integer.toString(gr_ch - 10) + ")",gr_password,Integer.toString(gr_id)));
 
             if (awaitingGroupReadReport) {
                 awaitingGroupReadReport = false;
@@ -836,6 +843,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                 thisone.firePropertyChange(DPLX_PC_ID_VALIDITY, false, true);
 
                 thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, "", " ");
+
             } else {
                 // if not expecting a group read, compare new read data
                 // versus first returned data
@@ -929,7 +937,8 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     private void invalidateDataAndQueryDuplexInfo() {
-        if (numUr92 > 0) {
+        // and clear query details from display table
+        if (numUr92CompatibleType > 0) {
             thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ProcessingReadingInfo");
             queryDuplexGroupIdentity();
         }
@@ -937,6 +946,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
 
     private void sendUr92IplQuery() {
         waitingForIplReply = true;
+        thisone.firePropertyChange(DPLX_IPL_DEVICE_DETAILS,"",  new BasicIPLDeviceInfo("","",""));
         memo.getLnTrafficController().sendLocoNetMessage(
                 LnIPLImplementation.createIplSpecificHostQueryPacket(
                         LnConstants.RE_IPL_DIGITRAX_HOST_ALL,
@@ -945,6 +955,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         int newvalue = 0;
         thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue); // NOI18N
         invalidateDuplexGroupIdentityInfo();
+
         if (swingTmrIplQuery != null) {
             if (swingTmrIplQuery.isRunning()) {
                 swingTmrIplQuery.restart();
@@ -967,11 +978,12 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         thisone.firePropertyChange(DPLX_PC_CHANNEL_VALIDITY, true, false);
         thisone.firePropertyChange(DPLX_PC_PASSWORD_VALIDITY, true, false);
         thisone.firePropertyChange(DPLX_PC_ID_VALIDITY, true, false);
+        thisone.firePropertyChange(DPLX_IPL_DEVICE_RESPONSE_DETAILS,"",  new BasicIPLDeviceResponseInfo("","","",""));
     }
 
     /**
-     * Begins a sequence which includes counting available UR92s and, if at
-     * least one UR92 is present, reads the Duplex Group Identity Info.
+     * Begins a sequence which includes counting available UR92s and similar and, if at
+     * least one UR92/UR93/LNWI is present, reads the Duplex Group Identity Info.
      */
     public void countUr92sAndQueryDuplexIdentityInfo() {
         if (thisone == null) {
@@ -987,7 +999,8 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             return;
         }
         invalidateDuplexGroupIdentityInfo();
-        numUr92 = 0;
+
+        numUr92CompatibleType = 0;
 
         // configure timer for delay between UR92 query request and begin of duplex info query
         sendUr92IplQuery();
@@ -1153,7 +1166,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *      LocoNet IPL device query which is sent by this class.
      */
     public int getNumUr92s() {
-        return numUr92;
+        return numUr92CompatibleType;
     }
 
     /**
@@ -1226,6 +1239,9 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     public final static String DPLX_PC_RCD_DPLX_IDENTITY_QUERY = "DPLXPCK_IDENTITY_QUERY"; // NOI18N
     public final static String DPLX_PC_RCD_DPLX_IDENTITY_REPORT = "DPLXPCK_IDENTITY_REPORT"; // NOI18N
 
+    public final static String DPLX_IPL_DEVICE_DETAILS = "DPLEXID"; // NOI18N
+    public final static String DPLX_IPL_DEVICE_RESPONSE_DETAILS = "DPLEXDETAILS"; // NOI18N
+
     /**
      * Connect this instance's LocoNetListener to the LocoNet Traffic Controller
      *
@@ -1251,6 +1267,84 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         if (memo.getLnTrafficController() != null) {
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
+    }
+
+    /*
+     * This class is used for populating the IPL devices Table
+     */
+    static protected class BasicIPLDeviceInfo {
+
+        protected BasicIPLDeviceInfo(String type, String serialNumber, String swVersion) {
+            this.type = type;
+            this.serialNumber = serialNumber;
+            this.swVersion = swVersion;
+        }
+
+        protected BasicIPLDeviceInfo(LocoNetMessage l) {
+            switch (l.getElement(5)) {
+                case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
+                    type = "UR92";
+                    break;
+                case LnConstants.RE_IPL_DIGITRAX_HOST_UR93:
+                    type = "UR93";
+                    break;
+                case LnConstants.RE_IPL_DIGITRAX_HOST_LNWI:
+                    type = "LNWI";
+                    break;
+                default:
+                    // should never get here
+                    type="NA";
+            }
+            serialNumber = StringUtil.twoHexFromInt(l.getElement(12))  +  StringUtil.twoHexFromInt ( l.getElement(11) );
+            swVersion = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
+        }
+
+        private String type;
+        private String serialNumber;
+        private String swVersion;
+
+        protected String getType() {
+            return type;
+        }
+        protected String getSerialNumber() {
+            return serialNumber;
+        }
+        protected String getSwVersion() {
+            return swVersion;
+        }
+
+    }
+
+    /*
+     * This class is used for populating the Device Response Table
+     */
+    static protected class BasicIPLDeviceResponseInfo {
+
+        protected BasicIPLDeviceResponseInfo(String groupName, String channel, String password, String groupId) {
+            this.groupName = groupName;
+            this.channel = channel;
+            this.password = password;
+            this.groupId = groupId;
+        }
+
+        private String groupName;
+        private String channel;
+        private String password;
+        private String groupId;
+
+        protected String getGroupName() {
+            return groupName;
+        }
+        protected String getChannel() {
+            return channel;
+        }
+        protected String getPassword() {
+            return password;
+        }
+        protected String getGroupId() {
+            return groupId;
+        }
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImpl.class);

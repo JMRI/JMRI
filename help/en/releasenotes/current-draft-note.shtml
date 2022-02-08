@@ -71,7 +71,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Updated some new IPL report messages</li>
+                <li>Add configuration support for UR93, LNWIs. Allow updates for individual parameters.</li>
             </ul>
 
         <h4>Maple</h4>
