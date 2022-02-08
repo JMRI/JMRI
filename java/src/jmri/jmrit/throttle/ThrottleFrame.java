@@ -895,7 +895,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             repaint();
         }
         throttleWindow.updateGUI();
-	// bring addresspanel to front if no allocated throttle
+        // bring addresspanel to front if no allocated throttle
         if (addressPanel.getThrottle() == null && throttleWindow.isEditMode()) {
             if (!addressPanel.isVisible()) {
                 addressPanel.setVisible(true);
