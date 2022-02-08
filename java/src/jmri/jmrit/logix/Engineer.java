@@ -354,17 +354,21 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      */
     protected void clearWaitForSync(OBlock block) {
         // block went active. if waiting on sync, clear it
-        if (_synchBlock != null && !block.equals(_synchBlock)) {    // && !_atClear && !_halt && !isRamping()) {
-            log.error("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
-                    _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
+        if (_synchBlock != null) {
+           if (block.equals(_synchBlock)) {
+               synchronized (_synchLockObject) {
+                   _synchLockObject.notifyAll();
+               }
+               if (log.isDebugEnabled()) {
+                   log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() called.  isRamping()={}",
+                           _warrant.getDisplayName(), block.getDisplayName(), isRamping());
+               }
+           } else {
+               log.error("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
+                       _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
+           }
         }
-        synchronized (_synchLockObject) {
-            _synchLockObject.notifyAll();
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() called.  isRamping()={}",
-                    _warrant.getDisplayName(), block.getDisplayName(), isRamping());
-        }
+
     }
 
     private static void setFrameStatusText(String m, Color c, boolean save) {
@@ -418,7 +422,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
 
             long time = 0;
-            int pause = _speedUtil.getRampTimeIncrement() + 20;
+            int pause = 2 *_speedUtil.getRampTimeIncrement() + 20;
             do {
                 // may need a bit of time for quit() or start() to get ready
                 try {
@@ -824,6 +828,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         jmri.Sensor s = (Sensor)bean;
         ValueType type = cmdVal.getType();
         try {
+            if (WarrantPreferences.getDefault().getTrace() || log.isDebugEnabled()) {
+                log.info(Bundle.getMessage("setSensor",
+                            _warrant.getTrainName(), s.getDisplayName(), type.toString()));
+            }
             _warrant.fireRunStatus("SensorSetCommand", type.toString(), s.getDisplayName());
             if (type == ValueType.VAL_ACTIVE) {
                 s.setKnownState(jmri.Sensor.ACTIVE);
@@ -871,10 +879,18 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             _waitForSensor = true;
             while (_waitForSensor) {
                 try {
+                    if (WarrantPreferences.getDefault().getTrace() || log.isDebugEnabled()) {
+                        log.info(Bundle.getMessage("waitSensor",
+                            _warrant.getTrainName(), _waitSensor.getDisplayName(), type.toString()));
+                    }
                     _warrant.fireRunStatus("SensorWaitCommand", type.toString(), _waitSensor.getDisplayName());
                     wait();
                     if (!_abort ) {
                         String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually'
+                        if (WarrantPreferences.getDefault().getTrace() || log.isDebugEnabled()) {
+                            log.info(Bundle.getMessage("waitSensorChange",
+                                    _warrant.getTrainName(), name));
+                        }
                         _warrant.fireRunStatus("SensorWaitCommand", null, name);
                     }
                 } catch (InterruptedException ie) {
@@ -930,7 +946,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             num--;  // decrement loop count
             cmdVal.setFloat(num);
         }
-        java.awt.Color color = java.awt.Color.red;
 
         if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
             // Same loco, perhaps different warrant
@@ -949,25 +964,19 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             if (log.isDebugEnabled()) log.debug("Exit runWarrant");
             return;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Loco address {} on warrant {} and starts loco {} on warrant {}",
-                        _warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(),
-                        warrant.getSpeedUtil().getDccAddress(), warrant.getDisplayName());
-            }
+            java.awt.Color color = java.awt.Color.red;
             String msg = WarrantTableFrame.getDefault().runTrain(warrant, Warrant.MODE_RUN);
-            if (msg != null) {
-                msg = Bundle.getMessage("CannotRun", warrant.getDisplayName(), msg);
-            } else {
+            if (msg == null) {
                 msg = Bundle.getMessage("linkedLaunch",
                         warrant.getDisplayName(), _warrant.getDisplayName(),
                         warrant.getfirstOrder().getBlock().getDisplayName(),
                         _warrant.getfirstOrder().getBlock().getDisplayName());
                 color = WarrantTableModel.myGreen;
-           }
-            final String m = msg;
-            java.awt.Color c = color;
-            Engineer.setFrameStatusText(m, c, true);
-            log.debug("Exit runWarrant - {}",msg);
+            }
+            if (WarrantPreferences.getDefault().getTrace() || log.isDebugEnabled()) {
+                log.info(msg);
+            }
+            Engineer.setFrameStatusText(msg, color, true);
         }
     }
 
@@ -981,12 +990,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
 
         String msg = null;
-        java.awt.Color color;
+        java.awt.Color color = java.awt.Color.red;
         msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
-        if (msg != null) {
-            msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
-            color = java.awt.Color.red;
-        } else {
+        if (msg == null) {
             CommandValue cmdVal = _currentCommand.getValue();
             int num = Math.round(cmdVal.getFloat());
             if (oldWarrant.equals(newWarrant)) {
@@ -999,9 +1005,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
             color = WarrantTableModel.myGreen;
         }
-        String m = msg;
-        java.awt.Color c = color;
-        Engineer.setFrameStatusText(m, c, true);
+        if (WarrantPreferences.getDefault().getTrace() || log.isDebugEnabled()) {
+            log.info(msg);
+        }
+        Engineer.setFrameStatusText(msg, color, true);
         try {
             _checker.join(100);
         } catch (InterruptedException ie) {

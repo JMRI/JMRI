@@ -223,9 +223,12 @@ public class LinkedWarrantTest {
         // It takes 500+ milliseconds per block to execute NXFrameTest.runtimes()
         // i.e. wait at least 600 * (route.length - 1) for return
 
+        String outBlockName = _OBlockMgr.getOBlock("OB11").getDisplayName();
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            return m.startsWith("Warrant");
+            return m.equals(Bundle.getMessage("warrantComplete",
+                                outWarrant.getTrainName(), outWarrant.getDisplayName(), 
+                                outBlockName));
         }, "WestToEastLink finished first leg out");
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -238,7 +241,9 @@ public class LinkedWarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            return m.startsWith("Warrant");
+            return m.equals(Bundle.getMessage("warrantComplete",
+                    backWarrant.getTrainName(), backWarrant.getDisplayName(), 
+                    _OBlockMgr.getOBlock("OB1").getDisplayName()));
         }, "EastToWestLink finished second leg back");
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -251,7 +256,9 @@ public class LinkedWarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            return m.startsWith("Warrant");
+            return m.equals(Bundle.getMessage("warrantComplete",
+                    outWarrant.getTrainName(), outWarrant.getDisplayName(), 
+                    outBlockName));
         }, "WestToEastLink finished third leg");
 
         jmri.util.JUnitUtil.waitFor(() -> {
