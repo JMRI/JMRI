@@ -141,6 +141,18 @@
       to parse the information in the Reporter and copy what you want into a <a href=
       "../../tools/Memories.shtml">Memory.</a> That Memory can then be displayed on a Layout Editor
       Panel.</p>
+      <h3>
+        Monitoring
+      </h3>
+      <p>
+        Open an RFID Command Monitor window to see the RFID tags as they are received.
+      </p>
+      <p>
+        Open a window to see the tags and the Road name Car number (if the tag is associated to a Car in
+        OperationsPro. see <a href="../../../package/jmri/jmrix/rfid/swing/tagcarwin/TagMonitorPane.shtml">Monitor
+        RFID Tags by Car</a> for
+        details.
+      </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

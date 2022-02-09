@@ -54,7 +54,7 @@ public class RampData {
         _settings.add(Float.valueOf(highSetting));
     }
 
-    protected float getRampLength(String speedType) {
+    protected float getRampLength() {
         float rampLength = 0;
         float nextSetting;
         if (_upRamp) {
