@@ -1808,21 +1808,28 @@ var $setWidgetState = function($id, $newState, data) {
                 // west turnout                                 // also compare source by userName
                 $widget.slipStateWest = $newState; // store turnout state w
             }
-            // handle changes from the 2 extra turnouts (they mirror the basic e and w turnouts
+            // handle changes from the 2 extra turnouts, if defined (they mirror the basic e and w turnouts)
+            // only CCCC, TCCT and CTTC are valid turnout state combinations (for slipState 5, 7 and 9 respectively)
             if (($turnoutName == $widget.turnoutLowerWest) || (data.userName == $widget.turnoutLowerWest)) {
                 // scissor additional west turnout, handle like turnoutEast
-                if (($newState != CLOSED && $widget.slipStateWest != CLOSED) || $newState != $widget.slipStateEast) {
-                    $newState = INCONSISTENT;
+                if (($newState == CLOSED) && ((($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == CLOSED)) ||
+                    (($widget.slipStateWest == THROWN) && ($widget.slipStateEast == CLOSED)))) {
+                        $widget.slipStateEast = $newState;
+                } else if (($newState == THROWN) && ($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == THROWN)) {
+                        $widget.slipStateEast = $newState;
                 } else {
-                    $widget.slipStateEast = $newState;
+                    $newState = INCONSISTENT;
                 }
             }
             if (($turnoutName == $widget.turnoutLowerEast) || (data.userName == $widget.turnoutLowerEast)) {
                 // scissor additional east turnout, handle like turnoutWest
-                if (($newState != CLOSED && $widget.slipStateEast != CLOSED) || $newState != $widget.slipStateWest) {
-                    $newState = INCONSISTENT;
+                if (($newState == CLOSED) && ((($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == CLOSED)) ||
+                    (($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == THROWN)))) {
+                        $widget.slipStateWest = $newState;
+                } else if (($newState == THROWN) && ($widget.slipStateWest == THROWN) && ($widget.slipStateEast == CLOSED)) {
+                        $widget.slipStateWest = $newState;
                 } else {
-                    $widget.slipStateWest = $newState;
+                    $newState = INCONSISTENT;
                 }
             }
 
