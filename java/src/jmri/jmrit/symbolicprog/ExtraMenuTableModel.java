@@ -23,8 +23,9 @@ import org.slf4j.LoggerFactory;
  * decoder.
  *
  * @author Howard G. Penny Copyright (C) 2005
+ * @author Bob Jacobsen   Copyright (C) 2021
  */
-public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
+public class ExtraMenuTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
     private String headers[] = {"Label", "Name",
         "Value",
@@ -39,7 +40,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     private JLabel _status = null;
     private Programmer mProgrammer;
 
-    public ResetTableModel(JLabel status, Programmer pProgrammer) {
+    public ExtraMenuTableModel(JLabel status, Programmer pProgrammer) {
         super();
 
         mProgrammer = pProgrammer;
@@ -375,5 +376,5 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ResetTableModel.class);
+    private final static Logger log = LoggerFactory.getLogger(ExtraMenuTableModel.class);
 }
