@@ -3,6 +3,8 @@ package jmri.jmrit.logixng.expressions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.NamedTable;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 
 import org.jdom2.Element;
@@ -42,6 +44,12 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         if (otherMemory != null) {
             element.addContent(new Element("otherMemory").addContent(otherMemory.getName()));
         }
+        NamedBeanHandle table = p.getTable();
+        if (table != null) {
+            element.addContent(new Element("table").addContent(table.getName()));
+        }
+        element.addContent(new Element("tableRow").addContent(p.getTableRowName()));
+        element.addContent(new Element("tableColumn").addContent(p.getTableColumnName()));
         
         String variableName = p.getLocalVariable();
         if (variableName != null) {
@@ -78,6 +86,23 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
             Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim());
             if (m != null) h.setOtherMemory(m);
             else h.removeOtherMemory();
+        }
+
+        Element tableName = shared.getChild("table");
+        if (tableName != null) {
+            NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(tableName.getTextTrim());
+            if (t != null) h.setTable(t);
+            else h.removeTable();
+        }
+
+        Element tableRowName = shared.getChild("tableRow");
+        if (tableRowName != null) {
+            h.setTableRowName(tableRowName.getTextTrim());
+        }
+
+        Element tableColumnName = shared.getChild("tableColumn");
+        if (tableColumnName != null) {
+            h.setTableColumnName(tableColumnName.getTextTrim());
         }
 
         Element variableName = shared.getChild("variable");

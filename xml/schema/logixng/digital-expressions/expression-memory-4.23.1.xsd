@@ -42,6 +42,9 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="table" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="tableRow" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="tableColumn" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="variable" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="compareTo" minOccurs="1" maxOccurs="1">
@@ -49,6 +52,7 @@
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="Value"/>
                     <xs:enumeration value="Memory"/>
+                    <xs:enumeration value="Table"/>
                     <xs:enumeration value="LocalVariable"/>
                     <xs:enumeration value="RegEx"/>
                   </xs:restriction>

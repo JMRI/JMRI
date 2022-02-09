@@ -30,13 +30,18 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
     
     private JTabbedPane _tabbedPaneCompareTo;
     private BeanSelectPanel<Memory> _compareToMemoryBeanPanel;
+    private BeanSelectPanel<NamedTable> _compareToTableBeanPanel;
     private JPanel _compareToConstant;
     private JPanel _compareToMemory;
     private JPanel _compareToLocalVariable;
+    private JPanel _compareToTable;
     private JPanel _compareToRegEx;
     private JTextField _compareToConstantTextField;
     private JTextField _compareToLocalVariableTextField;
     private JTextField _compareToRegExTextField;
+//    private JLabel _panelRowOrColumnLabel;
+    private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
+    private JComboBox<String> _rowOrColumnNameComboBox;
     
     
     private void enableDisableCompareTo() {
@@ -85,11 +90,13 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         _compareToConstant = new JPanel();
         _compareToMemory = new JPanel();
         _compareToLocalVariable = new JPanel();
+        _compareToTable = new JPanel();
         _compareToRegEx = new JPanel();
         
         _tabbedPaneCompareTo.addTab(CompareTo.Value.toString(), _compareToConstant);
         _tabbedPaneCompareTo.addTab(CompareTo.Memory.toString(), _compareToMemory);
         _tabbedPaneCompareTo.addTab(CompareTo.LocalVariable.toString(), _compareToLocalVariable);
+        _tabbedPaneCompareTo.addTab(CompareTo.Table.toString(), _compareToTable);
         
         _tabbedPane.addTab(CompareTo.RegEx.toString(), _compareToRegEx);
         
@@ -101,6 +108,29 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         
         _compareToLocalVariableTextField = new JTextField(30);
         _compareToLocalVariable.add(_compareToLocalVariableTextField);
+        
+        _compareToTableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+        
+//        _panelRowOrColumnLabel = new JLabel(Bundle.getMessage("TableForEachSwing_RowName"));
+        
+        _tableRowOrColumnComboBox = new JComboBox<>();
+        for (TableRowOrColumn item : TableRowOrColumn.values()) {
+            _tableRowOrColumnComboBox.addItem(item);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
+        _tableRowOrColumnComboBox.addActionListener((evt) -> {
+            setupRowOrColumnNameComboBox(expression != null ? expression.getRowOrColumnName() : null);
+            
+//            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Row) {
+//                _panelRowOrColumnLabel.setText(Bundle.getMessage("TableForEachSwing_RowName"));
+//            } else {
+//                _panelRowOrColumnLabel.setText(Bundle.getMessage("TableForEachSwing_ColumnName"));
+//            }
+        });
+        _rowOrColumnNameComboBox = new JComboBox<>();
+        _compareToTable.add(_compareToTableBeanPanel);
+        _compareToTable.add(_tableRowOrColumnComboBox);
+        _compareToTable.add(_rowOrColumnNameComboBox);
         
         _compareToRegExTextField = new JTextField(30);
         _compareToRegEx.add(_compareToRegExTextField);
@@ -139,6 +169,31 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         for (JComponent c : componentList) panel.add(c);
         
         enableDisableCompareTo();
+    }
+    
+    private void setupRowOrColumnNameComboBox(String rowOrColumnName) {
+        _rowOrColumnNameComboBox.removeAllItems();
+        NamedTable table = _compareToTableBeanPanel.getNamedBean();
+        if (table != null) {
+            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+                for (int column=0; column <= table.numColumns(); column++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(0, column);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            } else {
+                for (int row=0; row <= table.numRows(); row++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(row, 0);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            }
+            _rowOrColumnNameComboBox.setSelectedItem(rowOrColumnName);
+        }
     }
     
     /** {@inheritDoc} */

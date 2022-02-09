@@ -29,6 +29,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _otherMemoryHandle;
+    private NamedBeanHandle<NamedTable> _tableHandle;
+    private String _tableRowName = "";
+    private String _tableColumnName = "";
     private String _localVariable = "";
     private String _regEx = "";
     private boolean _listenToOtherMemory = true;
@@ -48,6 +51,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
         ExpressionMemory copy = new ExpressionMemory(sysName, userName);
         copy.setComment(getComment());
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        if (_tableHandle != null) copy.setTable(_tableHandle);
+        copy.setTableRowName(_tableRowName);
+        copy.setTableColumnName(_tableColumnName);
         copy.setMemoryOperation(_memoryOperation);
         copy.setCompareTo(_compareTo);
         copy.setCaseInsensitive(_caseInsensitive);
@@ -129,6 +135,62 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _otherMemoryHandle;
     }
 
+    public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
+        assertListenersAreNotRegistered(log, "setTable");
+        _tableHandle = handle;
+        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
+    }
+    
+    public void setTable(@Nonnull NamedTable turnout) {
+        assertListenersAreNotRegistered(log, "setTable");
+        setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
+    }
+    
+    public void removeTable() {
+        assertListenersAreNotRegistered(log, "setTable");
+        if (_tableHandle != null) {
+            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
+            _tableHandle = null;
+        }
+    }
+    
+    public NamedBeanHandle<NamedTable> getTable() {
+        return _tableHandle;
+    }
+    
+    /**
+     * Get name of row
+     * @return name
+     */
+    public String getTableRowName() {
+        return _tableRowName;
+    }
+    
+    /**
+     * Set name of column
+     * @param rowName name
+     */
+    public void setTableRowName(@Nonnull String rowName) {
+        _tableRowName = rowName;
+    }
+    
+    /**
+     * Get name of column
+     * @return name
+     */
+    public String getTableColumnName() {
+        return _tableColumnName;
+    }
+    
+    /**
+     * Set name of column
+     * @param columnName name
+     */
+    public void setTableColumnName(@Nonnull String columnName) {
+        _tableColumnName = columnName;
+    }
+    
     public void setLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setOtherLocalVariable");
         _localVariable = localVariable;
@@ -192,6 +254,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
         } else {
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
+        if (_tableHandle != null) {
+            InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
+        } else {
+            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
+        }
     }
 
     @Override
@@ -206,6 +273,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
                     throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(_tableHandle.getBean())) {
+                    throw new PropertyVetoException(getDisplayName(), evt);
+                }
+            }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(_memoryHandle.getBean())) {
@@ -213,6 +285,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 }
                 if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
                     removeOtherMemory();
+                }
+            }
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(_tableHandle.getBean())) {
+                    removeTable();
                 }
             }
         }
@@ -357,6 +434,10 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case Memory:
                 otherValue = getString(_otherMemoryHandle.getBean().getValue());
                 break;
+            case Table:
+                NamedTable table = _tableHandle.getBean();
+                otherValue = getString(table.getCell(_tableRowName, _tableColumnName));
+                break;
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_localVariable), false);
                 break;
@@ -435,27 +516,44 @@ public class ExpressionMemory extends AbstractDigitalExpression
             otherMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
 
+        String tableName;
+        if (_tableHandle != null) {
+            tableName = _tableHandle.getName();
+        } else {
+            tableName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
         String message;
-        String other;
+        String other1;
+        String other2 = null;
+        String other3 = null;
+
         switch (_compareTo) {
             case Value:
                 message = "Memory_Long_CompareConstant";
-                other = _constantValue;
+                other1 = _constantValue;
                 break;
 
             case Memory:
                 message = "Memory_Long_CompareMemory";
-                other = otherMemoryName;
+                other1 = otherMemoryName;
+                break;
+
+            case Table:
+                message = "Memory_Long_CompareTable";
+                other1 = tableName;
+                other2 = _tableRowName;
+                other3 = _tableColumnName;
                 break;
 
             case LocalVariable:
                 message = "Memory_Long_CompareLocalVariable";
-                other = _localVariable;
+                other1 = _localVariable;
                 break;
 
             case RegEx:
                 message = "Memory_Long_CompareRegEx";
-                other = _regEx;
+                other1 = _regEx;
                 break;
 
             default:
@@ -474,7 +572,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case GreaterThanOrEqual:
                 // fall through
             case GreaterThan:
-                return Bundle.getMessage(locale, message, memoryName, _memoryOperation._text, other);
+                return Bundle.getMessage(locale, message, memoryName, _memoryOperation._text, other1, other2, other3);
 
             case IsNull:
                 // fall through
@@ -484,7 +582,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case MatchRegex:
                 // fall through
             case NotMatchRegex:
-                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text, other);
+                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text, other1, other2, other3);
 
             default:
                 throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
@@ -570,6 +668,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
         Value(Bundle.getMessage("Memory_CompareTo_Value")),
         Memory(Bundle.getMessage("Memory_CompareTo_Memory")),
         LocalVariable(Bundle.getMessage("Memory_CompareTo_LocalVariable")),
+        Table(Bundle.getMessage("Memory_CompareTo_Table")),
         RegEx(Bundle.getMessage("Memory_CompareTo_RegularExpression"));
 
         private final String _text;

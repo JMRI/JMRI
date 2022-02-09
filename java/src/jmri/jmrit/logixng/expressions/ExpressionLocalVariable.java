@@ -29,6 +29,9 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _memoryHandle;
+    private NamedBeanHandle<NamedTable> _tableHandle;
+    private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
+    private String _rowOrColumnName = "";
     private String _otherLocalVariable = "";
     private String _regEx = "";
     private boolean _listenToMemory = true;
@@ -53,6 +56,9 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         copy.setCaseInsensitive(_caseInsensitive);
         copy.setConstantValue(_constantValue);
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        if (_tableHandle != null) copy.setTable(_tableHandle);
+        copy.setRowOrColumn(_tableRowOrColumn);
+        copy.setRowOrColumnName(_rowOrColumnName);
         copy.setOtherLocalVariable(_localVariable);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
@@ -112,6 +118,63 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         return _memoryHandle;
     }
 
+    public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
+        assertListenersAreNotRegistered(log, "setTable");
+        _tableHandle = handle;
+        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
+    }
+    
+    public void setTable(@Nonnull NamedTable turnout) {
+        assertListenersAreNotRegistered(log, "setTable");
+        setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
+    }
+    
+    public void removeTable() {
+        assertListenersAreNotRegistered(log, "setTable");
+        if (_tableHandle != null) {
+            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
+            _tableHandle = null;
+        }
+    }
+    
+    public NamedBeanHandle<NamedTable> getTable() {
+        return _tableHandle;
+    }
+    
+    /**
+     * Get tableRowOrColumn.
+     * @return tableRowOrColumn
+     */
+    public TableRowOrColumn getRowOrColumn() {
+        return _tableRowOrColumn;
+    }
+    
+    /**
+     * Set tableRowOrColumn.
+     * @param tableRowOrColumn tableRowOrColumn
+     */
+    public void setRowOrColumn(@Nonnull TableRowOrColumn tableRowOrColumn) {
+        _tableRowOrColumn = tableRowOrColumn;
+    }
+    
+    /**
+     * Get name of row or column
+     * @return name of row or column
+     */
+    public String getRowOrColumnName() {
+        return _rowOrColumnName;
+    }
+    
+    /**
+     * Set name of row or column
+     * @param rowOrColumnName name of row or column
+     */
+    public void setRowOrColumnName(@Nonnull String rowOrColumnName) {
+        if (rowOrColumnName == null) throw new RuntimeException("Daniel");
+        _rowOrColumnName = rowOrColumnName;
+    }
+    
     public void setOtherLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setOtherLocalVariable");
         _otherLocalVariable = localVariable;
@@ -171,22 +234,34 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+/*
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
+*/
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    throw new PropertyVetoException(getDisplayName(), evt);
+                }
+            }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+/*
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     removeMemory();
                 }
             }
-        }
 */
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    removeTable();
+                }
+            }
+        }
     }
 
     /** {@inheritDoc} */
@@ -539,6 +614,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         Value(Bundle.getMessage("LocalVariable_CompareTo_Value")),
         Memory(Bundle.getMessage("LocalVariable_CompareTo_Memory")),
         LocalVariable(Bundle.getMessage("LocalVariable_CompareTo_LocalVariable")),
+        Table(Bundle.getMessage("LocalVariable_CompareTo_Table")),
         RegEx(Bundle.getMessage("LocalVariable_CompareTo_RegularExpression"));
 
         private final String _text;
