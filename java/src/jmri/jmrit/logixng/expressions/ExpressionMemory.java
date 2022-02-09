@@ -13,6 +13,10 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -29,13 +33,32 @@ public class ExpressionMemory extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _otherMemoryHandle;
-    private NamedBeanHandle<NamedTable> _tableHandle;
-    private String _tableRowName = "";
-    private String _tableColumnName = "";
+
     private String _localVariable = "";
     private String _regEx = "";
     private boolean _listenToOtherMemory = true;
-//    private boolean _listenToOtherMemory = false;
+
+    private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
+    private NamedBeanHandle<NamedTable> _tableHandle;
+    private String _tableNameReference = "";
+    private String _tableNameLocalVariable = "";
+    private String _tableNameFormula = "";
+    private ExpressionNode _tableNameExpressionNode;
+
+    private NamedBeanAddressing _tableRowAddressing = NamedBeanAddressing.Direct;
+    private String _tableRowName = "";
+    private String _tableRowReference = "";
+    private String _tableRowLocalVariable = "";
+    private String _tableRowFormula = "";
+    private ExpressionNode _tableRowExpressionNode;
+
+    private NamedBeanAddressing _tableColumnAddressing = NamedBeanAddressing.Direct;
+    private String _tableColumnName = "";
+    private String _tableColumnReference = "";
+    private String _tableColumnLocalVariable = "";
+    private String _tableColumnFormula = "";
+    private ExpressionNode _tableColumnExpressionNode;
+
 
     public ExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -51,9 +74,21 @@ public class ExpressionMemory extends AbstractDigitalExpression
         ExpressionMemory copy = new ExpressionMemory(sysName, userName);
         copy.setComment(getComment());
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        copy.setTableNameAddressing(_tableNameAddressing);
         if (_tableHandle != null) copy.setTable(_tableHandle);
+        copy.setTableNameLocalVariable(_tableNameLocalVariable);
+        copy.setTableNameReference(_tableNameReference);
+        copy.setTableNameFormula(_tableNameFormula);
+        copy.setTableRowAddressing(_tableRowAddressing);
         copy.setTableRowName(_tableRowName);
+        copy.setTableRowLocalVariable(_tableRowLocalVariable);
+        copy.setTableRowReference(_tableRowReference);
+        copy.setTableRowFormula(_tableRowFormula);
+        copy.setTableColumnAddressing(_tableColumnAddressing);
         copy.setTableColumnName(_tableColumnName);
+        copy.setTableColumnLocalVariable(_tableColumnLocalVariable);
+        copy.setTableColumnReference(_tableColumnReference);
+        copy.setTableColumnFormula(_tableColumnFormula);
         copy.setMemoryOperation(_memoryOperation);
         copy.setCompareTo(_compareTo);
         copy.setCaseInsensitive(_caseInsensitive);
@@ -135,18 +170,26 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _otherMemoryHandle;
     }
 
+    public void setTableNameAddressing(@Nonnull NamedBeanAddressing addressing) {
+        this._tableNameAddressing = addressing;
+    }
+
+    public NamedBeanAddressing getTableNameAddressing() {
+        return _tableNameAddressing;
+    }
+
     public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
         assertListenersAreNotRegistered(log, "setTable");
         _tableHandle = handle;
         InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
     }
-    
+
     public void setTable(@Nonnull NamedTable turnout) {
         assertListenersAreNotRegistered(log, "setTable");
         setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(turnout.getDisplayName(), turnout));
     }
-    
+
     public void removeTable() {
         assertListenersAreNotRegistered(log, "setTable");
         if (_tableHandle != null) {
@@ -154,11 +197,58 @@ public class ExpressionMemory extends AbstractDigitalExpression
             _tableHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<NamedTable> getTable() {
         return _tableHandle;
     }
-    
+
+    public void setTableNameReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _tableNameReference = reference;
+    }
+
+    public String getTableNameReference() {
+        return _tableNameReference;
+    }
+
+    public void setTableNameLocalVariable(@Nonnull String localVariable) {
+        _tableNameLocalVariable = localVariable;
+    }
+
+    public String getTableNameLocalVariable() {
+        return _tableNameLocalVariable;
+    }
+
+    public void setTableNameFormula(@Nonnull String formula) throws ParserException {
+        _tableNameFormula = formula;
+        parseTableNameFormula();
+    }
+
+    public String getTableNameFormula() {
+        return _tableNameFormula;
+    }
+
+    private void parseTableNameFormula() throws ParserException {
+        if (_tableNameAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _tableNameExpressionNode = parser.parseExpression(_tableNameFormula);
+        } else {
+            _tableNameExpressionNode = null;
+        }
+    }
+
+    public void setTableRowAddressing(@Nonnull NamedBeanAddressing addressing) {
+        this._tableRowAddressing = addressing;
+    }
+
+    public NamedBeanAddressing getTableRowAddressing() {
+        return _tableRowAddressing;
+    }
+
     /**
      * Get name of row
      * @return name
@@ -166,7 +256,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public String getTableRowName() {
         return _tableRowName;
     }
-    
+
     /**
      * Set name of column
      * @param rowName name
@@ -174,7 +264,93 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public void setTableRowName(@Nonnull String rowName) {
         _tableRowName = rowName;
     }
-    
+
+    public void setTableRowReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _tableRowReference = reference;
+    }
+
+    public String getTableRowReference() {
+        return _tableRowReference;
+    }
+
+    public void setTableRowLocalVariable(@Nonnull String localVariable) {
+        _tableRowLocalVariable = localVariable;
+    }
+
+    public String getTableRowLocalVariable() {
+        return _tableRowLocalVariable;
+    }
+
+    public void setTableRowFormula(@Nonnull String formula) throws ParserException {
+        _tableRowFormula = formula;
+        parseTableRowFormula();
+    }
+
+    public String getTableRowFormula() {
+        return _tableRowFormula;
+    }
+
+    private void parseTableRowFormula() throws ParserException {
+        if (_tableRowAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _tableRowExpressionNode = parser.parseExpression(_tableRowFormula);
+        } else {
+            _tableRowExpressionNode = null;
+        }
+    }
+
+    public void setTableColumnAddressing(@Nonnull NamedBeanAddressing addressing) {
+        this._tableColumnAddressing = addressing;
+    }
+
+    public NamedBeanAddressing getTableColumnAddressing() {
+        return _tableColumnAddressing;
+    }
+
+    public void setTableColumnReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _tableColumnReference = reference;
+    }
+
+    public String getTableColumnReference() {
+        return _tableColumnReference;
+    }
+
+    public void setTableColumnLocalVariable(@Nonnull String localVariable) {
+        _tableColumnLocalVariable = localVariable;
+    }
+
+    public String getTableColumnLocalVariable() {
+        return _tableColumnLocalVariable;
+    }
+
+    public void setTableColumnFormula(@Nonnull String formula) throws ParserException {
+        _tableColumnFormula = formula;
+        parseTableColumnFormula();
+    }
+
+    public String getTableColumnFormula() {
+        return _tableColumnFormula;
+    }
+
+    private void parseTableColumnFormula() throws ParserException {
+        if (_tableColumnAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _tableColumnExpressionNode = parser.parseExpression(_tableColumnFormula);
+        } else {
+            _tableColumnExpressionNode = null;
+        }
+    }
+
     /**
      * Get name of column
      * @return name
@@ -182,7 +358,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public String getTableColumnName() {
         return _tableColumnName;
     }
-    
+
     /**
      * Set name of column
      * @param columnName name
@@ -190,7 +366,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public void setTableColumnName(@Nonnull String columnName) {
         _tableColumnName = columnName;
     }
-    
+
     public void setLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setOtherLocalVariable");
         _localVariable = localVariable;

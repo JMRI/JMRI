@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions.swing;
 
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import jmri.jmrit.logixng.expressions.ExpressionMemory.CompareTo;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.MemoryOperation;
 import jmri.jmrit.logixng.swing.LogixNG_DataDialog;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -27,8 +24,8 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
-    private WindowFocusListener _focusListener;
     private final LogixNG_DataDialog _logixNG_DataDialog = new LogixNG_DataDialog(this);
+    private WindowFocusListener _focusListener;
     private BeanSelectPanel<Memory> _memoryBeanPanel;
     private JComboBox<MemoryOperation> _memoryOperationComboBox;
     private JCheckBox _caseInsensitiveCheckBox;
@@ -46,11 +43,33 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
     private JTextField _compareToConstantTextField;
     private JTextField _compareToLocalVariableTextField;
     private JTextField _compareToRegExTextField;
+    private JButton _editTableNameButton;
+    private JButton _editRowNameButton;
+    private JButton _editColumnNameButton;
     private JLabel _tableNameLabel;
     private JLabel _rowNameLabel;
     private JLabel _columnNameLabel;
-    private JComboBox<String> _rowNameComboBox;
-    private JComboBox<String> _columnNameComboBox;
+
+    private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
+    private NamedBeanHandle<NamedTable> _tableHandle;
+    private JTextField _tableNameReferenceTextField;
+    private JTextField _tableNameLocalVariableTextField;
+    private JTextField _tableNameFormulaTextField;
+
+    private NamedBeanAddressing _tableRowAddressing = NamedBeanAddressing.Direct;
+    private JComboBox<String> _tableRowNameComboBox;
+    private JTextField _tableRowNameTextField;
+    private JTextField _tableRowReferenceTextField;
+    private JTextField _tableRowLocalVariableTextField;
+    private JTextField _tableRowFormulaTextField;
+
+    private NamedBeanAddressing _tableColumnAddressing = NamedBeanAddressing.Direct;
+    private JComboBox<String> _tableColumnNameComboBox;
+    private JTextField _tableColumnNameTextField;
+    private JTextField _tableColumnReferenceTextField;
+    private JTextField _tableColumnLocalVariableTextField;
+    private JTextField _tableColumnFormulaTextField;
+
 
 
     private void enableDisableCompareTo() {
@@ -126,21 +145,75 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _rowNameLabel = new JLabel("Row by reference {IM1}");
         _columnNameLabel = new JLabel("Column by local variable myVar");
 
+        _tableNameAddressing = NamedBeanAddressing.Direct;
         _compareToTableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
         _compareToTableBeanPanel.getBeanCombo().addActionListener((evt) -> {
             setupRowOrColumnNameComboBox(expression);
         });
 
-        _rowNameComboBox = new JComboBox<>();
-        _columnNameComboBox = new JComboBox<>();
+        _tableRowNameComboBox = new JComboBox<>();
+        _tableRowNameTextField = new JTextField();
+        _tableColumnNameComboBox = new JComboBox<>();
+        _tableColumnNameTextField = new JTextField();
 
-        JButton _editTableNameLabel = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
-        JButton _editRowNameLabel = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
-        JButton _editColumnNameLabel = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
+        _editTableNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
+        _editRowNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
+        _editColumnNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
 
-        _editTableNameLabel.addActionListener((evt) -> {_logixNG_DataDialog.showDialog(_compareToTableBeanPanel);});
-        _editRowNameLabel.addActionListener((evt) -> {_logixNG_DataDialog.showDialog(_rowNameComboBox);});
-        _editColumnNameLabel.addActionListener((evt) -> {_logixNG_DataDialog.showDialog(_columnNameComboBox);});
+        _tableNameReferenceTextField = new JTextField(30);
+        _tableNameLocalVariableTextField = new JTextField(30);
+        _tableNameFormulaTextField = new JTextField(30);
+
+        _tableRowReferenceTextField = new JTextField(30);
+        _tableRowLocalVariableTextField = new JTextField(30);
+        _tableRowFormulaTextField = new JTextField(30);
+
+        _tableColumnReferenceTextField = new JTextField(30);
+        _tableColumnLocalVariableTextField = new JTextField(30);
+        _tableColumnFormulaTextField = new JTextField(30);
+
+        _editTableNameButton.addActionListener((evt) -> {
+            _logixNG_DataDialog.showDialog(
+                    _compareToTableBeanPanel,
+                    _tableNameReferenceTextField,
+                    _tableNameLocalVariableTextField,
+                    _tableNameFormulaTextField,
+                    this::editTableNameFinished);
+        });
+        _editRowNameButton.addActionListener((evt) -> {
+            if (_tableNameAddressing == NamedBeanAddressing.Direct) {
+                _logixNG_DataDialog.showDialog(
+                        _tableRowNameComboBox,
+                        _tableRowReferenceTextField,
+                        _tableRowLocalVariableTextField,
+                        _tableRowFormulaTextField,
+                        this::editTableRowFinished);
+            } else {
+                _logixNG_DataDialog.showDialog(
+                        _tableRowNameTextField,
+                        _tableRowReferenceTextField,
+                        _tableRowLocalVariableTextField,
+                        _tableRowFormulaTextField,
+                        this::editTableRowFinished);
+            }
+        });
+        _editColumnNameButton.addActionListener((evt) -> {
+            if (_tableNameAddressing == NamedBeanAddressing.Direct) {
+                _logixNG_DataDialog.showDialog(
+                        _tableColumnNameComboBox,
+                        _tableColumnReferenceTextField,
+                        _tableColumnLocalVariableTextField,
+                        _tableColumnFormulaTextField,
+                        this::editTableColumnFinished);
+            } else {
+                _logixNG_DataDialog.showDialog(
+                        _tableColumnNameTextField,
+                        _tableColumnReferenceTextField,
+                        _tableColumnLocalVariableTextField,
+                        _tableColumnFormulaTextField,
+                        this::editTableColumnFinished);
+            }
+        });
 
 //        _panelRowOrColumnLabel = new JLabel(Bundle.getMessage("TableForEachSwing_RowName"));
 
@@ -150,13 +223,13 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.EAST;
-        _compareToTable.add(_editTableNameLabel, constraints);
+        _compareToTable.add(_editTableNameButton, constraints);
 //        _compareToTable.add(new JLabel(Bundle.getMessage("ExpressionMemory_Table")), constraints);
         constraints.gridy = 1;
-        _compareToTable.add(_editRowNameLabel, constraints);
+        _compareToTable.add(_editRowNameButton, constraints);
 //        _compareToTable.add(new JLabel(Bundle.getMessage("ExpressionMemory_RowName")), constraints);
         constraints.gridy = 2;
-        _compareToTable.add(_editColumnNameLabel, constraints);
+        _compareToTable.add(_editColumnNameButton, constraints);
 //        _compareToTable.add(new JLabel(Bundle.getMessage("ExpressionMemory_ColumnName")), constraints);
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -177,13 +250,13 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
 //        _compareToTable.add(_compareToTableBeanPanel, constraints);
-        _compareToTable.add(_editTableNameLabel, constraints);
+        _compareToTable.add(_editTableNameButton, constraints);
         constraints.gridy = 1;
 //        _compareToTable.add(_rowNameComboBox, constraints);
-        _compareToTable.add(_editRowNameLabel, constraints);
+        _compareToTable.add(_editRowNameButton, constraints);
         constraints.gridy = 2;
 //        _compareToTable.add(_columnNameComboBox, constraints);
-        _compareToTable.add(_editColumnNameLabel, constraints);
+        _compareToTable.add(_editColumnNameButton, constraints);
 
         _compareToRegExTextField = new JTextField(30);
         _compareToRegEx.add(_compareToRegExTextField);
@@ -196,6 +269,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             if (expression.getOtherMemory() != null) {
                 _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getOtherMemory().getBean());
             }
+            _tableNameAddressing = expression.getTableNameAddressing();
             if (expression.getTable() != null) {
                 _compareToTableBeanPanel.setDefaultNamedBean(expression.getTable().getBean());
             }
@@ -212,9 +286,14 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             _compareToConstantTextField.setText(expression.getConstantValue());
             _compareToLocalVariableTextField.setText(expression.getLocalVariable());
             _compareToRegExTextField.setText(expression.getRegEx());
-            _rowNameComboBox.setSelectedItem(expression.getTableRowName());
-            _columnNameComboBox.setSelectedItem(expression.getTableColumnName());
+            _tableRowNameComboBox.setSelectedItem(expression.getTableRowName());
+            _tableColumnNameComboBox.setSelectedItem(expression.getTableColumnName());
         }
+
+        // These lines must be after the _compareToTableBeanPanel has set the default bean
+        boolean enable = _compareToTableBeanPanel.getNamedBean() != null;
+        _editRowNameButton.setEnabled(enable);
+        _editColumnNameButton.setEnabled(enable);
 
         JComponent[] components = new JComponent[]{
             _memoryBeanPanel,
@@ -243,12 +322,26 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         getJDialog().addWindowFocusListener(_focusListener);
     }
 
+    private void editTableNameFinished() {
+        boolean enable = _compareToTableBeanPanel.getNamedBean() != null;
+        _editRowNameButton.setEnabled(enable);
+        _editColumnNameButton.setEnabled(enable);
+    }
+
+    private void editTableRowFinished() {
+
+    }
+
+    private void editTableColumnFinished() {
+
+    }
+
     private void setupRowOrColumnNameComboBox(ExpressionMemory expression) {
         String rowName = expression != null ? expression.getTableRowName() : null;
         String columnName = expression != null ? expression.getTableColumnName() : null;
 
-        _rowNameComboBox.removeAllItems();
-        _columnNameComboBox.removeAllItems();
+        _tableRowNameComboBox.removeAllItems();
+        _tableColumnNameComboBox.removeAllItems();
 
         NamedTable table = _compareToTableBeanPanel.getNamedBean();
         if (table != null) {
@@ -256,18 +349,18 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(row, 0);
                 if ((header != null) && (!header.toString().isEmpty())) {
-                    _rowNameComboBox.addItem(header.toString());
+                    _tableRowNameComboBox.addItem(header.toString());
                 }
             }
             for (int column=0; column <= table.numColumns(); column++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(0, column);
                 if ((header != null) && (!header.toString().isEmpty())) {
-                    _columnNameComboBox.addItem(header.toString());
+                    _tableColumnNameComboBox.addItem(header.toString());
                 }
             }
-            _rowNameComboBox.setSelectedItem(rowName);
-            _columnNameComboBox.setSelectedItem(columnName);
+            _tableRowNameComboBox.setSelectedItem(rowName);
+            _tableColumnNameComboBox.setSelectedItem(columnName);
         }
     }
 
@@ -336,13 +429,13 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         } else {
             expression.removeTable();
         }
-        if (_rowNameComboBox.getSelectedIndex() != -1) {
-            expression.setTableRowName(_rowNameComboBox.getItemAt(_rowNameComboBox.getSelectedIndex()));
+        if (_tableRowNameComboBox.getSelectedIndex() != -1) {
+            expression.setTableRowName(_tableRowNameComboBox.getItemAt(_tableRowNameComboBox.getSelectedIndex()));
         } else {
             expression.setTableRowName("");
         }
-        if (_columnNameComboBox.getSelectedIndex() != -1) {
-            expression.setTableColumnName(_columnNameComboBox.getItemAt(_columnNameComboBox.getSelectedIndex()));
+        if (_tableColumnNameComboBox.getSelectedIndex() != -1) {
+            expression.setTableColumnName(_tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex()));
         } else {
             expression.setTableColumnName("");
         }

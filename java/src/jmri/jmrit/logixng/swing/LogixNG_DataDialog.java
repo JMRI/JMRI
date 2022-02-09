@@ -5,9 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
-import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.TurnoutManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectPanel;
@@ -21,17 +19,18 @@ public class LogixNG_DataDialog {
     private final SwingConfiguratorInterface _swi;
     private JmriJFrame _showDialogFrame;
 
-
-    private JTabbedPane _tabbedPaneTurnout;
-    private BeanSelectPanel<? extends NamedBean> _turnoutBeanPanel;
-    private JComboBox<? extends Object> _turnoutComboBox;
-    private JPanel _panelTurnoutDirect;
-    private JPanel _panelTurnoutReference;
-    private JPanel _panelTurnoutLocalVariable;
-    private JPanel _panelTurnoutFormula;
-    private JTextField _turnoutReferenceTextField;
-    private JTextField _turnoutLocalVariableTextField;
-    private JTextField _turnoutFormulaTextField;
+    private Runnable _runOnOk;
+    private JTabbedPane _tabbedPane;
+    private BeanSelectPanel<? extends NamedBean> _beanPanel;
+    private JComboBox<? extends Object> _beanComboBox;
+    private JTextField _beanTextField;
+    private JPanel _panelDirect;
+    private JPanel _panelReference;
+    private JPanel _panelLocalVariable;
+    private JPanel _panelFormula;
+    private JTextField _beanReferenceTextField;
+    private JTextField _beanLocalVariableTextField;
+    private JTextField _beanFormulaTextField;
 
 
 
@@ -39,141 +38,105 @@ public class LogixNG_DataDialog {
         _swi = swi;
     }
 
-    public void showDialog(BeanSelectPanel<? extends NamedBean> turnoutBeanPanel) {
+    public void showDialog(
+            BeanSelectPanel<? extends NamedBean> beanPanel,
+            JTextField referenceTextField,
+            JTextField localVariableTextField,
+            JTextField formulaTextField,
+            Runnable runOnOk) {
         if (checkOpenDialog()) {
             return;
         }
 
-        _turnoutBeanPanel = turnoutBeanPanel;
-        _turnoutComboBox = null;
-        showDialog();
+        _beanPanel = beanPanel;
+        _beanComboBox = null;
+        _beanTextField = null;
+
+        showDialog(referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
-    public void showDialog(JComboBox<? extends Object> turnoutComboBox) {
+    public void showDialog(
+            JComboBox<? extends Object> comboBox,
+            JTextField referenceTextField,
+            JTextField localVariableTextField,
+            JTextField formulaTextField,
+            Runnable runOnOk) {
         if (checkOpenDialog()) {
             return;
         }
 
-        _turnoutBeanPanel = null;
-        _turnoutComboBox = turnoutComboBox;
-        showDialog();
+        _beanPanel = null;
+        _beanComboBox = comboBox;
+        _beanTextField = null;
+
+        showDialog(referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
-    private void showDialog() {
+    public void showDialog(
+            JTextField textField,
+            JTextField referenceTextField,
+            JTextField localVariableTextField,
+            JTextField formulaTextField,
+            Runnable runOnOk) {
+        if (checkOpenDialog()) {
+            return;
+        }
+
+        _beanPanel = null;
+        _beanComboBox = null;
+        _beanTextField = textField;
+        showDialog(referenceTextField, localVariableTextField, formulaTextField, runOnOk);
+    }
+
+    private void showDialog(
+            JTextField referenceTextField,
+            JTextField localVariableTextField,
+            JTextField formulaTextField,
+            Runnable runOnOk) {
+
+        _beanReferenceTextField = referenceTextField;
+        _beanLocalVariableTextField = localVariableTextField;
+        _beanFormulaTextField = formulaTextField;
+
+        _runOnOk = runOnOk;
+
 //        _showDialogFrame = new JmriJFrame(Bundle.getMessage(titleId));
         _showDialogFrame = new JmriJFrame("Edit table name");
 //        _showDialogFrame.addHelpMenu(
 //                "package.jmri.jmrit.beantable.LogixNGTable", true);     // NOI18N
-//        _showDialogFrame.setLocation(50, 30);
         _showDialogFrame.setLocation(
                 (Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - _showDialogFrame.getWidth() / 2,
                 (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - _showDialogFrame.getHeight() / 2);
         Container contentPane = _showDialogFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        JPanel p = new JPanel();
-//        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        _tabbedPane = new JTabbedPane();
+        _panelDirect = new javax.swing.JPanel();
+        _panelReference = new javax.swing.JPanel();
+        _panelLocalVariable = new javax.swing.JPanel();
+        _panelFormula = new javax.swing.JPanel();
 
-
-
-        _tabbedPaneTurnout = new JTabbedPane();
-        _panelTurnoutDirect = new javax.swing.JPanel();
-        _panelTurnoutReference = new javax.swing.JPanel();
-        _panelTurnoutLocalVariable = new javax.swing.JPanel();
-        _panelTurnoutFormula = new javax.swing.JPanel();
-
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.Direct.toString(), _panelTurnoutDirect);
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.Reference.toString(), _panelTurnoutReference);
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutLocalVariable);
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutFormula);
+        _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
+        _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
+        _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
+        _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
 
 //        _turnoutBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
-        if (_turnoutBeanPanel != null) _panelTurnoutDirect.add(_turnoutBeanPanel);
-        else if (_turnoutComboBox != null) _panelTurnoutDirect.add(_turnoutComboBox);
+        if (_beanPanel != null) _panelDirect.add(_beanPanel);
+        else if (_beanComboBox != null) _panelDirect.add(_beanComboBox);
+        else if (_beanTextField != null) _panelDirect.add(_beanTextField);
 
-        _turnoutReferenceTextField = new JTextField();
-        _turnoutReferenceTextField.setColumns(30);
-        _panelTurnoutReference.add(_turnoutReferenceTextField);
+//        _beanReferenceTextField = new JTextField();
+//        _beanReferenceTextField.setColumns(30);
+        _panelReference.add(_beanReferenceTextField);
 
-        _turnoutLocalVariableTextField = new JTextField();
-        _turnoutLocalVariableTextField.setColumns(30);
-        _panelTurnoutLocalVariable.add(_turnoutLocalVariableTextField);
+//        _beanLocalVariableTextField = new JTextField();
+//        _beanLocalVariableTextField.setColumns(30);
+        _panelLocalVariable.add(_beanLocalVariableTextField);
 
-        _turnoutFormulaTextField = new JTextField();
-        _turnoutFormulaTextField.setColumns(30);
-        _panelTurnoutFormula.add(_turnoutFormulaTextField);
-
-
-        p.add(_tabbedPaneTurnout);
-
-
-
-/*
-        p.setLayout(new FlowLayout());
-        p.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(_sysNameLabel, c);
-        _sysNameLabel.setLabelFor(_systemName);
-        c.gridy = 1;
-        p.add(_userNameLabel, c);
-        _userNameLabel.setLabelFor(_addUserName);
-        c.gridx = 1;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.WEST;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        p.add(_systemName, c);
-        c.gridy = 1;
-        p.add(_addUserName, c);
-        c.gridx = 2;
-        c.gridy = 1;
-        c.anchor = java.awt.GridBagConstraints.WEST;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        c.gridy = 0;
-        p.add(_autoSystemName, c);
-        _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
-        _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
-        contentPane.add(p);
-        // set up message
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-        JPanel panel31 = new JPanel();
-        panel31.setLayout(new FlowLayout());
-        JLabel message1 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGMessage1"));  // NOI18N
-        panel31.add(message1);
-        JPanel panel32 = new JPanel();
-        JLabel message2 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGMessage2"));  // NOI18N
-        panel32.add(message2);
-        panel3.add(panel31);
-        panel3.add(panel32);
-        contentPane.add(panel3);
-
-        // set up create and cancel buttons
-        JPanel panel5 = new JPanel();
-        panel5.setLayout(new FlowLayout());
-        // Cancel
-        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
-        panel5.add(cancel);
-        cancel.addActionListener(this::cancelAddPressed);
-        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGButtonHint"));      // NOI18N
-
-        addLogixNGFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                cancelAddPressed(null);
-            }
-        });
-        contentPane.add(panel5);
-*/
-//        _autoSystemName.addItemListener((ItemEvent e) -> {
-//            autoSystemName();
-//        });
+//        _beanFormulaTextField = new JTextField();
+//        _beanFormulaTextField.setColumns(30);
+        _panelFormula.add(_beanFormulaTextField);
 
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
@@ -193,16 +156,29 @@ public class LogixNG_DataDialog {
             if (_swi.getJDialog() != null) {
                 _swi.getJDialog().setVisible(true);
             }
+            _runOnOk.run();
         });
 
-        _showDialogFrame.add(p);
+        _showDialogFrame.add(_tabbedPane);
 
         _showDialogFrame.add(panel5);
 
         _showDialogFrame.pack();
         _showDialogFrame.setVisible(true);
+    }
 
-
+    public NamedBeanAddressing getAddressing() {
+        if (_tabbedPane.getSelectedComponent() == _panelDirect) {
+            return NamedBeanAddressing.Direct;
+        } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
+            return NamedBeanAddressing.Reference;
+        } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
+            return NamedBeanAddressing.LocalVariable;
+        } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
+            return NamedBeanAddressing.Formula;
+        } else {
+            throw new IllegalArgumentException("_tabbedPane has unknown selection");
+        }
     }
 
     public boolean checkOpenDialog() {

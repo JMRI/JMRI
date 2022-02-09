@@ -21,7 +21,7 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
@@ -35,7 +35,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private JTextField _turnoutReferenceTextField;
     private JTextField _turnoutLocalVariableTextField;
     private JTextField _turnoutFormulaTextField;
-    
+
     private JTabbedPane _tabbedPaneTurnoutState;
     private JComboBox<TurnoutState> _stateComboBox;
     private JPanel _panelTurnoutStateDirect;
@@ -46,72 +46,72 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private JTextField _turnoutStateLocalVariableTextField;
     private JTextField _turnoutStateFormulaTextField;
     
-    
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionTurnout action = (ActionTurnout)object;
-        
+
         panel = new JPanel();
-        
+
         _tabbedPaneTurnout = new JTabbedPane();
         _panelTurnoutDirect = new javax.swing.JPanel();
         _panelTurnoutReference = new javax.swing.JPanel();
         _panelTurnoutLocalVariable = new javax.swing.JPanel();
         _panelTurnoutFormula = new javax.swing.JPanel();
-        
+
         _tabbedPaneTurnout.addTab(NamedBeanAddressing.Direct.toString(), _panelTurnoutDirect);
         _tabbedPaneTurnout.addTab(NamedBeanAddressing.Reference.toString(), _panelTurnoutReference);
         _tabbedPaneTurnout.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutLocalVariable);
         _tabbedPaneTurnout.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutFormula);
-        
+
         turnoutBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
         _panelTurnoutDirect.add(turnoutBeanPanel);
-        
+
         _turnoutReferenceTextField = new JTextField();
         _turnoutReferenceTextField.setColumns(30);
         _panelTurnoutReference.add(_turnoutReferenceTextField);
-        
+
         _turnoutLocalVariableTextField = new JTextField();
         _turnoutLocalVariableTextField.setColumns(30);
         _panelTurnoutLocalVariable.add(_turnoutLocalVariableTextField);
-        
+
         _turnoutFormulaTextField = new JTextField();
         _turnoutFormulaTextField.setColumns(30);
         _panelTurnoutFormula.add(_turnoutFormulaTextField);
-        
-        
+
+
         _tabbedPaneTurnoutState = new JTabbedPane();
         _panelTurnoutStateDirect = new javax.swing.JPanel();
         _panelTurnoutStateReference = new javax.swing.JPanel();
         _panelTurnoutStateLocalVariable = new javax.swing.JPanel();
         _panelTurnoutStateFormula = new javax.swing.JPanel();
-        
+
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Direct.toString(), _panelTurnoutStateDirect);
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Reference.toString(), _panelTurnoutStateReference);
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutStateLocalVariable);
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutStateFormula);
-        
+
         _stateComboBox = new JComboBox<>();
         for (TurnoutState e : TurnoutState.values()) {
             _stateComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-        
+
         _panelTurnoutStateDirect.add(_stateComboBox);
-        
+
         _turnoutStateReferenceTextField = new JTextField();
         _turnoutStateReferenceTextField.setColumns(30);
         _panelTurnoutStateReference.add(_turnoutStateReferenceTextField);
-        
+
         _turnoutStateLocalVariableTextField = new JTextField();
         _turnoutStateLocalVariableTextField.setColumns(30);
         _panelTurnoutStateLocalVariable.add(_turnoutStateLocalVariableTextField);
-        
+
         _turnoutStateFormulaTextField = new JTextField();
         _turnoutStateFormulaTextField.setColumns(30);
         _panelTurnoutStateFormula.add(_turnoutStateFormulaTextField);
-        
-        
+
+
         if (action != null) {
             switch (action.getAddressing()) {
                 case Direct: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutDirect); break;
@@ -126,7 +126,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             _turnoutReferenceTextField.setText(action.getReference());
             _turnoutLocalVariableTextField.setText(action.getLocalVariable());
             _turnoutFormulaTextField.setText(action.getFormula());
-            
+
             switch (action.getStateAddressing()) {
                 case Direct: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateDirect); break;
                 case Reference: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateReference); break;
@@ -139,23 +139,23 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             _turnoutStateLocalVariableTextField.setText(action.getStateLocalVariable());
             _turnoutStateFormulaTextField.setText(action.getStateFormula());
         }
-        
+
         JComponent[] components = new JComponent[]{
             _tabbedPaneTurnout,
             _tabbedPaneTurnoutState};
-        
+
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ActionTurnout_Components"), components);
-        
+
         for (JComponent c : componentList) panel.add(c);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
         ActionTurnout action = new ActionTurnout("IQDA1", null);
-        
+
         try {
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutReference) {
                 action.setReference(_turnoutReferenceTextField.getText());
@@ -164,7 +164,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             errorMessages.add(e.getMessage());
             return false;
         }
-        
+
         try {
             if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
                 action.setStateReference(_turnoutStateReferenceTextField.getText());
@@ -173,7 +173,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             errorMessages.add(e.getMessage());
             return false;
         }
-        
+
         try {
             action.setFormula(_turnoutFormulaTextField.getText());
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
@@ -192,7 +192,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         }
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
@@ -200,7 +200,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
@@ -236,7 +236,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             } else {
                 throw new IllegalArgumentException("_tabbedPaneTurnout has unknown selection");
             }
-            
+
             if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
                 action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
@@ -256,21 +256,21 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("Turnout_Short");
     }
-    
+
     @Override
     public void dispose() {
         if (turnoutBeanPanel != null) {
             turnoutBeanPanel.dispose();
         }
     }
-    
-    
+
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnoutSwing.class);
-    
+
 }
