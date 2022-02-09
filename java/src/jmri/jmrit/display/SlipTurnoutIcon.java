@@ -3,11 +3,11 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -206,8 +206,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     boolean singleSlipRoute = false;
-    static boolean LOWERWESTtoLOWEREAST = false;
-    static boolean UPPERWESTtoUPPEREAST = true;
+    //static boolean LOWERWESTtoLOWEREAST = false;
+    //static boolean UPPERWESTtoUPPEREAST = true;
 
     /**
      * Single Slip Route, determines if the slip route is from upper west to
@@ -389,16 +389,16 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Get current state of attached turnouts This adds the two turnout states
+     * Get current state of attached turnouts. This adds the two turnout states
      * together, however for the second turnout configured it will add 1 to the
      * Closed state and 3 to the Thrown state. This helps to identify which
      * turnout is thrown and/or closed.
      * <p>
      * For a Scissor crossing that uses four turnouts, the code simply checks to
-     * ensure that diagonally opposite turnouts are set the same. If not is will
-     * return an Inconsistent state.
+     * ensure that diagonally opposite turnouts are set the same. If not, it will
+     * return Inconsistent state.
      * <p>
-     * If any turnout that has either not been configured or in an Unknown or
+     * If any turnout that has either not been configured or is in an Unknown or
      * Inconsistent state, the code will return the state UNKNOWN or
      * INCONSISTENT.
      *
@@ -504,7 +504,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     @Override
-    @NonNull
+    @Nonnull
     public String getNameString() {
         String name;
         if (namedTurnoutWest == null) {
@@ -1166,7 +1166,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     @Override
-    public boolean setTextEditMenu(@NonNull JPopupMenu popup) {
+    public boolean setTextEditMenu(@Nonnull JPopupMenu popup) {
         String popuptext = Bundle.getMessage("SetSlipText");
         if (turnoutType == THREEWAY) {
             popuptext = Bundle.getMessage("Set3WayText");
@@ -1243,7 +1243,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Check if Slip is busy.
      *
-     * @return true if commands are being issued to Slips turnouts.
+     * @return true if commands are being issued to Slip turnouts.
      */
     protected boolean isSlipBusy() {
         return (busy);
