@@ -14,5 +14,19 @@ public class ResetTableModel extends ExtraMenuTableModel {
 
     public ResetTableModel(JLabel status, Programmer pProgrammer) {
         super(status, pProgrammer);
+        name = Bundle.getMessage("MenuReset");
     }
+
+    /** {@inheritDoc} */
+    @Override
+    protected String getTopLevelElementName() {
+        return "resets";
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected String getIndividualElementName() {
+        return "factReset";
+    }
+
 }

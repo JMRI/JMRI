@@ -19,8 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Creates a table of the available factory resets available for a particular
- * decoder.
+ * Holds a table of the extra menu items available for a particular decoder.
+ *
+ * {@see ResetTableModel}
  *
  * @author Howard G. Penny Copyright (C) 2005
  * @author Bob Jacobsen   Copyright (C) 2021
@@ -40,12 +41,18 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
     private JLabel _status = null;
     private Programmer mProgrammer;
 
+    String name = "<default>"; // User visible menu name
+
     public ExtraMenuTableModel(JLabel status, Programmer pProgrammer) {
         super();
 
         mProgrammer = pProgrammer;
         // save a place for notification
         _status = status;
+    }
+
+    public String toString() {
+        return "Element id: "+getTopLevelElementName()+" name: "+name+": "+rowVector.size()+" rows";
     }
 
     public void setProgrammer(Programmer p) {
@@ -154,7 +161,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
         for (Element ep : elementList) {
             try {
                 mode = ep.getAttribute("mode").getValue();
-                if (ep.getName().equals("resets")) {
+                if (ep.getName().equals(getTopLevelElementName())) {
                     resetsModeFound = true;
                 } else if (resetsModeFound) {
                     modeList.clear();
@@ -169,7 +176,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
             try {
                 elementModes = ep.getChildren("mode");
                 for (Element s : elementModes) {
-                    if (ep.getName().equals("resets")) {
+                    if (ep.getName().equals(getTopLevelElementName())) {
                         resetsModeFound = true;
                     } else if (resetsModeFound) {
                         modeList.clear();
@@ -184,6 +191,20 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
         }
 
         return modeList;
+    }
+
+    /**
+     * Name of the XML element for the collection of extra menu items
+     */
+    protected String getTopLevelElementName() {
+        return "resets";
+    }
+
+    /**
+     * Name of the XML element for individual menu items
+     */
+    protected String getIndividualElementName() {
+        return "factReset";
     }
 
     private ProgrammingMode savedMode;
