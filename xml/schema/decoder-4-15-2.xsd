@@ -38,34 +38,34 @@
   <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
   <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="http://www.w3.org/2001/XInclude.xsd"/>
-  
+
   <xs:annotation>
     <xs:documentation>
       Defines the JMRI decoder definition files.
-      
+
       This version is for use with JMRI 4.1.1 and later, in which
       support for the "ivariable" element and contained elements
       have been deprecated.  Those will not validate with this
       schema.
-      
+
     </xs:documentation>
     <xs:appinfo>
       <jmri:usingclass configurexml="false">jmri.jmrit.decoderdefn.DecoderFile</jmri:usingclass>
       <jmri:usingclass configurexml="false">jmri.jmrit.symbolicprog.VariableTableModel</jmri:usingclass>
     </xs:appinfo>
   </xs:annotation>
-  
+
   <xs:complexType name="VersionType">
     <xs:attribute name="author" type="xs:string" />
     <xs:attribute name="version" type="xs:string" />
     <xs:attribute name="lastUpdated" type="xs:string" />
   </xs:complexType>
-  
+
   <xs:complexType name="DecoderType">
     <xs:sequence>
-      
+
       <xs:element name="family" type="FamilyType" minOccurs="1" maxOccurs="1" />
-      
+
       <xs:element name="programming" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
           <xs:sequence>
@@ -156,7 +156,7 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
-      
+
       <xs:element name="variables" type="VariablesType" minOccurs="1" maxOccurs="1">
         <xs:unique name="UniqueVariableItemAttribute2">
           <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
@@ -166,12 +166,13 @@
           <xs:field xpath="@exclude"/>
         </xs:unique>
       </xs:element>
-      
+
       <xs:element name="resets" type="ResetsType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="extraMenu" type="ExtraMenuType" minOccurs="0" maxOccurs="1"/>
 
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:element name="decoder-config">
     <xs:complexType>
       <xs:sequence>
@@ -203,7 +204,7 @@
       <xs:attribute name="allowResetDefaults" type="yesNoType"/>
     </xs:complexType>
   </xs:element>
-  
+
   <xs:element name="decoderIndex-config">
     <xs:annotation><xs:documentation>
         Defines the content of the JMRI decoderIndex.xml file.
@@ -315,6 +316,15 @@
     </xs:annotation>
   </xs:element>
 
+  <xs:element name="extraMenu" type="ExtraMenuType" >
+    <xs:annotation>
+      <xs:documentation>
+        Provides a base element that can be used in "extraMenu" fragment files, those
+        little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:complexType  name="OutputsType">
     <xs:sequence>
       <!-- An outputs element can be the root of an include file, where version information may be useful -->
@@ -342,7 +352,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:element name="outputs" type="OutputsType">
     <!-- element definition for include files -->
   </xs:element>
@@ -437,12 +447,12 @@
           <xs:attribute name="numFns" type="xs:int">
             <xs:annotation><xs:documentation>
                 For the traditional Function Map:
-                    This is a legacy attribute that limits the total number of function mapping lines displayed. 
+                    This is a legacy attribute that limits the total number of function mapping lines displayed.
                     It is no longer required as there are many optional variations as well as
                     the original F0F, F0R &amp; F1-F28.
                     Hence the JMRI code now automatically suppresses unused lines.
                 For the ESU Function Maps:
-                    This optional attribute limits the total number of function mapping lines displayed. 
+                    This optional attribute limits the total number of function mapping lines displayed.
             </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="maxFnNum" type="xs:int" default="28">
@@ -450,7 +460,7 @@
                 This is the highest F key number that will appear in the Function Labels Pane and throttles:
                     It was originally 28 as per NMRA standards. Many decoders didn't support the whole range F0-F28.
                     European standards now allow up to 68, i.e. the range F0-F68.
-                Note that this is unrelated to "numFns", which limits the total number of function mapping lines displayed. 
+                Note that this is unrelated to "numFns", which limits the total number of function mapping lines displayed.
             </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="numOuts" type="xs:int" >
@@ -988,6 +998,50 @@
           <xs:attribute ref="xml:base" />
         </xs:complexType>
         <xs:unique name="UniqueResetLabel1">
+          <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+          <xs:selector xpath="label"/>
+          <xs:field xpath="@xml:lang"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="mode" type="modeType"/>
+    <xs:attribute ref="xml:base" />
+  </xs:complexType>
+
+  <xs:complexType name="ExtraMenuType">
+    <xs:sequence>
+      <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>
+            Specifies programmer mode(s) for use during menu operation
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="extraMenuItem" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+                  Specifies programmer mode(s) for use during menu operation
+              </xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
+              <xs:complexType mixed="true">
+                <xs:attribute ref="xml:lang" default=""/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="label" type="xs:string">
+            <xs:annotation><xs:documentation>Deprecated, use the label element instead.</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CV" type="cvNameType"/>
+          <xs:attribute name="default" type="xs:string">
+            <xs:annotation><xs:documentation>Value to be written to CV to perform this reset.</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="comment" type="xs:string"/>
+          <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute ref="xml:base" />
+        </xs:complexType>
+        <xs:unique name="UniqueExtraMenuLabel1">
           <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
           <xs:selector xpath="label"/>
           <xs:field xpath="@xml:lang"/>
