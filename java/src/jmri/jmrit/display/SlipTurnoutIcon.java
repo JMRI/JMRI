@@ -634,6 +634,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                         break;
                     default:
                         log.warn("Unhandled scissors state: {}", state);
+                        state = 8;
                         break;
                 }
                 break;
