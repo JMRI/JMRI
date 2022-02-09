@@ -28,7 +28,7 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new TrafficController(){
            @Override
@@ -70,10 +70,9 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
     @Override
     @AfterEach
     public void tearDown(){
-       tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
-
     }
 
 }

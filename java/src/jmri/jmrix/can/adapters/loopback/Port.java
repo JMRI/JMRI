@@ -76,14 +76,9 @@ public class Port extends AbstractSerialPortController {
 
     @Override
     public java.util.Vector<String> getPortNames() {
-        java.util.Vector<String> v = new java.util.Vector<String>();
+        java.util.Vector<String> v = new java.util.Vector<>();
         v.addElement(Bundle.getMessage("none"));
         return v;
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     @Override

@@ -110,6 +110,28 @@ public class MergReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("el 1", 0x63, r.getElement(0));
     }
 
+    @Test
+    public void testZeroLengthRtr() {
+        MergReply g = new MergReply(":SB0F0R;");
+        CanReply r = g.createReply();
+        
+        Assert.assertEquals("rtr", true, r.isRtr());
+        Assert.assertEquals("extended", false, r.isExtended());
+        Assert.assertEquals("header", 1415, r.getHeader());
+        Assert.assertEquals("num elements", 0, r.getNumDataElements());
+    }
+
+    @Test
+    public void testZeroLengthStandard() {
+        MergReply g = new MergReply(":SB180N;");
+        CanReply r = g.createReply();
+        
+        Assert.assertEquals("rtr", false, r.isRtr());
+        Assert.assertEquals("extended", false, r.isExtended());
+        Assert.assertEquals("header", 1420, r.getHeader());
+        Assert.assertEquals("num elements", 0, r.getNumDataElements());
+    }
+    
     // Left shift a standard header from CBUS specific format
     public int unMungeStdHeader(int h) {
         return (h >> 5);
@@ -128,6 +150,7 @@ public class MergReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

@@ -66,25 +66,25 @@ public class TrackEditCommentsFrame extends OperationsFrame {
         pCb.setLayout(new GridBagLayout());
         addItem(pCb, commentBothScroller, 1, 0);
         
-        addItem(pCb, OperationsPanel.getColorChooserPanel(track.getCommentBoth(), commentColorChooserBoth), 2, 0);
+        addItem(pCb, OperationsPanel.getColorChooserPanel(track.getCommentBothWithColor(), commentColorChooserBoth), 2, 0);
 
         JPanel pCp = new JPanel();
         pCp.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentPickup")));
         pCp.setLayout(new GridBagLayout());
         addItem(pCp, commentPickupScroller, 1, 0);
         
-        addItem(pCp, OperationsPanel.getColorChooserPanel(track.getCommentPickup(), commentColorChooserPickup), 2, 0);
+        addItem(pCp, OperationsPanel.getColorChooserPanel(track.getCommentPickupWithColor(), commentColorChooserPickup), 2, 0);
 
         JPanel pCs = new JPanel();
         pCs.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentSetout")));
         pCs.setLayout(new GridBagLayout());
         addItem(pCs, commentSetoutScroller, 1, 0);
         
-        addItem(pCs, OperationsPanel.getColorChooserPanel(track.getCommentSetout(), commentColorChooserSetout), 2, 0);
+        addItem(pCs, OperationsPanel.getColorChooserPanel(track.getCommentSetoutWithColor(), commentColorChooserSetout), 2, 0);
 
-        commentBothTextArea.setText(TrainCommon.getTextColorString(track.getCommentBoth()));
-        commentPickupTextArea.setText(TrainCommon.getTextColorString(track.getCommentPickup()));
-        commentSetoutTextArea.setText(TrainCommon.getTextColorString(track.getCommentSetout()));
+        commentBothTextArea.setText(TrainCommon.getTextColorString(track.getCommentBothWithColor()));
+        commentPickupTextArea.setText(TrainCommon.getTextColorString(track.getCommentPickupWithColor()));
+        commentSetoutTextArea.setText(TrainCommon.getTextColorString(track.getCommentSetoutWithColor()));
 
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());

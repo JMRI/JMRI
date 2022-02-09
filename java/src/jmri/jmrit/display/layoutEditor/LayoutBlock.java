@@ -94,6 +94,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private int useCount = 0;
     private NamedBeanHandle<Sensor> occupancyNamedSensor = null;
     private NamedBeanHandle<Memory> namedMemory = null;
+    private boolean setSensorFromBlockEnabled = true;     // Controls whether getOccupancySensor should get the sensor from the block
 
     private Block block = null;
 
@@ -514,11 +515,18 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get occupancy Sensor.
+     * <p>
+     * If a sensor has not been assigned, try getting the sensor from the related
+     * block.
+     * <p>
+     * When setting the layout block sensor from the block itself using the OccupancySensorChange
+     * event, the automatic assignment has to be disabled for the sensor checking performed by
+     * {@link jmri.jmrit.display.layoutEditor.LayoutBlockManager#getBlockWithSensorAssigned}
      *
-     * @return occ sensor name
+     * @return occupancy sensor or null
      */
     public Sensor getOccupancySensor() {
-        if (occupancyNamedSensor == null) {
+        if (occupancyNamedSensor == null && setSensorFromBlockEnabled) {
             if (block != null) {
                 occupancyNamedSensor = block.getNamedSensor();
             }
@@ -868,11 +876,30 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
             m.setValue(val);
         }
+
         if (e.getPropertyName().equals("UserName")) {
             setUserName(e.getNewValue().toString());
             InstanceManager.getDefault(NamedBeanHandleManager.class).
                     renameBean(e.getOldValue().toString(), e.getNewValue().toString(), this);
         }
+
+        if (e.getPropertyName().equals("OccupancySensorChange")) {
+            if (e.getNewValue() == null){
+                // Remove Sensor
+                setOccupancySensorName(null);
+            } else {
+                // Set/change sensor
+                Sensor sensor = (Sensor) e.getNewValue();
+                setSensorFromBlockEnabled = false;
+                if (validateSensor(sensor.getSystemName(), null) == null) {
+                    // Sensor change rejected, reset block sensor assignment
+                    Sensor origSensor = (Sensor) e.getOldValue();
+                    block.setSensor(origSensor == null ? "" : origSensor.getSystemName());
+                }
+                setSensorFromBlockEnabled = true;
+            }
+        }
+
         // Redraw all Layout Editor panels using this Layout Block
         redrawLayoutBlockPanels();
 

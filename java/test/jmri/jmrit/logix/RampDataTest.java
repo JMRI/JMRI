@@ -32,7 +32,7 @@ public class RampDataTest {
         assertThat(ramp.getNumSteps()).withFailMessage("NumRampSteps").isEqualTo(23);
         assertThat(ramp.getRamptime()).withFailMessage("Ramptime").isEqualTo(33000);
         assertThat(ramp.getMaxSpeed()).withFailMessage("MaxSpeed").isEqualTo(0.91f);
-        assertThat(ramp.getRampLength("Normal")).withFailMessage("RampLength").isEqualTo(5083.989f);
+        assertThat(ramp.getRampLength()).withFailMessage("RampLength").isEqualTo(5083.989f);
     }
 
     @BeforeEach
