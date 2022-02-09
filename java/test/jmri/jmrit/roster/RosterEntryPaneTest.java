@@ -5,6 +5,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
@@ -201,6 +202,7 @@ public class RosterEntryPaneTest {
         Assert.assertTrue(p.checkDuplicate());
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAccessibleContent() {
         RosterEntryPane p = new RosterEntryPane(rOld);
