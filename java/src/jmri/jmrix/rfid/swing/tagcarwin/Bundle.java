@@ -78,7 +78,7 @@ public class Bundle extends jmri.jmrix.rfid.Bundle {
     }
 
 
-    private final static jmri.jmrix.rfid.swing.serialmon.Bundle b = new jmri.jmrix.rfid.swing.serialmon.Bundle();
+    private final static Bundle b = new Bundle();
 
     @Override
     @CheckForNull

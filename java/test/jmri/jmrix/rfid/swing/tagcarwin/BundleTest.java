@@ -1,13 +1,13 @@
-package jmri.jmrix.rfid.swing.serialmon;
+package jmri.jmrix.rfid.swing.tagcarwin;
 
 import org.junit.jupiter.api.*;
 
 /**
- * Tests for the Bundle class
+ * Tests for the Bundle class.
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
-public class BundleTest  {
+public class BundleTest {
 
     @Test public void testGoodKeys() {
         Assertions.assertEquals("(none)", Bundle.getMessage("none"));
