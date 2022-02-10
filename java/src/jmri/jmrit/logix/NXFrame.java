@@ -756,8 +756,8 @@ public class NXFrame extends WarrantRoute {
             // distance attaining final speed
             intervalDist = _speedUtil.getDistanceOfSpeedChange(_maxThrottle, prevSetting, downRamp.getRampTimeIncrement());
             log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}",
-                    totalLen, upRamp.getRampLength(Warrant.Normal), downRamp.getRampLength(Warrant.Normal));
-        } while ((upRamp.getRampLength(Warrant.Normal) + intervalDist + downRamp.getRampLength(Warrant.Normal)) > totalLen);
+                    totalLen, upRamp.getRampLength(), downRamp.getRampLength());
+        } while ((upRamp.getRampLength() + intervalDist + downRamp.getRampLength()) > totalLen);
         _maxThrottle = downRamp.getMaxSpeed();
 
         float blockLen = _startDist;    // length of path in current block
@@ -770,10 +770,10 @@ public class NXFrame extends WarrantRoute {
         float nextThrottle = 0f;
         float curDistance = 0;  // current distance traveled mm
         float blkDistance = 0;  // distance traveled in current block mm
-        float upRampLength = upRamp.getRampLength(Warrant.Normal);
+        float upRampLength = upRamp.getRampLength();
         float remRamp = upRampLength;
         float remTotal = totalLen;
-        float dnRampLength = downRamp.getRampLength(Warrant.Normal);
+        float dnRampLength = downRamp.getRampLength();
         int timeInterval = downRamp.getRampTimeIncrement();
         boolean rampsShareBlock = false;
 

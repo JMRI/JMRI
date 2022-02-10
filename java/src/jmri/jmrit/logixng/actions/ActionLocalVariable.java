@@ -22,6 +22,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
     private String _localVariable;
     private NamedBeanHandle<Memory> _memoryHandle;
+    private NamedBeanHandle<Block> _blockHandle;
+    private NamedBeanHandle<Reporter> _reporterHandle;
     private VariableOperation _variableOperation = VariableOperation.SetToString;
     private String _constantValue = "";
     private String _otherTableCell = "";
@@ -29,7 +31,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
     private String _formula = "";
     private ExpressionNode _expressionNode;
     private boolean _listenToMemory = true;
-//    private boolean _listenToMemory = false;
+    private boolean _listenToBlock = true;
+    private boolean _listenToReporter = true;
 
     public ActionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -52,6 +55,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
         copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setFormula(_formula);
         copy.setListenToMemory(_listenToMemory);
+        copy.setListenToBlock(_listenToBlock);
+        copy.setListenToReporter(_listenToReporter);
         return manager.registerAction(copy);
     }
 
@@ -108,6 +113,98 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
+    }
+
+    public void setBlock(@Nonnull String blockName) {
+        assertListenersAreNotRegistered(log, "setBlock");  // No I18N
+        BlockManager blockManager = InstanceManager.getDefault(BlockManager.class);
+        Block block = blockManager.getBlock(blockName);
+        if (block != null) {
+            setBlock(block);
+        } else {
+            removeBlock();
+            log.warn("block \"{}\" is not found", blockName);
+        }
+    }
+
+    public void setBlock(@Nonnull NamedBeanHandle<Block> handle) {
+        assertListenersAreNotRegistered(log, "setBlock");  // No I18N
+        _blockHandle = handle;
+        if (_blockHandle != null) {
+            InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
+        } else {
+            InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
+        }
+    }
+
+    public void setBlock(@CheckForNull Block block) {
+        assertListenersAreNotRegistered(log, "setBlock");  // No I18N
+        if (block != null) {
+            _blockHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(block.getDisplayName(), block);
+            InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
+        } else {
+            _blockHandle = null;
+            InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
+        }
+    }
+
+    public void removeBlock() {
+        assertListenersAreNotRegistered(log, "removeBlock");   // No I18N
+        if (_blockHandle != null) {
+            InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
+            _blockHandle = null;
+        }
+    }
+
+    public NamedBeanHandle<Block> getBlock() {
+        return _blockHandle;
+    }
+
+    public void setReporter(@Nonnull String reporterName) {
+        assertListenersAreNotRegistered(log, "setReporter");  // No I18N
+        ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
+        Reporter reporter = reporterManager.getReporter(reporterName);
+        if (reporter != null) {
+            setReporter(reporter);
+        } else {
+            removeReporter();
+            log.warn("reporter \"{}\" is not found", reporterName);
+        }
+    }
+
+    public void setReporter(@Nonnull NamedBeanHandle<Reporter> handle) {
+        assertListenersAreNotRegistered(log, "setReporter");  // No I18N
+        _reporterHandle = handle;
+        if (_reporterHandle != null) {
+            InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
+        } else {
+            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
+        }
+    }
+
+    public void setReporter(@CheckForNull Reporter reporter) {
+        assertListenersAreNotRegistered(log, "setReporter");  // No I18N
+        if (reporter != null) {
+            _reporterHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(reporter.getDisplayName(), reporter);
+            InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
+        } else {
+            _reporterHandle = null;
+            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
+        }
+    }
+
+    public void removeReporter() {
+        assertListenersAreNotRegistered(log, "removeReporter");   // No I18N
+        if (_reporterHandle != null) {
+            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
+            _reporterHandle = null;
+        }
+    }
+
+    public NamedBeanHandle<Reporter> getReporter() {
+        return _reporterHandle;
     }
 
     public void setVariableOperation(VariableOperation variableOperation) throws ParserException {
@@ -184,6 +281,22 @@ public class ActionLocalVariable extends AbstractDigitalAction
         return _listenToMemory;
     }
 
+    public void setListenToBlock(boolean listenToBlock) {
+        this._listenToBlock = listenToBlock;
+    }
+
+    public boolean getListenToBlock() {
+        return _listenToBlock;
+    }
+
+    public void setListenToReporter(boolean listenToReporter) {
+        this._listenToReporter = listenToReporter;
+    }
+
+    public boolean getListenToReporter() {
+        return _listenToReporter;
+    }
+
     private void parseFormula() throws ParserException {
         if (_variableOperation == VariableOperation.CalculateFormula) {
             Map<String, Variable> variables = new HashMap<>();
@@ -202,6 +315,18 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 if (evt.getOldValue().equals(_memoryHandle.getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);   // No I18N
                     throw new PropertyVetoException(Bundle.getMessage("ActionLocalVariable_MemoryInUseLocalVariableActionVeto", getDisplayName()), e); // NOI18N
+                }
+            }
+            if (evt.getOldValue() instanceof Block) {
+                if (evt.getOldValue().equals(_blockHandle.getBean())) {
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);   // No I18N
+                    throw new PropertyVetoException(Bundle.getMessage("ActionLocalVariable_BlockInUseLocalVariableActionVeto", getDisplayName()), e); // NOI18N
+                }
+            }
+            if (evt.getOldValue() instanceof Memory) {
+                if (evt.getOldValue().equals(_reporterHandle.getBean())) {
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);   // No I18N
+                    throw new PropertyVetoException(Bundle.getMessage("ActionLocalVariable_ReporterInUseLocalVariableActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
@@ -250,6 +375,22 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 symbolTable.setValue(_localVariable, refValue);
                 break;
 
+            case CopyBlockToVariable:
+                if (_blockHandle != null) {
+                    symbolTable.setValue(_localVariable, _blockHandle.getBean().getValue());
+                } else {
+                    log.warn("ActionLocalVariable should copy block value to variable but block is null");
+                }
+                break;
+
+            case CopyReporterToVariable:
+                if (_reporterHandle != null) {
+                    symbolTable.setValue(_localVariable, _reporterHandle.getBean().getCurrentReport());
+                } else {
+                    log.warn("ActionLocalVariable should copy current report to variable but reporter is null");
+                }
+                break;
+
             case CalculateFormula:
                 if (_formula.isEmpty()) {
                     symbolTable.setValue(_localVariable, null);
@@ -292,6 +433,20 @@ public class ActionLocalVariable extends AbstractDigitalAction
             copyToMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
 
+        String copyToBlockName;
+        if (_blockHandle != null) {
+            copyToBlockName = _blockHandle.getBean().getDisplayName();
+        } else {
+            copyToBlockName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
+        String copyToReporterName;
+        if (_reporterHandle != null) {
+            copyToReporterName = _reporterHandle.getBean().getDisplayName();
+        } else {
+            copyToReporterName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
         switch (_variableOperation) {
             case SetToNull:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Null", _localVariable);
@@ -311,6 +466,14 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyMemoryToVariable",
                         _localVariable, copyToMemoryName);
 
+            case CopyBlockToVariable:
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyBlockToVariable",
+                        _localVariable, copyToBlockName);
+
+            case CopyReporterToVariable:
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReporterToVariable",
+                        _localVariable, copyToReporterName);
+
             case CalculateFormula:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Formula", _localVariable, _formula);
 
@@ -328,9 +491,21 @@ public class ActionLocalVariable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_memoryHandle != null)) {
-            if (_listenToMemory) {
+        if (!_listenersAreRegistered) {
+            if (_listenToMemory
+                    && (_variableOperation == VariableOperation.CopyMemoryToVariable)
+                    && (_memoryHandle != null)) {
                 _memoryHandle.getBean().addPropertyChangeListener("value", this);
+            }
+            if (_listenToBlock
+                    && (_variableOperation == VariableOperation.CopyBlockToVariable)
+                    && (_blockHandle != null)) {
+                _blockHandle.getBean().addPropertyChangeListener("value", this);
+            }
+            if (_listenToReporter
+                    && (_variableOperation == VariableOperation.CopyReporterToVariable)
+                    && (_reporterHandle != null)) {
+                _reporterHandle.getBean().addPropertyChangeListener("currentReport", this);
             }
             _listenersAreRegistered = true;
         }
@@ -340,8 +515,20 @@ public class ActionLocalVariable extends AbstractDigitalAction
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            if (_listenToMemory && (_memoryHandle != null)) {
+            if (_listenToMemory
+                    && (_variableOperation == VariableOperation.CopyMemoryToVariable)
+                    && (_memoryHandle != null)) {
                 _memoryHandle.getBean().removePropertyChangeListener("value", this);
+            }
+            if (_listenToBlock
+                    && (_variableOperation == VariableOperation.CopyBlockToVariable)
+                    && (_blockHandle != null)) {
+                _blockHandle.getBean().removePropertyChangeListener("value", this);
+            }
+            if (_listenToReporter
+                    && (_variableOperation == VariableOperation.CopyReporterToVariable)
+                    && (_reporterHandle != null)) {
+                _reporterHandle.getBean().removePropertyChangeListener("currentReport", this);
             }
             _listenersAreRegistered = false;
         }
@@ -365,6 +552,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
         CopyVariableToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyVariableToVariable")),
         CopyMemoryToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyMemoryToVariable")),
         CopyTableCellToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyTableCellToVariable")),
+        CopyBlockToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyBlockToVariable")),
+        CopyReporterToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyReporterToVariable")),
         CalculateFormula(Bundle.getMessage("ActionLocalVariable_VariableOperation_CalculateFormula"));
 
         private final String _text;

@@ -303,6 +303,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
                 aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
                 aat.setUseSpeedProfile(info.getUseSpeedProfile());
+                getAutoTrainsFrame().addAutoActiveTrain(aat);
                 if (!aat.initialize()) {
                     log.error("ERROR initializing autorunning for train {}", at.getTrainName());
                     JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
@@ -310,7 +311,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             JOptionPane.INFORMATION_MESSAGE);
                     return -1;
                 }
-                getAutoTrainsFrame().addAutoActiveTrain(aat);
             }
             allocateNewActiveTrain(at);
             newTrainDone(at);
@@ -1521,7 +1521,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         if (at.getAutoRun()) {
             AutoActiveTrain aat = at.getAutoActiveTrain();
-            _autoTrainsFrame.removeAutoActiveTrain(aat);
             aat.terminate();
             aat.dispose();
         }

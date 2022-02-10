@@ -154,7 +154,7 @@ public class TreeEditor extends TreeViewer {
 */
     }
 
-    final public void openClipboard() {
+    public static void openClipboard() {
         if (_clipboardEditor == null) {
             _clipboardEditor = new ClipboardEditor();
             _clipboardEditor.initComponents();

@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
  *   microswitch attached to its Switch input.
  *   <li>EXACT - listen to the LocoNet for messages back from a DS54 that has two
  *   microswitches, one connected to the Switch input and one to the Aux input.
+ *   <li>ALTERNATE - listen to the LocoNet for messages back from a MGP decoders
+ *   that has reports servo moving.
  * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -52,7 +54,7 @@ public class LnTurnout extends AbstractTurnout {
 
         _number = number;
         // update feedback modes
-        _validFeedbackTypes |= MONITORING | EXACT | INDIRECT;
+        _validFeedbackTypes |= MONITORING | EXACT | INDIRECT | LNALTERNATE ;
         _activeFeedbackType = MONITORING;
 
         // if needed, create the list of feedback mode
@@ -99,8 +101,8 @@ public class LnTurnout extends AbstractTurnout {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
             log.error("int and string feedback arrays different length");
         }
-        String[] tempModeNames = new String[_validFeedbackNames.length + 3];
-        int[] tempModeValues = new int[_validFeedbackNames.length + 3];
+        String[] tempModeNames = new String[_validFeedbackNames.length + 4];
+        int[] tempModeValues = new int[_validFeedbackNames.length + 4];
         for (int i = 0; i < _validFeedbackNames.length; i++) {
             tempModeNames[i] = _validFeedbackNames[i];
             tempModeValues[i] = _validFeedbackModes[i];
@@ -111,6 +113,8 @@ public class LnTurnout extends AbstractTurnout {
         tempModeValues[_validFeedbackNames.length + 1] = INDIRECT;
         tempModeNames[_validFeedbackNames.length + 2] = "EXACT"; // NOI18N
         tempModeValues[_validFeedbackNames.length + 2] = EXACT;
+        tempModeNames[_validFeedbackNames.length + 3] = "LNALTERNATE"; // NOI18N
+        tempModeValues[_validFeedbackNames.length + 3] = LNALTERNATE;
 
         modeNames = tempModeNames;
         modeValues = tempModeValues;
@@ -275,6 +279,8 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(CLOSED);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(CLOSED);
+        } else if (getFeedbackMode() == LNALTERNATE) {
+            newKnownState(adjustStateForInversion(CLOSED));
         }
     }
 
@@ -282,6 +288,8 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(THROWN);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(THROWN);
+        } else if (getFeedbackMode() == LNALTERNATE) {
+            newKnownState(adjustStateForInversion(THROWN));
         }
     }
 
@@ -296,6 +304,8 @@ public class LnTurnout extends AbstractTurnout {
         newCommandedState(0);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
             newKnownState(0);
+        } else if (getFeedbackMode() == LNALTERNATE) {
+            newKnownState(INCONSISTENT);
         }
     }
 

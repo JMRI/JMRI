@@ -1,7 +1,6 @@
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -70,11 +69,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
         updateUserNameField();
 
-        ((JComboBox<Option>) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateUserNameField();
-            }
+        ((JComboBox<Option>) options.get("Protocol").getComponent()).addActionListener((ActionEvent e) -> {
+            updateUserNameField();
         });
     }
 
@@ -101,11 +97,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Access to current selected command station mode
+     * {@inheritDoc}
      */
-    /*public String getMode() {
-     return opt2Box.getSelectedItem().toString();
-     }*/
     @Override
     public boolean isPortAdvanced() {
         return false;

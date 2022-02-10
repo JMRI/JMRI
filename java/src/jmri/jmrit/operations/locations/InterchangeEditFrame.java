@@ -17,6 +17,12 @@ public class InterchangeEditFrame extends TrackEditFrame {
     public InterchangeEditFrame() {
         super(Bundle.getMessage("AddInterchange"));
     }
+    
+    @Override
+    public void initComponents(Track track) {
+        setTitle(Bundle.getMessage("EditInterchange"));
+        initComponents(track.getLocation(), track);
+    }
 
     @Override
     public void initComponents(Location location, Track track) {
