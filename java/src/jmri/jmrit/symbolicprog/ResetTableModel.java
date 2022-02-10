@@ -19,13 +19,13 @@ public class ResetTableModel extends ExtraMenuTableModel {
 
     /** {@inheritDoc} */
     @Override
-    protected String getTopLevelElementName() {
+    public String getTopLevelElementName() {
         return "resets";
     }
 
     /** {@inheritDoc} */
     @Override
-    protected String getIndividualElementName() {
+    public String getIndividualElementName() {
         return "factReset";
     }
 

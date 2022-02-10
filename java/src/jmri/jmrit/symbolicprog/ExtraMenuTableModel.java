@@ -43,6 +43,9 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
 
     String name = "<default>"; // User visible menu name
 
+    public String getName() { return name; }
+    public void setName(String n) { this.name = n; }
+
     public ExtraMenuTableModel(JLabel status, Programmer pProgrammer) {
         super();
 
@@ -196,14 +199,14 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
     /**
      * Name of the XML element for the collection of extra menu items
      */
-    protected String getTopLevelElementName() {
+    public String getTopLevelElementName() {
         return "resets";
     }
 
     /**
      * Name of the XML element for individual menu items
      */
-    protected String getIndividualElementName() {
+    public String getIndividualElementName() {
         return "factReset";
     }
 

@@ -9,18 +9,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to create a dialog so that the user can select a factory reset to
+ * Action to create a dialog so that the user can select an extra menu to
  * execute. The user can cancel this dialog skipping any resets
  *
  * @author Howard G. Penny Copyright (C) 2005
+ * @author Bob Jacobsen    Copyright (C) 2022
  */
-public class FactoryResetAction extends AbstractAction {
+public class FactoryExtraMenuAction extends AbstractAction {
 
     ExtraMenuTableModel rModel;
     JFrame mParent;
+    String name;
 
-    public FactoryResetAction(String actionName, ExtraMenuTableModel rpModel, JFrame pParent) {
+    public FactoryExtraMenuAction(String actionName, ExtraMenuTableModel rpModel, JFrame pParent) {
         super(actionName);
+        name = actionName;
         rModel = rpModel;
         mParent = pParent;
     }
@@ -28,7 +31,7 @@ public class FactoryResetAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        log.debug("start to display Factory Reset");
+        log.debug("start to display extra menu item");
         Object[] options;
         options = new String[rModel.getRowCount()];
         for (int i = 0; i < rModel.getRowCount(); i++) {
@@ -36,8 +39,8 @@ public class FactoryResetAction extends AbstractAction {
         }
         String s = (String) JOptionPane.showInputDialog(
                 mParent,
-                "Factory Reset" + (options.length > 1 ? "s" : ""),
-                ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetTitle"),
+                name, // title over JComboBox
+                name, // Dialog title
                 JOptionPane.WARNING_MESSAGE,
                 null,
                 options,
@@ -54,5 +57,5 @@ public class FactoryResetAction extends AbstractAction {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(FactoryResetAction.class);
+    private final static Logger log = LoggerFactory.getLogger(FactoryExtraMenuAction.class);
 }

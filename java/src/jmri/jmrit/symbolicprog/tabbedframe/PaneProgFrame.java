@@ -48,8 +48,13 @@ abstract public class PaneProgFrame extends JmriJFrame
     ResetTableModel resetModel = null;
     JMenu resetMenu = null;
 
+    ArrayList<ExtraMenuTableModel> extraMenuModelList = null;
+    ArrayList<JMenu> extraMenuList = new ArrayList<>();
+
     Programmer mProgrammer;
     JPanel modePane = null;
+
+    JMenuBar menuBar = new JMenuBar();
 
     JPanel tempPane; // passed around during construction
 
@@ -134,7 +139,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(fileDirtyTask);
 
         // Create a menu bar
-        JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
         // add a "File" menu
@@ -589,6 +593,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 cvModel);
 
         resetModel = new ResetTableModel(progStatus, mProgrammer);
+        extraMenuModelList = new ArrayList<>();
 
         // handle the roster entry
         _rosterEntry.setOpen(true);
@@ -624,6 +629,18 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
+        // if there are extra menus defined, enable them
+        System.err.println("enabling "+extraMenuModelList.size()+" "+extraMenuModelList);
+        for (int i = 0; i<extraMenuModelList.size(); i++) {
+            if (!_opsMode || extraMenuModelList.get(i).hasOpsModeReset()) {
+                System.err.println("  loop "+i);
+                if (extraMenuModelList.get(i).getRowCount() > 0) {
+                    System.err.println("extraMenuList "+extraMenuList);
+                    extraMenuList.get(i).setEnabled(true);
+                }
+            }
+        }
+
         // set the programming mode
         if (pProg != null) {
             if (InstanceManager.getOptionalDefault(AddressedProgrammerManager.class).isPresent()
@@ -649,6 +666,9 @@ abstract public class PaneProgFrame extends JmriJFrame
                     mProgrammer = pf;
                     cvModel.setProgrammer(pf);
                     resetModel.setProgrammer(pf);
+                    for (var model : extraMenuModelList) {
+                        model.setProgrammer(pf);
+                    }
                     log.debug("Found programmer: {}", cvModel.getProgrammer());
 
                 }
@@ -902,6 +922,20 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // load reset from decoder tree
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
+
+        // load extra menus from decoder tree
+        df.loadExtraMenuModel(decoderRoot.getChild("decoder"), extraMenuModelList, progStatus, mProgrammer);
+
+        // add extra menus
+        System.err.println("add menus "+extraMenuModelList.size()+" "+extraMenuList);
+        for (int i=0; i < extraMenuModelList.size(); i++ ) {
+            String name = extraMenuModelList.get(i).getName();
+            JMenu menu = new JMenu(name);
+            extraMenuList.add(i, menu);
+            menuBar.add(menu);
+            menu.add(new FactoryExtraMenuAction(name, extraMenuModelList.get(i), this));
+            menu.setEnabled(false);
+        }
 
         // load function names from family
         re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"), "family");
