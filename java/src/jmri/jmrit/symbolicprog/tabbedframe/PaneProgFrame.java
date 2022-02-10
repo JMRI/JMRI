@@ -628,12 +628,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // if there are extra menus defined, enable them
-        System.err.println("enabling "+extraMenuModelList.size()+" "+extraMenuModelList);
+        log.trace("enabling {} {}", extraMenuModelList.size(), extraMenuModelList);
         for (int i = 0; i<extraMenuModelList.size(); i++) {
             if (!_opsMode || extraMenuModelList.get(i).hasOpsModeReset()) {
-                System.err.println("  loop "+i);
                 if (extraMenuModelList.get(i).getRowCount() > 0) {
-                    System.err.println("extraMenuList "+extraMenuList);
                     extraMenuList.get(i).setEnabled(true);
                 }
             }
@@ -925,13 +923,13 @@ abstract public class PaneProgFrame extends JmriJFrame
         df.loadExtraMenuModel(decoderRoot.getChild("decoder"), extraMenuModelList, progStatus, mProgrammer);
 
         // add extra menus
-        System.err.println("add menus "+extraMenuModelList.size()+" "+extraMenuList);
+        log.trace("add menus {} {}", extraMenuModelList.size(), extraMenuList);
         for (int i=0; i < extraMenuModelList.size(); i++ ) {
             String name = extraMenuModelList.get(i).getName();
             JMenu menu = new JMenu(name);
             extraMenuList.add(i, menu);
             menuBar.add(menu);
-            menu.add(new FactoryExtraMenuAction(name, extraMenuModelList.get(i), this));
+            menu.add(new ExtraMenuAction(name, extraMenuModelList.get(i), this));
             menu.setEnabled(false);
         }
 

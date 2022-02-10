@@ -568,12 +568,11 @@ public class DecoderFile extends XmlFile {
     // process "extraMenu" elements into data model(s)
     public void loadExtraMenuModel(Element decoderElement, ArrayList<ExtraMenuTableModel> extraMenuModelList, JLabel progStatus, Programmer mProgrammer) {
         var menus = decoderElement.getChildren("extraMenu");
-        System.err.println("loadExtraMenuModel "+menus.size()+" "+extraMenuModelList);
+        log.trace("loadExtraMenuModel {} {}", menus.size(), extraMenuModelList);
         int i = 0;
         for (var menuElement : menus) {
             if (i >= extraMenuModelList.size() || extraMenuModelList.get(i) == null) {
-                log.debug("Add element {} in array of size {}",i,extraMenuModelList.size());
-                System.err.println("adding "+i);
+                log.trace("Add element {} in array of size {}",i,extraMenuModelList.size());
                 var model = new ExtraMenuTableModel(progStatus, mProgrammer);
                 model.setName(menuElement.getAttributeValue("name","Extra"));
                 extraMenuModelList.add(i, model);

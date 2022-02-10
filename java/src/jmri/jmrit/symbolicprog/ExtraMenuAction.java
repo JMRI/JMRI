@@ -9,20 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to create a dialog so that the user can select an extra menu to
- * execute. The user can cancel this dialog skipping any resets
+ * Action to create a dialog so that the user can select an extra menu item to
+ * execute. The user can cancel this dialog skipping any execution
  *
- * @author Howard G. Penny Copyright (C) 2005
+ * @author Howard G. Penny Copyright (C) 2005 (as FactoryResetAction)
  * @author Bob Jacobsen    Copyright (C) 2022
  */
-public class FactoryExtraMenuAction extends AbstractAction {
+public class ExtraMenuAction extends AbstractAction {
 
     ExtraMenuTableModel rModel;
     JFrame mParent;
     String name;
 
-    public FactoryExtraMenuAction(String actionName, ExtraMenuTableModel rpModel, JFrame pParent) {
-        super(actionName);
+    public ExtraMenuAction(String actionName, ExtraMenuTableModel rpModel, JFrame pParent) {
+        super(Bundle.getMessage("ExtraMessageActionMenuItem", actionName));
         name = actionName;
         rModel = rpModel;
         mParent = pParent;
@@ -39,8 +39,8 @@ public class FactoryExtraMenuAction extends AbstractAction {
         }
         String s = (String) JOptionPane.showInputDialog(
                 mParent,
-                name, // title over JComboBox
-                name, // Dialog title
+                Bundle.getMessage("ExtraMessageActionLabel", name), // label over JComboBox
+                Bundle.getMessage("ExtraMessageActionTitle", name), // Dialog box title
                 JOptionPane.WARNING_MESSAGE,
                 null,
                 options,
@@ -57,5 +57,5 @@ public class FactoryExtraMenuAction extends AbstractAction {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(FactoryExtraMenuAction.class);
+    private final static Logger log = LoggerFactory.getLogger(ExtraMenuAction.class);
 }
