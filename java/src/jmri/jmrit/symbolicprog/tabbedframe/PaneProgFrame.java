@@ -302,8 +302,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         // and put that pane into the JFrame
         getContentPane().add(pane);
 
-        // add help
-        addHelp();
     }
 
     void setProgrammingGui(JPanel bottom) {
@@ -936,6 +934,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             menu.add(new FactoryExtraMenuAction(name, extraMenuModelList.get(i), this));
             menu.setEnabled(false);
         }
+
+        // add Window and Help menu items (_after_ the extra menus)
+        addHelp();
 
         // load function names from family
         re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"), "family");
