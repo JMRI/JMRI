@@ -613,9 +613,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
                     break;
 
                 case Formula:
-                    name = _tableColumnExpressionNode != null
+                    name = _tableNameExpressionNode  != null
                             ? TypeConversionUtil.convertToString(
-                                    _tableColumnExpressionNode.calculate(
+                                    _tableNameExpressionNode .calculate(
                                             getConditionalNG().getSymbolTable()), false)
                             : null;
                     break;
