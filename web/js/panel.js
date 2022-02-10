@@ -1141,7 +1141,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $drawLayoutShape($widget);
                             break;
                         default:
-                            log.log("unknown $widget.widgetType: " + $widget.widgetType + ".");
+                            log.warn("unknown $widget.widgetType: " + $widget.widgetType + ".");
                             break;
                     }
                     break;
@@ -1301,7 +1301,9 @@ function processPanelXML($returnedData, $success, $xhr) {
 
 // perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
-    if (jmri_logging) log.log("$handleClick()");
+    if (jmri_logging) {
+        log.log("$handleClick()");
+    }
 
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
@@ -1321,7 +1323,9 @@ function $handleClick(e) {
             } else if (this.id.endsWith("r")) {
                 $widget["side"] = "right";
             }
-            if (jmri_logging) log.log("\nlayoutSlip-side:" + $widget.side);
+            if (jmri_logging) {
+                log.log("\nlayoutSlip-side:" + $widget.side);
+            }
 
             // convert current slip state to current turnout states
             var $oldStateA, $oldStateB;
@@ -1347,7 +1351,7 @@ function $handleClick(e) {
             }
             //jmri_logging = false;
         } else {
-            log.log("$handleClick(e): unknown slip widget " + this.id);
+            log.warn("$handleClick(e): unknown slip widget " + this.id);
             $logProperties(this);
         }
     // special case for LE layoutTurntable
@@ -1429,8 +1433,9 @@ function $handleMultiClick(e) {
     var $widget = $gWidgets[this.id];
     var clickX = (e.offsetX || e.pageX - $(e.target).offset().left); //get click position on the widget
     var clickY = (e.offsetY || e.pageY - $(e.target).offset().top );
-    log.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
-
+    if (jmri_logging) {
+        log.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
+    }
     //increment or decrement based on where the click occurred on image
     var missed = true; //flag if click x,y outside image bounds, indicates we didn't get good values
     var dec = false;
@@ -1800,7 +1805,7 @@ var $setWidgetState = function($id, $newState, data) {
             $widget = $gWidgets[$slipID];
             // determine combined slipState for icon0/5/7/9/11
             $turnoutName = data.name; // systemName
-            log.log("change from turnout: " + $turnoutName + " to state: " + $newState);
+            //log.log("change from turnout: " + $turnoutName + " to state: " + $newState);
             if (($turnoutName == $widget.turnoutEast) || (data.userName == $widget.turnoutEast)) {
                 // east turnout                          // also compare source by userName
                 $widget.slipStateEast = $newState; // store turnout state e
@@ -1841,8 +1846,8 @@ var $setWidgetState = function($id, $newState, data) {
                 // fix some special sequences, as in java/src/jmri/jmrit/display/SlipTurnoutIcon.java#displayState(state)
                 $widget.slipState = ($widget.slipStateEast << 1) | ($widget.slipStateWest >> 1) | 0x01;
             }
-            log.log("#### $setWidgetState(slipturnouticon " + $slipID + ", " + $widget.slipState +
-                "); (was " + $widget.slipState + ")");
+            //log.log("#### $setWidgetState(slipturnouticon " + $slipID + ", " + $widget.slipState +
+            //    "); (was " + $widget.slipState + ")");
             $newState = $widget.slipState;
             // is overwritten by $newState at end of method, so temp only to pass next if-statement and redraw correctly
             $id = $slipID;
@@ -1865,7 +1870,7 @@ var $setWidgetState = function($id, $newState, data) {
             [$stateA, $stateB] = [$widget.stateA, $widget.stateB];
             $widget.state = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
             if (jmri_logging) {
-                log.log("#### 3360 Slip " + $widget.name +
+                log.log("#### Slip " + $widget.name +
                     " before: " + slipStateToString($widget.state) +
                     ", stateA: " + turnoutStateToString($stateA) +
                     ", stateB: " + turnoutStateToString($stateB));
@@ -1875,7 +1880,7 @@ var $setWidgetState = function($id, $newState, data) {
             if ($id.endsWith("r")) {
                 if ($stateA != $newState) {
                     if (jmri_logging) {
-                        log.log("#### 3370 Changed r slip " + $widget.name +
+                        log.log("#### Changed r slip " + $widget.name +
                             " $stateA from " + turnoutStateToString($stateA) +
                             " to " + turnoutStateToString($newState));
                     }
@@ -1885,7 +1890,7 @@ var $setWidgetState = function($id, $newState, data) {
             } else if ($id.endsWith("l")) {
                 if ($stateB != $newState) {
                     if (jmri_logging) {
-                        log.log("#### 3379 Changed l slip " + $widget.name +
+                        log.log("#### Changed l slip " + $widget.name +
                             " $stateB from " + turnoutStateToString($stateB) +
                             " to " + turnoutStateToString($newState));
                     }
@@ -1897,7 +1902,7 @@ var $setWidgetState = function($id, $newState, data) {
             // turn turnout states back into slip state
             $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
             if (jmri_logging) {
-                log.log("#### 3390 Slip " + $widget.name +
+                log.log("#### Slip " + $widget.name +
                     " after: " + slipStateToString($newState) +
                     ", stateA: " + turnoutStateToString($stateA) +
                     ", stateB: " + turnoutStateToString($stateB));
