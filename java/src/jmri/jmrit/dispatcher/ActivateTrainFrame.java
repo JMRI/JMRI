@@ -935,12 +935,12 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (autoRunBox.isSelected()) {
             AutoActiveTrain aat = new AutoActiveTrain(at);
             setAutoRunItems(aat);
+            _dispatcher.getAutoTrainsFrame().addAutoActiveTrain(aat);
             if (!aat.initialize()) {
                 JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
                         "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            _dispatcher.getAutoTrainsFrame().addAutoActiveTrain(aat);
         }
         _dispatcher.allocateNewActiveTrain(at);
         _dispatcher.newTrainDone(at);

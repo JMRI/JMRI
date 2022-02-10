@@ -1,22 +1,27 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 import jmri.util.swing.ValidatedTextField;
 
 /**
- * Provides a JPanel for querying and configuring Digitrax Duplex (radio)
- * network identification. Provides useful function if one or more UR92 devices
+ * Provides a JPanel for querying and configuring Digitrax Duplex and WiFi
+ * network identification. Provides useful function if one or more devices
  * are connected to LocoNet.
- * <p>
- * This tool works equally well with UR92 and UR92CE devices. The UR92 and
- * UR92CE behave identically with respect to this tool. For the purpose of
- * clarity, only the term UR92 is used herein.
  * <p>
  * This tool makes use of LocoNet messages which have not been publicly
  * documented by Digitrax. This tool is made possible by the reverse-
@@ -33,20 +38,28 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     // member declarations
     JButton swingReadButton;
     JButton swingSetButton;
+    JButton swingUpdateGrpName;
+    JButton swingUpdateChannel;
+    JButton swingUpdatePassword;
+    JButton swingUpdateGroupId;
     ValidatedTextField swingNameValueField = new ValidatedTextField(1, false, "a", "b");
     ValidatedTextField swingChannelValueField = new ValidatedTextField(1, false, "a", "b");
     ValidatedTextField swingPasswordValueField = new ValidatedTextField(1, false, "a", "b");
     ValidatedTextField swingIdValueField = new ValidatedTextField(1, false, "a", "b");
+    JTable swingDeviceTable=new JTable();
+    JTable swingDeviceResponseTable=new JTable();
+    ResponsesTableModel dtModel;
+    ResponsesTableModel dtrtModel;
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss.S");
     JLabel swingNumUr92Label;
     JLabel swingStatusValueLabel;
-    private int numUr92;
+    private int numDuplexTypeDevices;
 
     private LnDplxGrpInfoImpl duplexGroupImplementation;
 
     private int minWindowWidth = 0;
 
     public DuplexGroupInfoPanel() {
-        super();
         swingNameValueField = new ValidatedTextField(9, false, "^.{1,8}$",  // NOI18N
                 "ErrorBadGroupName");
 
@@ -74,7 +87,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             minWindowWidth = DEFAULT_WINDOW_WIDTH;
         }
 
-        numUr92 = 0;        // assume 0 UR92 devices available
+        numDuplexTypeDevices = 0;        // assume 0 UR92 devices available
         swingStatusValueLabel = new JLabel();
         swingStatusValueLabel.setName("ProcessingInitialStatusMessage");  //this string is used as a reference to a .properties file entry; internationalization is handled there.
         swingStatusValueLabel.setText(convertToHtml(swingStatusValueLabel.getName(), minWindowWidth));
@@ -82,18 +95,26 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingNameValueField.setText(Bundle.getMessage("ValueUnknownGroupName"));
         swingNameValueField.setToolTipText(Bundle.getMessage("ToolTipGroupName"));
         swingNameValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupName"));
+        swingUpdateGrpName = new JButton(Bundle.getMessage("ButtonUpdate"));
+        swingUpdateGrpName.setToolTipText(Bundle.getMessage("ButtonUpdateDuplexNameHint"));
 
         swingChannelValueField.setText(Bundle.getMessage("ValueUnknownGroupChannel"));
         swingChannelValueField.setToolTipText(Bundle.getMessage("ToolTipGroupChannel"));
         swingChannelValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupChannel"));
+        swingUpdateChannel = new JButton(Bundle.getMessage("ButtonUpdate"));
+        swingUpdateChannel.setToolTipText(Bundle.getMessage("ButtonUpdateChannelHint"));
 
         swingPasswordValueField.setText(Bundle.getMessage("ValueUnknownGroupPassword"));
         swingPasswordValueField.setToolTipText(Bundle.getMessage("ToolTipGroupPassword"));
         swingPasswordValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupPassword"));
+        swingUpdatePassword = new JButton(Bundle.getMessage("ButtonUpdate"));
+        swingUpdatePassword.setToolTipText(Bundle.getMessage("ButtonDuplexPasswordHint"));
 
         swingIdValueField.setText(Bundle.getMessage("ValueUnknownGroupID"));
         swingIdValueField.setToolTipText(Bundle.getMessage("ToolTipGroupID"));
         swingIdValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupID"));
+        swingUpdateGroupId = new JButton(Bundle.getMessage("ButtonUpdate"));
+        swingUpdateGroupId.setToolTipText(Bundle.getMessage("ButtonDuplexGroupIDHint"));
 
         // Want to force space in the GUI for N lines of status, where N comes
         // from a value in the DuplexGroup.properties file;
@@ -119,6 +140,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexName")));
         swingTempPanel.add(swingNameValueField);
         swingTempLabel.setLabelFor(swingNameValueField); // for "assistive technology" per JLabel on-line documentation
+        swingTempPanel.add(swingUpdateGrpName);
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
@@ -126,6 +148,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexChannel")));
         swingTempPanel.add(swingChannelValueField);
         swingTempLabel.setLabelFor(swingChannelValueField); // for "assistive technology" per JLabel on-line documentation
+        swingTempPanel.add(swingUpdateChannel);
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
@@ -133,6 +156,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexPassword")));
         swingTempPanel.add(swingPasswordValueField);
         swingTempLabel.setLabelFor(swingPasswordValueField); // for "assistive technology" per JLabel on-line documentation
+        swingTempPanel.add(swingUpdatePassword);
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
@@ -140,12 +164,38 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexGroupID")));
         swingTempPanel.add(swingIdValueField);
         swingTempLabel.setLabelFor(swingIdValueField); // for "assistive technology" per JLabel on-line documentation
+        swingTempPanel.add(swingUpdateGroupId);
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
         swingTempPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 3));
         swingTempPanel.add(swingNumUr92Label = new JLabel(" "));
         updateDisplayOfUr92Count();
+        add(swingTempPanel);
+
+        swingTempPanel = new JPanel();
+        swingTempPanel.setLayout(new java.awt.BorderLayout());
+        dtModel = new ResponsesTableModel(
+                new String[]{ Bundle.getMessage("IPLDeviceInfoHeaderType"),
+                        Bundle.getMessage("IPLDeviceInfoHeaderSerial"),
+                        Bundle.getMessage("IPLDeviceInfoHeaderFwv") },0);
+        swingDeviceTable.setModel(dtModel);
+        JScrollPane sp=new JScrollPane(swingDeviceTable);
+        sp.setPreferredSize(new Dimension(0,swingDeviceTable.getRowHeight()*5)); //five rows high
+        swingTempPanel.add(sp);
+        add(swingTempPanel);
+
+        swingTempPanel = new JPanel();
+        swingTempPanel.setLayout(new java.awt.BorderLayout());
+        dtrtModel = new ResponsesTableModel(new String[]{ Bundle.getMessage("IPLDeviceRespHeaderTime"),
+                Bundle.getMessage("IPLDeviceRespHeaderName"),
+                Bundle.getMessage("IPLDeviceRespHeaderChannel"),
+                Bundle.getMessage("IPLDeviceRespHeaderPassword"),
+                Bundle.getMessage("IPLDeviceRespHeaderGroupID") },0);
+        swingDeviceResponseTable.setModel(dtrtModel);
+        JScrollPane spdtrt=new JScrollPane(swingDeviceResponseTable);
+        spdtrt.setPreferredSize(new Dimension(0,swingDeviceResponseTable.getRowHeight()*5)); //five rows high
+        swingTempPanel.add(spdtrt);
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
@@ -160,6 +210,55 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingTempPanel.setLayout(new java.awt.FlowLayout());
         swingTempPanel.add(swingStatusValueLabel);
         add(swingTempPanel);
+
+        swingUpdateGrpName.addActionListener(e -> {
+            swingNameValueField.setForeground(COLOR_OK);
+            updateStatusLineMessage(" ", COLOR_STATUS_OK);
+            if (validateGroupNameField() == false) {
+                swingNameValueField.setForeground(COLOR_ERROR_VAL);
+                updateStatusLineMessage("ErrorBadGroupName", COLOR_STATUS_ERROR);
+                swingNameValueField.requestFocusInWindow();
+                return;
+            }
+            writeGroupName();
+            readButtonActionPerformed();
+        });
+        swingUpdateChannel.addActionListener(e -> {
+            swingChannelValueField.setForeground(COLOR_OK);
+            updateStatusLineMessage(" ", COLOR_STATUS_OK);
+            if (validateGroupNameField() == false) {
+                swingChannelValueField.setForeground(COLOR_ERROR_VAL);
+                updateStatusLineMessage("ErrorBadGroupName", COLOR_STATUS_ERROR);
+                swingChannelValueField.requestFocusInWindow();
+                return;
+            }
+            writeChannel();
+            readButtonActionPerformed();
+        });
+        swingUpdatePassword.addActionListener(e -> {
+            swingPasswordValueField.setForeground(COLOR_OK);
+            updateStatusLineMessage(" ", COLOR_STATUS_OK);
+            if (validateGroupNameField() == false) {
+                swingPasswordValueField.setForeground(COLOR_ERROR_VAL);
+                updateStatusLineMessage("ErrorBadGroupName", COLOR_STATUS_ERROR);
+                swingPasswordValueField.requestFocusInWindow();
+                return;
+            }
+            writePassword();
+            readButtonActionPerformed();
+        });
+        swingUpdateGroupId.addActionListener(e -> {
+            swingIdValueField.setForeground(COLOR_OK);
+            updateStatusLineMessage(" ", COLOR_STATUS_OK);
+            if (validateGroupNameField() == false) {
+                swingIdValueField.setForeground(COLOR_ERROR_VAL);
+                updateStatusLineMessage("ErrorBadGroupName", COLOR_STATUS_ERROR);
+                swingIdValueField.requestFocusInWindow();
+                return;
+            }
+            writeDuplexId();
+            readButtonActionPerformed();
+        });
 
         swingSetButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -200,7 +299,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * available UR92 devices.
      */
     private void scanButtonActionPerformed() {
-        numUr92 = 0;
+        numDuplexTypeDevices = 0;
         updateStatusLineMessage("ProcessingFindingUR92s", COLOR_STATUS_OK);
         duplexGroupImplementation.countUr92sAndQueryDuplexIdentityInfo();
     }
@@ -211,7 +310,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * UR92(s) for Duplex network identity information.
      */
     private void readButtonActionPerformed() {
-        if (numUr92 == 0) {
+        if (numDuplexTypeDevices == 0) {
             scanButtonActionPerformed();
             return;
         }
@@ -295,6 +394,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingPasswordValueField.setForeground(COLOR_OK);
         swingIdValueField.setForeground(COLOR_OK);
         updateStatusLineMessage(" ", COLOR_STATUS_OK);
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         if (validateGroupNameField() == false) {
             swingNameValueField.setForeground(COLOR_ERROR_VAL);
@@ -319,45 +419,80 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
 
         if (result == true) {
-            updateStatusLineMessage("ProcessingGroupUpdate", COLOR_STATUS_OK);
-            StringBuilder writeGroupName = new StringBuilder();
-            writeGroupName.append(swingNameValueField.getText());
-            writeGroupName.append("         "); // ensure length at least 8 characters
-            writeGroupName.setLength(LnDplxGrpInfoImplConstants.DPLX_NAME_LEN); // trim to required length
-            try {
-                duplexGroupImplementation.setDuplexGroupName(writeGroupName.toString());
-            } catch (LocoNetException e) {
-                // illegal Duplex Group Name
-                updateStatusLineMessage("ErrorBadGroupName", COLOR_STATUS_ERROR);
-                swingNameValueField.requestFocusInWindow();
-                return;
+            if (!writeGroupName() ||
+                    !writeChannel() ||
+                    !writePassword() ||
+                    !writeDuplexId()) {
+                // do nothing
+            } else {
+                readButtonActionPerformed();
             }
-            try {
-                duplexGroupImplementation.setDuplexGroupChannel(Integer.parseInt(swingChannelValueField.getText(), 10));
-            } catch (LocoNetException e) {
-                // illegal Duplex Group Channel
-                updateStatusLineMessage("ErrorBadGroupChannel", COLOR_STATUS_ERROR);
-                swingChannelValueField.requestFocusInWindow();
-                return;
-            }
-            try {
-                duplexGroupImplementation.setDuplexGroupPassword(swingPasswordValueField.getText());
-            } catch (LocoNetException e) {
-                // illegal Duplex Group Password
-                updateStatusLineMessage("ErrorBadGroupPassword", COLOR_STATUS_ERROR);
-                swingPasswordValueField.requestFocusInWindow();
-                return;
-            }
-            try {
-                duplexGroupImplementation.setDuplexGroupId(swingIdValueField.getText());
-            } catch (LocoNetException e) {
-                // illegal Duplex Group Id
-                updateStatusLineMessage("ErrorBadGroupId", COLOR_STATUS_ERROR);
-                swingIdValueField.requestFocusInWindow();
-                return;
-            }
-            readButtonActionPerformed();
         }
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    // delay need between messages slower Duplex/LNWI devices
+    // eg LNWI, UR93
+    private static final int WRITE_DELAY = 250;
+    private static final int WRITE_DELAY_PASSWORD = 2500; // LNWI need a lot of time on password updates
+
+    // four routines for performing the writes.
+    private boolean writeGroupName() {
+        updateStatusLineMessage("ProcessingGroupUpdate", COLOR_STATUS_OK);
+        StringBuilder writeGroupName = new StringBuilder();
+        writeGroupName.append(swingNameValueField.getText());
+        writeGroupName.append("         "); // ensure length at least 8 characters
+        writeGroupName.setLength(LnDplxGrpInfoImplConstants.DPLX_NAME_LEN); // trim to required length
+        try {
+            duplexGroupImplementation.setDuplexGroupName(writeGroupName.toString());
+            Thread.sleep(WRITE_DELAY);
+        } catch (LocoNetException | InterruptedException e) {
+            // illegal Duplex Group Name
+            updateStatusLineMessage("ErrorBadGroupName", COLOR_STATUS_ERROR);
+            swingNameValueField.requestFocusInWindow();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean writeChannel() {
+        updateStatusLineMessage("ProcessingGroupUpdate", COLOR_STATUS_OK);
+        try {
+            duplexGroupImplementation.setDuplexGroupChannel(Integer.parseInt(swingChannelValueField.getText(), 10));
+            Thread.sleep(WRITE_DELAY);
+        } catch (LocoNetException | InterruptedException e) {
+            // illegal Duplex Group Channel
+            updateStatusLineMessage("ErrorBadGroupChannel", COLOR_STATUS_ERROR);
+            swingChannelValueField.requestFocusInWindow();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean writePassword() {
+        try {
+            duplexGroupImplementation.setDuplexGroupPassword(swingPasswordValueField.getText());
+            Thread.sleep(WRITE_DELAY_PASSWORD);
+        } catch (LocoNetException | InterruptedException e) {
+            // illegal Duplex Group Password
+            updateStatusLineMessage("ErrorBadGroupPassword", COLOR_STATUS_ERROR);
+            swingPasswordValueField.requestFocusInWindow();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean writeDuplexId() {
+        try {
+            duplexGroupImplementation.setDuplexGroupId(swingIdValueField.getText());
+            Thread.sleep(WRITE_DELAY);
+        } catch (LocoNetException | InterruptedException e) {
+            // illegal Duplex Group Id
+            updateStatusLineMessage("ErrorBadGroupId", COLOR_STATUS_ERROR);
+            swingIdValueField.requestFocusInWindow();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -384,8 +519,8 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      */
     private void updateDisplayOfUr92Count() {
         Object[] messageArguments = {
-            numUr92,
-            numUr92
+            numDuplexTypeDevices,
+            numDuplexTypeDevices
         };
         java.text.MessageFormat formatter = new java.text.MessageFormat("");
 
@@ -406,7 +541,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             String ur92CountString = formatter.format(messageArguments);
             swingNumUr92Label.setText(ur92CountString);
         } catch (RuntimeException e) {
-            swingNumUr92Label.setText(Bundle.getMessage("LabelDeviceCountUR92Except", numUr92));
+            swingNumUr92Label.setText(Bundle.getMessage("LabelDeviceCountUR92Except", numDuplexTypeDevices));
             // eat the exception and show a simple, gramatically ambiguous message
         }
         swingNumUr92Label.repaint();
@@ -460,6 +595,26 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             }
             // is not an error message, so replace it.
             updateStatusLineMessage(statusMessage, fgColor);
+        } else if ( eventName.equals(LnDplxGrpInfoImpl.DPLX_IPL_DEVICE_DETAILS) ) {
+            LnDplxGrpInfoImpl.BasicIPLDeviceInfo tmpItem = (LnDplxGrpInfoImpl.BasicIPLDeviceInfo)evt.getNewValue();
+            if (tmpItem.getType().isEmpty()) {
+                for (int ix = dtModel.getRowCount()-1  ; ix > -1 ; ix --) {
+                    dtModel.removeRow(ix);
+                }
+            } else {
+                dtModel.addRow(new String[] {tmpItem.getType(), tmpItem.getSerialNumber(), tmpItem.getSwVersion()});
+            }
+            return;
+        } else if ( eventName.equals(LnDplxGrpInfoImpl.DPLX_IPL_DEVICE_RESPONSE_DETAILS) ) {
+            LnDplxGrpInfoImpl.BasicIPLDeviceResponseInfo tmpItem = (LnDplxGrpInfoImpl.BasicIPLDeviceResponseInfo)evt.getNewValue();
+            if (tmpItem.getGroupName().isEmpty()) {
+                for (int ix = dtrtModel.getRowCount()-1  ; ix > -1 ; ix --) {
+                    dtrtModel.removeRow(ix);
+                }
+            } else {
+                dtrtModel.addRow(new String[] {dtf.format(LocalDateTime.now()),tmpItem.getGroupName(), tmpItem.getChannel(), tmpItem.getPassword(), tmpItem.getGroupId()});
+            }
+            return;
         } else if ((eventName.equals(ValidatedTextField.VTF_PC_STAT_LN_UPDATE))
                 || (eventName.equals(LnDplxGrpInfoImpl.DPLX_PC_STAT_LN_UPDATE))) {
             if (swingStatusValueLabel == null) {
@@ -480,7 +635,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
                 updateStatusLineMessage(statusMessage, fgColor);
             }
         } else if (eventName.equals("NumberOfUr92sUpdate")) { // NOI18N
-            numUr92 = (Integer) evt.getNewValue();
+            numDuplexTypeDevices = (Integer) evt.getNewValue();
             updateDisplayOfUr92Count();
         } else if (eventName.equals(LnDplxGrpInfoImpl.DPLX_PC_NAME_VALIDITY)) {
             swingNameValueField.setForeground(COLOR_OK);
@@ -648,6 +803,17 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
     }
 
-    //    private final static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class);
-    
+    // make the table model read only
+    static public class ResponsesTableModel extends DefaultTableModel {
+         public ResponsesTableModel(String[] columns, int rows) {
+             super(columns, rows);
+         }
+        @Override
+        public boolean isCellEditable(int row, int column){
+            return false;
+        }
+   }
+
+   //    private final static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class);
+
 }

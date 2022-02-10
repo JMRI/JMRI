@@ -2,7 +2,6 @@ package jmri.jmrix.can.adapters.gridconnect.net;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,15 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
     @Test
     public void testCTor() {
         MergConnectionConfig t = new MergConnectionConfig();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
+        t.dispose();
+    }
+
+    @Test
+    public void testMergName() {
+        MergConnectionConfig t = new MergConnectionConfig();
+        Assertions.assertEquals("CAN via MERG Network Interface", t.name(),"MERG name");
+        t.dispose();
     }
 
     @BeforeEach
