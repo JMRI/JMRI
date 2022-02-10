@@ -117,8 +117,17 @@ public class IndicatorTrackPaths {
         }
     }
 
+    /**
+     * @param block OBlock occupied by train
+     * @param pt    position of track icon
+     * @param size  size of track icon
+     * @param ed    editor
+     * LocoLabel ctor causes editor to draw a graphic. Must be done on GUI
+     * Called from IndicatorTrackIcon.setStatus and IndicatorTurnoutIcon.setStatus
+     * Each wraps this method with ThreadingUtil.runOnLayoutEventually, so there is
+     * a time lag for when track icon changes and display of the change.
+     */
     @jmri.InvokeOnLayoutThread
-    // LocoLabel ctor causes editor to draw a graphic. Must be done on GUI
     synchronized protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
         if (!_showTrain) {
             removeLocoIcon();
@@ -127,6 +136,11 @@ public class IndicatorTrackPaths {
         String trainName = (String) block.getValue();
         if (trainName == null) {
             removeLocoIcon();
+            return;
+        }
+        if ((block.getState() & (OBlock.OCCUPIED | OBlock.RUNNING)) == 0) {
+            // during delay of runOnLayoutEventually, state has changed
+            // don't paint loco icon 
             return;
         }
         if (_loco != null || pt == null) {
