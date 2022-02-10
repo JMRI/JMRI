@@ -593,9 +593,103 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return m.matches();
     }
 
+    private NamedTable getTableBean() throws JmriException {
+
+        if (_tableNameAddressing == NamedBeanAddressing.Direct) {
+            return _tableHandle != null ? _tableHandle.getBean() : null;
+        } else {
+            String name;
+
+            switch (_tableNameAddressing) {
+                case Reference:
+                    name = ReferenceUtil.getReference(
+                            getConditionalNG().getSymbolTable(), _tableColumnReference);
+                    break;
+
+                case LocalVariable:
+                    SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                    name = TypeConversionUtil
+                            .convertToString(symbolTable.getValue(_tableColumnLocalVariable), false);
+                    break;
+
+                case Formula:
+                    name = _tableColumnExpressionNode != null
+                            ? TypeConversionUtil.convertToString(
+                                    _tableColumnExpressionNode.calculate(
+                                            getConditionalNG().getSymbolTable()), false)
+                            : null;
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("invalid _addressing state: " + _tableColumnAddressing.name());
+            }
+
+            NamedTable table = null;
+            if (name != null) {
+                table = InstanceManager.getDefault(NamedTableManager.class)
+                        .getNamedBean(name);
+            }
+            return table;
+        }
+    }
+
+    private String getTableRow() throws JmriException {
+
+        switch (_tableRowAddressing) {
+            case Direct:
+                return _tableRowName;
+
+            case Reference:
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _tableRowReference);
+
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_tableRowLocalVariable), false);
+
+            case Formula:
+                return _tableRowExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _tableRowExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _tableRowAddressing.name());
+        }
+    }
+
+    private String getTableColumn() throws JmriException {
+
+        switch (_tableColumnAddressing) {
+            case Direct:
+                return _tableColumnName;
+
+            case Reference:
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _tableColumnReference);
+
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_tableColumnLocalVariable), false);
+
+            case Formula:
+                return _tableColumnExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _tableColumnExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _tableColumnAddressing.name());
+        }
+    }
+
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws JmriException {
         if (_memoryHandle == null) return false;
 
         // ConditionalVariable, line 661:  boolean compare(String value1, String value2, boolean caseInsensitive) {
@@ -611,8 +705,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 otherValue = getString(_otherMemoryHandle.getBean().getValue());
                 break;
             case Table:
-                NamedTable table = _tableHandle.getBean();
-                otherValue = getString(table.getCell(_tableRowName, _tableColumnName));
+                otherValue = getString(getTableBean().getCell(getTableRow(), getTableColumn()));
                 break;
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_localVariable), false);
@@ -676,6 +769,87 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return Bundle.getMessage(locale, "Memory_Short");
     }
 
+    private String getTableNameDescription(Locale locale) {
+        String namedBean;
+        switch (_tableNameAddressing) {
+            case Direct:
+                String tableName;
+                if (_tableHandle != null) {
+                    tableName = _tableHandle.getBean().getDisplayName();
+                } else {
+                    tableName = Bundle.getMessage(locale, "BeanNotSelected");
+                }
+                namedBean = Bundle.getMessage(locale, "AddressByDirect", tableName);
+                break;
+
+            case Reference:
+                namedBean = Bundle.getMessage(locale, "AddressByReference", _tableNameReference);
+                break;
+
+            case LocalVariable:
+                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _tableNameLocalVariable);
+                break;
+
+            case Formula:
+                namedBean = Bundle.getMessage(locale, "AddressByFormula", _tableNameFormula);
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
+        }
+        return namedBean;
+    }
+
+    private String getTableRowDescription(Locale locale) {
+        String row;
+        switch (_tableRowAddressing) {
+            case Direct:
+                row = Bundle.getMessage(locale, "AddressByDirect", _tableRowName);
+                break;
+
+            case Reference:
+                row = Bundle.getMessage(locale, "AddressByReference", _tableRowReference);
+                break;
+
+            case LocalVariable:
+                row = Bundle.getMessage(locale, "AddressByLocalVariable", _tableRowLocalVariable);
+                break;
+
+            case Formula:
+                row = Bundle.getMessage(locale, "AddressByFormula", _tableRowFormula);
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+        }
+        return row;
+    }
+
+    private String getTableColumnDescription(Locale locale) {
+        String column;
+        switch (_tableRowAddressing) {
+            case Direct:
+                column = Bundle.getMessage(locale, "AddressByDirect", _tableColumnName);
+                break;
+
+            case Reference:
+                column = Bundle.getMessage(locale, "AddressByReference", _tableColumnReference);
+                break;
+
+            case LocalVariable:
+                column = Bundle.getMessage(locale, "AddressByLocalVariable", _tableColumnLocalVariable);
+                break;
+
+            case Formula:
+                column = Bundle.getMessage(locale, "AddressByFormula", _tableColumnFormula);
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+        }
+        return column;
+    }
+
     @Override
     public String getLongDescription(Locale locale) {
         String memoryName;
@@ -690,13 +864,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
             otherMemoryName = _otherMemoryHandle.getName();
         } else {
             otherMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
-
-        String tableName;
-        if (_tableHandle != null) {
-            tableName = _tableHandle.getName();
-        } else {
-            tableName = Bundle.getMessage(locale, "BeanNotSelected");
         }
 
         String message;
@@ -717,9 +884,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
             case Table:
                 message = "Memory_Long_CompareTable";
-                other1 = tableName;
-                other2 = _tableRowName;
-                other3 = _tableColumnName;
+                other1 = getTableNameDescription(locale);
+                other2 = getTableRowDescription(locale);
+                other3 = getTableColumnDescription(locale);
                 break;
 
             case LocalVariable:

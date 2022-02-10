@@ -39,6 +39,7 @@ public class LogixNG_DataDialog {
     }
 
     public void showDialog(
+            NamedBeanAddressing addressing,
             BeanSelectPanel<? extends NamedBean> beanPanel,
             JTextField referenceTextField,
             JTextField localVariableTextField,
@@ -52,10 +53,11 @@ public class LogixNG_DataDialog {
         _beanComboBox = null;
         _beanTextField = null;
 
-        showDialog(referenceTextField, localVariableTextField, formulaTextField, runOnOk);
+        showDialog(addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
     public void showDialog(
+            NamedBeanAddressing addressing,
             JComboBox<? extends Object> comboBox,
             JTextField referenceTextField,
             JTextField localVariableTextField,
@@ -69,10 +71,11 @@ public class LogixNG_DataDialog {
         _beanComboBox = comboBox;
         _beanTextField = null;
 
-        showDialog(referenceTextField, localVariableTextField, formulaTextField, runOnOk);
+        showDialog(addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
     public void showDialog(
+            NamedBeanAddressing addressing,
             JTextField textField,
             JTextField referenceTextField,
             JTextField localVariableTextField,
@@ -85,10 +88,11 @@ public class LogixNG_DataDialog {
         _beanPanel = null;
         _beanComboBox = null;
         _beanTextField = textField;
-        showDialog(referenceTextField, localVariableTextField, formulaTextField, runOnOk);
+        showDialog(addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
     private void showDialog(
+            NamedBeanAddressing addressing,
             JTextField referenceTextField,
             JTextField localVariableTextField,
             JTextField formulaTextField,
@@ -121,7 +125,14 @@ public class LogixNG_DataDialog {
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
 
-//        _turnoutBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
+        switch (addressing) {
+            case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
+            case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
+            case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
+            case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
+            default: throw new IllegalArgumentException("invalid addressing: " + addressing.name());
+        }
+
         if (_beanPanel != null) _panelDirect.add(_beanPanel);
         else if (_beanComboBox != null) _panelDirect.add(_beanComboBox);
         else if (_beanTextField != null) _panelDirect.add(_beanTextField);

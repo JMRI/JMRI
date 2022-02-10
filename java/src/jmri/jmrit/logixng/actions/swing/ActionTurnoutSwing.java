@@ -45,7 +45,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private JTextField _turnoutStateReferenceTextField;
     private JTextField _turnoutStateLocalVariableTextField;
     private JTextField _turnoutStateFormulaTextField;
-    
+
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -189,6 +189,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             }
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
+            return false;
         }
         return true;
     }

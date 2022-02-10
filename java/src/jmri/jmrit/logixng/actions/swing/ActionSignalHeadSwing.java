@@ -388,6 +388,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             }
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
+            return false;
         }
         return true;
     }
