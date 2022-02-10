@@ -1026,7 +1026,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
 
             log.debug("{}: {}({}) {}({}), Dest: {}, path max: {}",
-                    _activeTrain.getTrainName(),
+                    _activeTrain.getTrainName(),1,2,
                     _controllingSignalMast.getDisplayName(USERSYS), displayedAspect, aspectSpeedStr, aspectSpeed,
                     smDestinationName, (int) smLogicSpeed);
 
@@ -1867,7 +1867,7 @@ public class AutoActiveTrain implements ThrottleListener {
             //calculate speed increment to use in each minInterval time
             speedIncrement = (100.0f / ((float) fullRampTime / minThrottleInterval)
                     / rampRate) / 100.0f;
-            log.debug("{}: _speedIncrement={}", speedIncrement);
+            log.debug("{}: _speedIncrement={}", throttle.getLocoAddress(), speedIncrement);
         }
 
         public  void setIsForward(boolean isForward) {

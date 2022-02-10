@@ -2006,7 +2006,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (prevBlk != null) {
                 msg = Bundle.getMessage("removeStopBlock", prevBlk.getDisplayName());
             }
-            log.info("{} {}", Bundle.getMessage("StopBlockSet", _stoppingBlock.getDisplayName(), getTrainName()), msg);
+            log.info("{} : msg({})", Bundle.getMessage("StopBlockSet", _stoppingBlock.getDisplayName(), getTrainName()), msg);
         }
     }
 
@@ -2623,7 +2623,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             log.debug("{}: Flags: _waitForBlock={}, _waitForSignal={}, _waitForWarrant={} speedSetting= {}.",
                     getDisplayName(), _waitForBlock, _waitForSignal, _waitForWarrant, speedSetting);
             if (_message != null) {
-                log.debug("{}:  ", getDisplayName(), _message);
+                log.debug("{}: _message ({}) ", getDisplayName(), _message);
             }
         }
 
