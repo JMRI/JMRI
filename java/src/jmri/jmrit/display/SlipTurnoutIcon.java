@@ -416,64 +416,49 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         //back will be unknown
         int state;
         if (namedTurnoutWest != null) {
-            if (getTurnout(WEST).getKnownState() == UNKNOWN) {
-                return UNKNOWN;
-            }
-            if (getTurnout(WEST).getKnownState() == INCONSISTENT) {
-                return INCONSISTENT;
-            }
-            state = getTurnout(WEST).getKnownState();
+            state = getTurnout(WEST).getKnownState(); // part 1 of the slip(turnouticon)state
         } else {
-            return UNKNOWN;
+            state  = UNKNOWN;
         }
-        //We add 1 to the value of the west turnout to help identify the states for both turnouts
+        if ((state == UNKNOWN) || (state == INCONSISTENT)) {
+            return state;
+        }
+        //We add 1 (or 3) to the value of the west turnout to help identify the states for both turnouts
         if (namedTurnoutEast != null) {
-            if (getTurnout(EAST).getKnownState() == UNKNOWN) {
-                return UNKNOWN;
+            int eState = getTurnout(EAST).getKnownState();
+            if (eState == CLOSED) {
+                eState = state + (getTurnout(EAST).getKnownState() + 1);  // part 2 of the slip(turnouticon)state
+            } else if (eState == THROWN) {
+                eState = state + (getTurnout(EAST).getKnownState() + 3);  // part 2 of the slip(turnouticon)state
             }
-            if (getTurnout(EAST).getKnownState() == INCONSISTENT) {
-                return INCONSISTENT;
-            }
-            if (getTurnout(EAST).getKnownState() == CLOSED) {
-                state = state + (getTurnout(EAST).getKnownState() + 1);
-            }
-            if (getTurnout(EAST).getKnownState() == THROWN) {
-                state = state + (getTurnout(EAST).getKnownState() + 3);
-            }
+            state = eState;
         } else {
-            return UNKNOWN;
+            state = UNKNOWN;
         }
+
         if ((turnoutType == SCISSOR) && (!singleSlipRoute)) {
-            //We simply need to check that the opposite turnout is set the same state
+            // We simply check that the opposite turnout is set the same state
             if (namedTurnoutEastLower != null) {
-                if (getTurnout(LOWEREAST).getKnownState() == UNKNOWN) {
-                    return UNKNOWN;
-                }
-                if (getTurnout(LOWEREAST).getKnownState() == INCONSISTENT) {
-                    return INCONSISTENT;
+                int leState = getTurnout(LOWEREAST).getKnownState();
+                if (( leState== UNKNOWN) || (leState == INCONSISTENT)) {
+                    state = leState;
+                } else if (leState != getTurnout(WEST).getKnownState()) {
+                    state = INCONSISTENT;
                 }
             } else {
-                return UNKNOWN;
+                state = UNKNOWN;
             }
             if (namedTurnoutWestLower != null) {
-                if (getTurnout(LOWERWEST).getKnownState() == UNKNOWN) {
-                    return UNKNOWN;
-                }
-                if (getTurnout(LOWERWEST).getKnownState() == INCONSISTENT) {
-                    return INCONSISTENT;
+                int lwState = getTurnout(LOWERWEST).getKnownState();
+                if ((lwState == UNKNOWN) || (lwState == INCONSISTENT)) {
+                    state = lwState;
+                } else if (lwState != getTurnout(EAST).getKnownState()) {
+                    state = INCONSISTENT;
                 }
             } else {
-                return UNKNOWN;
-            }
-
-            if (getTurnout(LOWEREAST).getKnownState() != getTurnout(WEST).getKnownState()) {
-                return INCONSISTENT;
-            }
-            if (getTurnout(LOWERWEST).getKnownState() != getTurnout(EAST).getKnownState()) {
-                return INCONSISTENT;
+                state = UNKNOWN;
             }
         }
-
         return state;
     }
 
@@ -482,9 +467,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("property change: {} {} is now {}", getNameString(), e.getPropertyName(), e.getNewValue());
-        }
+        log.debug("property change: {} {} is now {}", getNameString(), e.getPropertyName(), e.getNewValue());
 
         // when there's feedback, transition through inconsistent icon for better
         // animation
@@ -902,7 +885,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             default:
                 log.error("turnoutType value {} should not have appeared", turnoutType);
         }
-
     }
 
     /**
