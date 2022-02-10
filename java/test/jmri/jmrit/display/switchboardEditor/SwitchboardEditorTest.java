@@ -132,7 +132,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assertions.assertEquals(0, e.getRows(), "Default Rows 0"); // autoRows on
         e.setRows(10); // will turn off autoRows checkboxmenu
         Assertions.assertEquals(10, e.getRows(), "Rows should now be be 10");
-        e.setShowUserName(false);
+        e.setShowUserName(0);
         Assertions.assertEquals("no", e.showUserName(), "Show User Name is No");
         e.setSwitchShape("symbol");
         Assertions.assertEquals("symbol", e.getSwitchShape(), "Switch shape set to 'symbol'");
