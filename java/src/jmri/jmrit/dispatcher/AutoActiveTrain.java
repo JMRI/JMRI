@@ -1026,7 +1026,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
 
             log.debug("{}: {}({}) {}({}), Dest: {}, path max: {}",
-                    _activeTrain.getTrainName(),1,2,
+                    _activeTrain.getTrainName(),
                     _controllingSignalMast.getDisplayName(USERSYS), displayedAspect, aspectSpeedStr, aspectSpeed,
                     smDestinationName, (int) smLogicSpeed);
 
