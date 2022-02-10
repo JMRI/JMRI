@@ -122,11 +122,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             log.debug("Switch userName from bean: {}", _uName);
             if (_uName == null) {
                 _uName = Bundle.getMessage("NoUserName");
-            } else if (showUserName == 1) {
+            } else if (showUserName == 1) { // (menu option setting)
                 _uLabel = _uName;
             } else if (showUserName == 2) {
-                _switchDisplayName = _uName;
-                //switchLabel = _uName; // replace system name (menu option setting)
+                _switchDisplayName = _uName; // replace system name
             }
         }
 
