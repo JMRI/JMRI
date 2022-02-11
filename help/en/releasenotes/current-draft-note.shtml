@@ -567,7 +567,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Restored tab and shift+tab shortcuts to browse through throttles inner windows</li>
+            <li>Address Panel is now focused as a default when openning a new throttle</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -630,7 +631,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Support for display and interaction with (Control) Panel slipTurnoutIcons has been added
+            to JMRI Web Server Panels.<br>
+            This includes double and single slips, three-way turnouts and scissors with 2 or 4 turnouts.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
