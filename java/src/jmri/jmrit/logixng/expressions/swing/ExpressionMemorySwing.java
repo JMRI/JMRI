@@ -108,7 +108,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
         _memoryOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
 
-        _caseInsensitiveCheckBox = new JCheckBox(Bundle.getMessage("ExpressionMemory_CaseInsensitive"));
+        _caseInsensitiveCheckBox = new JCheckBox(Bundle.getMessage("ExpressionMemory_CaseInsensitive"));    // NOI18N
         operationAndCasePanel.add(_caseInsensitiveCheckBox);
 
         _tabbedPane = new JTabbedPane();
@@ -140,7 +140,9 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _compareToLocalVariable.add(_compareToLocalVariableTextField);
 
 
-
+        _tableNameLabel = new JLabel();
+        _rowNameLabel = new JLabel();
+        _columnNameLabel = new JLabel();
 
         _tableNameAddressing = NamedBeanAddressing.Direct;
         _compareToTableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
@@ -153,9 +155,9 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _tableColumnNameComboBox = new JComboBox<>();
         _tableColumnNameTextField = new JTextField(30);
 
-        _editTableNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
-        _editRowNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
-        _editColumnNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));
+        _editTableNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));     // NOI18N
+        _editRowNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));       // NOI18N
+        _editColumnNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));    // NOI18N
 
         _tableNameReferenceTextField = new JTextField(30);
         _tableNameLocalVariableTextField = new JTextField(30);
@@ -168,10 +170,6 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _tableColumnReferenceTextField = new JTextField(30);
         _tableColumnLocalVariableTextField = new JTextField(30);
         _tableColumnFormulaTextField = new JTextField(30);
-
-        _tableNameLabel = new JLabel(getTableNameDescription());
-        _rowNameLabel = new JLabel(getTableRowDescription());
-        _columnNameLabel = new JLabel(getTableColumnDescription());
 
         _editTableNameButton.addActionListener((evt) -> {
             _logixNG_DataDialog.showDialog(
@@ -221,8 +219,6 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             }
         });
 
-//        _panelRowOrColumnLabel = new JLabel(Bundle.getMessage("TableForEachSwing_RowName"));
-
         java.awt.GridBagConstraints constraints = new java.awt.GridBagConstraints();
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
@@ -230,23 +226,17 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.EAST;
         _compareToTable.add(_editTableNameButton, constraints);
-//        _compareToTable.add(new JLabel(Bundle.getMessage("ExpressionMemory_Table")), constraints);
         constraints.gridy = 1;
         _compareToTable.add(_editRowNameButton, constraints);
-//        _compareToTable.add(new JLabel(Bundle.getMessage("ExpressionMemory_RowName")), constraints);
         constraints.gridy = 2;
         _compareToTable.add(_editColumnNameButton, constraints);
-//        _compareToTable.add(new JLabel(Bundle.getMessage("ExpressionMemory_ColumnName")), constraints);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
-//        _compareToTable.add(_compareToTableBeanPanel, constraints);
         _compareToTable.add(_tableNameLabel, constraints);
         constraints.gridy = 1;
-//        _compareToTable.add(_rowNameComboBox, constraints);
         _compareToTable.add(_rowNameLabel, constraints);
         constraints.gridy = 2;
-//        _compareToTable.add(_columnNameComboBox, constraints);
         _compareToTable.add(_columnNameLabel, constraints);
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -255,13 +245,10 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         constraints.gridx = 2;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
-//        _compareToTable.add(_compareToTableBeanPanel, constraints);
         _compareToTable.add(_editTableNameButton, constraints);
         constraints.gridy = 1;
-//        _compareToTable.add(_rowNameComboBox, constraints);
         _compareToTable.add(_editRowNameButton, constraints);
         constraints.gridy = 2;
-//        _compareToTable.add(_columnNameComboBox, constraints);
         _compareToTable.add(_editColumnNameButton, constraints);
 
         _compareToRegExTextField = new JTextField(30);
@@ -281,7 +268,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 case Memory: _tabbedPaneCompareTo.setSelectedComponent(_compareToMemory); break;
                 case Table: _tabbedPaneCompareTo.setSelectedComponent(_compareToTable); break;
                 case LocalVariable: _tabbedPaneCompareTo.setSelectedComponent(_compareToLocalVariable); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());  // NOI18N
             }
             _memoryOperationComboBox.setSelectedItem(expression.getMemoryOperation());
             _caseInsensitiveCheckBox.setSelected(expression.getCaseInsensitive());
@@ -303,7 +290,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 case Reference: _tableNameReferenceTextField.setText(expression.getTableNameReference()); break;
                 case LocalVariable: _tableNameLocalVariableTextField.setText(expression.getTableNameLocalVariable()); break;
                 case Formula: _tableNameFormulaTextField.setText(expression.getTableNameFormula()); break;
-                default: throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
+                default: throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());    // NOI18N
             }
 
             _tableRowAddressing = expression.getTableRowAddressing();
@@ -318,7 +305,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 case Reference: _tableRowReferenceTextField.setText(expression.getTableRowReference()); break;
                 case LocalVariable: _tableRowLocalVariableTextField.setText(expression.getTableRowLocalVariable()); break;
                 case Formula: _tableRowFormulaTextField.setText(expression.getTableRowFormula()); break;
-                default: throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+                default: throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());  // NOI18N
             }
 
             _tableColumnAddressing = expression.getTableColumnAddressing();
@@ -333,7 +320,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 case Reference: _tableColumnReferenceTextField.setText(expression.getTableColumnReference()); break;
                 case LocalVariable: _tableColumnLocalVariableTextField.setText(expression.getTableColumnLocalVariable()); break;
                 case Formula: _tableColumnFormulaTextField.setText(expression.getTableColumnFormula()); break;
-                default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
+                default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());    // NOI18N
             }
         }
 
@@ -344,6 +331,10 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _editRowNameButton.setEnabled(enable);
         _editColumnNameButton.setEnabled(enable);
 
+        _tableNameLabel.setText(getTableNameDescription());
+        _rowNameLabel.setText(getTableRowDescription());
+        _columnNameLabel.setText(getTableColumnDescription());
+
         JComponent[] components = new JComponent[]{
             _memoryBeanPanel,
             operationAndCasePanel,
@@ -351,7 +342,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         };
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ExpressionMemory_Components"), components);
+                Bundle.getMessage("ExpressionMemory_Components"), components);  // NOI18N
 
         for (JComponent c : componentList) panel.add(c);
 
@@ -379,77 +370,77 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 if (_compareToTableBeanPanel.getNamedBean() != null) {
                     tableName = _compareToTableBeanPanel.getNamedBean().getDisplayName();
                 } else {
-                    tableName = Bundle.getMessage("BeanNotSelected");
+                    tableName = Bundle.getMessage("BeanNotSelected");   // NOI18N
                 }
-                namedBean = Bundle.getMessage("AddressByDirect", tableName);
+                namedBean = Bundle.getMessage("AddressByDirect", tableName);    // NOI18N
                 break;
 
             case Reference:
-                namedBean = Bundle.getMessage("AddressByReference", _tableNameReferenceTextField.getText());
+                namedBean = Bundle.getMessage("AddressByReference", _tableNameReferenceTextField.getText());    // NOI18N
                 break;
 
             case LocalVariable:
-                namedBean = Bundle.getMessage("AddressByLocalVariable", _tableNameLocalVariableTextField.getText());
+                namedBean = Bundle.getMessage("AddressByLocalVariable", _tableNameLocalVariableTextField.getText());    // NOI18N
                 break;
 
             case Formula:
-                namedBean = Bundle.getMessage("AddressByFormula", _tableNameFormulaTextField.getText());
+                namedBean = Bundle.getMessage("AddressByFormula", _tableNameFormulaTextField.getText());    // NOI18N
                 break;
 
             default:
-                throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
+                throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name()); // NOI18N
         }
-        return namedBean;
+        return Bundle.getMessage("ExpressionMemory_Table", namedBean);  // NOI18N
     }
 
     private String getTableRowDescription() {
         String row;
         switch (_tableRowAddressing) {
             case Direct:
-                row = Bundle.getMessage("AddressByDirect", _tableRowNameTextField.getText());
+                row = Bundle.getMessage("AddressByDirect", _tableRowNameTextField.getText());   // NOI18N
                 break;
 
             case Reference:
-                row = Bundle.getMessage("AddressByReference", _tableRowReferenceTextField.getText());
+                row = Bundle.getMessage("AddressByReference", _tableRowReferenceTextField.getText());   // NOI18N
                 break;
 
             case LocalVariable:
-                row = Bundle.getMessage("AddressByLocalVariable", _tableRowLocalVariableTextField.getText());
+                row = Bundle.getMessage("AddressByLocalVariable", _tableRowLocalVariableTextField.getText());   // NOI18N
                 break;
 
             case Formula:
-                row = Bundle.getMessage("AddressByFormula", _tableRowFormulaTextField.getText());
+                row = Bundle.getMessage("AddressByFormula", _tableRowFormulaTextField.getText());   // NOI18N
                 break;
 
             default:
-                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());   // NOI18N
         }
-        return row;
+        return Bundle.getMessage("ExpressionMemory_RowName", row);  // NOI18N
     }
 
     private String getTableColumnDescription() {
         String column;
-        switch (_tableRowAddressing) {
+        switch (_tableColumnAddressing) {
             case Direct:
-                column = Bundle.getMessage("AddressByDirect", _tableColumnNameTextField.getText());
+                column = Bundle.getMessage("AddressByDirect", _tableColumnNameTextField.getText()); // NOI18N
                 break;
 
             case Reference:
-                column = Bundle.getMessage("AddressByReference", _tableColumnReferenceTextField.getText());
+                column = Bundle.getMessage("AddressByReference", _tableColumnReferenceTextField.getText()); // NOI18N
                 break;
 
             case LocalVariable:
-                column = Bundle.getMessage("AddressByLocalVariable", _tableColumnLocalVariableTextField.getText());
+                column = Bundle.getMessage("AddressByLocalVariable", _tableColumnLocalVariableTextField.getText()); // NOI18N
                 break;
 
             case Formula:
-                column = Bundle.getMessage("AddressByFormula", _tableColumnFormulaTextField.getText());
+                column = Bundle.getMessage("AddressByFormula", _tableColumnFormulaTextField.getText()); // NOI18N
                 break;
 
             default:
-                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableColumnAddressing.name());   // NOI18N
         }
-        return column;
+        return Bundle.getMessage("ExpressionMemory_ColumnName", column);    // NOI18N
     }
 
     private void editTableNameFinished() {
