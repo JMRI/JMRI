@@ -587,7 +587,7 @@
         <a id="Wt" name="Wt"></a>
         <ul>
             <li>Additional bug fixing and enhancements to Shared Warrants. SWs are
-                useful to animate the simultaneous operation of multiple trains. 
+                useful to animate the simultaneous operation of multiple trains.
                 Be aware that SWs may mutually block movement that can only be resolved
                 by aborting at least one of them. Regular warrants avoid such deadlocks
                 due to the priority of their launch times.
@@ -600,7 +600,7 @@
                    </li>
                <li>If a ramp down to stop at a "hazard" overruns into the next block, the
                    SW will allocate the next block if that is permissible. Whether or not, i.e.
-                   the position of the train is marked yellow or blue, use the normal Control 
+                   the position of the train is marked yellow or blue, use the normal Control
                    commands to restart. "Resume" if the "hazard" was occupation or a warrant,
                    or wait for the signal change to an allowable speed.
                    </li>
@@ -648,5 +648,6 @@
             <li>Developers: The
                 <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
                 has been updated.</li>
+            <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.
         </ul>
 
