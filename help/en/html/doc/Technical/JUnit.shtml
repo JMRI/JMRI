@@ -251,6 +251,13 @@ suite.<br>
         <dd>If true, issues a warning if a test takes too long. The default limit is 5000 msec, but
         you can change it defining the jmri.util.JUnitUtil.checkTestDurationMax environment
         variable.</dd>
+
+        <dt>jmri.util.AccessibilityChecks.logToSystemOut
+        <dt>jmri.util.AccessibilityChecks.warnOnIssue
+        <dt>jmri.util.AccessibilityChecks.failOnIssue
+        <dt>jmri.util.AccessibilityChecks.includeLaf
+        <dd>These control accessibility checks, see
+            <a href="#access">below</a>.
       </dl>
       For more on setting these, see the <a href="StartUpScripts.shtml#prop">start-up scripts
       page</a>.
@@ -1101,6 +1108,22 @@ milliseconds can improve the reliability of tests. Also, setting
           wait-for-empty value may never occur.</p>
         </li>
       </ul>
+
+        <h3 id="access">Testing GUI Accessibility</a>
+        You can enable some accessibility checks using environment variables. These
+        control test routines that are included in regular test runs over your code.
+        For an example, see
+        the jmri.jmrit.roster.RosterEntryPaneTest class.
+
+        <dl>
+            <dt>jmri.util.AccessibilityChecks.logToSystemOut
+            <dt>jmri.util.AccessibilityChecks.warnOnIssue
+            <dt>jmri.util.AccessibilityChecks.failOnIssue
+            <dd>These determine what happens when a non-accessible GUI
+                element is found, ranging from logging to failing the relevant test.
+            <dt>jmri.util.AccessibilityChecks.includeLaf
+            <dd>If set true, turns off messages about Java Look&Feel classes, i.e. Spinners.
+        </dl>
 
       <h2 id="testScriptCode">Testing Script Code</h2>
       JMRI ships with sample scripts. This section discussions how you can write simple tests for
