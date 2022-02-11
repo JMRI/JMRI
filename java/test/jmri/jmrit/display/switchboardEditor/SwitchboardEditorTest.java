@@ -156,7 +156,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assertions.assertNotNull(sm.getSensor("IS20"));
         Objects.requireNonNull(sm.getSensor("IS20")).setUserName("twenty"); // make it harder to fetch label
         e.updatePressed(); // recreate to connect switch "IS20" to Sensor sensor20
-        Assertions.assertEquals(24, e.getSwitches().size(), "24 (connected) item displayed");
+        Assertions.assertEquals(24, e.getSwitches().size(), "24 (connected) items displayed");
         Assertions.assertEquals(Sensor.UNKNOWN, sensor20.getState(), "sensor20 state is Unknown");
         Assertions.assertNotNull(e.getSwitch("IS20"));
         Assertions.assertEquals("IS20: ?", e.getSwitch("IS20").getIconLabel(), "IS20 displays Unknown");
