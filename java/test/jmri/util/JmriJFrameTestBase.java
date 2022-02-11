@@ -34,6 +34,13 @@ abstract public class JmriJFrameTestBase {
         fo.requestClose();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testAccessibleContent() {
+        frame.initComponents();
+        jmri.util.AccessibilityChecks.check(frame);
+    }
+
     @BeforeEach
     abstract public void setUp();  // set the value of frame.  
                                    // do not call initComponents.
