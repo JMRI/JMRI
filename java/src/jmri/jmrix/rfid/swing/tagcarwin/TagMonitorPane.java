@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 /**
  * A monitor for RFID tags which shows the tag, a car (if there is a car associated with that tag).
- * If there is no car, a button allows the user to assoicate a car. For those tags with cars,
+ * If there is no car, a button allows the user to associate a car. For those tags with cars,
  * the user can set the location or edit the car.
  *
  * @author J. Scott Walton Copyright (C) 2022
@@ -225,10 +225,15 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
     protected String rowCountField = this.getClass().getName() + "RowCount";
     JLabel panelMessage = new JLabel("");
 
+    public boolean getShowTimestamps() {
+        return showTimestamps.isSelected();
+    }
+
     @Override
     public void initComponents() {
         dataModel = new TableDataModel(this);
         JTable tagMonitorTable = new JTable(dataModel);
+        tagMonitorTable.setRowHeight(tagMonitorTable.getRowHeight() + 5);
         tagMonitorTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         tagMonitorTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         dataModel.setParent(tagMonitorTable);
