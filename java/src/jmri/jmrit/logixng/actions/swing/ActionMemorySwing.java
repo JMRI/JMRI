@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.event.WindowFocusListener;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -10,6 +11,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.jmrit.logixng.actions.ActionMemory.MemoryOperation;
+import jmri.jmrit.logixng.swing.LogixNG_DataDialog;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
@@ -20,6 +22,9 @@ import jmri.util.swing.BeanSelectPanel;
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionMemorySwing extends AbstractDigitalActionSwing {
+
+    private final LogixNG_DataDialog _logixNG_DataDialog = new LogixNG_DataDialog(this);
+    private WindowFocusListener _focusListener;
 
     private JTabbedPane _tabbedPaneMemory;
     private BeanSelectPanel<Memory> _memoryBeanPanel;
@@ -40,9 +45,34 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
     private JPanel _copyVariable;
     private JPanel _calculateFormula;
     private JTextField _setToConstantTextField;
-    private JTextField _copyTableCellTextField;
+//    private JTextField _copyTableCellTextField;
     private JTextField _copyLocalVariableTextField;
     private JTextField _calculateFormulaTextField;
+    private JButton _editTableNameButton;
+    private JButton _editRowNameButton;
+    private JButton _editColumnNameButton;
+    private JLabel _tableNameLabel;
+    private JLabel _rowNameLabel;
+    private JLabel _columnNameLabel;
+
+    private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
+    private JTextField _tableNameReferenceTextField;
+    private JTextField _tableNameLocalVariableTextField;
+    private JTextField _tableNameFormulaTextField;
+
+    private NamedBeanAddressing _tableRowAddressing = NamedBeanAddressing.Direct;
+    private JComboBox<String> _tableRowNameComboBox;
+    private JTextField _tableRowNameTextField;
+    private JTextField _tableRowReferenceTextField;
+    private JTextField _tableRowLocalVariableTextField;
+    private JTextField _tableRowFormulaTextField;
+
+    private NamedBeanAddressing _tableColumnAddressing = NamedBeanAddressing.Direct;
+    private JComboBox<String> _tableColumnNameComboBox;
+    private JTextField _tableColumnNameTextField;
+    private JTextField _tableColumnReferenceTextField;
+    private JTextField _tableColumnLocalVariableTextField;
+    private JTextField _tableColumnFormulaTextField;
 
 
     @Override
@@ -104,8 +134,8 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         _copyLocalVariableTextField = new JTextField(30);
         _copyVariable.add(_copyLocalVariableTextField);
 
-        _copyTableCellTextField = new JTextField(30);
-        _copyTableCell.add(_copyTableCellTextField);
+//        _copyTableCellTextField = new JTextField(30);
+//        _copyTableCell.add(_copyTableCellTextField);
 
         _calculateFormulaTextField = new JTextField(30);
         _calculateFormula.add(_calculateFormulaTextField);
@@ -139,7 +169,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getMemoryOperation().name());
             }
             _setToConstantTextField.setText(action.getConstantValue());
-            _copyTableCellTextField.setText(ActionMemory.convertTableReference(action.getOtherTableCell(), false));
+//DANIEL            _copyTableCellTextField.setText(ActionMemory.convertTableReference(action.getOtherTableCell(), false));
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getOtherFormula());
         }
@@ -216,7 +246,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         // If using the Table tab, validate the table reference content via setOtherTableCell.
         try {
             if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyTableCell) {
-                action.setOtherTableCell(ActionMemory.convertTableReference(_copyTableCellTextField.getText(), true));
+//DANIEL                action.setOtherTableCell(ActionMemory.convertTableReference(_copyTableCellTextField.getText(), true));
             }
         } catch (IllegalArgumentException e) {
             errorMessages.add(e.getMessage());
@@ -299,7 +329,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
             } else if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyTableCell) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyTableCellToMemory);
-                action.setOtherTableCell(ActionMemory.convertTableReference(_copyTableCellTextField.getText(), true));
+//DANIEL                action.setOtherTableCell(ActionMemory.convertTableReference(_copyTableCellTextField.getText(), true));
             } else if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyVariable) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
                 action.setOtherLocalVariable(_copyLocalVariableTextField.getText());

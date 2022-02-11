@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import java.awt.event.*;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -397,7 +396,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         String row;
         switch (_tableRowAddressing) {
             case Direct:
-                row = Bundle.getMessage("AddressByDirect", _tableRowNameTextField.getText());   // NOI18N
+                String rowName =
+                        _tableNameAddressing == NamedBeanAddressing.Direct
+                        ? _tableRowNameComboBox.getItemAt(_tableRowNameComboBox.getSelectedIndex())
+                        : _tableRowNameTextField.getText();
+                row = Bundle.getMessage("AddressByDirect", rowName);   // NOI18N
                 break;
 
             case Reference:
@@ -422,7 +425,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         String column;
         switch (_tableColumnAddressing) {
             case Direct:
-                column = Bundle.getMessage("AddressByDirect", _tableColumnNameTextField.getText()); // NOI18N
+                String columnName =
+                        _tableNameAddressing == NamedBeanAddressing.Direct
+                        ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
+                        : _tableColumnNameTextField.getText();
+                column = Bundle.getMessage("AddressByDirect", columnName); // NOI18N
                 break;
 
             case Reference:

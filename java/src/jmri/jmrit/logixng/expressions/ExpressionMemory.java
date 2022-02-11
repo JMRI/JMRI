@@ -925,7 +925,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case MatchRegex:
                 // fall through
             case NotMatchRegex:
-                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text, other1, other2, other3);
+                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text, other1);
 
             default:
                 throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());

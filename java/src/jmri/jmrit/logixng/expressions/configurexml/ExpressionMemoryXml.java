@@ -94,7 +94,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ExpressionMemory h = new ExpressionMemory(sys, uname);
