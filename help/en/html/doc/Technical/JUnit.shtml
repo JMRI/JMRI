@@ -1122,7 +1122,8 @@ milliseconds can improve the reliability of tests. Also, setting
             <dd>These determine what happens when a non-accessible GUI
                 element is found, ranging from logging to failing the relevant test.
             <dt>jmri.util.AccessibilityChecks.includeLaf
-            <dd>If set true, turns off messages about Java Look&Feel classes, i.e. Spinners.
+            <dd>By default, these tests turn off messages about Java Look&Feel classes, i.e. Spinners.
+                Setting this variable true will include those in the output.
         </dl>
 
       <h2 id="testScriptCode">Testing Script Code</h2>
