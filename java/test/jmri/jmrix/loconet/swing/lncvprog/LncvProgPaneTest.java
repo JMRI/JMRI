@@ -3,13 +3,13 @@ package jmri.jmrix.loconet.swing.lncvprog;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.loconet.*;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
-import java.awt.*;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test of the LNCV Programming Pane tool.
@@ -19,12 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    LocoNetSystemConnectionMemo memo;
-    LncvProgPane panel;
+    private LocoNetSystemConnectionMemo memo;
+    private LncvProgPane lnPanel;
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testCTor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         LncvProgPane p = new LncvProgPane();
         assertNotNull(p, "exists");
     }
@@ -33,7 +33,7 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
     @Test
     public void testInitComponents() throws Exception{
         // for now, just makes sure there isn't an exception.
-        panel.initComponents(memo);
+        lnPanel.initComponents(memo);
     }
 
     @Test
@@ -48,9 +48,9 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
         Assertions.assertEquals(title, panel.getTitle(), "title");
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDispose() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         LncvProgPane p = new LncvProgPane();
         Assertions.assertTrue(p.isVisible(), "LNCV running = visible");
         assertNotNull(p, "exists");
@@ -58,14 +58,14 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
         Assertions.assertFalse(p.isVisible(), "disposed = invisible");
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testPanel() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         LncvDevicesManager lcdm = memo.getLncvDevicesManager();
-        panel.initComponents(memo); // set up stuff
+        lnPanel.initComponents(memo); // set up stuff
         panel.initComponents();
         // test list
-        Assertions.assertNull(panel.getModule(0), "Get LncvModule 0 from empty list");
+        Assertions.assertNull(lnPanel.getModule(0), "Get LncvModule 0 from empty list");
 
         Thread dialog_thread1 = new Thread(() -> {
             JDialogOperator jfo = new JDialogOperator(Bundle.getMessage("WarningTitle") );
@@ -74,37 +74,37 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
         dialog_thread1.setName("BroadcastAll Dialog button Proceed clicked");
         dialog_thread1.start();
 
-        panel.allProgButtonActionPerformed();
+        lnPanel.allProgButtonActionPerformed();
 
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "BroadcastAll Warning Dialog closed");
-        Assertions.assertEquals("locked", panel.getAddressEntry(), "AddressField locked");
+        Assertions.assertEquals("locked", lnPanel.getAddressEntry(), "AddressField locked");
 
-        panel.allProgButtonActionPerformed(); // second click "Stop" will release buttons
-        Assertions.assertEquals("1", panel.getAddressEntry(), "AddressField unlocked");
+        lnPanel.allProgButtonActionPerformed(); // second click "Stop" will release buttons
+        Assertions.assertEquals("1", lnPanel.getAddressEntry(), "AddressField unlocked");
 
         lcdm.message(new LocoNetMessage(new int[]{0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
         Assertions.assertEquals(1, lcdm.getDeviceCount(), "modules in devman list after add");
-        Assertions.assertEquals(5033, panel.getModule(0).getProductID(), "ProductID of LncvModule at index 0 after adding");
+        Assertions.assertEquals(5033, lnPanel.getModule(0).getProductID(), "ProductID of LncvModule at index 0 after adding");
         // add same module to monitor, adding it to table and filling in texts entry fields
-        panel.message(new LocoNetMessage(new int[]{0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
-        Assertions.assertEquals("", panel.getArticleEntry(), "Article field still empty");
+        lnPanel.message(new LocoNetMessage(new int[]{0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
+        Assertions.assertEquals("", lnPanel.getArticleEntry(), "Article field still empty");
 
-        panel.copyEntry(8888, 77);
-        Assertions.assertEquals("8888", panel.getArticleEntry(), "ProductID copied to Article field");
+        lnPanel.copyEntry(8888, 77);
+        Assertions.assertEquals("8888", lnPanel.getArticleEntry(), "ProductID copied to Article field");
 
-        panel.modProgButtonActionPerformed();
-        Assertions.assertEquals("locked", panel.getAddressEntry(), "AddressField locked");
+        lnPanel.modProgButtonActionPerformed();
+        Assertions.assertEquals("locked", lnPanel.getAddressEntry(), "AddressField locked");
 
-        panel.setCvFields(1, 100); // enter some values for read
-        panel.readButtonActionPerformed();
+        lnPanel.setCvFields(1, 100); // enter some values for read
+        lnPanel.readButtonActionPerformed();
         // no feedback, just confirm no exception is thrown
-        panel.writeButtonActionPerformed();
+        lnPanel.writeButtonActionPerformed();
         LocoNetMessage l = new LocoNetMessage(new int[]{0xB4, 0x6D, 0x7F, 0x59}); // OPC_LONG_ACK
-        panel.message(l); // check in monitor
-        Assertions.assertEquals("confirmed by module 77\n", panel.getMonitorContents().substring(panel.getMonitorContents().length() - 23), "Write confirmed in Monitor");
+        lnPanel.message(l); // check in monitor
+        Assertions.assertEquals("confirmed by module 77\n", lnPanel.getMonitorContents().substring(lnPanel.getMonitorContents().length() - 23), "Write confirmed in Monitor");
 
-        panel.modProgButtonActionPerformed(); // to turn programming off
-        Assertions.assertEquals("77", panel.getAddressEntry(), "AddressField 77");
+        lnPanel.modProgButtonActionPerformed(); // to turn programming off
+        Assertions.assertEquals("77", lnPanel.getAddressEntry(), "AddressField 77");
     }
 
     @Override
@@ -124,7 +124,7 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
         jmri.InstanceManager.setDefault(jmri.jmrit.roster.RosterConfigManager.class, new RosterConfigManager());
 
         // pane for LncvProg
-        panel = new LncvProgPane();
+        panel = lnPanel = new LncvProgPane();
         helpTarget = "package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane";
         title = Bundle.getMessage("MenuItemLncvProg");
     }
@@ -133,6 +133,7 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
     @AfterEach
     public void tearDown() {
         panel = null;
+        memo.dispose();
 
         JUnitUtil.tearDown();
     }
