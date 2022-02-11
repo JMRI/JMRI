@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Holds a table of the extra menu items available for a particular decoder.
  *
- * {@see ResetTableModel}
+ * @see ResetTableModel
  *
  * @author Howard G. Penny Copyright (C) 2005
  * @author Bob Jacobsen   Copyright (C) 2021
@@ -54,6 +54,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
         _status = status;
     }
 
+    @Override
     public String toString() {
         return "Element id: "+getTopLevelElementName()+" name: "+name+": "+rowVector.size()+" rows";
     }
