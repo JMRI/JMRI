@@ -199,6 +199,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
 
     /**
      * Name of the XML element for the collection of extra menu items
+     * @return element name for top level menu item
      */
     public String getTopLevelElementName() {
         return "resets";
@@ -206,6 +207,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
 
     /**
      * Name of the XML element for individual menu items
+     * @return element name for individual menu item
      */
     public String getIndividualElementName() {
         return "factReset";
