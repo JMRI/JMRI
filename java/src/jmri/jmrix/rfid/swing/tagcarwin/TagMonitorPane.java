@@ -219,6 +219,7 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
     protected String timeCheck = this.getClass().getName() + "Times";
     protected String dupeCheck = this.getClass().getName() + "Duplicates";
     protected String forceSet = this.getClass().getName() + "ForceSet";
+    protected JButton clearButton = new JButton();
     protected JLabel rowCountLabel = new JLabel();
     protected JTextField rowCount = new JTextField();
     protected JButton setRowCount = new JButton();
@@ -268,6 +269,11 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
         messagePanel.add(panelMessage);
         add(messagePanel);
         checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.X_AXIS));
+        clearButton.setText(Bundle.getMessage("ButtonClearScreen"));
+        checkBoxPanel.add(clearButton);
+        clearButton.addActionListener(e -> {
+            dataModel.clearTable();
+        });
         rowCountLabel.setText(Bundle.getMessage("MonitorRowCount"));
         checkBoxPanel.add(rowCountLabel);
         try {
@@ -276,16 +282,19 @@ public class TagMonitorPane extends JmriPanel implements RfidListener, RfidPanel
             currentRowCount = 15;
         }
         dataModel.setRowMax(currentRowCount);
-        checkBoxPanel.setPreferredSize(new Dimension(400, 30));
-        checkBoxPanel.setMaximumSize(new Dimension(600, 30));
+        checkBoxPanel.setPreferredSize(new Dimension(750, 30));
+        checkBoxPanel.setMaximumSize(new Dimension(800, 30));
         rowCount.setPreferredSize(new Dimension(40, 15));
+        rowCount.setMinimumSize(new Dimension( 40, 12));
         rowCount.setText(currentRowCount.toString());
         checkBoxPanel.add(rowCount);
         checkBoxPanel.add(setRowCount);
         setRowCount.setText(Bundle.getMessage("MonitorSetRowCount"));
         setRowCount.setToolTipText(Bundle.getMessage("MonitorRowToolTip"));
         checkBoxPanel.add(showTimestamps);
+        showTimestamps.setMinimumSize(new Dimension(60,12));
         checkBoxPanel.add(showDuplicates);
+        showDuplicates.setMinimumSize(new Dimension( 60, 12));
         add(checkBoxPanel);
         rowCount.addActionListener(e -> {
             if (!rowCount.getText().isEmpty()) {

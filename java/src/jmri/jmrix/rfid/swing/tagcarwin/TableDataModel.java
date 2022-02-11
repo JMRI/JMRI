@@ -131,6 +131,11 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         locationBox.addItemListener(this);
     }
 
+    public void clearTable() {
+        log.debug("clearing the RFID tag car window");
+        cleanTable(0, true);
+    }
+
     private void cleanTable(int newRowMax, boolean fireChange) {
         boolean rowsRemoved = false;
         if (tagList.size() <= newRowMax) {
