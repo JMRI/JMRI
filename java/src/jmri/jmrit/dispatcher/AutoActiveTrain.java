@@ -4,14 +4,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
-import java.util.Timer;
 
 import javax.annotation.CheckForNull;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +54,6 @@ public class AutoActiveTrain implements ThrottleListener {
         _lbManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         // listen for additions in our allocated section table
         at.addPropertyChangeListener("sectionallocated",this::handleAnotherSectionAllocatedChange);
-        dispatcher = InstanceManager.getDefault(DispatcherFrame.class);
     }
 
     /* Speed aspects as defined by Douglas A. Kerr - "Rail Signal Aspects and Indications"
@@ -267,6 +264,8 @@ public class AutoActiveTrain implements ThrottleListener {
         _stoppingBySensor = false;
         _stoppingByBlockOccupancy = false;
         _stoppingUsingSpeedProfile = false;
+        // get the dispatcher
+        dispatcher = InstanceManager.getDefault(DispatcherFrame.class);
 
         // get decoder address
         try {
