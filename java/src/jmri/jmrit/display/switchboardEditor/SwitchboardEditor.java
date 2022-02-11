@@ -1569,11 +1569,6 @@ public class SwitchboardEditor extends Editor {
     public void setShowUserName(int label) {
         _showUserName = label;
         switch (label) {
-            case 0:
-                systemNameBox.setSelected(true);
-                bothNamesBox.setSelected(false);
-                displayNameBox.setSelected(false);
-                break;
             case 1:
                 systemNameBox.setSelected(false);
                 bothNamesBox.setSelected(true);
@@ -1583,6 +1578,12 @@ public class SwitchboardEditor extends Editor {
                 systemNameBox.setSelected(false);
                 bothNamesBox.setSelected(false);
                 displayNameBox.setSelected(true);
+                break;
+            case 0:
+            default:
+                systemNameBox.setSelected(true);
+                bothNamesBox.setSelected(false);
+                displayNameBox.setSelected(false);
                 break;
         }
     }
