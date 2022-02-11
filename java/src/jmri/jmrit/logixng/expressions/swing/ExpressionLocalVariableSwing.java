@@ -681,8 +681,23 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         return Bundle.getMessage("LocalVariable_Short");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public boolean canClose() {
+        if (_logixNG_DataDialog.checkOpenDialog()) {
+            JOptionPane.showMessageDialog(getJDialog(),
+                    Bundle.getMessage("Error_InEditMode"), // NOI18N
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void dispose() {
+        _logixNG_DataDialog.dispose();
+        getJDialog().removeWindowFocusListener(_focusListener);
     }
 
 
