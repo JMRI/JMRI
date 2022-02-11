@@ -168,7 +168,7 @@
       </xs:element>
 
       <xs:element name="resets" type="ResetsType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="extraMenu" type="ExtraMenuType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="extraMenu" type="ExtraMenuType" minOccurs="0" maxOccurs="unbounded"/>
 
     </xs:sequence>
   </xs:complexType>
@@ -1015,6 +1015,12 @@
             Specifies programmer mode(s) for use during menu operation
         </xs:documentation></xs:annotation>
       </xs:element>
+      <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
+        <xs:complexType mixed="true">
+          <xs:attribute ref="xml:lang" default=""/>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="extraMenuItem" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -1031,7 +1037,7 @@
             </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string">
-            <xs:annotation><xs:documentation>Deprecated, use the label element instead.</xs:documentation></xs:annotation>
+            <xs:annotation><xs:documentation>Deprecated, use the name element instead.</xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="CV" type="cvNameType"/>
           <xs:attribute name="default" type="xs:string">
@@ -1048,6 +1054,9 @@
         </xs:unique>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="name" type="xs:string">
+      <xs:annotation><xs:documentation>Deprecated, use the name element instead.</xs:documentation></xs:annotation>
+    </xs:attribute>
     <xs:attribute name="mode" type="modeType"/>
     <xs:attribute ref="xml:base" />
   </xs:complexType>
