@@ -61,7 +61,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         textTrackCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrackComment")));
         textTrackCommentPane.setBackground(null);
         textTrackCommentPane.setEditable(false);
-        textTrackCommentPane.setMaximumSize(new Dimension(2000, 200));
+        textTrackCommentPane.setMaximumSize(new Dimension(1000, 200));
 
         JPanel pTrackSelect = new JPanel();
         pTrackSelect.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Track")));
@@ -164,10 +164,35 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         .createTitledBorder(MessageFormat.format(TrainSwitchListText.getStringScheduledWork(),
                                 new Object[] { train.getName(), train.getDescription() })));
                 // Track work comments
-                boolean pickup = false;
-                boolean setout = false;
+                boolean pickupCar = false;
+                boolean setoutCar = false;
                 JTextPane textTrackCommentWorkPane = getTrackWorkCommentPane();
                 pTrain.add(textTrackCommentWorkPane);
+
+                boolean localCar = false;
+
+                // Engine
+                boolean pickupEngine = false;
+                boolean setoutEngine = false;
+
+                // pick ups
+                JPanel pPickups = new JPanel();
+                pPickups.setLayout(new BoxLayout(pPickups, BoxLayout.Y_AXIS));
+                pPickups.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Pickup")));
+                pPickups.setMaximumSize(new Dimension(2000, 2000));
+
+                // set outs
+                JPanel pSetouts = new JPanel();
+                pSetouts.setLayout(new BoxLayout(pSetouts, BoxLayout.Y_AXIS));
+                pSetouts.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SetOut")));
+                pSetouts.setMaximumSize(new Dimension(2000, 2000));
+
+                // local moves
+                JPanel pLocal = new JPanel();
+                pLocal.setLayout(new BoxLayout(pLocal, BoxLayout.Y_AXIS));
+                pLocal.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocalMoves")));
+                pLocal.setMaximumSize(new Dimension(2000, 2000));
+
                 // List locos first
                 List<Engine> engList = engManager.getByTrainBlockingList(train);
                 if (Setup.isPrintHeadersEnabled()) {
@@ -175,7 +200,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         if (engine.getTrack() == _track) {
                             JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader());
                             setLabelFont(header);
-                            pTrain.add(header);
+                            pPickups.add(header);
                             break;
                         }
                     }
@@ -186,8 +211,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         rollingStock.add(engine);
                         JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
                         setCheckBoxFont(checkBox);
-                        pTrain.add(checkBox);
-                        checkBoxes.put(engine.getId(), checkBox);
+                        pPickups.add(checkBox);
+                        pickupEngine = true;
+                        checkBoxes.put(engine.getId() + "p", checkBox);
                         pTrack.add(pTrain);
                     }
                 }
@@ -197,7 +223,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         if (engine.getDestinationTrack() == _track) {
                             JLabel header = new JLabel(Tab + trainCommon.getDropEngineHeader());
                             setLabelFont(header);
-                            pTrain.add(header);
+                            pSetouts.add(header);
                             break;
                         }
                     }
@@ -208,7 +234,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         rollingStock.add(engine);
                         JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
                         setCheckBoxFont(checkBox);
-                        pTrain.add(checkBox);
+                        pSetouts.add(checkBox);
+                        setoutEngine = true;
                         checkBoxes.put(engine.getId(), checkBox);
                         pTrack.add(pTrain);
                     }
@@ -221,7 +248,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             JLabel header = new JLabel(Tab +
                                     trainCommon.getPickupCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
-                            pTrain.add(header);
+                            pPickups.add(header);
                             break;
                         }
                     }
@@ -245,11 +272,11 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             } else {
                                 text = trainCommon.pickupCar(car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
                             }
-                            pickup = true;
+                            pickupCar = true;
                             JCheckBox checkBox = new JCheckBox(text);
                             setCheckBoxFont(checkBox);
-                            pTrain.add(checkBox);
-                            checkBoxes.put(car.getId(), checkBox);
+                            pPickups.add(checkBox);
+                            checkBoxes.put(car.getId() + "p", checkBox);
                             pTrack.add(pTrain);
                         }
                     }
@@ -262,7 +289,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             JLabel header = new JLabel(
                                     Tab + trainCommon.getDropCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
-                            pTrain.add(header);
+                            pSetouts.add(header);
                             break;
                         }
                     }
@@ -280,10 +307,10 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         } else {
                             text = trainCommon.dropCar(car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
                         }
-                        setout = true;
+                        setoutCar = true;
                         JCheckBox checkBox = new JCheckBox(text);
                         setCheckBoxFont(checkBox);
-                        pTrain.add(checkBox);
+                        pSetouts.add(checkBox);
                         checkBoxes.put(car.getId(), checkBox);
                         pTrack.add(pTrain);
                     }
@@ -295,7 +322,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                                 car.getRouteDestination() == car.getRouteLocation()) {
                             JLabel header = new JLabel(Tab + trainCommon.getLocalMoveHeader(!IS_MANIFEST));
                             setLabelFont(header);
-                            pTrain.add(header);
+                            pLocal.add(header);
                             break;
                         }
                     }
@@ -316,29 +343,44 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             text = trainCommon.localMoveCar(car, !IS_MANIFEST);
                         }
                         if (car.getTrack() == _track) {
-                            pickup = true;
+                            pickupCar = true;
                         }
                         if (car.getDestinationTrack() == _track) {
-                            setout = true;
+                            setoutCar = true;
                         }
                         JCheckBox checkBox = new JCheckBox(text);
                         setCheckBoxFont(checkBox);
-                        pTrain.add(checkBox);
+                        pLocal.add(checkBox);
+                        localCar = true;
                         checkBoxes.put(car.getId(), checkBox);
                         pTrack.add(pTrain);
                     }
                 }
-                if (pickup && !setout) {
+                if (pickupCar && !setoutCar) {
                     textTrackCommentWorkPane.setText(_track.getCommentPickup());
-                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentPickupWithColor()));
-                } else if (!pickup && setout) {
+                    textTrackCommentWorkPane
+                            .setForeground(TrainCommon.getTextColor(_track.getCommentPickupWithColor()));
+                } else if (!pickupCar && setoutCar) {
                     textTrackCommentWorkPane.setText(_track.getCommentSetout());
-                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentSetoutWithColor()));
-                } else if (pickup && setout) {
+                    textTrackCommentWorkPane
+                            .setForeground(TrainCommon.getTextColor(_track.getCommentSetoutWithColor()));
+                } else if (pickupCar && setoutCar) {
                     textTrackCommentWorkPane.setText(_track.getCommentBoth());
                     textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentBothWithColor()));
                 }
                 textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().isEmpty());
+
+                // only show panels that have work
+                if (pickupCar || pickupEngine) {
+                    pTrain.add(pPickups);
+                }
+                if (setoutCar || setoutEngine) {
+                    pTrain.add(pSetouts);
+                }
+                if (localCar) {
+                    pTrain.add(pLocal);
+                }
+
                 pTrackPane.validate();
                 pTrain.setMaximumSize(new Dimension(2000, pTrain.getHeight()));
                 pTrain.revalidate();

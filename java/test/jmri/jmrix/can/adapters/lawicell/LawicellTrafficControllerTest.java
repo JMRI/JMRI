@@ -44,7 +44,10 @@ public class LawicellTrafficControllerTest extends jmri.jmrix.can.TrafficControl
 
         CanMessage mm = listener.getMessages().get(0);
         Assertions.assertEquals(r,mm,"CanMessage matches");
-        Assertions.assertEquals(g.getNumDataElements(),pcs.getOutputStream().size(),"dos size matches, message sent.");
+
+        JUnitUtil.waitFor(() -> {
+            return pcs.getOutputStream().size() >= g.getNumDataElements();
+        },"dos size ok, message sent.");
 
         listener.dispose();
         ltc.disconnectPort(pcs);

@@ -71,7 +71,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Updated some new IPL report messages</li>
+                <li>Add configuration support for UR93, LNWIs. Allow updates for individual parameters.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -117,7 +118,23 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>Updated: Tags are recorded in a table.
+                    If there is a Car (from OperationsPro) associated with this tag,
+                    the Road name and Car number are shown. The location and Track are
+                    shown in ComboBoxes which the user can set
+                    and then click on a button to set to the new Location and Track.
+                    Another button shows the Car in the Edit Car window.
+                    If there is no associated car, a button opens a window with a list of Road names.
+                    The user can select a road name and the second list shows all car numbers for that road.
+                    Once a car number has been selected a button sets the tag in that Car.
+                    By default the only visible road names and numbers are for cars that do not have a tag.
+                    A checkbox shows all cars, including those with tags.
+                <p>
+                    The window is opened from the "RFID" menu choice (there is one for each RFID connection).
+                    The first choice opens the standard Serial Monitor Pane.
+                    This new Pane is opened from the second choice.
+                    The help screen can be viewed from the monitor pane,
+                    or via a link in the Hardware RFID connection frame.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -361,7 +378,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix XCrossings allocation.</li>
+             <li>Improve AutoEngineer. Permit unlimited number of Auto Trains.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -385,7 +403,6 @@
           <li>Tooltip support for panel icons has been changed.
           See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
           Tooltips</a> for details.</li>
-
           <li>Update the layout block occupancy sensor when the occupancy sensor for the related
           block has been added, removed or changed to a different sensor.</li>
         </ul>
@@ -473,7 +490,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li></li>
+            <li>Inobu One provided new single-crossover icons and additional double-crossover USS icons.</li>
         </ul>
 
     <h3>Roster</h3>
@@ -550,7 +567,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Restored tab and shift+tab shortcuts to browse through throttles inner windows</li>
+            <li>Address Panel is now focused as a default when openning a new throttle</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -568,7 +586,28 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Additional bug fixing and enhancements to Shared Warrants. SWs are
+                useful to animate the simultaneous operation of multiple trains. 
+                Be aware that SWs may mutually block movement that can only be resolved
+                by aborting at least one of them. Regular warrants avoid such deadlocks
+                due to the priority of their launch times.
+                <ul>
+               <li>SWs will not allocate any blocks beyond or at a "hazard" (occupation
+                 by foreign train, passage beyond a stop signal, conflict with another
+                 warrant)</li>
+               <li>If a ramp down to stop at a "hazard" stops before entering the next block,
+                   the restart is done automatically when the condition clears.
+                   </li>
+               <li>If a ramp down to stop at a "hazard" overruns into the next block, the
+                   SW will allocate the next block if that is permissible. Whether or not, i.e.
+                   the position of the train is marked yellow or blue, use the normal Control 
+                   commands to restart. "Resume" if the "hazard" was occupation or a warrant,
+                   or wait for the signal change to an allowable speed.
+                   </li>
+                 </ul>
+            <li>The messages to the status field of the warrant Table and other information
+                can be displayed to the console by clicking the "Trace Warrants" button in
+                Warrant Preferences.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -586,13 +625,15 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Added a "TelnetTrain.py" example to run a train from the Python command line.</li>
         </ul>
 
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Support for display and interaction with (Control) Panel slipTurnoutIcons has been added
+            to JMRI Web Server Panels.<br>
+            This includes double and single slips, three-way turnouts and scissors with 2 or 4 turnouts.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>

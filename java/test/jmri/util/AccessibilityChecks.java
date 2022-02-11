@@ -23,11 +23,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AccessibilityChecks {
 
-    private final static boolean logSystemOut = Boolean.getBoolean("jmri.util.AccessibilityChecks.logToSystemOut"); // false unless set true
+    private final static boolean LOGSYSTEMOUT = Boolean.getBoolean("jmri.util.AccessibilityChecks.logToSystemOut"); // false unless set true
 
-    private final static boolean warnIssues   = Boolean.getBoolean("jmri.util.AccessibilityChecks.warnOnIssue"); // false unless set true
+    private final static boolean WARNISSUES   = Boolean.getBoolean("jmri.util.AccessibilityChecks.warnOnIssue"); // false unless set true
 
-    private final static boolean assertFail   = Boolean.getBoolean("jmri.util.AccessibilityChecks.failOnIssue"); // false unless set true
+    private final static boolean ASSERTFAIL   = Boolean.getBoolean("jmri.util.AccessibilityChecks.failOnIssue"); // false unless set true
+
+    private final static boolean INCLUDELAF   = Boolean.getBoolean("jmri.util.AccessibilityChecks.includeLaf"); // false unless set true
 
     /**
      * Check a JPanel or Container for Accessibility issues.
@@ -39,7 +41,21 @@ public class AccessibilityChecks {
      */
     @Nonnull
     public static String check( @Nonnull final Container contentPane) {
-        return feedBack(getSingleContentPaneList(contentPane));
+        return check(contentPane, false);
+    }
+    
+    /**
+     * Check a JPanel or Container for Accessibility issues.
+     * <p>
+     * Typical usage would be to pass a JPanel.
+     * 
+     * @param contentPane eg. JFrame.getContentPane() or a JPanel
+     * @param failOnIssue set true to fail the unit test if any issue found.
+     * @return Empty string if no errors, else String containing details.
+     */
+    @Nonnull
+    public static String check( @Nonnull final Container contentPane, final boolean failOnIssue) {
+        return feedBack(getSingleContentPaneList(contentPane), failOnIssue);
     }
 
     /**
@@ -55,11 +71,28 @@ public class AccessibilityChecks {
      */
     @Nonnull
     public static String check(@Nonnull JFrame frame) {
+        return check(frame, false);
+    }
+
+    /**
+     * Check a Frame for Accessibility issues.
+     * <p>
+     * Typical usage would be to pass a JFrame.
+     * Searches the frame via 
+     * getContentPane() , getLayeredPane(), getRootPane()
+     * for issues.
+     * 
+     * @param frame a JFrame for which to search through.
+     * @param failOnIssue set true to fail the unit test if any issue found.
+     * @return Empty string if no errors, else String containing details.
+     */
+    @Nonnull
+    public static String check(@Nonnull JFrame frame, final boolean failOnIssue) {
         HashSet<JComponent> set = new HashSet<>();
         set.addAll(getSingleContentPaneList(frame.getContentPane()));
         set.addAll(getSingleContentPaneList(frame.getLayeredPane()));
         set.addAll(getSingleContentPaneList(frame.getRootPane()));
-        return feedBack(set);
+        return feedBack(set, failOnIssue);
     }
 
     private static Set<JComponent> getSingleContentPaneList(@Nonnull final Container contentPane){
@@ -70,21 +103,33 @@ public class AccessibilityChecks {
         return set;
     }
 
-    private static String feedBack(Set<JComponent> components) {
+    private static String feedBack(Set<JComponent> components, boolean forceFailOnIssue) {
         if (components.isEmpty()){
             return "";
         }
         String msg = getMessageString(components);
-        if ( logSystemOut ) {
+        if ( LOGSYSTEMOUT ) {
             System.out.println(msg);
         }
-        if ( warnIssues ) {
+        if ( WARNISSUES ) {
             log.warn("{}",msg);
         }
-        if ( assertFail ) {
+        if ( ASSERTFAIL || forceFailOnIssue ) {
             Assertions.fail(msg);
         }
         return msg;
+    }
+
+    private static boolean includeComponent(JComponent component){
+        if (!INCLUDELAF) {
+            if ( component.getClass().getName().contains(".laf.") ) {
+                return false;
+            }
+            if ( component.getClass().getName().contains(".plaf.") ) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static String getMessageString(Set<JComponent> components){
@@ -92,10 +137,15 @@ public class AccessibilityChecks {
         sb.append(components.size()).append(" Potential Issue(s) found. ");
         components.forEach(s -> {
             sb.append(System.getProperty("line.separator"));
-            sb.append("No accessible Content for: ").append(s.getClass())
-                    .append(" Name:").append(s.getName())
-                    .append(" ToolTip:").append(s.getToolTipText()).append (". ");
+            sb.append("No accessible Content for: ").append(s.getClass());
+            if ( s.getName() != null ) {
+                sb.append(" Name:").append(s.getName());
+            }
+            if ( s.getToolTipText() != null ) {
+                sb.append(" ToolTip:").append(s.getToolTipText());
+            }
         });
+        sb.append(System.getProperty("line.separator"));
         return sb.toString();
     }
 
@@ -105,7 +155,9 @@ public class AccessibilityChecks {
         as.forEach(s -> {
             String accessibleContent = s.getAccessibleContext().getAccessibleName();
             if (accessibleContent == null || accessibleContent.isEmpty()) {
-                list.add(s);
+                if (includeComponent(s)) {
+                    list.add(s);
+                }
             }
         });
         return list;
