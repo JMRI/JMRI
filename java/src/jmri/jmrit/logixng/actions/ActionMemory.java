@@ -828,7 +828,7 @@ public class ActionMemory extends AbstractDigitalAction
 
     private String getTableColumnDescription(Locale locale) {
         String column;
-        switch (_tableRowAddressing) {
+        switch (_tableColumnAddressing) {
             case Direct:
                 column = Bundle.getMessage(locale, "AddressByDirect", _tableColumnName);
                 break;
@@ -846,7 +846,7 @@ public class ActionMemory extends AbstractDigitalAction
                 break;
 
             default:
-                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+                throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
         }
         return column;
     }

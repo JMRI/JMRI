@@ -827,7 +827,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
     private String getTableColumnDescription(Locale locale) {
         String column;
-        switch (_tableRowAddressing) {
+        switch (_tableColumnAddressing) {
             case Direct:
                 column = Bundle.getMessage(locale, "AddressByDirect", _tableColumnName);
                 break;
@@ -845,7 +845,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 break;
 
             default:
-                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+                throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
         }
         return column;
     }
