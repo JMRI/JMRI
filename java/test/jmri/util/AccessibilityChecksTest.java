@@ -46,7 +46,7 @@ public class AccessibilityChecksTest {
         b.getAccessibleContext().setAccessibleName("Test Spinner");
         JPanel p = new JPanel();
         p.add(b);
-        Assertions.assertTrue(AccessibilityChecks.check(p).startsWith("3 Potential Issue"));
+        Assertions.assertTrue(AccessibilityChecks.check(p).startsWith("1 Potential Issue"));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class AccessibilityChecksTest {
         b.getAccessibleContext().setAccessibleName("Test ComboBox");
         JPanel p = new JPanel();
         p.add(b);
-        Assertions.assertTrue(AccessibilityChecks.check(p).startsWith("1 Potential Issue"));
+        Assertions.assertEquals("", AccessibilityChecks.check(p),"no issues found");
     }
 
     @Test
