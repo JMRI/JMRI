@@ -635,7 +635,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         try {
             expression.setTableNameAddressing(_tableNameAddressing);
             switch (_tableNameAddressing) {
-                case Direct: expression.setTable(_compareToTableBeanPanel.getNamedBean()); break;
+                case Direct:
+                    NamedTable table = _compareToTableBeanPanel.getNamedBean();
+                    if (table != null) expression.setTable(table);
+                    else expression.removeTable();
+                    break;
                 case Reference: expression.setTableNameReference(_tableNameReferenceTextField.getText()); break;
                 case LocalVariable: expression.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
                 case Formula: expression.setTableNameFormula(_tableNameFormulaTextField.getText()); break;

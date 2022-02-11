@@ -184,10 +184,10 @@ public class ExpressionMemory extends AbstractDigitalExpression
         InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
     }
 
-    public void setTable(@Nonnull NamedTable turnout) {
+    public void setTable(@Nonnull NamedTable table) {
         assertListenersAreNotRegistered(log, "setTable");
         setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
+                .getNamedBeanHandle(table.getDisplayName(), table));
     }
 
     public void removeTable() {

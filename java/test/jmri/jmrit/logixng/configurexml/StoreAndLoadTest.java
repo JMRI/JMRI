@@ -48,7 +48,7 @@ public class StoreAndLoadTest {
         }
         return null;
     }
-    
+
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -2747,6 +2747,30 @@ public class StoreAndLoadTest {
         expressionMemory.setOtherMemory(memory3);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setComment("A comment");
+        expressionMemory.setMemory(memory2);
+        expressionMemory.setOtherMemory(memory3);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Table);
+        expressionMemory.setTableNameAddressing(NamedBeanAddressing.Direct);
+        expressionMemory.setTable(csvTable);
+        expressionMemory.setTableNameReference("{tableRef}");
+        expressionMemory.setTableNameLocalVariable("tableVariable");
+        expressionMemory.setTableNameFormula("\"IT\"+str(index)");
+        expressionMemory.setTableRowAddressing(NamedBeanAddressing.Direct);
+        expressionMemory.setTableRowName("The row");
+        expressionMemory.setTableRowReference("{rowRef}");
+        expressionMemory.setTableRowLocalVariable("rowVariable");
+        expressionMemory.setTableRowFormula("\"Row \"+str(index)");
+        expressionMemory.setTableColumnAddressing(NamedBeanAddressing.Direct);
+        expressionMemory.setTableColumnName("The column");
+        expressionMemory.setTableColumnReference("{columnRef}");
+        expressionMemory.setTableColumnLocalVariable("columnVariable");
+        expressionMemory.setTableColumnFormula("\"Column \"+str(index)");
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
         and.getChild(indexExpr++).connect(maleSocket);
 
