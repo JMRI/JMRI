@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Lawicell devices - added RTR CAN Frame support.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -71,8 +71,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Updated some new IPL report messages</li>
-                <li>Add configuration support for UR93, LNWIs. Allow updates for individual parameters.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -112,28 +111,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Lawicell devices - added RTR CAN Frame support.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
             <ul>
-                <li>Updated: Tags are recorded in a table.
-                    If there is a Car (from OperationsPro) associated with this tag,
-                    the Road name and Car number are shown. The location and Track are
-                    shown in ComboBoxes which the user can set
-                    and then click on a button to set to the new Location and Track.
-                    Another button shows the Car in the Edit Car window.
-                    If there is no associated car, a button opens a window with a list of Road names.
-                    The user can select a road name and the second list shows all car numbers for that road.
-                    Once a car number has been selected a button sets the tag in that Car.
-                    By default the only visible road names and numbers are for cars that do not have a tag.
-                    A checkbox shows all cars, including those with tags.
-                <p>
-                    The window is opened from the "RFID" menu choice (there is one for each RFID connection).
-                    The first choice opens the standard Serial Monitor Pane.
-                    This new Pane is opened from the second choice.
-                    The help screen can be viewed from the monitor pane,
-                    or via a link in the Hardware RFID connection frame.</li>
+                <li></li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -364,8 +347,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Added accessible names to the (simple)
-                variables displayed on programming panes.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -377,8 +359,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Fix XCrossings allocation.</li>
-             <li>Improve AutoEngineer. Permit unlimited number of Auto Trains.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -396,14 +377,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-          <li>Use the actual turnout state for the turnout circle when that option is used.  This
-          corrects the color for turnouts using the continuing route option when set to thrown.</li>
-
-          <li>Tooltip support for panel icons has been changed.
-          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
-          Tooltips</a> for details.</li>
-          <li>Update the layout block occupancy sensor when the occupancy sensor for the related
-          block has been added, removed or changed to a different sensor.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -420,25 +394,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action <i>Throttle</i> has been updated.
-          It now also has the child sockets <i>Function</i>
-          and <i>FunctionOnOff</i>. These are optional.
-          If both are connected, the Throttle action sets
-          or resets this function. The child <i>Function</i>
-          tells the function number and the child
-          <i>FunctionOnOff</i> tells if the function should
-          be On (True) or Off (False).</li>
-          <li>A single Logix can be imported to LogixNG. See
-          the section <i>Logix</i> for more information.</li>
-          <li>The action <i>Local Variable</i> now supports
-          <i>Block</i> and <i>Reporter</i>. For <i>Memory</i>,
-          <i>Block</i> and <i>Reporter</i>, there is a new
-          option <i>Listen</i> that selects whenether the
-          action should listen on changes for the <i>Memory</i>,
-          <i>Block</i> or <i>Reporter</i>.</li>
-          <li>The actions <i>Memory</i> and <i>Local variable</i>
-          and the expressions <i>Memory</i> and <i>Local variable</i>
-          have improved support for LogixNG Tables.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -456,19 +412,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-          <li>Tooltips can now be edited in Panel Editor.</li>
-
-          <li>Tooltip support for panel icons has been changed.
-          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
-          Tooltips</a> for details.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-          <li>Tooltip support for panel icons has been changed.
-          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
-          Tooltips</a> for details.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -490,7 +440,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li>Inobu One provided new single-crossover icons and additional double-crossover USS icons.</li>
+            <li></li>
         </ul>
 
     <h3>Roster</h3>
@@ -560,15 +510,13 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li>The menu options to label a switch were enhanced to allow hiding the system name in case a user
-              name is configured. This was suggested by Phil-Klein.</li>
+            <li></li>
         </ul>
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Restored tab and shift+tab shortcuts to browse through throttles inner windows</li>
-            <li>Address Panel is now focused as a default when opening a new throttle</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -586,28 +534,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Additional bug fixing and enhancements to Shared Warrants. SWs are
-                useful to animate the simultaneous operation of multiple trains. 
-                Be aware that SWs may mutually block movement that can only be resolved
-                by aborting at least one of them. Regular warrants avoid such deadlocks
-                due to the priority of their launch times.
-                <ul>
-               <li>SWs will not allocate any blocks beyond or at a "hazard" (occupation
-                 by foreign train, passage beyond a stop signal, conflict with another
-                 warrant)</li>
-               <li>If a ramp down to stop at a "hazard" stops before entering the next block,
-                   the restart is done automatically when the condition clears.
-                   </li>
-               <li>If a ramp down to stop at a "hazard" overruns into the next block, the
-                   SW will allocate the next block if that is permissible. Whether or not, i.e.
-                   the position of the train is marked yellow or blue, use the normal Control 
-                   commands to restart. "Resume" if the "hazard" was occupation or a warrant,
-                   or wait for the signal change to an allowable speed.
-                   </li>
-                 </ul>
-            <li>The messages to the status field of the warrant Table and other information
-                can be displayed to the console by clicking the "Trace Warrants" button in
-                Warrant Preferences.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -625,15 +552,13 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>Added a "TelnetTrain.py" example to run a train from the Python command line.</li>
+            <li></li>
         </ul>
 
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Support for display and interaction with (Control) Panel slipTurnoutIcons has been added
-            to JMRI Web Server Panels.<br>
-            This includes double and single slips, three-way turnouts and scissors with 2 or 4 turnouts.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -645,9 +570,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improved accessibility of throttle keyboard shortcut help.</li>
-            <li>Developers: The
-                <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
-                has been updated.</li>
+            <li></li>
         </ul>
 
