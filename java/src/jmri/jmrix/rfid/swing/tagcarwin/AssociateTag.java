@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.util.AlphanumComparator;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
@@ -180,10 +181,10 @@ public class AssociateTag extends JmriPanel implements ActionListener, ListSelec
         java.util.Collections.sort(roadsWith);
         java.util.Collections.sort(roadList);
         for (String road : roadList) {
-            java.util.Collections.sort(roadNumbers.get(road));
+            java.util.Collections.sort(roadNumbers.get(road), new AlphanumComparator());
         }
         for (String road : roadsWith) {
-            java.util.Collections.sort(numbersWith.get(road));
+            java.util.Collections.sort(numbersWith.get(road), new AlphanumComparator());
         }
     }
 
