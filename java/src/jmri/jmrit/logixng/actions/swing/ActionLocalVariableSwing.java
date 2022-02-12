@@ -164,6 +164,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
         _editTableNameButton.addActionListener((evt) -> {
             _logixNG_DataDialog.showDialog(
+                    Bundle.getMessage("ActionLocalVariable_EditTable"),
                     _tableNameAddressing,
                     _copyTableBeanPanel,
                     _tableNameReferenceTextField,
@@ -174,6 +175,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _editRowNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionLocalVariable_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameComboBox,
                         _tableRowReferenceTextField,
@@ -182,6 +184,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                         this::editTableRowFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionLocalVariable_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameTextField,
                         _tableRowReferenceTextField,
@@ -193,6 +196,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _editColumnNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionLocalVariable_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameComboBox,
                         _tableColumnReferenceTextField,
@@ -201,6 +205,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                         this::editTableColumnFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionLocalVariable_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameTextField,
                         _tableColumnReferenceTextField,
@@ -527,7 +532,11 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
         try {
             switch (_tableNameAddressing) {
-                case Direct: action.setTable(_copyTableBeanPanel.getNamedBean()); break;
+                case Direct:
+                    NamedTable table = _copyTableBeanPanel.getNamedBean();
+                    if (table != null) action.setTable(table);
+                    else action.removeTable();
+                    break;
                 case Reference: action.setTableNameReference(_tableNameReferenceTextField.getText()); break;
                 case LocalVariable: action.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
                 case Formula: action.setTableNameFormula(_tableNameFormulaTextField.getText()); break;

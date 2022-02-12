@@ -199,6 +199,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
 
         _editTableNameButton.addActionListener((evt) -> {
             _logixNG_DataDialog.showDialog(
+                    Bundle.getMessage("ExpressionLocalVariable_EditTable"),
                     _tableNameAddressing,
                     _compareToTableBeanPanel,
                     _tableNameReferenceTextField,
@@ -209,6 +210,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         _editRowNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionLocalVariable_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameComboBox,
                         _tableRowReferenceTextField,
@@ -217,6 +219,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
                         this::editTableRowFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionLocalVariable_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameTextField,
                         _tableRowReferenceTextField,
@@ -228,6 +231,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         _editColumnNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionLocalVariable_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameComboBox,
                         _tableColumnReferenceTextField,
@@ -236,6 +240,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
                         this::editTableColumnFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionLocalVariable_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameTextField,
                         _tableColumnReferenceTextField,
@@ -531,7 +536,11 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
 
         try {
             switch (_tableNameAddressing) {
-                case Direct: expression.setTable(_compareToTableBeanPanel.getNamedBean()); break;
+                case Direct:
+                    NamedTable table = _compareToTableBeanPanel.getNamedBean();
+                    if (table != null) expression.setTable(table);
+                    else expression.removeTable();
+                    break;
                 case Reference: expression.setTableNameReference(_tableNameReferenceTextField.getText()); break;
                 case LocalVariable: expression.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
                 case Formula: expression.setTableNameFormula(_tableNameFormulaTextField.getText()); break;

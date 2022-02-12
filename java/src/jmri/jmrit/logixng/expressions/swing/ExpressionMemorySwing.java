@@ -172,6 +172,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
         _editTableNameButton.addActionListener((evt) -> {
             _logixNG_DataDialog.showDialog(
+                    Bundle.getMessage("ExpressionMemory_EditTable"),
                     _tableNameAddressing,
                     _compareToTableBeanPanel,
                     _tableNameReferenceTextField,
@@ -182,6 +183,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _editRowNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionMemory_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameComboBox,
                         _tableRowReferenceTextField,
@@ -190,6 +192,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                         this::editTableRowFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionMemory_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameTextField,
                         _tableRowReferenceTextField,
@@ -201,6 +204,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _editColumnNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionMemory_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameComboBox,
                         _tableColumnReferenceTextField,
@@ -209,6 +213,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                         this::editTableColumnFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ExpressionMemory_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameTextField,
                         _tableColumnReferenceTextField,
@@ -506,7 +511,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
         try {
             switch (_tableNameAddressing) {
-                case Direct: expression.setTable(_compareToTableBeanPanel.getNamedBean()); break;
+                case Direct:
+                    NamedTable table = _compareToTableBeanPanel.getNamedBean();
+                    if (table != null) expression.setTable(table);
+                    else expression.removeTable();
+                    break;
                 case Reference: expression.setTableNameReference(_tableNameReferenceTextField.getText()); break;
                 case LocalVariable: expression.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
                 case Formula: expression.setTableNameFormula(_tableNameFormulaTextField.getText()); break;

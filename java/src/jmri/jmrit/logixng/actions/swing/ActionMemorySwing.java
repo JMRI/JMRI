@@ -176,6 +176,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
         _editTableNameButton.addActionListener((evt) -> {
             _logixNG_DataDialog.showDialog(
+                    Bundle.getMessage("ActionMemory_EditTable"),
                     _tableNameAddressing,
                     _copyTableBeanPanel,
                     _tableNameReferenceTextField,
@@ -186,6 +187,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         _editRowNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionMemory_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameComboBox,
                         _tableRowReferenceTextField,
@@ -194,6 +196,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                         this::editTableRowFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionMemory_EditRow"),
                         _tableRowAddressing,
                         _tableRowNameTextField,
                         _tableRowReferenceTextField,
@@ -205,6 +208,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         _editColumnNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionMemory_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameComboBox,
                         _tableColumnReferenceTextField,
@@ -213,6 +217,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                         this::editTableColumnFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
+                        Bundle.getMessage("ActionMemory_EditColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameTextField,
                         _tableColumnReferenceTextField,
@@ -578,7 +583,11 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
         try {
             switch (_tableNameAddressing) {
-                case Direct: action.setTable(_copyTableBeanPanel.getNamedBean()); break;
+                case Direct:
+                    NamedTable table = _copyTableBeanPanel.getNamedBean();
+                    if (table != null) action.setTable(table);
+                    else action.removeTable();
+                    break;
                 case Reference: action.setTableNameReference(_tableNameReferenceTextField.getText()); break;
                 case LocalVariable: action.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
                 case Formula: action.setTableNameFormula(_tableNameFormulaTextField.getText()); break;

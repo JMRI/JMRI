@@ -43,6 +43,7 @@ public class LogixNG_DataDialog {
     }
 
     public void showDialog(
+            String title,
             NamedBeanAddressing addressing,
             BeanSelectPanel<? extends NamedBean> beanPanel,
             JTextField referenceTextField,
@@ -57,10 +58,11 @@ public class LogixNG_DataDialog {
         _beanComboBox = null;
         _beanTextField = null;
 
-        showDialog(addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
+        showDialog(title, addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
     public void showDialog(
+            String title,
             NamedBeanAddressing addressing,
             JComboBox<? extends Object> comboBox,
             JTextField referenceTextField,
@@ -75,10 +77,11 @@ public class LogixNG_DataDialog {
         _beanComboBox = comboBox;
         _beanTextField = null;
 
-        showDialog(addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
+        showDialog(title, addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
     public void showDialog(
+            String title,
             NamedBeanAddressing addressing,
             JTextField textField,
             JTextField referenceTextField,
@@ -92,10 +95,11 @@ public class LogixNG_DataDialog {
         _beanPanel = null;
         _beanComboBox = null;
         _beanTextField = textField;
-        showDialog(addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
+        showDialog(title, addressing, referenceTextField, localVariableTextField, formulaTextField, runOnOk);
     }
 
     private void showDialog(
+            String title,
             NamedBeanAddressing addressing,
             JTextField referenceTextField,
             JTextField localVariableTextField,
@@ -109,7 +113,7 @@ public class LogixNG_DataDialog {
         _runOnOk = runOnOk;
 
 //        _showDialogFrame = new JmriJFrame(Bundle.getMessage(titleId));
-        _showDialogFrame = new JmriJFrame("Edit table name");
+        _showDialogFrame = new JmriJFrame(title);
 //        _showDialogFrame.addHelpMenu(
 //                "package.jmri.jmrit.beantable.LogixNGTable", true);     // NOI18N
         _showDialogFrame.setLocation(
