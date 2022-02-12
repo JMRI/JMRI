@@ -883,10 +883,30 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public void componentShown(ComponentEvent e) {
         throttleWindow.setCurrentThrottleFrame(this);
         if (willSwitch) {
-            setEditMode(this.throttleWindow.getEditMode());
+            setEditMode(this.throttleWindow.isEditMode());
             repaint();
         }
         throttleWindow.updateGUI();
+        // bring addresspanel to front if no allocated throttle
+        if (addressPanel.getThrottle() == null && throttleWindow.isEditMode()) {
+            if (!addressPanel.isVisible()) {
+                addressPanel.setVisible(true);
+            }            
+            if (addressPanel.isIcon()) {
+                try {
+                    addressPanel.setIcon(false);
+                } catch (PropertyVetoException ex) {
+                    log.debug("JInternalFrame uniconify, vetoed");
+                }
+            }
+            addressPanel.requestFocus();
+            addressPanel.toFront();
+            try {
+                addressPanel.setSelected(true);
+            } catch (java.beans.PropertyVetoException ex) {
+                log.debug("JInternalFrame selection, vetoed");
+            }
+        }
     }
 
     public void saveThrottle() {
@@ -910,8 +930,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     public void activateNextJInternalFrame() {
         try {
-            activeFrame = (activeFrame + 1) % NUM_FRAMES;
-            frameList[activeFrame].setSelected(true);
+            int initialFrame = activeFrame; // avoid infinite loop
+            do {
+                activeFrame = (activeFrame + 1) % NUM_FRAMES;
+                frameList[activeFrame].setSelected(true);
+            } while ((frameList[activeFrame].isClosed() || frameList[activeFrame].isIcon() || (!frameList[activeFrame].isVisible())) && (initialFrame != activeFrame));
         } catch (PropertyVetoException ex) {
             log.warn("Exception selecting internal frame:{}", ex.getMessage());
         }
@@ -919,11 +942,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     public void activatePreviousJInternalFrame() {
         try {
-            activeFrame--;
-            if (activeFrame < 0) {
-                activeFrame = NUM_FRAMES - 1;
-            }
-            frameList[activeFrame].setSelected(true);
+            int initialFrame = activeFrame; // avoid infinite loop
+            do {
+                activeFrame--;
+                if (activeFrame < 0) {
+                    activeFrame = NUM_FRAMES - 1;
+                }
+                frameList[activeFrame].setSelected(true);
+            } while ((frameList[activeFrame].isClosed() || frameList[activeFrame].isIcon() || (!frameList[activeFrame].isVisible())) && (initialFrame != activeFrame));
         } catch (PropertyVetoException ex) {
             log.warn("Exception selecting internal frame:{}", ex.getMessage());
         }

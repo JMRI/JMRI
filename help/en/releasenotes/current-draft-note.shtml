@@ -436,6 +436,9 @@
           option <i>Listen</i> that selects whenether the
           action should listen on changes for the <i>Memory</i>,
           <i>Block</i> or <i>Reporter</i>.</li>
+          <li>The actions <i>Memory</i> and <i>Local variable</i>
+          and the expressions <i>Memory</i> and <i>Local variable</i>
+          have improved support for LogixNG Tables.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -557,13 +560,15 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+            <li>The menu options to label a switch were enhanced to allow hiding the system name in case a user
+              name is configured. This was suggested by Phil-Klein.</li>
         </ul>
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Restored tab and shift+tab shortcuts to browse through throttles inner windows</li>
+            <li>Address Panel is now focused as a default when opening a new throttle</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -626,7 +631,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Support for display and interaction with (Control) Panel slipTurnoutIcons has been added
+            to JMRI Web Server Panels.<br>
+            This includes double and single slips, three-way turnouts and scissors with 2 or 4 turnouts.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>

@@ -460,7 +460,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     /**
      * Respond to the Cancel button in Add bean window.
      * <p>
- Note: Also get there if the user closes the Add bean window.
+     * Note: Also get there if the user closes the Add bean window.
      *
      * @param e The event heard
      */
