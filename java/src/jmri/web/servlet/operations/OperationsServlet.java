@@ -175,7 +175,7 @@ public class OperationsServlet extends HttpServlet {
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
                     StringEscapeUtils.escapeHtml4(train.getComment()).replaceAll("\n", "<br>"),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
-                    manifest.getLocations()
+                    manifest.getLocations().replaceAll("\n", "<br>")
             ));
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
             log.debug("Getting manifest JSON code for train {}", id);

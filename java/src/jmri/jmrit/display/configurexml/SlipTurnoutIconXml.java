@@ -109,7 +109,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         try {
             Attribute a = element.getAttribute("rotate");
             rotation = a.getIntValue();
-        } catch (org.jdom2.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException ignored) {
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
@@ -246,5 +246,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             }
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(SlipTurnoutIconXml.class);
+
 }

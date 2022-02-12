@@ -27,7 +27,7 @@ import java.util.Vector;
 
 /**
  * The table model for displaying rows of incoming RFID tags and associating them with cars
- * and locations.  This is where most of the logic resides, though the actually rceiving of the table
+ * and locations.  This is where most of the logic resides, though the actually receiving of the table
  * is done in the parent
  *
  * @author J. Scott Walton Copyright (C) 2022
@@ -129,6 +129,11 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
             trackBox.addItemListener(this);
         }
         locationBox.addItemListener(this);
+    }
+
+    public void clearTable() {
+        log.debug("clearing the RFID tag car window");
+        cleanTable(0, true);
     }
 
     private void cleanTable(int newRowMax, boolean fireChange) {
@@ -348,7 +353,11 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     Component getLocationRowEditor(JTable table, Object value, boolean isSelected, int row, int column) {
-        if (column != LOCATION_COLUMN) {
+       int tempCol = column;
+       if (!parentPane.getShowTimestamps()) {
+           tempCol = column + 1; // if timestamp column is not visible , need to adjust count
+       }
+       if (tempCol != LOCATION_COLUMN) {
             log.error("getLocationRowEditor called for other than Location column {}", column);
             return null;
         }
@@ -363,8 +372,12 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     Component getTrackRowEditor(JTable table, Object value, boolean isSelected, int row, int column) {
-        if (column != TRACK_COLUMN) {
-            log.error("Track row colum called for incorrect column: {}", column);
+       int tempCol = column;
+       if (!parentPane.getShowTimestamps()) {
+           tempCol = column + 1;   // if timestamp column is not visible, need to adjust column number to account for it
+       }
+       if (tempCol != TRACK_COLUMN) {
+            log.error("Track row column called for incorrect column: {}", column);
             return null;
         }
         return tagList.get(row).getTrackCombo();
@@ -443,6 +456,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case TRAIN_POSITION_COLUMN:
+            case CAR_NUMBER_COLUMN:
                 return Integer.class;
             case LOCATION_COLUMN:
             case TRACK_COLUMN:
@@ -563,21 +577,30 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             if (model == null) {
                 log.error("was not called through the correct constructor - model is null");
+                return null;
             }
-            if (column == TableDataModel.TRACK_COLUMN) {
+            int tempCol = column;
+            if (model.parentPane == null) {
+                log.error("parent pane pointer is missing");
+                return null;
+            }
+            if (!model.parentPane.getShowTimestamps()) {
+                tempCol = column + 1;  // if timestamps are not visible, the column counter will be off
+            }
+            if (tempCol == TableDataModel.TRACK_COLUMN) {
                 this.value = model.tagList.get(row).getTrackCombo();
                 return model.getTrackRowEditor(table, value, isSelected, row, column);
-            } else if (column == TableDataModel.LOCATION_COLUMN) {
+            } else if (tempCol == TableDataModel.LOCATION_COLUMN) {
                 this.value = model.tagList.get(row).getLocationCombo();
                 return model.getLocationRowEditor(table, value, isSelected, row, column);
-            } else if (column == TableDataModel.ACTION1_COLUMN) {
+            } else if (tempCol == TableDataModel.ACTION1_COLUMN) {
                 this.value = model.tagList.get(row).getAction1();
                 return model.tagList.get(row).getAction1();
-            } else if (column == TableDataModel.ACTION2_COLUMN) {
+            } else if (tempCol == TableDataModel.ACTION2_COLUMN) {
                 this.value = model.tagList.get(row).getAction2();
                 return model.tagList.get(row).getAction2();
             }
-            log.error("unable to determine column - returning null for table editor");
+            log.error("unable to determine column (value {} - returning null for table editor", column);
             return null;
         }
 

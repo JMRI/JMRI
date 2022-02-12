@@ -92,6 +92,50 @@
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
+              <xs:element name="table" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+
+                    <xs:element name="tableName" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="name" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+                          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="row" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="column" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+                          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
