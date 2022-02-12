@@ -120,6 +120,7 @@ public class SwitchboardEditor extends Editor {
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
     private int _iconSquare = 75;
+    private int _showUserName = 1;
     // tmp @GuardedBy("this")
     private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
@@ -139,7 +140,10 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
     //tmp @GuardedBy("this")
     private final JCheckBoxMenuItem autoRowsBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoRows"));
-    private final JCheckBoxMenuItem showUserNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxUserName"));
+    private final JMenu labelNamesMenu = new JMenu(Bundle.getMessage("SwitchNameDisplayMenu"));
+    private final JCheckBoxMenuItem systemNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxSystemName"));
+    private final JCheckBoxMenuItem bothNamesBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxBothNames"));
+    private final JCheckBoxMenuItem displayNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxDisplayName"));
     private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
     private final JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
     private final JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
@@ -824,11 +828,6 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(showToolTipBox);
         showToolTipBox.addActionListener((ActionEvent e) -> setAllShowToolTip(showToolTipBox.isSelected()));
         showToolTipBox.setSelected(showToolTip());
-        // show user name on switches item
-        _optionMenu.add(showUserNameBox);
-        showUserNameBox.addActionListener((ActionEvent e) -> updatePressed());
-        showUserNameBox.setSelected(true); // default on
-
         // hideUnconnected item
         _optionMenu.add(hideUnconnectedBox);
         hideUnconnectedBox.setSelected(_hideUnconnected);
@@ -839,6 +838,20 @@ public class SwitchboardEditor extends Editor {
             updatePressed();
             setDirty();
         });
+        // switch label options
+        _optionMenu.add(labelNamesMenu);
+        // only system name
+        labelNamesMenu.add(systemNameBox);
+        systemNameBox.setSelected(false); // default off
+        systemNameBox.addActionListener((ActionEvent e) -> setLabel(0));
+        // both names (when set)
+        labelNamesMenu.add(bothNamesBox);
+        bothNamesBox.setSelected(true); // default on
+        bothNamesBox.addActionListener((ActionEvent e) -> setLabel(1));
+        // only user name (when set), aka display name
+        labelNamesMenu.add(displayNameBox);
+        displayNameBox.setSelected(false); // default off
+        displayNameBox.addActionListener((ActionEvent e) -> setLabel(2));
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -1070,6 +1083,29 @@ public class SwitchboardEditor extends Editor {
      */
     public Color getDefaultBackgroundColor() {
         return defaultBackgroundColor;
+    }
+
+    public void setLabel(int label) {
+        _showUserName = label;
+        switch (label) {
+            case 0 :
+                //deselect box 2 and 3
+                bothNamesBox.setSelected(false);
+                displayNameBox.setSelected(false);
+                break;
+            case 2 :
+                //deselect box 1 and 2
+                systemNameBox.setSelected(false);
+                bothNamesBox.setSelected(false);
+                break;
+            case 1 :
+            default:
+                //deselect box 1 and 3
+                systemNameBox.setSelected(false);
+                displayNameBox.setSelected(false);
+                break;
+        }
+        updatePressed();
     }
 
     // *********************** end Menus ************************
@@ -1366,6 +1402,10 @@ public class SwitchboardEditor extends Editor {
     public void setSwitchManu(String manuPrefix) {
         try {
             memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(manuPrefix);
+            if (memo == null) {
+                log.error("No default SystemConnectionMemo defined for prefix {}", manuPrefix);
+                return;
+            }
             if (memo.get(TurnoutManager.class) != null) { // just for initial view
                 turnoutManComboBox.setSelectedItem(memo.get(TurnoutManager.class));
                 log.debug("turnoutManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
@@ -1499,12 +1539,53 @@ public class SwitchboardEditor extends Editor {
         log.debug("loadComplete");
     }
 
+    // used for xml persistent storage and web display
     public String showUserName() {
-        return (showUserNameBox.isSelected() ? "yes" : "no");
+        switch (_showUserName) {
+            case 0 :
+                return "no";
+            case 2 :
+                return "displayname";
+            case 1 :
+            default :
+                return "yes";
+        }
+        // new: multi value, see XML and panel.js
     }
 
+    public int nameDisplay() {
+        return _showUserName;
+    }
+
+    /**
+     * Initial, simple boolean label option
+     * @param on true to show both system and user name on the switch label
+     */
+    @Deprecated
     public void setShowUserName(Boolean on) {
-        showUserNameBox.setSelected(on);
+        setShowUserName(1);
+    }
+
+    public void setShowUserName(int label) {
+        _showUserName = label;
+        switch (label) {
+            case 1:
+                systemNameBox.setSelected(false);
+                bothNamesBox.setSelected(true);
+                displayNameBox.setSelected(false);
+                break;
+            case 2:
+                systemNameBox.setSelected(false);
+                bothNamesBox.setSelected(false);
+                displayNameBox.setSelected(true);
+                break;
+            case 0:
+            default:
+                systemNameBox.setSelected(true);
+                bothNamesBox.setSelected(false);
+                displayNameBox.setSelected(false);
+                break;
+        }
     }
 
     /**
