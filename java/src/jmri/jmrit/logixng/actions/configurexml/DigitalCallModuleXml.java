@@ -21,7 +21,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
 
     public DigitalCallModuleXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -35,20 +35,22 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         Element element = new Element("CallModule");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         NamedBeanHandle<Module> module = p.getModule();
         if (module != null) {
             element.addContent(new Element("module").addContent(module.getName()));
         }
-        
+
         Element parameters = new Element("Parameters");
         for (ParameterData pd : p.getParameterData()) {
             Element elementParameter = new Element("Parameter");
             elementParameter.addContent(new Element("name").addContent(pd._name));
+            if (pd._initialValueType == null) pd._initialValueType = SymbolTable.InitialValueType.None;
             elementParameter.addContent(new Element("initalValueType").addContent(pd._initialValueType.name()));
             elementParameter.addContent(new Element("initialValueData").addContent(pd._initialValueData));
+            if (pd._returnValueType == null) pd._returnValueType = Module.ReturnValueType.None;
             elementParameter.addContent(new Element("returnValueType").addContent(pd._returnValueType.name()));
             elementParameter.addContent(new Element("returnValueData").addContent(pd._returnValueData));
             parameters.addContent(elementParameter);
@@ -57,7 +59,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
@@ -72,35 +74,35 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
             if (t != null) h.setModule(t);
             else h.removeModule();
         }
-        
+
         List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
         log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
 
         for (Element e : parameterList) {
             Element elementName = e.getChild("name");
-            
+
             SymbolTable.InitialValueType initialValueType = null;
             Element elementType = e.getChild("initalValueType");
             if (elementType != null) {
                 initialValueType = SymbolTable.InitialValueType.valueOf(elementType.getTextTrim());
             }
-            
+
             Element elementInitialValueData = e.getChild("initialValueData");
-            
+
             Module.ReturnValueType returnValueType = null;
             elementType = e.getChild("returnValueType");
             if (elementType != null) {
                 returnValueType = Module.ReturnValueType.valueOf(elementType.getTextTrim());
             }
-            
+
             Element elementReturnValueData = e.getChild("returnValueData");
-            
+
             if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
             if (initialValueType == null) throw new IllegalArgumentException("Element 'initalValueType' does not exists");
             if (elementInitialValueData == null) throw new IllegalArgumentException("Element 'initialValueData' does not exists");
             if (returnValueType == null) throw new IllegalArgumentException("Element 'returnValueType' does not exists");
             if (elementReturnValueData == null) throw new IllegalArgumentException("Element 'returnValueData' does not exists");
-            
+
             h.addParameter(elementName.getTextTrim(),
                     initialValueType, elementInitialValueData.getTextTrim(),
                     returnValueType, elementReturnValueData.getTextTrim());
@@ -109,6 +111,6 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModuleXml.class);
 }

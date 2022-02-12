@@ -574,7 +574,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         return Category.ITEM;
     }
 
-    private NamedTable getTableBean() throws JmriException {
+    private NamedTable getTableBean(ConditionalNG conditionalNG) throws JmriException {
 
         if (_tableNameAddressing == NamedBeanAddressing.Direct) {
             return _tableHandle != null ? _tableHandle.getBean() : null;
@@ -584,11 +584,11 @@ public class ActionLocalVariable extends AbstractDigitalAction
             switch (_tableNameAddressing) {
                 case Reference:
                     name = ReferenceUtil.getReference(
-                            getConditionalNG().getSymbolTable(), _tableColumnReference);
+                            conditionalNG.getSymbolTable(), _tableColumnReference);
                     break;
 
                 case LocalVariable:
-                    SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                    SymbolTable symbolTable = conditionalNG.getSymbolTable();
                     name = TypeConversionUtil
                             .convertToString(symbolTable.getValue(_tableColumnLocalVariable), false);
                     break;
@@ -597,7 +597,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     name = _tableNameExpressionNode  != null
                             ? TypeConversionUtil.convertToString(
                                     _tableNameExpressionNode .calculate(
-                                            getConditionalNG().getSymbolTable()), false)
+                                            conditionalNG.getSymbolTable()), false)
                             : null;
                     break;
 
@@ -614,7 +614,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         }
     }
 
-    private String getTableRow() throws JmriException {
+    private String getTableRow(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_tableRowAddressing) {
             case Direct:
@@ -622,10 +622,10 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case Reference:
                 return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _tableRowReference);
+                        conditionalNG.getSymbolTable(), _tableRowReference);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_tableRowLocalVariable), false);
 
@@ -633,7 +633,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 return _tableRowExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _tableRowExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
+                                        conditionalNG.getSymbolTable()), false)
                         : null;
 
             default:
@@ -641,7 +641,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         }
     }
 
-    private String getTableColumn() throws JmriException {
+    private String getTableColumn(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_tableColumnAddressing) {
             case Direct:
@@ -649,10 +649,10 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case Reference:
                 return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _tableColumnReference);
+                        conditionalNG.getSymbolTable(), _tableColumnReference);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_tableColumnLocalVariable), false);
 
@@ -660,7 +660,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 return _tableColumnExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _tableColumnExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
+                                        conditionalNG.getSymbolTable()), false)
                         : null;
 
             default:
@@ -706,7 +706,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyTableCellToVariable:
-                    Object value = getTableBean().getCell(getTableRow(), getTableColumn());
+                    Object value = getTableBean(conditionalNG).getCell(
+                            getTableRow(conditionalNG), getTableColumn(conditionalNG));
                     symbolTable.setValue(_localVariable, value);
                     break;
 
