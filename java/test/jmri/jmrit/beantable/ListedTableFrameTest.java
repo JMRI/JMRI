@@ -1,25 +1,23 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class ListedTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     @Override
     public void testShowAndClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ((ListedTableFrame)frame).initTables();
         frame.initComponents();
         ThreadingUtil.runOnLayout(() -> {
@@ -30,23 +28,27 @@ public class ListedTableFrameTest extends jmri.util.JmriJFrameTestBase {
         // Ask to close window
         fo.requestClose();
     }
-    
+
     @Test
     public void testNoInitTablesError() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ListedTableFrame.tabbedTableItemListArrayArray.clear(); // reset static BeanTable list
         frame.initComponents();
         JUnitAppender.assertErrorMessageStartsWith("No tables loaded: ");
     }
-    
+
+    @Test
+    @Override
+    public void testAccessibleContent() {
+        ((ListedTableFrame)frame).initTables();
+        super.testAccessibleContent();
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()) {
-           jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-           frame = new ListedTableFrame<>();
-        }
+        JUnitUtil.initDefaultUserMessagePreferences();
+        frame = new ListedTableFrame<>();
     }
 
     @AfterEach

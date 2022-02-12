@@ -3,12 +3,14 @@ package jmri.util;
 import javax.swing.*;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the AccessibilityChecks class.
  *
  * @author Steve Young Copyright (C) 2022
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class AccessibilityChecksTest {
 
     @Test
