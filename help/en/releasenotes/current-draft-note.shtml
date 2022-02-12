@@ -423,9 +423,9 @@
           option <i>Listen</i> that selects whenether the
           action should listen on changes for the <i>Memory</i>,
           <i>Block</i> or <i>Reporter</i>.</li>
-		  <li>The actions <i>Memory</i> and <i>Local variable</i>
-		  and the expressions <i>Memory</i> and <i>Local variable</i>
-		  have improved support for LogixNG Tables.</li>
+          <li>The actions <i>Memory</i> and <i>Local variable</i>
+          and the expressions <i>Memory</i> and <i>Local variable</i>
+          have improved support for LogixNG Tables.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
