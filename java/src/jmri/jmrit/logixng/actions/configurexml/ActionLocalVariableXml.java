@@ -76,7 +76,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
         Element tableNameElement = new Element("tableName");
         tableNameElement.addContent(new Element("addressing").addContent(p.getTableNameAddressing().name()));
-        NamedBeanHandle table = p.getTable();
+        var table = p.getTable();
         if (table != null) {
             tableNameElement.addContent(new Element("name").addContent(table.getName()));
         }
