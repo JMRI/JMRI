@@ -916,7 +916,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 break;
 
             case Table:
-                message = "Memory_Long_CompareTable";
+                message = "LocalVariable_Long_CompareTable";
                 other1 = getTableNameDescription(locale);
                 other2 = getTableRowDescription(locale);
                 other3 = getTableColumnDescription(locale);

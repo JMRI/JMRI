@@ -889,7 +889,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 String tableName = getTableNameDescription(locale);
                 String rowName = getTableRowDescription(locale);
                 String columnName = getTableColumnDescription(locale);
-                return Bundle.getMessage(locale, "ActionMemory_Long_CopyTableCellToMemory", _localVariable, tableName, rowName, columnName);
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyTableCellToVariable", _localVariable, tableName, rowName, columnName);
 
             case CopyReporterToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReporterToVariable",
@@ -899,7 +899,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Formula", _localVariable, _formula);
 
             default:
-                throw new IllegalArgumentException("_memoryOperation has invalid value: " + _variableOperation.name());
+                throw new IllegalArgumentException("_variableOperation has invalid value: " + _variableOperation.name());
         }
     }
 
