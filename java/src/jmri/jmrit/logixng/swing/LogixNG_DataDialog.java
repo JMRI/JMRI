@@ -11,7 +11,11 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
- * A dialog
+ * A dialog to enter data.
+ * In LogixNG, the user can in many cases enter data in several ways.
+ * For example, a turnout can be entered directly, by using a reference,
+ * a local variable or a formula. This dialog presents a dialog for that.
+ *
  * @author Daniel Bergqvist (C) 2022
  */
 public class LogixNG_DataDialog {
