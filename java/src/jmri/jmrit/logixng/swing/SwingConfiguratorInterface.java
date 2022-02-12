@@ -60,7 +60,8 @@ public interface SwingConfiguratorInterface {
 
     /**
      * Get a configuration panel when a new object is to be created and we don't
-     * have it yet.This method initializes the panel with an empty configuration.
+     * have it yet.
+     * This method initializes the panel with an empty configuration.
      *
      * @param buttonPanel panel with the buttons
      * @return a panel that configures this object
