@@ -175,14 +175,14 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
             boolean result = false;
             String ref = otherTableCell.getTextTrim();
             String[] refParts = ref.substring(1).split("[\\[\\]]");  // Remove first { and then split on [ and ]
-            System.out.format("refParts.length: %d, '%s', '%s'%n", refParts.length, refParts[0], refParts[1]);
+//            System.out.format("refParts.length: %d, '%s', '%s'%n", refParts.length, refParts[0], refParts[1]);
             if (refParts.length == 3) {
                 String table = refParts[0];
                 String[] rowColumnParts = refParts[1].split(",");
                 if (rowColumnParts.length == 2) {
                     String row = rowColumnParts[0];
                     String column = rowColumnParts[1];
-                    System.out.format("Table: '%s', row: '%s', column: '%s'%n", table, row, column);
+//                    System.out.format("Table: '%s', row: '%s', column: '%s'%n", table, row, column);
 
                     h.setTableNameAddressing(NamedBeanAddressing.Direct);
                     if (table != null) {

@@ -62,7 +62,7 @@
   <LogixNGTables class="jmri.jmrit.logixng.implementation.configurexml.DefaultNamedTableManagerXml">
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT:AUTO:0001</systemName>
-      <fileName>program:java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
+      <fileName>program:java/test/jmri/jmrit/logixng/configurexml/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">

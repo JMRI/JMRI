@@ -62,7 +62,7 @@
   <LogixNGTables class="jmri.jmrit.logixng.implementation.configurexml.DefaultNamedTableManagerXml">
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT:AUTO:0001</systemName>
-      <fileName>program:java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
+      <fileName>program:java/test/jmri/jmrit/logixng/configurexml/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
@@ -75,6 +75,28 @@
       <caseInsensitive>no</caseInsensitive>
       <constant>C4</constant>
       <regEx />
+      <table>
+        <tableName>
+          <addressing>Direct</addressing>
+          <reference />
+          <localVariable />
+          <formula />
+        </tableName>
+        <row>
+          <addressing>Direct</addressing>
+          <name />
+          <reference />
+          <localVariable />
+          <formula />
+        </row>
+        <column>
+          <addressing>Direct</addressing>
+          <name />
+          <reference />
+          <localVariable />
+          <formula />
+        </column>
+      </table>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -91,6 +113,28 @@
       <caseInsensitive>no</caseInsensitive>
       <constant>D1</constant>
       <regEx />
+      <table>
+        <tableName>
+          <addressing>Direct</addressing>
+          <reference />
+          <localVariable />
+          <formula />
+        </tableName>
+        <row>
+          <addressing>Direct</addressing>
+          <name />
+          <reference />
+          <localVariable />
+          <formula />
+        </row>
+        <column>
+          <addressing>Direct</addressing>
+          <name />
+          <reference />
+          <localVariable />
+          <formula />
+        </column>
+      </table>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -140,9 +184,31 @@
       <variable>MyVar</variable>
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant />
-      <otherTableCell>{IQT:AUTO:0001[Row 4,Column C]}</otherTableCell>
       <otherVariable />
       <formula />
+      <table>
+        <tableName>
+          <addressing>Direct</addressing>
+          <name>IQT:AUTO:0001</name>
+          <reference />
+          <localVariable />
+          <formula />
+        </tableName>
+        <row>
+          <addressing>Direct</addressing>
+          <name>Row 4</name>
+          <reference />
+          <localVariable />
+          <formula />
+        </row>
+        <column>
+          <addressing>Direct</addressing>
+          <name>Column C</name>
+          <reference />
+          <localVariable />
+          <formula />
+        </column>
+      </table>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -159,9 +225,31 @@
       <formula />
       <memoryOperation>CopyTableCellToMemory</memoryOperation>
       <otherConstant />
-      <otherTableCell>{IQT:AUTO:0001[Row 1,Column D]}</otherTableCell>
       <otherVariable />
       <otherFormula />
+      <table>
+        <tableName>
+          <addressing>Direct</addressing>
+          <name>IQT:AUTO:0001</name>
+          <reference />
+          <localVariable />
+          <formula />
+        </tableName>
+        <row>
+          <addressing>Direct</addressing>
+          <name>Row 1</name>
+          <reference />
+          <localVariable />
+          <formula />
+        </row>
+        <column>
+          <addressing>Direct</addressing>
+          <name>Column D</name>
+          <reference />
+          <localVariable />
+          <formula />
+        </column>
+      </table>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -314,71 +402,15 @@
   </LogixNGDigitalActions>
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Fri Feb 11 12:18:10 CET 2022</date>
-      <filename>JMRI program</filename>
-    </operation>
-    <operation>
       <type>Load OK</type>
-      <date>Fri Feb 11 12:18:13 CET 2022</date>
-      <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Fri Feb 11 12:16:00 CET 2022</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Feb 11 12:16:04 CET 2022</date>
-          <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Feb 11 12:08:59 CET 2022</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Feb 11 12:09:03 CET 2022</date>
-              <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Fri Feb 11 12:07:36 CET 2022</date>
-                  <filename>JMRI program</filename>
-                </operation>
-                <operation>
-                  <type>Load with errors</type>
-                  <date>Fri Feb 11 12:08:33 CET 2022</date>
-                  <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Fri Feb 11 12:08:39 CET 2022</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Feb 11 12:15:37 CET 2022</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Fri Feb 11 12:17:48 CET 2022</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <date>Sat Feb 12 02:18:50 CET 2022</date>
+      <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Feb 11 12:18:58 CET 2022</date>
+      <date>Sat Feb 12 02:18:50 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.10ish+daniel+2022-02-11T11:17:54Z+Rd1c7394 on Fri Feb 11 12:18:58 CET 2022-->
+  <!--Written by JMRI version 4.25.10ish+daniel+2022-02-12T01:18:23Z+R62d39d4 on Sat Feb 12 02:18:50 CET 2022-->
 </layout-config>
