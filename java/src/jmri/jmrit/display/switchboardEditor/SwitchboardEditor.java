@@ -1550,9 +1550,13 @@ public class SwitchboardEditor extends Editor {
             default :
                 return "yes";
         }
-        // new: multi value, see XML and panel.js
+        // xml type="labelType", see xml/schema/types/switchboardeditor.xsd and panel.js
     }
 
+    /**
+     * Get the label type.
+     * @return system + user name = 1, only system name = 0 or only username (if set) = 2
+     */
     public int nameDisplay() {
         return _showUserName;
     }
