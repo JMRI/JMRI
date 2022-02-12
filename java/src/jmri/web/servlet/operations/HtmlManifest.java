@@ -82,7 +82,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 // add route comment
                 if (!location.path(JSON.COMMENT).textValue().trim().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), 
-                            location.path(JSON.COMMENT).textValue().replaceAll("\n", "<br>")));
+                            location.path(JSON.COMMENT).textValue()));
                 }
 
                 builder.append(getTrackComments(location.path(JsonOperations.TRACK), location.path(JsonOperations.CARS)));
