@@ -516,44 +516,6 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         validateMemorySection(errorMessages);
         validateDataSection(errorMessages);
 
-        try {
-            switch (_tableNameAddressing) {
-                case Direct: action.setTable(_copyTableBeanPanel.getNamedBean()); break;
-                case Reference: action.setTableNameReference(_tableNameReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
-                case Formula: action.setTableNameFormula(_tableNameFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
-            }
-
-            String rowName =
-                    _tableNameAddressing == NamedBeanAddressing.Direct
-                    ? _tableRowNameComboBox.getItemAt(_tableRowNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
-            switch (_tableRowAddressing) {
-                case Direct: action.setTableRowName(rowName); break;
-                case Reference: action.setTableRowReference(_tableRowReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableRowLocalVariable(_tableRowLocalVariableTextField.getText()); break;
-                case Formula: action.setTableRowFormula(_tableRowFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
-            }
-
-            String columnName =
-                    _tableNameAddressing == NamedBeanAddressing.Direct
-                    ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
-            switch (_tableColumnAddressing) {
-                case Direct: action.setTableColumnName(columnName); break;
-                case Reference: action.setTableColumnReference(_tableColumnReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableColumnLocalVariable(_tableColumnLocalVariableTextField.getText()); break;
-                case Formula: action.setTableColumnFormula(_tableColumnFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add("Invalid value: " + e.getMessage());
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
-
         return errorMessages.isEmpty();
     }
 
@@ -607,22 +569,50 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
             }
         }
 
-        // If using the Table tab, validate the table reference content via setOtherTableCell.
-        try {
-            if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyTableCell) {
-//DANIEL                action.setOtherTableCell(ActionMemory.convertTableReference(_copyTableCellTextField.getText(), true));
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return;
-        }
-
         // Validate formula parsing via setFormula and tab selection.
         try {
             action.setOtherFormula(_calculateFormulaTextField.getText());
             if (_tabbedPaneMemoryOperation.getSelectedComponent() == _calculateFormula) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
             }
+        } catch (ParserException e) {
+            errorMessages.add("Cannot parse formula: " + e.getMessage());
+        }
+
+        try {
+            switch (_tableNameAddressing) {
+                case Direct: action.setTable(_copyTableBeanPanel.getNamedBean()); break;
+                case Reference: action.setTableNameReference(_tableNameReferenceTextField.getText()); break;
+                case LocalVariable: action.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
+                case Formula: action.setTableNameFormula(_tableNameFormulaTextField.getText()); break;
+                default: throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
+            }
+
+            String rowName =
+                    _tableNameAddressing == NamedBeanAddressing.Direct
+                    ? _tableRowNameComboBox.getItemAt(_tableRowNameComboBox.getSelectedIndex())
+                    : _tableRowNameTextField.getText();
+            switch (_tableRowAddressing) {
+                case Direct: action.setTableRowName(rowName); break;
+                case Reference: action.setTableRowReference(_tableRowReferenceTextField.getText()); break;
+                case LocalVariable: action.setTableRowLocalVariable(_tableRowLocalVariableTextField.getText()); break;
+                case Formula: action.setTableRowFormula(_tableRowFormulaTextField.getText()); break;
+                default: throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
+            }
+
+            String columnName =
+                    _tableNameAddressing == NamedBeanAddressing.Direct
+                    ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
+                    : _tableRowNameTextField.getText();
+            switch (_tableColumnAddressing) {
+                case Direct: action.setTableColumnName(columnName); break;
+                case Reference: action.setTableColumnReference(_tableColumnReferenceTextField.getText()); break;
+                case LocalVariable: action.setTableColumnLocalVariable(_tableColumnLocalVariableTextField.getText()); break;
+                case Formula: action.setTableColumnFormula(_tableColumnFormulaTextField.getText()); break;
+                default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
+            }
+        } catch (IllegalArgumentException e) {
+            errorMessages.add("Invalid value: " + e.getMessage());
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
