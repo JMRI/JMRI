@@ -172,30 +172,32 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
                 if (elem != null) {
                     boolean result = false;
                     String ref = elem.getTextTrim();
-                    String[] refParts = ref.substring(1).split("[\\[\\]]");  // Remove first { and then split on [ and ]
-//                    System.out.format("refParts.length: %d, '%s', '%s'%n", refParts.length, refParts[0], refParts[1]);
-                    if (refParts.length == 3) {
-                        String table = refParts[0];
-                        String[] rowColumnParts = refParts[1].split(",");
-                        if (rowColumnParts.length == 2) {
-                            String row = rowColumnParts[0];
-                            String column = rowColumnParts[1];
-//                            System.out.format("Table: '%s', row: '%s', column: '%s'%n", table, row, column);
+                    if (!ref.isEmpty()) {
+                        String[] refParts = ref.substring(1).split("[\\[\\]]");  // Remove first { and then split on [ and ]
+//                      System.out.format("refParts.length: %d, '%s', '%s'%n", refParts.length, refParts[0], refParts[1]);
+                        if (refParts.length == 3) {
+                            String table = refParts[0];
+                            String[] rowColumnParts = refParts[1].split(",");
+                            if (rowColumnParts.length == 2) {
+                                String row = rowColumnParts[0];
+                                String column = rowColumnParts[1];
+//                                System.out.format("Table: '%s', row: '%s', column: '%s'%n", table, row, column);
 
-                            h.setTableNameAddressing(NamedBeanAddressing.Direct);
-                            if (table != null) {
-                                NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(table);
-                                if (t != null) h.setTable(t);
-                                else h.removeTable();
+                                h.setTableNameAddressing(NamedBeanAddressing.Direct);
+                                if (table != null) {
+                                    NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(table);
+                                    if (t != null) h.setTable(t);
+                                    else h.removeTable();
+                                }
+                                h.setTableRowAddressing(NamedBeanAddressing.Direct);
+                                h.setTableRowName(row);
+                                h.setTableColumnAddressing(NamedBeanAddressing.Direct);
+                                h.setTableColumnName(column);
+                                result = true;
                             }
-                            h.setTableRowAddressing(NamedBeanAddressing.Direct);
-                            h.setTableRowName(row);
-                            h.setTableColumnAddressing(NamedBeanAddressing.Direct);
-                            h.setTableColumnName(column);
-                            result = true;
                         }
+                        if (!result) throw new JmriConfigureXmlException("otherTableCell has invalid value: "+ref);
                     }
-                    if (!result) throw new JmriConfigureXmlException("otherTableCell has invalid value: "+ref);
                 }
 
                 elem = shared.getChild("otherVariable");
