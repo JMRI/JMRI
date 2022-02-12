@@ -577,8 +577,13 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             if (model == null) {
                 log.error("was not called through the correct constructor - model is null");
+                return null;
             }
             int tempCol = column;
+            if (model.parentPane == null) {
+                log.error("parent pane pointer is missing");
+                return null;
+            }
             if (!model.parentPane.getShowTimestamps()) {
                 tempCol = column + 1;  // if timestamps are not visible, the column counter will be off
             }
