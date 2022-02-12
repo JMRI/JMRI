@@ -273,7 +273,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
         git push github
 ```
 
-- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom) (This did not properly push the new branch in the .2 build, check that this time)
+- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom)
 
 ```
         ant make-test-release-branch
@@ -286,9 +286,9 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
 The release-4.99.3 branch has been created.
 
-Maintainers, please set the 4.99.4 milestone on pulls from now on, as that will be the next test release from the HEAD of the j11master branch.
+Maintainers, please set the 4.99.4 milestone on pulls from now on, as that will be the next test release.
 
-Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/4.99.4/)
+Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/4.99.3/)
 ```
 
 FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
@@ -314,7 +314,7 @@ If you're developing any additional (post-4.99.3) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 4.99.3 release name at the top. Enter the 4.99.1 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 4.99.3 release name at the top. Enter the 4.99.2 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -335,12 +335,12 @@ If you're developing any additional (post-4.99.3) changes that you want in the J
 
 ```
         ant realclean tests
-        unset JMRI_OPTIONS
+        JMRI_OPTIONS=jmri.skipTestsRequiringSeparateRunning=true
         ant headlesstest
 ```
 
 
-and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.99.3" Github issue so that historical resource usage info is available.
+and attach jvisualvm to the test class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 4.99.3](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.3%22)" Github issue so that historical resource usage info is available.
 
 ================================================================================
 ## Put Files Out For Checking
@@ -383,11 +383,11 @@ If anybody wants to add a change from here on in, they should
 
    Note: The GitHub automated CI tests do their build after doing a (temporary) merge with the target branch. If the release branch and master have diverged enough that a single set of changes can't be used with both, a more complicated procedure than above might be needed.  In that case, try a PR onto the release branch of the needed change, and then pull the release branch back onto the master branch before fixing conflicts.
 
-If somebody has merged their change into master (or it's branched from master later than the release tag), you have two choices:
+- If somebody has merged their change into master (or it's branched from master later than the release tag), you have two choices:
 
-  - Merge master into the release-4.99.3 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
+   - Merge master into the release-4.99.3 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
 
-  - `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
+   - `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
 - Make sure that the 4.99.3 milestone is on the original PR and any others that have been pulled in
 
