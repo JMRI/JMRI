@@ -202,7 +202,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
         diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.99-master.shtml | grep '^>'
 ```
 
-   If there were, update the j11master
+   If there were, update the master copy
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
 ```
@@ -247,7 +247,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
         open https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2020-06-01+
 ```
 
-For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.’
+For each, if it doesn't have the right milestone set, add the current milestone.’
 
 ================================================================================
 ## Create the Release Branch
