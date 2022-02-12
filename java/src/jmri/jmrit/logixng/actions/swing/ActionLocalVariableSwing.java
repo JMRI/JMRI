@@ -49,9 +49,9 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     private JTextField _copyLocalVariableTextField;
     private JTextField _calculateFormulaTextField;
 //    private JTextField _copyTableCellTextField;
-    private JButton _editTableNameButton;
-    private JButton _editRowNameButton;
-    private JButton _editColumnNameButton;
+    private JButton _selectTableNameButton;
+    private JButton _selectRowNameButton;
+    private JButton _selectColumnNameButton;
     private JLabel _tableNameLabel;
     private JLabel _rowNameLabel;
     private JLabel _columnNameLabel;
@@ -146,9 +146,9 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _tableColumnNameComboBox = new JComboBox<>();
         _tableColumnNameTextField = new JTextField(30);
 
-        _editTableNameButton = new JButton(Bundle.getMessage("ActionLocalVariable_Edit"));     // NOI18N
-        _editRowNameButton = new JButton(Bundle.getMessage("ActionLocalVariable_Edit"));       // NOI18N
-        _editColumnNameButton = new JButton(Bundle.getMessage("ActionLocalVariable_Edit"));    // NOI18N
+        _selectTableNameButton = new JButton(Bundle.getMessage("ActionLocalVariable_Select"));     // NOI18N
+        _selectRowNameButton = new JButton(Bundle.getMessage("ActionLocalVariable_Select"));       // NOI18N
+        _selectColumnNameButton = new JButton(Bundle.getMessage("ActionLocalVariable_Select"));    // NOI18N
 
         _tableNameReferenceTextField = new JTextField(30);
         _tableNameLocalVariableTextField = new JTextField(30);
@@ -162,56 +162,56 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _tableColumnLocalVariableTextField = new JTextField(30);
         _tableColumnFormulaTextField = new JTextField(30);
 
-        _editTableNameButton.addActionListener((evt) -> {
+        _selectTableNameButton.addActionListener((evt) -> {
             _logixNG_DataDialog.showDialog(
-                    Bundle.getMessage("ActionLocalVariable_EditTable"),
+                    Bundle.getMessage("ActionLocalVariable_SelectTable"),
                     _tableNameAddressing,
                     _copyTableBeanPanel,
                     _tableNameReferenceTextField,
                     _tableNameLocalVariableTextField,
                     _tableNameFormulaTextField,
-                    this::editTableNameFinished);
+                    this::selectTableNameFinished);
         });
-        _editRowNameButton.addActionListener((evt) -> {
+        _selectRowNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionLocalVariable_EditRow"),
+                        Bundle.getMessage("ActionLocalVariable_SelectRow"),
                         _tableRowAddressing,
                         _tableRowNameComboBox,
                         _tableRowReferenceTextField,
                         _tableRowLocalVariableTextField,
                         _tableRowFormulaTextField,
-                        this::editTableRowFinished);
+                        this::selectTableRowFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionLocalVariable_EditRow"),
+                        Bundle.getMessage("ActionLocalVariable_SelectRow"),
                         _tableRowAddressing,
                         _tableRowNameTextField,
                         _tableRowReferenceTextField,
                         _tableRowLocalVariableTextField,
                         _tableRowFormulaTextField,
-                        this::editTableRowFinished);
+                        this::selectTableRowFinished);
             }
         });
-        _editColumnNameButton.addActionListener((evt) -> {
+        _selectColumnNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionLocalVariable_EditColumn"),
+                        Bundle.getMessage("ActionLocalVariable_SelectColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameComboBox,
                         _tableColumnReferenceTextField,
                         _tableColumnLocalVariableTextField,
                         _tableColumnFormulaTextField,
-                        this::editTableColumnFinished);
+                        this::selectTableColumnFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionLocalVariable_EditColumn"),
+                        Bundle.getMessage("ActionLocalVariable_SelectColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameTextField,
                         _tableColumnReferenceTextField,
                         _tableColumnLocalVariableTextField,
                         _tableColumnFormulaTextField,
-                        this::editTableColumnFinished);
+                        this::selectTableColumnFinished);
             }
         });
 
@@ -221,11 +221,11 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.EAST;
-        _copyTableCell.add(_editTableNameButton, constraints);
+        _copyTableCell.add(_selectTableNameButton, constraints);
         constraints.gridy = 1;
-        _copyTableCell.add(_editRowNameButton, constraints);
+        _copyTableCell.add(_selectRowNameButton, constraints);
         constraints.gridy = 2;
-        _copyTableCell.add(_editColumnNameButton, constraints);
+        _copyTableCell.add(_selectColumnNameButton, constraints);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -241,11 +241,11 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         constraints.gridx = 2;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
-        _copyTableCell.add(_editTableNameButton, constraints);
+        _copyTableCell.add(_selectTableNameButton, constraints);
         constraints.gridy = 1;
-        _copyTableCell.add(_editRowNameButton, constraints);
+        _copyTableCell.add(_selectRowNameButton, constraints);
         constraints.gridy = 2;
-        _copyTableCell.add(_editColumnNameButton, constraints);
+        _copyTableCell.add(_selectColumnNameButton, constraints);
 
         _copyLocalVariableTextField = new JTextField(30);
         _copyVariable.add(_copyLocalVariableTextField);
@@ -336,8 +336,8 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         boolean enable =
                 (_tableNameAddressing != NamedBeanAddressing.Direct)
                 || (_copyTableBeanPanel.getNamedBean() != null);
-        _editRowNameButton.setEnabled(enable);
-        _editColumnNameButton.setEnabled(enable);
+        _selectRowNameButton.setEnabled(enable);
+        _selectColumnNameButton.setEnabled(enable);
 
         _tableNameLabel.setText(getTableNameDescription());
         _rowNameLabel.setText(getTableRowDescription());
@@ -456,22 +456,22 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         return Bundle.getMessage("ActionLocalVariable_ColumnName", column);    // NOI18N
     }
 
-    private void editTableNameFinished() {
+    private void selectTableNameFinished() {
         boolean enable =
                 (_tableNameAddressing != NamedBeanAddressing.Direct)
                 || (_copyTableBeanPanel.getNamedBean() != null);
-        _editRowNameButton.setEnabled(enable);
-        _editColumnNameButton.setEnabled(enable);
+        _selectRowNameButton.setEnabled(enable);
+        _selectColumnNameButton.setEnabled(enable);
         _tableNameAddressing = _logixNG_DataDialog.getAddressing();
         _tableNameLabel.setText(getTableNameDescription());
     }
 
-    private void editTableRowFinished() {
+    private void selectTableRowFinished() {
         _tableRowAddressing = _logixNG_DataDialog.getAddressing();
         _rowNameLabel.setText(getTableRowDescription());
     }
 
-    private void editTableColumnFinished() {
+    private void selectTableColumnFinished() {
         _tableColumnAddressing = _logixNG_DataDialog.getAddressing();
         _columnNameLabel.setText(getTableColumnDescription());
     }
@@ -714,7 +714,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     public boolean canClose() {
         if (_logixNG_DataDialog.checkOpenDialog()) {
             JOptionPane.showMessageDialog(getJDialog(),
-                    Bundle.getMessage("Error_InEditMode"), // NOI18N
+                    Bundle.getMessage("Error_InSelectMode"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
             return false;

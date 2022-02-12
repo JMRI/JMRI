@@ -44,9 +44,9 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
     private JTextField _compareToConstantTextField;
     private JTextField _compareToLocalVariableTextField;
     private JTextField _compareToRegExTextField;
-    private JButton _editTableNameButton;
-    private JButton _editRowNameButton;
-    private JButton _editColumnNameButton;
+    private JButton _selectTableNameButton;
+    private JButton _selectRowNameButton;
+    private JButton _selectColumnNameButton;
     private JLabel _tableNameLabel;
     private JLabel _rowNameLabel;
     private JLabel _columnNameLabel;
@@ -154,9 +154,9 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _tableColumnNameComboBox = new JComboBox<>();
         _tableColumnNameTextField = new JTextField(30);
 
-        _editTableNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));     // NOI18N
-        _editRowNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));       // NOI18N
-        _editColumnNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Edit"));    // NOI18N
+        _selectTableNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Select"));     // NOI18N
+        _selectRowNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Select"));       // NOI18N
+        _selectColumnNameButton = new JButton(Bundle.getMessage("ExpressionMemory_Select"));    // NOI18N
 
         _tableNameReferenceTextField = new JTextField(30);
         _tableNameLocalVariableTextField = new JTextField(30);
@@ -170,56 +170,56 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _tableColumnLocalVariableTextField = new JTextField(30);
         _tableColumnFormulaTextField = new JTextField(30);
 
-        _editTableNameButton.addActionListener((evt) -> {
+        _selectTableNameButton.addActionListener((evt) -> {
             _logixNG_DataDialog.showDialog(
-                    Bundle.getMessage("ExpressionMemory_EditTable"),
+                    Bundle.getMessage("ExpressionMemory_SelectTable"),
                     _tableNameAddressing,
                     _compareToTableBeanPanel,
                     _tableNameReferenceTextField,
                     _tableNameLocalVariableTextField,
                     _tableNameFormulaTextField,
-                    this::editTableNameFinished);
+                    this::selectTableNameFinished);
         });
-        _editRowNameButton.addActionListener((evt) -> {
+        _selectRowNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ExpressionMemory_EditRow"),
+                        Bundle.getMessage("ExpressionMemory_SelectRow"),
                         _tableRowAddressing,
                         _tableRowNameComboBox,
                         _tableRowReferenceTextField,
                         _tableRowLocalVariableTextField,
                         _tableRowFormulaTextField,
-                        this::editTableRowFinished);
+                        this::selectTableRowFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ExpressionMemory_EditRow"),
+                        Bundle.getMessage("ExpressionMemory_SelectRow"),
                         _tableRowAddressing,
                         _tableRowNameTextField,
                         _tableRowReferenceTextField,
                         _tableRowLocalVariableTextField,
                         _tableRowFormulaTextField,
-                        this::editTableRowFinished);
+                        this::selectTableRowFinished);
             }
         });
-        _editColumnNameButton.addActionListener((evt) -> {
+        _selectColumnNameButton.addActionListener((evt) -> {
             if (_tableNameAddressing == NamedBeanAddressing.Direct) {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ExpressionMemory_EditColumn"),
+                        Bundle.getMessage("ExpressionMemory_SelectColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameComboBox,
                         _tableColumnReferenceTextField,
                         _tableColumnLocalVariableTextField,
                         _tableColumnFormulaTextField,
-                        this::editTableColumnFinished);
+                        this::selectTableColumnFinished);
             } else {
                 _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ExpressionMemory_EditColumn"),
+                        Bundle.getMessage("ExpressionMemory_SelectColumn"),
                         _tableColumnAddressing,
                         _tableColumnNameTextField,
                         _tableColumnReferenceTextField,
                         _tableColumnLocalVariableTextField,
                         _tableColumnFormulaTextField,
-                        this::editTableColumnFinished);
+                        this::selectTableColumnFinished);
             }
         });
 
@@ -229,11 +229,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.EAST;
-        _compareToTable.add(_editTableNameButton, constraints);
+        _compareToTable.add(_selectTableNameButton, constraints);
         constraints.gridy = 1;
-        _compareToTable.add(_editRowNameButton, constraints);
+        _compareToTable.add(_selectRowNameButton, constraints);
         constraints.gridy = 2;
-        _compareToTable.add(_editColumnNameButton, constraints);
+        _compareToTable.add(_selectColumnNameButton, constraints);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -249,11 +249,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         constraints.gridx = 2;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
-        _compareToTable.add(_editTableNameButton, constraints);
+        _compareToTable.add(_selectTableNameButton, constraints);
         constraints.gridy = 1;
-        _compareToTable.add(_editRowNameButton, constraints);
+        _compareToTable.add(_selectRowNameButton, constraints);
         constraints.gridy = 2;
-        _compareToTable.add(_editColumnNameButton, constraints);
+        _compareToTable.add(_selectColumnNameButton, constraints);
 
         _compareToRegExTextField = new JTextField(30);
         _compareToRegEx.add(_compareToRegExTextField);
@@ -332,8 +332,8 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         boolean enable =
                 (_tableNameAddressing != NamedBeanAddressing.Direct)
                 || (_compareToTableBeanPanel.getNamedBean() != null);
-        _editRowNameButton.setEnabled(enable);
-        _editColumnNameButton.setEnabled(enable);
+        _selectRowNameButton.setEnabled(enable);
+        _selectColumnNameButton.setEnabled(enable);
 
         _tableNameLabel.setText(getTableNameDescription());
         _rowNameLabel.setText(getTableRowDescription());
@@ -455,22 +455,22 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         return Bundle.getMessage("ExpressionMemory_ColumnName", column);    // NOI18N
     }
 
-    private void editTableNameFinished() {
+    private void selectTableNameFinished() {
         boolean enable =
                 (_tableNameAddressing != NamedBeanAddressing.Direct)
                 || (_compareToTableBeanPanel.getNamedBean() != null);
-        _editRowNameButton.setEnabled(enable);
-        _editColumnNameButton.setEnabled(enable);
+        _selectRowNameButton.setEnabled(enable);
+        _selectColumnNameButton.setEnabled(enable);
         _tableNameAddressing = _logixNG_DataDialog.getAddressing();
         _tableNameLabel.setText(getTableNameDescription());
     }
 
-    private void editTableRowFinished() {
+    private void selectTableRowFinished() {
         _tableRowAddressing = _logixNG_DataDialog.getAddressing();
         _rowNameLabel.setText(getTableRowDescription());
     }
 
-    private void editTableColumnFinished() {
+    private void selectTableColumnFinished() {
         _tableColumnAddressing = _logixNG_DataDialog.getAddressing();
         _columnNameLabel.setText(getTableColumnDescription());
     }
@@ -703,7 +703,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
     public boolean canClose() {
         if (_logixNG_DataDialog.checkOpenDialog()) {
             JOptionPane.showMessageDialog(getJDialog(),
-                    Bundle.getMessage("Error_InEditMode"), // NOI18N
+                    Bundle.getMessage("Error_InSelectMode"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
             return false;
