@@ -274,7 +274,6 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getVariableOperation().name());
             }
             _setToConstantTextField.setText(action.getConstantValue());
-//DANIEL            _copyTableCellTextField.setText(ActionLocalVariable.convertTableReference(action.getOtherTableCell(), false));
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getFormula());
 

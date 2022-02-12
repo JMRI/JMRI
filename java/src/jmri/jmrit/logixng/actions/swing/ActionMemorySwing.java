@@ -286,7 +286,6 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getMemoryOperation().name());
             }
             _setToConstantTextField.setText(action.getConstantValue());
-//DANIEL            _copyTableCellTextField.setText(ActionMemory.convertTableReference(action.getOtherTableCell(), false));
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getOtherFormula());
 
