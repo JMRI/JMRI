@@ -511,8 +511,6 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        ActionMemory action = new ActionMemory("IQDA1", null);
-
         validateMemorySection(errorMessages);
         validateDataSection(errorMessages);
 

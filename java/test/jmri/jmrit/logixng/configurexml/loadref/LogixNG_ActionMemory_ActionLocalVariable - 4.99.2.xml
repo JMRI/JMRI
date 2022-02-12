@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>25</minor>
+    <test>10</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="D1">
+      <systemName>IM:AUTO:0001</systemName>
+      <userName>MyMemory</userName>
+    </memory>
+    <memory value="12:17 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Feb 11 12:07:37 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
+    <Thread>
+      <id>0</id>
+      <name>LogixNG thread</name>
+    </Thread>
+    <LogixNG enabled="yes">
+      <systemName>IQ:AUTO:0001</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0001</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <InitializationTable />
+    <Clipboard>
+      <Many class="jmri.jmrit.logixng.implementation.configurexml.ClipboardManyXml">
+        <Socket>
+          <socketName>X2</socketName>
+        </Socket>
+      </Many>
+    </Clipboard>
+  </LogixNGs>
+  <LogixNGConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0001</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0001</systemName>
+      </Socket>
+    </ConditionalNG>
+  </LogixNGConditionalNGs>
+  <LogixNGTables class="jmri.jmrit.logixng.implementation.configurexml.DefaultNamedTableManagerXml">
+    <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
+      <systemName>IQT:AUTO:0001</systemName>
+      <fileName>program:java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
+    </CsvTable>
+  </LogixNGTables>
+  <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
+    <ExpressionLocalVariable class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLocalVariableXml">
+      <systemName>IQDE:AUTO:0001</systemName>
+      <variable>MyVar</variable>
+      <otherVariable />
+      <compareTo>Value</compareTo>
+      <variableOperation>Equal</variableOperation>
+      <caseInsensitive>no</caseInsensitive>
+      <constant>C4</constant>
+      <regEx />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ExpressionLocalVariable>
+    <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
+      <systemName>IQDE:AUTO:0003</systemName>
+      <memory>MyMemory</memory>
+      <variable />
+      <compareTo>Value</compareTo>
+      <memoryOperation>Equal</memoryOperation>
+      <caseInsensitive>no</caseInsensitive>
+      <constant>D1</constant>
+      <regEx />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ExpressionMemory>
+  </LogixNGDigitalExpressions>
+  <LogixNGDigitalActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalActionManagerXml">
+    <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0001</systemName>
+      <Actions>
+        <Socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0002</systemName>
+        </Socket>
+        <Socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0004</systemName>
+        </Socket>
+        <Socket>
+          <socketName>A3</socketName>
+          <systemName>IQDA:AUTO:0005</systemName>
+        </Socket>
+        <Socket>
+          <socketName>A4</socketName>
+          <systemName>IQDA:AUTO:0009</systemName>
+        </Socket>
+        <Socket>
+          <socketName>A5</socketName>
+        </Socket>
+      </Actions>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+          <LocalVariable>
+            <name>MyVar</name>
+            <type>None</type>
+            <data />
+          </LocalVariable>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DigitalMany>
+    <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
+      <systemName>IQDA:AUTO:0002</systemName>
+      <variable>MyVar</variable>
+      <variableOperation>CopyTableCellToVariable</variableOperation>
+      <constant />
+      <otherTableCell>{IQT:AUTO:0001[Row 4,Column C]}</otherTableCell>
+      <otherVariable />
+      <formula />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionLocalVariable>
+    <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
+      <systemName>IQDA:AUTO:0004</systemName>
+      <memory>MyMemory</memory>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
+      <memoryOperation>CopyTableCellToMemory</memoryOperation>
+      <otherConstant />
+      <otherTableCell>{IQT:AUTO:0001[Row 1,Column D]}</otherTableCell>
+      <otherVariable />
+      <otherFormula />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionMemory>
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+      <systemName>IQDA:AUTO:0005</systemName>
+      <IfSocket>
+        <socketName>If</socketName>
+        <systemName>IQDE:AUTO:0001</systemName>
+      </IfSocket>
+      <ThenSocket>
+        <socketName>Then</socketName>
+        <systemName>IQDA:AUTO:0006</systemName>
+      </ThenSocket>
+      <ElseSocket>
+        <socketName>Else</socketName>
+        <systemName>IQDA:AUTO:0008</systemName>
+      </ElseSocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </IfThenElse>
+    <ShowDialog class="jmri.jmrit.logixng.actions.configurexml.ShowDialogXml">
+      <systemName>IQDA:AUTO:0006</systemName>
+      <ValidateSocket>
+        <socketName>Validate</socketName>
+      </ValidateSocket>
+      <ExecuteSocket>
+        <socketName>Execute</socketName>
+      </ExecuteSocket>
+      <Buttons>
+        <name>Ok</name>
+      </Buttons>
+      <formatType>OnlyText</formatType>
+      <format>MyVar: Success</format>
+      <localVariableForSelectedButton />
+      <localVariableForInputString />
+      <modal>no</modal>
+      <multiLine>no</multiLine>
+      <DataList />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShowDialog>
+    <ShowDialog class="jmri.jmrit.logixng.actions.configurexml.ShowDialogXml">
+      <systemName>IQDA:AUTO:0008</systemName>
+      <ValidateSocket>
+        <socketName>Validate</socketName>
+      </ValidateSocket>
+      <ExecuteSocket>
+        <socketName>Execute</socketName>
+      </ExecuteSocket>
+      <Buttons>
+        <name>Ok</name>
+      </Buttons>
+      <formatType>OnlyText</formatType>
+      <format>MyVar: Failure</format>
+      <localVariableForSelectedButton />
+      <localVariableForInputString />
+      <modal>no</modal>
+      <multiLine>no</multiLine>
+      <DataList />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShowDialog>
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+      <systemName>IQDA:AUTO:0009</systemName>
+      <IfSocket>
+        <socketName>If</socketName>
+        <systemName>IQDE:AUTO:0003</systemName>
+      </IfSocket>
+      <ThenSocket>
+        <socketName>Then</socketName>
+        <systemName>IQDA:AUTO:0010</systemName>
+      </ThenSocket>
+      <ElseSocket>
+        <socketName>Else</socketName>
+        <systemName>IQDA:AUTO:0011</systemName>
+      </ElseSocket>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </IfThenElse>
+    <ShowDialog class="jmri.jmrit.logixng.actions.configurexml.ShowDialogXml">
+      <systemName>IQDA:AUTO:0010</systemName>
+      <ValidateSocket>
+        <socketName>Validate</socketName>
+      </ValidateSocket>
+      <ExecuteSocket>
+        <socketName>Execute</socketName>
+      </ExecuteSocket>
+      <Buttons>
+        <name>Ok</name>
+      </Buttons>
+      <formatType>OnlyText</formatType>
+      <format>MyMemory: Success</format>
+      <localVariableForSelectedButton />
+      <localVariableForInputString />
+      <modal>no</modal>
+      <multiLine>no</multiLine>
+      <DataList />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShowDialog>
+    <ShowDialog class="jmri.jmrit.logixng.actions.configurexml.ShowDialogXml">
+      <systemName>IQDA:AUTO:0011</systemName>
+      <ValidateSocket>
+        <socketName>Validate</socketName>
+      </ValidateSocket>
+      <ExecuteSocket>
+        <socketName>Execute</socketName>
+      </ExecuteSocket>
+      <Buttons>
+        <name>Ok</name>
+      </Buttons>
+      <formatType>OnlyText</formatType>
+      <format>MyMemory: Failure</format>
+      <localVariableForSelectedButton />
+      <localVariableForInputString />
+      <modal>no</modal>
+      <multiLine>no</multiLine>
+      <DataList />
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ShowDialog>
+  </LogixNGDigitalActions>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Fri Feb 11 12:18:10 CET 2022</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Feb 11 12:18:13 CET 2022</date>
+      <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Fri Feb 11 12:16:00 CET 2022</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Feb 11 12:16:04 CET 2022</date>
+          <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Fri Feb 11 12:08:59 CET 2022</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Fri Feb 11 12:09:03 CET 2022</date>
+              <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Fri Feb 11 12:07:36 CET 2022</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load with errors</type>
+                  <date>Fri Feb 11 12:08:33 CET 2022</date>
+                  <filename>/C:/Users/daniel/JMRI/DCCpp.jmri/LogixNG_ActionMemory_ActionLocalVariable.xml</filename>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Fri Feb 11 12:08:39 CET 2022</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Fri Feb 11 12:15:37 CET 2022</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Fri Feb 11 12:17:48 CET 2022</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri Feb 11 12:18:58 CET 2022</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.25.10ish+daniel+2022-02-11T11:17:54Z+Rd1c7394 on Fri Feb 11 12:18:58 CET 2022-->
+</layout-config>
