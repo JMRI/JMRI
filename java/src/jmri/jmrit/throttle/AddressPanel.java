@@ -71,6 +71,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     /**
      * Constructor
+     * @param throttleManager the throttle manager
      */
     public AddressPanel(ThrottleManager throttleManager) {
         this.throttleManager = throttleManager;
