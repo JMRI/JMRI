@@ -276,7 +276,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final List<Section> sectionList = new ArrayList<>();
     private final List<Integer> direction = new ArrayList<>();
     private final List<Integer> sequence = new ArrayList<>();
-    @SuppressWarnings("unchecked")
     private final List<List<TransitSectionAction>> action = new ArrayList<>();
     private final List<Boolean> alternate = new ArrayList<>();
     private final List<Boolean> safe = new ArrayList<>();
@@ -2480,7 +2479,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     safe.set(row, val); // use checkbox to show Safe
                     break;
                 case STOPALLOCATING_SENSOR:
-                    JComboBox<?> cb = (JComboBox) value;
+                    JComboBox<?> cb = (JComboBox<?>) value;
                     if (cb.getSelectedIndex() < 0) {
                         sensorStopAllocation.set(row, "");
                     } else {

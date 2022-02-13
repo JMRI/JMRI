@@ -580,14 +580,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
 
     /**
-     * @deprecated since 4.19.5; use {@link #setEditMode(boolean)} instead
-     */
-    @Deprecated
-    public void switchMode() {
-        setEditMode(!isEditMode);
-    }
-
-    /**
      * Handle my own destruction.
      * <ol>
      * <li> dispose of sub windows.

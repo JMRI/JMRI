@@ -292,14 +292,6 @@ public class ThrottleWindow extends JmriJFrame {
         return isEditMode;
     }
 
-    /**
-     * @deprecated since 4.19.5; use {@link #setEditMode(boolean)} instead
-     */
-    @Deprecated
-    public void switchMode() {
-        setEditMode(!isEditMode);
-    }
-
     public Jynstrument ynstrument(String path) {
         Jynstrument it = JynstrumentFactory.createInstrument(path, this);
         if (it == null) {

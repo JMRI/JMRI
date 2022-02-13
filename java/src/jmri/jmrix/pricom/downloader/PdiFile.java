@@ -134,7 +134,7 @@ public class PdiFile {
                 buffer[3 + i] = (byte) (rd & 0xFF);             // tuck the byte
             }
         } catch (IOException e) {
-            log.error("IO exception reading file: {}", e);
+            log.error("IO exception reading file", e);
         }
         return buffer;
     }

@@ -958,7 +958,8 @@ public final class FnMapPanelESU extends JPanel {
         } catch (NumberFormatException e) {
             log.error("error handling decoder's numFns value");
         }
-        log.debug("loadModelAttributes numFns={}, numRows={}, numOuts={}, numItems={}, {}", numFns, numRows, numOuts, numItems);
+        log.debug("loadModelAttributes numFns={}, numRows={}, numOuts={}, numItems={}",
+                            numFns, numRows, numOuts, numItems);
     }
 
     /**

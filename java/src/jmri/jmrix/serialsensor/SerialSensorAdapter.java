@@ -81,8 +81,8 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // arrange to notify of sensor changes
             activeSerialPort.addEventListener(new SerialPortEventListener() {
@@ -213,7 +213,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
 
     /**
      * Do a sensor change on the event queue.
-     * @param sensor sensor 
+     * @param sensor sensor
      * @param value true if sensor changes on, else false.
      */
     public void notify(String sensor, boolean value) {

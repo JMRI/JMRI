@@ -109,15 +109,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    final static protected Dcc4PcTrafficController self = null;
-
     Dcc4PcMessage mLastMessage;  //Last message requested with a reply listener ie from external methods
     Dcc4PcMessage mLastSentMessage; //Last message actually sent from within the code, ie getResponse.
 

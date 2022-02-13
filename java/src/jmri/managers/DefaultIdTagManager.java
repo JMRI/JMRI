@@ -75,7 +75,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
                 try {
                     writeIdTagDetails();
                 } catch (java.io.IOException ioe) {
-                    log.error("Exception writing IdTags: {}", (Object) ioe);
+                    log.error("Exception writing IdTags", ioe);
                 }
             };
             InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
@@ -185,7 +185,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         return new DefaultIdTag(systemName, userName);
     }
 
-    /** 
+    /**
      * Provide ID Tag by UserName then SystemName, creates new IdTag if not found.
      * {@inheritDoc} */
     @Override

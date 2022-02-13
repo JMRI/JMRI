@@ -1165,7 +1165,7 @@ public class AutoActiveTrain implements ThrottleListener {
             } catch (NumberFormatException nx) {
                 try {
                     blockSpeed = InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(blockSpeedName);
-                    log.debug("{}: block speed from map for {} is {}",
+                    log.debug("{} {}: block speed from map for {} is {}",
                             _activeTrain.getTrainName(), block.getDisplayName(USERSYS), blockSpeedName,
                             blockSpeed);
                 } catch (Throwable ex) { // if _anything_ goes wrong, contain it
@@ -1226,8 +1226,11 @@ public class AutoActiveTrain implements ThrottleListener {
             // stopping by speed profile uses section length to stop
             setStopNow(true);
         } else if (_currentAllocatedSection.getLength()  < _maxTrainLength) {
-            log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow", _activeTrain.getTrainName(),
-                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
+            log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow({})",
+                    _activeTrain.getTrainName(),
+                    _currentAllocatedSection.getSection().getDisplayName(USERSYS),
+                    _currentAllocatedSection.getLength(),
+                    _maxTrainLength, _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
         } else if (_resistanceWheels) {
@@ -1552,7 +1555,10 @@ public class AutoActiveTrain implements ThrottleListener {
         // the speed comes in as units of warrents (mph, kph, mm/s etc)
             try {
                 float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile().getThrottleSettingFromSignalMapSpeed(speedState, getForward());
-                log.debug("{}: setTargetSpeedByProfile: SpeedState[{}]",_activeTrain.getTrainName(),throttleSetting,speedState);
+                log.debug("{}: setTargetSpeedByProfile: {} SpeedState[{}]",
+                        _activeTrain.getTrainName(),
+                        throttleSetting,
+                        speedState);
                 if (throttleSetting > 0.009) {
                     cancelStopInCurrentSection();
                     setTargetSpeed(applyMaxThrottleAndFactor(throttleSetting)); // apply speed factor and max
@@ -1793,7 +1799,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         waitNow = false;
                     }
                 } catch (InterruptedException e) {
-                    log.error("InterruptedException while watiting to stop for pause - {}", (Object) e);
+                    log.error("InterruptedException while waiting to stop for pause", e);
                     waitNow = false;
                     keepGoing = false;
                 }
@@ -1860,7 +1866,7 @@ public class AutoActiveTrain implements ThrottleListener {
             //calculate speed increment to use in each minInterval time
             speedIncrement = (100.0f / ((float) fullRampTime / minThrottleInterval)
                     / rampRate) / 100.0f;
-            log.debug("{}: _speedIncrement={}", speedIncrement);
+            log.debug("{}: _speedIncrement={}", throttle.getLocoAddress(), speedIncrement);
         }
 
         public  void setIsForward(boolean isForward) {

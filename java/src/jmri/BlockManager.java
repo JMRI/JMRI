@@ -49,7 +49,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
             }
         }
     };
-    
+
     public BlockManager() {
         super();
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
@@ -127,7 +127,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         try {
             r.setBlockSpeed("Global"); // NOI18N
         } catch (JmriException ex) {
-            log.error("{}", ex.getMessage());
+            log.error("Unexpected exception {}", ex.getMessage());
         }
         return r;
     }

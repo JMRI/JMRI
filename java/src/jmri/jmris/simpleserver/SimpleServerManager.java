@@ -22,19 +22,6 @@ public class SimpleServerManager implements InstanceManagerAutoDefault {
         preferences = InstanceManager.getDefault(SimpleServerPreferences.class);
     }
 
-    /**
-     *
-     * @return the instance of the SimpleServerManager
-     * @deprecated since 4.19.5.  Use InstanceManager.getDefault(SimpleServerManager.class) instead
-     */
-    @Deprecated
-    public static SimpleServerManager getInstance() {
-        if (InstanceManager.getNullableDefault(SimpleServerManager.class) == null) {
-            InstanceManager.store(new SimpleServerManager(), SimpleServerManager.class); // NOI18N
-        }
-        return InstanceManager.getDefault(SimpleServerManager.class);
-    }
-
     public SimpleServerPreferences getPreferences() {
         if (preferences == null) {
             preferences = new SimpleServerPreferences();

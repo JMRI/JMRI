@@ -210,9 +210,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     @SuppressWarnings("deprecation")  // META_MASK CTRL_MASK
     private void setMenuAcceleratorKey (JMenuItem mi,  int key) {
         if (SystemType.isMacOSX()) {
-            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.META_MASK));
+            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.META_DOWN_MASK));
         } else {
-            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.CTRL_MASK));
+            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.CTRL_DOWN_MASK));
         }
     }
 

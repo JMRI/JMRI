@@ -54,7 +54,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
 
     boolean configured = false;
 
-    // if true, this is the default Internal instance, which 
+    // if true, this is the default Internal instance, which
     // only provides a subset of types
     boolean defaultInstanceType = false;
 
@@ -125,7 +125,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     public InternalMeterManager getMeterManager() {
         InternalMeterManager meterManager = (InternalMeterManager) classObjectMap.get(MeterManager.class);
         if (meterManager == null) {
-            log.debug("Create InternalMeterManager by request", getSystemPrefix());
+            log.debug("Create InternalMeterManager by request {}", getSystemPrefix());
             meterManager = new InternalMeterManager(this);
             // special due to ProxyManager support
             InstanceManager.setMeterManager(meterManager);
@@ -136,7 +136,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     public InternalStringIOManager getStringIOManager() {
         InternalStringIOManager stringIOManager = (InternalStringIOManager) classObjectMap.get(StringIOManager.class);
         if (stringIOManager == null) {
-            log.debug("Create InternalStringIOManager by request", getSystemPrefix());
+            log.debug("Create InternalStringIOManager by request {}", getSystemPrefix());
             stringIOManager = new InternalStringIOManager(this);
             // special due to ProxyManager support
             InstanceManager.setStringIOManager(stringIOManager);
@@ -145,7 +145,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     }
 
     public DefaultPowerManager getPowerManager() {
-        return (DefaultPowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> {
+        return (DefaultPowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class<?> c) -> {
             log.debug("Create DefaultPowerManager by request");
             PowerManager powerManager = new jmri.managers.DefaultPowerManager(this);
             jmri.InstanceManager.store(powerManager, PowerManager.class);
@@ -158,7 +158,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         if (defaultInstanceType) {
             return null;
         }
-        return (InternalConsistManager) classObjectMap.computeIfAbsent((ConsistManager.class), (Class c) -> {
+        return (InternalConsistManager) classObjectMap.computeIfAbsent((ConsistManager.class), (Class<?> c) -> {
             log.debug("Create InternalConsistManager by request");
             ConsistManager consistManager = new InternalConsistManager();
             InstanceManager.store(consistManager, jmri.ConsistManager.class);
@@ -170,7 +170,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         if (defaultInstanceType) {
             return null;
         }
-        return (DebugThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, ( Class c) -> {
+        return (DebugThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, ( Class<?> c) -> {
             log.debug("Create DebugThrottleManager by request");
             // Install a debug throttle manager
             ThrottleManager throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
@@ -184,7 +184,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
             return null;
         }
         return (DebugProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,
-                (Class c) -> {
+                (Class<?> c) -> {
                     // Install a debug programmer
                     log.debug("Create DebugProgrammerManager by request");
                     return new DebugProgrammerManager(this);

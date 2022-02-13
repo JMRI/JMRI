@@ -484,7 +484,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             // write content to file
             writeXML(findFile(fileLocation + name), doc);
         } catch (java.io.IOException ioe) {
-            log.error("IO Exception {}", ioe);
+            log.error("IO Exception writing", ioe);
             throw (ioe);
         }
     }

@@ -88,19 +88,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * Static function returning the SerialTrafficController instance to use.
-     *
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for TMCCTrafficController");
-        return null;
-    }
-
-    /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
     @Override

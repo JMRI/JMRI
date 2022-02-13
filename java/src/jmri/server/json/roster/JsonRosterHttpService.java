@@ -219,7 +219,7 @@ public class JsonRosterHttpService extends JsonHttpService {
 
     /**
      * Get a list of roster groups.
-     * 
+     *
      * @param request the JSON request
      * @return a message containing the roster groups
      * @throws JsonException if a requested roster group does not exist
@@ -231,20 +231,6 @@ public class JsonRosterHttpService extends JsonHttpService {
             array.add(getRosterGroup(request.locale, name, request.id));
         }
         return message(array, request.id);
-    }
-
-    /**
-     * Get a list of roster groups.
-     * 
-     * @param locale the client locale
-     * @param id the request id set by the client
-     * @return a message containing the roster groups
-     * @throws JsonException if a requested roster group does not exist
-     * @deprecated since 4.19.2; use {@link #getRosterGroups(JsonRequest)} instead
-     */
-    @Deprecated
-    public JsonNode getRosterGroups(Locale locale, int id) throws JsonException {
-        return getRosterGroups(new JsonRequest(locale, V5, GET, id));
     }
 
     public JsonNode getRosterGroup(Locale locale, String name, int id) throws JsonException {

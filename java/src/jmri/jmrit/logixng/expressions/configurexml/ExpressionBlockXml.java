@@ -44,7 +44,7 @@ public class ExpressionBlockXml extends jmri.managers.configurexml.AbstractNamed
 
         storeCommon(p, element);
 
-        NamedBeanHandle block = p.getBlock();
+        var block = p.getBlock();
         if (block != null) {
             element.addContent(new Element("block").addContent(block.getName()));
         }

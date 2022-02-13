@@ -8,9 +8,9 @@ import jmri.NamedBean;
 import jmri.ReporterManager;
 
 /**
- * Utility Class supporting parsing and testing of addresses for Z21 CanBus  
+ * Utility Class supporting parsing and testing of addresses for Z21 CanBus
  * <p>
- * One address format is supported for Reporters and Sensors: 
+ * One address format is supported for Reporters and Sensors:
  * <ul>
  * <li>
  * Ztmm:pp where t is either R or S, mm is the module address and pp is the contact pin number (1-8).
@@ -40,14 +40,14 @@ public class Z21CanBusAddress {
         if(!systemNameStartsWithPrefix(systemName,prefix)) {
             return (-1);
         }
-        // name must be in the Ztmm:pp format (Z is user 
+        // name must be in the Ztmm:pp format (Z is user
         // configurable)
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
             if( ( systemName.charAt(prefix.length())=='R' ||
-                  systemName.charAt(prefix.length())=='r' || 
+                  systemName.charAt(prefix.length())=='r' ||
                    systemName.charAt(prefix.length())=='S' ||
-                  systemName.charAt(prefix.length())=='s' ) && 
+                  systemName.charAt(prefix.length())=='s' ) &&
                   curAddress.contains(":")) {
                //Address format passed is in the form of encoderAddress:input
                int seperator = curAddress.indexOf(':');
@@ -72,14 +72,14 @@ public class Z21CanBusAddress {
             return false;
         }
         return true;
-    } 
+    }
 
     private static int parseEncoderAddress(String addressWithoutPrefix,int start, int end) {
        int encoderAddress;
        try {
           encoderAddress = Integer.parseInt(addressWithoutPrefix.substring(start,end));
        } catch (NumberFormatException ex) {
-          // didn't parse as a decimal, check to see if network ID 
+          // didn't parse as a decimal, check to see if network ID
           // was used instead.
           encoderAddress = Integer.parseInt(addressWithoutPrefix.substring(start,end),16);
        }
@@ -109,7 +109,7 @@ public class Z21CanBusAddress {
      * @see jmri.Manager#validateSystemNameFormat(java.lang.String,
      * java.util.Locale)
      */
-    public static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+    public static String validateSystemNameFormat(String name, Manager<?> manager, Locale locale) {
         name = manager.validateSystemNamePrefix(name, locale);
         String[] parts = name.substring(manager.getSystemNamePrefix().length()).split(":");
         if (parts.length != 2) {
@@ -153,7 +153,7 @@ public class Z21CanBusAddress {
     public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
@@ -177,7 +177,7 @@ public class Z21CanBusAddress {
             // not a valid system name for Z21 Can Bus
             return ("");
         }
-        // check for a Reporter 
+        // check for a Reporter
         if (systemName.charAt(prefix.length() + 1) == 'R') {
             jmri.Reporter r;
             r = jmri.InstanceManager.getDefault(ReporterManager.class).getBySystemName(systemName);
@@ -186,8 +186,8 @@ public class Z21CanBusAddress {
             } else {
                 return ("");
             }
-        } 
-        // check for a Sensor 
+        }
+        // check for a Sensor
         if (systemName.charAt(prefix.length() + 1) == 'S') {
             jmri.Sensor s;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
@@ -196,7 +196,7 @@ public class Z21CanBusAddress {
             } else {
                 return ("");
             }
-        } 
+        }
         // not any known sensor
         return ("");
     }

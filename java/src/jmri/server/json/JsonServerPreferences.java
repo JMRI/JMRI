@@ -39,7 +39,6 @@ public class JsonServerPreferences extends Bean implements InstanceManagerAutoDe
         if (migrate) {
             // method is deprecated to discourage use, not for removal
             // using to allow migration from old package to new package
-            @SuppressWarnings("deprecation")
             Preferences oldPreferences = JmriPreferencesProvider.getPreferences(activeProfile, "jmri.jmris.json", true);
             readPreferences(oldPreferences);
         }
