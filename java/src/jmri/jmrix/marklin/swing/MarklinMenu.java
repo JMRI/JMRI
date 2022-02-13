@@ -33,7 +33,7 @@ public class MarklinMenu extends JMenu {
 
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             try {
-                new jmri.jmrit.beantable.ListedTableFrame();
+                new jmri.jmrit.beantable.ListedTableFrame<jmri.Turnout>();
             } catch (java.lang.NullPointerException ex) {
                 log.error("Unable to register Marklin table");
             }

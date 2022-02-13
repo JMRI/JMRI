@@ -29,7 +29,7 @@ import org.junit.jupiter.api.io.TempDir;
  * @author Randall Wood 2015
  */
 public class AbstractThrottleTest {
-        
+
     protected AbstractThrottle instance = null;
 
     @BeforeEach
@@ -722,14 +722,6 @@ public class AbstractThrottleTest {
     }
 
     /**
-     * Test of getListeners method, of class AbstractThrottle.
-     */
-    @Test
-    public void testGetListeners() {
-        assertThat(instance.getListeners()).isEmpty();
-    }
-
-    /**
      * Test of dispose method, of class AbstractThrottle.
      */
     @Test
@@ -773,7 +765,7 @@ public class AbstractThrottleTest {
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
-    
+
     @Test
     public void testTotalFunctions() {
         Assert.assertEquals("Total Functions", 29, instance.getFunctions().length);
@@ -783,71 +775,71 @@ public class AbstractThrottleTest {
     public void testTotalFunctionsMomentary() {
         Assert.assertEquals("Total Momentary Functions", 29, instance.getFunctionsMomentary().length);
     }
-    
+
     @Test
     public void testOutOfRangeUpdateFunction(){
-        
+
         instance.updateFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
-        
+
         instance.updateFunction(29, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
-        
+
     }
-    
+
     @Test
     public void testOutOfRangeSetFunction(){
-        
+
         instance.setFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: -1");
-        
+
         instance.setFunction(29, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
-        
+
     }
-    
+
     @Test
     public void testOutOfRangeGetFunction(){
         instance.getFunction(-1);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: -1");
-        
+
         instance.getFunction(29);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: 29");
     }
-    
+
     @Test
     public void testOutOfRangeUpdateFunctionMomentary(){
-        
+
         instance.updateFunctionMomentary(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: -1");
-        
+
         instance.updateFunctionMomentary(29, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: 29");
-        
+
     }
-    
+
     @Test
     public void testOutOfRangeSetFunctionMomentary(){
-        
+
         instance.setFunctionMomentary(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: -1");
-        
+
         instance.setFunctionMomentary(29, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: 29");
-        
+
     }
-    
+
     @Test
     public void testOutOfRangeGetFunctionMomentary(){
         instance.getFunctionMomentary(-1);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: -1");
-        
+
         instance.getFunctionMomentary(29);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: 29");
     }
-    
-    
-    
+
+
+
     /**
      * Test of setF0 method, of class AbstractThrottle.
      */
@@ -1600,15 +1592,15 @@ public class AbstractThrottleTest {
             speed = speed + 0.001F;
         }
     }
-    
+
     /**
      * Test of starting and stopping the time logging.
      */
     @Test
     public void testLogsSpeedToBasicRosterEntry(@TempDir File folder) throws java.io.IOException {
-        
+
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
-        
+
         // create Element
         org.jdom2.Element eOld = new org.jdom2.Element("locomotive")
             .setAttribute("id", "id info")
@@ -1626,22 +1618,22 @@ public class AbstractThrottleTest {
             protected void warnShortLong(String s) {
             }
         };
-        
+
         instance.setRosterEntry(re);
         Assertions.assertNull(re.getAttribute("OperatingDuration"), "No Starting Duration Roster Entry");
         Assertions.assertNull(re.getAttribute("LastOperated"), "No Last Operated Roster Entry");
         Assert.assertEquals("No Starting Duration Throttle", 0, instance.start);
-        
+
         instance.setSpeedSetting(0.777f);
         Assertions.assertTrue(instance.start > 0, "Starting Duration not set, throttle needs to call record(speed) on speed change");
-        
+
         instance.start = instance.start - 2011; // make duration about 2 seconds
         Assert.assertNotNull("instance finds roster entry", instance.getRosterEntry());
-        
+
         instance.throttleDispose();
         Assert.assertEquals("No Duration in Roster Entry, throttle needs to call finishRecord()", "2", re.getAttribute("OperatingDuration"));
         Assert.assertNotNull("Last Operated Updated", re.getAttribute("LastOperated"));
-        
+
     }
 
     public static final class AbstractThrottleImpl extends AbstractThrottle {

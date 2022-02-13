@@ -823,7 +823,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                             getSensor().setKnownState(jmri.Sensor.INACTIVE);
                         }
                     } catch (jmri.JmriException reason) {
-                        log.warn("Exception flipping sensor: {}", (Object) reason);
+                        log.warn("Exception flipping sensor", (Object) reason);
                     }
                     break;
                 default:
@@ -1041,17 +1041,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             _shape = SwitchboardEditor.SYMBOL;
             if (radius > 10) r = radius;
             log.debug("radius={} size={}", r, getWidth());
-        }
-
-        /**
-         * Ctor with fixed scale of image at 100%. Original public ctor.
-         *
-         * @param filepath1 the ON image
-         * @param filepath2 the OFF image
-         */
-        @Deprecated
-        public IconSwitch(String filepath1, String filepath2) {
-            this(filepath1, filepath2, Color.GRAY);
         }
 
         /**

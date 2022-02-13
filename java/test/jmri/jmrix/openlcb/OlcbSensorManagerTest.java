@@ -58,7 +58,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testUpperLower() {
     }
-    
+
     @Override
     @Test
     public void testMoveUserName() {
@@ -93,6 +93,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @BeforeAll
+    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -116,7 +117,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         });
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
-    
+
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 

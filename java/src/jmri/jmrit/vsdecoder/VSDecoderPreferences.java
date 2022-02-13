@@ -23,14 +23,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -88,7 +88,7 @@ public class VSDecoderPreferences {
             log.info("Did not find VSDecoder preferences file.  This is normal if you haven't save the preferences before");
             root = null;
         } catch (JDOMException | RuntimeException e) {
-            log.error("Exception while loading VSDecoder preferences: {}", e);
+            log.error("Exception while loading VSDecoder preferences", e);
             root = null;
         }
         if (root != null) {
@@ -206,7 +206,7 @@ public class VSDecoderPreferences {
                 log.error("createNewFile failed");
             }
         } catch (IOException | RuntimeException exp) {
-            log.error("Exception while writing the new VSDecoder preferences file, may not be complete: {}", exp);
+            log.error("Exception while writing the new VSDecoder preferences file, may not be complete", exp);
         }
 
         try {
@@ -223,7 +223,7 @@ public class VSDecoderPreferences {
             root.setContent(store());
             xf.writeXML(file, doc);
         } catch (IOException | RuntimeException ex) { // TODO fix null value for Attribute
-            log.warn("Exception in storing vsdecoder preferences xml: {}", ex);
+            log.warn("Exception in storing vsdecoder preferences xml", ex);
         }
     }
 
@@ -319,7 +319,7 @@ public class VSDecoderPreferences {
      * <p>
      * AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address.
-     * 
+     *
      * @param l listener to add.
      *
      */

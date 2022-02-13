@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
 import java.util.AbstractMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import jmri.jmrit.logixng.Category;
@@ -17,37 +16,40 @@ public class DigitalFactory implements DigitalExpressionFactory {
 
     @Override
     public Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> getExpressionClasses() {
-        Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> expressionClasses = new HashSet<>();
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, And.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Antecedent.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, DigitalCallModule.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionBlock.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionClock.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionConditional.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionDispatcher.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionEntryExit.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionLight.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionLocalVariable.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionMemory.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionOBlock.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionPower.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReference.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReporter.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionScript.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSensor.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSignalHead.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSignalMast.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionTurnout.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionWarrant.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, False.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalFormula.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Hold.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, LastResultOfDigitalExpression.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, LogData.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Not.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Or.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, TriggerOnce.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, True.class));
+        Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> expressionClasses =
+                Set.of(
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, And.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, Antecedent.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, DigitalCallModule.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionBlock.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionClock.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionConditional.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionDispatcher.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionEntryExit.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionLight.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionLocalVariable.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionMemory.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionOBlock.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionPower.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReference.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReporter.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionScript.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSensor.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSignalHead.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSignalMast.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionTurnout.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionWarrant.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, False.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalFormula.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, Hold.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, LastResultOfDigitalExpression.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, LogData.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, Not.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, Or.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, TriggerOnce.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, True.class)
+                );
+        
         return expressionClasses;
     }
 

@@ -106,7 +106,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
                 programmer.writeCV("3", 0, null);
             }
         } catch (JmriException e) {
-            log.error("exception setting turnout:{}", e);
+            log.error("exception setting turnout", e);
         }
     }
 

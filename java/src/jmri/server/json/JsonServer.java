@@ -57,7 +57,7 @@ public class JsonServer extends JmriServer implements InstanceManagerAutoDefault
                 try {
                     JsonServer.this.stop();
                 } catch (Exception ex) {
-                    log.warn("Exception shutting down JSON Server: {}", ex);
+                    log.warn("Exception shutting down JSON Server", ex);
                 }
             }
         };

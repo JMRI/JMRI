@@ -54,7 +54,7 @@ public class LockedRoutesManager {
      * No resources are modified!
      * <p>
      * Typically used for a O.S. section sensors check.
-     * Get the primary and possibly the secondary O.S. sensor(s) associated with it, and pass it 
+     * Get the primary and possibly the secondary O.S. sensor(s) associated with it, and pass it
      * in "sensors".  NO CHECK is made of traffic direction.
      * @param sensors set of sensors.
      * @param osSectionDescription section description.
@@ -74,10 +74,10 @@ public class LockedRoutesManager {
      * If there is no overlap, then add the
      * set to the presently allocated resources and return the LockedRoute object.
      * If there is overlap, modify nothing and return null.
-     * 
+     *
      * See explanation at the start of this source code about support put in here
      * for Fleeting.
-     * 
+     *
      * @param sensors set of sensors.
      * @param osSectionDescription section description.
      * @param ruleDescription rule description.
@@ -96,7 +96,7 @@ public class LockedRoutesManager {
 /*          Background:
                 "newLockedRoute" is NOT in "_mArrayListOfLockedRoutes" at this time, and "newLockedRoute" has NOT had "allocateRoute" called on it.
                 "existingLockedRouteThatHadFleeting" has some sensor(s) that have registered notification of sensor events already.
-            Shortcuts: 
+            Shortcuts:
                 It would be easiest to merge "newLockedRoute" into "existingLockedRouteThatHadFleeting", since that is the least work.
                 That is what "mergeRoutes" ASSUMES!
 */
@@ -129,7 +129,7 @@ public class LockedRoutesManager {
     /**
      * This routine frees all resources allocated by the passed lockedRoute (listeners primarily)
      * and then removes it from our "_mArrayListOfLockedRoutes".  Now the route does NOT exist anywhere.
-     * 
+     *
      * @param lockedRoute The route to cancel.
      * <p>
      * NOTE:
@@ -161,6 +161,5 @@ public class LockedRoutesManager {
         for (LockedRoute lockedRoute : _mArrayListOfLockedRoutes) {
             log.info(lockedRoute.dumpRoute());
         }
-        log.info("--------------");
     }
 }

@@ -2062,7 +2062,7 @@ final public class LayoutEditorTools {
                             Bundle.getMessage("BeanNameBlock") + " 1 "));
             panel11.add(block1NameLabel);
             panel11.add(block1IDComboBox);
-            block1IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
+            block1IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHintNW"));
             theContentPane.add(panel11);
 
             JPanel panel12 = new JPanel(new FlowLayout());
@@ -2072,7 +2072,7 @@ final public class LayoutEditorTools {
                             + " 2 " + Bundle.getMessage("Name")));
             panel12.add(block2NameLabel);
             panel12.add(block2IDComboBox);
-            block2IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
+            block2IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHintSE"));
             theContentPane.add(panel12);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -11224,7 +11224,7 @@ final public class LayoutEditorTools {
      * @param position   Which of the four points is being changed
      */
     <T extends LayoutTurnout> void setTurnoutSensor(T trackItem, Sensor newSensor, Sensor currSensor,
-            BeanDetails beanDetail, LayoutTrack connect, Point2D coords, String position) {
+            BeanDetails<? extends NamedBean> beanDetail, LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
@@ -11739,7 +11739,7 @@ final public class LayoutEditorTools {
      * @param coords     The track componennt coordinates
      * @param position   Which of the four points is being changed
      */
-    void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails beanDetail,
+    void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails<? extends NamedBean> beanDetail,
             LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {

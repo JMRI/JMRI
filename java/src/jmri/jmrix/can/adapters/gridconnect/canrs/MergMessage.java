@@ -116,7 +116,7 @@ public class MergMessage extends GridConnectMessage {
                 }
             }
             catch(IllegalArgumentException e) {
-                log.error("Value out of range for MergMessage data payload {}", e);
+                log.error("Value out of range for MergMessage data payload", e);
             }
             setHexDigit((val / 16) & 0xF, index++);
             setHexDigit(val & 0xF, index);

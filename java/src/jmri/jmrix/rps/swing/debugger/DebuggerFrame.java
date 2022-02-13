@@ -220,18 +220,6 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         }
     }
 
-    /**
-     *
-     * @throws IOException if unable to read file
-     * @deprecated since 4.19.3; use
-     * {@link #getParser(javax.swing.JFileChooser)}
-     * instead
-     */
-    @Deprecated
-    void setupReadingFile() throws IOException {
-        readingInput = getParser(readingFileChooser);
-    }
-
     private CSVParser getParser(JFileChooser chooser) throws IOException {
         // get file
         CSVParser parser = null;
@@ -276,18 +264,6 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
         lastPoint = m;
         Distributor.instance().submitMeasurement(m);
-    }
-
-    /**
-     *
-     * @throws IOException if unable to read file
-     * @deprecated since 4.19.3; use
-     * {@link #getParser(javax.swing.JFileChooser)}
-     * instead
-     */
-    @Deprecated
-    void setupMeasurementFile() throws IOException {
-        measurementInput = getParser(measurementFileChooser);
     }
 
     Measurement lastPoint = null;

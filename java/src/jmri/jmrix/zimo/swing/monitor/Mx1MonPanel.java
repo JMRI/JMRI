@@ -121,22 +121,6 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw.toString());
     }
 
-    /**
-     * Nested class to create one of these using old-style defaults.
-     * 
-     * @deprecated since 4.19.7; use {@link Mx1MonPanelAction} instead
-     */
-    @Deprecated
-    static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
-
-        public Default() {
-            super("Mx1 Command Monitor",
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    Mx1MonPanel.class.getName(),
-                    jmri.InstanceManager.getDefault(Mx1SystemConnectionMemo.class)); // NOI18N
-        }
-    }
-
     private final static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class);
 
 }

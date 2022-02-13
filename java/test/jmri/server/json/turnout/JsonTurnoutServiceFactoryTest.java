@@ -13,12 +13,6 @@ import jmri.server.json.JsonServiceFactoryTestBase;
  */
 public class JsonTurnoutServiceFactoryTest extends JsonServiceFactoryTestBase<JsonTurnoutHttpService, JsonTurnoutSocketService> {
 
-    @Test
-    public void testConstants() {
-        assertThat(JsonTurnoutServiceFactory.TURNOUT).isEqualTo(JsonTurnout.TURNOUT);
-        assertThat(JsonTurnoutServiceFactory.TURNOUTS).isEqualTo(JsonTurnout.TURNOUTS);
-    }
-
     @Override
     @Test
     public void testGetTypesV5() {

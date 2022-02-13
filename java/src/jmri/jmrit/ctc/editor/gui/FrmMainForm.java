@@ -83,7 +83,7 @@ public class FrmMainForm extends JFrame {
      */
     @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     private KeyStroke getAccelerator(int keycode) {
-        int modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         return KeyStroke.getKeyStroke(keycode, modifier);
     }
 

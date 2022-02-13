@@ -49,6 +49,7 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
     public static final String TYPE = "Type"; // cars and engines have different types
     public static final String LENGTH = "Length"; // cars and engines have different lengths
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("MS_CANNOT_BE_FINAL") // needs access in subpackage
     protected static boolean showDialogBox = true;
     public boolean showQuanity = false;
 

@@ -33,25 +33,25 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     private static int msgId = 0;
     protected int _id = -1;
-    
+
     /**
      * Get next message id
-     * 
-     * For modules that need to match their own message/reply pairs in strict sequence, e.g., 
+     *
+     * For modules that need to match their own message/reply pairs in strict sequence, e.g.,
      * SprogCommandStation, return a unique message id. The id wraps at a suitably large
      * value.
-     * 
+     *
      * @return the message id
      */
     protected synchronized int newMsgId() {
         msgId = (msgId+1)%65536;
         return msgId;
     }
-    
+
     public int getId() {
         return _id;
     }
-    
+
     // create a new one
     public SprogMessage(int i) {
         if (i < 1) {
@@ -275,11 +275,11 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     /*
      * CV reads can pass a hint by using different commands. The hint will first
      * be verified, potentially speeding up the read process.
-     * 
+     *
      * @param cv        CV address
      * @param mode      Programming mode
      * @param startVal  Hint
-     * @return 
+     * @return
      */
     static public SprogMessage getReadCV(int cv, ProgrammingMode mode, int startVal) {
         SprogMessage m = new SprogMessage(10);
@@ -421,8 +421,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    // [AC] 11/09/2002
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private static String addIntAsTwo(int val, SprogMessage m, int offset) {
         String s = "" + val;

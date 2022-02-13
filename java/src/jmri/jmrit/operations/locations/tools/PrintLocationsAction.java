@@ -136,7 +136,7 @@ public class PrintLocationsAction extends AbstractAction {
                 writer.close(); // force completion of the printing
             }
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction: {}", we);
+            log.error("Error printing PrintLocationAction", we);
         }
     }
 
@@ -684,7 +684,7 @@ public class PrintLocationsAction extends AbstractAction {
                 writer.write(getSchedule(track));
                 writer.write(getStagingInfo(track));
             } catch (IOException we) {
-                log.error("Error printing PrintLocationAction: {}", we);
+                log.error("Error printing PrintLocationAction", we);
             }
         }
     }

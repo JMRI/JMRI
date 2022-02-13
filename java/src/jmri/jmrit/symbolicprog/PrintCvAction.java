@@ -59,7 +59,7 @@ public class PrintCvAction extends AbstractAction {
                 w.write(s, 0, s.length());
             }
         } catch (IOException e) {
-            log.warn("error during printing: {}", e);
+            log.warn("error during printing", e);
         }
         mRoster.printEntry(w);
         w.setFontStyle(Font.PLAIN);

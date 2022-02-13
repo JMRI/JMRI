@@ -31,7 +31,7 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
     public ArrayList<XpaMessage> outbound = new ArrayList<>();  // public OK here, so long as this is a test class
 
     @Override
-    public void sendXpaMessage(XpaMessage m, XpaListener reply) {
+    public synchronized void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendXpaMessage [{}]", m);
         }

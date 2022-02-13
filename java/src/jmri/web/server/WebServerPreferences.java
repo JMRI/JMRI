@@ -52,19 +52,6 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
     private static final Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
     private boolean useZeroConf = true;
 
-    /**
-     * Create a WebServerPreferences instance. Prior to JMRI 4.19.2, this would
-     * migrate web server preferences from a JMRI 3.x configuration if needed.
-     * 
-     * @param fileName name of XML file containing JMRI 3.x configuration; this
-     *                 parameter is ignored
-     * @deprecated since 4.19.2; use {@link #WebServerPreferences()} instead
-     */
-    @Deprecated
-    public WebServerPreferences(String fileName) {
-        this();
-    }
-
     public WebServerPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
         Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
@@ -100,82 +87,6 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
         this.port = sharedPreferences.getInt(PORT, this.port);
         this.useZeroConf = sharedPreferences.getBoolean(USE_ZERO_CONF, this.useZeroConf);
         this.setIsDirty(false);
-    }
-
-    /**
-     * Load an XML element containing JMRI 3.x web server preferences. As of
-     * 4.19.2, this method does nothing.
-     * 
-     * @param child the element to load JMRI 3.x web server preferences from
-     * @deprecated since 4.19.2 without replacement
-     */
-    @Deprecated
-    public void load(Element child) {
-        // does nothing; empty implementation to avoid changing public API
-    }
-
-    /**
-     * Compare two different sets of preferences.
-     * 
-     * @param prefs the preferences to compare to this this preferences
-     * @return true if different; false otherwise
-     * @deprecated since 4.19.2 without replacement
-     */
-    @Deprecated
-    public boolean compareValuesDifferent(WebServerPreferences prefs) {
-        if (getClickDelay() != prefs.getClickDelay()) {
-            return true;
-        }
-        if (getRefreshDelay() != prefs.getRefreshDelay()) {
-            return true;
-        }
-        if (isUseAjax() != prefs.isUseAjax()) {
-            return true;
-        }
-        if (this.allowRemoteConfig() != prefs.allowRemoteConfig()) {
-            return true;
-        }
-        if (this.isReadonlyPower() != prefs.isReadonlyPower()) {
-            return true;
-        }
-        if (!(Arrays.equals(getDisallowedFrames(), prefs.getDisallowedFrames()))) {
-            return true;
-        }
-        if (getPort() != prefs.getPort()) {
-            return true;
-        }
-        return !getRailroadName().equals(prefs.getRailroadName());
-    }
-
-    /**
-     * Apply another set of WebServerPreferences to this set of preferences.
-     * 
-     * @param prefs the preferences to apply
-     * @deprecated since 4.19.2 without replacement
-     */
-    @Deprecated
-    public void apply(WebServerPreferences prefs) {
-        setClickDelay(prefs.getClickDelay());
-        setRefreshDelay(prefs.getRefreshDelay());
-        setUseAjax(prefs.isUseAjax());
-        setAllowRemoteConfig(prefs.allowRemoteConfig());
-        setReadonlyPower(prefs.isReadonlyPower());
-        setDisallowedFrames(prefs.getDisallowedFrames());
-        setPort(prefs.getPort());
-        setRailroadName(prefs.getRailroadName());
-    }
-
-    /**
-     * Open a JMRI 3.x web server preferences XML file. As of 4.19.2, this
-     * method does nothing.
-     * 
-     * @param fileName the name of the preferences file
-     * @throws FileNotFoundException if the requested file does not exist
-     * @deprecated since 4.19.2 without replacement
-     */
-    @Deprecated
-    public final void openFile(String fileName) throws FileNotFoundException {
-        // does nothing by design; in place only to avoid changing public API
     }
 
     public void save() {
@@ -285,7 +196,7 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
 
     /**
      * Can the power state be set from web clients?
-     * 
+     *
      * @return true if web clients are barred from setting power state; false if
      *         allowed
      */
@@ -295,7 +206,7 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
 
     /**
      * Set if the power state can be set from web clients.
-     * 
+     *
      * @param readonlyPower true to bar setting power from web clients; false to
      *                      allow
      */

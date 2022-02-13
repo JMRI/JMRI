@@ -964,7 +964,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
-                    log.trace("   draw at {} {}, {} {}", pt);
+                    log.trace("   draw at {}", pt);
                     g2.fill(trackControlCircleAt(pt));
                 }
             }
