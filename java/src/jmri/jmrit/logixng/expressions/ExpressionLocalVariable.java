@@ -30,15 +30,12 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _memoryHandle;
-//    private NamedBeanHandle<NamedTable> _tableHandle;
-//    private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
-//    private String _rowOrColumnName = "";
     private String _otherLocalVariable = "";
     private String _regEx = "";
     private boolean _listenToMemory = true;
-//    private boolean _listenToMemory = false;
 
-    private final LogixNG_SelectTable _selectTable = new LogixNG_SelectTable(this);
+    private final LogixNG_SelectTable _selectTable =
+            new LogixNG_SelectTable(this, () -> {return _compareTo == CompareTo.Table;});
 
     public ExpressionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -240,22 +237,18 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-/*
-            if (evt.getOldValue() instanceof Memory) {
+            if ((_compareTo == CompareTo.Memory) && (evt.getOldValue() instanceof Memory)) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("LocalVariable_MemoryInUseVariableExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
-*/
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-/*
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     removeMemory();
                 }
             }
-*/
         }
     }
 

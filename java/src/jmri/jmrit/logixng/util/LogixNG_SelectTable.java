@@ -22,7 +22,12 @@ import jmri.util.TypeConversionUtil;
  */
 public class LogixNG_SelectTable implements VetoableChangeListener {
 
+    public static interface InUse {
+        public boolean isInUse();
+    }
+
     private final AbstractBase _base;
+    private final InUse _inUse;
 
     private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<NamedTable> _tableHandle;
@@ -46,8 +51,9 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     private ExpressionNode _tableColumnExpressionNode;
 
 
-    public LogixNG_SelectTable(AbstractBase base) {
+    public LogixNG_SelectTable(AbstractBase base, InUse inUse) {
         _base = base;
+        _inUse = inUse;
     }
 
 
@@ -451,7 +457,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof NamedTable) {
+            if (_inUse.isInUse() && (evt.getOldValue() instanceof NamedTable)) {
                 if (evt.getOldValue().equals(getTable().getBean())) {
                     throw new PropertyVetoException(_base.getDisplayName(), evt);
                 }
