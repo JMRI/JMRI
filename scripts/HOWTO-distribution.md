@@ -180,13 +180,13 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
         git checkout master
         git pull
         cp jmri4.27.1.shtml jmri4.25.10.shtml
-        $EDITOR jmri4.25.10.shtml
+        $EDITOR jmri4.27.1.shtml
             (edit the new release note accordingly)
                 change numbers throughout
                 move new warnings to old (see below)
                 remove old-version change notes
-        git add jmri4.25.10.shtml
-        git commit -m"start new 4.25.10 next release note" jmri4.25.10.shtml
+        git add jmri4.27.1.shtml
+        git commit -m"start new 4.27.1 next release note" jmri4.27.1.shtml
         git push github
         cd ../../JMRI
 ```
@@ -211,7 +211,7 @@ If there were, update the master
 
  - Add any new warnings to the old warnings section of the next (4.25.10) release note:
 ```
-        ${EDITOR} ../website/releasenotes/jmri4.25.10.shtml ../website/releasenotes/jmri4.27.1.shtml
+        ${EDITOR} ../website/releasenotes/jmri4.27.1.shtml ../website/releasenotes/jmri4.27.1.shtml
 ```
 
 - Clean out the unneeded sections from the release note
@@ -223,7 +223,7 @@ If there were, update the master
 ```
         cp help/en/releasenotes/jmri4.25-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
-        git commit -m"start for 4.25.10 release note" help/en/releasenotes/*.shtml
+        git commit -m"start for 4.27.1 release note" help/en/releasenotes/*.shtml
         git push github
         git pull
 ```
@@ -231,7 +231,7 @@ If there were, update the master
 - Commit release note, push and pull back
 ```
         cd ../website/releasenotes
-        git commit -m"updated 4.25.10 release note" jmri4.*
+        git commit -m"updated 4.27.1 release note" jmri4.*
         git push github
         git pull
         cd ../../JMRI
@@ -281,7 +281,7 @@ For each, if it doesn't have the right milestone set, and is a change to the rel
 ```
 The release-4.27.1 branch has been created.
 
-Maintainers, please set the 4.25.10 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the 4.27.2 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/4.27.1/)
 ```
