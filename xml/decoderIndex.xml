@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.25.10ish+jake+20220110T1530Z+R4646adf2d6 on Mon Jan 10 10:30:55 EST 2022-->
-  <decoderIndex version="1076">
+  <!--Written by JMRI version 4.25.10ish+jake+20220213T0409Z+R341d0e1b18 on Sat Feb 12 23:10:06 EST 2022-->
+  <decoderIndex version="1078">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -22071,11 +22071,13 @@
         <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="907" comment="Model 8T0303.005" />
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B" />
         <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="873" comment="Model 8T0303.002" />
+        <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1014" comment="Model 8T030?.00?" />
         <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B" />
         <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B" />
         <model model="TSU-GN2208 SD75M" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="898" comment="Model 8T0301.005" />
         <model model="TSU-GN2208 SD80MAC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="935" comment="Model 8T0304.002" />
         <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="908" comment="Model 8T0305.001" />
+        <model model="TSU-GN2208 Dash 9-44CW" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="965" comment="Model 8T100?.00?" />
         <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B" />
         <model model="TSU-GN2208 ES40DC w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="921" comment="Model 8T1004.002" />
         <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001" />
@@ -29197,6 +29199,120 @@
       <family name="TCS A1X decoder" mfg="Train Control Systems" file="TCS_A1X.xml">
         <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32" replacementModel="A1X" replacementFamily="Jan 2000" />
       </family>
+      <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_BachmannFT.xml">
+        <model model="Sound Value FT" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="181">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="6" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="7" lockable="true">None</functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">None</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="15" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="16" lockable="true">Momentum </functionlabel>
+          <functionlabel num="17" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="18" lockable="true">Mute </functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_BachmannGP35.xml">
+        <model model="GP35" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="182">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="6" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="7" lockable="true">None</functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">None</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="15" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="16" lockable="true">Momentum </functionlabel>
+          <functionlabel num="17" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="18" lockable="true">Mute </functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_BachmannRS3.xml">
+        <model model="Sound Value RS3" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="181">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="6" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="7" lockable="true">None</functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">None</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="15" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="16" lockable="true">Momentum </functionlabel>
+          <functionlabel num="17" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="18" lockable="true">Mute </functionlabel>
+        </functionlabels>
+      </family>
       <family name="TCS DP2X decoder" mfg="Train Control Systems" file="TCS_DP2X.xml">
         <model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
@@ -32426,6 +32542,48 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
+      </family>
+      <family name="TCS WOWDiesel V5" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_WOWDieselV5-121.xml">
+        <model model="WOWDiesel V5 121" numOuts="12" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="200">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="9" label="F7" connection="plug" maxcurrent="100 mA" />
+          <output name="10" label="F8" connection="plug" maxcurrent="100 mA" />
+          <output name="11" label="F9" connection="plug" maxcurrent="100 mA" />
+          <output name="12" label="F10" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="6" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="7" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">Rotate Whistle </functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="15" lockable="true">Momentum </functionlabel>
+          <functionlabel num="16" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="17" lockable="true">Windshield Wipers </functionlabel>
+          <functionlabel num="18" lockable="true">Air Spitter </functionlabel>
+        </functionlabels>
       </family>
       <family name="WOW Diesel Sound Set 2" mfg="Train Control Systems" file="TCS_WOW_Diesel02.xml">
         <model model="WOW Diesel 101 SS2" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin" lowVersionID="2" highVersionID="2" productID="170">

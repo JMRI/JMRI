@@ -501,7 +501,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 break;
 
             case Table:
-                message = "Memory_Long_CompareTable";
+                message = "LocalVariable_Long_CompareTable";
                 other1 = _selectTable.getTableNameDescription(locale);
                 other2 = _selectTable.getTableRowDescription(locale);
                 other3 = _selectTable.getTableColumnDescription(locale);
