@@ -246,7 +246,7 @@ public abstract class AbstractBase
         disposeMe();
     }
 
-    protected void assertListenersAreNotRegistered(Logger log, String method) {
+    public void assertListenersAreNotRegistered(Logger log, String method) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
             log.error(method + " must not be called when listeners are registered", e);
