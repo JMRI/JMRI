@@ -78,19 +78,6 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
         }
     }
 
-    /**
-     * Notify listeners of a property change.
-     * 
-     * @param key property name
-     * @param oldValue old value of property
-     * @param value new value of property
-     * @deprecated since 4.19.5; use {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)} instead
-     */
-    @Deprecated
-    protected void notifyPropertyChange(String key, Object oldValue, Object value) {
-        firePropertyChange(key, oldValue, value);
-    }
-
     /** {@inheritDoc} */
     @Override
     abstract public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException;
@@ -104,7 +91,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
     abstract public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Basic implementation. Override this to turn reading on and off globally.
      */
     @Override
@@ -112,7 +99,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
         return true;
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Checks using the current default programming mode
      */
     @Override
@@ -130,7 +117,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
     @Override
     public final void setMode(ProgrammingMode m) {
         List<ProgrammingMode> validModes = getSupportedModes();
-        
+
         if (m == null) {
             if (validModes.size()>0) {
                 // null can only be set if there are no valid modes
@@ -139,7 +126,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
                 mode = null;
             }
         }
-        
+
         if (validModes.contains(m)) {
             ProgrammingMode oldMode = mode;
             mode = m;
@@ -155,9 +142,9 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
      * The definition of "best" is up to the specific-system developer.
      * By default, this is the first of the available methods from getSupportedModes;
      * override this method to change that.
-     * 
+     *
      * @return The recommended ProgrammingMode or null if none exists or is defined.
-     */ 
+     */
     public ProgrammingMode getBestMode() {
         if (!getSupportedModes().isEmpty()) {
             return getSupportedModes().get(0);
@@ -178,7 +165,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
     @Nonnull
     abstract public List<ProgrammingMode> getSupportedModes();
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Basic implementation. Override this to turn writing on and off globally.
      */
     @Override
@@ -186,7 +173,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
         return true;
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Checks using the current default programming mode.
      */
     @Override
@@ -194,7 +181,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
         return getCanWrite();
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * By default, say that no verification is done.
      *
      * @param addr A CV address to check (in case this varies with CV range) or null for any
@@ -203,7 +190,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
     @Nonnull
     @Override
     public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
-    
+
 
     /**
      * Internal routine to start timer to protect the mode-change.
@@ -233,7 +220,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
 
     /**
      * Internal routine to handle timer starts and restarts.
-     * 
+     *
      * @param delay the initial delay, in milliseconds
      */
     protected synchronized void restartTimer(int delay) {

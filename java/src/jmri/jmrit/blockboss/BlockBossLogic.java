@@ -1106,24 +1106,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * @return an enumeration of the collection of BlockBossLogic objects.
-     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#provideAll()} instead.
-     */
-    @Deprecated
-    public static Enumeration<BlockBossLogic> entries() {
-        return Collections.enumeration(InstanceManager.getDefault(BlockBossLogicProvider.class).provideAll());
-    }
-
-    /**
-     * Ensure that this BlockBossLogic object is available for later retrieval.
-     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#register(BlockBossLogic)} instead.
-     */
-    @Deprecated
-    public void retain() {
-        InstanceManager.getDefault(BlockBossLogicProvider.class).register(this);
-    }
-
-    /**
      * Get the BlockBossLogic item governing a specific signal head by its name,
      * having removed it from use.
      *
@@ -1153,38 +1135,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         BlockBossLogic b = InstanceManager.getDefault(BlockBossLogicProvider.class).provide(sh);
         b.stop();
         return b;
-    }
-
-    /**
-     * Get the BlockBossLogic item governing a specific signal head located from its name.
-     * <p>
-     * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
-     * not remove the object from being used.
-     *
-     * @param signal SignalHead system or user name
-     * @return never null - creates new object if none exists
-     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#provide(String)} instead.
-     */
-    @Nonnull
-    @Deprecated
-    public static BlockBossLogic getExisting(@Nonnull String signal) {
-        return InstanceManager.getDefault(BlockBossLogicProvider.class).provide(signal);
-    }
-
-    /**
-     * Get the BlockBossLogic item governing a specific signal head object.
-     * <p>
-     * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
-     * not remove the object from being used.
-     *
-     * @param sh Existing SignalHead object
-     * @return never null - creates new object if none exists
-     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#provide(SignalHead)} instead.
-     */
-    @Nonnull
-    @Deprecated
-    public static BlockBossLogic getExisting(@Nonnull SignalHead sh) {
-        return InstanceManager.getDefault(BlockBossLogicProvider.class).provide(sh);
     }
 
     @Override
@@ -1371,17 +1321,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         message.append(s);
         message.append(Bundle.getMessage(inUseWatchedSignal));
         message.append(s2);
-    }
-
-    /**
-     * Stop() all existing objects and clear the list.
-     * <p>
-     * Intended to be only used during testing.
-     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#dispose()} instead.
-     */
-    @Deprecated
-    public static void stopAllAndClear() {
-        InstanceManager.getDefault(BlockBossLogicProvider.class).dispose();
     }
 
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {

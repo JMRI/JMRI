@@ -105,24 +105,6 @@ public abstract class AbstractNamedBean implements NamedBean {
         return NamedBean.super.getDisplayName(displayOptions);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    @CheckReturnValue
-    @Nonnull
-    final public String getFullyFormattedDisplayName() {
-        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    @CheckReturnValue
-    @Nonnull
-    final public String getFullyFormattedDisplayName(boolean userNameFirst) {
-        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
-    }
-
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //  public void firePropertyChange(String propertyName,
@@ -275,7 +257,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     final public String toString() {
         /*
          * Implementation note:  This method is final to ensure that the
-         * contract for toString is properly implemented.  See the 
+         * contract for toString is properly implemented.  See the
          * comment in NamedBean#toString() for more info.
          * If a subclass wants to add extra info at the end of the
          * toString output, extend {@link #toStringSuffix}.
@@ -290,7 +272,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     protected String toStringSuffix() {
         return "";
     }
-    
+
     /** {@inheritDoc} */
     @Override
     final public String getUserName() {
@@ -402,7 +384,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation tests that 
+     * This implementation tests that
      * {@link jmri.NamedBean#getSystemName()}
      * is equal for this and obj.
      *
@@ -424,17 +406,17 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return hash code value is based on sthe ystem name.
      */
     @Override
     public int hashCode() {
-        return getSystemName().hashCode(); // as the 
+        return getSystemName().hashCode(); // as the
     }
-    
+
     /**
-     * {@inheritDoc} 
-     * 
+     * {@inheritDoc}
+     *
      * By default, does an alphanumeric-by-chunks comparison.
      */
     @CheckReturnValue

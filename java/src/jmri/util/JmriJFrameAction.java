@@ -40,9 +40,9 @@ public class JmriJFrameAction extends AbstractAction {
                 j.initComponents();
                 j.setVisible(true);
             } catch (java.lang.ClassNotFoundException ex1) {
-                log.error("Couldn't create window, because couldn't find class: {}", ex1);
+                log.error("Couldn't create window, because couldn't find class", ex1);
             } catch (Exception ex2) {
-                log.error("Exception creating frame: {}", ex2);
+                log.error("Exception creating frame", ex2);
             }
         }
     }

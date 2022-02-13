@@ -106,6 +106,7 @@ public class CheckJMRIObject {
 //  Function similar to the above, EXCEPT that it is used for form processing.
 //  Only JTextField's and JTable's are checked.
 //  A LIST of errors is returned, i.e. it checks ALL fields.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DP_DO_INSIDE_DO_PRIVILEGED")
 //  Gotcha: All JTextField's in a dialog are declared "private" by the IDE, ergo the need for "field.setAccessible(true);"
     public void analyzeForm(String prefix, javax.swing.JFrame dialog, ArrayList<String> errors) {
         Field[] objFields = dialog.getClass().getDeclaredFields();

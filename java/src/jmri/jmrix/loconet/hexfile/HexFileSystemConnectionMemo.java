@@ -24,7 +24,7 @@ public class HexFileSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(jmri.SensorManager.class, (Class c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(jmri.SensorManager.class, (Class<?> c) -> new LnSensorManager(this));
     }
 
     /**

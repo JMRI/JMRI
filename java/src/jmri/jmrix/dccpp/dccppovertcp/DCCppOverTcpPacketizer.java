@@ -250,7 +250,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
                     // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
                     // need to be parsed. Indeed, trying to parse them will screw them up.
-                    // So instead, we de-@Deprecated the string constructor so that we can
+                    // So instead, we de-deprecated the string constructor so that we can
                     // directly create a DCCppReply from the incoming string without translation/parsing.
 
                     //  Note: the substring call below also strips off the "< >"

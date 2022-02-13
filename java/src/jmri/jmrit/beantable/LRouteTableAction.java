@@ -15,6 +15,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.Conditional.Operator;
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
@@ -835,7 +836,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _systemName.setEnabled(true);
         _userName.setEnabled(true);
         _addFrame.setTitle(rbx.getString("LRouteAddTitle"));
-        
+
         _addFrame.setEscapeKeyClosesWindow(true);
         _addFrame.getRootPane().setDefaultButton(createButton);
     }
@@ -1317,19 +1318,19 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             try {
                 soundFile.setText(FileUtil.getPortableFilename(soundChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
-                log.error("exception setting sound file: {}", e);
+                log.error("exception setting sound file", e);
             }
         }
     }
 
-    JFileChooser scriptChooser = null;
+    ScriptFileChooser scriptChooser = null;
 
     /**
      * Set the script file
      */
     void setScriptPressed() {
         if (scriptChooser == null) {
-            scriptChooser = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+            scriptChooser = new ScriptFileChooser();
         }
         scriptChooser.rescanCurrentDirectory();
         int retVal = scriptChooser.showOpenDialog(null);
@@ -1338,7 +1339,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             try {
                 scriptFile.setText(FileUtil.getPortableFilename(scriptChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
-                log.error("exception setting script file: {}", e);
+                log.error("exception setting script file", e);
             }
         }
     }

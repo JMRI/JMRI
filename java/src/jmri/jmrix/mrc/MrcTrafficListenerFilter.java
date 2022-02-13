@@ -8,7 +8,7 @@ import java.util.Date;
  *
  * @author Matthias Keil Copyright (C) 2013
  * @author Kevin Dickerson Copyright (C) 2014
- * 
+ *
  *
  */
 public class MrcTrafficListenerFilter {
@@ -40,13 +40,6 @@ public class MrcTrafficListenerFilter {
      * The listener.
      */
     MrcTrafficListener l = null;
-
-    /**
-     * Hide default constructor
-     */
-    @SuppressWarnings("unused")
-    private MrcTrafficListenerFilter() {
-    }
 
     /**
      * Constructor

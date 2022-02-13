@@ -32,6 +32,7 @@ session.log
 /java/tmp
 /java/doc
 /java/test-classes/
+/scripts/HOWTO-distribution.md.bak
 *.class
 /temp
 .pydevproject

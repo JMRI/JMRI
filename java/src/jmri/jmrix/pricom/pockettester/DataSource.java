@@ -93,7 +93,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n{}", ex);
+                    log.error("Error while opening port.  Did you select the right one?", ex);
                 }
             }
         });
@@ -251,10 +251,10 @@ public class DataSource extends jmri.util.JmriJFrame {
             final byte endbyte = bytes[bytes.length - 1];
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: {}", e);
+            log.error("Exception on output", e);
         } catch (java.lang.InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: {}", e);
+            log.error("Interrupted output", e);
         }
     }
 
@@ -284,10 +284,9 @@ public class DataSource extends jmri.util.JmriJFrame {
             = new javax.swing.JComboBox<String>(new String[]{"9600", "19200", "38400", "57600", "115200"});
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Thread.stop
     @Override
     public void dispose() {
-        // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread != null) {
             readerThread.stop();
         }
@@ -312,7 +311,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -391,7 +390,7 @@ public class DataSource extends jmri.util.JmriJFrame {
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port {} in use, cannot open", p);
+        log.error("Port {} in use, cannot open", port, p);
     }
 
     DataInputStream serialStream = null;

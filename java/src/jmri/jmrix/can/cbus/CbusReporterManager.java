@@ -28,7 +28,7 @@ public class CbusReporterManager extends AbstractReporterManager {
     public CbusReporterManager(CanSystemConnectionMemo memo) {
         super(memo);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -83,7 +83,7 @@ public class CbusReporterManager extends AbstractReporterManager {
         log.debug("Valid system name: {}", systemName);
         return NameValidity.VALID;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -99,8 +99,8 @@ public class CbusReporterManager extends AbstractReporterManager {
     public String getEntryToolTip() {
         return Bundle.getMessage("AddReporterEntryToolTip");
     }
-    
-    /** 
+
+    /**
      * Validates to only numeric system names.
      * {@inheritDoc}
      */
@@ -109,23 +109,23 @@ public class CbusReporterManager extends AbstractReporterManager {
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         return validateSystemNameFormatOnlyNumeric(name,locale);
     }
-    
+
     protected final static String CBUS_REPORTER_DESCRIPTOR_KEY = "CBUS Reporter Type"; // NOI18N
-    
+
     protected final static String CBUS_REPORTER_TYPE_CLASSIC = "Classic RFID"; // NOI18N
-    
+
     protected final static String CBUS_REPORTER_TYPE_DDES_DESCRIBING = "CANRC522 / CANRCOM"; // NOI18N
-    
-    protected final static String[] CBUS_REPORTER_TYPES = {
+
+    final static String[] CBUS_REPORTER_TYPES = {
         CBUS_REPORTER_TYPE_CLASSIC,CBUS_REPORTER_TYPE_DDES_DESCRIBING};
-    
-    protected final static String[] CBUS_REPORTER_TYPE_TIPS = {
+
+    final static String[] CBUS_REPORTER_TYPE_TIPS = {
         "DDES / ACDAT 5 byte unique tag.","DDES self-describing ( Writeable CANRC522 / Railcom )"}; // NOI18N
-    
+
     protected final static String CBUS_DEFAULT_REPORTER_TYPE = CBUS_REPORTER_TYPES[0];
-    
+
     protected final static String CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY = "Maintain CBUS Sensor"; // NOI18N
-    
+
     @Override
     @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
@@ -154,9 +154,9 @@ public class CbusReporterManager extends AbstractReporterManager {
         });
         return l;
     }
-    
+
     private int _timeout=2000; // same default as TimeoutReporter
-    
+
     /**
      * Set the Reporter timeout.
      * @param timeout time in milliseconds that CbusReporters stay at IdTag.SEEN after hearing an ID Tag.
@@ -164,7 +164,7 @@ public class CbusReporterManager extends AbstractReporterManager {
     public void setTimeout(int timeout){
         _timeout = timeout;
     }
-    
+
     /**
      * Get the Reporter Timeout.
      * @return milliseconds for CbusReporters to return to IdTag.UNSEEN

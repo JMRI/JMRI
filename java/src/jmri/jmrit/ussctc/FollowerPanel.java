@@ -120,7 +120,7 @@ public class FollowerPanel extends BasePanel {
             invert.setSelected(o.getInvert());
             vetoName.setText(o.getVetoName());
         } catch (jmri.JmriException e) {
-            log.error("Exception trying to find existing OS Indicator: {}", e); // NOI18N
+            log.error("Exception trying to find existing OS Indicator", e); // NOI18N
         }
     }
 

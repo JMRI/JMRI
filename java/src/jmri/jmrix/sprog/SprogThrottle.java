@@ -36,7 +36,7 @@ public class SprogThrottle extends AbstractThrottle {
         this.address = address;
         this.isForward = true;
         this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
-        
+
     }
 
     SprogCommandStation station = null;
@@ -130,7 +130,7 @@ public class SprogThrottle extends AbstractThrottle {
             mode |= (InstanceManager.getDefault(jmri.PowerManager.class).getPower() == SprogPowerManager.ON)
                     ? SprogConstants.POWER_BIT : 0;
         } catch (Exception e) {
-            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class): {}", e);
+            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class)", e);
         }
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode);
@@ -164,7 +164,7 @@ public class SprogThrottle extends AbstractThrottle {
     public synchronized void setSpeedSetting(float speed) {
         SpeedStepMode mode = getSpeedStepMode();
         if (mode == SpeedStepMode.NMRA_DCC_28) {
-            // 28 step mode speed commands are 
+            // 28 step mode speed commands are
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;

@@ -123,7 +123,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * skipPrefix is not used at this point in time, but is 
+     * skipPrefix is not used at this point in time, but is
      * defined as abstract in AbstractMRReply
      */
     @Override
@@ -133,10 +133,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     // decode messages of a particular form
 
-    /* 
-     * The next group of routines are used by Feedback and/or turnout 
-     * control code.  These are used in multiple places within the code, 
-     * so they appear here. 
+    /*
+     * The next group of routines are used by Feedback and/or turnout
+     * control code.  These are used in multiple places within the code,
+     * so they appear here.
      */
 
     /**
@@ -153,7 +153,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         }
         return -1;
     }
-    
+
     private int getTurnoutAddrFromData(int a1, int a2) {
         if (getFeedbackMessageType() > 1) {
             return -1;
@@ -252,7 +252,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * Returns the number of feedback items in the messages.
      * For accessory info replies, always returns 1. For broadcast, it returns the
      * number of feedback pairs. Returns 0 for non-feedback messages.
-     * 
+     *
      * @return number of feedback pair items.
      */
     public final int getFeedbackMessageItems() {
@@ -364,7 +364,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * If this is a throttle-type message, return address.
-     * Otherwise return -1. 
+     * Otherwise return -1.
      * <p>
      * Note we only identify the command now;
      * the response to a request for status is not yet seen here.
@@ -422,8 +422,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || message == XNetConstants.LOCO_DH_INFO_V2);
     }
 
-    /* 
-     * Finally, we have some commonly used routines that are used for 
+    /*
+     * Finally, we have some commonly used routines that are used for
      * checking specific, generic, response messages.
      */
 
@@ -582,7 +582,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * @return the value returned by the DCC system associated with a 
+     * @return the value returned by the DCC system associated with a
      * service mode reply.
      * return -1 if not a service mode message.
      */
@@ -611,7 +611,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     @Override
     public boolean isUnsolicited() {
         // The message may be set as an unsolicited message else where
-        // or it may be classified as unsolicited based on the type of 
+        // or it may be classified as unsolicited based on the type of
         // message received.
         // NOTE: The feedback messages may be received in either solicited
         // or unsolicited form.  requesting code can mark the reply as solicited
@@ -621,42 +621,27 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Resets the unsolicited feedback flag. If the reply was not a feedback,
-     * or was received as a broadcast - unsolicited from the command station, 
-     * this method  <b>will not cause</b> the {@link #isUnsolicited()} to 
-     * return {@code false}.  
-     * <p>
-     * Messages sent as unsolicited by the command station can not be turned 
-     * to solicited.
-     * @deprecated since 4.21.1 without replacement
-     */
-    @Deprecated
-    public final void resetUnsolicited() {
-        // method deprecated
-    }
-    
-    /**
      * Mask to identify a turnout feedback + correct nibble. Turnout types differ in
      * 6th bit, so it's left out (is variable).
      */
     private static final int FEEDBACK_TURNOUT_MASK = 0b0101_0000;
-    
+
     /**
      * Mask to identify a feedback module + correct nibble. Turnout modules have
      * type exactly 2.
      */
     private static final int FEEDBACK_MODULE_MASK  = 0b0111_0000;
-    
+
     /**
-     * The value of "feedback module" type. 
+     * The value of "feedback module" type.
      */
     private static final int FEEDBACK_TYPE_FBMODULE = 0b0100_0000;
-    
+
     /**
      * Bit that indicates the higher nibble in module or turnout feedback
      */
     private static final int FEEDBACK_HIGH_NIBBLE = 0b0001_0000;
-    
+
     private int findFeedbackData(int baseAddress, int selector, int mask) {
         if (isFeedbackMessage()) {
             // shorctcut for single-item msg
@@ -682,7 +667,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * Returns value of the given feedback module bit. Returns {@link Optional}
      * that is non-empty, if the feedback was present. The Optional's value indicates the
      * feedback state.
-     * 
+     *
      * @param sensorNumber the sensor bit ID
      * @return optional sensor state.
      */
@@ -694,14 +679,14 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         // feedback address directly addresses 8-bit module, XpressNet spec 3.0:2.1.11.
         int s = sensorNumber - 1;
         int baseAddress = (s / 8);
-        int selector2 = (s & 0x04) != 0 ? 
-                FEEDBACK_TYPE_FBMODULE | FEEDBACK_HIGH_NIBBLE : 
+        int selector2 = (s & 0x04) != 0 ?
+                FEEDBACK_TYPE_FBMODULE | FEEDBACK_HIGH_NIBBLE :
                 FEEDBACK_TYPE_FBMODULE;
         int res = findFeedbackData(baseAddress, selector2, FEEDBACK_MODULE_MASK);
-        return res == -1 ? null : 
+        return res == -1 ? null :
                 (res & (1 << (s % 4))) > 0;
     }
-    
+
     /**
      * Calls processor for turnout's feedback, returns the processor's outcome.
      * Searches for the turnout feedback for the given accessory. If found,
@@ -740,7 +725,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         FeedbackItem item = new FeedbackItem(this, accessoryNumber, r);
         return Optional.of(item);
     }
-    
+
     protected final FeedbackItem createFeedbackItem(int n, int d) {
         return new FeedbackItem(this, n, d);
     }
@@ -754,7 +739,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         StringBuilder text;
         // First, Decode anything that is sent by the LI10x, and
         // not the command station
-        
+
         if(getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER){
             switch(this.getElement(1)) {
               case XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR:
@@ -879,7 +864,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             } else if (isPagedModeResponse()) {
                 text = new StringBuilder(Bundle.getMessage("XNetReplyServiceModePagedResponse", getServiceModeCVNumber(), getServiceModeCVValue()));
             } else if (getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-                String typeString; 
+                String typeString;
                 switch (getElement(3)) {
                     case 0x00:
                         typeString = Bundle.getMessage("CSTypeLZ100");
@@ -1206,7 +1191,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             // We have to re-arange the bits, since bit 4 is the LSB,
             // but other bits are in order from 0-3
             speedVal = ((element2 & 0x0F) << 1) + ((element2 & 0x10) >> 4);
-            // The first speed step used is actually at 4 for 28  
+            // The first speed step used is actually at 4 for 28
             // speed step mode.
             if (speedVal >= 3) {
                 speedVal -= 3;

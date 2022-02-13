@@ -59,7 +59,7 @@ public class AutoTrainAction {
     private ArrayList<TransitSection> _activeTransitSectionList = new ArrayList<TransitSection>();
     private ArrayList<TransitSectionAction> _activeActionList = new ArrayList<TransitSectionAction>();
 
-    // this method is called when an AutoActiveTrain enters a Section 
+    // this method is called when an AutoActiveTrain enters a Section
     protected synchronized void addTransitSection(TransitSection ts) {
         _activeTransitSectionList.add(ts);
         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
@@ -429,13 +429,13 @@ public class AutoTrainAction {
                         try {
                             s.setState(Sensor.INACTIVE);
                         } catch (jmri.JmriException reason) {
-                            log.error("Exception when toggling Sensor {} Inactive - {}", tsa.getStringWhat(), reason);
+                            log.error("Exception when toggling Sensor {} Inactive", tsa.getStringWhat(), reason);
                         }
                     }
                     try {
                         s.setState(Sensor.ACTIVE);
                     } catch (jmri.JmriException reason) {
-                        log.error("Exception when setting Sensor {} Active - {}", tsa.getStringWhat(), reason);
+                        log.error("Exception when setting Sensor {} Active", tsa.getStringWhat(), reason);
                     }
                 } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
                     log.error("Could not find Sensor {}", tsa.getStringWhat());
@@ -451,13 +451,13 @@ public class AutoTrainAction {
                         try {
                             s.setState(Sensor.ACTIVE);
                         } catch (jmri.JmriException reason) {
-                            log.error("Exception when toggling Sensor {} Active - {}", tsa.getStringWhat(), reason);
+                            log.error("Exception when toggling Sensor {} Active", tsa.getStringWhat(), reason);
                         }
                     }
                     try {
                         s.setState(Sensor.INACTIVE);
                     } catch (jmri.JmriException reason) {
-                        log.error("Exception when setting Sensor {} Inactive - {}", tsa.getStringWhat(), reason);
+                        log.error("Exception when setting Sensor {} Inactive", tsa.getStringWhat(), reason);
                     }
                 } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
                     log.error("Could not find Sensor {}", tsa.getStringWhat());
@@ -564,7 +564,7 @@ public class AutoTrainAction {
                 int sleepTime = ((_tsa.getDataWhat1()) * 12) / 10;
                 boolean keepGoing = true;
                 while (keepGoing && (index < pattern.length())) {
-                    // sound horn 
+                    // sound horn
                     if (_autoActiveTrain.getAutoEngineer() != null) {
                         _autoActiveTrain.getAutoEngineer().setFunction(2, true);
                         try {
@@ -629,7 +629,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action      
+                        // interrupting will cause termination without executing the action
                     }
                 } else if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTART) {
                     if ((_autoActiveTrain.getAutoEngineer() != null)
@@ -646,10 +646,10 @@ public class AutoTrainAction {
                                 }
                             }
                         } catch (InterruptedException e) {
-                            // interrupting will cause termination without executing the action      
+                            // interrupting will cause termination without executing the action
                         }
                     }
-                    // train is stopped, wait for it to start 
+                    // train is stopped, wait for it to start
                     try {
                         while (waitingOnTrain) {
                             if ((_autoActiveTrain.getAutoEngineer() != null)
@@ -661,7 +661,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action      
+                        // interrupting will cause termination without executing the action
                     }
                 }
             }

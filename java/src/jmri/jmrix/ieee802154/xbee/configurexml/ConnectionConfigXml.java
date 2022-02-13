@@ -138,7 +138,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             // create the RemoteXBeeDevice for the node.
             RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
                     guid, address, Identifier);
-            // Check to see if the node is a duplicate, if it is, move 
+            // Check to see if the node is a duplicate, if it is, move
             // to the next one.
             // get a XBeeNode corresponding to this node address if one exists
             XBeeNode curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
@@ -224,7 +224,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     // fallback for connections created with a script
                     node.connectPortController(connectedController);
                 }
-                log.info("loaded {} onto node ", node.getConnectionConfig(), node);
+                log.info("loaded {} onto node {}", node.getConnectionConfig(), node);
                 log.info("manuf {} userName {} ", node.getConnectionConfig().getManufacturer(), node.getConnectionConfig().name());
             } catch (TimeoutException toe) {
                 log.error("Timeout adding node {} from configuration file.",

@@ -35,12 +35,12 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         this.tc = _tc;
         SHORT_TIMEOUT = 4000; // length default timeout
         // connect to listen
-        log.info("{}", this.tc);
+        log.info("Mx1TrafficController: {}", this.tc);
         if(this.tc!=null)
             this.tc.addMx1Listener(~0, this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Types implemented here.
@@ -62,7 +62,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     int _val; // remember the value being read/written for confirmative reply
     int _cv;  // remember the cv being read/written
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -93,7 +93,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -101,7 +101,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         readCV(CV, p);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -147,7 +147,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -206,7 +206,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Internal routine to handle a timeout

@@ -80,7 +80,7 @@ public class DirectSystemConnectionMemo extends DefaultSystemConnectionMemo impl
      */
     public ThrottleManager getThrottleManager(){
         return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,
-                (Class c) -> {
+                (Class<?> c) -> {
                     setThrottleManager(new ThrottleManager(this));
                     log.debug("Auto create of ThrottleManager for initial configuration");
                     return get(ThrottleManager.class);

@@ -191,6 +191,13 @@ it.
       "https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/findbugsResult/">daily
       builds</a>. If new errors appear during CI, the job will (usually) fail. You can look at the
       Jenkins output to see where there are existing errors to work on.
+      There's a very nice browser
+      that lets you select items by type, by file, by package, etc,
+      available by clicking on the "SpotBugs Warnings" button on the left of the
+      <a href="https://builds.jmri.org/jenkins/job/development/job/spotbugs/">Jenkins SpotBugs job</a>
+      (see also the
+      <a href="https://builds.jmri.org/jenkins/job/j11development/job/spotbugs/">Java 11 counterpart</a>)
+
       <p>To run it locally:</p>
 
       <ul>

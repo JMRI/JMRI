@@ -69,14 +69,6 @@ public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
     private Mx1TrafficController st;
 
-    /**
-     * Configure the "command station" object
-     * @deprecated since 4.21.1 without replacement
-     */
-    @Deprecated
-    public void configureCommandStation() {
-    }
-
     @Override
     public void configureManagers() {
 
@@ -114,7 +106,7 @@ public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     public DefaultProgrammerManager getProgrammerManager() {
-        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class c) -> {
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class<?> c) -> {
             return generateDefaultProgrammerManagerForConnection();
         });
     }
@@ -135,14 +127,6 @@ public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo impleme
 
     public Mx1TurnoutManager getTurnoutManager() {
         return (Mx1TurnoutManager) classObjectMap.get(TurnoutManager.class);
-    }
-
-    /**
-     * @param cs command station object to set
-     * @deprecated since 4.21.1 without replacement
-     */
-    @Deprecated
-    public void setCommandStation(Mx1CommandStation cs) {
     }
 
     public Mx1PowerManager getPowerManager() {

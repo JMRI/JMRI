@@ -32,7 +32,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
         log.debug("Constructor called");
 
         systemPrefix = memo.getSystemPrefix();
-        beanType = InstanceManager.getDefault(MeterManager.class).typeLetter();        
+        beanType = InstanceManager.getDefault(MeterManager.class).typeLetter();
         tc = memo.getDCCppTrafficController();
 
         updateTask = new MeterUpdateTask(10000, 10000) {
@@ -48,26 +48,26 @@ public class DCCppPredefinedMeters implements DCCppListener {
         tc.addDCCppListener(DCCppInterface.CS_INFO, this);
 
         updateTask.initTimer();
-        
+
         //request one 'c' reply to set up the meters
-        tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);       
+        tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
     }
 
     public void setDCCppTrafficController(DCCppTrafficController controller) {
         tc = controller;
     }
 
-    /* handle new Meter replies and original current replies 
+    /* handle new Meter replies and original current replies
      *   creates meters if first time this name is encountered
-     *   uses new MeterReply message format from DCC-EX 
-     *   also supports original "current percent" meter from 
+     *   uses new MeterReply message format from DCC-EX
+     *   also supports original "current percent" meter from
      *   older DCC++                                           */
     @Override
     public void message(DCCppReply r) {
 
         //bail if other message types received
-        if (!r.isCurrentReply() && !r.isMeterReply()) return; 
-        
+        if (!r.isCurrentReply() && !r.isMeterReply()) return;
+
         log.debug("Handling reply: '{}'", r);
 
         //assume old-style current message and default name and settings
@@ -91,36 +91,37 @@ public class DCCppPredefinedMeters implements DCCppListener {
             meterUnit = r.getMeterUnit();
             warnValue = r.getMeterWarnValue();
         }
-                
+
         //create, store and register the meter if not yet defined
         if (!meters.containsKey(meterName)) {
-            log.debug("Adding new meter '{}' of type '{}' with unit '{}'" , meterName, meterType, meterUnit, warnValue);
+            log.debug("Adding new meter '{}' of type '{}' with unit '{}' {}",
+                    meterName, meterType, meterUnit, warnValue);
             Meter newMeter;
-            String sysName = systemPrefix + beanType + meterType + "_" + meterName; 
+            String sysName = systemPrefix + beanType + meterType + "_" + meterName;
             if (meterType.equals(DCCppConstants.VOLTAGE)) {
                 newMeter = new DefaultMeter.DefaultVoltageMeter(
                         sysName, meterUnit, minValue, maxValue, resolution, updateTask);
             } else {
                 newMeter = new DefaultMeter.DefaultCurrentMeter(
-                        sysName, meterUnit, minValue, maxValue, resolution, updateTask);                
+                        sysName, meterUnit, minValue, maxValue, resolution, updateTask);
             }
             //store meter by incoming name for lookup later
             meters.put(meterName, newMeter);
             InstanceManager.getDefault(MeterManager.class).register(newMeter);
         }
-        
+
         //calculate percentage meter value if original current reply message type received
         if (r.isCurrentReply()) {
             meterValue = ((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f ;
         }
-        
+
         //set the newValue for the meter
         Meter meter = meters.get(meterName);
         log.debug("Setting value for '{}' to {}" , meterName, meterValue);
         try {
             meter.setCommandedAnalogValue(meterValue);
         } catch (JmriException e) {
-            log.error("exception thrown when setting meter '{}' value {}: {}", meterName, meterValue, e);
+            log.error("exception thrown when setting meter '{}' value {}", meterName, meterValue, e);
         }
     }
 
@@ -128,7 +129,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
     public void message(DCCppMessage m) {
         // Do nothing
     }
-    
+
     /* dispose of all defined meters             */
     /* NOTE: I don't know if this is ever called */
     public void dispose() {
@@ -137,9 +138,9 @@ public class DCCppPredefinedMeters implements DCCppListener {
             updateTask.disable(v);
             InstanceManager.getDefault(MeterManager.class).deregister(v);
             updateTask.dispose(v);
-        }); 
+        });
     }
-    
+
     // Handle message timeout notification, no retry
     @Override
     public void notifyTimeout(DCCppMessage msg) {

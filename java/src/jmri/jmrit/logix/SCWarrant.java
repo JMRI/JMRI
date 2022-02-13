@@ -765,9 +765,11 @@ public class SCWarrant extends Warrant {
                     _throttle.setSpeedSetting(speedFactor*SPEED_TO_PLATFORM);
                 }
                 while ((getBlockAt(orders.size()-2).getState()&Block.OCCUPIED)==Block.OCCUPIED && getBlockAt(orders.size()-2).isAllocatedTo(_warrant)) {
-                    log.debug(" runSignalControlledTrain entering wait. Block {}"
-                              +"   free: {}   allocated to this warrant: {}",
-                              _warrant._trainName,getBlockAt(orders.size()-2).getDisplayName(),getBlockAt(orders.size()-2).isFree(),getBlockAt(orders.size()-2).isAllocatedTo(_warrant));
+                    log.debug(" runSignalControlledTrain {} entering wait. Block {}   free: {}   allocated to this warrant: {}",
+                              _warrant._trainName,
+                              getBlockAt(orders.size()-2).getDisplayName(),
+                              getBlockAt(orders.size()-2).isFree(),
+                              getBlockAt(orders.size()-2).isAllocatedTo(_warrant));
                     try {
                         // This does not need to be a timed wait, since we will get interrupted once the block is free
                         // However, the functionality is more robust with a timed wait.
