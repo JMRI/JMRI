@@ -10,12 +10,13 @@ import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.actions.ActionMemory;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for ActionMemory objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -26,14 +27,16 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
     }
 
     /**
-     * Default implementation for storing the contents of a SE8cSignalHead
+     * Default implementation for storing the contents of a ActionMemory
      *
-     * @param o Object to store, of type TripleLightSignalHead
+     * @param o Object to store, of type ActionMemory
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
         ActionMemory p = (ActionMemory) o;
+
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
         Element element = new Element("ActionMemory");
         element.setAttribute("class", this.getClass().getName());
@@ -62,36 +65,7 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable()));
         element.addContent(new Element("otherFormula").addContent(p.getOtherFormula()));
 
-
-        Element tableElement = new Element("table");
-        element.addContent(tableElement);
-
-        Element tableNameElement = new Element("tableName");
-        tableNameElement.addContent(new Element("addressing").addContent(p.getTableNameAddressing().name()));
-        NamedBeanHandle table = p.getTable();
-        if (table != null) {
-            tableNameElement.addContent(new Element("name").addContent(table.getName()));
-        }
-        tableNameElement.addContent(new Element("reference").addContent(p.getTableNameReference()));
-        tableNameElement.addContent(new Element("localVariable").addContent(p.getTableNameLocalVariable()));
-        tableNameElement.addContent(new Element("formula").addContent(p.getTableNameFormula()));
-        tableElement.addContent(tableNameElement);
-
-        Element tableRowElement = new Element("row");
-        tableRowElement.addContent(new Element("addressing").addContent(p.getTableRowAddressing().name()));
-        tableRowElement.addContent(new Element("name").addContent(p.getTableRowName()));
-        tableRowElement.addContent(new Element("reference").addContent(p.getTableRowReference()));
-        tableRowElement.addContent(new Element("localVariable").addContent(p.getTableRowLocalVariable()));
-        tableRowElement.addContent(new Element("formula").addContent(p.getTableRowFormula()));
-        tableElement.addContent(tableRowElement);
-
-        Element tableColumnElement = new Element("column");
-        tableColumnElement.addContent(new Element("addressing").addContent(p.getTableColumnAddressing().name()));
-        tableColumnElement.addContent(new Element("name").addContent(p.getTableColumnName()));
-        tableColumnElement.addContent(new Element("reference").addContent(p.getTableColumnReference()));
-        tableColumnElement.addContent(new Element("localVariable").addContent(p.getTableColumnLocalVariable()));
-        tableColumnElement.addContent(new Element("formula").addContent(p.getTableColumnFormula()));
-        tableElement.addContent(tableColumnElement);
+        element.addContent(selectTableXml.store(p.getSelectTable()));
 
         return element;
     }
@@ -101,6 +75,8 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionMemory h = new ActionMemory(sys, uname);
+
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
         loadCommon(h, shared);
 
@@ -183,16 +159,16 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
                                 String column = rowColumnParts[1];
 //                                System.out.format("Table: '%s', row: '%s', column: '%s'%n", table, row, column);
 
-                                h.setTableNameAddressing(NamedBeanAddressing.Direct);
+                                h.getSelectTable().setTableNameAddressing(NamedBeanAddressing.Direct);
                                 if (table != null) {
                                     NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(table);
-                                    if (t != null) h.setTable(t);
-                                    else h.removeTable();
+                                    if (t != null) h.getSelectTable().setTable(t);
+                                    else h.getSelectTable().removeTable();
                                 }
-                                h.setTableRowAddressing(NamedBeanAddressing.Direct);
-                                h.setTableRowName(row);
-                                h.setTableColumnAddressing(NamedBeanAddressing.Direct);
-                                h.setTableColumnName(column);
+                                h.getSelectTable().setTableRowAddressing(NamedBeanAddressing.Direct);
+                                h.getSelectTable().setTableRowName(row);
+                                h.getSelectTable().setTableColumnAddressing(NamedBeanAddressing.Direct);
+                                h.getSelectTable().setTableColumnName(column);
                                 result = true;
                             }
                         }
@@ -211,79 +187,7 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
             }
         }
 
-
-        Element tableElement = shared.getChild("table");
-
-        if (tableElement != null) {
-            try {
-                Element tableName = tableElement.getChild("tableName");
-                Element name = tableName.getChild("name");
-                if (name != null) {
-                    NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(name.getTextTrim());
-                    if (t != null) h.setTable(t);
-                    else h.removeTable();
-                }
-
-                Element elem = tableName.getChild("addressing");
-                if (elem != null) {
-                    h.setTableNameAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-                }
-
-                elem = tableName.getChild("reference");
-                if (elem != null) h.setTableNameReference(elem.getTextTrim());
-
-                elem = tableName.getChild("localVariable");
-                if (elem != null) h.setTableNameLocalVariable(elem.getTextTrim());
-
-                elem = tableName.getChild("formula");
-                if (elem != null) h.setTableNameFormula(elem.getTextTrim());
-
-
-                Element tableRow = tableElement.getChild("row");
-                elem = tableRow.getChild("addressing");
-                if (elem != null) {
-                    h.setTableRowAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-                }
-
-                name = tableRow.getChild("name");
-                if (name != null) {
-                    h.setTableRowName(name.getTextTrim());
-                }
-
-                elem = tableRow.getChild("reference");
-                if (elem != null) h.setTableRowReference(elem.getTextTrim());
-
-                elem = tableRow.getChild("localVariable");
-                if (elem != null) h.setTableRowLocalVariable(elem.getTextTrim());
-
-                elem = tableRow.getChild("formula");
-                if (elem != null) h.setTableRowFormula(elem.getTextTrim());
-
-
-                Element tableColumn = tableElement.getChild("column");
-                elem = tableColumn.getChild("addressing");
-                if (elem != null) {
-                    h.setTableColumnAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-                }
-
-                name = tableColumn.getChild("name");
-                if (name != null) {
-                    h.setTableColumnName(name.getTextTrim());
-                }
-
-                elem = tableColumn.getChild("reference");
-                if (elem != null) h.setTableColumnReference(elem.getTextTrim());
-
-                elem = tableColumn.getChild("localVariable");
-                if (elem != null) h.setTableColumnLocalVariable(elem.getTextTrim());
-
-                elem = tableColumn.getChild("formula");
-                if (elem != null) h.setTableColumnFormula(elem.getTextTrim());
-
-            } catch (ParserException e) {
-                throw new JmriConfigureXmlException(e);
-            }
-        }
+        selectTableXml.load(shared.getChild("table"), h.getSelectTable());
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

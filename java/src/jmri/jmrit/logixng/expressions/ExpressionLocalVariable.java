@@ -37,6 +37,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     private final LogixNG_SelectTable _selectTable =
             new LogixNG_SelectTable(this, () -> {return _compareTo == CompareTo.Table;});
 
+
     public ExpressionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
