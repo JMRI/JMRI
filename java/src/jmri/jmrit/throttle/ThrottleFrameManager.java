@@ -2,9 +2,13 @@ package jmri.jmrit.throttle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import javax.swing.JFrame;
+
 import jmri.InstanceManagerAutoDefault;
+import jmri.ThrottleManager;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +45,17 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return The newly created ThrottleWindow
      */
     public ThrottleWindow createThrottleWindow() {
-        ThrottleWindow tw = new ThrottleWindow();
+        return createThrottleWindow(jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
+    }
+
+    /**
+     * Tell this manager that a new ThrottleWindow was created.
+     *
+     * @param throttleManager the throttle manager
+     * @return The newly created ThrottleWindow
+     */
+    public ThrottleWindow createThrottleWindow(ThrottleManager throttleManager) {
+        ThrottleWindow tw = new ThrottleWindow(throttleManager);
         tw.pack();
         synchronized (this) {
             throttleWindows.add(tw);
@@ -56,7 +70,17 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return The newly created ThrottleFrame
      */
     public ThrottleFrame createThrottleFrame() {
-        return createThrottleWindow().getCurrentThrottleFrame();
+        return createThrottleFrame(jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
+    }
+
+    /**
+     * Tell this manager that a new ThrottleFrame was created.
+     *
+     * @param throttleManager the throttle manager
+     * @return The newly created ThrottleFrame
+     */
+    public ThrottleFrame createThrottleFrame(ThrottleManager throttleManager) {
+        return createThrottleWindow(throttleManager).getCurrentThrottleFrame();
     }
 
     /**
@@ -147,7 +171,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlesListFrame.setContentPane(throttlesListPanel);
         throttlesListFrame.pack();
     }
-    
+
     /*
      * Show JMRI native throttle list window
      *
@@ -171,7 +195,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         } else {
             throttlePreferencesFrame.resetComponents();
             throttlePreferencesFrame.revalidate();
-        }                
+        }
         throttlePreferencesFrame.setVisible(true);
         throttlePreferencesFrame.requestFocus();
     }
@@ -186,6 +210,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         });
         throttlesListPanel.applyPreferences();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }

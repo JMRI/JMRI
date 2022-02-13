@@ -10,9 +10,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.PowerManager;
+import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
@@ -27,6 +25,8 @@ import org.slf4j.LoggerFactory;
 
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
 public class ThrottleWindow extends JmriJFrame {
+
+    private final ThrottleManager throttleManager;
 
     private JPanel throttlesPanel;
     private ThrottleFrame currentThrottleFrame;
@@ -70,11 +70,20 @@ public class ThrottleWindow extends JmriJFrame {
      * Default constructor
      */
     public ThrottleWindow() {
+        this(InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
+    }
+
+    /**
+     * Constructor
+     * @param throttleManager the throttle mananger
+     */
+    public ThrottleWindow(ThrottleManager throttleManager) {
         super();
+        this.throttleManager = throttleManager;
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }  
+        }
         myInputsListener = new ThrottleWindowInputsListener(this);
         myActionFactory = new ThrottleWindowActionsFactory(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
@@ -91,25 +100,25 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
         throttlesPanel.setDoubleBuffered(true);
-        
+
         initializeToolbar();
         initializeMenu();
 
-        setCurrentThrottleFrame(new ThrottleFrame(this));
+        setCurrentThrottleFrame(new ThrottleFrame(this, throttleManager));
         getCurrentThrottleFrame().setTitle("default");
         throttlesPanel.add(getCurrentThrottleFrame(), "default");
         throttleFrames.put("default", getCurrentThrottleFrame());
         add(throttlesPanel, BorderLayout.CENTER);
-        
+
         installInputsListenerOnAllComponents(this);
         // to get something to put focus on
         getRootPane().setFocusable(true);
-        
+
         ActionMap am = myActionFactory.buildActionMap();
         for (Object k : am.allKeys()) {
             getRootPane().getActionMap().put(k, am.get(k));
         }
-        
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -132,7 +141,7 @@ public class ThrottleWindow extends JmriJFrame {
                 } catch (PropertyVetoException ex) {
                     Exceptions.printStackTrace(ex);
                 }
-            }            
+            }
         });
         updateGUI();
     }
@@ -496,7 +505,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public ThrottleFrame getCurrentThrottleFrame() {
         return currentThrottleFrame;
-    }    
+    }
 
     public void setCurrentThrottleFrame(ThrottleFrame tf) {
         if (getCurrentThrottleFrame() != null) {
@@ -593,7 +602,7 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     public ThrottleFrame addThrottleFrame() {
-        setCurrentThrottleFrame(new ThrottleFrame(this));
+        setCurrentThrottleFrame(new ThrottleFrame(this, throttleManager));
         installInputsListenerOnAllComponents(getCurrentThrottleFrame());
         addThrottleFrame(getCurrentThrottleFrame());
         return getCurrentThrottleFrame();
@@ -752,7 +761,7 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     public void applyPreferences() {
-        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
+        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
 
         ComponentInputMap im = new ComponentInputMap(getRootPane());
         for (Object k : this.getRootPane().getActionMap().allKeys()) {
@@ -764,11 +773,11 @@ public class ThrottleWindow extends JmriJFrame {
                     }
                 }
             }
-        } 
+        }
         getRootPane().setInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW,im);
 
         throttleToolBar.setVisible ( preferences.isUsingExThrottle() && preferences.isUsingToolBar() );
-        
+
         if (smallPowerMgmtButton != null) {
             smallPowerMgmtButton.setVisible( (!preferences.isUsingExThrottle()) || (!preferences.isUsingToolBar()) );
         }

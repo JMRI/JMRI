@@ -82,6 +82,13 @@ public class ToolsMenu extends JMenu {
 
         JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
         throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle")));
+
+        for (jmri.jmrix.ConnectionConfig c : InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class)) {
+            throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(
+                    Bundle.getMessage("MenuItemNewThrottleWithConnection", c.getConnectionName()),
+                    (jmri.ThrottleManager) c.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class)));
+        }
+
         throttleMenu.add(new jmri.jmrit.throttle.ThrottlesListAction(Bundle.getMessage("MenuItemThrottlesList")));
         throttleMenu.addSeparator();
         throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveThrottleLayout")));

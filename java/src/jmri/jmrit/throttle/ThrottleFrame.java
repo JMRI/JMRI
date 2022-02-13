@@ -27,6 +27,7 @@ import javax.swing.event.InternalFrameEvent;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.ThrottleManager;
 import jmri.configurexml.LoadXmlConfigAction;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
@@ -50,6 +51,8 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Berridge Copyright 2010
  */
 public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener {
+
+    private final ThrottleManager throttleManager;
 
     private final Integer BACKPANEL_LAYER = Integer.MIN_VALUE;
     private final Integer PANEL_LAYER_FRAME = 1;
@@ -89,13 +92,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         return getDefaultThrottleFolder() + DEFAULT_THROTTLE_FILENAME;
     }
 
-    public ThrottleFrame(ThrottleWindow tw) {
-        super();        
+    public ThrottleFrame(ThrottleWindow tw, ThrottleManager tm) {
+        super();
         throttleWindow = tw;
+        throttleManager = tm;
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }        
+        }
         initGUI();
         applyPreferences();
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(this);
@@ -207,12 +211,12 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     private void loadDefaultThrottle() {
         String dtf = InstanceManager.getDefault(ThrottlesPreferences.class).getDefaultThrottleFilePath();
         if (dtf == null || dtf.isEmpty()) {
-            return;            
+            return;
         }
         log.debug("Loading default throttle file : "+dtf);
         loadThrottle(dtf);
-    }    
-    
+    }
+
     public void loadThrottle() {
         JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
@@ -223,7 +227,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         loadThrottle(file.getAbsolutePath());
     }
-    
+
     public void loadThrottle(String sfile) {
         if (sfile == null) {
             loadThrottle();
@@ -325,7 +329,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         speedPanel.addInternalFrameListener(frameListener);
         speedPanel.pack();
 
-        addressPanel = new AddressPanel();
+        addressPanel = new AddressPanel(throttleManager);
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
@@ -364,16 +368,16 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         add(functionPanel, PANEL_LAYER_FRAME);
         add(addressPanel, PANEL_LAYER_FRAME);
         add(speedPanel, PANEL_LAYER_FRAME);
-        
+
         backgroundPanel = new BackgroundPanel();
         backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
         addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
         addressPanel.addAddressListener(backgroundPanel);
         addressPanel.setBackgroundPanel(backgroundPanel); // so that it's changeable when browsing through rosters
         add(backgroundPanel, BACKPANEL_LAYER);
-            
+
         addComponentListener(this); // to force sub windows repositionning
-           
+
         frameList = new JInternalFrame[NUM_FRAMES];
         frameList[ADDRESS_PANEL_INDEX] = addressPanel;
         frameList[CONTROL_PANEL_INDEX] = controlPanel;
@@ -392,7 +396,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                     }
                 }
             });
-           
+
         try {
             addressPanel.setSelected(true);
         } catch (PropertyVetoException ex) {
@@ -486,15 +490,15 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     private HashMap<Container, JInternalFrame> contentPanes;
 
-    public void applyPreferences() {      
+    public void applyPreferences() {
         ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-        
+
         backgroundPanel.setVisible(  (preferences.isUsingExThrottle()) && (preferences.isUsingRosterImage()));
-        
+
         controlPanel.applyPreferences();
         functionPanel.applyPreferences();
         addressPanel.applyPreferences();
-        backgroundPanel.applyPreferences();        
+        backgroundPanel.applyPreferences();
     }
 
     private static class TranslucentJPanel extends JPanel {
@@ -523,7 +527,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             }
         }
     }
-    
+
     private void translude(JInternalFrame jif) {
         Dimension cpSize = jif.getContentPane().getSize();
         Point cpLoc = jif.getContentPane().getLocationOnScreen();
@@ -899,7 +903,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (addressPanel.getThrottle() == null && throttleWindow.isEditMode()) {
             if (!addressPanel.isVisible()) {
                 addressPanel.setVisible(true);
-            }            
+            }
             if (addressPanel.isIcon()) {
                 try {
                     addressPanel.setIcon(false);
@@ -935,7 +939,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         saveThrottle(file.getAbsolutePath());
     }
-   
+
     public void activateNextJInternalFrame() {
         try {
             int initialFrame = activeFrame; // avoid infinite loop
@@ -947,7 +951,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             log.warn("Exception selecting internal frame:{}", ex.getMessage());
         }
     }
-    
+
     public void activatePreviousJInternalFrame() {
         try {
             int initialFrame = activeFrame; // avoid infinite loop
