@@ -118,7 +118,7 @@ public class Mx1Adapter extends Mx1PortController {
     }
 
     // base class methods for the ZimoPortController interface
-    
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -199,20 +199,6 @@ public class Mx1Adapter extends Mx1PortController {
     //protected String selectedOption1=validOption1[0];
 
     InputStream serialStream = null;
-
-    /**
-     * @return the default adapter
-     * @deprecated since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
-     */
-    @Deprecated
-    static public Mx1Adapter instance() {
-        if (mInstance == null) {
-            mInstance = new Mx1Adapter();
-        }
-        return mInstance;
-    }
-    static Mx1Adapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class);
 

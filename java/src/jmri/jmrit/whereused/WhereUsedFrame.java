@@ -252,7 +252,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         try {
             FileUtil.appendTextToFile(file, _textArea.getText());
         } catch (IOException e) {
-            log.error("Unable to write where used content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write where used content to '{}', exception", file, e);  // NOI18N
         }
     }
 

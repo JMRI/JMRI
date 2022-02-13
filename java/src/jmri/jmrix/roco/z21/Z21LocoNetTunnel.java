@@ -287,7 +287,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     }
 
-    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
+    @SuppressWarnings("deprecation") // Thread.stop
     public void dispose(){
        if(lsc != null){
           lsc.dispose();

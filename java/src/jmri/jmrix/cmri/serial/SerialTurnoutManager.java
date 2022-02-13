@@ -86,20 +86,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to notify user of Turnout creation error.
-     * @param conflict human readable name of turnout with conflict.
-     * @param bitNum conflict bit number.
-     * @deprecated  since 4.23.4;
-     */
-    @Deprecated
-    public void notifyTurnoutCreationError(String conflict, int bitNum) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
-                Bundle.getMessage("ErrorAssignLine2T"),
-                Bundle.getMessage("ErrorAssignTitle"),
-                JOptionPane.INFORMATION_MESSAGE, null);
-    }
-
-    /**
      * Get from the user, the number of addressed bits used to control a
      * turnout.
      * <p>
@@ -164,7 +150,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public int askControlType(@Nonnull String systemName) {
-        // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
+        // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or
         // 'pulsed' output (some turnout controllers).
         int iType = selectOutputType();
         if (iType == JOptionPane.CLOSED_OPTION) {
@@ -339,7 +325,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         systemName = validateSystemNamePrefix(systemName, locale);
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
-    
+
     /**
      * {@inheritDoc}
      */

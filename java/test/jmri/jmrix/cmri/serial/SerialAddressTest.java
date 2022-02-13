@@ -37,11 +37,7 @@ public class SerialAddressTest {
         n18 = new SerialNode(18, SerialNode.SMINI, stcs);
 
         // create and register the manager objects
-        jmri.TurnoutManager l = new SerialTurnoutManager(memo) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.TurnoutManager l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.LightManager lgt = new SerialLightManager(memo);

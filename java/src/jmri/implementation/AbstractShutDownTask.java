@@ -33,17 +33,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean isShutdownAllowed() {
-        LoggingUtil.deprecationWarning(log, "isShutdownAllowed");
-        return call();
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
+     *
      * This implementation merely sets the "doRun" property to true, and should
      * be overridden for any real checking. Note that overriding implementations
      * should call {@link #setDoRun(boolean)} correctly.
@@ -54,39 +44,14 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
         return doRun;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public final boolean execute() {
-        LoggingUtil.deprecationWarning(log, "execute");
-        run();
-        return true;
-    }
-
     @Override
     public String getName() {
         return mName;
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean isParallel() {
-        LoggingUtil.deprecationWarning(log, "isParallel");
-        return false;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean isComplete() {
-        LoggingUtil.deprecationWarning(log, "isComplete");
-        return !this.isParallel();
-    }
-
     /**
      * {@inheritDoc}
-     * 
+     *
      * Note that overriding implementations should call this implementation to set
      * the doRun property correctly.
      */
@@ -97,12 +62,12 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
             doRun = false;
         }
     }
-    
+
     /**
      * Check if action should be taken in {@link #run()} method. This defaults
      * to false, although the default implementation of {@link #call()} sets
      * this to true.
-     * 
+     *
      * @return true if action should be taken; false otherwise
      */
     public boolean isDoRun() {
@@ -113,12 +78,12 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
      * Set if action should be taken in {@link #run()} method. Overriding
      * implementations of {@link #call()} must call this to set
      * {@link #isDoRun()} to true.
-       * 
+       *
      * @param flag true if action should be taken; false otherwise
      */
     public void setDoRun(boolean flag) {
         doRun = flag;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractShutDownTask.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractShutDownTask.class);
 }

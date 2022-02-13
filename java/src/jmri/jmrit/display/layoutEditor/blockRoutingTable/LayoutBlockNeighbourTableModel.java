@@ -149,7 +149,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     public void dispose() {
     }
 
-    public jmri.Manager getManager() {
+    public jmri.Manager<LayoutBlock> getManager() {
         return jmri.InstanceManager.getDefault(LayoutBlockManager.class);
     }
 

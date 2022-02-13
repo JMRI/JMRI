@@ -32,7 +32,7 @@ public class ValidatingInputPaneTest {
         assertNotNull("Converter exception expected", intValidator.getException());
         assertTrue(intValidator.getException() instanceof NumberFormatException);
     }
-    
+
     /**
      * Empty input should be accepted as no-op
      */
@@ -42,29 +42,29 @@ public class ValidatingInputPaneTest {
         intValidator.validateText("");
         assertFalse("Empty string must be accepted", intValidator.hasError());
     }
-    
+
     @Test
     public void testValidationRejects() {
         ValidatingInputPane<Integer> intValidator = new ValidatingInputPane<>((s) -> Integer.parseInt(s));
         intValidator.validator((i) -> i >= 5);
         intValidator.validateText("3");
-        
+
         assertTrue("Bad number should produce error", intValidator.hasError());
         assertNull("Validator rejection does not record an exception", intValidator.getException());
         assertEquals("General message expected", Bundle.getMessage("InputDialogError"), intValidator.getErrorMessage());
     }
-    
+
     @Test
     public void testValidationPasses() {
         ValidatingInputPane<Integer> intValidator = new ValidatingInputPane<>((s) -> Integer.parseInt(s));
         intValidator.validator((i) -> i >= 5);
         intValidator.validateText("6");
-        
+
         assertFalse("Validation must pass", intValidator.hasError());
         assertNull("Exception must be null on OK result", intValidator.getException());
         assertNull("No message for OK result", intValidator.getErrorMessage());
     }
-    
+
     @Test
     public void testValidationThrowsCustomMessage() {
         setupLargeValidator();
@@ -79,14 +79,14 @@ public class ValidatingInputPaneTest {
         assertNull("Message must be null on successful validation", intValidator.getErrorMessage());
         assertFalse("No error must be indicated", intValidator.hasError());
     }
-    
+
     private ValidatingInputPane<Integer> intValidator;
     private JButton control;
-    
+
     private void setupLargeValidator() {
         setupLargeValidator(false);
     }
-    
+
     private void setupLargeValidator(boolean useControl) {
         intValidator = new ValidatingInputPane<>((s) -> Integer.parseInt(s));
         if (useControl) {
@@ -113,7 +113,7 @@ public class ValidatingInputPaneTest {
         assertNull("Message must be null on successful validation", intValidator.getErrorMessage());
         assertFalse("No error must be indicated", intValidator.hasError());
     }
-    
+
     /**
      * Wraps the tested panel into a Window and makes it visible. Runs the
      * Callable in EDT to properly process UI. Terminate
@@ -122,7 +122,7 @@ public class ValidatingInputPaneTest {
     private <T> void testInGUI(Callable<T> check) throws Exception {
         // terminate tests which require GUI
         assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // display the panel
         JWindow dlg = new JWindow();
         dlg.setLayout(new BorderLayout());
@@ -130,8 +130,8 @@ public class ValidatingInputPaneTest {
         if (control != null) {
             dlg.add(control, BorderLayout.SOUTH);
         }
-        dlg.show();
-        
+        dlg.setVisible(true);
+
         Exception[] out = new Exception[1];
         SwingUtilities.invokeAndWait(() -> {
             try {
@@ -140,18 +140,18 @@ public class ValidatingInputPaneTest {
                 out[0] = ex;
             }
         });
-        
+
         dlg.dispose();
-        
+
         if (out[0] != null) {
             throw out[0];
         }
     }
-    
+
     @Test
     public void testValidationHappensWhenAfterDisplayed() throws Exception {
         setupLargeValidator();
-        
+
         intValidator.setText("6");
         // no validation yet.
         assertNull(intValidator.getErrorMessage());
@@ -164,23 +164,23 @@ public class ValidatingInputPaneTest {
     @Test
     public void testTextChangeValidatesFalse() throws Exception {
         setupLargeValidator();
-        
+
         intValidator.setText("3");
         // no validation yet.
         assertNull(intValidator.getErrorMessage());
         testInGUI(() -> {
             assertFalse(intValidator.hasError());
-            
+
             JTextField input = intValidator.getTextField();
             input.getDocument().insertString(1, "3", null);
-            
+
             // now the text should be validated and error message present
             assertTrue(intValidator.hasError());
             assertNotNull(intValidator.getException());
             return null;
         });
     }
-    
+
     @Test
     public void testClearAllNoError() throws Exception {
         setupLargeValidator();
@@ -189,20 +189,20 @@ public class ValidatingInputPaneTest {
         assertNull(intValidator.getErrorMessage());
         testInGUI(() -> {
             assertTrue(intValidator.hasError());
-            
+
             JTextField input = intValidator.getTextField();
             input.setSelectionStart(0);
             input.setSelectionEnd(1);
             // should clear the text
             input.replaceSelection("");
-            
+
             // now the text should be validated and error message present
             assertFalse(intValidator.hasError());
             assertNull(intValidator.getException());
             return null;
         });
     }
-    
+
     @Test
     public void testControlBecomesDisabled() throws Exception {
         setupLargeValidator(true);

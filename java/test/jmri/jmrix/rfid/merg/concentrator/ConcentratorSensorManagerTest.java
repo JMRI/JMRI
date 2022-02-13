@@ -27,19 +27,19 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
     public void testCtor() {
         Assert.assertNotNull(l);
     }
-    
+
     @Test
     public void testAlphaSystemName() {
         Sensor t = l.provide("RSA");
         Assert.assertNotNull(t);
     }
-    
+
     // test not applicable as minimal validation
     @Test
     @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {
-    } 
-    
+    }
+
     // test not applicable as minimal validation
     @Test
     @Override
@@ -64,7 +64,7 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
             }
 
             @Override
-            public void reply(jmri.jmrix.rfid.RfidReply m) {
+            public synchronized void reply(jmri.jmrix.rfid.RfidReply m) {
             }
 
         };

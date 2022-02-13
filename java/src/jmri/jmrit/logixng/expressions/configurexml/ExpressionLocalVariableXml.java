@@ -65,7 +65,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
 
         Element tableNameElement = new Element("tableName");
         tableNameElement.addContent(new Element("addressing").addContent(p.getTableNameAddressing().name()));
-        NamedBeanHandle table = p.getTable();
+        var table = p.getTable();
         if (table != null) {
             tableNameElement.addContent(new Element("name").addContent(table.getName()));
         }

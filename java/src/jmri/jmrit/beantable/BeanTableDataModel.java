@@ -66,7 +66,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         super();
         initModel();
     }
-    
+
     /**
      * Internal routine to avoid over ride method call in constructor.
      */
@@ -205,7 +205,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
-                    return "btm unknown"; // NOI18N 
+                    return "btm unknown"; // NOI18N
                 }
                 return desc.getColumnHeaderText();
         }
@@ -337,7 +337,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     /**
      * Get the Table Model Bean Manager.
      * In many cases, especially around Model startup,
-     * this will be the Proxy Manager, which is then changed to the 
+     * this will be the Proxy Manager, which is then changed to the
      * hardware specific manager.
      * @return current Manager in use by the Model.
      */
@@ -345,9 +345,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Set the Model Bean Manager.
-     * Note that for many Models this may not work as the manager is 
+     * Note that for many Models this may not work as the manager is
      * currently obtained directly from the Action class.
-     * 
+     *
      * @param man Bean Manager that the Model should use.
      */
     protected void setManager(@Nonnull Manager<T> man) {
@@ -487,11 +487,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         for (int i = 0; i < columnModel.getColumnCount(false); i++) {
-            
+
             // resize columns as requested
             int width = getPreferredWidth(i);
             columnModel.getColumnByModelIndex(i).setPreferredWidth(width);
-            
+
         }
         table.sizeColumnsToFit(-1);
 
@@ -681,7 +681,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
             // TODO: Create base BeanTableJTable.java,
             // extend TurnoutTableJTable from it as next 2 classes duplicate.
-            
+
             @Override
             public String getToolTipText(MouseEvent e) {
                 java.awt.Point p = e.getPoint();
@@ -691,7 +691,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 int realColumnIndex = convertColumnIndexToModel(colIndex);
                 return getCellToolTip(this, realRowIndex, realColumnIndex);
             }
-            
+
             /**
              * Disable Windows Key or Mac Meta Keys being pressed acting
              * as a trigger for editing the focused cell.
@@ -738,7 +738,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Get String of the Single Bean Type.
      * In many cases the return is Bundle localised
      * so should not be used for matching Bean types.
-     * 
+     *
      * @return Bean Type String.
      */
     protected String getBeanType(){
@@ -1002,8 +1002,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Display the comment text for the current row as a tool tip.
-     * 
-     * Most of the bean tables use the standard model with comments in column 3.  
+     *
+     * Most of the bean tables use the standard model with comments in column 3.
      * The SignalMastLogic table uses column 4 for the comment field.
      * TurnoutTableAction has its own getCellToolTip.
      * <p>
@@ -1109,13 +1109,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Set identities for any columns that need an identity.
-     * 
-     * It is recommended that all columns get a constant identity to 
+     *
+     * It is recommended that all columns get a constant identity to
      * prevent identities from being subject to changes due to translation.
      * <p>
      * The default implementation sets column identities to the String
      * {@code Column#} where {@code #} is the model index for the column.
-     * Note that if the TableColumnModel is a {@link jmri.util.swing.XTableColumnModel}, 
+     * Note that if the TableColumnModel is a {@link jmri.util.swing.XTableColumnModel},
      * the index includes hidden columns.
      *
      * @param table the table to set identities for.
@@ -1273,12 +1273,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
                 dialog.pack();
-                
+
                 dialog.getRootPane().setDefaultButton(noButton);
                 noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
                 dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
                         dialog.setVisible(false);
-                        dialog.dispose(); }, 
+                        dialog.dispose(); },
                     KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
                 dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
@@ -1389,21 +1389,21 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     private class BtComboboxEditor extends jmri.jmrit.symbolicprog.ValueEditor {
-    
+
         public BtComboboxEditor(){
             super();
         }
-        
+
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
             boolean isSelected,
             int row, int column) {
             if (value instanceof JComboBox) {
-                ((JComboBox) value).addActionListener((ActionEvent e1) -> table.getCellEditor().stopCellEditing());
+                ((JComboBox<?>) value).addActionListener((ActionEvent e1) -> table.getCellEditor().stopCellEditing());
             }
-            
+
             if (value instanceof JComponent ) {
-            
+
                 int modelcol =  table.convertColumnIndexToModel(column);
                 int modelrow = table.convertRowIndexToModel(row);
 
@@ -1411,15 +1411,15 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 boolean editable = table.getModel().isCellEditable(modelrow, modelcol);
 
                 ((JComponent) value).setEnabled(editable);
-            
+
             }
-            
+
             return super.getTableCellEditorComponent(table, value, isSelected, row, column);
         }
-    
-    
+
+
     }
-    
+
     private class BtValueRenderer implements TableCellRenderer {
 
         public BtValueRenderer() {

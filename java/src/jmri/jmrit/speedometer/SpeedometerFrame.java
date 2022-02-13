@@ -701,9 +701,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: {}", ex);
+            log.error("File not found when writing", ex);
         } catch (IOException ex) {
-            log.error("IO Exception when writing: {}", ex);
+            log.error("IO Exception when writing", ex);
         }
 
         log.debug("...done");
@@ -793,9 +793,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             }
 
         } catch (JDOMException ex) {
-            log.error("File invalid: {}", ex);
+            log.error("File invalid", ex);
         } catch (IOException ex) {
-            log.error("Error reading file: {}", ex);
+            log.error("Error reading file", ex);
         }
 
         log.debug("...done");

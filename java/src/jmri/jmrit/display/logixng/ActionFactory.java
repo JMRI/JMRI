@@ -26,9 +26,10 @@ public class ActionFactory implements DigitalActionFactory {
     
     @Override
     public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses() {
-        Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> actionClasses = new HashSet<>();
-        
-        actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionPositionable.class));
+        Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> actionClasses =
+                Set.of(
+                        new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionPositionable.class)
+                );
         
         return actionClasses;
     }

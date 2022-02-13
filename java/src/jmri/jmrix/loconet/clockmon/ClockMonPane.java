@@ -139,21 +139,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
     final static JTextField spacer = new JTextField("123");
 
-    /**
-     * Nested class to create one of these using old-style defaults.
-     * @deprecated since 4.19.7; use {@link ClockMonPaneAction} instead
-     */
-    @Deprecated
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        public Default() {
-            super(Bundle.getMessage("MenuItemClockMon"),
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    ClockMonPane.class.getName(),
-                    jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
-        }
-    }
-
     private final static Logger log = LoggerFactory.getLogger(ClockMonPane.class);
 
 }

@@ -30,15 +30,4 @@ public class CanUsbDriverAdapter extends jmri.jmrix.can.adapters.lawicell.Serial
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }
 
-    /**
-     * {@inheritDoc}
-     * Migration method
-     * @deprecated since 4.16
-     */
-    @Deprecated
-    @Override
-    public int[] validBaudValues() {
-        return validBaudNumbers();
-    }
-
 }

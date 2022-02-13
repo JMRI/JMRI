@@ -1031,7 +1031,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         try {
             this.writeFile(this.getRosterIndexPath());
         } catch (IOException e) {
-            log.error("Exception while writing the new roster file, may not be complete: {}", e);
+            log.error("Exception while writing the new roster file, may not be complete", e);
             try {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorSavingText") + "\n" + e.getMessage(),
@@ -1066,7 +1066,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         try {
             roster.writeFile(this.getRosterIndexPath());
         } catch (IOException ex) {
-            log.error("Exception while writing the new roster file, may not be complete: {}", ex);
+            log.error("Exception while writing the new roster file, may not be complete", ex);
         }
         this.reloadRosterFile();
         log.info("Roster rebuilt, stored in {}", this.getRosterIndexPath());
@@ -1447,7 +1447,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (log.isDebugEnabled()) {
             log.debug("filename list:");
             for (i = 0; i < sbox.length; i++) {
-                log.debug("      {}", sbox[i]);
+                log.debug("     name: {}", sbox[i]);
             }
         }
         return sbox;

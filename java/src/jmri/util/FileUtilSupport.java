@@ -806,21 +806,6 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Used to set the profile path, but now does nothing.
-     *
-     * @see #getProfilePath()
-     * @param path The path to the profile directory using system-specific
-     *             separators. If null, this will cause
-     *             {@link #getProfilePath()} to provide the preferences
-     *             directory via {@link #getPreferencesPath()}.
-     * @deprecated since 4.17.3 without replacement
-     */
-    @Deprecated
-    public void setProfilePath(@CheckForNull String path) {
-        // does nothing
-    }
-
-    /**
      * Get the preferences directory. This directory is set based on the OS and
      * is not normally settable by the user.
      * <ul>
@@ -951,7 +936,26 @@ public class FileUtilSupport extends Bean {
     @CheckReturnValue
     public String getProgramPath() {
         if (programPath == null) {
-            this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
+            if (System.getProperty("jmri.path.program") == null) {
+                log.debug("jmri.path.program property not set");
+                // find from jar or class files location
+                String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+                String path2 = (new File(path1)).getParentFile().getPath();
+                try {
+                    String loadingDir = java.net.URLDecoder.decode(path2, "UTF-8");
+                    log.trace("Program location from Classloader: {}", loadingDir);
+                    if (loadingDir.endsWith("target")) {
+                        loadingDir = loadingDir.substring(0, loadingDir.length()-6);
+                    }
+                     this.setProgramPath(loadingDir); // NOI18N
+               } catch (java.io.UnsupportedEncodingException e) {
+                    log.error("Unsupported URL when trying to locate program directory: {}", path2);
+                    // best guess
+                    this.setProgramPath("."); // NOI18N
+                }
+            } else {
+                this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
+            }
         }
         return programPath;
     }

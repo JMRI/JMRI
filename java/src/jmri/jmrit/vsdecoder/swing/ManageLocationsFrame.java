@@ -38,19 +38,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to manage Reporters, Blocks, Locations and Listener attributes. 
+ * GUI to manage Reporters, Blocks, Locations and Listener attributes.
  *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -157,9 +157,9 @@ public class ManageLocationsFrame extends JmriJFrame {
         locData[0][ManageLocationsTableModel.AZIMUTHCOL] = listenerLoc.getAzimuth();
 
         log.debug("Listener: {}", listenerLoc.toString());
-        log.debug("locData:");
+        log.debug("  locData:");
         for (int i = 0; i < 7; i++) {
-            log.debug("{}", locData[0][i]);
+            log.debug("  item {}", locData[0][i]);
         }
 
         JPanel locPanel = new JPanel();
@@ -276,7 +276,7 @@ public class ManageLocationsFrame extends JmriJFrame {
     private void saveTableValues() {
         if ((Boolean) locModel.getValueAt(0, ManageLocationsTableModel.USECOL)) {
             // Don't accept Azimuth value 90 or -90 (they are not in the domain of definition)
-            if ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) != null 
+            if ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) != null
                     && ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == 90.0d
                     || (Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == -90.0d)) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldTableAzimuthInvalidValue"));

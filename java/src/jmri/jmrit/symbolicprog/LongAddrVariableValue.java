@@ -25,12 +25,15 @@ public class LongAddrVariableValue extends VariableValue
     public LongAddrVariableValue(@Nonnull String name, @Nonnull String comment, @Nonnull String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             @Nonnull String cvNum, @Nonnull String mask, int minVal, int maxVal,
-            @Nonnull HashMap<String, CvValue> v, @Nonnull JLabel status, 
+            @Nonnull HashMap<String, CvValue> v, @Nonnull JLabel status,
             @Nonnull String stdname, @Nonnull CvValue mHighCV) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
+
         _value = new JTextField("0", 5);
+        _value.getAccessibleContext().setAccessibleName(label());
+
         _defaultColor = _value.getBackground();
         _value.setBackground(COLOR_UNKNOWN);
         // connect to the JTextField value, cv
@@ -212,7 +215,9 @@ public class LongAddrVariableValue extends VariableValue
 
     @Override
     public Component getNewRep(String format) {
-        return updateRepresentation(new VarTextField(_value.getDocument(), _value.getText(), 5, this));
+        var retval = updateRepresentation(new VarTextField(_value.getDocument(), _value.getText(), 5, this));
+        retval.getAccessibleContext().setAccessibleName(label());
+        return retval;
     }
     private int _progState = 0;
     private static final int IDLE = 0;

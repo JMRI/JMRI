@@ -128,7 +128,7 @@ public class ZTC611Adapter extends XNetSerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (IOException e) {
-            log.error("getOutputStream exception: ", e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -189,15 +189,6 @@ public class ZTC611Adapter extends XNetSerialPortController {
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    @Deprecated
-    static public ZTC611Adapter instance() {
-        if (mInstance == null) {
-            mInstance = new ZTC611Adapter();
-        }
-        return mInstance;
-    }
-    static volatile ZTC611Adapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class);
 

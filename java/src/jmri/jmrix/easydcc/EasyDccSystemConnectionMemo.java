@@ -112,7 +112,7 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (EasyDccPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,
-                (Class c) -> new jmri.jmrix.easydcc.EasyDccPowerManager(this));
+                (Class<?> c) -> new jmri.jmrix.easydcc.EasyDccPowerManager(this));
     }
 
     public ThrottleManager getThrottleManager() {
@@ -120,7 +120,7 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,
-                (Class c) -> new jmri.jmrix.easydcc.EasyDccThrottleManager(this));
+                (Class<?> c) -> new jmri.jmrix.easydcc.EasyDccThrottleManager(this));
     }
 
     public void setThrottleManager(ThrottleManager t) {
@@ -132,7 +132,7 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (EasyDccTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,
-                (Class c) -> new jmri.jmrix.easydcc.EasyDccTurnoutManager(this));
+                (Class<?> c) -> new jmri.jmrix.easydcc.EasyDccTurnoutManager(this));
     }
 
     @Override
@@ -141,12 +141,12 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (EasyDccConsistManager) classObjectMap.computeIfAbsent(ConsistManager.class,
-                (Class c) -> new jmri.jmrix.easydcc.EasyDccConsistManager(this));
+                (Class<?> c) -> new jmri.jmrix.easydcc.EasyDccConsistManager(this));
     }
 
     public EasyDccProgrammerManager getProgrammerManager() {
          return (EasyDccProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,
-                 (Class c) -> new EasyDccProgrammerManager(new EasyDccProgrammer(this), this));
+                 (Class<?> c) -> new EasyDccProgrammerManager(new EasyDccProgrammer(this), this));
     }
 
     public void setProgrammerManager(EasyDccProgrammerManager p) {

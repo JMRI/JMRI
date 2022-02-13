@@ -56,7 +56,7 @@ public class LIUSBAdapter extends XNetSerialPortController {
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et);
+                log.info("failed to set serial timeout", et);
             }
 
             // get and save stream
@@ -191,15 +191,6 @@ public class LIUSBAdapter extends XNetSerialPortController {
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    @Deprecated
-    static public LIUSBAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new LIUSBAdapter();
-        }
-        return mInstance;
-    }
-    static volatile LIUSBAdapter mInstance = null;
 
     private static final Logger log = LoggerFactory.getLogger(LIUSBAdapter.class);
 

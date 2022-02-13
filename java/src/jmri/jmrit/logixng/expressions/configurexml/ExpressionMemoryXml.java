@@ -38,11 +38,11 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
 
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getMemory();
+        var memory = p.getMemory();
         if (memory != null) {
             element.addContent(new Element("memory").addContent(memory.getName()));
         }
-        NamedBeanHandle otherMemory = p.getOtherMemory();
+        var otherMemory = p.getOtherMemory();
         if (otherMemory != null) {
             element.addContent(new Element("otherMemory").addContent(otherMemory.getName()));
         }
@@ -65,7 +65,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
 
         Element tableNameElement = new Element("tableName");
         tableNameElement.addContent(new Element("addressing").addContent(p.getTableNameAddressing().name()));
-        NamedBeanHandle table = p.getTable();
+        var table = p.getTable();
         if (table != null) {
             tableNameElement.addContent(new Element("name").addContent(table.getName()));
         }

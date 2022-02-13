@@ -86,7 +86,7 @@ try:
           # Check for desired component and act
           component = event.oldValue.getComponent().toString()
           value = event.newValue
-          # 
+          #
           # uncomment the following to see the entries
           #print component, value
           #
@@ -109,11 +109,11 @@ try:
           if (component == componentStop and value > 0.0) :
               controlPanel.stop()
           if (component == componentReverse) :
-              if (value > 0.0) : 
+              if (value > 0.0) :
                   # reverse
                   controlPanel.setForwardDirection(False)
                   print "sFD False"
-              else : 
+              else :
                   # forward
                   controlPanel.setForwardDirection(True)
                   print "SFD True"
@@ -150,7 +150,7 @@ try:
                   newsetting = nowsetting-componentWheelIncrement
               elif (componentWheelInverted and value < componentWheelLowerEdge) :
                   newsetting = nowsetting+componentWheelIncrement
-              else : 
+              else :
                   newsetting = nowsetting  # don't do anything
               print "At A: ", value, nowsetting, newsetting, controlPanel.getIsForward()
               self.setdirection = False
@@ -183,30 +183,30 @@ try:
 
           # function keys
           if (component == componentF0) :
-              functionPanel.getFunctionButtons()[0].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[0].setSelected(value>0.5)
           if (component == componentF1) :
-              functionPanel.getFunctionButtons()[1].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[1].setSelected(value>0.5)
           if (component == componentF2) :
-              functionPanel.getFunctionButtons()[2].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[2].setSelected(value>0.5)
           if (component == componentF3) :
-              functionPanel.getFunctionButtons()[3].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[3].setSelected(value>0.5)
           if (component == componentF4) :
-              functionPanel.getFunctionButtons()[4].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[4].setSelected(value>0.5)
           if (component == componentF5) :
-              functionPanel.getFunctionButtons()[5].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[5].setSelected(value>0.5)
           if (component == componentF6) :
-              functionPanel.getFunctionButtons()[6].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[6].setSelected(value>0.5)
           if (component == componentF7) :
-              functionPanel.getFunctionButtons()[7].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[7].setSelected(value>0.5)
           if (component == componentF8) :
-              functionPanel.getFunctionButtons()[8].changeState(value>0.5)
+              functionPanel.getFunctionButtons()[8].setSelected(value>0.5)
           return
 
   model.addPropertyChangeListener(TreeListener())
 except:
   import javax.swing.JOptionPane as JOptionPane
-  import javax.swing.JFrame as JFrame  
-  JOptionPane.showMessageDialog(JFrame(), 
+  import javax.swing.JFrame as JFrame
+  JOptionPane.showMessageDialog(JFrame(),
 """This code is no longer maintained.
 
 Please use Jynstrument jython/Jynstrument/ThrottleWindowToolBar/USBThrottle.jyn instead

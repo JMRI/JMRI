@@ -30,14 +30,6 @@ public class DirectoryHandlerTest {
         assertThat(t.getWelcomeFiles()).containsExactly("index.html");
     }
 
-    @Test
-    public void testDefaultConstructor() {
-        DirectoryHandler t = new DirectoryHandler();
-        assertThat(t.getResourceBase()).isNull();
-        assertThat(t.isDirectoriesListed()).isTrue();
-        assertThat(t.getWelcomeFiles()).containsExactly("index.html");
-    }
-
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

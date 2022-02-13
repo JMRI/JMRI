@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.AbstractMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import jmri.jmrit.logixng.Base;
@@ -17,10 +16,13 @@ public class StringFactory implements StringActionFactory {
 
     @Override
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
-        Set<Map.Entry<Category, Class<? extends Base>>> stringActionClasses = new HashSet<>();
-        stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, StringActionMemory.class));
-        stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, StringActionStringIO.class));
-        stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, StringMany.class));
+        Set<Map.Entry<Category, Class<? extends Base>>> stringActionClasses =
+                Set.of(
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, StringActionMemory.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, StringActionStringIO.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, StringMany.class)
+                );
+        
         return stringActionClasses;
     }
 

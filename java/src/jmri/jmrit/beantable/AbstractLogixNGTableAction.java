@@ -312,7 +312,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<E> f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
@@ -493,22 +493,23 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
                 // This may or may not work. It's not tested yet.
                 // Disable for now.
-                if (1==0) {
-                    JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
-                    // Create bean
-                    JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                    panel5.add(create);
-                    create.addActionListener((ActionEvent e) -> {
-                        JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
-    //                    copyLogixNGPressed(e);
-                    });
-                    addLogixNGFrame.pack();
-                    addLogixNGFrame.setVisible(true);
-                    _autoSystemName.setSelected(false);
-                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                        _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
-                    });
-                }
+//                 if (1==0) {
+//                     JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
+//                     // Create bean
+//                     JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
+//                     panel5.add(create);
+//                     create.addActionListener((ActionEvent e) -> {
+//                         JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+//     //                    copyLogixNGPressed(e);
+//                     });
+//                     addLogixNGFrame.pack();
+//                     addLogixNGFrame.setVisible(true);
+//                     _autoSystemName.setSelected(false);
+//                     InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+//                         _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
+//                     });
+//                 }
+
                 _inCopyMode = false;
             }
         };
@@ -830,7 +831,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         final E x = getManager().getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        
+
         if (x == null) return;  // This should never happen
 
         StringBuilder message = new StringBuilder();
@@ -936,7 +937,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
             dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
                     dialog.setVisible(false);
-                    dialog.dispose(); }, 
+                    dialog.dispose(); },
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
             dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
@@ -944,7 +945,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             dialog.setVisible(true);
         }
     }
-    
+
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLogixNGTable");        // NOI18N
@@ -1059,7 +1060,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logixNG system name.txt
-        userFileChooser.setSelectedFile(new File(_curNamedBean.getSystemName() + ".txt"));  // NOI18N
+        String suggestedFileName = _curNamedBean.getSystemName().replace(':', '_') + ".txt";
+        userFileChooser.setSelectedFile(new File(suggestedFileName));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1093,14 +1095,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 + (isEnabled(_curNamedBean)
                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-//        JTextArea textContent = buildConditionalListing();
-        JTextArea textContent = new JTextArea();
         try {
             // Add bean Header inforation first
             FileUtil.appendTextToFile(file, tStr);
-            FileUtil.appendTextToFile(file, textContent.getText());
+            FileUtil.appendTextToFile(file, "-".repeat(tStr.length()));
+            FileUtil.appendTextToFile(file, "");
+            FileUtil.appendTextToFile(file, _textContent.getText());
         } catch (IOException e) {
-            log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
         }
     }
 

@@ -22,9 +22,13 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     @Override
-    @SuppressWarnings("deprecation") // until DCC4PC is migrated to multiple systems
     protected void getInstance() {
-        adapter = Mx1Adapter.instance();
+        adapter = new Mx1Adapter();
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override

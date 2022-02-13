@@ -24,14 +24,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -413,7 +413,7 @@ public class VSDFile extends ZipFile {
         String s = el.getChildText(name);
         if ((s != null) && (getFile(s) == null)) {
             missedFileName = s;
-            log.error("File {} for Element {} not found", s, name, el.getAttributeValue("name"));
+            log.error("File {} for Element {} not found {}", s, name, el.getAttributeValue("name"));
             return false;
         }
         return true;
@@ -448,7 +448,7 @@ public class VSDFile extends ZipFile {
                 while (ns_if.hasNext()) {
                     Element ns_ef = ns_if.next();
                     s = ns_ef.getText();
-                    log.debug("  {}", s);
+                    log.debug("  getText: {}", s);
                     if ((s == null) || (getFile(s) == null)) {
                         log.error("File {} for Element {} in Element {} not found", s, fn, name);
                         missedFileName = s; // Pass missing file name to global variable
