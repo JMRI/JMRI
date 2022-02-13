@@ -61,7 +61,7 @@
       <xs:attribute name="columns" type="xs:int"/> <!-- deprecated 4.21.2, replaced by rows -->
       <xs:attribute name="rows" type="xs:int"/>
       <xs:attribute name="total" type="xs:int"/>
-      <xs:attribute name="showusername" type="yesNoType" default="no"/>
+      <xs:attribute name="showusername" type="xs:string" default="no"/>
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
       <xs:attribute name="activecolor" type="screenColorType"/>
       <xs:attribute name="inactivecolor" type="screenColorType"/>

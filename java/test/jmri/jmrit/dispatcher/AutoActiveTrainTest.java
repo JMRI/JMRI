@@ -7,6 +7,7 @@ import jmri.util.JUnitUtil;
 import org.mockito.Mockito;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.*;
  */
 public class AutoActiveTrainTest {
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCTor() {
 
