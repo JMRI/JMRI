@@ -15,7 +15,7 @@ public class AddressPanelTest {
 
     @Test
     public void testCtor() {
-        AddressPanel panel = new AddressPanel(InstanceManager.throttleManagerInstance());
+        AddressPanel panel = new AddressPanel(InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
         Assert.assertNotNull("exists", panel);
     }
 
