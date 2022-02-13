@@ -42,16 +42,14 @@ something else.
 
 - Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.99.3". (This [might already exist](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.3%22), if it was properly created at the end of the last build cycle)  Typical content:
 ```
-This is the next release in the 4.26 cycle. It's intended to be created from the HEAD of the j11master branch.
+This is the next release in the 4.26 cycle. It's intended to be created from the HEAD of the master branch.
 ```
 
 
 ================================================================================
 ## Update Content
 
-- As a special step while we’re working from j11master, create and merge a PR to merge `master` to `j11master`. CI should pass, but no need to wait 24 hours.
-
-- Go to the j11master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
+- Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
  - Make sure `git status` shows "up to date", not "ahead".
 
@@ -162,7 +160,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 
 - If you changed anything, commit it back.
 
-- Commit the current copy of these notes, then push directly back to j11master on GitHub.
+- Commit the current copy of these notes, then push directly back to master on GitHub.
 
 ```
         git commit -m"for 4.99.3" scripts/HOWTO-distribution.md
@@ -257,7 +255,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 - Do one more check that everything is committed (you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere)
 
 ```
-        git checkout j11master
+        git checkout master
         git status
             (commit as needed)
         git push github
@@ -415,7 +413,7 @@ cd ..
 mkdir release
 mv target/properties.4.99.3.zip release/
 ls -lt release/
-git checkout j11master
+git checkout master
 
 ```
 
@@ -521,7 +519,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 4.99.4". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 5.0 cycle. It's intended to be created from the `HEAD` of the `j11master` branch.
+This is the next release in the 5.0 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 - Add the 4.99.4 milestone to the issue.
 
