@@ -661,11 +661,17 @@
       used with any action, such as signals. The time delay units are milliseconds, seconds,
       minutes and hours.</p>
 
+      <p>The default mode is that once a timer starts, subsequent requests will be ignored. If
+      <strong>Restart timer if already started</strong> is selected and a timer is already running,
+      it will be canceled and started again.  The subsequent action will be delayed until the timer
+      finishes.  If <strong>Use individual timers</strong> is selected, each request will be
+      independent.</p>
+
       <p>See <a href="#timeout">Timeout</a> for a conditional delayed execution.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/execute_delay.png"><img src="images/chapter5/execute_delay.png"
-        alt="Chapter 5 execute_delay" width="535" height="329"></a>
+        alt="Chapter 5 execute_delay" width="531" height="352"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
