@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20110628"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
@@ -190,7 +190,7 @@
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
         <label xml:lang="cs">Verze dekodéru: </label>
-      </variable> 
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
@@ -236,6 +236,11 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version37.xml"/>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+    <!--   Begin additional extraMemu elements - Jacobsen / Cliffe,   Feb 2022 -->
+    <xi:include href="http://jmri.org/xml/decoders/zimo/LoadCalibrationExtraMenu.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/PseudoIncrementalExtraMenu.xml"/>
+    <!--   End additional extraMemu elements - Jacobsen / Cliffe,   Feb 2022  -->
+
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
