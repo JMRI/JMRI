@@ -41,14 +41,14 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
 
     private HidServices hidServices = null;
     private HidDevice hidDevice = null;
-    
+
 
     //TODO: Remove this if/when the RailDriver script is removed
     //private final boolean invokeOnMenuOnly = true;
 
     private Thread thread = null;
     private ThrottleWindow throttleWindow = null;
-    private ThrottleFrame activeThrottleFrame = null;    
+    private ThrottleFrame activeThrottleFrame = null;
 
     public RailDriverMenuItem(String name) {
         super();
@@ -57,14 +57,14 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
     }
 
     public RailDriverMenuItem() {
-        // TODO: remove "(built in)" if/when this replaces Raildriver script        
+        // TODO: remove "(built in)" if/when this replaces Raildriver script
         this(Bundle.getMessage("RdBuiltIn"));
     }
-    
+
     private void initGUI(String name) {
         setText(name);
     }
-    
+
     private void setupListeners() {
         addPropertyChangeListener(this);
 
@@ -124,7 +124,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                 }
             }*/
         } catch (HidException ex) {
-            log.error("HidException: {}", ex);
+            log.error("HidException", ex);
         }
     }
 
@@ -183,7 +183,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                     // wait (500 mSec) for it to die
                     thread.join(500);
                 } catch (InterruptedException ex) {
-                    log.debug("InterruptedException : {}", ex);
+                    log.debug("InterruptedException", ex);
                 }
             }
             // start a new thread
@@ -264,16 +264,16 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         sleep(0.25);
                     }
                 }
-                
+
                 sendString("The quick brown fox jumps over the lazy dog.", 0.250);
                 sleep(2.0);
-                
+
                 setLEDs("8.8.8.");
                 sleep(2.0);
-                
+
                 setLEDs("???");
                 sleep(3.0);
-                
+
                 setLEDs("Pro");
             }).start();
         }
@@ -321,7 +321,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
         try {
             TimeUnit.MILLISECONDS.sleep((long) (delay * 1000.0));
         } catch (InterruptedException ex) {
-            log.debug("TimeUnit.sleep InterruptedException: {}", ex);
+            log.debug("TimeUnit.sleep InterruptedException", ex);
         }
     }
 
@@ -439,7 +439,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                 log.error("hidDevice.write error: {}", hidDevice.getLastErrorMessage());
             }
         } catch (IllegalStateException ex) {
-            log.error("hidDevice.write Exception : {}", ex);
+            log.error("hidDevice.write Exception", ex);
         }
     }
 
@@ -452,7 +452,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
 /*        HidDevice tHidDevice = event.getHidDevice();
         if ((tHidDevice.getVendorId() == VENDOR_ID) && (tHidDevice.getProductId() == PRODUCT_ID) && (!invokeOnMenuOnly) ) {
 //                && ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
-            setupRailDriver();                             
+            setupRailDriver();
         }*/
     }
 
@@ -507,7 +507,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         activeThrottleFrame = null;
                     }
                 } else if (object instanceof ThrottleFrame) {
-                    
+
                     if (throttleWindow != null) {
                         throttleWindow.removePropertyChangeListener(this);
                         throttleWindow = null;
@@ -516,14 +516,14 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         activeThrottleFrame.removePropertyChangeListener(this);
                         activeThrottleFrame = null;
                     }
-                    
+
                     activeThrottleFrame = (ThrottleFrame) object;
                     throttleWindow = activeThrottleFrame.getThrottleWindow();
-                    
+
                     throttleWindow.addPropertyChangeListener(this);
                     activeThrottleFrame.addPropertyChangeListener(this);
-                    
-                }   
+
+                }
                 break;
             case "Value":
                 String oldValue = event.getOldValue().toString();
@@ -531,14 +531,14 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                 DccThrottle throttle = activeThrottleFrame.getAddressPanel().getThrottle();
                 AddressPanel addressPanel = activeThrottleFrame.getAddressPanel();
                 //log.info("propertyChange \"Value\" old: {}, new: {}", oldValue, newValue);
-                
+
                 double value;
                 try {
                     value = Double.parseDouble(newValue);
                 } catch (NumberFormatException ex) {
                     log.error("RailDriver parse property new value ('{}')", newValue, ex);
                     return;
-                }  
+                }
                 switch (oldValue) {
                     case "Axis 0":
                         // REVERSER is the state of the reverser lever, values greater

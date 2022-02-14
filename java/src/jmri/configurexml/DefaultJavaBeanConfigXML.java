@@ -31,7 +31,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
     public void load(Element e, Object o) {
     }
 
-    Object unpack(Element e) 
+    Object unpack(Element e)
             throws ClassNotFoundException,  NoSuchMethodException, InstantiationException,
                     java.beans.IntrospectionException, IllegalAccessException,
                     java.lang.reflect.InvocationTargetException
@@ -116,11 +116,11 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                 e.addContent(p);
             }
         } catch (java.beans.IntrospectionException ex) {
-            log.error("Partial store due to IntrospectionException: {}", ex);
+            log.error("Partial store due to IntrospectionException", ex);
         } catch (java.lang.reflect.InvocationTargetException ex) {
-            log.error("Partial store due to InvocationTargetException: {}", ex);
+            log.error("Partial store due to InvocationTargetException", ex);
         } catch (IllegalAccessException ex) {
-            log.error("Partial store due to IllegalAccessException: {}", ex);
+            log.error("Partial store due to IllegalAccessException", ex);
         }
 
         return e;

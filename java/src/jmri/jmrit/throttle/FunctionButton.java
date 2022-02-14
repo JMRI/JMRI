@@ -292,19 +292,6 @@ public class FunctionButton extends JToggleButton {
     /**
      * Change the state of the function.
      * Sets internal state, setSelected, and sends to listeners.
-     *
-     * @param newState The new state. True = Is on, False = Is off.
-     * @deprecated since 4.19.6; use
-     * {@link jmri.jmrit.throttle.FunctionButton#setSelected(boolean) } instead
-     */
-    @Deprecated
-    public void changeState(boolean newState) {
-        setSelected(newState);
-    }
-
-    /**
-     * Change the state of the function.
-     * Sets internal state, setSelected, and sends to listeners.
      * <p>
      * To update this button WITHOUT sending to layout, use setState.
      *
@@ -317,19 +304,6 @@ public class FunctionButton extends JToggleButton {
         for (int i = 0; i < listeners.size(); i++) {
             listeners.get(i).notifyFunctionStateChanged(identity, newState);
         }
-    }
-
-    /**
-     * Add a listener to this button, probably some sort of keypad panel.
-     *
-     * @param l The FunctionListener that wants notifications via the
-     *          FunctionListener.notifyFunctionStateChanged.
-     * @deprecated since 4.19.6; use
-     * {@link jmri.jmrit.throttle.FunctionButton#addFunctionListener(jmri.jmrit.throttle.FunctionListener) } instead
-     */
-    @Deprecated
-    public void setFunctionListener(FunctionListener l) {
-        addFunctionListener(l);
     }
 
     /**
@@ -495,7 +469,7 @@ public class FunctionButton extends JToggleButton {
             }
             updateLnF();
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: {}", ex);
+            log.error("DataConverstionException in setXml", ex);
         }
     }
 

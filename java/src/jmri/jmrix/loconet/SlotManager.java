@@ -56,6 +56,26 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     static public int postProgDelay = 100; // this is public to allow changes via script
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
+    /**
+     * slotMapEntry - a from to pair of slot numbers defining a valid range of loco/system slots
+     * TODO add slottype, eg systemslot, std slot, expanded slot etc
+     * @author sg
+     *
+     */
+    static public class SlotMapEntry {
+        public SlotMapEntry(int from, int to) {
+            fromSlot = from;
+            toSlot = to;
+        }
+        int fromSlot;
+        int toSlot;
+        public int getFrom() {
+            return fromSlot;
+        }
+        public int getTo() {
+            return toSlot;
+        }
+    }
 
     /**
      * a Map of the CS slots.
@@ -716,7 +736,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public final void setAcceptAnyLACK() {
         acceptAnyLACK = true;
     }
-    
+
     /**
      * Handles OPC_LONG_ACK replies to programming slot operations.
      *
@@ -789,7 +809,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             }
         }
     }
-    
+
     /**
      * Internal method to notify ProgListener after a short delay that the operation is complete.
      * The delay ensures that the target device has completed the operation prior to the notification.
@@ -1381,7 +1401,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(cvNum, p, 0);
     }
-    
+
     /**
      * Read a CV via the OpsMode programmer.
      *
@@ -1641,7 +1661,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 try {
                     jmri.InstanceManager.getDefault(jmri.PowerManager.class).setPower(jmri.PowerManager.ON);
                 } catch (jmri.JmriException e) {
-                    log.error("exception during power on at end of programming: {}", e); // NOI18N
+                    log.error("exception during power on at end of programming", e); // NOI18N
                 }
             } else {
                 log.debug("end ops-mode programming: no power change"); // NOI18N

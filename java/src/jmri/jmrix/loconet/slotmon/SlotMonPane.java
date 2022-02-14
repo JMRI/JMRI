@@ -221,18 +221,4 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         sorter.setRowFilter(rf);
     }
 
-    /**
-     * Nested class to create one of these using old-style defaults.
-     * @deprecated since 4.19.7; use {@link SlotMonPaneAction} instead
-     */
-    @Deprecated
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        public Default() {
-            super(Bundle.getMessage("MenuItemSlotMonitor"),
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    SlotMonPane.class.getName(),
-                    jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
-        }
-    }
 }

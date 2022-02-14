@@ -71,25 +71,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         Assert.assertEquals("byte 4 hi nibble", 0x70, m.getElement(8));
     }
 
-    @SuppressWarnings("unused")
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i={} reply={}", i, rcvdReply);
-        }
-        if (i == 0) {
-            log.warn("waitForReply saw an immediate return; is threading right?");
-        }
-        return i < 100;
-    }
-
     // internal class to simulate a Listener
     class SerialListenerScaffold implements SerialListener {
 
@@ -194,6 +175,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

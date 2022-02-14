@@ -105,7 +105,7 @@ public class SerialDriverAdapter extends XpaPortController {
         XpaSystemConnectionMemo memo = ((XpaSystemConnectionMemo)getSystemConnectionMemo());
         XpaTrafficController tc = memo.getXpaTrafficController();
         tc.connectPort(this);
-        
+
         InstanceManager.store(memo.getPowerManager(), jmri.PowerManager.class);
         InstanceManager.store(memo.getTurnoutManager(),jmri.TurnoutManager.class);
         InstanceManager.store(memo.getThrottleManager(),jmri.ThrottleManager.class);
@@ -137,7 +137,7 @@ public class SerialDriverAdapter extends XpaPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e);
+            log.error("getOutputStream exception", e);
         }
         return null;
     }

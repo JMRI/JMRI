@@ -12,15 +12,15 @@ package jmri.jmrit.ussctc;
  */
 public interface Section<To extends Enum<To>, From extends Enum<From>>
                  extends CentralSection<To, From>, FieldSection<To, From> {
-                 
-    
+
+
     /**
      * Name of this Section.
      * Does not include name of associated Station.
      * @return section name without station.
-    */ 
+    */
     public String getName();
-    
-    public Station getStation();
-        
+
+    public Station<To, From> getStation();
+
 }

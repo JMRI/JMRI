@@ -24,7 +24,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     }
 
     private jmri.jmrix.can.CanSystemConnectionMemo _memo;
-    
+
     public CbusDccProgrammer(jmri.jmrix.can.CanSystemConnectionMemo m) {
         this.tc = m.getTrafficController();
         _memo = m;
@@ -58,7 +58,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -77,13 +77,13 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             tc.sendCanMessage(CbusMessage.getWriteCV(_cv, _val, getMode(), tc.getCanid()), this);
         } catch (Exception e) {
             // program op failed, go straight to end
-            log.error("Write operation failed, {} ",e);
+            log.error("Write operation failed",e);
             progState = RETURNSENT;
             //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -91,7 +91,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         readCV(CV, p);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -99,7 +99,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         readCV(CVname, p, 0);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -121,7 +121,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             }
         } catch (Exception e) {
             // program op failed, go straight to end
-            log.error("Read operation failed, {} ", e);
+            log.error("Read operation failed", e);
             progState = RETURNSENT;
             //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
         }
@@ -140,7 +140,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      * Only listening for frames coming in to JMRI, see CanReply
      */
@@ -148,7 +148,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     public void message(CanMessage m) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -199,7 +199,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Internal routine to handle a timeout

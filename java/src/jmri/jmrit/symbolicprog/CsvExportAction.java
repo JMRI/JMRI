@@ -60,7 +60,7 @@ public class CsvExportAction extends AbstractAction {
                 }
                 str.flush();
             } catch (IOException ex) {
-                log.error("Error writing file: {}", ex);
+                log.error("Error writing file", ex);
             }
         }
     }

@@ -1287,7 +1287,6 @@ public class TreeEditor extends TreeViewer {
             insertElementAt(element, 0);
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public void insertElementAt(E element, int index) {
             int size = getSize();

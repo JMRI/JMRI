@@ -160,16 +160,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         loadDisabled = s;
     }
 
-    /**
-     * 
-     * @return the default instance of the DefaultLogixManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public DefaultLogixManager instance() {
-        return InstanceManager.getDefault(DefaultLogixManager.class);
-    }
-
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {

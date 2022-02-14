@@ -517,7 +517,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         };
         getRootPane().getActionMap().put("close", act);
 
-        int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         // We extract the modifiers as a string, then add the I18N string, and

@@ -41,7 +41,7 @@ package jmri.jmrit.withrottle;
  * length of 4 char.
  *
  * Send Info on routes to devices, not specific to any one route. Format:
- * PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey 
+ * PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey
  *
  * Send list of routes Format:
  * PRL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
@@ -49,11 +49,11 @@ package jmri.jmrit.withrottle;
  * sensor, if used)
  *
  * Send Info on turnouts to devices, not specific to any one turnout. Format:
- * PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey 
+ * PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey
  * Send list of turnouts Format:
  * PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
  * States: 1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
- * 
+ *
  * Send time or time&rate:
  * 'PFT' + UTCAdjustedTimeSeconds
  *     -OR-
@@ -79,7 +79,7 @@ package jmri.jmrit.withrottle;
  * Info message: 'Hm' + message to display. Same as HM, but lower priority.
  *
  * Server Type message: 'HT' + type. Always 'JMRI' for this server.
- * Server Description message: 'Ht' + message. Includes version and railroad name. 
+ * Server Description message: 'Ht' + message. Includes version and railroad name.
  *
  */
 import java.io.BufferedReader;
@@ -332,7 +332,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                     break;
                                 }
                                 default:
-                                    log.warn("Unhandled code: {}", inPackage.charAt(1), this);
+                                    log.warn("Unhandled code {} {}", inPackage.charAt(1), this);
                                     break;
                             }
                             break;
@@ -604,7 +604,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     /**
      * Get the Roster ID String.
-     * 
+     *
      * @since 4.15.4
      * @return roster ID string.
      */
@@ -660,26 +660,26 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Send an Alert message (simple text string) to this client
      * <p>
-     * @param message 
+     * @param message
      * Format: HMmessage
      */
     @Override
-    public void sendAlertMessage(String message) {        
+    public void sendAlertMessage(String message) {
         sendPacketToDevice("HM" + message);
     }
 
     /**
      * Send an Info message (simple text string) to this client
      * <p>
-     * @param message 
+     * @param message
      * Format: Hmmessage
      */
     @Override
     public void sendInfoMessage(String message) {
         sendPacketToDevice("Hm" + message);
     }
-   
-    
+
+
 
     /**
      * Add a DeviceListener

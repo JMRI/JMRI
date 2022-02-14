@@ -46,20 +46,20 @@ public class BDL16Panel extends AbstractBoardProgPanel {
     public BDL16Panel() {
         this(1, false);
     }
-    
+
     JComboBox<Integer> addressComboBox;
     int[] boardNumbers;
     int origAccessBoardNum = 0;
     java.util.ArrayList<Integer> boardNumsEntryValue = new java.util.ArrayList<Integer>();
-    
+
     @SuppressWarnings("unchecked") // type erasure means can't ask for new JComboBox<String>[48]
     JComboBox<String> comboBox[] = new JComboBox[48];
-    
+
     /**
      * BDL16x Programming tool.
      * <p>
      * Use this constructor when the Unit Address is known.
-     * 
+     *
      * @param boardNum    integer for the initial Unit Address
      * @param readOnInit  True to trigger automatic read of the board
      */
@@ -72,7 +72,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * Get the URL for the HTML help for this tool.
-     * 
+     *
      * @return URL
      */
     @Override
@@ -82,7 +82,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * Get the name of the tool for use in the title of the window.
-     * 
+     *
      * @return String containing text for the title of the window
      */
     @Override
@@ -151,7 +151,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
         int temp = opsw[37]?1:0;
         temp += opsw[38]?2:0;
         comboBox[37].setSelectedIndex(temp);
-        
+
         temp = opsw[43]?1:0;
         temp += opsw[44]?2:0;
         comboBox[43].setSelectedIndex(temp);
@@ -159,7 +159,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * Determine the next OpSw to be accessed.
-     * 
+     *
      * @param state  most-recently accessed OpSw
      * @return       next OpSw to be accessed
      */
@@ -213,10 +213,10 @@ public class BDL16Panel extends AbstractBoardProgPanel {
                 return 0;
         }
     }
-    
+
     /**
      * Initialize LocoNet connection for use by the tool.
-     * 
+     *
      * @param memo  the LocoNet Connection
      */
     @Override
@@ -241,7 +241,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
     public void initComponents() {
         JPanel addressingPanel = provideAddressing(" "); // create read/write buttons, address
 
-        
+
         int indexOfTargetBoardAddress = 0;
 
         addressComboBox = new JComboBox<>();
@@ -257,10 +257,10 @@ public class BDL16Panel extends AbstractBoardProgPanel {
         addressingPanel.add(addressComboBox, 2);
         addressingPanel.getComponent(1).setVisible(false);
         addressComboBox.setEditable(true);
-        
+
         addressingPanel.add(new JLabel(Bundle.getMessage("LabelBoardID")),1);
         addressingPanel.getComponent(0).setVisible(false);
-        
+
         readAllButton.setPreferredSize(null);
         readAllButton.setText(Bundle.getMessage("ButtonReadFullSheet"));
         readAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonReadFullSheet"));
@@ -279,9 +279,9 @@ public class BDL16Panel extends AbstractBoardProgPanel {
         }
         writeAllButton.setPreferredSize(new java.awt.Dimension((int) (w * 1.1), d.height));
         readAllButton.setPreferredSize(new java.awt.Dimension((int) (w * 1.1), d.height));
-        
+
         appendLine(addressingPanel);  // add read/write buttons, address
-                
+
         JPanel frame1 = new JPanel();
         frame1.setLayout(new BoxLayout(frame1, BoxLayout.PAGE_AXIS));
 
@@ -463,14 +463,14 @@ public class BDL16Panel extends AbstractBoardProgPanel {
     /**
      * Create a JComboBox with two possible values.
      * <p>
-     * For a given OpSw number, create a JComboBox containing the appropriate 
-     * strings from the bundle.  Sets the initial value based on the OpSw's 
+     * For a given OpSw number, create a JComboBox containing the appropriate
+     * strings from the bundle.  Sets the initial value based on the OpSw's
      * reported default value.
-     * 
+     *
      * @param n   OpSw number
      * @return  the JPanel into which the JComboBox is placed
      */
-    private JComboBox getComboBox(int n) {
+    private JComboBox<String> getComboBox(int n) {
         String number = Integer.toString(n);
         if (number.length() == 1) {
             number = "0" + number;
@@ -492,15 +492,15 @@ public class BDL16Panel extends AbstractBoardProgPanel {
     /**
      * Create a JComboBox with four possible values.
      * <p>
-     * For two given OpSw numbers, create a JComboBox containing the appropriate 
-     * strings from the bundle.  Sets the initial value based on the OpSws' 
+     * For two given OpSw numbers, create a JComboBox containing the appropriate
+     * strings from the bundle.  Sets the initial value based on the OpSws'
      * reported default value.
-     * 
+     *
      * @param n first OpSw number
      * @param n2 second OpSw number
      * @return the JPanel into which the JComboBox is placed
      */
-    private JComboBox getComboBox(int n, int n2) {
+    private JComboBox<String> getComboBox(int n, int n2) {
         String number = Integer.toString(n);
         if (number.length() == 1) {
             number = "0" + number; // NOI18N
@@ -528,9 +528,9 @@ public class BDL16Panel extends AbstractBoardProgPanel {
     }
 
     /**
-     * Determine the JComboBox index which corresponds to the default value 
+     * Determine the JComboBox index which corresponds to the default value
      * for a given OpSw.
-     * 
+     *
      * @param  n OpSw number
      * @return index of default choice
      */
@@ -544,10 +544,10 @@ public class BDL16Panel extends AbstractBoardProgPanel {
                 return 0;
         }
     }
-    
+
     /**
      * Already know of this board (unit address)?
-     * 
+     *
      * @param id  Unit address to be checked against list
      * @return    True if the unit address is already in the list
      */
@@ -557,7 +557,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * Add a board to the list of unit addresses if not already there.
-     * 
+     *
      * @param   id a unit address to be added
      * @return  index into the boardNumsEntryValue list of entry for unit address "id"
      */
@@ -577,7 +577,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * Select a device based on an index into the list of unit addresses.
-     * 
+     *
      * @param index into the list of addresses
      */
     private void selectBoardIdByIndex(Integer index) {
@@ -602,7 +602,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * Interpret incoming LocoNet messages.
-     * 
+     *
      * @param m LocoNet message to be interpreted
      */
     @Override

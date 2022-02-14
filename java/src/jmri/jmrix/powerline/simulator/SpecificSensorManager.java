@@ -54,7 +54,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                 if ((flag & Constants.FLAG_BIT_X10_CMDUNIT) == Constants.FLAG_X10_RECV_CMD) {
                     if ((newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_ON)) {
                         // some sort of 'global' command, process for all matching the house code
-                        
+
                         getNamedBeanSet().forEach(sensorInSet -> {
                             String sName = sensorInSet.getSystemName();
                             if (newHouseCode.compareTo(tc.getAdapterMemo().getSerialAddress().houseCodeFromSystemName(sName)) == 0) {
@@ -66,9 +66,9 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                                     }
                                 } catch (jmri.JmriException e) {
                                     if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-                                        log.error("Exception setting {} sensor INACTIVE: {}", sName, e);
+                                        log.error("Exception setting {} sensor INACTIVE", sName, e);
                                     } else {
-                                        log.error("Exception setting {} sensor ACTIVE: {}", sName, e);
+                                        log.error("Exception setting {} sensor ACTIVE", sName, e);
                                     }
                                 }
                             }
@@ -81,14 +81,14 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                                 try {
                                     sensor.setKnownState(Sensor.ACTIVE);
                                 } catch (jmri.JmriException e) {
-                                    log.error("Exception setting {} sensor ACTIVE: {}", sysName, e);
+                                    log.error("Exception setting {} sensor ACTIVE", sysName, e);
                                 }
                             }
                             if (newCmdCode == X10Sequence.FUNCTION_OFF || newCmdCode == X10Sequence.FUNCTION_DIM || newCmdCode == X10Sequence.FUNCTION_STATUS_OFF) {
                                 try {
                                     sensor.setKnownState(Sensor.INACTIVE);
                                 } catch (jmri.JmriException e) {
-                                    log.error("Exception setting {} sensor INACTIVE: {}", sysName, e);
+                                    log.error("Exception setting {} sensor INACTIVE", sysName, e);
                                 }
                             }
                         }
@@ -120,14 +120,14 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                     try {
                         sensor.setKnownState(Sensor.ACTIVE);
                     } catch (jmri.JmriException e) {
-                        log.error("Exception setting {} sensor ACTIVE: {}", sysName, e);
+                        log.error("Exception setting {} sensor ACTIVE", sysName, e);
                     }
                 }
                 if (cmd1 == Constants.CMD_LIGHT_OFF_FAST || cmd1 == Constants.CMD_LIGHT_OFF_RAMP) {
                     try {
                         sensor.setKnownState(Sensor.INACTIVE);
                     } catch (jmri.JmriException e) {
-                        log.error("Exception setting {} sensor INACTIVE: {}", sysName, e);
+                        log.error("Exception setting {} sensor INACTIVE", sysName, e);
                     }
                 }
             }

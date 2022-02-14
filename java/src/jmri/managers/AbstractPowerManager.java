@@ -50,7 +50,7 @@ abstract public class AbstractPowerManager<M extends SystemConnectionMemo> exten
         power = state;
         firePowerPropertyChange(old, power);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public final String getUserName() {
@@ -72,7 +72,7 @@ abstract public class AbstractPowerManager<M extends SystemConnectionMemo> exten
             }
         }
     }
-    
+
     /**
      * Returns the amount of time since the layout was last powered up,
      * in milliseconds. If the layout has not been powered up as far as
@@ -86,17 +86,15 @@ abstract public class AbstractPowerManager<M extends SystemConnectionMemo> exten
         }
         return Instant.now().toEpochMilli() - lastOn.toEpochMilli();
     }
-    
+
     /**
      * Fires a {@link java.beans.PropertyChangeEvent} for the power state using
-     * both property names "power" and "Power".
-     * 
+     * property name "power".
+     *
      * @param old the old power state
      * @param current the new power state
      */
-    @SuppressWarnings("deprecation")
     protected final void firePowerPropertyChange(int old, int current) {
         firePropertyChange(POWER, old, current);
-        firePropertyChange(POWER_OPN, old, current);
     }
 }

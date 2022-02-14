@@ -1348,7 +1348,7 @@ public class SlotManagerTest {
                 startedShortTimer = true;
             }
             @Override
-            protected void stopTimer() {
+            protected synchronized void stopTimer() {
                 super.stopTimer();
                 stoppedTimer = true;
             }

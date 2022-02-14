@@ -43,11 +43,6 @@ public class JmriFacelessTest {
                 JUnitUtil.initMemoryManager();
                 JUnitUtil.initDebugThrottleManager();
             }
-
-            @Override
-            protected void installShutDownManager() {
-                // done automatically now as part of InstanceManager default handling
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application

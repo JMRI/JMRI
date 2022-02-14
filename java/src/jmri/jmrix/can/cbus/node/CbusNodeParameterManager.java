@@ -13,7 +13,7 @@ public class CbusNodeParameterManager {
     private int[] _parameters;
     private boolean _commandStationIdentified;
     private boolean _nodeTraitsSet;
-    
+
     /**
      * Create a new CbusNodeCanListener
      *
@@ -25,7 +25,7 @@ public class CbusNodeParameterManager {
         _commandStationIdentified = false;
         _nodeTraitsSet = false;
     }
-    
+
     /**
      * Set Node Parameters.
      * <p>
@@ -58,18 +58,18 @@ public class CbusNodeParameterManager {
      * Para 19 CPU manufacturer code
      * <p>
      * Para 20 Beta revision (numeric), or 0 if release
-     * 
+     *
      * @param newparams set the node parameters
-     *                
+     *
      */
     public void setParameters( int[] newparams ) {
-        
+
         //  log.warn("new params {}",newparams);
         _parameters = new int [(newparams[0]+1)];
         for (int i = 0; i < _parameters.length; i++) {
             setParameter(i,newparams[i]);
         }
-        
+
         if ( getParameter(6) > -1 ) {
             int [] myarray = new int[(getParameter(6)+1)]; // +1 to account for index 0 being the NV count
             java.util.Arrays.fill(myarray, -1);
@@ -77,13 +77,13 @@ public class CbusNodeParameterManager {
             _node.getNodeNvManager().setNVs(myarray);
         }
     }
-    
+
     /**
      * Set a Single Node Parameter.
      * Parameter array should be initialised before calling.
      * Notifies PropertyChangeListener "PARAMETER"
-     * 
-     * @param index Parameter Index, 
+     *
+     * @param index Parameter Index,
      * @param newval New Parameter Value, 0-255
      */
     public void setParameter( int index, int newval ) {
@@ -93,7 +93,7 @@ public class CbusNodeParameterManager {
         }
         log.debug("set parameter tot:{} index:{} newval:{}",_parameters.length,index,newval);
         if ( index <= _parameters.length ) {
-        
+
             _parameters[index] = newval;
             _node.notifyPropertyChangeListener("PARAMETER", null, null);
         }
@@ -101,15 +101,15 @@ public class CbusNodeParameterManager {
 
     /**
      * Get Number of outstanding unknown Parameters to be fetched from a CbusNode
-     * 
+     *
      * @return Number of outstanding Parameters, else 8
      */
     public int getOutstandingParams(){
-        
+
         if (_parameters == null){
             return 8; // CBUS Spec minimum 8 parameters, likely value 20
         }
-        
+
         int count = 0;
         for (int i = 1; i < _parameters.length; i++) {
             if ( _parameters[i] == -1 ) {
@@ -118,15 +118,15 @@ public class CbusNodeParameterManager {
         }
         return count;
     }
-    
+
     /**
      * Get a Single Parameter value
      * <p>
      * eg. for param. array [3,1,2,3] index 2 returns 2
-     * 
+     *
      * @param index of which parameter, 0 gives the total parameters
      * @return Full Parameter value for a particular index, -1 if unknown
-     */ 
+     */
     public int getParameter(int index) {
         if ( _parameters == null ) {
             return -1;
@@ -141,20 +141,20 @@ public class CbusNodeParameterManager {
 
     /**
      * Get array of All parameters
-     * 
+     *
      * @return Full Parameter array, index 0 is total parameters
-     */ 
+     */
     public int[] getParameters() {
         return _parameters;
     }
-    
+
     /**
      * Get the Parameter String in Hex Byte Format
      * <p>
      * eg. for param. array [3,1,2,3] returns "010203"
-     * 
+     *
      * @return Full Parameter String WITHOUT leading number of parameters
-     */  
+     */
     public String getParameterHexString() {
         if (getParameters()==null) {
             return "";
@@ -167,10 +167,10 @@ public class CbusNodeParameterManager {
         _parameters = null;
         _nodeTraitsSet = false;
     }
-    
+
     /**
      * Get the Node Type
-     * 
+     *
      * @return eg. MERG Command Station CANCMD Firmware 4d Node 65534
      */
     public String getNodeTypeString(){
@@ -191,7 +191,7 @@ public class CbusNodeParameterManager {
         .append (_node.getNodeNumber());
         return n.toString();
     }
-    
+
     public void requestEventTot() {
         if ( _node.getNodeTimerManager().hasActiveTimers() ){
             return;
@@ -199,7 +199,7 @@ public class CbusNodeParameterManager {
         _node.getNodeTimerManager().setNumEvTimeout();
         _node.send.rQEVN( _node.getNodeNumber() );
     }
-    
+
     /**
      * Request a single Parameter from a Physical Node
      * <p>
@@ -215,7 +215,7 @@ public class CbusNodeParameterManager {
         _node.getNodeTimerManager().setAllParamTimeout(param);
         _node.send.rQNPN( _node.getNodeNumber(), param );
     }
-    
+
     private boolean sentParamRequest(int paramToCheck){
         if ( getParameter(paramToCheck) < 0 ) {
             requestParam(paramToCheck);
@@ -223,10 +223,10 @@ public class CbusNodeParameterManager {
         }
         return false;
     }
-    
+
     /**
      * Send a request for the next unknown parameter to the physical node
-     * 
+     *
      */
     protected void sendRequestNextParam(){
         if ( _parameters == null ) {
@@ -238,7 +238,7 @@ public class CbusNodeParameterManager {
             || ( sentParamRequest(6) ) ) { // initialise NV's
             return;
         }
-        
+
         if ( sentParamRequest(5) // get number event variables per event
             || ( sentParamRequest(7) ) // get firmware pt1
             || ( sentParamRequest(2) ) ) { // get firmware pt2
@@ -246,39 +246,39 @@ public class CbusNodeParameterManager {
         }
 
         finishedWhenGotMainParams();
-        
+
         for (int i = 1; i < _parameters.length; i++) {
             if ( sentParamRequest(i) ) {
                 return;
             }
         }
     }
-    
+
     private void finishedWhenGotMainParams(){
-        
+
         if (!( _node instanceof CbusNode)){
             return;
         }
-        
+
         if (( ( (CbusNode) _node).getCsNum() > -1 ) && ( _commandStationIdentified == false ) ) {
             // notify command station located
-            log.info("{}",getNodeTypeString() );
+            log.info("Node type: {}",getNodeTypeString() );
             _commandStationIdentified = true;
         }
-        
+
         // set node traits, eg CANPAN v1 send wrack on nv set, CANCMD v4 numevents 0
         // only do this once
         if (!_nodeTraitsSet ) {
             CbusNodeConstants.setTraits((CbusNode) _node);
             _nodeTraitsSet = true;
         }
-        
+
         // now traits are known request num. of events
         if ( _node.getNodeEventManager().getTotalNodeEvents()<0 ){
             requestEventTot();
         }
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(CbusNodeParameterManager.class);
-    
+
 }

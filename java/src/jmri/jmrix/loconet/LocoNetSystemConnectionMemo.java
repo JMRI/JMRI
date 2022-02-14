@@ -116,7 +116,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     }
 
     public DefaultProgrammerManager getProgrammerManager() {
-        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class c) -> new LnProgrammerManager(this));
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class<?> c) -> new LnProgrammerManager(this));
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
@@ -240,7 +240,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class c) -> new LnPowerManager(this));
+        return (LnPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class<?> c) -> new LnPowerManager(this));
     }
 
     public ThrottleManager getThrottleManager() {
@@ -270,35 +270,35 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> new LnTurnoutManager(this, tm, mTurnoutNoRetry));
+        return (LnTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class<?> c) -> new LnTurnoutManager(this, tm, mTurnoutNoRetry));
     }
 
     public LnClockControl getClockControl() {
         if (getDisabled()) {
             return null;
         }
-        return (LnClockControl) classObjectMap.computeIfAbsent(ClockControl.class,(Class c) -> new LnClockControl(this));
+        return (LnClockControl) classObjectMap.computeIfAbsent(ClockControl.class,(Class<?> c) -> new LnClockControl(this));
     }
 
     public LnReporterManager getReporterManager() {
         if (getDisabled()) {
             return null;
         }
-        return (LnReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class c) -> new LnReporterManager(this));
+        return (LnReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class<?> c) -> new LnReporterManager(this));
     }
 
     public LnSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> new LnSensorManager(this));
     }
 
     public LnLightManager getLightManager() {
         if (getDisabled()) {
             return null;
         }
-        return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
+        return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class<?> c) -> new LnLightManager(this));
     }
 
     public LncvDevicesManager getLncvDevicesManager() {
@@ -316,7 +316,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnStringIOManager) classObjectMap.computeIfAbsent(StringIOManager.class, (Class c) -> new LnStringIOManager(this));
+        return (LnStringIOManager) classObjectMap.computeIfAbsent(StringIOManager.class, (Class<?> c) -> new LnStringIOManager(this));
     }
 
     protected LnPredefinedMeters predefinedMeters;
@@ -370,7 +370,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     // yes, tagManager is static.  Tags can move between system connections.
     // when readers are not all on the same LocoNet
     // this manager is loaded on demand.
-    protected static TranspondingTagManager tagManager;
+    static TranspondingTagManager tagManager;
 
     static public TranspondingTagManager getIdTagManager() {
         synchronized (LocoNetSystemConnectionMemo.class) { // since tagManager can be null, can't synch on that
@@ -383,7 +383,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     }
 
     public LnCabSignalManager getCabSignalManager() {
-        return (LnCabSignalManager) classObjectMap.computeIfAbsent(CabSignalManager.class,(Class c) -> new LnCabSignalManager(this));
+        return (LnCabSignalManager) classObjectMap.computeIfAbsent(CabSignalManager.class,(Class<?> c) -> new LnCabSignalManager(this));
     }
 
     @Override

@@ -47,7 +47,7 @@ public class ActionReporterXml extends jmri.managers.configurexml.AbstractNamedB
 
         storeCommon(p, element);
 
-        NamedBeanHandle reporter = p.getReporter();
+        var reporter = p.getReporter();
         if (reporter != null) {
             element.addContent(new Element("reporter").addContent(reporter.getName()));
         }
@@ -64,7 +64,7 @@ public class ActionReporterXml extends jmri.managers.configurexml.AbstractNamedB
         element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
         element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
 
-        NamedBeanHandle memory = p.getMemory();
+        var memory = p.getMemory();
         if (memory != null) {
             element.addContent(new Element("memory").addContent(memory.getName()));
         }

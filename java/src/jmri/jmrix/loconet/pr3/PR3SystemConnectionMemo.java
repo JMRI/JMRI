@@ -114,7 +114,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return super.getThrottleManager();
         }
-        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,(Class c) -> new jmri.jmrix.loconet.LnPr2ThrottleManager(this));
+        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,(Class<?> c) -> new jmri.jmrix.loconet.LnPr2ThrottleManager(this));
     }
 
     @Override
@@ -140,7 +140,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         }
         if(type.equals(jmri.ConsistManager.class)){
            return(getConsistManager()!=null);
-        } 
+        }
         return false;
     }
     //private jmri.jmrix.loconet.pr2.LnPr2PowerManager powerManager;
@@ -158,7 +158,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return super.getPowerManager();
         }
-        return (LnPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class c) -> new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
+        return (LnPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class<?> c) -> new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
     }
 
     /**

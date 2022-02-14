@@ -90,7 +90,7 @@ public class Sound {
             log.error("Unable to open {}", url);
         }
     }
-    
+
     private Clip openClip() {
         Clip newClip = null;
         try {
@@ -115,10 +115,10 @@ public class Sound {
         } catch (UnsupportedAudioFileException ex) {
             log.error("{} is not a recognised audio format", url);
         }
-        
+
         return newClip;
     }
-    
+
     /**
      * Set if the clip be closed automatically.
      * @param autoClose true if closed automatically
@@ -126,7 +126,7 @@ public class Sound {
     public void setAutoClose(boolean autoClose) {
         this.autoClose = autoClose;
     }
-    
+
     /**
      * Get if the clip is closed automatically.
      * @return true if closed automatically
@@ -134,7 +134,7 @@ public class Sound {
     public boolean getAutoClose() {
         return autoClose;
     }
-    
+
     /**
      * Closes the sound.
      */
@@ -150,11 +150,11 @@ public class Sound {
             });
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
-    public void finalize() throws Throwable {
+    @SuppressWarnings("deprecation") // Object.finalize
+    protected void finalize() throws Throwable {
         try {
             if (!streaming) {
                 clipRef.updateAndGet(clip -> {
@@ -168,7 +168,7 @@ public class Sound {
             super.finalize();
         }
     }
-    
+
     /**
      * Play the sound once.
      */
@@ -277,11 +277,11 @@ public class Sound {
             line.open(format);
         } catch (LineUnavailableException ex) {
             // Handle the error.
-            log.error("error opening line: {}", ex);
+            log.error("error opening line", ex);
             return;
         }
         line.start();
-        // write(byte[] b, int off, int len) 
+        // write(byte[] b, int off, int len)
         line.write(wavData, 0, wavData.length);
 
     }
@@ -379,7 +379,7 @@ public class Sound {
         /** {@inheritDoc} */
         @Override
         public void run() {
-            // Note: some of the following is based on code from 
+            // Note: some of the following is based on code from
             //      "Killer Game Programming in Java" by A. Davidson.
             // Set up the audio input stream from the sound file
             try {
@@ -441,7 +441,7 @@ public class Sound {
                 return;
             }
             // Read  the sound file in chunks of bytes into buffer, and
-            //   pass them on through the SourceDataLine 
+            //   pass them on through the SourceDataLine
             int numRead;
             byte[] buffer = new byte[line.getBufferSize()];
             log.debug("streaming sound buffer size = {}", line.getBufferSize());
@@ -449,7 +449,7 @@ public class Sound {
             // read and play chunks of the audio
             try {
                 if (stream.markSupported()) stream.mark(Integer.MAX_VALUE);
-                
+
                 int i=0;
                 while (!streamingStop && ((i++ < count) || (count == Clip.LOOP_CONTINUOUSLY))) {
                     int offset;

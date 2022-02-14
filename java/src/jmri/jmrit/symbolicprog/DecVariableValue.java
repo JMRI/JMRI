@@ -32,6 +32,7 @@ public class DecVariableValue extends VariableValue
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", fieldLength());
+        _value.getAccessibleContext().setAccessibleName(label());
         _defaultColor = _value.getBackground();
         _value.setBackground(COLOR_UNKNOWN);
         // connect to the JTextField value, cv
@@ -270,7 +271,7 @@ public class DecVariableValue extends VariableValue
     /**
      * Set a new value, including notification as needed.
      * <p>
-     * This does the conversion from string to int, so if the place where 
+     * This does the conversion from string to int, so if the place where
      * formatting needs to be applied.
      * @param value new value.
      */

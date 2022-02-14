@@ -50,11 +50,6 @@ public class FirstTimeStartUpWizardTest {
             }
 
             @Override
-            protected void installShutDownManager() {
-                // done automatically now as part of InstanceManager default handling
-            }
-
-            @Override
             public void createAndDisplayFrame() {
                 // called when wizard is disposed, but do nothing in tests
             }

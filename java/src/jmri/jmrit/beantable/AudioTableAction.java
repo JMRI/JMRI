@@ -2,6 +2,7 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -300,7 +301,6 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
          *
          * @param subType Audio sub-type to update
          */
-        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
         protected synchronized void updateSpecificNameList(char subType) {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
@@ -312,7 +312,17 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
                     }
                 }
             }
-            sysNameList = getManager().getSystemNameList(subType);
+
+            // recreate the list of system names
+            var tempSet = getManager().getNamedBeanSet();
+            var out = new ArrayList<String>();
+            tempSet.stream().forEach((audio) -> {
+                if (audio.getSubType() == subType) {
+                    out.add(audio.getSystemName());
+                }
+            });
+            sysNameList = out;
+
             // and add them back in
             sysNameList.stream().forEach((sysName) -> {
                 getBySystemName(sysName).addPropertyChangeListener(this);

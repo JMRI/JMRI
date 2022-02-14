@@ -54,7 +54,7 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.setUp();
         stc = new SRCPTrafficControlScaffold();
         SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(stc, "TEST", 1);
-        memo.setTurnoutManager(new SRCPTurnoutManager(memo, memo.getBus()));
+        memo.setTurnoutManager(new SRCPTurnoutManager(memo));
         t = new SRCPTurnout(1, memo);
     }
 

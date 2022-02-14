@@ -7,14 +7,11 @@ import java.beans.PropertyChangeEvent;
  *
  * @author Randall Wood Copyright 2020
  */
-//This interface exists so that multiple implementations can inherit the Javadocs
-public interface PropertyChangeFirer {
+// This package-protected interface exists so that multiple implementations can inherit the Javadocs
+interface PropertyChangeFirer {
 
     /**
-     * Fire an indexed property change. Despite being public due to limitations
-     * in Java 8, this method should only be called by the subclasses of
-     * implementing classes, as this will become a protected class when JMRI
-     * requires Java 11 or newer.
+     * Fire an indexed property change.
      *
      * @param propertyName the programmatic name of the property that was
      *                     changed
@@ -25,10 +22,7 @@ public interface PropertyChangeFirer {
     void fireIndexedPropertyChange(String propertyName, int index, boolean oldValue, boolean newValue);
 
     /**
-     * Fire an indexed property change. Despite being public due to limitations
-     * in Java 8, this method should only be called by the subclasses of
-     * implementing classes, as this will become a protected class when JMRI
-     * requires Java 11 or newer.
+     * Fire an indexed property change.
      *
      * @param propertyName the programmatic name of the property that was
      *                     changed
@@ -39,10 +33,7 @@ public interface PropertyChangeFirer {
     void fireIndexedPropertyChange(String propertyName, int index, int oldValue, int newValue);
 
     /**
-     * Fire an indexed property change. Despite being public due to limitations
-     * in Java 8, this method should only be called by the subclasses of
-     * implementing classes, as this will become a protected class when JMRI
-     * requires Java 11 or newer.
+     * Fire an indexed property change.
      *
      * @param propertyName the programmatic name of the property that was
      *                     changed
@@ -53,10 +44,7 @@ public interface PropertyChangeFirer {
     void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue);
 
     /**
-     * Fire a property change. Despite being public due to limitations
-     * in Java 8, this method should only be called by the subclasses of
-     * implementing classes, as this will become a protected class when JMRI
-     * requires Java 11 or newer.
+     * Fire a property change.
      *
      * @param propertyName the programmatic name of the property that was
      *                     changed
@@ -66,20 +54,14 @@ public interface PropertyChangeFirer {
     void firePropertyChange(String propertyName, boolean oldValue, boolean newValue);
 
     /**
-     * Fire a property change. Despite being public due to limitations
-     * in Java 8, this method should only be called by the subclasses of
-     * implementing classes, as this will become a protected class when JMRI
-     * requires Java 11 or newer.
+     * Fire a property change.
      *
      * @param event the PropertyChangeEvent to be fired
      */
     void firePropertyChange(PropertyChangeEvent event);
 
     /**
-     * Fire a property change. Despite being public due to limitations
-     * in Java 8, this method should only be called by the subclasses of
-     * implementing classes, as this will become a protected class when JMRI
-     * requires Java 11 or newer.
+     * Fire a property change.
      *
      * @param propertyName the programmatic name of the property that was
      *                     changed
@@ -89,10 +71,7 @@ public interface PropertyChangeFirer {
     void firePropertyChange(String propertyName, int oldValue, int newValue);
 
     /**
-     * Fire a property change. Despite being public due to limitations
-     * in Java 8, this method should only be called by the subclasses of
-     * implementing classes, as this will become a protected class when JMRI
-     * requires Java 11 or newer.
+     * Fire a property change.
      *
      * @param propertyName the programmatic name of the property that was
      *                     changed

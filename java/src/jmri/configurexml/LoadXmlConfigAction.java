@@ -84,7 +84,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                     }
                 }
             } catch (JmriException e) {
-                log.error("Unhandled problem in loadFile: {}", e);  // NOI18N
+                log.error("Unhandled problem in loadFile", e);  // NOI18N
             }
         } else {
             results = true;   // We assume that as the file is null then the user has clicked cancel.

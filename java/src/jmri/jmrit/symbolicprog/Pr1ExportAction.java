@@ -74,7 +74,7 @@ public class Pr1ExportAction extends AbstractAction {
                 str.flush();
                 str.close();
             } catch (IOException ex) {
-                log.error("Error writing file: {}", ex);
+                log.error("Error writing file", ex);
             }
         }
     }

@@ -74,20 +74,22 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     void copyAndInstall(URL from, JPanel who) {
         log.debug("[{}]", from.getFile());
 
         // get output name
         File temp = new File(from.getFile());
 
-        log.debug("[{}]", temp.toString());
+        log.debug("File [{}]", temp.toString());
 
         // ensure directories exist
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "decoders");
 
         // output file
         File toFile = new File(FileUtil.getUserFilesPath() + "decoders" + File.separator + temp.getName());
-        log.debug("[{}]", toFile.toString());
+        log.debug("file [{}]", toFile.toString());
 
         // first do the copy, but not if source and output files are the same
         if (!temp.toString().equals(toFile.toString())) {
@@ -125,11 +127,11 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             }
             // done - finally cleans up
         } catch (FileNotFoundException ex) {
-            log.debug("{}", ex);
+            log.debug("unexpected", ex);
             JOptionPane.showMessageDialog(who, Bundle.getMessage("CopyError1"));
             return false;
         } catch (IOException e) {
-            log.debug("{}", e);
+            log.debug("IO Exception ", e);
             JOptionPane.showMessageDialog(who, Bundle.getMessage("CopyError2"));
             return false;
         } finally {
@@ -168,7 +170,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             return true;
 
         } catch (java.io.IOException | org.jdom2.JDOMException ex) {
-            log.debug("{}", ex);
+            log.debug("Exception checking file", ex);
             JOptionPane.showMessageDialog(who, Bundle.getMessage("ParseError"));
             return false;
         }

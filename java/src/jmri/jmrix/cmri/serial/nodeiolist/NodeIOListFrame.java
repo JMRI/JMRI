@@ -582,7 +582,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                     w.write("\n");
                     lineString = new StringBuilder("");
                 } catch (IOException e) {
-                    log.warn("error during printing: {}", e);
+                    log.warn("error during printing", e);
                 }
             }
         }

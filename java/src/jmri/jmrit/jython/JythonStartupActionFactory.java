@@ -1,8 +1,12 @@
 package jmri.jmrit.jython;
 
+import jmri.script.swing.InputWindowAction;
+
 import java.util.Locale;
+
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
