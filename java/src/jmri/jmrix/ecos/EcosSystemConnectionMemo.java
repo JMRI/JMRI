@@ -131,7 +131,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
     }
 
     public EcosProgrammerManager getProgrammerManager() {
-        return (EcosProgrammerManager) classObjectMap.computeIfAbsent(EcosProgrammerManager.class, (Class c) ->
+        return (EcosProgrammerManager) classObjectMap.computeIfAbsent(EcosProgrammerManager.class, (Class<?> c) ->
             new EcosProgrammerManager(new EcosProgrammer(getTrafficController()), this));
     }
 

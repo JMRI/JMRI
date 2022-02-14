@@ -14,7 +14,7 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
 
     public StringActionMemoryXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -28,14 +28,14 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         Element element = new Element("StringActionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getMemory();
+        var memory = p.getMemory();
         if (memory != null) {
             element.addContent(new Element("memory").addContent(memory.getName()));
         }
-        
+
         return element;
     }
 /*
@@ -62,13 +62,13 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
 //        List<Element> l = shared.getChildren("lightname");
-/*        
+/*
         if (l.size() == 0) {
             l = shared.getChildren("light");  // older form
         }
         NamedBeanHandle<Light> low = loadLight(l.get(0));
         NamedBeanHandle<Light> high = loadLight(l.get(1));
-*/        
+*/
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
@@ -89,6 +89,6 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         InstanceManager.getDefault(StringActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemoryXml.class);
 }

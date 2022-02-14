@@ -31,7 +31,7 @@ public class LNCPSignalMastXml extends jmri.implementation.configurexml.DccSigna
             m = (LNCPSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideCustomSignalMast(sys, LNCPSignalMast.class);
         } catch (JmriException e) {
-            log.error("Failed to load DccSignalMast {}: {}", sys, e);
+            log.error("Failed to load DccSignalMast {}", sys, e);
             return false;
         }
 

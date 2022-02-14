@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * <li>CanReply - Can Frame being received by JMRI
  * </ul>
  * https://github.com/MERG-DEV/CBUSlib.
- * 
+ *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young (C) 2018
  */
@@ -55,7 +55,7 @@ public class CbusMessage {
         }
         return msg;
     }
-    
+
 
     /**
      * Get the Op Code from the CanMessage
@@ -76,7 +76,7 @@ public class CbusMessage {
     public static int getDataLength(AbstractMessage am) {
         return am.getElement(0) >> 5;
     }
-    
+
     /**
      * Get the Node Number from a CanFrame Event
      *
@@ -90,7 +90,7 @@ public class CbusMessage {
             return 0;
         }
     }
-    
+
     /**
      * Get the Event Number from a CBUS Event
      *
@@ -104,7 +104,7 @@ public class CbusMessage {
             return -1;
         }
     }
-    
+
     /**
      * Get the Event Type ( on or off ) from a CanFrame
      *
@@ -133,7 +133,7 @@ public class CbusMessage {
         }
         return CbusOpCodes.isEvent(am.getElement(0));
     }
-    
+
     /**
      * Tests if CanFrame is a short event
      *
@@ -221,7 +221,7 @@ public class CbusMessage {
 
     /**
      * Checks if a CanMessage is requesting Track Power Off
-     * 
+     *
      * @param  m Can Frame Message
      * @return boolean
      */
@@ -231,7 +231,7 @@ public class CbusMessage {
 
     /**
      * Checks if a CanMessage is requesting Track Power On
-     * 
+     *
      * @param  m Can Frame Message
      * @return True if outgoing track power on request
      */
@@ -337,11 +337,11 @@ public class CbusMessage {
 
     /**
      * CBUS programmer commands
-     * 
+     *
      * CBUS VCVS works like a QCVS read but the programmer will first check if
      * the CV contents are equal to the startVal. This can speed up CV reads by
      * skipping reading of other values.
-     * 
+     *
      * @param cv CV to read
      * @param mode Programming Mode
      * @param startVal Hint of current CV value
@@ -450,7 +450,7 @@ public class CbusMessage {
 
 
     // CBUS bootloader commands
-    
+
     /**
      * This is a strict CBUS message to put a node into boot mode.
      * @param nn Node Number 1-65534
@@ -470,7 +470,7 @@ public class CbusMessage {
      * Microchip AN247 format NOP message to set address.
      * <p>
      * The CBUS bootloader uses extended ID frames
-     * 
+     *
      * @param a address
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
@@ -492,7 +492,7 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to reset and enter normal mode.
-     * 
+     *
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
@@ -514,7 +514,7 @@ public class CbusMessage {
     /**
      * Microchip AN247 format message to initialise the bootloader and set the
      * start address.
-     * 
+     *
      * @param a start address
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
@@ -536,10 +536,10 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to send the checksum for comparison.
-     * 
+     *
      * At time of writing [6th Feb '20] The MERG bootloader doc is incorrect and
      * shows the checksum as being byte swapped.
-     * 
+     *
      * @param c 0-65535 2's complement of sum of all program bytes sent
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
@@ -561,7 +561,7 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to check if a module is in boot mode.
-     * 
+     *
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
@@ -582,7 +582,7 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to write 8 bytes of data
-     * 
+     *
      * @param d data array, 8 length, values 0-255
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
@@ -601,14 +601,14 @@ public class CbusMessage {
             m.setElement(6, d[6] & 0xff);
             m.setElement(7, d[7] & 0xff);
         } catch (Exception e) {
-            log.error("Exception in bootloader data {}", e);
+            log.error("Exception in bootloader data", e);
         }
         return m;
     }
 
     /**
      * Microchip AN247 format message to write 8 bytes of data
-     * 
+     *
      * @param d data array, 8 length, values 0-255
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
@@ -627,21 +627,21 @@ public class CbusMessage {
             m.setElement(6, d[6] & 0xff);
             m.setElement(7, d[7] & 0xff);
         } catch (Exception e) {
-            log.error("Exception in bootloader data {}", e);
+            log.error("Exception in bootloader data", e);
         }
         return m;
     }
 
     /**
      * Tests if a message is a bootloader data write
-     * 
+     *
      * @param m message
      * @return true if the message is a bootloader data write
      */
     public static boolean isBootWriteData(CanMessage m) {
         if (m.isExtended() && (m.getHeader() == 0x5)) {
             return (true);
-        } 
+        }
         return (false);
     }
 
@@ -654,7 +654,7 @@ public class CbusMessage {
     public static boolean isBootError(CanReply r) {
         if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_ERROR)) {
             return (true);
-        } 
+        }
         return (false);
     }
 
@@ -670,7 +670,7 @@ public class CbusMessage {
         }
         return (false);
     }
-    
+
     /**
      * Tests if incoming CanReply is a Boot Confirm.
      *

@@ -79,7 +79,7 @@ public class SerialDriverAdapter extends RfidPortController {
                 log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(), // NOI18N
                         activeSerialPort.getReceiveFramingByte()); // NOI18N
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: {}", ef); // NOI18N
+                log.debug("failed to set serial framing", ef); // NOI18N
             }
 
             // set timeout; framing should work before this anyway
@@ -88,7 +88,7 @@ public class SerialDriverAdapter extends RfidPortController {
                 log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), // NOI18N
                         activeSerialPort.isReceiveTimeoutEnabled()); // NOI18N
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et); // NOI18N
+                log.info("failed to set serial timeout", et); // NOI18N
             }
 
             // get and save stream

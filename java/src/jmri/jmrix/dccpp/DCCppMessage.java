@@ -113,9 +113,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Since DCCppMessages are text, there is no Hex-to-byte conversion.
      * <p>
      * NOTE 15-Feb-17: un-Deprecating this function so that it can be used in
-     * the DCCppOverTCP server/client interface. 
+     * the DCCppOverTCP server/client interface.
      * Messages shouldn't be parsed, they are already in DCC++ format,
-     * so we need the string constructor to generate a DCCppMessage from 
+     * so we need the string constructor to generate a DCCppMessage from
      * the incoming byte stream.
      * @param s message in string form.
      */
@@ -265,10 +265,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 myRegex = DCCppConstants.LIST_REGISTER_CONTENTS_REGEX;
                 break;
             case DCCppConstants.DIAG_CMD:
-                myRegex = DCCppConstants.DIAG_CMD_REGEX;                
+                myRegex = DCCppConstants.DIAG_CMD_REGEX;
                 break;
             case DCCppConstants.CONTROL_CMD:
-                myRegex = DCCppConstants.CONTROL_CMD_REGEX;                
+                myRegex = DCCppConstants.CONTROL_CMD_REGEX;
                 break;
             default:
                 myRegex = "";
@@ -341,7 +341,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += ", State: " + getFuncV2StateString();
                     text += ", (No Reply Expected)";
                 } else {
-                    text += "Invalid syntax: '" + toString() + "'";                                        
+                    text += "Invalid syntax: '" + toString() + "'";
                 }
                 break;
             case DCCppConstants.FORGET_CAB_CMD:
@@ -350,7 +350,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += "CAB: " + (getForgetCabString().equals("")?"[ALL]":getForgetCabString());
                     text += ", (No Reply Expected)";
                 } else {
-                    text += "Invalid syntax: '" + toString() + "'";                    
+                    text += "Invalid syntax: '" + toString() + "'";
                 }
                 break;
             case DCCppConstants.ACCESSORY_CMD:
@@ -391,7 +391,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += "ID: " + getTOIDString();
                     text += ", State: " + getTOStateString();
                 } else {
-                    text = "Unmatched Turnout Cmd: " + toString();                    
+                    text = "Unmatched Turnout Cmd: " + toString();
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
@@ -507,16 +507,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.QUERY_SENSOR_STATES_CMD:
                 text = "Query Sensor States Cmd: '" + toString() + "'";
-                break;               
+                break;
             case DCCppConstants.DIAG_CMD:
                 text = "Diag Cmd: '" + toString() + "'";
-                break;               
+                break;
             case DCCppConstants.CONTROL_CMD:
                 text = "Control Cmd: '" + toString() + "'";
-                break;               
+                break;
             case DCCppConstants.ESTOP_ALL_CMD:
                 text = "eStop All Locos Cmd: '" + toString() + "'";
-                break;               
+                break;
             default:
                 text = "Unknown Message: '" + toString() + "'";
         }
@@ -571,11 +571,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public char getOpCodeChar() {
         //return(opcode);
         return (myMessage.charAt(0));
-    }
-
-    @Deprecated
-    public String getOpCodeString() {
-        return (Character.toString(opcode));
     }
 
     private int getGroupCount() {
@@ -1562,7 +1557,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * control code.  These are used in multiple places within the code,
      * so they appear here.
      */
-    
+
     /**
      * Stationary Decoder Message.
      * <p>
@@ -2003,7 +1998,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Writes, without any verification, a Configuration Variable to the decoder
      * of an engine on the main operations track.
      * <p>
-     * @param address the short (1-127) or long (128-10293) address of the 
+     * @param address the short (1-127) or long (128-10293) address of the
      *                  engine decoder.
      * @param cv the number of the Configuration Variable memory location in the
      *                  decoder to write to (1-1024).
@@ -2111,9 +2106,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * @return (for DCC-EX), 1 or more of  {@code <c MeterName value C/V unit min max res warn>}
      * where name and settings are used to define arbitrary meters on the DCC-EX side
-     * AND {@code <a CURRENT>} where CURRENT = 0-1024, based on 
+     * AND {@code <a CURRENT>} where CURRENT = 0-1024, based on
      * exponentially-smoothed weighting scheme
-     * 
+     *
      */
     public static DCCppMessage makeReadTrackCurrentMsg() {
         return (new DCCppMessage(DCCppConstants.READ_TRACK_CURRENT, DCCppConstants.READ_TRACK_CURRENT_REGEX));
@@ -2202,7 +2197,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Generate an emergency stop for the specified address.
      * <p>
      * Note: This just sends a THROTTLE command with speed = -1
-     * 
+     *
      * @param register Register Number for the loco assigned address.
      * @param address is the locomotive address.
      * @return message to send e stop to the specified address.

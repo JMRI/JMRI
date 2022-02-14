@@ -11,38 +11,38 @@ import jmri.Meter;
  * @author Daniel Bergqvist  (C) 2020
  */
 public abstract class MeterUpdateTask {
-    
+
     Map<Meter, Boolean> meters = new HashMap<>();
     boolean _enabled = false;
     private UpdateTask _intervalTask = null;
     private int _initialInterval; //in ms
     private int _sleepInterval;   //in ms
-    
+
     /* default values for both sleepIntervals */
     public MeterUpdateTask() {
         _sleepInterval = 10000;
         _initialInterval = 10000;
     }
-    
+
     /* if only one interval passed, set both to same */
     public MeterUpdateTask(int interval) {
         _initialInterval = interval;
         _sleepInterval = interval;
      }
-     
+
     public MeterUpdateTask(int initialInterval, int sleepInterval) {
         _initialInterval = initialInterval;
         _sleepInterval = sleepInterval;
      }
-     
+
     public void addMeter(Meter m) {
         meters.put(m, false);
     }
-    
+
     public void removeMeter(Meter m) {
         meters.remove(m);
     }
-    
+
     public void enable() {
         if(_intervalTask != null) {
             _intervalTask.enable();
@@ -50,12 +50,12 @@ public abstract class MeterUpdateTask {
             log.debug("_intervalTask is null, enable() ignored");
         }
     }
-    
+
     public void enable(Meter m) {
         if (!meters.containsKey(m)) {
             throw new IllegalArgumentException("Meter is not registered");
         }
-        
+
         if (!meters.get(m)) {
             meters.put(m, true);
             if (!_enabled) {
@@ -64,16 +64,16 @@ public abstract class MeterUpdateTask {
             }
         }
     }
-    
+
     protected void disable() {
         if(_intervalTask != null) {
             _intervalTask.disable();
         }
     }
-    
+
     public void disable(Meter m) {
         if (!meters.containsKey(m)) return;
-        
+
         if (meters.get(m)) {
             meters.put(m, false);
             if (_enabled) {
@@ -89,14 +89,14 @@ public abstract class MeterUpdateTask {
             }
         }
     }
-    
+
     public void initTimer() {
         if(_intervalTask != null) {
            _intervalTask.cancel();
            _intervalTask = null;
         }
         if(_sleepInterval < 0){
-           log.debug("_sleepInterval {} less than zero, initTimer() ignored");           
+           log.debug("_sleepInterval {} less than zero, initTimer() ignored", _sleepInterval);
            return; // don't start or restart the timer.
         }
         _intervalTask = new UpdateTask();
@@ -105,9 +105,9 @@ public abstract class MeterUpdateTask {
         jmri.util.TimerUtil.scheduleAtFixedRate(_intervalTask,
                 _initialInterval, _sleepInterval);
     }
-    
+
     public abstract void requestUpdateFromLayout();
-    
+
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
@@ -120,8 +120,8 @@ public abstract class MeterUpdateTask {
            _intervalTask = null;
         }
     }
-    
-    
+
+
     // Timer task for periodic updates...
     private class UpdateTask extends TimerTask {
 
@@ -144,11 +144,11 @@ public abstract class MeterUpdateTask {
             if (_isEnabled) {
                 log.debug("UpdateTask requesting update from layout");
                 requestUpdateFromLayout();
-            } else { 
+            } else {
                 log.debug("UpdateTask not enabled, run() ignored");
             }
         }
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterUpdateTask.class);
 }

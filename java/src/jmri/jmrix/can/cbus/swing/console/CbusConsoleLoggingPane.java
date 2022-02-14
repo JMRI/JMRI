@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2018
  */
 public class CbusConsoleLoggingPane extends javax.swing.JPanel {
-    
+
     private final CbusConsolePane _mainPane;
     private final JFileChooser logFileChooser;
     private final JToggleButton startStopLogButton;
@@ -28,17 +28,17 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
     private final JButton openFileChooserButton;
     private final JTextField entryField;
     private final JButton logenterButton;
-    
+
     // @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
     private PrintStream logStream;
-    
+
     public CbusConsoleLoggingPane(CbusConsolePane mainPane){
         super();
         _mainPane = mainPane;
         // set file chooser to a default
         logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
         logFileChooser.setSelectedFile(new File(FileUtil.getUserFilesPath()+"monitorLog.txt"));
-        
+
         startStopLogButton = new JToggleButton();
         openLogFileButton = new JButton();
         openFileChooserButton = new JButton();
@@ -47,101 +47,101 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
         setupPane();
 
     }
-    
+
     private void setupPane() {
-    
+
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(), Bundle.getMessage("Logging"))); 
-        
+            BorderFactory.createEtchedBorder(), Bundle.getMessage("Logging")));
+
         setButtonToolTips();
-        
+
         add(startStopLogButton);
         add(openFileChooserButton);
         add(openLogFileButton);
         add(logenterButton);
         add(entryField);
-        
+
         addListeners();
-    
+
     }
-    
+
     private void setSelectFileToolTip() {
-    
+
         openFileChooserButton.setToolTipText(logFileChooser.getSelectedFile().getPath());
-    
-        
+
+
     }
-    
+
     private void addListeners() {
-    
+
         startStopLogButton.addActionListener((java.awt.event.ActionEvent e) -> {
-        
+
             openFileChooserButton.setEnabled(!startStopLogButton.isSelected());
-            
+
             if (startStopLogButton.isSelected()){
                 startLogButtonActionPerformed(e);
             }
             else {
                 stopLogButtonActionPerformed(e);
             }
-            
+
             updateStartStopButtonText();
-            
+
         });
-        
+
         openFileChooserButton.addActionListener(this::openFileChooserButtonActionPerformed);
-        
+
         openLogFileButton.addActionListener((java.awt.event.ActionEvent e) -> {
             try {
                 openLogFileActionPerformed(e);
             } catch (IOException ex) {
-                log.error("log file open exception {}", ex);
+                log.error("log file open exception", ex);
             }
         });
-        
+
         logenterButton.addActionListener(this::textToLogButtonActionPerformed);
         entryField.addActionListener(this::textToLogButtonActionPerformed);
-        
+
         updateStartStopButtonText();
-    
+
     }
-    
+
     private void setButtonToolTips() {
-    
+
         logenterButton.setText(Bundle.getMessage("ButtonAddMessage"));
         logenterButton.setToolTipText(Bundle.getMessage("TooltipAddMessage"));
-        
+
         openFileChooserButton.setText(Bundle.getMessage("ButtonChooseLogFile"));
         setSelectFileToolTip();
-        
+
         openLogFileButton.setText(Bundle.getMessage("OpenLogFile"));
         openLogFileButton.setToolTipText(Bundle.getMessage("OpenLogFileTip"));
-        
+
         entryField.setToolTipText(Bundle.getMessage("EntryAddtoLogTip"));
-    
+
     }
-    
+
     private void updateStartStopButtonText(){
-    
+
         if (startStopLogButton.isSelected()){
-            
+
             startStopLogButton.setText(Bundle.getMessage("ButtonStopLogging"));
             startStopLogButton.setToolTipText(Bundle.getMessage("TooltipStopLogging"));
             startStopLogButton.setForeground(Color.red);
-            
+
         }
         else {
-        
+
             startStopLogButton.setText(Bundle.getMessage("ButtonStartLogging"));
             startStopLogButton.setToolTipText(Bundle.getMessage("TooltipStartLogging") + " " +
                 Bundle.getMessage("ButtonStartLogTipExtra"));
             startStopLogButton.setForeground(new JToggleButton().getForeground());
-            
+
         }
-    
+
     }
-    
+
     private void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
         if (logStream == null) {  // successive clicks don't restart the file
@@ -149,7 +149,7 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (FileNotFoundException ex) {
-                log.error("exception {}", ex);
+                log.error("exception", ex);
             }
         }
     }
@@ -179,30 +179,30 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
         }
         setSelectFileToolTip();
     }
-    
+
     private void openLogFileActionPerformed(java.awt.event.ActionEvent e) throws IOException {
         // start at current file, show dialog
         Desktop desktop = Desktop.getDesktop();
         File dirToOpen;
-        
+
         try {
             dirToOpen = logFileChooser.getSelectedFile();
             desktop.open(dirToOpen);
         } catch (IllegalArgumentException iae) {
             // log.info("Merg Cbus Console Log File Not Found");
-            JOptionPane.showMessageDialog(_mainPane, 
+            JOptionPane.showMessageDialog(_mainPane,
                 (Bundle.getMessage("NoOpenLogFile")), Bundle.getMessage("WarningTitle"),
                 JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }
-    
+
     private void textToLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         _mainPane.nextLine(entryField.getText() + "\n", entryField.getText() + "\n", -1);
     }
-    
+
     private final String newline = System.getProperty("line.separator");
-    
+
     protected void sendLogToFile( String sbCbus ){
         if (logStream != null) {
             String logLine = sbCbus;

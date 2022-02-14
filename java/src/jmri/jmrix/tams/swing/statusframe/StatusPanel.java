@@ -89,28 +89,13 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
     public void message(TamsMessage m) {
         // messages are ignored
     }
-    
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public String getTitle() {
         return Bundle.getMessage("MenuItemInfo");
-    }
-
-    /**
-     * Nested class to create one of these using old-style defaults
-     * @deprecated since 4.19.7; use {@link StatusPanelAction} instead
-     */
-    @Deprecated
-    static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
-
-        public Default() {
-            super(Bundle.getMessage("MenuItemInfo"),
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    StatusPanel.class.getName(),
-                    jmri.InstanceManager.getDefault(TamsSystemConnectionMemo.class));
-        }
     }
 
 }

@@ -240,7 +240,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
             } else {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidHexDigitAtLine", lineNo),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.error("Format Error! Invalid hex digit at line ()", lineNo);
+                log.error("Format Error! Invalid hex digit at line {}", lineNo);
                 b = 16;
             }
         } catch (IOException e) {

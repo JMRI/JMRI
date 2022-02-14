@@ -23,7 +23,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Test
     public void testCtor() {
-        SRCPTurnoutManager m = new SRCPTurnoutManager(memo, memo.getBus());
+        SRCPTurnoutManager m = new SRCPTurnoutManager(memo);
         Assert.assertNotNull(m);
     }
 
@@ -42,7 +42,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             }
         }, "A", 1);
 
-        l = new SRCPTurnoutManager(memo, memo.getBus());
+        l = new SRCPTurnoutManager(memo);
         memo.setTurnoutManager(l);
     }
 

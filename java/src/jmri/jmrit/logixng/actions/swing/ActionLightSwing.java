@@ -257,6 +257,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             }
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
+            return false;
         }
 
 
@@ -284,6 +285,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             }
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
+            return false;
         }
 
         if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {

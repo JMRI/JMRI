@@ -155,7 +155,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e);
+            log.error("getOutputStream exception", e);
         }
         return null;
     }
@@ -186,26 +186,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     InputStream serialStream = null;
 
     /**
-     * @return instance.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
-            mInstance = m;
-        }
-        return mInstance;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile SerialDriverAdapter mInstance = null;
-
-    /**
      * set up all of the other objects to operate with an Dcc4Pc command station
      * connected to this port
      */
@@ -214,7 +194,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         // connect to the traffic controller
         Dcc4PcTrafficController control = new Dcc4PcTrafficController();
         this.getSystemConnectionMemo().setDcc4PcTrafficController(control);
-        this.getSystemConnectionMemo().setDefaultProgrammer(getOptionState(option1Name));
         control.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
 

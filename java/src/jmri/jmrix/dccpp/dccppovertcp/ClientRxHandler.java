@@ -53,9 +53,9 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
     @Override
     public void run() {
-    
+
         DCCppSystemConnectionMemo memo = InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
-        
+
         try {
             txThread = new Thread(new ClientTxHandler(this));
             txThread.setDaemon(true);
@@ -101,7 +101,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
                     // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
                     // need to be parsed. Indeed, trying to parse them will screw them up.
-                    // So instead, we de-@Deprecated the string constructor so that we can
+                    // So instead, we de-deprecated the string constructor so that we can
                     // directly create a DCCppMessage from the incoming string without translation/parsing.
                     DCCppMessage msg = new DCCppMessage(inString.substring(inString.indexOf('<') + 1,
                             inString.lastIndexOf('>')));

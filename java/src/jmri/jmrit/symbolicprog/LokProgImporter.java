@@ -67,7 +67,7 @@ public class LokProgImporter {
                 }
             }
         } catch (IOException e) {
-            log.error("Error reading file: {}", e);
+            log.error("Error reading file", e);
         } finally {
             if (bufferedReader != null) {
                 bufferedReader.close();

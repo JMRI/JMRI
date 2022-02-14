@@ -70,7 +70,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         // replace if already present
         SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(h.getSystemName());
         if (sh != null) InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(sh);
-        
+
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
@@ -82,7 +82,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         try {
             return e.getAttribute("systemName").getIntValue(); // NOI18N
         } catch (DataConversionException ex) {
-            log.warn("Can't read turnout number for SE8cSignalHead because of {}", ex); // NOI18N
+            log.warn("Can't read turnout number for SE8cSignalHead because of exception", ex); // NOI18N
             return 0;
         }
     }

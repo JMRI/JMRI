@@ -40,7 +40,7 @@ public class Engine extends RollingStock {
     /**
      * Set the locomotive's model. Note a model has only one length, type, and
      * horsepower rating.
-     * 
+     *
      * @param model The string model name.
      *
      */
@@ -220,7 +220,7 @@ public class Engine extends RollingStock {
 
     /**
      * Place locomotive in a consist
-     * 
+     *
      * @param consist The Consist to use.
      *
      */
@@ -260,7 +260,7 @@ public class Engine extends RollingStock {
         }
         return NONE;
     }
-    
+
     /**
      * B units that aren't part of a consist are blocked at the end.
      */
@@ -274,7 +274,7 @@ public class Engine extends RollingStock {
 
     /**
      * Used to determine if engine is lead engine in a consist
-     * 
+     *
      * @return true if lead engine in a consist
      */
     public boolean isLead() {
@@ -288,7 +288,7 @@ public class Engine extends RollingStock {
      * Get the DCC address for this engine from the JMRI roster. Does 4
      * attempts, 1st by road and number, 2nd by number, 3rd by dccAddress using
      * the engine's road number, 4th by id.
-     * 
+     *
      * @return dccAddress
      */
     public String getDccAddress() {
@@ -298,12 +298,12 @@ public class Engine extends RollingStock {
         }
         return NONE;
     }
-    
+
     /**
      * Get the RosterEntry for this engine from the JMRI roster. Does 4
      * attempts, 1st by road and number, 2nd by number, 3rd by dccAddress using
      * the engine's road number, 4th by id.
-     * 
+     *
      * @return RosterEntry, can be null
      */
     public RosterEntry getRosterEntry() {
@@ -477,8 +477,8 @@ public class Engine extends RollingStock {
         super.propertyChange(e);
         if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getTypeName())) {
-                log.debug("Loco ({} {}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
-                        .getNewValue()); // NOI18N
+                log.debug("Loco ({}) sees type name change old: ({}) new: ({})", toString(),
+                            e.getOldValue(), e.getNewValue()); // NOI18N
                 setTypeName((String) e.getNewValue());
             }
         }

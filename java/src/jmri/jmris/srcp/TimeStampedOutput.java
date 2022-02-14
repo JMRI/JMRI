@@ -53,19 +53,4 @@ public class TimeStampedOutput extends OutputStream {
         outputStream.close();
     }
 
-    /**
-     * Write to an output stream with a pre-pended time stamp
-     *
-     * @param outStream to write to
-     * @param s data to write
-     * @throws java.io.IOException if there is an IO Exception
-     * @deprecated since 4.19.5 use the TimeStampOutput stream decorator instead.
-     */
-    @Deprecated
-    public static void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
-     Date currenttime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
-        long time = currenttime.getTime();
-        outStream.writeBytes("" + time / 1000 + "." + time % 1000 + " " + s);
-    }
-
 }

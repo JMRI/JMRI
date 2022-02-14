@@ -35,11 +35,6 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         super(m);
     }
 
-    @Deprecated
-    public LnStreamPortPacketizer() {
-        this(new LocoNetSystemConnectionMemo());
-    }
-
     public LnStreamPortController streamController = null;
 
     @Override

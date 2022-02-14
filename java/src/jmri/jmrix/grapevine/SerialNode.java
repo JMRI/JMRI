@@ -404,7 +404,7 @@ public class SerialNode extends AbstractNode {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in markChanges: {}", e);
+            log.error("exception in markChanges", e);
         }
     }
 

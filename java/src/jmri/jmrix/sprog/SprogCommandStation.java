@@ -139,7 +139,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     /**
      * Clear all slots.
      */
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void clearAllSlots() {
         slots.stream().forEach((s) -> {
@@ -529,7 +528,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         try {
                             powerMgr.setPower(PowerManager.OFF);
                         } catch (JmriException ex) {
-                            log.error("Exception turning power off {}", ex);
+                            log.error("Exception turning power off", ex);
                         }
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
                             Bundle.getMessage("SprogCSTitle"), JOptionPane.ERROR_MESSAGE);

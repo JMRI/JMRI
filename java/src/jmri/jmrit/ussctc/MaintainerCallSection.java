@@ -15,8 +15,8 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
      *  Anonymous object only for testing
      */
     MaintainerCallSection() {}
-    
-    
+
+
     /**
      * Create and configure.
      *
@@ -26,7 +26,7 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
      * @param layoutOutput  Turnout name for maintainer call on layout
      * @param station Station to which this Section belongs
      */
-    public MaintainerCallSection(String inputSensor, String layoutOutput, Station station) {
+    public MaintainerCallSection(String inputSensor, String layoutOutput, Station<CodeGroupOneBit,CodeGroupNoBits> station) {
         this.station = station;
 
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
@@ -35,20 +35,20 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
 
         hInputSensor = hm.getNamedBeanHandle(inputSensor, sm.provideSensor(inputSensor));
         hLayoutOutput = hm.getNamedBeanHandle(layoutOutput, tm.provideTurnout(layoutOutput));
-        
+
         // aligns at start
         codeValueDelivered(codeSendStart());
     }
 
     NamedBeanHandle<Sensor> hInputSensor;
     NamedBeanHandle<Turnout> hLayoutOutput;
-    
-    Station station;
+
+    Station<CodeGroupOneBit,CodeGroupNoBits> station;
     @Override
-    public Station getStation() { return station; }
+    public Station<CodeGroupOneBit,CodeGroupNoBits> getStation() { return station; }
     @Override
     public String getName() { return "MC for "+hLayoutOutput.getBean().getDisplayName(); }
- 
+
      /**
      * Start of sending code operation.
      * @return code line value to transmit
@@ -66,7 +66,7 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
      */
     @Override
     public void indicationComplete(CodeGroupNoBits value) {
-    } 
+    }
 
     /**
      * Notification that code has arrived in the field. Sets the turnout on the layout.
@@ -92,6 +92,6 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
         return CodeGroupNoBits.None;
     }
 
-     
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MaintainerCallSection.class);
 }

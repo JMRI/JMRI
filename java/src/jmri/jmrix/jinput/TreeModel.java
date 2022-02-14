@@ -80,7 +80,7 @@ public final class TreeModel extends DefaultTreeModel {
         try {
             insertNodeInto(pChild, pParent, index);
         } catch (IllegalArgumentException e) {
-            log.error("insertNode({}, {}) Exception {}", pChild, pParent, e);
+            log.error("insertNode({}, {})", pChild, pParent, e);
         }
         return pChild;
     }
@@ -221,7 +221,7 @@ public final class TreeModel extends DefaultTreeModel {
             try {
                 cNode = (UsbNode) insertNode(cNode, dRoot);
             } catch (IllegalArgumentException e) {
-                log.error("insertNode({}, {}) Exception {}", cNode, dRoot, e);
+                log.error("insertNode({}, {})", cNode, dRoot, e);
             }
             // Device (component) node
             String dname = component.getName() + " [" + component.getIdentifier().toString() + "]";
@@ -229,7 +229,7 @@ public final class TreeModel extends DefaultTreeModel {
             try {
                 dNode = (UsbNode) insertNode(dNode, cNode);
             } catch (IllegalArgumentException e) {
-                log.error("insertNode({}, {}) Exception {}", dNode, cNode, e);
+                log.error("insertNode({}, {})", dNode, cNode, e);
             }
 
             dNode.setValue(value);
@@ -265,7 +265,7 @@ public final class TreeModel extends DefaultTreeModel {
             } else {
                 log.error("Encountered Throwable while getting controllers", ex);
             }
-            
+
             // could not load some component(s)
             ca = null;
             return false;
@@ -300,10 +300,10 @@ public final class TreeModel extends DefaultTreeModel {
                     break;  // skip this controller
                 } catch (IllegalArgumentException e) {
                     // ignore components that throw IllegalArgumentExceptions
-                    log.error("insertNode({}, {}) Exception {}", deviceNode, controllerNode, e);
+                    log.error("insertNode({}, {}) Exception", deviceNode, controllerNode, e);
                 } catch (Exception e) {
                     // log all others
-                    log.error("Exception {}", e);
+                    log.error("Exception", e);
                 }
             }
         }

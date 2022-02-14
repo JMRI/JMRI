@@ -32,7 +32,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testLocoNetMessages() {
         // send messages for 21, 22
         // notify the Ln that somebody else changed it...
@@ -59,14 +58,13 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         List<String> testList = new ArrayList<>(2);
         testList.add("LT21");
         testList.add("LT22");
-        Assert.assertEquals("system name list", testList, l.getSystemNameList());
-        
+
         jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
-        
+
         Assert.assertEquals("2 Turnouts in nambedbeanset",2,l.getNamedBeanSet().size());
         Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT21")));
         Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT22")));
-        
+
     }
 
     @Test
@@ -77,7 +75,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertNotNull(l.getBySystemName("LT61"));
         Assert.assertEquals(Turnout.CLOSED, l.getBySystemName("LT61").getKnownState());
     }
-    
+
     @Test
     public void testCreateFromMessage2 () {
         // Turnout LT62 () Switch input is Thrown (input on).
@@ -86,7 +84,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertNotNull(l.getBySystemName("LT62"));
         Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT62").getKnownState());
     }
-    
+
     @Test
     public void testCreateFromMessage3 () {
         // Turnout LT63 () Aux input is Thrown (input ).
@@ -96,7 +94,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertEquals("EXACT", l.getBySystemName("LT63").getFeedbackModeName());
         Assert.assertEquals(Turnout.INCONSISTENT, l.getBySystemName("LT63").getKnownState());
     }
-    
+
     @Test
     public void testCreateFromMessage4 () {
         // Turnout LT64 () Aux input is Closed (input off).
@@ -106,7 +104,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertEquals("EXACT", l.getBySystemName("LT64").getFeedbackModeName());
         Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT64").getKnownState());
     }
-    
+
     @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type

@@ -50,6 +50,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     private ArrayList<Message> messages;
 
     @BeforeEach
+    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     public void localSetUp() {
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
 

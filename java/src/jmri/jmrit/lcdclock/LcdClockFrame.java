@@ -146,7 +146,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         this.getContentPane().revalidate();
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     void update() {
         Date now = clock.getTime();
         int hours = now.getHours();
@@ -166,7 +166,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         updateButtonText();
     }
-    
+
     /**
      * Update clock button text.
      */

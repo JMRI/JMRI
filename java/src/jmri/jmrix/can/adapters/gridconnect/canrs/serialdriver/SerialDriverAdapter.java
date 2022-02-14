@@ -35,7 +35,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
         try {
             tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings {}", e);
+            log.error("Cannot parse CAN ID - check your preference settings", e);
             log.error("Now using default CAN ID");
         }
 
@@ -47,7 +47,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
     }

@@ -404,7 +404,7 @@ public class JUnitOperationsUtil {
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         createSevenNormalLocations();
-        
+
         Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford-Davers-Essex");
 
         Location acton = lmanager.getLocationByName("Acton");
@@ -675,14 +675,14 @@ public class JUnitOperationsUtil {
         // remove the operations shut down tasks
         Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
+        var list = sm.getRunnables();
         // only one operations shut down task, the others can be NCE shutdown and EditorManager shutdown.
         Assert.assertTrue("Two shut down tasks max", list.size() < 4);
         ShutDownTask operationShutdownTask = null;
-        for (ShutDownTask task : list) {
-            if (task.getName().equals("Operations Train Window Check")
-                    || task.getName().equals("Save Operations State")) {
-                operationShutdownTask = task;
+        for (var task : list) {
+            if (((ShutDownTask)task).getName().equals("Operations Train Window Check")
+                    || ((ShutDownTask)task).getName().equals("Save Operations State")) {
+                operationShutdownTask = ((ShutDownTask)task);
             }
         }
         Assert.assertNotNull(operationShutdownTask);

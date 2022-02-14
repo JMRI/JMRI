@@ -35,7 +35,7 @@ public class ProjectsCommonSubs {
     static public ArrayList<String> getArrayListOfSignalNames(ArrayList<NBHSignal> array) {
         ArrayList<String> stringList = new ArrayList<>();
         array.forEach(row -> {
-            NamedBeanHandle handle = (NamedBeanHandle) row.getBeanHandle();
+            var handle = (NamedBeanHandle<?>) row.getBeanHandle();
             stringList.add(handle.getName());
         });
         return stringList;
