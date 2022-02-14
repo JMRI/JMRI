@@ -58,6 +58,10 @@
         </li>
 
         <li>
+          <a href="#headless">Headless Tests</a>
+        </li>
+
+        <li>
           <a href="#separate">Separate Tests</a>
         </li>
 
@@ -90,9 +94,14 @@
         <a href="JUnit.shtml">JUnit tests</a> on a Windows server. A screen buffer (not a real
         screen) is used for all the GUI tests. All tests must pass.
 
+      <h3 id="headless">Headless tests</h3>
+        Reruns the JUnit test suite in "java.awt.Headless=true" mode to ensure that
+        the parts of JMRI that are meant to run without a GUI really can. This is about 80%
+        of the test suite. These are run on Linux. All tests must pass.
+
       <h3 id="separate">Separate tests</h3>
         About a hundred JUnit graphical tests are run separately from AllTest
-        to ensure they have a clean environment.  These are run on Linux.
+        to ensure they have a clean environment. These are run on Linux. All tests must pass.
 
       <h3 id="static">Static analysis</h3>
         This runs a series of static analysis checks:
@@ -111,7 +120,7 @@
             <ul>
                 <li>Checks consistency of TypeScript and Javascript files.
                 <li>Set flags that represent whether a PR might need localization,
-                    and contains updated help files.
+                    and whether it contains updated help files.
                 <li>If needed, reminds the author to add to the release note
                 <li>Prevent PRs marked "WIP" (Work In Progress) from <a href="https://github.com/apps/wip">being merged</a>
                 <li>Require that PRs be approved by a 2nd party before being merged
