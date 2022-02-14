@@ -162,10 +162,10 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
     public String[] commandStationOptions() {
         String[] retval = new String[commandStationNames.length + 1];
         retval[0] = LnCommandStationType.COMMAND_STATION_USB_DCS210Plus_ALONE.getName();
-        retval[1] = LnCommandStationType.COMMAND_STATION_DCS210Plus.getName();
+        retval[1] = LnCommandStationType.COMMAND_STATION_DCS210PLUS.getName();
         int count = 2;
         for (String commandStationName : commandStationNames) {
-            if (!commandStationName.equals(LnCommandStationType.COMMAND_STATION_DCS210Plus.getName())) {
+            if (!commandStationName.equals(LnCommandStationType.COMMAND_STATION_DCS210PLUS.getName())) {
             // include all but COMMAND_STATION_DCS210Plus, which was forced  to 
             // the front of the list (above)
                 retval[count++] = commandStationName;

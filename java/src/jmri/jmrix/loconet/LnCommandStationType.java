@@ -47,7 +47,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
-    COMMAND_STATION_DCS210Plus("DCS210+ (Advanced Command Station)",  // NOI18N
+    COMMAND_STATION_DCS210PLUS("DCS210+ (Advanced Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
             ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N

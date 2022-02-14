@@ -35,7 +35,7 @@ public class LnCommandStationTypeTest {
     @Test
     public void checkNumberOfWorkstations() {
         // if you need to change this, you need to add lines below in the tests
-       Assert.assertEquals("Number Of workstations to test",LnCommandStationType.values().length,18);
+       Assert.assertEquals("Number Of workstations to test",LnCommandStationType.values().length,20);
     }
 
     @Test
@@ -47,6 +47,7 @@ public class LnCommandStationTypeTest {
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS200.getImplementsIdle());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getImplementsIdle());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getImplementsIdle());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210PLUS.getImplementsIdle());
 
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR2_ALONE.getImplementsIdle());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR3_ALONE.getImplementsIdle());
