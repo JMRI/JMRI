@@ -299,7 +299,7 @@ public abstract class AbstractNamedBeanDecorator implements NamedBean {
             return this.getSystemName().equals(b.getSystemName());
         }
 
-        if(obj.equals(this.decorated)){
+        if(this.decorated.equals(obj)){
             // this isn't the same object, but it is decorating the object
             return true;
         }
