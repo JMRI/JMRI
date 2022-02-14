@@ -98,6 +98,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             if (name.indexOf(' ') != -1) {
                 name = name.substring(0, name.indexOf(' '));
             }
+            name = name.replace("+", "Plus");
             log.debug("match /{}/", name); // NOI18N
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig." + name + "options"); // NOI18N
         } catch (Exception e) { // use standard option set
