@@ -352,6 +352,15 @@
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected local variable.</li>
 
+        <li><strong>Block:</strong> Select the <strong>Block</strong> tab and select the block
+        which will provide the value for the selected local variable.</li>
+
+        <li><strong>Reporter:</strong> Select the <strong>Reporter</strong> tab and select the
+        reporter which will provide the <em>current report</em> for the selected local variable.</li>
+
+        <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
+        variable name which will provide the value for the selected local variable.</li>
+
         <li><strong>Table:</strong> Enter the table name, row name and column name that contains
         the data that will be copied to the selected local variable. For example,
         <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
@@ -359,7 +368,13 @@
         <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
         copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
         for details about tables.</li>
+
+        <li><strong>Formula:</strong> Set the selected local variable to the result of a formula
+        calculation.</li>
       </ul>
+
+      <p>Note: The Memory, Block and Reporter tabs have an option to listen to changes to their
+      value.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
