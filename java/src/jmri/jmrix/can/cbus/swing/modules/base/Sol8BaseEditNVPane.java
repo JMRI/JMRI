@@ -8,7 +8,6 @@ import javax.swing.event.*;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.*;
-import jmri.jmrix.can.cbus.swing.modules.base.Bundle;
 import static jmri.jmrix.can.cbus.swing.modules.merg.CansolPaneProvider.*;
 
 /**

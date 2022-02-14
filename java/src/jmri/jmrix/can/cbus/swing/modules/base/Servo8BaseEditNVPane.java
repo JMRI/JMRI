@@ -11,7 +11,6 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
 import jmri.jmrix.can.cbus.swing.modules.*;
-import jmri.jmrix.can.cbus.swing.modules.base.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
