@@ -534,7 +534,6 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-<<<<<<< HEAD
             <li>Additional bug fixing and enhancements to Shared Warrants. SWs are
                 useful to animate the simultaneous operation of multiple trains.
                 Be aware that SWs may mutually block movement that can only be resolved
@@ -557,9 +556,6 @@
             <li>The messages to the status field of the warrant Table and other information
                 can be displayed to the console by clicking the "Trace Warrants" button in
                 Warrant Preferences.</li>
-=======
-            <li></li>
->>>>>>> master
         </ul>
 
    <h3>Web Access</h3>
@@ -595,13 +591,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-<<<<<<< HEAD
             <li>Developers: The
                 <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
                 has been updated.</li>
             <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.
-=======
-            <li></li>
->>>>>>> master
         </ul>
 
