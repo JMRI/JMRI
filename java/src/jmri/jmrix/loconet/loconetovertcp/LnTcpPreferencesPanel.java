@@ -60,7 +60,7 @@ public class LnTcpPreferencesPanel extends JPanel implements PreferencesPanel {
         port.setEditor(new JSpinner.NumberEditor(port, "#"));
         port.setToolTipText(Bundle.getMessage("ToolTipPort")); // NOI18N
 
-        Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${port}"), port, BeanProperty.create("value"));
+        var binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${port}"), port, BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         portLabel.setText(Bundle.getMessage("LabelPort")); // NOI18N

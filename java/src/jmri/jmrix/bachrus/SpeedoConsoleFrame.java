@@ -455,8 +455,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             selectedScale = scales[scaleList.getSelectedIndex()];
             checkCustomScale();
         });
-        
-        
+
+
 
         scaleLabel.setText(Bundle.getMessage("Scale"));
         scaleLabel.setVisible(true);
@@ -926,7 +926,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 freq = 1500000 / count;
                 sampleSpeed = (freq / 24) * circ * thisScale * 3600 / 1000000 * speedTestScaleFactor;
             } catch (ArithmeticException ae) {
-                log.error("Exception calculating sampleSpeed {}", ae);
+                log.error("Exception calculating sampleSpeed", ae);
             }
             avFn(sampleSpeed);
             log.debug("New sample: {} Average: {}", sampleSpeed, avSpeed);
@@ -1134,7 +1134,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //<editor-fold defaultstate="collapsed" desc="Power Manager Helper Functions">
     /**
      * {@inheritDoc}
-     * 
+     *
      * Handles property changes from the power manager.
      */
     @Override
@@ -1784,7 +1784,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     /**
-     * Called when we must decide to steal the throttle for the requested address. Since this is a 
+     * Called when we must decide to steal the throttle for the requested address. Since this is a
      * an automatically stealing implementation, the throttle will be automatically stolen.
      */
     @Override
@@ -1792,7 +1792,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
       InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
     //</editor-fold>
-          
+
     //<editor-fold defaultstate="collapsed" desc="Other Timers">
     javax.swing.Timer replyTimer = null;
     javax.swing.Timer displayTimer = null;
@@ -1991,7 +1991,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         try {
             ops_mode_prog.writeCV(cv, value, this);
         } catch (ProgrammerException e) {
-            log.error("Exception writing CV {} {}", cv, e);
+            log.error("Exception writing CV {}", cv, e);
         }
     }
 
@@ -2004,7 +2004,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         try {
             prog.readCV(String.valueOf(cv), this);
         } catch (ProgrammerException e) {
-            log.error("Exception reading CV {} {}", cv, e);
+            log.error("Exception reading CV {}", cv, e);
         }
     }
 

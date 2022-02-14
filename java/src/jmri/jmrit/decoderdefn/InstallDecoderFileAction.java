@@ -52,7 +52,7 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
             try {
                 return new URL("file:" + file.getCanonicalPath());
             } catch (Exception e) {
-                log.error("Unexpected exception in new URL: {}", e);
+                log.error("Unexpected exception in new URL", e);
                 return null;
             }
         } else {

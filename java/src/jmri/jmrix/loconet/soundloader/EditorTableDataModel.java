@@ -239,7 +239,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         try {
             buff = new jmri.jmrit.sound.WavBuffer(chooser.getSelectedFile());
         } catch (Exception e) {
-            log.error("Exception loading file: {}", e);
+            log.error("Exception loading file", e);
             return;
         }
         // store to memory
@@ -292,7 +292,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     /**
      * Configure a table to have our standard rows and columns.
-     * This is optional, in that other table formats can use this table model. 
+     * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
      * @param table table to configured.
      */

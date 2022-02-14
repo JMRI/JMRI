@@ -585,7 +585,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             try {
                 getSensor().setKnownState(jmri.Sensor.ACTIVE);
             } catch (jmri.JmriException reason) {
-                log.warn("Exception setting momentary sensor: {}", reason);
+                log.warn("Exception setting momentary sensor", reason);
             }
         }
         super.doMousePressed(e);
@@ -598,7 +598,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             try {
                 getSensor().setKnownState(jmri.Sensor.INACTIVE);
             } catch (jmri.JmriException reason) {
-                log.warn("Exception setting momentary sensor: {}", reason);
+                log.warn("Exception setting momentary sensor", reason);
             }
         }
         super.doMouseReleased(e);
@@ -616,7 +616,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                         getSensor().setKnownState(jmri.Sensor.INACTIVE);
                     }
                 } catch (jmri.JmriException reason) {
-                    log.warn("Exception flipping sensor: {}", reason);
+                    log.warn("Exception flipping sensor", reason);
                 }
             }
         }

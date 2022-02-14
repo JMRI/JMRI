@@ -38,9 +38,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("deprecation") // until DCC4PC is migrated to multiple systems
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
     }
 
 }

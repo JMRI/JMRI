@@ -55,7 +55,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     private static boolean shuttingDown = false;
     private static final Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
-    private final List<ShutDownTask> tasks = new ArrayList<>();
     private final Set<Callable<Boolean>> callables = new HashSet<>();
     private final Set<Runnable> runnables = new HashSet<>();
     protected final Thread shutdownHook;
@@ -90,11 +89,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @Override
     public synchronized void register(ShutDownTask s) {
         Objects.requireNonNull(s, NO_NULL_TASK);
-        if (!this.tasks.contains(s)) {
-            this.tasks.add(s);
-        } else {
-            log.debug("already contains {}", s);
-        }
         this.runnables.add(s);
         this.callables.add(s);
         this.addPropertyChangeListener(PROP_SHUTTING_DOWN, s);
@@ -124,7 +118,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @Override
     public synchronized void deregister(ShutDownTask s) {
         this.removePropertyChangeListener(PROP_SHUTTING_DOWN, s);
-        this.tasks.remove(s);
         this.callables.remove(s);
         this.runnables.remove(s);
     }
@@ -149,21 +142,12 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("deprecation")
-    public List<ShutDownTask> tasks() {
-        return Collections.unmodifiableList(tasks);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public List<Callable<Boolean>> getCallables() {
         List<Callable<Boolean>> list = new ArrayList<>();
         list.addAll(callables);
         return Collections.unmodifiableList(list);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -231,7 +215,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();
-            log.debug("Shutting down with {} tasks", this.tasks.size());
+            log.debug("Shutting down with {} callable and {} runnable tasks",
+                callables.size(), runnables.size());
             setShuttingDown(true);
             // First check if shut down is allowed
             for (Callable<Boolean> task : callables) {

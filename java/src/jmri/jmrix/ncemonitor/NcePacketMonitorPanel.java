@@ -121,7 +121,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n{}", ex);
+                    log.error("Error while opening port.  Did you select the right one?", ex);
                 }
             }
         });
@@ -451,10 +451,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 ostream.write(endbyte);
             }
         } catch (IOException e) {
-            log.error("Exception on output: {}", e);
+            log.error("Exception on output", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: {}", e);
+            log.error("Interrupted output", e);
         }
     }
 
@@ -484,7 +484,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     // use deprecated stop method to stop thread,
     // which will be sitting waiting for input
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Thread.stop
     void stopThread(Thread t) {
         t.stop();
     }
@@ -516,7 +516,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -591,7 +591,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port {} in use, cannot open", p);
+        log.error("Port {} in use, cannot open", port, p);
     }
 
     DataInputStream serialStream = null;

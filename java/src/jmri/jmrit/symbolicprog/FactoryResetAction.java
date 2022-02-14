@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
  */
 public class FactoryResetAction extends AbstractAction {
 
-    ResetTableModel rModel;
+    ExtraMenuTableModel rModel;
     JFrame mParent;
 
-    public FactoryResetAction(String actionName, ResetTableModel rpModel, JFrame pParent) {
+    public FactoryResetAction(String actionName, ExtraMenuTableModel rpModel, JFrame pParent) {
         super(actionName);
         rModel = rpModel;
         mParent = pParent;

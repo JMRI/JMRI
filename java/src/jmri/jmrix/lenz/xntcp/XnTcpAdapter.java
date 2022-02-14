@@ -146,14 +146,14 @@ public class XnTcpAdapter extends XNetNetworkPortController {
 
         } // Report possible errors encountered while opening the connection
         catch (SocketException se) {
-            log.error("Socket exception while opening TCP connection with {} trace follows: {}", outName, se);
+            log.error("Socket exception while opening TCP connection with {} trace follows", outName, se);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         outName, ConnectionStatus.CONNECTION_DOWN);
             throw (se);
         }
         catch (IOException e) {
-            log.error("Unexpected exception while opening TCP connection with {} trace follows: {}", outName, e);
+            log.error("Unexpected exception while opening TCP connection with {} trace follows", outName, e);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         outName, ConnectionStatus.CONNECTION_DOWN);
@@ -202,7 +202,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
             }
         } // When timeout or any error occurs, simply exit the loop // When timeout or any error occurs, simply exit the loop
         catch (IOException e) {
-            log.debug("Exception occured: {}",e);
+            log.debug("Exception occured",e);
         } finally {
             // Before exiting, release resources
             if (udpSocket != null) {
@@ -247,7 +247,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         outName, ConnectionStatus.CONNECTION_DOWN);
-            // Clear open status, in order to avoid issuing the error 
+            // Clear open status, in order to avoid issuing the error
             // message more than than once.
             opened = false;
             log.debug("XnTcpError: TCP/IP communication dropped");
@@ -376,7 +376,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
 
         @Override
         public void write(byte[] b, int off, int len) throws java.io.IOException {
-            // Make sure that we don't mix bytes of different packets, 
+            // Make sure that we don't mix bytes of different packets,
             // if called at the same time by different threads
             synchronized (tcpOut) {
                 while (len-- > 0) {

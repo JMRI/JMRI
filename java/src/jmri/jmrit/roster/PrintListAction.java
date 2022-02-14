@@ -97,7 +97,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
                 writer.write(s, 0, s.length());
             }
         } catch (IOException ex) {
-            log.warn("error during printing: {}", ex);
+            log.warn("error during printing", ex);
         }
 
         // Loop through the Roster, printing a 1 line list entry as needed
@@ -139,7 +139,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
         writer.write("\n", 0, 1);
         writer.write(headerText);
         } catch (IOException ex) {
-            log.warn("error during printing: {}", ex);
+            log.warn("error during printing", ex);
         }
 
         for (RosterEntry re : l) {

@@ -32,6 +32,8 @@ public class BugReport extends IssueReport {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE",
+                justification="Null check in stream.forEach() is embedded, beyond our control")
     public void prepare() {
         title = Bundle.getMessage(Locale.US, "bug.title", title);
         if (!tooLong) {

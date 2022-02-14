@@ -70,7 +70,10 @@ public class SplitVariableValue extends VariableValue
         _cvNum = cvNum;
         _textField = new JTextField("0");
         _defaultColor = _textField.getBackground();
+
         _textField.setBackground(COLOR_UNKNOWN);
+        _textField.getAccessibleContext().setAccessibleName(label());
+
         mFactor = pFactor;
         mOffset = pOffset;
         // legacy format variables
@@ -290,16 +293,7 @@ public class SplitVariableValue extends VariableValue
         return retString;
     }
 
-    @Deprecated
-    public String getSecondCvNum() {
-        String retString = "";
-        if (cvCount > 1) {
-            retString = cvList.get(1).cvName;
-        }
-        return retString;
-    }
-
-    @Override
+   @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         _textField.setToolTipText(t);  // set our value

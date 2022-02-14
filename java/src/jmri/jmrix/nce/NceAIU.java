@@ -75,7 +75,7 @@ public class NceAIU {
             try {
                 sensorArray[offset].setKnownState(newState);
             } catch (JmriException e) {
-                log.error("exception in sensorChange: {}", e);
+                log.error("exception in sensorChange", e);
             }
         }
     }

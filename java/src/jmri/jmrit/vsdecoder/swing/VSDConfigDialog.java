@@ -141,7 +141,7 @@ public class VSDConfigDialog extends JDialog {
             locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Bundle.getMessage("LTPManualTabToolTip"));
             locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Mnemonics.get("ManualTab"));
         } catch (IndexOutOfBoundsException iobe) {
-            log.debug("Index out of bounds setting up tabbed Pane: {}", iobe);
+            log.debug("Index out of bounds setting up tabbed Pane", iobe);
             // Ignore out-of-bounds exception.  We just won't have mnemonics or tool tips this go round
         }
         // Roster Tab components
@@ -532,7 +532,7 @@ public class VSDConfigDialog extends JDialog {
                     vsd_launch_throttle.equals("yes") &&
                     InstanceManager.throttleManagerInstance().getThrottleUsageCount(rosterEntry) == 0) {
                 // Launch a JMRI Throttle (if setup by the Roster media attribut and a throttle not already exists).
-                jmri.jmrit.throttle.ThrottleFrame tf = 
+                jmri.jmrit.throttle.ThrottleFrame tf =
                         InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleFrame();
                 tf.toFront();
                 tf.getAddressPanel().setRosterEntry(Roster.getDefault().entryFromTitle(rosterEntry.getId()));

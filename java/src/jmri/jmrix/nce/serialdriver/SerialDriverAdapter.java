@@ -133,7 +133,7 @@ public class SerialDriverAdapter extends NcePortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e);
+            log.error("getOutputStream exception", e);
         }
         return null;
     }

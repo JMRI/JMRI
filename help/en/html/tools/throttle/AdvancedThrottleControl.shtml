@@ -100,8 +100,10 @@
           <br>
         <dt>Focus next throttle internal window</dt>
           <dd>K</dd>
+          <dd>Tab</dd>
         <dt>Focus previous throttle internal window</dt>
           <dd>L</dd>
+          <dd>Shift+Tab</dd>
           <br>
         <dt>Focus control panel</dt>
           <dd>C</dd>

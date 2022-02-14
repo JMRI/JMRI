@@ -89,11 +89,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
