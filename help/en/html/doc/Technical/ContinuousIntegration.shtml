@@ -19,7 +19,9 @@
       <p>"Continuous Integration" is the process of rebuilding a system every time it changes, so
       that you rapidly learn of new problems and are motivated to remove existing ones.</p>
 
-      <p>The core of our system is a series of <a href="#jenkins">Jenkins</a> jobs that routinely
+      <p>The core of our system is a series of
+      <a href="#mandatory">GitHub Actions</a>
+      <a href="#jenkins">Jenkins</a> jobs that routinely
       build the code, run checks, and creates downloadable installers. That means that we can and
       do put changes into our users hands very quickly. There's a <a href="CI-status.shtml">CI
       status page</a> that shows the combined status of that.</p>
@@ -45,73 +47,29 @@
       </ul>
 
       <h2 id="mandatory">Mandatory Checks</h2>
-      We use three CI engines to test every proposed change entered into our GitHub code repository
+      We use multiple
+      <a href="https://docs.github.com/en/actions">GitHub actions</a>
+      to test every proposed change entered into our GitHub code repository
       before it gets merged.
+      <a href="images/ActionSettings.png"><img src="images/ActionSettings.png" class="floatRight" width="331" height="167" alt="github actions"></a>
       <ul>
         <li>
-          <a href="#travis">Travis</a>
+          <a href="#winCI">Windows CI tests</a>
         </li>
 
         <li>
-          <a href="#actions">GitHub Actions</a>
+          <a href="#separate">Separate Tests</a>
         </li>
 
         <li>
-          <a href="#wip">WIP check</a>
+          <a href="#static">Static Analysis</a>
+        </li>
+
+        <li>
+          <a href="#process">Process steps</a>
         </li>
       </ul>
-
-      <h3 id="travis">Travis CI</h3>
-
-      <p>We use <a href="https://travis-ci.org/">Travis CI</a> to do integration/test builds on
-      Linux for every pull into our main <a href="http://github.com/JMRI">GitHub</a>
-      repositories.</p>
-
-      <p>Travis will build any branch that contains a .travis.yml file. The build history for the
-      main JMRI repository is at <a href=
-      "https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.</p>
-
-      <p>Travis normally runs several jobs in parallel:</p>
-
-      <ul>
-        <li>The "graphical" one, which just runs AllTest with schema checks and intermittent tests
-        disabled to reduce runtime; this also does coverage checks. A screen buffer (not a real
-        screen) is used for all the GUI tests.</li>
-
-        <li>The "static" one, which runs various static code checks such as he checks for valid
-        line-ends, the check for proper ASCII characters, SpotBugs, etc,</li>
-
-        <li>The "headless" one, which runs HeadlessTest with schema tests enabled</li>
-
-        <li>And one that separately and individual runs the tests that are marked as requiring
-        separate runnning.</li>
-      </ul>
-
-      <p>You can enable Travis CI for your fork (personal GitHub repository) as well. After merging
-      JMRI/master into your own fork, allow Travis CI to monitor your fork, and it will begin
-      testing after your next push to GitHub. Follow the instructions at <a href=
-      "https://travis-ci.org/">Travis CI</a> to set up your forks.</p>
-
-      <p>You can prevent a Travis CI from running against a specific commit by including "[ci
-      skip]" (including the brackets, but not the quotes) anywhere in the commit message if so
-      desired.</p>
-
-      <p>Travis is controlled by the .travis.yml file. Much of the work is done by the
-      scripts/travis.sh script.</p>
-
-      <h3>GitHub Actions</h3>
-      We use <a href="https://github.com/features/actions">GitHub Actions</a> to do two things on
-      every pull into our main <a href="http://github.com/JMRI">GitHub</a> repositories. <a href=
-      "images/ActionSettings.png"><img src="images/ActionSettings.png" class="floatRight" width=
-      "331" height="167" alt="github actions"></a>
-      <ul>
-        <li>Run a series of static checks: Run Spotbugs and the compiler warning checks, make sure
-        Javadocs build cleanly, etc.</li>
-
-        <li>Run the JUnit tests on a Windows machine.</li>
-      </ul>
-
-      <p>These checks are defined by files in the .github/workflows/ directory.</p>
+      <p>These checks are defined by files in the .github/ directory.</p>
 
       <p>These normally run both on PRs to the main JMRI/JMRI repository, but also on pushes and
       PRs to your own repository. If you want to turn that off,</p>
@@ -126,37 +84,59 @@
       </ol>
       Note that if you turn this off, the "Actions" tab won't show in the GitHub web interface
       until you turn it back on.
-      <h3 id="wip">WIP</h3>
 
-      <p>We use the <a href="https://github.com/apps/wip">WIP check</a> to allow somebody to mark a
-      PR as "Work in Progress" (WIP) by putting WIP in the title line. The PR will then not be
-      merged until the WIP is removed.</p>
+      <h3 id="winCI">Windows CI tests</h3>
+        This runs "AllTest", our test suite of over 30,000
+        <a href="JUnit.shtml">JUnit tests</a> on a Windows server. A screen buffer (not a real
+        screen) is used for all the GUI tests. All tests must pass.
+
+      <h3 id="separate">Separate tests</h3>
+        About a hundred JUnit graphical tests are run separately from AllTest
+        to ensure they have a clean environment.  These are run on Linux.
+
+      <h3 id="static">Static analysis</h3>
+        This runs a series of static analysis checks:
+            <ul>
+                <li>A pass of the ECJ compiler with warnings on
+                <li><a href="SpotBugs.shtml">Spotbugs</a>
+                <li>CheckStyle
+                <li>A Javadoc generation and check
+                <li>A scan of the help files with htmllint
+                <li>And a set of architecture checks of interpackage references, etc.
+            </ul>
+        Any errors or warnings fail this step.
+
+      <h3 id="process">Process steps</h3>
+        There are a few additional actions that are used as process controls:
+            <ul>
+                <li>Checks consistency of TypeScript and Javascript files.
+                <li>Set flags that represent whether a PR might need localization,
+                    and contains updated help files.
+                <li>If needed, reminds the author to add to the release note
+                <li>Prevent PRs marked "WIP" (Work In Progress) from <a href="https://github.com/apps/wip">being merged</a>
+                <li>Require that PRs be approved by a 2nd party before being merged
+                <li>And enforce a 24-hour waiting period so that the world-wide team
+                    can get a look at the PR.
+            </ul>
+
 
       <h2 id="optional">Optional Checks</h2>
 
-      <p>We also run some advisory checkers. Although we don't require that they pass, we strongly
+      <p>We also run advisory checks on every pull request (PR). Although we don't require that they
+      have zero warnings, we strongly
       recommend that people look at them and try to improve their metrics of test coverage,
       simplicity and understandability, etc.</p>
 
       <ul>
         <li>
-          <a href="#coveralls">Coveralls</a>
-        </li>
-
-        <li>
           <a href="#codeclimate">CodeClimate</a>
         </li>
       </ul>
 
-      <h3 id="coveralls">Coveralls</h3>
-      The <a href="https://coveralls.io/github/JMRI">Coveralls check</a> does a deep check of which
-      parts of the code were run during the test steps, and which were left uncovered. This can be
-      very useful information when writing tests to make sure your code is working properly. In
-      general, you should try to increase the code coverage, even if just a bit, with every PR.
       <h3 id="CodeClimate">Code Climate</h3>
       The <a href="https://codeclimate.com/github/JMRI/JMRI/">Code Climate</a> points out places
       where the code appears to be complex in various ways. (It also provides coverage information,
-      though <a href="#coveralls">Coveralls</a> seems to do a better job of that.) We recommend you
+      though <a href="#jacoco">JaCoCo</a> seems to do a better job of that.) We recommend you
       look at those results and make updates where they make sense, so that things are continuously
       improving, but not every suggestion it makes is worth it, or even appropriate. We don't
       require this to be clean before merging.
@@ -170,10 +150,7 @@
       <p>Our primary Jenkins engine is at <a href=
       "https://builds.jmri.org/jenkins/">https://builds.jmri.org/jenkins/</a>. Because it's hosted
       outside the US, we force its Java locale to US English by setting the <code>LC_ALL</code>
-      environment variable to <code>en_US</code> in the master Jenkins configuration settings. 
-      <!-- We previously had an engine at <a href=
-      "https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
-      but that's now inactive --></p>
+      environment variable to <code>en_US</code> in the master Jenkins configuration settings.
 
       <p id="jenkins">Specific Jenkins results of interest:</p>
 
@@ -181,10 +158,18 @@
         <li>
           <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> page,
           showing status of the builds done after every series of commits. Successful builds are
-          followed by builds installers via the <a href=
+          followed by building installers via the <a href=
           "https://builds.jmri.org/jenkins/job/development/job/packages">Packages</a> job.
+          These are sometimes referred to as "development builds".
         </li>
 
+        <li id="jacoco">
+            <a href="https://builds.jmri.org/jenkins/job/development/job/jacoco/">JaCoCo</a> page,
+            showing test coverage from our JUnit tests.  There's both a summary of overall
+            coverage, and detailed information on each
+            <a href="https://builds.jmri.org/jenkins/job/development/job/jacoco/lastBuild/jacoco/jmri.implementation/">class</a> and
+            <a href="https://builds.jmri.org/jenkins/job/development/job/jacoco/lastBuild/jacoco/jmri.implementation/AbstractAudio/">method</a>.
+        </li>
         <li>
           <a href="https://builds.jmri.org/jenkins/job/development/job/spotbugs/">SpotBugs</a>
           page, showing status of the more-extensive <a href="SpotBugs.shtml">SpotBugs</a> tests
