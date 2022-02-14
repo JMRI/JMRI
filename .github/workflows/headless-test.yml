@@ -23,5 +23,5 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
     - name: Run HeadLessTest with Maven
       run: |
-        # run 'ant headlesstest' using maven
-        mvn antrun:run -Danttarget=headlesstest
+        # run tests using maven with graphics suppressed
+        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"  "-Djava.awt.headless=true"
