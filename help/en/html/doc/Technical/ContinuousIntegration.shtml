@@ -20,7 +20,7 @@
       that you rapidly learn of new problems and are motivated to remove existing ones.</p>
 
       <p>The core of our system is a series of
-      <a href="#mandatory">GitHub Actions</a>
+      <a href="#mandatory">GitHub Actions</a> and
       <a href="#jenkins">Jenkins</a> jobs that routinely
       build the code, run checks, and creates downloadable installers. That means that we can and
       do put changes into our users hands very quickly. There's a <a href="CI-status.shtml">CI
@@ -50,7 +50,7 @@
       We use multiple
       <a href="https://docs.github.com/en/actions">GitHub actions</a>
       to test every proposed change entered into our GitHub code repository
-      before it gets merged.
+      before it gets merged.<br>
       <a href="images/ActionSettings.png"><img src="images/ActionSettings.png" class="floatRight" width="331" height="167" alt="github actions"></a>
       <ul>
         <li>
