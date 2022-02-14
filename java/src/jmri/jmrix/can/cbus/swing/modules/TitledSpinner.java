@@ -54,10 +54,10 @@ public class TitledSpinner extends JPanel implements ChangeListener {
     /**
      * Initialise with int values
      * 
-     * @param init
-     * @param min
-     * @param max
-     * @param step 
+     * @param init Initial value for spinner
+     * @param min  Minimum value for spinner
+     * @param max  Maximum value fro spinner
+     * @param step Step size for spinner adjustments
      */
     public void init(int init, int min, int max, int step) {
         SpinnerNumberModel spinModel = new SpinnerNumberModel(init, min, max, step);
