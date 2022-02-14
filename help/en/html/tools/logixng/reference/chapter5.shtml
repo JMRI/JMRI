@@ -539,11 +539,35 @@
 
       <h4>Throttle</h4>
 
-      <p>The Throttle action controls a throttle. It has child expressions for loco address, loco
-      speed and loco direction. For now, an analog memory expression or an analog constant
-      expression can be used to control the loco address and the loco speed, but once JMRI has
-      support for AnalogIO devices, an AnalogIO may be used to control loco address and/or loco
-      speed.</p>
+      <p>The Throttle action controls a throttle.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
+        alt="Chapter 5 throttle action" width="500" height="300"></a>
+      </div>
+
+      <dl>
+        <dt>Address &mdash; Analog Expression</dt>
+        <dd>Value between 1 and 9999.</dd>
+
+        <dt>Speed &mdash; Analog Expression</dt>
+        <dd>Value between 0.0 and 1.0.</dd>
+
+        <dt>Direction &mdash; Digital Expression</dt>
+        <dd>True for forward.</dd>
+
+        <dt>Function &mdash; Analog Expression</dt>
+        <dd>Value between 0 and 28.</dd>
+
+        <dt>FunctionOnOff &mdash; Digital Expression</dt>
+        <dd>True for function on</dd>
+      </dl>
+
+      <p>The analog expressions can be an analog memory expression or an analog constant
+      expression. In the future, AnalogIO will also be available.</p>
+
+      <p>The digital expressions are either <strong>Always true</strong> or <strong>Always false
+      </strong>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
