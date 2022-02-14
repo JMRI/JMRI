@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 
+/**
+ * Test for the jmri.implmentaiton.decorators.TimeoutReporter class
+ *
+ * @author Paul Bender Copyright (C) 2022
+ */
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimeoutReporterTest {
@@ -36,3 +41,4 @@ class TimeoutReporterTest {
     }
 
 }
+
