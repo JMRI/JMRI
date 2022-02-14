@@ -2,11 +2,10 @@ package jmri.jmrix.can.cbus.swing.modules;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+
 import javax.swing.*;
 import javax.swing.border.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to display CBUS command station flag settings
@@ -117,7 +116,5 @@ public class CmdStaFlags extends JPanel {
             }
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(CmdStaFlags.class);
 
 }

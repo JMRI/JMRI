@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.swing.modules;
 
 import java.awt.*;
 import java.util.TimerTask;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.ChangeEvent;
@@ -9,8 +10,6 @@ import javax.swing.event.ChangeListener;
 
 import jmri.util.TimerUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JSlider with a titled border
@@ -108,14 +107,14 @@ public class TitledSlider extends JPanel implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
         if (!source.getValueIsAdjusting()) {
-            log.debug("TitledSlider.stateChanged() finished adjusting - final update");
+//            log.debug("TitledSlider.stateChanged() finished adjusting - final update");
             _update.setNewVal(_index);
             if (timerTask != null) {
                 timerTask.cancel();
                 timerTask = null;
             }
         } else if (timerTask == null) {
-            log.debug("TitledSlider.stateChanged() update");
+//            log.debug("TitledSlider.stateChanged() update");
             _update.setNewVal(_index);
             startTimer();
         }
@@ -161,6 +160,6 @@ public class TitledSlider extends JPanel implements ChangeListener {
         TimerUtil.schedule(timerTask, 100);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(TitledSlider.class);
+//    private final static Logger log = LoggerFactory.getLogger(TitledSlider.class);
 
 }

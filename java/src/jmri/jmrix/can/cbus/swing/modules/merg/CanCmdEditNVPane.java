@@ -387,7 +387,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             mainSpinner = new TitledSpinner(Bundle.getMessage("MainLimit"), CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
-            mainSpinner.init(new Double(getSelectValue(CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 1)), 1.0, 96.0, 255.0);
+            mainSpinner.init(getSelectValue(CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
             gridPane.add(mainSpinner, c);
             c.gridy++;
             
@@ -405,7 +405,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
-            progSpinner.init(new Double(getSelectValue(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1)), 1.0, 96.0, 255.0);
+            progSpinner.init(getSelectValue(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
             gridPane.add(progSpinner, c);
             c.gridy++;
             
