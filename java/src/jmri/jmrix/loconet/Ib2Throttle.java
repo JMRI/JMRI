@@ -112,6 +112,7 @@ public class Ib2Throttle extends LocoNetThrottle {
      * leaving all the function bits off.  We therefore don't
      * do an update _from_ the slot during message processing.
      */
+    @Override
     protected void updateFunctions() {
     }
 
