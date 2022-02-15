@@ -529,7 +529,8 @@
         decoder.</li>
 
         <li>Klaus Killinger, <!-- klk32003 -->
-         who improved the sound support and has provided multiple sound projects</li>
+         who improved the sound support, has provided multiple sound projects,
+         and helped with Intellibox development.</li>
 
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
@@ -732,6 +733,8 @@
 
         <li>Pål <-paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
+
+        <li>Gopal Patnaik helped with Intellibox development.</li>
 
         <li>Howard G. Penny provided info on the NCE D14SR decoder, then went on to become an
         active developer, including providing the code for indexed CVs (ala QSI), better support of
