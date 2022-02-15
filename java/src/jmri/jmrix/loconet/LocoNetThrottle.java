@@ -553,7 +553,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // Functions
         for (int i = 0; i < 29; i++) {
             log.debug("updateFunction({}, {})", i, slot.isFunction(i));
-            if (1==20) log.trace("Tracing back F20", new Exception("traceback");
+            if (1==20) log.trace("Tracing back F20", new Exception("traceback"));
             updateFunction(i,slot.isFunction(i));
         }
         log.debug("notifyChangedSlot ends");
