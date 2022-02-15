@@ -850,6 +850,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             _rfid = id;
             if (!id.equals(NONE)) {
                 IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(id);
+                setIdTag(tag);
             }
             setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
         }
