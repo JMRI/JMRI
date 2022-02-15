@@ -6,6 +6,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 
+import jmri.jmrix.can.cbus.simulator.moduletypes.MergCanpan;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -23,7 +25,7 @@ public class CbusDummyNodeTest {
     
     @Test
     public void testCTor() {
-        CbusDummyNode t = new CbusDummyNode(1,2,3,4,null);
+        CbusDummyNode t = new CbusDummyNode(null, 1);
         Assert.assertNotNull("exists",t);
         t.dispose();
     }
@@ -32,7 +34,7 @@ public class CbusDummyNodeTest {
     public void testListeners() {
         
         Assert.assertTrue("0 listeners",tcis.numListeners()==0);
-        CbusDummyNode t = new CbusDummyNode(1,2,3,4,memo);
+        CbusDummyNode t = new CbusDummyNode(memo, 1 );
         
         Assert.assertTrue("1 listener",tcis.numListeners()==1);
         
@@ -47,27 +49,22 @@ public class CbusDummyNodeTest {
     @Test
     public void testNodeRequestNumber() {
         
-        CbusDummyNode t = new CbusDummyNode(1,2,3,4,memo); // nn, manufacturer, type, canid, memo
+        CbusDummyNode t = new MergCanpan().getNewDummyNode( memo, 1);
         ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         
         Assert.assertFalse("start getProcessIn", ((CbusSimCanListener) t.getCanListener()).getProcessIn() );
         Assert.assertTrue("start getProcessOut", ((CbusSimCanListener) t.getCanListener()).getProcessOut() );
         Assert.assertTrue("start getSendIn", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
         Assert.assertFalse("start getSendOut", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
-        Assert.assertTrue("start getsendsWRACKonNVSET", t.getsendsWRACKonNVSET());
         Assert.assertFalse("start getsendsWRACKonNVSET", t.getnvWriteInLearnOnly());
-        Assert.assertEquals(" getNodeType SLIM", "SLIM",t.getNodeStats().getNodeTypeName() );
         
-        // set node to CANPAN from SLIM
-        t.setDummyType(165,29);
-        
-        Assert.assertTrue("is a CANPAN getsendsWRACKonNVSET",t.getsendsWRACKonNVSET()==false);
+        Assert.assertFalse("is a CANPAN getsendsWRACKonNVSET",t.getsendsWRACKonNVSET());
         Assert.assertEquals(" getNodeType", "CANPAN",t.getNodeStats().getNodeTypeName() );
         Assert.assertTrue("canpan getTotalNVs 0",t.getNodeNvManager().getTotalNVs()== 1 );
         
         t.flimButton();
         
-        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>0); }, " reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.inbound.isEmpty()); }, " reply didn't arrive");
         
         Assert.assertEquals(" 0 outbound not increased", 0,(tcis.outbound.size()));
         Assert.assertEquals(" 1 inbound nodenum request ", 1,(tcis.inbound.size()));
@@ -98,7 +95,7 @@ public class CbusDummyNodeTest {
         m.setElement(0, CbusConstants.CBUS_RQNP);
         t.getCanListener().message(m); // should be ignored
         
-        JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>0); }, " reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.outbound.isEmpty()); }, " reply didn't arrive");
         
         Assert.assertEquals(" 1 outbound params request", 1,(tcis.outbound.size() ) );
         Assert.assertEquals(" 1 inbound not increased ", 1,(tcis.inbound.size() ) );
@@ -149,8 +146,9 @@ public class CbusDummyNodeTest {
         Assert.assertEquals("node responds to QNN with PNN", "[5f8] B6 B1 2C A5 1D 0D",
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
         
-        // set node to type 0 SLIM inbound and outbound listeners
-        t.setDummyType(165,0);
+        // set node to SLIM to check inbound and outbound listeners
+        t.setNodeInFLiMMode(false);
+        
         t.getCanListener().message(m);
         
         Assert.assertEquals(" 1 outbound not increased", 1,(tcis.outbound.size() ) );
@@ -169,7 +167,7 @@ public class CbusDummyNodeTest {
     public void testNodeFetchParameters() {
         
         // dummy CANPAN
-        CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
+        CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
         ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
@@ -182,7 +180,7 @@ public class CbusDummyNodeTest {
         m.setElement(3, 0x00); // parameter index on node, 0 is total parameters
         t.getCanListener().message(m);        
         
-        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>0); }, " inbound 1 didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.inbound.isEmpty()); }, " inbound 1 didn't arrive");
         Assert.assertEquals(" 1 inbound increase", 1,(tcis.inbound.size() ) );
         Assert.assertEquals("node 1234 responds parameter index 0 val 20", "[5f8] 9B 04 D2 00 14",
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
@@ -203,7 +201,7 @@ public class CbusDummyNodeTest {
     public void testNodeFetchTeachNV() {
         
         // dummy CANPAN
-        CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
+        CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
         ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
@@ -216,7 +214,7 @@ public class CbusDummyNodeTest {
         m.setElement(3, 0x00); // NV index on node, 0 is total node variables
         t.getCanListener().message(m);        
         
-        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>0); }, " inbound 1 didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.inbound.isEmpty()); }, " inbound 1 didn't arrive");
         Assert.assertEquals(" 1 inbound increase", 1,(tcis.inbound.size() ) );
         Assert.assertEquals("node 1234 responds nv index 0 val 1", "[5f8] 97 04 D2 00 01",
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
@@ -287,7 +285,7 @@ public class CbusDummyNodeTest {
     @Test
     public void testNodeLearnEvent() {
         
-        CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
+        CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
         ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
@@ -318,7 +316,7 @@ public class CbusDummyNodeTest {
         m.setElement(6, 0x04); // event variable value
         t.getCanListener().message(m);
         
-        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>0); }, " inbound 1 didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.inbound.isEmpty()); }, " inbound 1 didn't arrive");
         Assert.assertEquals(" 1 inbound increased", 1,(tcis.inbound.size() ) );
         
         Assert.assertTrue("1 getTotalNodeEvents ",t.getNodeEventManager().getTotalNodeEvents()== 1 );
@@ -488,7 +486,7 @@ public class CbusDummyNodeTest {
     @Test
     public void testNodeLearnTwoEventsThenDelete() {
     
-        CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
+        CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
         ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
@@ -589,7 +587,7 @@ public class CbusDummyNodeTest {
     @Test
     public void testResponseToNameRequest() {
     
-        CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
+        CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
         ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         t.setNodeInSetupMode(true);
@@ -600,7 +598,7 @@ public class CbusDummyNodeTest {
         t.getCanListener().message(m);
         
         
-        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>0); }, " inbound 1 didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.inbound.isEmpty()); }, " inbound 1 didn't arrive");
         Assert.assertEquals(" 1 inbound increased", 1,(tcis.inbound.size() ) );
         Assert.assertEquals("node responds to RQMN 0", "[5f8] E2 50 41 4E 20 20 20 20",
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
