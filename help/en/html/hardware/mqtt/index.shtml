@@ -94,8 +94,8 @@
       <h3 id="limitations">Available Objects</h3>
 
       <p>Older versions of JMRI (4.12 and earlier) directly support Turnouts only. Sensors and
-      Lights were added in version 4.21.1. Direct support for Reporters is expected to be added in
-      version 4.22. Support for Signal Masts is planned but not yet scheduled.</p>
+      Lights were added in version 4.21.1. Support for Signal Masts were made available in 4.26.
+      Support for Reporters is not yet available.</p>
 
       <p>MQTT messages can be sent and received and used with other object types, such as <a href=
       "../../tools/Memories.shtml">Memories</a>, by writing custom <a href=
@@ -210,18 +210,18 @@
         Light change e.g. by clicking on a panel or table. JMRI also acts on Light state messages sent
         from the layout on the "Light receive topic."</li>
 
-        <li><strong>Reporters</strong>Native MQTT Reports are not yet implemented.
+        <li><strong>Reporters</strong>: Native MQTT Reports are not yet implemented.
         Using a script to read from a JMRI reporter and send the content as MQTT
         is one possible work around.
         </li>
 
-        <li><strong>Signal Heads</strong>Native MQTT Signal Heads are not yet implemented.
+        <li><strong>Signal Heads</strong>: Native MQTT Signal Heads are not yet implemented.
         You can use e.g. the Three Turnout Signal Head style with MQTT turnouts as a
         work around. You can also write a script that sends the content of a virtual or other
         Signal Head to the layout.
         </li>
 
-        <li><strong>Signal Masts</strong>You can define MQTT Signal Masts which will send
+        <li><strong>Signal Masts</strong>: You can define MQTT Signal Masts which will send
         their aspect when changed.  These do not receive anything from the layout.
         </li>
 
@@ -279,6 +279,13 @@
       and "OFF". Receiving any other messages will result in a Warning in the <a href=
       "../../../package/apps/SystemConsole.shtml">JMRI System Console.</a> and cause the Light
       state to be set to "UNKNOWN."
+
+      <h3>Signal Masts</h3>
+      <span class="since">Since JMRI 4.26</span> A JMRI MQTT Signal Mast will send the
+      aspect name, followed by the held status and the lit status. Examples are
+      "Approach Medium; Lit; Unheld" and "Clear; Unlit; Held". The available
+      aspect names are defined in the signal system definition being used.
+
       <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
       </p>
       <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
