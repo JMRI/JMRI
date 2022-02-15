@@ -106,14 +106,18 @@ public class Ib2Throttle extends LocoNetThrottle {
     }
 
     /**
-     * Do not update the functions from the slot.
+     * Update functions F0 to F8 from the slot
      * Invoked by notifyChangedSlot(). The special LocoNet
      * messages generated here don't (yet) update the slot,
      * leaving all the function bits off.  We therefore don't
-     * do an update _from_ the slot during message processing.
+     * update those from the slot during message processing.
      */
     @Override
     protected void updateFunctions() {
+        for (int i = 0; i <= 8; i++) {
+            log.debug("updateFunction({}, {})", i, slot.isFunction(i));
+            updateFunction(i,slot.isFunction(i));
+        }
     }
 
     // initialize logging
