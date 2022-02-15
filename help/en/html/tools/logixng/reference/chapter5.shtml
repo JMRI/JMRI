@@ -361,16 +361,11 @@
         <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
         variable name which will provide the value for the selected local variable.</li>
 
-        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
-        the data that will be copied to the selected local variable. For example,
-        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
-        the table reference is OK, such as when using the
-        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
-        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
-        for details about tables.</li>
+        <li><strong>Table:</strong> See <a href="chapter11.shtml#tableCellSelection">Simplified
+        Table Cell Reference</a>.  The rest of chapter 11 has all of the details on tables.</li>
 
-        <li><strong>Formula:</strong> Set the selected local variable to the result of a formula
-        calculation.</li>
+        <li><strong>Formula:</strong> Select the <strong>Formula</strong> tab and set the selected
+        local variable to the result of a formula calculation.</li>
       </ul>
 
       <p>Note: The Memory, Block and Reporter tabs have an option to listen to changes to their
@@ -392,13 +387,15 @@
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected memory.</li>
 
-        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
-        the data that will be copied to the selected memory variable. For example,
-        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
-        the table reference is OK, such as when using the
-        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
-        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
-        for details about tables.</li>
+        <li><strong>Table:</strong> See <a href="chapter11.shtml#tableCellSelection">Simplified
+        Table Cell Reference</a>.  The rest of chapter 11 has all of the details on tables.</li>
+
+        <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
+        variable name which will provide the value for the selected memory.</li>
+
+        <li><strong>Formula:</strong> Select the <strong>Formula</strong> tab and set the selected
+        memory to the result of a formula calculation.</li>
+
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
