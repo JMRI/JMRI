@@ -563,10 +563,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected void updateFunctions() {
         for (int i = 0; i < 29; i++) {
             log.debug("updateFunction({}, {})", i, slot.isFunction(i));
-            if (i==20 && log.isDebugEnabled()) log.trace("Tracing back F20", new Exception("traceback"));
+            if (i==20 && log.isTraceEnabled()) log.trace("Tracing back F20", new Exception("traceback"));
             updateFunction(i,slot.isFunction(i));
         }
     }
+
     /**
      * Set the speed step value and the related speedIncrement value.
      *
