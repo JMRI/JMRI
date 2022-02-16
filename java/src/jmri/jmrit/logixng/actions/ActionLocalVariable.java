@@ -33,9 +33,9 @@ public class ActionLocalVariable extends AbstractDigitalAction
     private String _otherLocalVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
-    private boolean _listenToMemory = true;
-    private boolean _listenToBlock = true;
-    private boolean _listenToReporter = true;
+    private boolean _listenToMemory = false;
+    private boolean _listenToBlock = false;
+    private boolean _listenToReporter = false;
 
     private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<NamedTable> _tableHandle;

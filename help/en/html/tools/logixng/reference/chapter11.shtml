@@ -197,6 +197,57 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h3 id="tableCellSelection">Simplified Table Cell Reference<span class="since">since 4.99.3</span></h3>
+
+      <p>Instead of the complex table/row/column text reference, the actions and expressions for
+      Memory and Local Variable table addressing use a three field reference.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/table_cell_selection.png"><img src=
+        "images/chapter11/table_cell_selection.png" alt="table cell selection" width="204"
+        height="138"></a>
+      </div>
+
+      <p>The first step is to select the table which has been loaded using LogixNG Tables.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/select_table.png"><img src=
+        "images/chapter11/select_table.png" alt="select table" width="401" height="150"></a>
+      </div>
+
+      <p>In addition to selecting from a drop down list, indirect references, local variables and
+      formulas can be used to determine the table name.</p>
+
+      <p>The second step is to select the row.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/select_row.png"><img src=
+        "images/chapter11/select_row.png" alt="select row" width="401" height="150"></a>
+      </div>
+
+      <p>And select the column.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/select_col.png"><img src=
+        "images/chapter11/select_col.png" alt="select column" width="401" height="150"></a>
+      </div>
+
+      <p>This is the result.  This example is using local variables for the row and column.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/select_done.png"><img src=
+        "images/chapter11/select_done.png" alt="selection done" width="344" height="141"></a>
+      </div>
+
+      <p>Here is the row in the tree editor along with a second row that uses a formula.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/select_sample.png"><img src=
+        "images/chapter11/select_sample.png" alt="selection sample" width="843" height="51"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3>Using comments in the table</h3>
 
       <p>It's useful to be able to add comments in the table, especially for large tables.
