@@ -202,21 +202,6 @@ public class Ib1Throttle extends LocoNetThrottle {
         network.sendLocoNetMessage(msg2);
     }
 
-    /**
-     * Update functions F0 to F8 from the slot
-     * Invoked by notifyChangedSlot(). The special LocoNet
-     * messages generated here don't (yet) update the slot,
-     * leaving all the function bits off.  We therefore don't
-     * update those from the slot during message processing.
-     */
-    @Override
-    protected void updateFunctions() {
-        for (int i = 0; i <= 8; i++) {
-            log.debug("updateFunction({}, {})", i, slot.isFunction(i));
-            updateFunction(i,slot.isFunction(i));
-        }
-    }
-
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(Ib1Throttle.class);
 
