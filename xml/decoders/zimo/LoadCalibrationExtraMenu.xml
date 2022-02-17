@@ -4,6 +4,8 @@
   <!--     of decoder pane, for CVs which don't really work as DecoderPro elements, such as Pseudo Programming and Load Calibration -->
   <!--     CVs also removed from decoder normal list at same date -->
     <extraMenu name="Load Calibration" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+           <mode>OPSBITMODE</mode>
+           <mode>OPSBYTEMODE</mode>
            <extraMenuItem label="Run a Forwards Calibration" CV="302" default="75"/>
            <extraMenuItem label="Run a Reverse Calibration" CV="302" default="76"/>
     </extraMenu>
