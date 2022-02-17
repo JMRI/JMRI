@@ -126,10 +126,11 @@
 
         <dt>Tools</dt>
 
-        <dd>The tools menu has one item: <strong>Open PickList Tables</strong>. The PickList was
-        designed for dragging names, such as sensor names, to a text field. Due to the
-        implementation of ConditionalNG edit dialogs, the drag and drop capability does not
-        function. It can still be used as a reference.</dd>
+        <dd>The tools menu has two items: <strong>Open clipboard</strong> and <strong>Open PickList
+        Tables</strong>.  See <a href="../../../../html/tools/logixng/reference/chapter2.shtml">
+        LogixNG Reference - Chapter 2</a> for details on the using the clipboard. The PickList was
+        designed for dragging names, such as sensor names, to a text field. Most LogixNG name fields
+        use drop down combo boxes, but this could be used when building Formulas.</dd>
       </dl>
 
       <h2 id="addLogixNG">Add a LogixNG</h2>
