@@ -69,6 +69,8 @@
         </li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3>Expression dialogs</h3>
 
       <p>When the category and type has been selected, the detail expression dialog will be
@@ -146,13 +148,17 @@
         <dd>
         </dd>
       </dl>
-      <a id="digital_expression_item"></a>
-      <h3>Digital expression :: Item</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_expression_item">Digital expression :: Item</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_item.png"><img src=
         "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Block</h5>
 
@@ -173,6 +179,8 @@
         value or a reference value, which is typically a memory variable.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Clock</h5>
 
       <ul>
@@ -182,6 +190,8 @@
         <li><strong>System clock:</strong> Evaluate to true if the system clock time is between two
         hh:mm values.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Conditional</h5>
 
@@ -198,6 +208,8 @@
         <li><strong>Other:</strong> Evaluate to true if the state of the specified conditional is
         unknown or inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Dispatcher</h5>
 
@@ -228,6 +240,8 @@
         <li><strong>Done</strong></li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Entry/Exit</h5>
 
       <ul>
@@ -243,6 +257,8 @@
         <li>Evaluate if an Entry/Exit pair is active, inactive or other.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Light</h5>
 
       <ul>
@@ -254,10 +270,14 @@
         or inconsistent.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Local variable</h5>
 
-      <p>Compares the value of the specified local variable to either a string, a memory variable
-      or another local variable. Evaluates to true if the comparison is true.</p>
+      <p>Compares the value of the specified local variable to either a string, a memory variable,
+      another local variable or a table cell. See <a href="chapter11.shtml#tableCellSelection">
+      Simplified Table Cell Reference</a> for details on defining the table cell.  Evaluates to true
+      if the comparison is true.</p>
 
       <ul>
         <li><strong>is less than</strong>
@@ -293,11 +313,15 @@
 
       <p>For information about regular expressions, see:
       https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Memory</h5>
 
-      <p>Compares the value of the specified memory variable to either a string, another memory
-      variable or a local variable. Evaluates to true if the comparison is true.</p>
+      <p>Compares the value of the specified memory variable to either a string, another memory,
+      variable, a local variable or a table cell. See <a href="chapter11.shtml#tableCellSelection">
+      Simplified Table Cell Reference</a> for details on defining the table cell. Evaluates to true
+      if the comparison is true.</p>
 
       <ul>
         <li><strong>is less than</strong>
@@ -333,6 +357,8 @@
 
       <p>For information about regular expressions, see:
       https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>OBlock</h5>
 
@@ -356,6 +382,8 @@
         (is power error in Logix).</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Power</h5>
 
       <ul>
@@ -366,6 +394,8 @@
         <li><strong>Other:</strong> Evaluate to true if the power state is unknown or
         inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Reference</h5>
 
@@ -384,6 +414,8 @@
         "images/chapter6/reference_dialog.png" alt="Chapter 6 reference dialog" width="718" height=
         "252"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Reporter</h5>
 
@@ -405,11 +437,15 @@
       <p>Note:  The meaning of the reports and the state number are defined by originating
       hardware.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Script</h5>
 
       <p>A script expression calls a Jython script. The Jython context contains a
       <strong>result</strong> boolean object. When the script is done, it does a
       <code>result.setValue(x)</code> where x is, or evaluates to, True or False.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Sensor</h5>
 
@@ -423,6 +459,8 @@
         <li><strong>Other:</strong> Evaluate to true if the state of the specified sensor is
         unknown or inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Signal head</h5>
 
@@ -445,6 +483,8 @@
         <li><strong>is not held:</strong> Evaluate to true if the state of the specified signal
         head is not held.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Signal mast</h5>
 
@@ -474,6 +514,8 @@
         signal does not have permissive sml disabled.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Turnout</h5>
 
       <ul>
@@ -486,6 +528,8 @@
         <li><strong>Other:</strong> Evaluate to true if the state of the specified turnout is
         unknown or inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Warrant</h5>
 
@@ -504,8 +548,10 @@
         <li><strong>Train is running:</strong> Evaluate to true if the specified route has a train
         running.</li>
       </ul>
-      <a id="digital_expression_common"></a>
-      <h3>Digital expression :: Common</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_expression_common">Digital expression :: Common</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_common.png"><img src=
@@ -513,10 +559,14 @@
         width="136" height="98"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>And</h5>
 
       <p>And evaluates the child expressions and if all of them returns true, the And expression
       returns true as well.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Antecedent</h5>
 
@@ -530,8 +580,10 @@
       been kept from Logix Antecedent as well. <em>Note: Antecedent is included for compability
       with Logix but it's recommended to use Formula instead. Formula is much more powerful, uses
       the socket names and also works with numbers and strings.</em></p>
-      <a id="digital_formula"></a>
-      <h5>Digital Formula</h5>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="digital_formula">Digital Formula</h5>
 
       <p>Formula is the next generation of Antecedent. It supports many operators, like ==, !=,
       &lt;=, &gt;=, &lt;, &gt;, +, -, *, / and %. It supports local variables, memories and
@@ -539,24 +591,32 @@
       See <a href="#generic_expression">Generic expression</a> for details on the result of merging
       the other expressions.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Not</h5>
 
       <p>The Not expression has one child expression and answers <strong>true</strong> if the child
       expression answers <strong>false</strong>, and <strong>false</strong> if the child expression
       answers <strong>true</strong>.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Or</h5>
 
       <p>Or evaluates the child expressions and if at least one of them returns true, the Or
       expression returns true as well.</p>
-      <a id="digital_expression_loconet"></a>
-      <h3>Digital expression :: LocoNet</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_expression_loconet">Digital expression :: LocoNet</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_loconet.png"><img src=
         "images/chapter6/digital_expression_loconet.png" alt="Chapter 6 expression loconet list"
         width="136" height="26"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Slot Usage</h5>
 
@@ -567,8 +627,10 @@
         "images/chapter6/loconet_slot_usage.png" alt="Chapter 6 loconet slot usage" width="962"
         height="505"></a>
       </div>
-      <a id="digital_expression_other"></a>
-      <h3>Digital expression :: Other</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_expression_other">Digital expression :: Other</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_other.png"><img src=
@@ -576,19 +638,27 @@
         "232" height="134"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Always false</h5>
 
       <p>The False expression always answers <strong>false</strong>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Always true</h5>
 
       <p>The True expression always answers <strong>true</strong>. This expression is commonly used
       as a child to the Trigger Once expression.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Call module</h5>
 
       <p>Call a module and and return its true/false response. See <a href=
       "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Hold</h5>
 
@@ -596,8 +666,10 @@
       expression. For this expression to become <strong>true</strong>, both the trigger expression
       and the hold expression must answer <strong>true</strong>. But then it stays
       <strong>true</strong> as long as the hold expression stays <strong>true</strong>.</p>
-      <a id="LastResult"></a>
-      <h5>Last result of digital expression</h5>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="LastResult">Last result of digital expression</h5>
 
       <p>Each digital expression retains its most recent true/false state. This can be checked if
       the expression has a user name. See <a href="chapter3.shtml">Chapter 3</a>. Select the user
@@ -608,6 +680,8 @@
         "images/chapter6/expression_last_result.png" alt="Chapter 6 expression last result" width=
         "485" height="247"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Log data</h5>
 
@@ -626,6 +700,8 @@
       <p><strong>True</strong> is recommended for <strong>And</strong> expressions and
       <strong>False</strong> for <strong>Or</strong> expressions.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Trigger once</h5>
 
       <p>The TriggerOnce expression answers true one single time and then false until its child
@@ -633,8 +709,10 @@
 
       <p>Most often, the TriggerOnce expression will have the expression Always true as its child
       and it will then answers true one single time and then false until JMRI is restarted.</p>
-      <a id="analog_expression_item"></a>
-      <h3>Analog expression :: Item</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="analog_expression_item">Analog expression :: Item</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/analog_expression_item.png"><img src=
@@ -642,10 +720,13 @@
         width="201" height="80"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Analog constant</h5>
 
       <p>Return a constant as an analog value.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <h5>AnalogIO</h5>
 
       <p>AnalogIO reads the value of an AnalogIO and returns its value. There is currently two
@@ -661,16 +742,22 @@
       on the hardware connected to JMRI. An example is the Roco Z21 that has a current and voltage
       meter that JMRI can listen to.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Memory as analog value</h5>
 
       <p>Return value of a memory variable as an analog value.</p>
-      <a id="MidnightMinutes"></a>
-      <h5>Minutes since midnight</h5>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="MidnightMinutes">Minutes since midnight</h5>
 
       <p>Return the number of minutes since midnight using either the fast clock or the system
       clock.</p>
-      <a id="analog_expression_common"></a>
-      <h3>Analog expression :: Common</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="analog_expression_common">Analog expression :: Common</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/analog_expression_common.png"><img src=
@@ -678,11 +765,15 @@
         "Chapter 6 analog expression common list" width="201" height="26"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Analog formula</h5>
 
       <p>Return the result of a formula as an analog value.</p>
-      <a id="string_expression_item"></a>
-      <h3>String expression :: Item</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="string_expression_item">String expression :: Item</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/string_expression_item.png"><img src=
@@ -690,15 +781,21 @@
         width="196" height="44"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Memory as string value</h5>
 
       <p>Return value of a memory variable as a string value.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>String constant</h5>
 
       <p>Return a constant as an string value.</p>
-      <a id="string_expression_common"></a>
-      <h3>String expression :: Common</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="string_expression_common">String expression :: Common</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/string_expression_common.png"><img src=
@@ -706,11 +803,14 @@
         "Chapter 6 string expression common list" width="196" height="26"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <h5>String formula</h5>
 
       <p>Return the result of a formula as a string value.</p>
-      <a id="generic_expression"></a>
-      <h3>Generic expression</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="generic_expression">Generic expression</h3>
 
       <p>The <a href="#digital_formula">Digital Formula</a> expression can use any of the other
       expressions. This means the lists from the other sockets and categories are combined.</p>

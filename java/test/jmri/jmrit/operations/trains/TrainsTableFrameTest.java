@@ -149,6 +149,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // should have disposed the edit train window
         et = JmriJFrame.getFrame("Edit Train");
         Assert.assertNull(et);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -185,6 +186,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // kill panels
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -279,6 +281,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // kill panels
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -329,6 +332,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // kill panels
         jfoc.dispose();
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
@@ -400,6 +404,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // kill panels
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -445,6 +450,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // kill panels
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test

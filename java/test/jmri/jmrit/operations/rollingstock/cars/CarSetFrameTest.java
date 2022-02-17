@@ -41,7 +41,6 @@ public class CarSetFrameTest extends OperationsTestCase {
         f.loadCar(c3);
 
         JUnitUtil.dispose(f);
-
     }
 
     @Test
@@ -180,6 +179,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -235,6 +235,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -291,6 +292,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -345,6 +347,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -400,6 +403,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -456,6 +460,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -515,6 +520,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNull("Car's route location is removed", c3.getRouteLocation());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     private void toggleCheckBoxThenClickSave(CarSetFrame frame, JCheckBox box){

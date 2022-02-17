@@ -412,6 +412,7 @@ public abstract class FemaleSocketTestBase {
 
     @Test
     public void testCategory() {
+        org.junit.Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         JDialog dialog = new JDialog();
 
         // Test that the classes method getCategory() returns the same value as

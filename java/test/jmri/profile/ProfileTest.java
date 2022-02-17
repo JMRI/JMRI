@@ -27,7 +27,7 @@ public class ProfileTest {
 
     /**
      * Test of constructor with extension for Profile path.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -54,7 +54,7 @@ public class ProfileTest {
 
     /**
      * Test of getName method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -66,7 +66,7 @@ public class ProfileTest {
 
     /**
      * Test of setName method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -79,7 +79,7 @@ public class ProfileTest {
 
     /**
      * Test of getId method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -92,7 +92,7 @@ public class ProfileTest {
 
     /**
      * Test of getPath method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -106,7 +106,7 @@ public class ProfileTest {
 
     /**
      * Test of toString method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -118,7 +118,7 @@ public class ProfileTest {
 
     /**
      * Test of hashCode method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -131,7 +131,7 @@ public class ProfileTest {
 
     /**
      * Test of equals method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -151,13 +151,12 @@ public class ProfileTest {
         Assert.assertFalse(instance.equals(null));
         Assert.assertFalse(instance.equals(new String()));
         Assert.assertFalse(instance.equals(instance2));
-        System.out.println("Should be the same:");
         Assert.assertTrue(instance.equals(instance3));
     }
 
     /**
      * Test of isComplete method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -169,7 +168,7 @@ public class ProfileTest {
 
     /**
      * Test of getUniqueId method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -183,7 +182,7 @@ public class ProfileTest {
 
     /**
      * Test of containsProfile method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -200,7 +199,7 @@ public class ProfileTest {
 
     /**
      * Test of inProfile method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -218,7 +217,7 @@ public class ProfileTest {
 
     /**
      * Test of isProfile method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -235,7 +234,7 @@ public class ProfileTest {
 
     /**
      * Test of compareTo method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
