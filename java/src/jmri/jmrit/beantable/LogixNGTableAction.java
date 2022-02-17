@@ -7,6 +7,7 @@ import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
@@ -14,6 +15,7 @@ import jmri.Manager;
 import jmri.util.JmriJFrame;
 
 
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
@@ -111,6 +113,27 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
             log.error(e.getMessage());
         }
+    }
+
+    private void copyConditionalNGToLogixNG(
+            @Nonnull ConditionalNG conditionalNG,
+            @Nonnull LogixNG sourceBean,
+            @Nonnull LogixNG targetBean) {
+
+
+    }
+
+    @Override
+    protected void copyBean(@Nonnull LogixNG sourceBean, @Nonnull LogixNG targetBean) {
+        for (int i = 0; i < sourceBean.getNumConditionalNGs(); i++) {
+            ConditionalNG conditionalNG = sourceBean.getConditionalNG(i);
+            copyConditionalNGToLogixNG(conditionalNG, sourceBean, targetBean);
+        }
+    }
+
+    @Override
+    protected boolean isCopyBeanSupported() {
+        return true;
     }
 
     @Override
