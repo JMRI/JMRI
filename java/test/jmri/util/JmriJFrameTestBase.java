@@ -25,7 +25,7 @@ abstract public class JmriJFrameTestBase {
     @Test
     public void testShowAndClose() {
         frame.initComponents();
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             frame.setVisible(true);
         });
         JFrameOperator fo = new JFrameOperator(frame);
