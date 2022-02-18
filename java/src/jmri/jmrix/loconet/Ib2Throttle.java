@@ -26,6 +26,7 @@ public class Ib2Throttle extends LocoNetThrottle {
         // Special LocoNet message for Uhlenbrock Intellibox-II implementation
         // Intellibox-I uses another implementation for these functions
         // Functions F9 to F12
+        log.debug("IB1 sendFunctionGroup3");
         int new_IB2_F9_F12 = ((getF12() ? LnConstants.RE_IB2_F12_MASK : 0)
                 | (getF11() ? LnConstants.RE_IB2_F11_MASK : 0)
                 | (getF10() ? LnConstants.RE_IB2_F10_MASK : 0)
@@ -41,6 +42,7 @@ public class Ib2Throttle extends LocoNetThrottle {
     protected void sendFunctionGroup4() {
         // Special LocoNet message for Uhlenbrock (IB-I and IB-II) implementation
         // Functions F13 to F19
+        log.debug("IB1 sendFunctionGroup4");
         int new_IB2_F13_F19 = ((getF19() ? LnConstants.RE_IB2_F19_MASK : 0)
                 | (getF18() ? LnConstants.RE_IB2_F18_MASK : 0)
                 | (getF17() ? LnConstants.RE_IB2_F17_MASK : 0)
@@ -56,7 +58,7 @@ public class Ib2Throttle extends LocoNetThrottle {
         msg.setElement(4, new_IB2_F13_F19);
         network.sendLocoNetMessage(msg);
 
-        // Function F20 (and F28) 
+        // Function F20 (and F28)
         // F12 is also controlled from this message though IB-II uses RE_OPC_IB2_F9_F12 OPS code for F12 - needed to avoid overridding F12 value
         int new_IB2_F20_F28 = ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
                 | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
@@ -73,6 +75,7 @@ public class Ib2Throttle extends LocoNetThrottle {
     @Override
     protected void sendFunctionGroup5() {
         // Functions F21 to F27
+        log.debug("IB1 sendFunctionGroup5");
         int new_IB2_F21_F27 = ((getF27() ? LnConstants.RE_IB2_F27_MASK : 0)
                 | (getF26() ? LnConstants.RE_IB2_F26_MASK : 0)
                 | (getF25() ? LnConstants.RE_IB2_F25_MASK : 0)
@@ -100,6 +103,21 @@ public class Ib2Throttle extends LocoNetThrottle {
         msg2.setElement(3, LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN);
         msg2.setElement(4, new_IB2_F20_F28);
         network.sendLocoNetMessage(msg2);
+    }
+
+    /**
+     * Update functions F0 to F8 from the slot
+     * Invoked by notifyChangedSlot(). The special LocoNet
+     * messages generated here don't (yet) update the slot,
+     * leaving all the function bits off.  We therefore don't
+     * update those from the slot during message processing.
+     */
+    @Override
+    protected void updateFunctions() {
+        for (int i = 0; i <= 8; i++) {
+            log.debug("updateFunction({}, {})", i, slot.isFunction(i));
+            updateFunction(i,slot.isFunction(i));
+        }
     }
 
     // initialize logging

@@ -14,9 +14,7 @@
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE" />
            <Bug pattern="OVERRIDING_METHODS_MUST_INVOKE_SUPER" />
-           <Bug pattern="STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="DCN_NULLPOINTER_EXCEPTION" /> <!-- 327 cases -->
         </Or>
