@@ -99,6 +99,11 @@ public class LocoFile extends XmlFile {
 
                 // check whether the CV already exists, i.e. due to a variable definition
                 cvObject = cvModel.allCvMap().get(name);
+                if (cvObject == null && name.equals("19")) {
+                    log.info("CV19 special case triggered, kept without Variable");
+                    cvModel.addCV(name, false, false, false);
+                    cvObject = cvModel.allCvMap().get(name);
+                }
                 if (cvObject == null) {
                     // No warning since ESU files do not generate CV entries until panel load time
                     // plus this is a valid way to migrate a decoder definition, i.e. to remove a variable.
