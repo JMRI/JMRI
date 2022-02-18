@@ -709,7 +709,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             // Get validated system name
             sName = _systemName.getText();
             // check if a bean with this name already exists
-            E x = null;
+            E x;
             try {
                 x = getManager().getBySystemName(sName);
             } catch (Exception ex) {
