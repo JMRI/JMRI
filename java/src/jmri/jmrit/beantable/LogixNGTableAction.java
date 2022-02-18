@@ -6,18 +6,18 @@ import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
+import jmri.jmrit.beantable.Bundle;
+import jmri.jmrit.logixng.*;
 import jmri.util.JmriJFrame;
 
 
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 
@@ -116,18 +116,37 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
     private void copyConditionalNGToLogixNG(
-            @Nonnull ConditionalNG conditionalNG,
-            @Nonnull LogixNG sourceBean,
+            @Nonnull ConditionalNG sourceConditionalNG,
             @Nonnull LogixNG targetBean) {
 
+            // Create ConditionalNG
+            String sysName = InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName();
+            ConditionalNG targetConditionalNG =
+                    InstanceManager.getDefault(ConditionalNG_Manager.class)
+                            .createConditionalNG(targetBean, sysName, sourceConditionalNG.getUserName());
 
+            sourceConditionalNG.getFemaleSocket().unregisterListeners();
+            targetConditionalNG.getFemaleSocket().unregisterListeners();
+            Map<String, String> systemNames = new HashMap<>();
+            Map<String, String> userNames = new HashMap<>();
+            try {
+                FemaleSocket femaleSourceSocket = sourceConditionalNG.getFemaleSocket();
+                if (femaleSourceSocket.isConnected()) {
+                    targetConditionalNG.getFemaleSocket().connect(
+                            (MaleSocket) femaleSourceSocket.getConnectedSocket()
+                                    .getDeepCopy(systemNames, userNames));
+                }
+            } catch (JmriException ex) {
+                log.error(ex.getMessage(), ex);
+            }
+            sourceConditionalNG.getFemaleSocket().registerListeners();
+            targetConditionalNG.getFemaleSocket().registerListeners();
     }
 
     @Override
     protected void copyBean(@Nonnull LogixNG sourceBean, @Nonnull LogixNG targetBean) {
         for (int i = 0; i < sourceBean.getNumConditionalNGs(); i++) {
-            ConditionalNG conditionalNG = sourceBean.getConditionalNG(i);
-            copyConditionalNGToLogixNG(conditionalNG, sourceBean, targetBean);
+            copyConditionalNGToLogixNG(sourceBean.getConditionalNG(i), targetBean);
         }
     }
 
