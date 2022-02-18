@@ -11,10 +11,12 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
+import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.com.sun.ToggleOrPressButtonModel;
+import jmri.util.gui.GuiLafPreferencesManager;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -57,7 +59,6 @@ public class FunctionButton extends JToggleButton {
     private final static int BUT_MAX_WDTH = 256;
     private final static int BUT_MIN_WDTH = 100;
 
-    public final static int DEFAULT_FONT_SIZE = 12;
     public final static int DEFAULT_IMG_SIZE = 48;
 
     /**
@@ -106,7 +107,7 @@ public class FunctionButton extends JToggleButton {
         setModel(_model);
         //Add listener to components that can bring up popupMenu menus.
         addMouseListener(new PopupListener());
-        setFont(new Font("Monospaced", Font.PLAIN, DEFAULT_FONT_SIZE));
+        setFont(new Font("Monospaced", Font.PLAIN, ((GuiLafPreferencesManager)InstanceManager.getDefault(GuiLafPreferencesManager.class)).getFontSize()));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);
         updateLnF();

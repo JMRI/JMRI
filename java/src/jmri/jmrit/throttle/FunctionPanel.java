@@ -15,6 +15,7 @@ import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
@@ -154,10 +155,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     rosterEntry.setFunctionLabel(functionNumber, text);
                 }
                 String fontSizeKey = "function"+functionNumber+"_ThrottleFontSize";
-                if (rosterEntry.getAttribute(fontSizeKey) != null && functionButton.getFont().getSize() == FunctionButton.DEFAULT_FONT_SIZE) {
+                if (rosterEntry.getAttribute(fontSizeKey) != null && functionButton.getFont().getSize() == ((GuiLafPreferencesManager)InstanceManager.getDefault(GuiLafPreferencesManager.class)).getFontSize()) {
                     rosterEntry.deleteAttribute(fontSizeKey);
                 }
-                if (functionButton.getFont().getSize() != FunctionButton.DEFAULT_FONT_SIZE) {
+                if (functionButton.getFont().getSize() != ((GuiLafPreferencesManager)InstanceManager.getDefault(GuiLafPreferencesManager.class)).getFontSize()) {
                     rosterEntry.putAttribute(fontSizeKey, ""+functionButton.getFont().getSize());
                 }
                 String imgButtonSizeKey = "function"+functionNumber+"_ThrottleImageButtonSize";
