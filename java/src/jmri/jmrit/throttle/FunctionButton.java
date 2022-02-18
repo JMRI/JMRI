@@ -411,7 +411,9 @@ public class FunctionButton extends JToggleButton {
         me.setAttribute("text", this.getButtonLabel());
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
-        me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        if (getFont().getSize() != InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()) {
+            me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        }
         me.setAttribute("buttonImageSize", String.valueOf(this.getButtonImageSize()));
         if (this.getIconPath().startsWith(FileUtil.getUserResourcePath())) {
             me.setAttribute("iconPath", this.getIconPath().substring(FileUtil.getUserResourcePath().length()));
@@ -452,7 +454,11 @@ public class FunctionButton extends JToggleButton {
             this.setText(e.getAttribute("text").getValue());
             this.setIsLockable(e.getAttribute("isLockable").getBooleanValue());
             this.setDisplay(e.getAttribute("isVisible").getBooleanValue());
-            this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+            if (e.getAttribute("fontSize") != null) {
+                this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+            } else {
+                this.setFont(new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()));
+            }
             this.setButtonImageSize( (e.getAttribute("buttonImageSize")!=null)?e.getAttribute("buttonImageSize").getIntValue():DEFAULT_IMG_SIZE);
             if ((e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {
                 if (checkFile(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue())) {
