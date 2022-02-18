@@ -15,7 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Steve Young Copyright (C) 2022
  */
 @ServiceProvider(service = CbusSimulatedModuleProvider.class)
-public class SprogPi3 extends CbusSimulatedModuleProvider {
+public class SprogPiSprog3 extends CbusSimulatedModuleProvider {
 
     @Override
     public int getManufacturerId() {
@@ -55,7 +55,7 @@ public class SprogPi3 extends CbusSimulatedModuleProvider {
 
         node.getNodeParamManager().setParameters(_params);
         node.getNodeNvManager().setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
-        node.setNodeNameFromName("PSPROG3");
+        node.setNodeNameFromName("PiSPRG3");
     }
 
 }

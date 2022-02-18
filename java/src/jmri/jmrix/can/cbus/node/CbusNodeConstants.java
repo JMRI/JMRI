@@ -311,12 +311,12 @@ public class CbusNodeConstants {
     
     
     /*
-     * Populate hashmap with format strings
-     *
+     * Populate hashmap with format strings.
+     * Visible name of module, not the CBUS NAME OPC Response.
      */
     private static Map<Integer, String> createType44Map() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(1, "CANPiSPRG3"); // NOI18N
+        result.put(1, "Pi-SPROG 3"); // NOI18N
         result.put(2, "CANSPROG3P"); // NOI18N
         result.put(3, "CANSPROG"); // NOI18N
         result.put(4, "SBOOST"); // NOI18N
