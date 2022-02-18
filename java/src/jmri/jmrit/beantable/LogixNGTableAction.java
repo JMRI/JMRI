@@ -13,7 +13,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.beantable.Bundle;
 import jmri.jmrit.logixng.*;
 import jmri.util.JmriJFrame;
 
