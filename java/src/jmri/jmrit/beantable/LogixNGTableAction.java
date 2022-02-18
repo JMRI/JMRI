@@ -120,9 +120,11 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
             // Create ConditionalNG
             String sysName = InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName();
+            String oldUserName = sourceConditionalNG.getUserName();
+            String userName = oldUserName != null ? Bundle.getMessage("CopyOfConditionalNG", oldUserName) : null;
             ConditionalNG targetConditionalNG =
                     InstanceManager.getDefault(ConditionalNG_Manager.class)
-                            .createConditionalNG(targetBean, sysName, sourceConditionalNG.getUserName());
+                            .createConditionalNG(targetBean, sysName, userName);
 
             sourceConditionalNG.getFemaleSocket().unregisterListeners();
             targetConditionalNG.getFemaleSocket().unregisterListeners();
