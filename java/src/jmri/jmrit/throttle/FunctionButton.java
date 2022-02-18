@@ -107,7 +107,7 @@ public class FunctionButton extends JToggleButton {
         setModel(_model);
         //Add listener to components that can bring up popupMenu menus.
         addMouseListener(new PopupListener());
-        setFont(new Font("Monospaced", Font.PLAIN, ((GuiLafPreferencesManager)InstanceManager.getDefault(GuiLafPreferencesManager.class)).getFontSize()));
+        setFont(new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);
         updateLnF();
