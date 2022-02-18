@@ -32,6 +32,7 @@ abstract public class JmriJFrameTestBase {
         // It's up at this point, and can be manipulated
         // Ask to close window
         fo.requestClose();
+        fo.waitClosed();
     }
 
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
