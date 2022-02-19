@@ -822,14 +822,15 @@ value="<xsl:value-of select="@dataString"/>"
                 <th>Socket Name</th>
                 <th>System Name</th>
                 <th>Action Type</th>
+                <th>Comment</th>
                </tr>
             <xsl:for-each select="./Socket">
               <tr><td><xsl:value-of select="socketName"/></td>
               <td><xsl:value-of select="systemName"/></td>
               <!-- Find type of action -->
-              <td><xsl:call-template name="oneNGDigitalAction">
+              <xsl:call-template name="oneNGDigitalActionWithComment">
                     <xsl:with-param name="systemname" select="systemName"/> 
-              </xsl:call-template></td>
+              </xsl:call-template>
              </tr>
             </xsl:for-each>
             </table>
@@ -837,30 +838,27 @@ value="<xsl:value-of select="@dataString"/>"
     </xsl:for-each>
 </xsl:template>
 
-<!-- *************************************************************************************** -->
-<xsl:template name="oneNGDigitalAction">
+<!-- ********************************************* -->
+<xsl:template name="oneNGDigitalActionWithComment">
         <xsl:param name="systemname"/>
-
     <xsl:for-each select="/layout-config/LogixNGDigitalActions/*">
 		<xsl:if test='( systemName = $systemname )' >
         <!-- found the right one -->
-            <xsl:value-of select="local-name()"/>
+            <td><xsl:value-of select="local-name()"/></td>
+            <td><xsl:value-of select="./comment"/></td>
         </xsl:if>
     </xsl:for-each>
-
 </xsl:template>
 
 <!-- *************************************************************************************** -->
-<xsl:template name="oneNGDigitalExpression">
-        <xsl:param name="systemname"/>
-
-    <xsl:for-each select="/layout-config/LogixNGDigitalExpressions/*">
-		<xsl:if test='( systemName = $systemname )' >
-        <!-- found the right one -->
-            <xsl:value-of select="local-name()"/>
-        </xsl:if>
+<xsl:template match="layout-config/LogixNGs/InitializationTable">
+    <h2>LogixNG Initialization Table</h2>
+    <xsl:for-each select="./*">
+        <xsl:value-of select="local-name()"/>
+        <xsl:value-of select="."/>
+        <br/>
     </xsl:for-each>
-
+    
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -888,7 +886,33 @@ value="<xsl:value-of select="@dataString"/>"
         </xsl:for-each>
     </table>
 </xsl:template>
-    
+ 
+<!-- ********************************************* -->
+<xsl:template name="oneNGDigitalAction">
+        <xsl:param name="systemname"/>
+
+    <xsl:for-each select="/layout-config/LogixNGDigitalActions/*">
+		<xsl:if test='( systemName = $systemname )' >
+        <!-- found the right one -->
+            <xsl:value-of select="local-name()"/>
+        </xsl:if>
+    </xsl:for-each>
+
+</xsl:template>
+
+<!-- ********************************************* -->
+<xsl:template name="oneNGDigitalExpression">
+        <xsl:param name="systemname"/>
+
+    <xsl:for-each select="/layout-config/LogixNGDigitalExpressions/*">
+		<xsl:if test='( systemName = $systemname )' >
+        <!-- found the right one -->
+            <xsl:value-of select="local-name()"/>
+        </xsl:if>
+    </xsl:for-each>
+
+</xsl:template>
+
 <!-- *************************************************************************************** -->
 <!-- template to show ConditionalNG Expressions -->
 <xsl:template match="layout-config/LogixNGDigitalExpressions">
