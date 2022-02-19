@@ -395,7 +395,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li><i>Copy</i> now works in the LogixNG table. With <i>Copy</i>,
+          you can copy the entire LogixNG to a new LogixNG with all its ConditionalNGs.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
