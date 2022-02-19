@@ -26,7 +26,8 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Added CmriExample.py,
+                    a sample script for directly sending a C/MRI frame.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>

@@ -1083,6 +1083,46 @@ public class LocoNetSlot {
                 }
                 return;
             }
+            case LnConstants.RE_OPC_IB2_SPECIAL: {
+                if (l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
+                    // IB function message
+                    int data = l.getElement(4);
+                    switch (l.getElement(3)) {
+                        case LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN:
+                            // under 8 are kept in the slot, not local variables
+                            localF9 = ((data & LnConstants.RE_IB1_F9_MASK) != 0);
+                            localF10 = ((data & LnConstants.RE_IB1_F10_MASK) != 0);
+                            localF11 = ((data & LnConstants.RE_IB1_F11_MASK) != 0);
+                            return;
+                        case LnConstants.RE_IB2_SPECIAL_F13_F19_TOKEN:
+                            localF13 = ((data & LnConstants.RE_IB2_F13_MASK) != 0);
+                            localF14 = ((data & LnConstants.RE_IB2_F14_MASK) != 0);
+                            localF15 = ((data & LnConstants.RE_IB2_F15_MASK) != 0);
+                            localF16 = ((data & LnConstants.RE_IB2_F16_MASK) != 0);
+                            localF17 = ((data & LnConstants.RE_IB2_F17_MASK) != 0);
+                            localF18 = ((data & LnConstants.RE_IB2_F18_MASK) != 0);
+                            localF19 = ((data & LnConstants.RE_IB2_F19_MASK) != 0);
+                            return;
+                        case LnConstants.RE_IB2_SPECIAL_F21_F27_TOKEN:
+                            localF21 = ((data & LnConstants.RE_IB2_F21_MASK) != 0);
+                            localF22 = ((data & LnConstants.RE_IB2_F22_MASK) != 0);
+                            localF23 = ((data & LnConstants.RE_IB2_F23_MASK) != 0);
+                            localF24 = ((data & LnConstants.RE_IB2_F24_MASK) != 0);
+                            localF25 = ((data & LnConstants.RE_IB2_F25_MASK) != 0);
+                            localF26 = ((data & LnConstants.RE_IB2_F26_MASK) != 0);
+                            localF27 = ((data & LnConstants.RE_IB2_F27_MASK) != 0);
+                            return;
+                        case LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN:
+                            localF12 = ((data & LnConstants.RE_IB2_SPECIAL_F12_MASK) != 0);
+                            localF20 = ((data & LnConstants.RE_IB2_SPECIAL_F20_MASK) != 0);
+                            localF28 = ((data & LnConstants.RE_IB2_SPECIAL_F28_MASK) != 0);
+                            return;
+                        default:
+                            log.debug("Found IB RE_OPC_IB2_SPECIAL message of {}", l);
+                            return;
+                    }
+                }
+            }
             default: {
                 throw new LocoNetException("message can't be parsed"); // NOI18N
             }

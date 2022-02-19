@@ -630,7 +630,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         // if there are extra menus defined, enable them
         log.trace("enabling {} {}", extraMenuModelList.size(), extraMenuModelList);
         for (int i = 0; i<extraMenuModelList.size(); i++) {
-            if (!_opsMode || extraMenuModelList.get(i).hasOpsModeReset()) {
+            log.trace("enabling {} {}", _opsMode, extraMenuModelList.get(i).hasOpsModeReset());
+            if ( !_opsMode || extraMenuModelList.get(i).hasOpsModeReset()) {
                 if (extraMenuModelList.get(i).getRowCount() > 0) {
                     extraMenuList.get(i).setEnabled(true);
                 }
