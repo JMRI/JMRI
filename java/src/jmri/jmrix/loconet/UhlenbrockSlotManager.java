@@ -119,7 +119,7 @@ public class UhlenbrockSlotManager extends SlotManager {
         }
 
         // see if message for Intellibox_I and -II functions F9 thru F128
-        if (m.getOpCode() == LnConstants.RE_OPC_IB2_SPECIAL && m.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
+        if (m.getOpCode() == LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL && m.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
             UhlenbrockSlot slot = (UhlenbrockSlot) slot(m.getElement(2));
             slot.iBfunctionMessage(m);
         }

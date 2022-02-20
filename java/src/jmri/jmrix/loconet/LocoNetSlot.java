@@ -939,29 +939,6 @@ public class LocoNetSlot {
                 leadSlot = (((l.getElement(9) & 0x03)   * 128) + l.getElement(8) );
                 notifySlotListeners();
                 break;
-            case LnConstants.OPC_EXP_SLOT_MOVE:
-                int src = slot;
-                int dest = ((l.getElement(3) & 0x07) * 128) + (l.getElement(4) & 0x7f);
-                // null move or change status or consisting or?
-                if ((l.getElement(1) & 0b11111000) == 0b00111000) {
-                    if (((l.getElement(3) & 0b01110000) == 0b01100000)) {
-                        stat = l.getElement(4);
-                    } else if ((l.getElement(3) & 0b01110000) == 0b01010000) {
-                        // unconsisting returns slot contents so do nothing to this slot
-                    } else if ((l.getElement(3) & 0b01110000) == 0b01000000) {
-                        //consisting do something?
-                        //Set From slot as slave to slot as master
-                        stat = stat | LnConstants.CONSIST_TOP;
-                    } else if (src == 0 && dest == 0) {
-                        stat = stat & ~LnConstants.LOCO_IN_USE;
-                        log.info("set idle");
-                    } else {
-                        // a real move slot
-                        // TODO: deal with at slot manager level.
-                    }
-                }
-                notifySlotListeners();
-                break;
             case LnConstants.OPC_SL_RD_DATA:
                 lastUpdateTime = System.currentTimeMillis();
             //fall through
@@ -1083,7 +1060,7 @@ public class LocoNetSlot {
                 }
                 return;
             }
-            case LnConstants.RE_OPC_IB2_SPECIAL: {
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: {
                 if (l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
                     // IB function message
                     int data = l.getElement(4);
@@ -1122,6 +1099,31 @@ public class LocoNetSlot {
                             return;
                     }
                 }
+                int src = slot;
+                int dest = ((l.getElement(3) & 0x07) * 128) + (l.getElement(4) & 0x7f);
+                // null move or change status or consisting or?
+                if ((l.getElement(1) & 0b11111000) == 0b00111000) {
+                    if (((l.getElement(3) & 0b01110000) == 0b01100000)) {
+                        stat = l.getElement(4);
+                        notifySlotListeners();
+                        return;
+                    } else if ((l.getElement(3) & 0b01110000) == 0b01010000) {
+                        // unconsisting returns slot contents so do nothing to this slot
+                        return;     
+                    } else if ((l.getElement(3) & 0b01110000) == 0b01000000) {
+                        //consisting do something?
+                        //Set From slot as slave to slot as master
+                        stat = stat | LnConstants.CONSIST_TOP;
+                        notifySlotListeners();
+                        return;
+                    } else if (src == 0 && dest == 0) {
+                        stat = stat & ~LnConstants.LOCO_IN_USE;
+                        log.info("set idle");
+                        notifySlotListeners();
+                        return;
+                    }
+                }
+                return;
             }
             default: {
                 throw new LocoNetException("message can't be parsed"); // NOI18N
@@ -1190,7 +1192,7 @@ public class LocoNetSlot {
             return l;
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
             l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
@@ -1248,7 +1250,7 @@ public class LocoNetSlot {
             return l;
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
             l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
@@ -1298,7 +1300,7 @@ public class LocoNetSlot {
             return l;
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
             l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0);

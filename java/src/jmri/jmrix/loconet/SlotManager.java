@@ -605,10 +605,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         switch (m.getOpCode()) {
             case LnConstants.OPC_WR_SL_DATA:
             case LnConstants.OPC_SL_RD_DATA:
-            case LnConstants.RE_OPC_IB2_SPECIAL:
                 i = m.getElement(2);
                 break;
-
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL:
+                if ( m.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
+                    i = m.getElement(2);
+                    break;
+                }
+                i = ( (m.getElement(1) & 0x03 ) *128) + m.getElement(2);
+                break;
             case LnConstants.OPC_LOCO_DIRF:
             case LnConstants.OPC_LOCO_SND:
             case LnConstants.OPC_LOCO_SPD:
@@ -625,9 +630,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 }
                 break;
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:
-            case LnConstants.OPC_EXP_SLOT_MOVE:
                 i = ( (m.getElement(1) & 0x03 ) *128) + m.getElement(2);
-                return i;
+                break;
             case LnConstants.OPC_EXP_RD_SL_DATA:
             case LnConstants.OPC_EXP_WR_SL_DATA:
                 //only certain lengths get passed to slot
@@ -890,7 +894,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // Changing a slot to common. Depending on a CS and its OpSw, and throttle speed
             // it could have its status changed a number of ways.
             sendReadSlotDelayed(i,100);
-        } else if (m.getOpCode() == LnConstants.OPC_EXP_SLOT_MOVE) {
+        } else if (m.getOpCode() == LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL) {
             boolean isSettingStatus = ((m.getElement(3) & 0b01110000) == 0b01100000);
             if (isSettingStatus) {
                 int stat = m.getElement(4);
