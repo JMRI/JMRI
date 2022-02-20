@@ -13,7 +13,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.* ;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -33,7 +33,7 @@ public class PrintTrainBuildReportActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", t);
     }
 
-    @RepeatedTest(50)
+    @Test
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testPrintAction() {
 
