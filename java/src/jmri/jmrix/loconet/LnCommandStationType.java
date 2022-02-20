@@ -73,6 +73,25 @@ public enum LnCommandStationType {
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.LOCO))
             ),
+            LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
+    COMMAND_STATION_DCS210PLUS("DCS210+ (Advanced Command Station)",  // NOI18N
+            ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            "LnThrottleManager", "SlotManager",  // NOI18N
+            IdleSupport.SUPPORTS_OPC_IDLE,
+            MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
+            LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
+            CommandStationFracType.CLOCK15BIT,
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,100,SlotType.LOCO),
+                    new SlotMapEntry(101,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
+            ),
     COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
             ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
@@ -307,6 +326,7 @@ public enum LnCommandStationType {
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
+<<<<<<< HEAD
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
@@ -314,6 +334,16 @@ public enum LnCommandStationType {
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN))
             ),
+=======
+            LocoResetSupport.NO_LOCO_RESET_SUPPORT),
+    COMMAND_STATION_USB_DCS210Plus_ALONE("DCS210+ USB interface as standalone programmer", // NOI18N
+            ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            "LnThrottleManager", "SlotManager",  // NOI18N
+            IdleSupport.NO_OPC_IDLE_SUPPORT,
+            MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
+            LocoResetSupport.NO_LOCO_RESET_SUPPORT),
+>>>>>>> master
     COMMAND_STATION_USB_DCS52_ALONE("DCS52 USB interface as standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
             ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
