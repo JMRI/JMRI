@@ -1,16 +1,6 @@
 package jmri.jmrit.symbolicprog;
 
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Action to export modified CV values to a Comma Separated Variable (CSV) data file.
