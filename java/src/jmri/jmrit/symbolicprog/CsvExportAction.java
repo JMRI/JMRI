@@ -69,6 +69,8 @@ public class CsvExportAction extends AbstractAction {
 
     /**
      * Decide whether a given CV should be written out.
+     * @param cv CV to be checked
+     * @return true if CV should be included in output file.
      */
     protected boolean isWritable(CvValue cv) {
         return true;
