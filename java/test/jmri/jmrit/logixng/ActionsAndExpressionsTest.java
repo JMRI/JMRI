@@ -20,6 +20,7 @@ import jmri.util.JUnitUtil;
 // import org.apache.log4j.Level;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.Assert;
 
 /**
@@ -246,6 +247,7 @@ public class ActionsAndExpressionsTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testGetBeanType() {
         Map<Category, List<Class<? extends Base>>> classes = new HashMap<>();
         for (Category category : Category.values()) {

@@ -26,7 +26,8 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Added CmriExample.py,
+                    a sample script for directly sending a C/MRI frame.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -71,7 +72,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added Digitrax DCS210Plus command station</li>
             </ul>
 
         <h4>Maple</h4>
@@ -146,7 +147,7 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+                <li>Improved handling of the decoder functions.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -336,7 +337,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Updated some MX640-series definitions, adding menu items for on-track operations.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -347,7 +348,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>You can now write out just edited CV values to a CSV file.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -394,7 +395,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li><i>Copy</i> now works in the LogixNG table. With <i>Copy</i>,
+          you can copy the entire LogixNG to a new LogixNG with all its ConditionalNGs.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -536,7 +538,28 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Additional bug fixing and enhancements to Shared Warrants. SWs are
+                useful to animate the simultaneous operation of multiple trains.
+                Be aware that SWs may mutually block movement that can only be resolved
+                by aborting at least one of them. Regular warrants avoid such deadlocks
+                due to the priority of their launch times.
+                <ul>
+               <li>SWs will not allocate any blocks beyond or at a "hazard" (occupation
+                 by foreign train, passage beyond a stop signal, conflict with another
+                 warrant)</li>
+               <li>If a ramp down to stop at a "hazard" stops before entering the next block,
+                   the restart is done automatically when the condition clears.
+                   </li>
+               <li>If a ramp down to stop at a "hazard" overruns into the next block, the
+                   SW will allocate the next block if that is permissible. Whether or not, i.e.
+                   the position of the train is marked yellow or blue, use the normal Control
+                   commands to restart. "Resume" if the "hazard" was occupation or a warrant,
+                   or wait for the signal change to an allowable speed.
+                   </li>
+                 </ul>
+            <li>The messages to the status field of the warrant Table and other information
+                can be displayed to the console by clicking the "Trace Warrants" button in
+                Warrant Preferences.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -572,6 +595,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Developers: The
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
+                has been updated.</li>
+            <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.
         </ul>
 

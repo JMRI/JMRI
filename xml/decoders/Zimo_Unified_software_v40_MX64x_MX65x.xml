@@ -754,67 +754,8 @@
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
 
     <!--   Begin additional extraMemu elements - Jacobsen / Cliffe,   Feb 2022 -->
-    <!--  in production files, this will go out as external "include" file, as with the Reset mechanism immediately above this  -->
-    <extraMenu name="Load Calibration">
-           <extraMenuItem label="Run a Forwards Calibration" CV="302" default="75"/>
-           <extraMenuItem label="Run a Reverse Calibration" CV="302" default="76"/>
-    </extraMenu>
-    <extraMenu name="Pseudo Programming">
-           <extraMenuItem label="Select Steam Chuff Set" CV="300" default="100"/>
-           <extraMenuItem label="Boiling sounds (Steam loco)" CV="300" default="128"/>
-           <extraMenuItem label="Blow-off sound (Steam loco)" CV="300" default="133"/>
-           <extraMenuItem label="Direction-change sound" CV="300" default="129"/>
-           <extraMenuItem label="Brake squeal" CV="300" default="130"/>
-           <extraMenuItem label="Start whistle or horn" CV="300" default="132"/>
-           <extraMenuItem label="Rolling noise" CV="300" default="135"/>
-           <extraMenuItem label="Driving sounds (Electric loco)" CV="300" default="134"/>
-           <extraMenuItem label="Thyrister-control start (Electric loco)" CV="300" default="131"/>
-           <extraMenuItem label="Switchgear sound (Electric loco)" CV="300" default="136"/>
-           <extraMenuItem label="Second Thyristor (Electric Loco)" CV="300" default="137"/>
-           <extraMenuItem label="Dynamic brake (Electric loco)" CV="300" default="142"/>
-           <extraMenuItem label="Turbo charger (Diesel loco)" CV="300" default="141"/>
-           <extraMenuItem label="Random Generator Z1" CV="300" default="101"/>
-           <extraMenuItem label="Random Generator Z2" CV="300" default="102"/>
-           <extraMenuItem label="Random Generator Z3" CV="300" default="103"/>
-           <extraMenuItem label="Random Generator Z4" CV="300" default="104"/>
-           <extraMenuItem label="Random Generator Z5" CV="300" default="105"/>
-           <extraMenuItem label="Random Generator Z6" CV="300" default="106"/>
-           <extraMenuItem label="Random Generator Z7" CV="300" default="107"/>
-           <extraMenuItem label="Random Generator Z8" CV="300" default="108"/>
-           <extraMenuItem label="Switch Input S1" CV="300" default="111"/>
-           <extraMenuItem label="Switch Input S2" CV="300" default="112"/>
-           <extraMenuItem label="Switch Input S3" CV="300" default="113"/>
-           <extraMenuItem label="Function key F1" CV="300" default="1"/>
-           <extraMenuItem label="Function key F2" CV="300" default="2"/>
-           <extraMenuItem label="Function key F3" CV="300" default="3"/>
-           <extraMenuItem label="Function key F4" CV="300" default="4"/>
-           <extraMenuItem label="Function key F5" CV="300" default="5"/>
-           <extraMenuItem label="Function key F6" CV="300" default="6"/>
-           <extraMenuItem label="Function key F7" CV="300" default="7"/>
-           <extraMenuItem label="Function key F8" CV="300" default="8"/>
-           <extraMenuItem label="Function key F9" CV="300" default="9"/>
-           <extraMenuItem label="Function key F10" CV="300" default="10"/>
-           <extraMenuItem label="Function key F11" CV="300" default="11"/>
-           <extraMenuItem label="Function key F12" CV="300" default="12"/>
-           <extraMenuItem label="Function key F13" CV="300" default="13"/>
-           <extraMenuItem label="Function key F14" CV="300" default="14"/>
-           <extraMenuItem label="Function key F15" CV="300" default="15"/>
-           <extraMenuItem label="Function key F16" CV="300" default="16"/>
-           <extraMenuItem label="Function key F17" CV="300" default="17"/>
-           <extraMenuItem label="Function key F18" CV="300" default="18"/>
-           <extraMenuItem label="Function key F19" CV="300" default="19"/>
-           <extraMenuItem label="Function key F0" CV="300" default="20"/>
-    </extraMenu>
-    <extraMenu name="Incremental Programming of Sounds">
-           <extraMenuItem label="Group 1 CV66-68" CV="301" default="66"/>
-           <extraMenuItem label="Group 2 CV69-71" CV="300" default="69"/>
-           <extraMenuItem label="Group 3 CV72-74" CV="300" default="72"/>
-           <extraMenuItem label="Group 4 CV75-77" CV="300" default="75"/>
-           <extraMenuItem label="Group 5 CV78-79" CV="300" default="78"/>
-           <extraMenuItem label="Group 6 CV81-83" CV="300" default="81"/>
-           <extraMenuItem label="Group 7 CV84-86" CV="300" default="84"/>
-    </extraMenu>
-
+    <xi:include href="http://jmri.org/xml/decoders/zimo/LoadCalibrationExtraMenu.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/PseudoIncrementalExtraMenu.xml"/>
     <!--   End additional extraMemu elements - Jacobsen / Cliffe,   Feb 2022  -->
 
   </decoder>

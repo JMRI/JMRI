@@ -187,6 +187,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         exportSubMenu.add(new CsvExportAction(Bundle.getMessage("MenuExportCSV"), cvModel, this));
         exportSubMenu.add(new Pr1ExportAction(Bundle.getMessage("MenuExportPr1DOS"), cvModel, this));
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
+        exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
 
         // add "Import" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
@@ -630,7 +631,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         // if there are extra menus defined, enable them
         log.trace("enabling {} {}", extraMenuModelList.size(), extraMenuModelList);
         for (int i = 0; i<extraMenuModelList.size(); i++) {
-            if (!_opsMode || extraMenuModelList.get(i).hasOpsModeReset()) {
+            log.trace("enabling {} {}", _opsMode, extraMenuModelList.get(i).hasOpsModeReset());
+            if ( !_opsMode || extraMenuModelList.get(i).hasOpsModeReset()) {
                 if (extraMenuModelList.get(i).getRowCount() > 0) {
                     extraMenuList.get(i).setEnabled(true);
                 }

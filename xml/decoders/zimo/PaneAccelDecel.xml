@@ -40,13 +40,26 @@
               <text>Function Key to apply braking (key changes deceleration)</text>
               <text xml:lang="cs">Funkční klávesa pro aplikaci brzdy (tlačítko změní zpomalení)</text>
             </label>
-
             <display item="Brake key"/>   <!-- CV309 -->
             <display item="Brake time" >   <!-- CV349 -->
                 <label>Brake Key Deceleration Rate</label>
                 <label xml:lang="cs">Doba brždění</label>
             </display>
-            <label> <text>    </text> </label>
+            <label> <text>        </text> </label>
+            <label>
+              <text>Change momentum when driving solo / light engine</text>
+            </label>
+            <display item="Fn key driving solo">   <!-- CV347 -->
+                <label>Key for solo / light engine</label>
+            </display>
+            <display item="Solo change momentum" >   <!-- CV348 bit1 -->
+                <label>Change Momentum</label>
+            </display>
+            <display item="Momentum reduction when driving solo">   <!-- CV390 -->
+                <label>Momentum Reduction</label>
+            </display>
+            <label> <text>        </text> </label>
+            
           </column>
           <column>
             <label> <text>    </text> </label>

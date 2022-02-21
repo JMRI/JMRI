@@ -352,14 +352,24 @@
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected local variable.</li>
 
-        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
-        the data that will be copied to the selected local variable. For example,
-        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
-        the table reference is OK, such as when using the
-        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
-        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
-        for details about tables.</li>
+        <li><strong>Block:</strong> Select the <strong>Block</strong> tab and select the block
+        which will provide the value for the selected local variable.</li>
+
+        <li><strong>Reporter:</strong> Select the <strong>Reporter</strong> tab and select the
+        reporter which will provide the <em>current report</em> for the selected local variable.</li>
+
+        <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
+        variable name which will provide the value for the selected local variable.</li>
+
+        <li><strong>Table:</strong> See <a href="chapter11.shtml#tableCellSelection">Simplified
+        Table Cell Reference</a>.  The rest of chapter 11 has all of the details on tables.</li>
+
+        <li><strong>Formula:</strong> Select the <strong>Formula</strong> tab and set the selected
+        local variable to the result of a formula calculation.</li>
       </ul>
+
+      <p>Note: The Memory, Block and Reporter tabs have an option to listen to changes to their
+      value.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -377,13 +387,15 @@
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected memory.</li>
 
-        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
-        the data that will be copied to the selected memory variable. For example,
-        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
-        the table reference is OK, such as when using the
-        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
-        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
-        for details about tables.</li>
+        <li><strong>Table:</strong> See <a href="chapter11.shtml#tableCellSelection">Simplified
+        Table Cell Reference</a>.  The rest of chapter 11 has all of the details on tables.</li>
+
+        <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
+        variable name which will provide the value for the selected memory.</li>
+
+        <li><strong>Formula:</strong> Select the <strong>Formula</strong> tab and set the selected
+        memory to the result of a formula calculation.</li>
+
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -539,11 +551,35 @@
 
       <h4>Throttle</h4>
 
-      <p>The Throttle action controls a throttle. It has child expressions for loco address, loco
-      speed and loco direction. For now, an analog memory expression or an analog constant
-      expression can be used to control the loco address and the loco speed, but once JMRI has
-      support for AnalogIO devices, an AnalogIO may be used to control loco address and/or loco
-      speed.</p>
+      <p>The Throttle action controls a throttle.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
+        alt="Chapter 5 throttle action" width="500" height="300"></a>
+      </div>
+
+      <dl>
+        <dt>Address &mdash; Analog Expression</dt>
+        <dd>Value between 1 and 9999.</dd>
+
+        <dt>Speed &mdash; Analog Expression</dt>
+        <dd>Value between 0.0 and 1.0.</dd>
+
+        <dt>Direction &mdash; Digital Expression</dt>
+        <dd>True for forward.</dd>
+
+        <dt>Function &mdash; Analog Expression</dt>
+        <dd>Value between 0 and 28.</dd>
+
+        <dt>FunctionOnOff &mdash; Digital Expression</dt>
+        <dd>True for function on</dd>
+      </dl>
+
+      <p>The analog expressions can be an analog memory expression or an analog constant
+      expression. In the future, AnalogIO will also be available.</p>
+
+      <p>The digital expressions are either <strong>Always true</strong> or <strong>Always false
+      </strong>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -661,11 +697,17 @@
       used with any action, such as signals. The time delay units are milliseconds, seconds,
       minutes and hours.</p>
 
+      <p>The default mode is that once a timer starts, subsequent requests will be ignored. If
+      <strong>Restart timer if already started</strong> is selected and a timer is already running,
+      it will be canceled and started again.  The subsequent action will be delayed until the timer
+      finishes.  If <strong>Use individual timers</strong> is selected, each request will be
+      independent.</p>
+
       <p>See <a href="#timeout">Timeout</a> for a conditional delayed execution.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/execute_delay.png"><img src="images/chapter5/execute_delay.png"
-        alt="Chapter 5 execute_delay" width="535" height="329"></a>
+        alt="Chapter 5 execute_delay" width="531" height="352"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
