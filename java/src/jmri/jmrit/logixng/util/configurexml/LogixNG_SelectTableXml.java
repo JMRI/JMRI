@@ -17,7 +17,7 @@ import org.jdom2.Element;
 public class LogixNG_SelectTableXml {
 
     /**
-     * Default implementation for storing the contents of a ExpressionLocalVariable
+     * Default implementation for storing the contents of a LogixNG_SelectTable
      *
      * @param selectTable the LogixNG_SelectTable object
      * @return Element containing the complete info

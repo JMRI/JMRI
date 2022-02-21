@@ -18,7 +18,7 @@ import org.junit.Test;
 
 /**
  * Test ActionTurnout
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
@@ -27,28 +27,28 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     private ConditionalNG conditionalNG;
     private ActionTurnout actionTurnout;
     private Turnout turnout;
-    
-    
+
+
     @Override
     public ConditionalNG getConditionalNG() {
         return conditionalNG;
     }
-    
+
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
     }
-    
+
     @Override
     public MaleSocket getConnectableChild() {
         return null;
     }
-    
+
     @Override
     public String getExpectedPrintedTree() {
         return String.format("Set turnout IT1 to state Thrown ::: Use default%n");
     }
-    
+
     @Override
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
@@ -57,50 +57,50 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
                 "      ! A%n" +
                 "         Set turnout IT1 to state Thrown ::: Use default%n");
     }
-    
+
     @Override
     public NamedBean createNewBean(String systemName) {
         return new ActionTurnout(systemName, null);
     }
-    
+
     @Override
     public boolean addNewSocket() {
         return false;
     }
-    
+
     @Test
     public void testCtor() throws JmriException {
         Assert.assertTrue("object exists", _base != null);
-        
+
         ActionTurnout action2;
         Assert.assertNotNull("turnout is not null", turnout);
         turnout.setState(Turnout.ON);
-        
+
         action2 = new ActionTurnout("IQDA321", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout '' to state Thrown", action2.getLongDescription());
-        
+
         action2 = new ActionTurnout("IQDA321", "My turnout");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout '' to state Thrown", action2.getLongDescription());
-        
+
         action2 = new ActionTurnout("IQDA321", null);
-        action2.setTurnout(turnout);
-        Assert.assertTrue("turnout is correct", turnout == action2.getTurnout().getBean());
+        action2.getSelectNamedBean().setNamedBean(turnout);
+        Assert.assertTrue("turnout is correct", turnout == action2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout IT1 to state Thrown", action2.getLongDescription());
-        
+
         Turnout l = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         action2 = new ActionTurnout("IQDA321", "My turnout");
-        action2.setTurnout(l);
-        Assert.assertTrue("turnout is correct", l == action2.getTurnout().getBean());
+        action2.getSelectNamedBean().setNamedBean(l);
+        Assert.assertTrue("turnout is correct", l == action2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout IT1 to state Thrown", action2.getLongDescription());
-        
+
         boolean thrown = false;
         try {
             // Illegal system name
@@ -109,7 +109,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
+
         thrown = false;
         try {
             // Illegal system name
@@ -118,15 +118,15 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
+
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
     }
-    
+
     @Test
     public void testGetChild() {
         Assert.assertTrue("getChildCount() returns 0", 0 == actionTurnout.getChildCount());
-        
+
         boolean hasThrown = false;
         try {
             actionTurnout.getChild(0);
@@ -136,17 +136,17 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-    
+
     @Test
     public void testTurnoutState() {
         Assert.assertEquals("String matches", "Closed", ActionTurnout.TurnoutState.Closed.toString());
         Assert.assertEquals("String matches", "Thrown", ActionTurnout.TurnoutState.Thrown.toString());
         Assert.assertEquals("String matches", "Toggle", ActionTurnout.TurnoutState.Toggle.toString());
-        
+
         Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.Closed == ActionTurnout.TurnoutState.get(Turnout.CLOSED));
         Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.Thrown == ActionTurnout.TurnoutState.get(Turnout.THROWN));
         Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.Toggle == ActionTurnout.TurnoutState.get(-1));
-        
+
         boolean hasThrown = false;
         try {
             ActionTurnout.TurnoutState.get(100);    // The number 100 is a state that ActionTurnout.TurnoutState isn't aware of
@@ -156,7 +156,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-    
+
     @Test
     public void testSetTurnout() {
         Turnout turnout11 = InstanceManager.getDefault(TurnoutManager.class).provide("IL11");
@@ -165,30 +165,30 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Turnout turnout13 = InstanceManager.getDefault(TurnoutManager.class).provide("IL13");
         Turnout turnout14 = InstanceManager.getDefault(TurnoutManager.class).provide("IL14");
         turnout14.setUserName("Some user name");
-        
-        actionTurnout.removeTurnout();
-        Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
-        
-        actionTurnout.setTurnout(turnout11);
-        Assert.assertTrue("turnout is correct", turnout11 == actionTurnout.getTurnout().getBean());
-        
-        actionTurnout.removeTurnout();
-        Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
-        
-        actionTurnout.setTurnout(turnoutHandle12);
-        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == actionTurnout.getTurnout());
-        
-        actionTurnout.setTurnout("A non existent turnout");
-        Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
-        JUnitAppender.assertErrorMessage("turnout \"A non existent turnout\" is not found");
-        
-        actionTurnout.setTurnout(turnout13.getSystemName());
-        Assert.assertTrue("turnout is correct", turnout13 == actionTurnout.getTurnout().getBean());
-        
-        actionTurnout.setTurnout(turnout14.getUserName());
-        Assert.assertTrue("turnout is correct", turnout14 == actionTurnout.getTurnout().getBean());
+
+        actionTurnout.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("turnout handle is null", actionTurnout.getSelectNamedBean().getNamedBean());
+
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout11);
+        Assert.assertTrue("turnout is correct", turnout11 == actionTurnout.getSelectNamedBean().getNamedBean().getBean());
+
+        actionTurnout.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("turnout handle is null", actionTurnout.getSelectNamedBean().getNamedBean());
+
+        actionTurnout.getSelectNamedBean().setNamedBean(turnoutHandle12);
+        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == actionTurnout.getSelectNamedBean().getNamedBean());
+
+        actionTurnout.getSelectNamedBean().setNamedBean("A non existent turnout");
+        Assert.assertNull("turnout handle is null", actionTurnout.getSelectNamedBean().getNamedBean());
+        JUnitAppender.assertErrorMessage("Turnout \"A non existent turnout\" is not found");
+
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout13.getSystemName());
+        Assert.assertTrue("turnout is correct", turnout13 == actionTurnout.getSelectNamedBean().getNamedBean().getBean());
+
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout14.getUserName());
+        Assert.assertTrue("turnout is correct", turnout14 == actionTurnout.getSelectNamedBean().getNamedBean().getBean());
     }
-    
+
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
         // Set the light
@@ -199,21 +199,21 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
-        
+
         // Test to set turnout to closed
         actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.CLOSED);
-        
+
         // Test to set turnout to toggle
         actionTurnout.setBeanState(ActionTurnout.TurnoutState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
-        
+
         // Test to set turnout to toggle
         actionTurnout.setBeanState(ActionTurnout.TurnoutState.Toggle);
         // Execute the conditional
@@ -221,31 +221,31 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.CLOSED);
     }
-    
+
     @Test
     public void testIndirectAddressing() throws JmriException {
-        
+
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         m1.setValue("IT102");
-        
+
         Assert.assertTrue(conditionalNG.isActive());
         Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT101");
         Turnout t2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT102");
         Turnout t3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT103");
         Turnout t4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT104");
         Turnout t5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT105");
-        
+
         actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
-        actionTurnout.setTurnout(t1.getSystemName());
-        actionTurnout.setReference("{IM1}");    // Points to "IT102"
-        actionTurnout.setLocalVariable("myTurnout");
-        actionTurnout.setFormula("\"IT10\" + str(index)");
+        actionTurnout.getSelectNamedBean().setNamedBean(t1.getSystemName());
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");    // Points to "IT102"
+        actionTurnout.getSelectNamedBean().setLocalVariable("myTurnout");
+        actionTurnout.getSelectNamedBean().setFormula("\"IT10\" + str(index)");
         _baseMaleSocket.addLocalVariable("refTurnout", SymbolTable.InitialValueType.String, "IT103");
         _baseMaleSocket.addLocalVariable("myTurnout", SymbolTable.InitialValueType.String, "IT104");
         _baseMaleSocket.addLocalVariable("index", SymbolTable.InitialValueType.Integer, "5");
-        
+
         // Test direct addressing
-        actionTurnout.setAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         t1.setState(Turnout.CLOSED);
         t2.setState(Turnout.CLOSED);
         t3.setState(Turnout.CLOSED);
@@ -259,9 +259,9 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
-        
+
         // Test reference by memory addressing
-        actionTurnout.setAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         t1.setState(Turnout.CLOSED);
         t2.setState(Turnout.CLOSED);
         t3.setState(Turnout.CLOSED);
@@ -275,10 +275,10 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
-        
+
         // Test reference by local variable addressing
-        actionTurnout.setReference("{refTurnout}");    // Points to "IT103"
-        actionTurnout.setAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.getSelectNamedBean().setReference("{refTurnout}");    // Points to "IT103"
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         t1.setState(Turnout.CLOSED);
         t2.setState(Turnout.CLOSED);
         t3.setState(Turnout.CLOSED);
@@ -292,9 +292,9 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(Turnout.THROWN, t3.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
-        
+
         // Test local variable addressing
-        actionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
         t1.setState(Turnout.CLOSED);
         t2.setState(Turnout.CLOSED);
         t3.setState(Turnout.CLOSED);
@@ -308,9 +308,9 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, t4.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
-        
+
         // Test formula addressing
-        actionTurnout.setAddressing(NamedBeanAddressing.Formula);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
         t1.setState(Turnout.CLOSED);
         t2.setState(Turnout.CLOSED);
         t3.setState(Turnout.CLOSED);
@@ -325,16 +325,16 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, t5.getCommandedState());
     }
-    
+
     @Test
     public void testIndirectStateAddressing() throws JmriException {
-        
+
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         m1.setValue("IT102");
-        
+
         Assert.assertTrue(conditionalNG.isActive());
-        
-        
+
+
         // Test direct addressing
         actionTurnout.setStateAddressing(NamedBeanAddressing.Direct);
         // Test Closed
@@ -351,8 +351,8 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
-        
-        
+
+
         // Test reference by memory addressing
         actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
         actionTurnout.setStateReference("{IM1}");
@@ -370,8 +370,8 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
-        
-        
+
+
         // Test reference by local variable addressing
         actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
         actionTurnout.setStateReference("{refVariable}");
@@ -391,8 +391,8 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
-        
-        
+
+
         // Test local variable addressing
         actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
         actionTurnout.setStateLocalVariable("myVariable");
@@ -412,8 +412,8 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
-        
-        
+
+
         // Test formula addressing
         actionTurnout.setStateAddressing(NamedBeanAddressing.Formula);
         actionTurnout.setStateFormula("refVariable + myVariable");
@@ -436,65 +436,65 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
     }
-    
+
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the action and set the turnout
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
         ActionTurnout action = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        action.setTurnout(turnout);
-        
+        action.getSelectNamedBean().setNamedBean(turnout);
+
         // Get some other turnout for later use
         Turnout otherTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IM99");
         Assert.assertNotNull("Turnout is not null", otherTurnout);
         Assert.assertNotEquals("Turnout is not equal", turnout, otherTurnout);
-        
+
         // Test vetoableChange() for some other propery
         action.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
-        
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
+
         // Test vetoableChange() for a string
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
-        
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
+
         // Test vetoableChange() for another turnout
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
-        
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
+
         // Test vetoableChange() for its own turnout
         boolean thrown = false;
         try {
-            action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
+            action.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
-        action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
-        Assert.assertNull("Turnout is null", action.getTurnout());
+
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
+        action.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
+        Assert.assertNull("Turnout is null", action.getSelectNamedBean().getNamedBean());
     }
-    
+
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
     }
-    
+
     @Test
     public void testShortDescription() {
         Assert.assertEquals("String matches", "Turnout", _base.getShortDescription());
     }
-    
+
     @Test
     public void testLongDescription() {
         Assert.assertEquals("String matches", "Set turnout IT1 to state Thrown", _base.getLongDescription());
     }
-    
+
     @Test
     public void testChild() {
         Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
@@ -507,7 +507,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -518,10 +518,10 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _category = Category.ITEM;
         _isExternal = true;
-        
+
         turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout.setCommandedState(Turnout.CLOSED);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
@@ -531,14 +531,14 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         actionTurnout = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        actionTurnout.setTurnout(turnout);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout);
         actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
         conditionalNG.getChild(0).connect(socket);
-        
+
         _base = actionTurnout;
         _baseMaleSocket = socket;
-        
+
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
@@ -548,5 +548,5 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

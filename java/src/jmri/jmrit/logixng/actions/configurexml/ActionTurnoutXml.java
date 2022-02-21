@@ -5,6 +5,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -30,21 +31,15 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
     public Element store(Object o) {
         ActionTurnout p = (ActionTurnout) o;
 
+        LogixNG_SelectNamedBeanXml selectNamedBeanXml = new LogixNG_SelectNamedBeanXml();
+
         Element element = new Element("ActionTurnout");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-        var turnout = p.getTurnout();
-        if (turnout != null) {
-            element.addContent(new Element("turnout").addContent(turnout.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean()));
 
         element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
         element.addContent(new Element("turnoutState").addContent(p.getBeanState().name()));
@@ -61,32 +56,15 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         String uname = getUserName(shared);
         ActionTurnout h = new ActionTurnout(sys, uname);
 
+        LogixNG_SelectNamedBeanXml selectNamedBeanXml = new LogixNG_SelectNamedBeanXml();
+
         loadCommon(h, shared);
 
-        Element turnoutName = shared.getChild("turnout");
-        if (turnoutName != null) {
-            Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName.getTextTrim());
-            if (t != null) h.setTurnout(t);
-            else h.removeTurnout();
-        }
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "turnout");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("stateAddressing");
+            Element elem = shared.getChild("stateAddressing");
             if (elem != null) {
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
