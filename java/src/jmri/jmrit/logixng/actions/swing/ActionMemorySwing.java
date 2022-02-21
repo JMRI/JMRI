@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -12,8 +10,8 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.jmrit.logixng.actions.ActionMemory.MemoryOperation;
-import jmri.jmrit.logixng.swing.LogixNG_DataDialog;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 
@@ -24,12 +22,10 @@ import jmri.util.swing.BeanSelectPanel;
  */
 public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
-    private final LogixNG_DataDialog _logixNG_DataDialog = new LogixNG_DataDialog(this);
-    private WindowFocusListener _focusListener;
+    private LogixNG_SelectTableSwing selectTableSwing;
 
     private JTabbedPane _tabbedPaneMemory;
     private BeanSelectPanel<Memory> _memoryBeanPanel;
-    private BeanSelectPanel<NamedTable> _copyTableBeanPanel;
     private JPanel _panelMemoryDirect;
     private JPanel _panelMemoryReference;
     private JPanel _panelMemoryLocalVariable;
@@ -47,39 +43,15 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
     private JPanel _copyVariable;
     private JPanel _calculateFormula;
     private JTextField _setToConstantTextField;
-//    private JTextField _copyTableCellTextField;
     private JTextField _copyLocalVariableTextField;
     private JTextField _calculateFormulaTextField;
-    private JButton _selectTableNameButton;
-    private JButton _selectRowNameButton;
-    private JButton _selectColumnNameButton;
-    private JLabel _tableNameLabel;
-    private JLabel _rowNameLabel;
-    private JLabel _columnNameLabel;
-
-    private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
-    private JTextField _tableNameReferenceTextField;
-    private JTextField _tableNameLocalVariableTextField;
-    private JTextField _tableNameFormulaTextField;
-
-    private NamedBeanAddressing _tableRowAddressing = NamedBeanAddressing.Direct;
-    private JComboBox<String> _tableRowNameComboBox;
-    private JTextField _tableRowNameTextField;
-    private JTextField _tableRowReferenceTextField;
-    private JTextField _tableRowLocalVariableTextField;
-    private JTextField _tableRowFormulaTextField;
-
-    private NamedBeanAddressing _tableColumnAddressing = NamedBeanAddressing.Direct;
-    private JComboBox<String> _tableColumnNameComboBox;
-    private JTextField _tableColumnNameTextField;
-    private JTextField _tableColumnReferenceTextField;
-    private JTextField _tableColumnLocalVariableTextField;
-    private JTextField _tableColumnFormulaTextField;
 
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionMemory action = (ActionMemory)object;
+
+        selectTableSwing = new LogixNG_SelectTableSwing(getJDialog(), this);
 
         panel = new JPanel();
 
@@ -114,8 +86,11 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         _setToNull = new JPanel();
         _setToConstant = new JPanel();
         _copyMemory = new JPanel();
-        _copyTableCell = new JPanel();
-        _copyTableCell.setLayout(new java.awt.GridBagLayout());
+        if (action != null) {
+            _copyTableCell = selectTableSwing.createPanel(action.getSelectTable());
+        } else {
+            _copyTableCell = selectTableSwing.createPanel(null);
+        }
         _copyVariable = new JPanel();
         _calculateFormula = new JPanel();
 
@@ -136,128 +111,6 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
         _copyLocalVariableTextField = new JTextField(30);
         _copyVariable.add(_copyLocalVariableTextField);
-
-//        _copyTableCellTextField = new JTextField(30);
-//        _copyTableCell.add(_copyTableCellTextField);
-
-
-        _copyTableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
-
-        _tableNameLabel = new JLabel();
-        _rowNameLabel = new JLabel();
-        _columnNameLabel = new JLabel();
-
-        _tableNameAddressing = NamedBeanAddressing.Direct;
-        _copyTableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
-        _copyTableBeanPanel.getBeanCombo().addActionListener((evt) -> {
-            setupRowOrColumnNameComboBox(action);
-        });
-
-        _tableRowNameComboBox = new JComboBox<>();
-        _tableRowNameTextField = new JTextField(30);
-        _tableColumnNameComboBox = new JComboBox<>();
-        _tableColumnNameTextField = new JTextField(30);
-
-        _selectTableNameButton = new JButton(Bundle.getMessage("ActionMemory_Select"));     // NOI18N
-        _selectRowNameButton = new JButton(Bundle.getMessage("ActionMemory_Select"));       // NOI18N
-        _selectColumnNameButton = new JButton(Bundle.getMessage("ActionMemory_Select"));    // NOI18N
-
-        _tableNameReferenceTextField = new JTextField(30);
-        _tableNameLocalVariableTextField = new JTextField(30);
-        _tableNameFormulaTextField = new JTextField(30);
-
-        _tableRowReferenceTextField = new JTextField(30);
-        _tableRowLocalVariableTextField = new JTextField(30);
-        _tableRowFormulaTextField = new JTextField(30);
-
-        _tableColumnReferenceTextField = new JTextField(30);
-        _tableColumnLocalVariableTextField = new JTextField(30);
-        _tableColumnFormulaTextField = new JTextField(30);
-
-        _selectTableNameButton.addActionListener((evt) -> {
-            _logixNG_DataDialog.showDialog(
-                    Bundle.getMessage("ActionMemory_SelectTable"),
-                    _tableNameAddressing,
-                    _copyTableBeanPanel,
-                    _tableNameReferenceTextField,
-                    _tableNameLocalVariableTextField,
-                    _tableNameFormulaTextField,
-                    this::selectTableNameFinished);
-        });
-        _selectRowNameButton.addActionListener((evt) -> {
-            if (_tableNameAddressing == NamedBeanAddressing.Direct) {
-                _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionMemory_SelectRow"),
-                        _tableRowAddressing,
-                        _tableRowNameComboBox,
-                        _tableRowReferenceTextField,
-                        _tableRowLocalVariableTextField,
-                        _tableRowFormulaTextField,
-                        this::selectTableRowFinished);
-            } else {
-                _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionMemory_SelectRow"),
-                        _tableRowAddressing,
-                        _tableRowNameTextField,
-                        _tableRowReferenceTextField,
-                        _tableRowLocalVariableTextField,
-                        _tableRowFormulaTextField,
-                        this::selectTableRowFinished);
-            }
-        });
-        _selectColumnNameButton.addActionListener((evt) -> {
-            if (_tableNameAddressing == NamedBeanAddressing.Direct) {
-                _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionMemory_SelectColumn"),
-                        _tableColumnAddressing,
-                        _tableColumnNameComboBox,
-                        _tableColumnReferenceTextField,
-                        _tableColumnLocalVariableTextField,
-                        _tableColumnFormulaTextField,
-                        this::selectTableColumnFinished);
-            } else {
-                _logixNG_DataDialog.showDialog(
-                        Bundle.getMessage("ActionMemory_SelectColumn"),
-                        _tableColumnAddressing,
-                        _tableColumnNameTextField,
-                        _tableColumnReferenceTextField,
-                        _tableColumnLocalVariableTextField,
-                        _tableColumnFormulaTextField,
-                        this::selectTableColumnFinished);
-            }
-        });
-
-        java.awt.GridBagConstraints constraints = new java.awt.GridBagConstraints();
-        constraints.gridwidth = 1;
-        constraints.gridheight = 1;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.anchor = java.awt.GridBagConstraints.EAST;
-        _copyTableCell.add(_selectTableNameButton, constraints);
-        constraints.gridy = 1;
-        _copyTableCell.add(_selectRowNameButton, constraints);
-        constraints.gridy = 2;
-        _copyTableCell.add(_selectColumnNameButton, constraints);
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.anchor = java.awt.GridBagConstraints.WEST;
-        _copyTableCell.add(_tableNameLabel, constraints);
-        constraints.gridy = 1;
-        _copyTableCell.add(_rowNameLabel, constraints);
-        constraints.gridy = 2;
-        _copyTableCell.add(_columnNameLabel, constraints);
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        constraints.anchor = java.awt.GridBagConstraints.WEST;
-        _copyTableCell.add(new JLabel("  "), constraints);
-        constraints.gridx = 2;
-        constraints.gridy = 0;
-        constraints.anchor = java.awt.GridBagConstraints.WEST;
-        _copyTableCell.add(_selectTableNameButton, constraints);
-        constraints.gridy = 1;
-        _copyTableCell.add(_selectRowNameButton, constraints);
-        constraints.gridy = 2;
-        _copyTableCell.add(_selectColumnNameButton, constraints);
 
         _calculateFormulaTextField = new JTextField(30);
         _calculateFormula.add(_calculateFormulaTextField);
@@ -293,63 +146,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
             _setToConstantTextField.setText(action.getConstantValue());
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getOtherFormula());
-
-
-            _tableNameAddressing = action.getTableNameAddressing();
-
-            switch (_tableNameAddressing) {
-                case Direct:
-                    if (action.getTable() != null) {
-                        _copyTableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
-                    }
-                    break;
-                case Reference: _tableNameReferenceTextField.setText(action.getTableNameReference()); break;
-                case LocalVariable: _tableNameLocalVariableTextField.setText(action.getTableNameLocalVariable()); break;
-                case Formula: _tableNameFormulaTextField.setText(action.getTableNameFormula()); break;
-                default: throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());    // NOI18N
-            }
-
-            _tableRowAddressing = action.getTableRowAddressing();
-            switch (_tableRowAddressing) {
-                case Direct:
-                    if (_tableNameAddressing == NamedBeanAddressing.Direct) {
-                        _tableRowNameComboBox.setSelectedItem(action.getTableRowName());
-                    } else {
-                        _tableRowNameTextField.setText(action.getTableRowName());
-                    }
-                    break;
-                case Reference: _tableRowReferenceTextField.setText(action.getTableRowReference()); break;
-                case LocalVariable: _tableRowLocalVariableTextField.setText(action.getTableRowLocalVariable()); break;
-                case Formula: _tableRowFormulaTextField.setText(action.getTableRowFormula()); break;
-                default: throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());  // NOI18N
-            }
-
-            _tableColumnAddressing = action.getTableColumnAddressing();
-            switch (_tableColumnAddressing) {
-                case Direct:
-                    if (_tableNameAddressing == NamedBeanAddressing.Direct) {
-                        _tableColumnNameComboBox.setSelectedItem(action.getTableColumnName());
-                    } else {
-                        _tableColumnNameTextField.setText(action.getTableColumnName());
-                    }
-                    break;
-                case Reference: _tableColumnReferenceTextField.setText(action.getTableColumnReference()); break;
-                case LocalVariable: _tableColumnLocalVariableTextField.setText(action.getTableColumnLocalVariable()); break;
-                case Formula: _tableColumnFormulaTextField.setText(action.getTableColumnFormula()); break;
-                default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());    // NOI18N
-            }
         }
-
-        // These lines must be after the _copyTableBeanPanel has set the default bean
-        boolean enable =
-                (_tableNameAddressing != NamedBeanAddressing.Direct)
-                || (_copyTableBeanPanel.getNamedBean() != null);
-        _selectRowNameButton.setEnabled(enable);
-        _selectColumnNameButton.setEnabled(enable);
-
-        _tableNameLabel.setText(getTableNameDescription());
-        _rowNameLabel.setText(getTableRowDescription());
-        _columnNameLabel.setText(getTableColumnDescription());
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneMemory,
@@ -360,170 +157,21 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                 Bundle.getMessage("ActionMemory_Components"), components);
 
         for (JComponent c : componentList) panel.add(c);
-
-        _focusListener = new WindowFocusListener(){
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-                _logixNG_DataDialog.checkOpenDialog();
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                // Do nothing
-            }
-        };
-        getJDialog().addWindowFocusListener(_focusListener);
-    }
-
-    private String getTableNameDescription() {
-        String namedBean;
-        switch (_tableNameAddressing) {
-            case Direct:
-                String tableName;
-                if (_copyTableBeanPanel.getNamedBean() != null) {
-                    tableName = _copyTableBeanPanel.getNamedBean().getDisplayName();
-                } else {
-                    tableName = Bundle.getMessage("BeanNotSelected");   // NOI18N
-                }
-                namedBean = Bundle.getMessage("AddressByDirect", tableName);    // NOI18N
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage("AddressByReference", _tableNameReferenceTextField.getText());    // NOI18N
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage("AddressByLocalVariable", _tableNameLocalVariableTextField.getText());    // NOI18N
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage("AddressByFormula", _tableNameFormulaTextField.getText());    // NOI18N
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name()); // NOI18N
-        }
-        return Bundle.getMessage("ActionMemory_Table", namedBean);  // NOI18N
-    }
-
-    private String getTableRowDescription() {
-        String row;
-        switch (_tableRowAddressing) {
-            case Direct:
-                String rowName =
-                        _tableNameAddressing == NamedBeanAddressing.Direct
-                        ? _tableRowNameComboBox.getItemAt(_tableRowNameComboBox.getSelectedIndex())
-                        : _tableRowNameTextField.getText();
-                row = Bundle.getMessage("AddressByDirect", rowName);   // NOI18N
-                break;
-
-            case Reference:
-                row = Bundle.getMessage("AddressByReference", _tableRowReferenceTextField.getText());   // NOI18N
-                break;
-
-            case LocalVariable:
-                row = Bundle.getMessage("AddressByLocalVariable", _tableRowLocalVariableTextField.getText());   // NOI18N
-                break;
-
-            case Formula:
-                row = Bundle.getMessage("AddressByFormula", _tableRowFormulaTextField.getText());   // NOI18N
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());   // NOI18N
-        }
-        return Bundle.getMessage("ActionMemory_RowName", row);  // NOI18N
-    }
-
-    private String getTableColumnDescription() {
-        String column;
-        switch (_tableColumnAddressing) {
-            case Direct:
-                String columnName =
-                        _tableNameAddressing == NamedBeanAddressing.Direct
-                        ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
-                        : _tableColumnNameTextField.getText();
-                column = Bundle.getMessage("AddressByDirect", columnName); // NOI18N
-                break;
-
-            case Reference:
-                column = Bundle.getMessage("AddressByReference", _tableColumnReferenceTextField.getText()); // NOI18N
-                break;
-
-            case LocalVariable:
-                column = Bundle.getMessage("AddressByLocalVariable", _tableColumnLocalVariableTextField.getText()); // NOI18N
-                break;
-
-            case Formula:
-                column = Bundle.getMessage("AddressByFormula", _tableColumnFormulaTextField.getText()); // NOI18N
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableColumnAddressing.name());   // NOI18N
-        }
-        return Bundle.getMessage("ActionMemory_ColumnName", column);    // NOI18N
-    }
-
-    private void selectTableNameFinished() {
-        boolean enable =
-                (_tableNameAddressing != NamedBeanAddressing.Direct)
-                || (_copyTableBeanPanel.getNamedBean() != null);
-        _selectRowNameButton.setEnabled(enable);
-        _selectColumnNameButton.setEnabled(enable);
-        _tableNameAddressing = _logixNG_DataDialog.getAddressing();
-        _tableNameLabel.setText(getTableNameDescription());
-    }
-
-    private void selectTableRowFinished() {
-        _tableRowAddressing = _logixNG_DataDialog.getAddressing();
-        _rowNameLabel.setText(getTableRowDescription());
-    }
-
-    private void selectTableColumnFinished() {
-        _tableColumnAddressing = _logixNG_DataDialog.getAddressing();
-        _columnNameLabel.setText(getTableColumnDescription());
-    }
-
-    private void setupRowOrColumnNameComboBox(ActionMemory action) {
-        String rowName = action != null ? action.getTableRowName() : null;
-        String columnName = action != null ? action.getTableColumnName() : null;
-
-        _tableRowNameComboBox.removeAllItems();
-        _tableColumnNameComboBox.removeAllItems();
-
-        NamedTable table = _copyTableBeanPanel.getNamedBean();
-        if (table != null) {
-            for (int row=0; row <= table.numRows(); row++) {
-                // If the header is null or empty, treat the row as a comment
-                Object header = table.getCell(row, 0);
-                if ((header != null) && (!header.toString().isEmpty())) {
-                    _tableRowNameComboBox.addItem(header.toString());
-                }
-            }
-            for (int column=0; column <= table.numColumns(); column++) {
-                // If the header is null or empty, treat the row as a comment
-                Object header = table.getCell(0, column);
-                if ((header != null) && (!header.toString().isEmpty())) {
-                    _tableColumnNameComboBox.addItem(header.toString());
-                }
-            }
-            _tableRowNameComboBox.setSelectedItem(rowName);
-            _tableColumnNameComboBox.setSelectedItem(columnName);
-        }
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        validateMemorySection(errorMessages);
-        validateDataSection(errorMessages);
+        // Create a temporary action to test formula
+        ActionMemory action = new ActionMemory("IQDA2", null);
+
+        validateMemorySection(action, errorMessages);
+        validateDataSection(action, errorMessages);
 
         return errorMessages.isEmpty();
     }
 
-    private void validateMemorySection(@Nonnull List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionMemory action = new ActionMemory("IQDA1", null);
+    private void validateMemorySection(@Nonnull ActionMemory action, @Nonnull List<String> errorMessages) {
 
         // If using the Direct tab, validate the memory variable selection.
         if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryDirect) {
@@ -560,10 +208,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         }
     }
 
-    public void validateDataSection(@Nonnull List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionMemory action = new ActionMemory("IQDA2", null);
-
+    public void validateDataSection(@Nonnull ActionMemory action, @Nonnull List<String> errorMessages) {
         // If using the Memory tab, validate the memory variable selection.
         if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyMemory) {
             if (_copyMemoryBeanPanel.getNamedBean() == null) {
@@ -581,47 +226,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
 
-        try {
-            switch (_tableNameAddressing) {
-                case Direct:
-                    NamedTable table = _copyTableBeanPanel.getNamedBean();
-                    if (table != null) action.setTable(table);
-                    else action.removeTable();
-                    break;
-                case Reference: action.setTableNameReference(_tableNameReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
-                case Formula: action.setTableNameFormula(_tableNameFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
-            }
-
-            String rowName =
-                    _tableNameAddressing == NamedBeanAddressing.Direct
-                    ? _tableRowNameComboBox.getItemAt(_tableRowNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
-            switch (_tableRowAddressing) {
-                case Direct: action.setTableRowName(rowName); break;
-                case Reference: action.setTableRowReference(_tableRowReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableRowLocalVariable(_tableRowLocalVariableTextField.getText()); break;
-                case Formula: action.setTableRowFormula(_tableRowFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
-            }
-
-            String columnName =
-                    _tableNameAddressing == NamedBeanAddressing.Direct
-                    ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
-            switch (_tableColumnAddressing) {
-                case Direct: action.setTableColumnName(columnName); break;
-                case Reference: action.setTableColumnReference(_tableColumnReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableColumnLocalVariable(_tableColumnLocalVariableTextField.getText()); break;
-                case Formula: action.setTableColumnFormula(_tableColumnFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add("Invalid value: " + e.getMessage());
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
+        selectTableSwing.validate(action.getSelectTable(), errorMessages);
     }
 
     /** {@inheritDoc} */
@@ -702,49 +307,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
 
-
-        try {
-            action.setTableNameAddressing(_tableNameAddressing);
-            switch (_tableNameAddressing) {
-                case Direct:
-                    NamedTable table = _copyTableBeanPanel.getNamedBean();
-                    if (table != null) action.setTable(table);
-                    else action.removeTable();
-                    break;
-                case Reference: action.setTableNameReference(_tableNameReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableNameLocalVariable(_tableNameLocalVariableTextField.getText()); break;
-                case Formula: action.setTableNameFormula(_tableNameFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
-            }
-
-            action.setTableRowAddressing(_tableRowAddressing);
-            String rowName =
-                    _tableNameAddressing == NamedBeanAddressing.Direct
-                    ? _tableRowNameComboBox.getItemAt(_tableRowNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
-            switch (_tableRowAddressing) {
-                case Direct: action.setTableRowName(rowName); break;
-                case Reference: action.setTableRowReference(_tableRowReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableRowLocalVariable(_tableRowLocalVariableTextField.getText()); break;
-                case Formula: action.setTableRowFormula(_tableRowFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
-            }
-
-            action.setTableColumnAddressing(_tableColumnAddressing);
-            String columnName =
-                    _tableNameAddressing == NamedBeanAddressing.Direct
-                    ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
-            switch (_tableColumnAddressing) {
-                case Direct: action.setTableColumnName(columnName); break;
-                case Reference: action.setTableColumnReference(_tableColumnReferenceTextField.getText()); break;
-                case LocalVariable: action.setTableColumnLocalVariable(_tableColumnLocalVariableTextField.getText()); break;
-                case Formula: action.setTableColumnFormula(_tableColumnFormulaTextField.getText()); break;
-                default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+        selectTableSwing.updateObject(action.getSelectTable());
     }
 
     /** {@inheritDoc} */
@@ -756,20 +319,12 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean canClose() {
-        if (_logixNG_DataDialog.checkOpenDialog()) {
-            JOptionPane.showMessageDialog(getJDialog(),
-                    Bundle.getMessage("Error_InSelectMode"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
+        return selectTableSwing.canClose();
     }
 
     @Override
     public void dispose() {
-        _logixNG_DataDialog.dispose();
-        getJDialog().removeWindowFocusListener(_focusListener);
+        selectTableSwing.dispose();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionMemorySwing.class);

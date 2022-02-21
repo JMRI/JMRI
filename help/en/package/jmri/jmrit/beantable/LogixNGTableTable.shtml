@@ -70,11 +70,13 @@
 
       <h2 id="selectActions">Select Actions</h2>
 
-      <p>The dropdown combo box has 4 actions that can be applied to the current LogixNG row.</p>
+      <p>The dropdown combo box has 3 actions that can be applied to the current LogixNG tables
+      row.</p>
 
       <div style="margin-left: 2em">
-        <a href="../logixng/images/SelectActions.png"><img src=
-        "../logixng/images/SelectActions.png" alt="Select Actions" width="167" height="123"></a>
+        <a href="../logixng/images/SelectActionsNoCopy.png"><img src=
+        "../logixng/images/SelectActionsNoCopy.png" alt="Select Actions No Copy"
+         width="147" height="80"></a>
       </div>
 
       <dl>
@@ -93,11 +95,6 @@
           definitions within the LogixNG table. See <a href=
           "../logixng/LogixNGBrowser.shtml">LogixNG Browser</a> for details about the browser.
         </dd>
-
-        <dt>Copy</dt>
-
-        <dd>The <strong>Copy</strong> action is used to create a duplicate of the current LogixNG
-        table. <strong><em>Note: This feature is not available yet.</em></strong></dd>
 
         <dt>Delete</dt>
 
