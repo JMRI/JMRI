@@ -284,13 +284,13 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
             switch (_tableNameAddressing) {
                 case Reference:
                     name = ReferenceUtil.getReference(
-                            conditionalNG.getSymbolTable(), _tableColumnReference);
+                            conditionalNG.getSymbolTable(), _tableNameReference);
                     break;
 
                 case LocalVariable:
                     SymbolTable symbolTable = conditionalNG.getSymbolTable();
                     name = TypeConversionUtil
-                            .convertToString(symbolTable.getValue(_tableColumnLocalVariable), false);
+                            .convertToString(symbolTable.getValue(_tableNameLocalVariable), false);
                     break;
 
                 case Formula:
@@ -302,7 +302,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                     break;
 
                 default:
-                    throw new IllegalArgumentException("invalid _addressing state: " + _tableColumnAddressing.name());
+                    throw new IllegalArgumentException("invalid _addressing state: " + _tableNameAddressing.name());
             }
 
             NamedTable table = null;

@@ -58,6 +58,7 @@ public class CbusNodeNVManager {
         for (int i = 0; i < newnvs.length; i++) {
             setNV(i,newnvs[i]);
         }
+        
         _node.notifyPropertyChangeListener("ALLNVUPDATE", null, null);
     }
     
