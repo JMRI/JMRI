@@ -31,7 +31,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
     public Element store(Object o) {
         ActionTurnout p = (ActionTurnout) o;
 
-        LogixNG_SelectNamedBeanXml selectNamedBeanXml = new LogixNG_SelectNamedBeanXml();
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
 
         Element element = new Element("ActionTurnout");
         element.setAttribute("class", this.getClass().getName());
@@ -56,7 +56,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         String uname = getUserName(shared);
         ActionTurnout h = new ActionTurnout(sys, uname);
 
-        LogixNG_SelectNamedBeanXml selectNamedBeanXml = new LogixNG_SelectNamedBeanXml();
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
 
         loadCommon(h, shared);
 

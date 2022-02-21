@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
@@ -23,8 +24,8 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
 
-    private final LogixNG_SelectNamedBeanSwing _selectNamedBeanSwing =
-            new LogixNG_SelectNamedBeanSwing(InstanceManager.getDefault(TurnoutManager.class));
+    private final LogixNG_SelectNamedBeanSwing<Turnout> _selectNamedBeanSwing =
+            new LogixNG_SelectNamedBeanSwing<>(InstanceManager.getDefault(TurnoutManager.class));
 
     private JTabbedPane _tabbedPaneTurnoutState;
     private JComboBox<TurnoutState> _stateComboBox;

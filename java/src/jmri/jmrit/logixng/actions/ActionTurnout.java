@@ -25,7 +25,7 @@ import jmri.util.TypeConversionUtil;
 public class ActionTurnout extends AbstractDigitalAction implements VetoableChangeListener {
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
-            new LogixNG_SelectNamedBean(
+            new LogixNG_SelectNamedBean<>(
                     this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private TurnoutState _turnoutState = TurnoutState.Thrown;
