@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>25</minor>
-    <test>10</test>
-    <modifier>ish</modifier>
+    <minor>99</minor>
+    <test>3</test>
+    <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -63,6 +63,7 @@
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT:AUTO:0001</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/configurexml/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
+      <predefinedCvsFormat>TabSeparated</predefinedCvsFormat>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
@@ -403,14 +404,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Feb 12 02:18:50 CET 2022</date>
+      <date>Mon Feb 21 07:19:32 CET 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Feb 12 02:18:50 CET 2022</date>
+      <date>Mon Feb 21 07:19:32 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.10ish+daniel+2022-02-12T01:18:23Z+R62d39d4 on Sat Feb 12 02:18:50 CET 2022-->
+  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-21T06:18:49Z+R9a9e5c1 on Mon Feb 21 07:19:32 CET 2022-->
 </layout-config>
