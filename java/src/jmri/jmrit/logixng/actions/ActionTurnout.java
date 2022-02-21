@@ -34,7 +34,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        super(sys, user);
+        super(sys, user, Category.ITEM);
     }
 
     @Override
@@ -114,12 +114,6 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Category getCategory() {
-        return Category.ITEM;
-    }
-
     private String getNewState() throws JmriException {
 
         switch (_stateAddressing) {
@@ -149,11 +143,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public void execute() throws JmriException {
         Turnout turnout = _selectNamedBean.getNamedBean(getConditionalNG());
 
-//        System.out.format("ActionTurnout.execute: %s%n", getLongDescription());
-//        System.out.format("ActionTurnout.execute: turnout: %s%n", turnout);
-
         if (turnout == null) {
-//            log.error("turnout is null");
             return;
         }
 
@@ -178,16 +168,6 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 turnout.setCommandedState(state.getID());
             }
         });
-    }
-
-    @Override
-    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public int getChildCount() {
-        return 0;
     }
 
     @Override
@@ -228,21 +208,6 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void disposeMe() {
     }
 
 

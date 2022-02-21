@@ -156,7 +156,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
     public E getNamedBean(ConditionalNG conditionalNG) throws JmriException {
 
-        System.out.format("getNamedBean: Addr: %s%n", _addressing.name());
         if (_addressing == NamedBeanAddressing.Direct) {
             return _handle != null ? _handle.getBean() : null;
         } else {
