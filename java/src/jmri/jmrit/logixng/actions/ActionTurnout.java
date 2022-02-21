@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 

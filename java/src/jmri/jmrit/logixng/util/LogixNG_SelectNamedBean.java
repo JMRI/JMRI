@@ -57,7 +57,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     }
 
 
-    public void copy(LogixNG_SelectNamedBean copy) throws ParserException {
+    public void copy(LogixNG_SelectNamedBean<E> copy) throws ParserException {
         copy.setAddressing(_addressing);
         if (_handle != null) copy.setNamedBean(_handle);
         copy.setLocalVariable(_localVariable);
