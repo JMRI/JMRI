@@ -2,7 +2,7 @@
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page              -->
 <!-- Used by default when the panel file is displayed in a web browser      -->
-<!-- This version corresponds to the 2.9.6 schema update                    -->
+<!-- This version corresponds to the 4.19.2 schema update                    -->
 
 <!-- Some updates have been made for 4.19.2 schema (2022-02-18 )            -->
 <!--   [This includes addition of logixNG and ctcdata]                      -->
@@ -501,7 +501,8 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
         <tr>
             <th>Operator</th>
             <th>Type</th>
-            <th>System Name</th>
+            <th>Negated</th>
+            <th>System/User Name</th>
             <th>Num1</th>
             <th>Num2</th>
             <th>Data String</th>
@@ -538,6 +539,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
   <xsl:when test="( @operator = 2 )" >Not </xsl:when>
   <xsl:when test="( @operator = 3 )" >And not </xsl:when>
   <xsl:when test="( @operator = 4 )" ></xsl:when>  <!-- None -->
+  <xsl:when test="( @operator = 5 )" >Or</xsl:when>
   <xsl:otherwise>(operator="<xsl:value-of select="@operator"/>") </xsl:otherwise>
 </xsl:choose>
 </td>
@@ -570,6 +572,9 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 </xsl:choose>
 </td>
 <td>
+<xsl:if test='@negated = "yes"'>Yes</xsl:if>
+</td>
+<td>
 <xsl:value-of select="@systemName"/>
 </td>
 <td>
@@ -588,9 +593,7 @@ value="<xsl:value-of select="@dataString"/>"
 </xsl:if>
 </td>
 <td>
-<xsl:if test='@triggersCalc = "no"'>
-<b>(Doesn't trigger calculation)</b>
-</xsl:if>
+<xsl:value-of select="@triggersCalc"/>
 </td>
 </tr>
 </xsl:template>
@@ -789,6 +792,13 @@ value="<xsl:value-of select="@dataString"/>"
   <xsl:when test="( @type = 28 )" >
     Set Light "<xsl:value-of select="@systemName"/>"
     transition time to <xsl:value-of select="@data"/> fast seconds
+  </xsl:when>
+  <xsl:when test="( @type = 29 )" >
+    Control audio: 
+    <xsl:if test='@option != " "'> option= "<xsl:value-of select="@option"/>"</xsl:if>
+    <xsl:if test='@systemName != " "'> systemName= "<xsl:value-of select="@systemName"/>"</xsl:if>
+    <xsl:if test='@data != " "'> data= "<xsl:value-of select="@data"/>"</xsl:if>
+    <xsl:if test='@string != " "'> string= "<xsl:value-of select="@string"/>"</xsl:if>
   </xsl:when>
   <xsl:when test="( @type = 30 )" >
     Execute python
