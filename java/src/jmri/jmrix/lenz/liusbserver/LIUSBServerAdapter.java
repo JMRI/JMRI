@@ -77,13 +77,13 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
             opened = true;
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: {}",e);
+            log.error("init (pipe): Exception",e);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
             throw e; // re-throw so this can be seen externally.
         } catch (Exception ex) {
-            log.error("init (connect): Exception: {}", ex);
+            log.error("init (connect): Exception", ex);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
@@ -386,7 +386,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         //puts the command station into service mode.
                         log.error("Communications port dropped", ex);
                     }
-                }   
+                }
             };
         }
         else {

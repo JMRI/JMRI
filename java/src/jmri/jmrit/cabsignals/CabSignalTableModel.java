@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     private CabSignalManager cabSignalManager;
-    
+
     // column order needs to match list in columnToolTips
 
     static public final int LOCO_ID_COLUMN = 0;
@@ -38,22 +38,22 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     static public final int NEXT_SIGNAL = 6;
     static public final int NEXT_ASPECT = 7;
     static public final int NEXT_ASPECT_ICON = 8;
-    
+
     static public final int MAX_COLUMN = 9;
-   
-    static protected final int[] STARTUPCOLUMNS = {0,1,2,3,4,5,6,7,8};
- 
+
+    static final int[] STARTUPCOLUMNS = {0,1,2,3,4,5,6,7,8};
+
     CabSignalTableModel(int row, int column) {
-        cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
+        cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class);
         if(cabSignalManager == null){
            log.info("creating new DefaultCabSignalManager");
            InstanceManager.store(new jmri.managers.DefaultCabSignalManager(), CabSignalManager.class);
-           cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
+           cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class);
         }
     }
 
     // order needs to match column list top of dtabledatamodel
-    static protected final String[] COLUMNTOOLTIPS = {
+    static final String[] COLUMNTOOLTIPS = {
         null, // loco id
         Bundle.getMessage("CabsigCheckboxTip"),
         Bundle.getMessage("BlockUserName"),
@@ -65,7 +65,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         Bundle.getMessage("NextIconTip"), // aspect icon
 
     }; // Length = number of items in array should (at least) match number of columns
-    
+
     /**
      * {@inheritDoc}
      */
@@ -166,7 +166,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 return null;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -276,7 +276,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 return null;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -304,7 +304,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     /**
      * Reverse the direction on the block associated with
-     * the row.  Changes to the cab signal happen when the block's 
+     * the row.  Changes to the cab signal happen when the block's
      * properties change.
      */
     private void chngblockdir(int row){
@@ -325,9 +325,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             olddirection=b.getDirection();
             log.debug("Block {} set to direction {} ", b.getUserName(), (String.valueOf(olddirection)) );
         }
-        
+
         log.debug(" Direction to reverse :{}", Path.decodeDirection(olddirection) );
-        
+
         if (olddirection==0){
             log.debug("No direction found, setting to North, East");
             b.setDirection(80);
@@ -338,7 +338,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         fireTableDataChanged();
         log.debug("block {} now has direction {}", b.getUserName(), b.getDirection());
     }
-    
+
     protected void setPanelPauseButton(boolean isPaused){
         for (int i = 0; i < getRowCount(); i++) {
             cabSignalManager.getCabSignalArray()[i].setMasterCabSigPauseActive(isPaused);

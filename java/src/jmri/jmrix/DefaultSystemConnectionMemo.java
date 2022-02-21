@@ -33,10 +33,9 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     private String userNameAsLoaded;
     protected Map<Class<?>,Object> classObjectMap;
 
-    @SuppressWarnings("deprecation")
     protected DefaultSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         classObjectMap = new HashMap<>();
-        if (this instanceof ConflictingSystemConnectionMemo) {
+        if (this instanceof CaptiveSystemConnectionMemo) {
             this.prefix = prefix;
             this.userName = userName;
             return;
@@ -290,26 +289,6 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     protected abstract ResourceBundle getActionModelResourceBundle();
 
     /**
-     * Add actions to the action list.
-     *
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    protected final void addToActionList() {
-        // do nothing
-    }
-
-    /**
-     * Remove actions from the action list.
-     *
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    protected final void removeFromActionList() {
-        // do nothing
-    }
-
-    /**
      * Get if connection is dirty.
      * Checked fields are disabled, prefix, userName
      *
@@ -365,7 +344,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * Change from e.g. connection config dialog and scripts using {@link #setOutputInterval(int)}
      */
     private int _interval = getDefaultOutputInterval();
-    
+
     /**
      * Default interval 250ms.
      * {@inheritDoc}

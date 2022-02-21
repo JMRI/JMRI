@@ -21,17 +21,18 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Lawicell devices - added RTR CAN Frame support.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Added CmriExample.py,
+                    a sample script for directly sending a C/MRI frame.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>handle new locoState reply to sync speed, dir and Fkeys</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -71,7 +72,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added Digitrax DCS210Plus command station</li>
             </ul>
 
         <h4>Maple</h4>
@@ -91,8 +92,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Native MQTT SignalMasts are available.</li>
-                <li>Splash screen shows connection address</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -112,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Lawicell devices - added RTR CAN Frame support.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -142,12 +142,12 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>Enabled functions 23-27 in the throttle.</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+                <li>Improved handling of the decoder functions.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -287,8 +287,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Genesis Diesel - add SD70ACU and Dash 9-44CW</li>
-		<li>TSU Genesis Steam - N Challenger add CV and change some default value per user request</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -338,7 +337,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>added new decoder definitions for Firmware v40.x</li>
+                <li>Updated some MX640-series definitions, adding menu items for on-track operations.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -349,7 +348,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>You can now write out just edited CV values to a CSV file.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -379,15 +378,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-          <li>Use the actual turnout state for the turnout circle when that option is used.  This
-          corrects the color for turnouts using the continuing route option when set to thrown.</li>
-
-          <li>Tooltip support for panel icons has been changed.
-          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
-          Tooltips</a> for details.</li>
-
-          <li>Update the layout block occupancy sensor when the occupancy sensor for the related
-          block has been added, removed or changed to a different sensor.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -398,30 +389,14 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li>A single Logix can now be exported to LogixNG.
-		  Open Tools -> Tables -> Logix and select <i>Export
-		  to LogixNG</i> for the Logix you want to export.</li>
+          <li></li>
         </ul>
 
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action <i>Throttle</i> has been updated.
-          It now also has the child sockets <i>Function</i>
-          and <i>FunctionOnOff</i>. These are optional.
-          If both are connected, the Throttle action sets
-          or resets this function. The child <i>Function</i>
-          tells the function number and the child
-          <i>FunctionOnOff</i> tells if the function should
-          be On (True) or Off (False).</li>
-          <li>A single Logix can be imported to LogixNG. See
-          the section <i>Logix</i> for more information.</li>
-          <li>The action <i>Local Variable</i> now supports
-          <i>Block</i> and <i>Reporter</i>. For <i>Memory</i>,
-          <i>Block</i> and <i>Reporter</i>, there is a new
-          option <i>Listen</i> that selects whenether the
-          action should listen on changes for the <i>Memory</i>,
-          <i>Block</i> or <i>Reporter</i>.</li>
+          <li><i>Copy</i> now works in the LogixNG table. With <i>Copy</i>,
+          you can copy the entire LogixNG to a new LogixNG with all its ConditionalNGs.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -439,19 +414,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-          <li>Tooltips can now be edited in Panel Editor.</li>
-
-          <li>Tooltip support for panel icons has been changed.
-          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
-          Tooltips</a> for details.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-          <li>Tooltip support for panel icons has been changed.
-          See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/Tooltips.shtml">
-          Tooltips</a> for details.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -497,7 +466,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -507,8 +476,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Allow user-modified signal systems to provide
-                    their own copy of an existing aspects.xml file.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -518,7 +486,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>Native MQTT masts are available</li>
+                <li></li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -568,7 +536,28 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Additional bug fixing and enhancements to Shared Warrants. SWs are
+                useful to animate the simultaneous operation of multiple trains.
+                Be aware that SWs may mutually block movement that can only be resolved
+                by aborting at least one of them. Regular warrants avoid such deadlocks
+                due to the priority of their launch times.
+                <ul>
+               <li>SWs will not allocate any blocks beyond or at a "hazard" (occupation
+                 by foreign train, passage beyond a stop signal, conflict with another
+                 warrant)</li>
+               <li>If a ramp down to stop at a "hazard" stops before entering the next block,
+                   the restart is done automatically when the condition clears.
+                   </li>
+               <li>If a ramp down to stop at a "hazard" overruns into the next block, the
+                   SW will allocate the next block if that is permissible. Whether or not, i.e.
+                   the position of the train is marked yellow or blue, use the normal Control
+                   commands to restart. "Resume" if the "hazard" was occupation or a warrant,
+                   or wait for the signal change to an allowable speed.
+                   </li>
+                 </ul>
+            <li>The messages to the status field of the warrant Table and other information
+                can be displayed to the console by clicking the "Trace Warrants" button in
+                Warrant Preferences.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -604,6 +593,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Developers: The
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
+                has been updated.</li>
+            <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.
         </ul>
 

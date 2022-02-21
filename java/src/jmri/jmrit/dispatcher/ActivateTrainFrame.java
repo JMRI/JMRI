@@ -935,12 +935,12 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (autoRunBox.isSelected()) {
             AutoActiveTrain aat = new AutoActiveTrain(at);
             setAutoRunItems(aat);
+            _dispatcher.getAutoTrainsFrame().addAutoActiveTrain(aat);
             if (!aat.initialize()) {
                 JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
                         "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            _dispatcher.getAutoTrainsFrame().addAutoActiveTrain(aat);
         }
         _dispatcher.allocateNewActiveTrain(at);
         _dispatcher.newTrainDone(at);
@@ -1142,9 +1142,9 @@ public class ActivateTrainFrame extends JmriJFrame {
                     trainInfoToDialog(info);
                 }
             } catch (java.io.IOException ioe) {
-                log.error("IO Exception when reading train info file {}", ioe);
+                log.error("IO Exception when reading train info file", ioe);
             } catch (org.jdom2.JDOMException jde) {
-                log.error("JDOM Exception when reading train info file {}", jde);
+                log.error("JDOM Exception when reading train info file", jde);
             }
         }
         handleDelayStartClick(null);
@@ -1202,7 +1202,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         // log.error("JDOM exception writing Train Info: "+jde);
         //}
         catch (java.io.IOException ioe) {
-            log.error("IO exception writing Train Info: {}", ioe);
+            log.error("IO exception writing Train Info", ioe);
         }
     }
 

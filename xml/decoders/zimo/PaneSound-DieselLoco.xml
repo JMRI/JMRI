@@ -7,6 +7,7 @@
 -->
 <!-- version 1.3 - Ronald Kuhn - add german translation -->
 <!-- version 1.4 - Ronald Kuhn - add options for v37+ and v38+ -->
+<!-- version 1.5 - Nigel Cliffe - added CV339 340. 379 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Sound - Diesel Loco</name>
   <name xml:lang="it">Suoni - Diesel</name>
@@ -84,6 +85,13 @@
         <!--label xml:lang="cs">Práh rychlostního stupně pro jízdu na volnoběh</label-->
         </display>
         
+    <label>
+    <text> </text>
+    </label>
+    
+    <display item="Function Key to raise diesel sound step"/>   <!-- CV339-->
+    <display item="Diesel sound step"/>   <!-- CV340-->
+
     <label>
     <text> </text>
     </label>

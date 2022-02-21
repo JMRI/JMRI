@@ -72,7 +72,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
                 _fileLogger = new java.io.File(getFullLoggerFileName());
             }
         } catch (Exception e) {
-            log.error("Exception while making logging directory: {}", e);
+            log.error("Exception while making logging directory", e);
         }
 
     }

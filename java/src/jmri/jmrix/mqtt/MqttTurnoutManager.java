@@ -14,17 +14,6 @@ import jmri.Turnout;
  */
 public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    /**
-     *
-     * @param ma the adapter for this manager
-     * @param p  an ignored value
-     * @deprecated since 4.17.3; use {@link #MqttTurnoutManager(jmri.jmrix.mqtt.MqttSystemConnectionMemo)} instead
-     */
-    @Deprecated
-    public MqttTurnoutManager(@Nonnull MqttAdapter ma, @Nonnull String p) {
-        this(ma.getSystemConnectionMemo());
-    }
-
     public MqttTurnoutManager(@Nonnull MqttSystemConnectionMemo memo) {
         super(memo);
     }
@@ -93,7 +82,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     public String getEntryToolTip() {
         return "A string which will be inserted into \"" + sendTopicPrefix + "\" for transmission";
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean allowMultipleAdditions(String systemName) {

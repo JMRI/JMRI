@@ -259,7 +259,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         //jmri.InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(new Z21XNetConnectionConfig(xsc));
     }
 
-    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
+    @SuppressWarnings("deprecation") // Thread.stop
     public void dispose(){
        if(xsc != null){
           xsc.dispose();

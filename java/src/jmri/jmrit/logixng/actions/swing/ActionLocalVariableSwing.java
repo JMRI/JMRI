@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.actions.ActionLocalVariable;
 import jmri.jmrit.logixng.actions.ActionLocalVariable.VariableOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
@@ -20,6 +21,8 @@ import jmri.util.swing.BeanSelectPanel;
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
+
+    private LogixNG_SelectTableSwing selectTableSwing;
 
     private JTextField _localVariableTextField;
 
@@ -41,12 +44,13 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     private JTextField _setToConstantTextField;
     private JTextField _copyLocalVariableTextField;
     private JTextField _calculateFormulaTextField;
-    private JTextField _copyTableCellTextField;
 
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionLocalVariable action = (ActionLocalVariable)object;
+
+        selectTableSwing = new LogixNG_SelectTableSwing(getJDialog(), this);
 
         panel = new JPanel();
 
@@ -59,7 +63,11 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _copyMemory = new JPanel();
         _copyBlock = new JPanel();
         _copyReporter = new JPanel();
-        _copyTableCell = new JPanel();
+        if (action != null) {
+            _copyTableCell = selectTableSwing.createPanel(action.getSelectTable());
+        } else {
+            _copyTableCell = selectTableSwing.createPanel(null);
+        }
         _copyVariable = new JPanel();
         _calculateFormula = new JPanel();
 
@@ -91,9 +99,6 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _listenOnReporter = new JCheckBox(Bundle.getMessage("ActionLocalVariable_ListenOnReporter"));
         _copyReporter.add(_copyReporterBeanPanel);
         _copyReporter.add(_listenOnReporter);
-
-        _copyTableCellTextField = new JTextField(30);
-        _copyTableCell.add(_copyTableCellTextField);
 
         _copyLocalVariableTextField = new JTextField(30);
         _copyVariable.add(_copyLocalVariableTextField);
@@ -127,10 +132,9 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getVariableOperation().name());
             }
             _setToConstantTextField.setText(action.getConstantValue());
-            _copyTableCellTextField.setText(ActionLocalVariable.convertTableReference(action.getOtherTableCell(), false));
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getFormula());
-            
+
             _listenOnMemory.setSelected(action.getListenToMemory());
             _listenOnBlock.setSelected(action.getListenToBlock());
             _listenOnReporter.setSelected(action.getListenToReporter());
@@ -173,14 +177,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             }
         }
 
-        // If using the Table tab, validate the table reference content via setOtherTableCell.
-        try {
-            if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyTableCell) {
-                action.setOtherTableCell(ActionLocalVariable.convertTableReference(_copyTableCellTextField.getText(), true));
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-        }
+        selectTableSwing.validate(action.getSelectTable(), errorMessages);
 
         return errorMessages.isEmpty();
     }
@@ -251,7 +248,6 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 action.setVariableOperation(VariableOperation.CopyReporterToVariable);
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyTableCell) {
                 action.setVariableOperation(VariableOperation.CopyTableCellToVariable);
-                action.setOtherTableCell(ActionLocalVariable.convertTableReference(_copyTableCellTextField.getText(), true));
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyVariable) {
                 action.setVariableOperation(VariableOperation.CopyVariableToVariable);
                 action.setOtherLocalVariable(_copyLocalVariableTextField.getText());
@@ -265,6 +261,8 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
 
+        selectTableSwing.updateObject(action.getSelectTable());
+
         action.setListenToMemory(_listenOnMemory.isSelected());
         action.setListenToBlock(_listenOnBlock.isSelected());
         action.setListenToReporter(_listenOnReporter.isSelected());
@@ -276,8 +274,15 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         return Bundle.getMessage("ActionLocalVariable_Short");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public boolean canClose() {
+        return selectTableSwing.canClose();
+    }
+
     @Override
     public void dispose() {
+        selectTableSwing.dispose();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariableSwing.class);

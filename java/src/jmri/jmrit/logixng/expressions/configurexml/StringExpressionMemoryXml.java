@@ -17,7 +17,7 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
     public StringExpressionMemoryXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -34,11 +34,11 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getMemory();
+        var memory = p.getMemory();
         if (memory != null) {
             element.addContent(new Element("memory").addContent(memory.getName()));
         }
-        
+
         return element;
     }
 /*
@@ -65,13 +65,13 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
 //        List<Element> l = shared.getChildren("lightname");
-/*        
+/*
         if (l.size() == 0) {
             l = shared.getChildren("light");  // older form
         }
         NamedBeanHandle<Light> low = loadLight(l.get(0));
         NamedBeanHandle<Light> high = loadLight(l.get(1));
-*/        
+*/
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
@@ -93,6 +93,6 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         InstanceManager.getDefault(StringExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionMemoryXml.class);
 }

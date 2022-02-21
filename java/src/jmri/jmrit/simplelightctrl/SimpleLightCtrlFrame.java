@@ -274,6 +274,8 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
 
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void offButtonActionPerformed(ActionEvent e) {
         if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
@@ -288,6 +290,8 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void onButtonActionPerformed(ActionEvent e) {
         if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
@@ -302,6 +306,8 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void intensityButtonActionPerformed(ActionEvent e) {
         if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
@@ -332,6 +338,8 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
      * Handle changes for intensity, rate, etc.
      * @param e unused.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void applyButtonActionPerformed(ActionEvent e) {
         if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));

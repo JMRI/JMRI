@@ -1,9 +1,13 @@
 package jmri.jmrit.dispatcher;
 
+import jmri.InstanceManager;
+import jmri.Transit;
 import jmri.util.JUnitUtil;
 
+import org.mockito.Mockito;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -11,12 +15,17 @@ import org.junit.Assert;
  */
 public class AutoActiveTrainTest {
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCTor() {
-        jmri.Transit transit = new jmri.Transit("TT1");
+
+        DispatcherFrame df = Mockito.mock(DispatcherFrame.class);
+        InstanceManager.setDefault(DispatcherFrame.class,df);
+
+        Transit transit = new Transit("TT1");
         ActiveTrain at = new ActiveTrain(transit,"Train",ActiveTrain.USER);
         AutoActiveTrain t = new AutoActiveTrain(at);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

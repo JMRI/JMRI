@@ -391,7 +391,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             PrintWriter writer,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         if (!(getObject() instanceof AbstractMaleSocket)) {
             String comment = getComment();
             if (comment != null) {
@@ -517,6 +517,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     public void getUsageTree(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         if (!(getObject() instanceof AbstractMaleSocket)) {
             log.debug("*@ {} :: {}", level, this.getLongDescription());
@@ -546,9 +548,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     @Override
     public final Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
             throws JmriException {
-        
+
         MaleSocket maleSocket = (MaleSocket)getObject().getDeepCopy(systemNames, userNames);
-        
+
         maleSocket.setComment(this.getComment());
         if (maleSocket.getDebugConfig() != null) {
             maleSocket.setDebugConfig(maleSocket.getDebugConfig().getCopy());
@@ -559,11 +561,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         maleSocket.setLocked(isLocked());
         maleSocket.setSystem(false);    // If a system item is copied, the new item is not treated as system
         maleSocket.setCatchAbortExecution(getCatchAbortExecution());
-        
+
         for (VariableData data : _localVariables) {
             maleSocket.addLocalVariable(data._name, data._initialValueType, data._initialValueData);
         }
-        
+
         return maleSocket;
     }
 

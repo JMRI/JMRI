@@ -57,7 +57,6 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     }
 
     @Override
-    @SuppressWarnings("UnnecessaryBoxing")
     public void layoutFrame() {
         super.layoutFrame();
         JPanel p;

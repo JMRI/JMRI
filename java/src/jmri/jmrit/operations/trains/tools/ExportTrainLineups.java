@@ -49,7 +49,7 @@ public class ExportTrainLineups extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (Exception e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete", e);
         }
     }
 
@@ -58,7 +58,7 @@ public class ExportTrainLineups extends XmlFile {
      * includes: Train Name, Lead Engine, Location, Arrival Time, Departure
      * Time, Direction, Pulls, Drops, Loads, Empties, Length, Weight, Engineer, Conductor,
      * Train Description, Train Comment
-     * 
+     *
      * @param name file path name
      */
     public void writeFile(String name) {
@@ -79,7 +79,7 @@ public class ExportTrainLineups extends XmlFile {
                     Bundle.getMessage("Location"),
                     Bundle.getMessage("Direction"),
                     Bundle.getMessage("Arrives"),
-                    Bundle.getMessage("Departs"),              
+                    Bundle.getMessage("Departs"),
                     Bundle.getMessage("Pulls"),
                     Bundle.getMessage("Drops"),
                     Bundle.getMessage("Loads"),

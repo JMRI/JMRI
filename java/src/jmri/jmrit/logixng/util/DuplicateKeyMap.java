@@ -14,7 +14,7 @@ import java.util.Set;
 public class DuplicateKeyMap<K, V> implements Map<K, V> {
 
     Map<K, List<V>> _internalMap = new HashMap<>();
-    
+
     @Override
     public int size() {
         int c = 0;
@@ -34,9 +34,6 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
         return _internalMap.containsKey(key);
     }
 
-    // Map.containsValue() requires that the parameter is of type Object
-    // The SuppressWarnings is because l.contains(value) expects a value of type V
-    @SuppressWarnings({"unchecked", "element-type-mismatch"})
     @Override
     public boolean containsValue(Object value) {
         for (List<V> l : _internalMap.values()) {
@@ -81,7 +78,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public void putAll(Map m) {
+    public void putAll(Map<? extends K,? extends V> m) {
         throw new UnsupportedOperationException("Not supported");
     }
 

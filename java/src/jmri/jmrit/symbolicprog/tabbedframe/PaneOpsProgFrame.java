@@ -67,10 +67,10 @@ public class PaneOpsProgFrame extends PaneProgFrame {
         if (log.isDebugEnabled()) {
             log.debug("Programmer supports:");
             for (ProgrammingMode m : modes) {
-                log.debug("   {} {}", m.getStandardName(), m.toString());
+                log.debug("  mode: {} {}", m.getStandardName(), m.toString());
             }
         }
-        
+
         // first try specified modes
         for (Element el1 : programming.getChildren("mode")) {
             String name = el1.getText();

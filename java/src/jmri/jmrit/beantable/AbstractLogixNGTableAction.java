@@ -269,7 +269,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 editCombo.addItem(Bundle.getMessage("ButtonSelect"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonEdit"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
-                editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
+                if (isCopyBeanSupported()) editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
                 col.setCellEditor(new DefaultCellEditor(editCombo));
@@ -312,7 +312,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<E> f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
@@ -500,26 +500,22 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         Runnable t = new Runnable() {
             @Override
             public void run() {
-                JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+//                JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
 
-                // This may or may not work. It's not tested yet.
-                // Disable for now.
-                if (1==0) {
-                    JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
-                    // Create bean
-                    JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                    panel5.add(create);
-                    create.addActionListener((ActionEvent e) -> {
-                        JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
-    //                    copyLogixNGPressed(e);
-                    });
-                    addLogixNGFrame.pack();
-                    addLogixNGFrame.setVisible(true);
-                    _autoSystemName.setSelected(false);
-                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                        _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
-                    });
-                }
+                JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
+                // Create bean
+                JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
+                panel5.add(create);
+                create.addActionListener((ActionEvent e) -> {
+                    copyBeanPressed(e);
+                });
+                addLogixNGFrame.pack();
+                addLogixNGFrame.setVisible(true);
+                _autoSystemName.setSelected(false);
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
+                });
+
                 _inCopyMode = false;
             }
         };
@@ -531,32 +527,40 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     String _logixNGSysName;
 
+    protected void copyBean(@Nonnull E sourceBean, @Nonnull E targetBean) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    protected boolean isCopyBeanSupported() {
+        return false;
+    }
+
     /**
      * Copy the bean as configured in the Copy set up pane.
      *
      * @param e the event heard
      */
-    void copyLogixNGPressed(ActionEvent e) {
-/*
+    private void copyBeanPressed(ActionEvent e) {
+
         String uName = _addUserName.getText().trim();
         if (uName.length() == 0) {
             uName = null;
         }
-        LogixNG targetLogixNG;
+        E targetBean;
         if (_autoSystemName.isSelected()) {
             if (!checkLogixNGUserName(uName)) {
                 return;
             }
-            targetLogixNG = _logixNG_Manager.createLogixNG(uName);
+            targetBean = createBean(uName);
         } else {
             if (!checkLogixNGSysName()) {
                 return;
             }
             String sName = _systemName.getText().trim();
-            // check if a LogixNG with this name already exists
+            // check if a bean with this name already exists
             boolean createLogix = true;
-            targetLogixNG = _logixNG_Manager.getBySystemName(sName);
-            if (targetLogixNG != null) {
+            targetBean = getManager().getBySystemName(sName);
+            if (targetBean != null) {
                 int result = JOptionPane.showConfirmDialog(f,
                         Bundle.getMessage("ConfirmLogixDuplicate", sName, _logixNGSysName), // NOI18N
                         Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,    // NOI18N
@@ -565,7 +569,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     return;
                 }
                 createLogix = false;
-                String userName = targetLogixNG.getUserName();
+                String userName = targetBean.getUserName();
                 if (userName != null && userName.length() > 0) {
                     _addUserName.setText(userName);
                     uName = userName;
@@ -575,26 +579,23 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
             if (createLogix) {
                 // Create the new LogixNG
-                targetLogixNG = _logixNG_Manager.createLogixNG(sName, uName);
-                if (targetLogixNG == null) {
+                targetBean = createBean(sName, uName);
+                if (targetBean == null) {
                     // should never get here unless there is an assignment conflict
                     log.error("Failure to create LogixNG with System Name: {}", sName);  // NOI18N
                     return;
                 }
-            } else if (targetLogixNG == null) {
+            } else if (targetBean == null) {
                 log.error("Error targetLogix is null!");  // NOI18N
                 return;
             } else {
-                targetLogixNG.setUserName(uName);
+                targetBean.setUserName(uName);
             }
         }
-        LogixNG srcLogic = _logixNG_Manager.getBySystemName(_logixNGSysName);
-        for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
-            String cSysName = srcLogic.getConditionalByNumberOrder(i);
-            copyConditionalToLogix(cSysName, srcLogic, targetLogixNG);
-        }
+        E sourceBean = getManager().getBySystemName(_logixNGSysName);
+        if (sourceBean != null) copyBean(sourceBean, targetBean);
+        else log.error("Error targetLogix is null!");  // NOI18N
         cancelAddPressed(null);
-*/
     }
 
     /**
@@ -719,7 +720,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             // Get validated system name
             sName = _systemName.getText();
             // check if a bean with this name already exists
-            E x = null;
+            E x;
             try {
                 x = getManager().getBySystemName(sName);
             } catch (Exception ex) {
@@ -841,7 +842,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         final E x = getManager().getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        
+
         if (x == null) return;  // This should never happen
 
         StringBuilder message = new StringBuilder();
@@ -947,7 +948,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
             dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
                     dialog.setVisible(false);
-                    dialog.dispose(); }, 
+                    dialog.dispose(); },
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
             dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
@@ -955,7 +956,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             dialog.setVisible(true);
         }
     }
-    
+
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLogixNGTable");        // NOI18N
@@ -1070,7 +1071,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logixNG system name.txt
-        userFileChooser.setSelectedFile(new File(_curNamedBean.getSystemName() + ".txt"));  // NOI18N
+        String suggestedFileName = _curNamedBean.getSystemName().replace(':', '_') + ".txt";
+        userFileChooser.setSelectedFile(new File(suggestedFileName));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1104,14 +1106,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 + (isEnabled(_curNamedBean)
                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-//        JTextArea textContent = buildConditionalListing();
-        JTextArea textContent = new JTextArea();
         try {
             // Add bean Header inforation first
             FileUtil.appendTextToFile(file, tStr);
-            FileUtil.appendTextToFile(file, textContent.getText());
+            FileUtil.appendTextToFile(file, "-".repeat(tStr.length()));
+            FileUtil.appendTextToFile(file, "");
+            FileUtil.appendTextToFile(file, _textContent.getText());
         } catch (IOException e) {
-            log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
         }
     }
 

@@ -19,7 +19,7 @@ public class FeedbackItem {
         this.data = data;
         this.reply = reply;
     }
-    
+
     /**
      * Determines if the feedback was solicited.
      * @return {@code true}, if feedback was solicited.
@@ -28,15 +28,6 @@ public class FeedbackItem {
         return reply.isUnsolicited();
     }
 
-    /**
-     * Resets the unsolicited flag in the reply.
-     * @deprecated since 4.21.1 without replacement
-     */
-    @Deprecated
-    public void resetUnsolicited() {
-       // deprecated, take no action.
-    }
-    
     /**
      * Returns the (base) address of the item.
      * For turnouts, return the reported address. For encoders,
@@ -100,7 +91,7 @@ public class FeedbackItem {
         }
         return -1;
     }
-    
+
     /**
      * Returns true, if the feedback is from feedback encoder.
      * @return {@code true} for encoder feedback.
@@ -108,7 +99,7 @@ public class FeedbackItem {
     public boolean isEncoder() {
         return getType() == 2;
     }
-    
+
     /**
      * Returns true, if the feedback is from turnout (accessory).
      * @return {@code true} for turnout feedback.
@@ -140,8 +131,8 @@ public class FeedbackItem {
      * if the sensor number is not within this FeedbackItem range, or the item does
      * not represent an encoder feedback.
      * @param sensorNumber sensor number, starting with 1.
-     * @return The sensor's reported bit value (true/false) or {@code null}, if 
-     * no encoder feedback for the sensor is found. 
+     * @return The sensor's reported bit value (true/false) or {@code null}, if
+     * no encoder feedback for the sensor is found.
      */
     @CheckForNull
     public Boolean getEncoderStatus(int sensorNumber) {

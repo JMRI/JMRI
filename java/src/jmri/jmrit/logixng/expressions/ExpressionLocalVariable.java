@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -32,7 +33,10 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     private String _otherLocalVariable = "";
     private String _regEx = "";
     private boolean _listenToMemory = true;
-//    private boolean _listenToMemory = false;
+
+    private final LogixNG_SelectTable _selectTable =
+            new LogixNG_SelectTable(this, () -> {return _compareTo == CompareTo.Table;});
+
 
     public ExpressionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -54,6 +58,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         copy.setConstantValue(_constantValue);
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         copy.setOtherLocalVariable(_localVariable);
+        _selectTable.copy(copy._selectTable);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
@@ -111,7 +116,64 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
     }
+/*
+    public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
+        assertListenersAreNotRegistered(log, "setTable");
+        _tableHandle = handle;
+        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
+    }
 
+    public void setTable(@Nonnull NamedTable turnout) {
+        assertListenersAreNotRegistered(log, "setTable");
+        setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
+    }
+
+    public void removeTable() {
+        assertListenersAreNotRegistered(log, "setTable");
+        if (_tableHandle != null) {
+            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
+            _tableHandle = null;
+        }
+    }
+
+    public NamedBeanHandle<NamedTable> getTable() {
+        return _tableHandle;
+    }
+
+    /*.*
+     * Get tableRowOrColumn.
+     * @return tableRowOrColumn
+     *./
+    public TableRowOrColumn getRowOrColumn() {
+        return _tableRowOrColumn;
+    }
+
+    /*.*
+     * Set tableRowOrColumn.
+     * @param tableRowOrColumn tableRowOrColumn
+     *./
+    public void setRowOrColumn(@Nonnull TableRowOrColumn tableRowOrColumn) {
+        _tableRowOrColumn = tableRowOrColumn;
+    }
+
+    /*.*
+     * Get name of row or column
+     * @return name of row or column
+     *./
+    public String getRowOrColumnName() {
+        return _rowOrColumnName;
+    }
+
+    /*.*
+     * Set name of row or column
+     * @param rowOrColumnName name of row or column
+     *./
+    public void setRowOrColumnName(@Nonnull String rowOrColumnName) {
+        if (rowOrColumnName == null) throw new RuntimeException("Daniel");
+        _rowOrColumnName = rowOrColumnName;
+    }
+*/
     public void setOtherLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setOtherLocalVariable");
         _otherLocalVariable = localVariable;
@@ -119,6 +181,10 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     public String getOtherLocalVariable() {
         return _otherLocalVariable;
+    }
+
+    public LogixNG_SelectTable getSelectTable() {
+        return _selectTable;
     }
 
     public void setConstantValue(String constantValue) {
@@ -170,13 +236,12 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     }
 
     @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*
+    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
+            if ((_compareTo == CompareTo.Memory) && (evt.getOldValue() instanceof Memory)) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("LocalVariable_MemoryInUseVariableExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
@@ -186,7 +251,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 }
             }
         }
-*/
     }
 
     /** {@inheritDoc} */
@@ -313,7 +377,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws JmriException {
         if (_localVariable == null) return false;
 
         String variableValue = getString(getConditionalNG()
@@ -327,6 +391,9 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 break;
             case Memory:
                 otherValue = getString(_memoryHandle.getBean().getValue());
+                break;
+            case Table:
+                otherValue = getString(_selectTable.getTableData(getConditionalNG()));
                 break;
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_otherLocalVariable), false);
@@ -407,26 +474,36 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         }
 
         String message;
-        String other;
+        String other1;
+        String other2 = null;
+        String other3 = null;
+
         switch (_compareTo) {
             case Value:
                 message = "LocalVariable_Long_CompareConstant";
-                other = _constantValue;
+                other1 = _constantValue;
                 break;
 
             case Memory:
                 message = "LocalVariable_Long_CompareMemory";
-                other = memoryName;
+                other1 = memoryName;
                 break;
 
             case LocalVariable:
                 message = "LocalVariable_Long_CompareLocalVariable";
-                other = _otherLocalVariable;
+                other1 = _otherLocalVariable;
+                break;
+
+            case Table:
+                message = "LocalVariable_Long_CompareTable";
+                other1 = _selectTable.getTableNameDescription(locale);
+                other2 = _selectTable.getTableRowDescription(locale);
+                other3 = _selectTable.getTableColumnDescription(locale);
                 break;
 
             case RegEx:
                 message = "LocalVariable_Long_CompareRegEx";
-                other = _regEx;
+                other1 = _regEx;
                 break;
 
             default:
@@ -445,7 +522,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case GreaterThanOrEqual:
                 // fall through
             case GreaterThan:
-                return Bundle.getMessage(locale, message, variableName, _variableOperation._text, other);
+                return Bundle.getMessage(locale, message, variableName, _variableOperation._text, other1, other2, other3);
 
             case IsNull:
                 // fall through
@@ -455,7 +532,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case MatchRegex:
                 // fall through
             case NotMatchRegex:
-                return Bundle.getMessage(locale, "LocalVariable_Long_CompareRegEx", variableName, _variableOperation._text, other);
+                return Bundle.getMessage(locale, "LocalVariable_Long_CompareRegEx", variableName, _variableOperation._text, other1);
 
             default:
                 throw new IllegalArgumentException("_variableOperation has unknown value: "+_variableOperation.name());
@@ -539,6 +616,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         Value(Bundle.getMessage("LocalVariable_CompareTo_Value")),
         Memory(Bundle.getMessage("LocalVariable_CompareTo_Memory")),
         LocalVariable(Bundle.getMessage("LocalVariable_CompareTo_LocalVariable")),
+        Table(Bundle.getMessage("LocalVariable_CompareTo_Table")),
         RegEx(Bundle.getMessage("LocalVariable_CompareTo_RegularExpression"));
 
         private final String _text;

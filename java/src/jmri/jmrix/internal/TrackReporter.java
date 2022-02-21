@@ -42,14 +42,13 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
      * @return the collection of elements associated with this reporter.
      */
     @Override
-    public java.util.Collection getCollection(){
+    public java.util.Collection<Object> getCollection(){
        return(collection);
     }
 
     // Special methods to set the report from the ends of the track
     // these methods record the order of reports seen.
 
-    @SuppressWarnings("unchecked")
     public void pushEast(Object o){
          if(o != null) {
             collection.addFirst(o);
@@ -57,7 +56,6 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
          }
     }
 
-    @SuppressWarnings("unchecked")
     public void pushWest(Object o){
          if(o != null) {
             collection.addLast(o);

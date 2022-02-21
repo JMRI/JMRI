@@ -21,15 +21,9 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
 
     private LocoNetSystemConnectionMemo memo;
     private LnStreamPortController apc;
-           
-    private DataOutputStream ostream;  // Traffic controller writes to this
-    
-    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
-    private DataInputStream tostream; // so we can read it from this
 
-    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
-    private DataOutputStream tistream; // tests write to this
-    
+    private DataOutputStream ostream;  // Traffic controller writes to this
+
     private DataInputStream istream;   // so the traffic controller can read from this
 
     @Override
@@ -42,12 +36,10 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
         try {
            PipedInputStream tempPipe;
            tempPipe = new PipedInputStream();
-           tostream = new DataInputStream(tempPipe);
            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
 
            tempPipe = new PipedInputStream();
            istream = new DataInputStream(tempPipe);
-           tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
            apc = new LnStreamPortController(memo, istream, ostream, "Test Stream Port");
        } catch (java.io.IOException ioe) {
            Assert.fail("failed to initialize port controller");
@@ -64,9 +56,7 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
         apc = null;
         memo = null;
         istream = null;
-        tistream = null;
         ostream = null;
-        tostream = null;
         JUnitUtil.tearDown();
     }
 

@@ -328,9 +328,9 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     private void setAppearanceComboBox(ExpressionSignalHead expression) {
         SignalHead sh;
         if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
-            sh = (SignalHead) _signalHeadBeanPanel.getBeanCombo().getSelectedItem();
+            sh = _signalHeadBeanPanel.getBeanCombo().getSelectedItem();
         } else {
-            sh = (SignalHead) _exampleSignalHeadBeanPanel.getBeanCombo().getSelectedItem();
+            sh = _exampleSignalHeadBeanPanel.getBeanCombo().getSelectedItem();
         }
 
         if (sh != null) {

@@ -738,7 +738,7 @@ public class DefaultConditional extends AbstractNamedBean
         }
         if (errorList.size() > 0) {
             for (int i = 0; i < errorList.size(); i++) {
-                log.error("{} - {}", getDisplayName(), errorList.get(i));
+                log.error(" error: {} - {}", getDisplayName(), errorList.get(i));
             }
             if (!GraphicsEnvironment.isHeadless()) {
                 java.awt.Toolkit.getDefaultToolkit().beep();

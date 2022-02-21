@@ -230,7 +230,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 try {
                     _csvFileName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
                 } catch (java.io.IOException ex) {
-                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    log.error("exception setting file location", ex);  // NOI18N
                     _csvFileName.setText("");
                 }
             }

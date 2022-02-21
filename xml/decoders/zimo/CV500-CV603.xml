@@ -8,6 +8,7 @@
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added CVs for Sound Sample selection.   Mark Waters, 11 Mar 2016 -->
   <!-- v1.2,  Include CVs 508-512 for Blinking by Swiss Mapping.   Ronald Kuhn, 26 Apr 2019 -->
+  <!-- v1.3  added CV593-598 as sound samples 43,44,45  - Nigel Cliffe, 14 Feb 2022 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable CV="266" item="Zimo Sound Setting 1">
@@ -541,6 +542,32 @@
     <label xml:lang="de">Zweiter Thyristor (Elektro)</label>
     <label xml:lang="cs">Druhá frekvence tyristoru</label>
   </variable>
+
+    <variable CV="593" item="Panto On Sample">
+    <decVal/>
+    <label>Panto On (Electric)</label>
+  </variable>
+  <variable CV="594" item="Zimo Sound Setting 43">
+    <decVal/>
+    <label>Panto On (Electric)</label>
+  </variable>
+    <variable CV="595" item="Panto Away Sample">
+    <decVal/>
+    <label>Panto Away (Electric)</label>
+  </variable>
+  <variable CV="596" item="Zimo Sound Setting 44">
+    <decVal/>
+    <label>Panto Away (Electric)</label>
+  </variable>  
+  <variable CV="597" item="Panto Stop Forked Sample">
+    <decVal/>
+    <label>Panto Forked (Electric)</label>
+  </variable>
+  <variable CV="598" item="Zimo Sound Setting 45">
+    <decVal/>
+    <label>Panto Forked (Electric)</label>
+  </variable>  
+  
   <variable CV="599" item="Turbocharger Sample">
     <decVal/>
     <label>Turbocharger (Diesel)</label>

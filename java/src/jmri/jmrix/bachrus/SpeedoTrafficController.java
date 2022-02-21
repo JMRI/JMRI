@@ -78,7 +78,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", client, e);
+                log.warn("notify: During dispatch to {} Exception", client, e);
             }
         }
 
@@ -119,18 +119,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
             log.warn("disconnectPort: disconnect called from non-connected LnPortController");
         }
         controller = null;
-    }
-
-    /**
-     * Get the SpeedoTrafficController instance to use.
-     *
-     * @return The registered SpeedoTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SpeedoTrafficController instance() {
-        return null;
     }
 
     // data members to hold the streams
@@ -188,7 +176,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                         this.reply.setElement(i, char1);
 
                     } catch (Exception e) {
-                        log.debug("{} Exception handling reply cause {}",e,e.getCause());
+                        log.debug("Exception handling reply cause {}", e.getCause(), e);
                     }
                     if (endReply(this.reply)) {
                         sendreply();

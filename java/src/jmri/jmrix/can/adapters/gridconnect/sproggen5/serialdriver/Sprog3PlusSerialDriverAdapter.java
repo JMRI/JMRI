@@ -29,7 +29,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
     }
 
     protected ProgModeSwitch _progMode;
-    
+
     /**
      * Set up all of the other objects to operate with a SPROG Gen 5
      * connected to this port.
@@ -42,7 +42,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         try {
             tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings {}", e);
+            log.error("Cannot parse CAN ID - check your preference settings", e);
             log.error("Now using default CAN ID");
         }
 
@@ -57,8 +57,8 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         this.getSystemConnectionMemo().setProgModeSwitch(_progMode);
         this.getSystemConnectionMemo().setSupportsCVHints(true);
         this.getSystemConnectionMemo().setPowerOnArst(false);
-        
-        // do central protocol-specific configuration    
+
+        // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
     }

@@ -576,7 +576,6 @@ public class JsonOperationsSocketServiceTest {
         service = new JsonOperationsSocketService(connection, new JsonOperationsHttpService(mapper));
     }
 
-    @SuppressWarnings("deprecation")
     @AfterEach
     public void tearDown() {
         service.onClose();
@@ -586,9 +585,9 @@ public class JsonOperationsSocketServiceTest {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
-    
+
     protected class InvalidJsonOperationsSocketService extends JsonOperationsSocketService {
-        
+
         protected final HashMap<String, BeanListener<Train>> invalidBeanListeners = new HashMap<>();
         protected final InvalidBeansListener invalidBeansListener = new InvalidBeansListener();
 
@@ -612,13 +611,13 @@ public class JsonOperationsSocketServiceTest {
             }
 
         }
-        
+
         protected InvalidBeanListener addInvalidBeanListener(Train bean) {
             InvalidBeanListener l = new InvalidBeanListener(bean);
             invalidBeanListeners.put(bean.getId(), l);
             return l;
         }
-        
+
         protected class InvalidBeansListener extends ManagerListener<TrainManager> {
 
             protected InvalidBeansListener() {
@@ -629,7 +628,7 @@ public class JsonOperationsSocketServiceTest {
             public void propertyChange(PropertyChangeEvent evt) {
                 // do nothing, use #propertyChange(String) directly in tests
             }
-            
+
         }
     }
 

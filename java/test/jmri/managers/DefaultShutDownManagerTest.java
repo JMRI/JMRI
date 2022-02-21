@@ -15,7 +15,6 @@ import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -38,78 +37,96 @@ public class DefaultShutDownManagerTest {
 
     @Test
     public void testRegister_Task() {
-        Assert.assertEquals(0, dsdm.tasks().size());
-        ShutDownTask task = new QuietShutDownTask("task") {
+        Assert.assertEquals(0, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
+        ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
             public void run() {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.tasks().size());
+        Assert.assertEquals(1, dsdm.getRunnables().size());
+        Assert.assertEquals(1, dsdm.getCallables().size());
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.tasks().size());
+        Assert.assertEquals(1, dsdm.getRunnables().size());
+        Assert.assertEquals(1, dsdm.getCallables().size());
         assertThatCode(() -> dsdm.register((ShutDownTask) null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test
     public void testDeregister_Task() {
-        Assert.assertEquals(0, dsdm.tasks().size());
-        ShutDownTask task = new QuietShutDownTask("task") {
+        Assert.assertEquals(0, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
+        ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
             public void run() {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.tasks().size());
-        Assert.assertTrue(dsdm.tasks().contains(task));
+        Assert.assertEquals(1, dsdm.getRunnables().size());
+        Assert.assertEquals(1, dsdm.getCallables().size());
+        Assert.assertTrue(dsdm.getCallables().contains(task));
         dsdm.deregister(task);
-        Assert.assertEquals(0, dsdm.tasks().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
         assertThatCode(() -> dsdm.deregister((ShutDownTask) null)).doesNotThrowAnyException();
     }
 
     @Test
     public void testRegister_Callable() {
         Assert.assertEquals(0, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
         Callable<Boolean> task = () -> true;
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
         assertThatCode(() -> dsdm.register((Callable<Boolean>) null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test
     public void testDeregister_Callable() {
         Assert.assertEquals(0, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
         Callable<Boolean> task = () -> true;
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
         Assert.assertTrue(dsdm.getCallables().contains(task));
         dsdm.deregister(task);
         Assert.assertEquals(0, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
         assertThatCode(() -> dsdm.deregister((Callable<Boolean>) null)).doesNotThrowAnyException();
     }
 
     @Test
     public void testRegister_Runnable() {
         Assert.assertEquals(0, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
         Runnable task = () -> {};
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
         assertThatCode(() -> dsdm.register((Runnable) null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test
     public void testDeregister_Runnable() {
         Assert.assertEquals(0, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
         Runnable task = () -> {};
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
         Assert.assertTrue(dsdm.getRunnables().contains(task));
         dsdm.deregister(task);
         Assert.assertEquals(0, dsdm.getRunnables().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
         assertThatCode(() -> dsdm.deregister((Runnable) null)).doesNotThrowAnyException();
     }
 
@@ -197,7 +214,7 @@ public class DefaultShutDownManagerTest {
     public void testInstanceManagerCreates() {
         assertThat(InstanceManager.getNullableDefault(ShutDownManager.class)).isNotNull();
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

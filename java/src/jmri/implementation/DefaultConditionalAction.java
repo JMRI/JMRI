@@ -395,7 +395,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             _timer.start();
             _timerActive = true;
         } else {
-            log.error("timer is null for {] of type {}", _deviceName, getTypeString());
+            log.error("timer is null for {} of type {}", _deviceName, getTypeString());
         }
     }
 

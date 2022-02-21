@@ -4,7 +4,6 @@ import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -12,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -32,12 +32,14 @@ public class ActionMemory extends AbstractDigitalAction
     private NamedBeanHandle<Memory> _otherMemoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.SetToString;
     private String _otherConstantValue = "";
-    private String _otherTableCell = "";
     private String _otherLocalVariable = "";
     private String _otherFormula = "";
     private ExpressionNode _otherExpressionNode;
     private boolean _listenToMemory = true;
-//    private boolean _listenToMemory = false;
+
+    private final LogixNG_SelectTable _selectTable =
+            new LogixNG_SelectTable(this, () -> {return _memoryOperation == MemoryOperation.CopyTableCellToMemory;});
+
 
     public ActionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -60,10 +62,11 @@ public class ActionMemory extends AbstractDigitalAction
         if (_otherMemoryHandle != null) copy.setOtherMemory(_otherMemoryHandle);
         copy.setMemoryOperation(_memoryOperation);
         copy.setOtherConstantValue(_otherConstantValue);
-        copy.setOtherTableCell(_otherTableCell);
+//        copy.setOtherTableCell(_otherTableCell);
         copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setOtherFormula(_otherFormula);
         copy.setListenToMemory(_listenToMemory);
+        _selectTable.copy(copy._selectTable);
         return manager.registerAction(copy);
     }
 
@@ -207,44 +210,16 @@ public class ActionMemory extends AbstractDigitalAction
         return _otherMemoryHandle;
     }
 
+    public LogixNG_SelectTable getSelectTable() {
+        return _selectTable;
+    }
+
     public void setListenToMemory(boolean listenToMemory) {
         this._listenToMemory = listenToMemory;
     }
 
     public boolean getListenToMemory() {
         return _listenToMemory;
-    }
-
-    // Table tab
-    public void setOtherTableCell(@Nonnull String tableCell) {
-        if ((! tableCell.isEmpty()) && (! ReferenceUtil.isReference(tableCell))) {
-            throw new IllegalArgumentException("The table reference \"" + tableCell + "\" is not a valid reference");
-        }
-        _otherTableCell = tableCell;
-    }
-
-    public String getOtherTableCell() {
-        return _otherTableCell;
-    }
-
-    /**
-     * Convert a table reference between direct table mode "table[row, col]"" and reference
-     * table mode "{table[row, col]}".
-     * @param string The current value.
-     * @param toReference If true, return reference table mode, false for direct table mode.
-     * @return the desired mode format.
-     */
-    public static String convertTableReference(String string, boolean toReference) {
-        String tableString = string == null ? "" : string.trim();
-        boolean referenceFormat = ReferenceUtil.isReference(tableString);
-
-        if (toReference) {
-            if (referenceFormat) return tableString;
-            return "{" + tableString + "}";
-        }
-
-        if (! referenceFormat) return tableString;
-        return tableString.isEmpty() ? "" : tableString.substring(1, tableString.length() - 1);
     }
 
     // Variable tab
@@ -270,29 +245,12 @@ public class ActionMemory extends AbstractDigitalAction
     private void parseOtherFormula() throws ParserException {
         if (_memoryOperation == MemoryOperation.CalculateFormula) {
             Map<String, Variable> variables = new HashMap<>();
-/*
-            SymbolTable symbolTable =
-                    InstanceManager.getDefault(LogixNG_Manager.class)
-                            .getSymbolTable();
-
-            if (symbolTable == null && 1==1) return;    // Why does this happens?
-//            if (symbolTable == null && 1==1) return;    // Nothing we can do if we don't have a symbol table
-            if (symbolTable == null) throw new RuntimeException("Daniel AA");
-            if (symbolTable.getSymbols() == null) throw new RuntimeException("Daniel BB");
-            if (symbolTable.getSymbols().values() == null) throw new RuntimeException("Daniel BB");
-
-            for (SymbolTable.Symbol symbol : symbolTable.getSymbols().values()) {
-                variables.put(symbol.getName(),
-                        new LocalVariableExpressionVariable(symbol.getName()));
-            }
-*/
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _otherExpressionNode = parser.parseExpression(_otherFormula);
         } else {
             _otherExpressionNode = null;
         }
     }
-
 
     private void addRemoveVetoListener() {
         if ((_memoryHandle != null) || (_otherMemoryHandle != null)) {
@@ -307,8 +265,14 @@ public class ActionMemory extends AbstractDigitalAction
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 boolean doVeto = false;
-                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) doVeto = true;
-                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) doVeto = true;
+                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if ((_memoryOperation == MemoryOperation.CopyMemoryToMemory)
+                        && (_otherMemoryHandle != null)
+                        && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
+                    doVeto = true;
+                }
                 if (doVeto) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("ActionMemory_MemoryInUseMemoryActionVeto", getDisplayName()), e); // NOI18N
@@ -371,7 +335,7 @@ public class ActionMemory extends AbstractDigitalAction
         }
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
-        
+
         final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
@@ -386,9 +350,8 @@ public class ActionMemory extends AbstractDigitalAction
                     break;
 
                 case CopyTableCellToMemory:
-                    String refValue = ReferenceUtil.getReference(
-                        conditionalNG.getSymbolTable(), _otherTableCell);
-                    memory.setValue(refValue);
+                    Object value = _selectTable.getTableData(getConditionalNG());
+                    memory.setValue(value);
                     break;
 
                 case CopyVariableToMemory:
@@ -487,12 +450,15 @@ public class ActionMemory extends AbstractDigitalAction
                 return Bundle.getMessage(locale, "ActionMemory_Long_Null", namedBean);
             case SetToString:
                 return Bundle.getMessage(locale, "ActionMemory_Long_Value", namedBean, _otherConstantValue);
-            case CopyTableCellToMemory:
-                return Bundle.getMessage(locale, "ActionMemory_Long_CopyTableCellToMemory", namedBean, convertTableReference(_otherTableCell, false));
             case CopyVariableToMemory:
                 return Bundle.getMessage(locale, "ActionMemory_Long_CopyVariableToMemory", namedBean, _otherLocalVariable);
             case CopyMemoryToMemory:
                 return Bundle.getMessage(locale, "ActionMemory_Long_CopyMemoryToMemory", namedBean, copyToMemoryName);
+            case CopyTableCellToMemory:
+                String tableName = _selectTable.getTableNameDescription(locale);
+                String rowName = _selectTable.getTableRowDescription(locale);
+                String columnName = _selectTable.getTableColumnDescription(locale);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyTableCellToMemory", namedBean, tableName, rowName, columnName);
             case CalculateFormula:
                 return Bundle.getMessage(locale, "ActionMemory_Long_Formula", namedBean, _otherFormula);
             default:

@@ -175,7 +175,7 @@ public class SerialDriverAdapter extends SprogPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e);
+            log.error("getOutputStream exception", e);
         }
         return null;
     }
@@ -205,7 +205,7 @@ public class SerialDriverAdapter extends SprogPortController {
     InputStream serialStream = null;
 
     protected int numSlots = 1;
-    
+
     /**
      * Set up all of the other objects to operate with an Sprog command station
      * connected to this port.

@@ -47,13 +47,12 @@ public class SwingShutDownTask extends AbstractShutDownTask {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * This implementation displays a dialog allowing a user continue stopping
      * the app, abort stopping the app, or take a custom action. Closing the
      * dialog without choosing any button is treated as aborting stopping the
      * app.
-       * 
-     * @see #doClose()
+     *
      * @see #didPrompt()
      * @see #doPrompt()
      */
@@ -100,7 +99,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * This implementation calls {@link #didPrompt()} if the user took the
      * prompt action.
      */
@@ -142,18 +141,6 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * @return true if ready to shutdown, false to end shutdown
      */
     protected boolean doPrompt() {
-        return true;
-    }
-
-    /**
-     * Provide a subclass-specific method to handle the case where the user has
-     * chosen the close window option.
-     *
-     * @return true if ready to shutdown, false to end shutdown
-     * @deprecated since 4.21.1 without replacement
-     */
-    @Deprecated
-    protected boolean doClose() {
         return true;
     }
 

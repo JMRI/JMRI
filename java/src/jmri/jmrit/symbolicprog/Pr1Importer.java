@@ -118,7 +118,8 @@ public class Pr1Importer {
                 throw new JmriException("CV not found");
             }
 
-            int shiftBits = ((cvNumber - 1) % 4) * 8;
+            int shiftBits = ((cvNumber - 1) % 4) << 3;
+
             long cvValue = Long.parseLong(cvValueStr);
 
             if (cvValue < 0) {

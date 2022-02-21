@@ -34,10 +34,32 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### JavaVersionCheckWindow.jar
+- Specific class files that have to be compiled with Java 8
+  - This is used to launch the warning dialog when running on Java 8
+        % jdk8
+        % cd java/src
+        % javac apps/JavaVersionCheckWindow.java
+        % jar cf ../../lib/JavaVersionCheckWindow.jar apps/JavaVersionCheckWindow*.class
+        % jar tf ../../lib/JavaVersionCheckWindow.jar
+        META-INF/
+        META-INF/MANIFEST.MF
+        apps/JavaVersionCheckWindow$Compatibility.class
+        apps/JavaVersionCheckWindow.class
+        % rm apps/*.class
+
+##### jmri.script.jsr223graalpython.jar
+- Encapsulation of GraalVM-specific code.
+- See java/graalvm/README.MD for build instructions
+
 ##### apiguardian-api-1.1.0.jar
 - version 1.1.0
 - provides Javadoc markers of API stability
 - from https://github.org/apiguardian-team/apiguardian
+
+#####  batik*
+    batik-js-1.8.jar is a "patched version of Rhino" needed for native-image closure with batik 1.4
+            https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-js/1.8
 
 ##### jetty-*.jar
 - version 9.4.28.v20200408
@@ -259,9 +281,12 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
-##### xercesImpl.jar
-- version Xerces-J 2.11.0
-- from http://www.apache.org/dist/xerces/j/
+##### xercesImpl-2.12.0.jar
+- version Xerces-J 2.12.0
+- from Maven
+
+##### xml-apis-ext-1.3.04.jar
+- from Maven
 
 ##### usb-api-1.0.2.jar, usb4java-*.jar, libusb4java-*.jar
 - usb4java version 1.3.0
@@ -281,8 +306,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
-- Eclipse compiler 4.10 from
-    - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
+- Eclipse compiler 4.19 from
+    - https://archive.eclipse.org/eclipse/downloads/drops4/R-4.19-202103031800/ (via selecting ecj-4.10.jar) March 3, 2021
 - used in ant warnings target
 
 ##### jemmy-2.3.1.1-RELEASE125.jar
@@ -305,6 +330,11 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
 - Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
 - Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
+
+##### OpenIDE Utilities
+- org-openide-util-RELEASE126.jar
+- org-openide-util-lookup-RELEASE126.jar
+- Downloaded from Maven Central 2021-12-21
 
 ##### PlantUML
 - plantuml.jar
@@ -341,7 +371,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations.jar
+##### spotbugs-annotations-3.1.7.jar
 - From SpotBugs 3.1.7
 - Only needed at compile/build time, not runtime
 - http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/

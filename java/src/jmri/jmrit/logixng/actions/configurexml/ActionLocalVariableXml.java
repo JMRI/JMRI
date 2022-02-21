@@ -1,14 +1,19 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.*;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.NamedBeanAddressing;
+import jmri.jmrit.logixng.NamedTable;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.actions.ActionLocalVariable;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for ActionLocalVariable objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -19,14 +24,16 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
     }
 
     /**
-     * Default implementation for storing the contents of a SE8cSignalHead
+     * Default implementation for storing the contents of a ActionLocalVariable
      *
-     * @param o Object to store, of type TripleLightSignalHead
+     * @param o Object to store, of type ActionLocalVariable
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
         ActionLocalVariable p = (ActionLocalVariable) o;
+
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
         Element element = new Element("ActionLocalVariable");   // NOI18N
         element.setAttribute("class", this.getClass().getName());   // NOI18N
@@ -63,18 +70,21 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));   // NOI18N
 
         element.addContent(new Element("constant").addContent(p.getConstantValue()));   // NOI18N
-        element.addContent(new Element("otherTableCell").addContent(p.getOtherTableCell()));    // NOI18N
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable())); // NOI18N
         element.addContent(new Element("formula").addContent(p.getFormula()));  // NOI18N
+
+        element.addContent(selectTableXml.store(p.getSelectTable()));
 
         return element;
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionLocalVariable h = new ActionLocalVariable(sys, uname);
+
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
         loadCommon(h, shared);
 
@@ -138,8 +148,37 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
         Element otherTableCell = shared.getChild("otherTableCell"); // NOI18N
         if (otherTableCell != null) {
-            h.setOtherTableCell(otherTableCell.getTextTrim());
+            boolean result = false;
+            String ref = otherTableCell.getTextTrim();
+            if (!ref.isEmpty()) {
+                String[] refParts = ref.substring(1).split("[\\[\\]]");  // Remove first { and then split on [ and ]
+//                System.out.format("refParts.length: %d, '%s', '%s'%n", refParts.length, refParts[0], refParts[1]);
+                if (refParts.length == 3) {
+                    String table = refParts[0];
+                    String[] rowColumnParts = refParts[1].split(",");
+                    if (rowColumnParts.length == 2) {
+                        String row = rowColumnParts[0];
+                        String column = rowColumnParts[1];
+//                        System.out.format("Table: '%s', row: '%s', column: '%s'%n", table, row, column);
+
+                        h.getSelectTable().setTableNameAddressing(NamedBeanAddressing.Direct);
+                        if (table != null) {
+                            NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(table);
+                            if (t != null) h.getSelectTable().setTable(t);
+                            else h.getSelectTable().removeTable();
+                        }
+                        h.getSelectTable().setTableRowAddressing(NamedBeanAddressing.Direct);
+                        h.getSelectTable().setTableRowName(row);
+                        h.getSelectTable().setTableColumnAddressing(NamedBeanAddressing.Direct);
+                        h.getSelectTable().setTableColumnName(column);
+                        result = true;
+                    }
+                }
+                if (!result) throw new JmriConfigureXmlException("otherTableCell has invalid value: "+ref);
+            }
         }
+
+        selectTableXml.load(shared.getChild("table"), h.getSelectTable());
 
         Element otherVariable = shared.getChild("otherVariable");   // NOI18N
         if (otherVariable != null) {
