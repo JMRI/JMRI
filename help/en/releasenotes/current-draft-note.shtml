@@ -72,7 +72,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added Digitrax DCS210Plus command station</li>
             </ul>
 
         <h4>Maple</h4>
@@ -197,7 +197,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Added DCS210Plus</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -348,7 +348,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>You can now write out just edited CV values to a CSV file.</li>
         </ul>
 
     <h3>CTC Tool</h3>
