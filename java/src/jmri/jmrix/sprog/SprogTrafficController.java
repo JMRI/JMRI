@@ -51,7 +51,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
+        init();
+    }
 
+    private void init() {
         // Set the timeout for communication with hardware
         resetTimeout();
 
@@ -70,6 +73,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     @Override
     public boolean status() {
         return (ostream != null && istream != null);
+    }
+    
+    protected boolean isTcThreadAlive() {
+        return tcThread.isAlive();
     }
 
     @Override

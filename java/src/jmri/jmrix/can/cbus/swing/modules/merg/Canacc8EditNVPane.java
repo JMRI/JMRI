@@ -9,8 +9,7 @@ import javax.swing.event.*;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
-import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
+import jmri.jmrix.can.cbus.swing.modules.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,13 +98,13 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             int value = getSelectValue(nv);
             if ((nv > 0) && (nv <= 8)) {
                 //log.debug("Update NV {} to {}", nv, value);
-                int oldSpinnerValue = ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue()/PULSE_WIDTH_STEP_SIZE;
+                int oldSpinnerValue = out[nv].pulseSpinner.getIntegerValue()/PULSE_WIDTH_STEP_SIZE;
                 out[nv].setButtons(value, oldSpinnerValue);
-                out[nv].pulseSpinner.getModel().setValue((value & 0x7f)*PULSE_WIDTH_STEP_SIZE);
-                log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue());
+                out[nv].pulseSpinner.setValue((value & 0x7f)*PULSE_WIDTH_STEP_SIZE);
+                log.debug("NV {} Now {}", nv, (out[nv].pulseSpinner.getIntegerValue()));
             } else if (nv == 9) {
                 //log.debug("Update feedback delay to {}", value);
-                feedbackSpinner.getModel().setValue(value*FEEDBACK_DELAY_STEP_SIZE);
+                feedbackSpinner.setValue(value*FEEDBACK_DELAY_STEP_SIZE);
             } else if ((nv == 10) || (nv == 11)) {
                 //log.debug("Update startup action", value);
                 for (int i = 1; i <= 8; i++) {
@@ -126,7 +125,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int pulseWidth = ((SpinnerNumberModel)out[index].pulseSpinner.getModel()).getNumber().intValue();
+            int pulseWidth = out[index].pulseSpinner.getIntegerValue();
             pulseWidth /= PULSE_WIDTH_STEP_SIZE;
             if (out[index].cont.isSelected()) {
                 pulseWidth = 0;
@@ -177,7 +176,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            double delay = ((SpinnerNumberModel)feedbackSpinner.getModel()).getNumber().doubleValue();
+            double delay = feedbackSpinner.getDoubleValue();
             int newInt = (int)(delay/FEEDBACK_DELAY_STEP_SIZE);
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(newInt, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
