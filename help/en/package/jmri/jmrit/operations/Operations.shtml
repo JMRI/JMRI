@@ -3502,7 +3502,7 @@
       list that the car is transporting hazardous materials. Your railroad's policy regarding
       hazardous materials can than be applied to this car!
       <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
-      appear. The text box allows you to enter a number between 0 and 100 and this gives you
+      appear. The text box allows you to enter a number between -100 and 100 and this gives you
       control where in the train's Manifest a car will be placed. Lower numbers will place the car
       near the front of the train, and higher numbers towards the rear. We recommend that you start
       off using numbers cleanly divisible by 10. For example, you might what to place an

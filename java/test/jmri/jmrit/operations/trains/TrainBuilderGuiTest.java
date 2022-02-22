@@ -3,7 +3,8 @@ package jmri.jmrit.operations.trains;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.InstanceManager;
@@ -244,6 +245,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
         Assert.assertTrue("Train status", train2.isBuilt());
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**

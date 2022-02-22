@@ -154,6 +154,7 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
             switch (ev.getPropertyName()) {
                 case "SINGLENVUPDATE":
                 case "ALLNVUPDATE":
+                    log.debug("Table data model recieves property change row: {}", evRow);
                     fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
                     fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
                     break;

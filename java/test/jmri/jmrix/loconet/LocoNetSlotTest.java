@@ -596,6 +596,14 @@ public class LocoNetSlotTest {
     }
 
     @Test
+    public void testIbIsF28() throws LocoNetException {
+        int ia[] = {0xD4, 0x20, 0x01, 0x05, 0x40, 0x4F};
+        LocoNetMessage lm = new LocoNetMessage(ia);
+        LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
+        Assert.assertTrue("is F28", t.isF28());
+    }
+
+    @Test
     public void testLocoAddr() throws LocoNetException {
         int ia[] = {0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x47,
             0x00, 0x2B, 0x00, 0x00, 0x00, 0x60};

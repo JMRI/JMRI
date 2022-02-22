@@ -1,14 +1,12 @@
 package jmri.jmrix.sprog.sprogslotmon;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of SprogSlotMonDataModel 
@@ -21,8 +19,8 @@ public class SprogSlotMonDataModelTest {
     private SprogSystemConnectionMemo m = null;
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         int numSlots = m.getNumSlots();
         SprogSlotMonDataModel action = new SprogSlotMonDataModel(numSlots, 8, m);
         Assert.assertNotNull("exists", action);
@@ -40,6 +38,8 @@ public class SprogSlotMonDataModelTest {
     @AfterEach
     public void tearDown() {
         m.getSlotThread().interrupt();
+        m.dispose();
+        JUnitUtil.waitFor(() -> { return !m.getSlotThread().isAlive(); });
         stcs.dispose();
         JUnitUtil.tearDown();
     }
