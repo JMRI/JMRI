@@ -36,6 +36,10 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
     public EcosTurnoutManager(EcosSystemConnectionMemo memo) {
         super(memo);
+        init();
+    }
+    
+    private void init() {
         tc = getMemo().getTrafficController();
 
         // listen for turnout creation
@@ -55,7 +59,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     EcosTrafficController tc;
 
     // The hash table simply holds the object number against the EcosTurnout ref.
-    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>(); // stores known Ecos Object ids to DCC
+    private final Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<>(); // stores known Ecos Object ids to DCC
 
     /**
      * {@inheritDoc}
@@ -631,10 +635,12 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             tc.sendEcosMessage(em, this);
         }
 
-        if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            jmri.InstanceManager.getDefault(ConfigureManager.class).deregister(this);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).deregister(this);
         }
         _tecos.clear();
+        tc.removeEcosListener(this); // disconnect from tc
+        super.dispose(); // remove SensorManager and SystemConnectionMemo change listeners
     }
 
     public List<String> getEcosObjectList() {
