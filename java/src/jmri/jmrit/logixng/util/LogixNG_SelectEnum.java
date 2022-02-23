@@ -44,16 +44,12 @@ public class LogixNG_SelectEnum<E extends Enum<?>> {
     }
 
 
-    public void copy(LogixNG_SelectEnum copy) throws ParserException {
+    public void copy(LogixNG_SelectEnum<E> copy) throws ParserException {
         copy.setAddressing(_addressing);
         copy.setEnum(_enum);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setFormula(_formula);
-    }
-
-    public Enum[] getEnumArray() {
-        return _enumArray;
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
@@ -120,9 +116,7 @@ public class LogixNG_SelectEnum<E extends Enum<?>> {
         }
     }
 
-
-
-    public Enum evaluateEnum(ConditionalNG conditionalNG) throws JmriException {
+    public E evaluateEnum(ConditionalNG conditionalNG) throws JmriException {
 
         if (_addressing == NamedBeanAddressing.Direct) {
             return _enum;
