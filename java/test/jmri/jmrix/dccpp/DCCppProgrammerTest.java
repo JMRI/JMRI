@@ -162,12 +162,14 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
     }
 
-
     @Test
     public void testReadCvWithStartValSequence() throws JmriException {
         
         t.terminateThreads();
         p.dispose();
+        l =  null;
+        t = null;
+        p = null;
         
         // infrastructure objects
         DCCppCommandStation cs = new DCCppCommandStation();
