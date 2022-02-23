@@ -403,6 +403,8 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void tearDown() {
         try {
             m.getSlotThread().interrupt();
+            m.dispose();
+            JUnitUtil.waitFor(() -> { return !m.getSlotThread().isAlive(); });
             stcs.dispose();
         } finally {
             JUnitUtil.tearDown();

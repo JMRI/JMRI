@@ -76,19 +76,26 @@ public class SprogSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
         Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
     }
 
+    private SprogTrafficControlScaffold stcs = null;
+
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS);
-        scm.setSprogTrafficController(new SprogTrafficControlScaffold(scm));
+        stcs = new SprogTrafficControlScaffold(scm);
+        scm.setSprogTrafficController(stcs);
         scm.configureManagers();
     }
 
     @Override
     @AfterEach
     public void tearDown() {
+        scm.getSlotThread().interrupt();
+        JUnitUtil.waitFor(() -> { return !scm.getSlotThread().isAlive(); });
         scm.getSprogTrafficController().dispose();
+        scm.dispose();
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
 
