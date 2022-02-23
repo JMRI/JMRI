@@ -46,7 +46,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         return _selectNamedBean;
     }
 
-    public LogixNG_SelectEnum getSelectEnum() {
+    public LogixNG_SelectEnum<TurnoutState> getSelectEnum() {
         return _selectEnum;
     }
 
