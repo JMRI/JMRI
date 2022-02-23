@@ -61,7 +61,13 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "turnout");
 
         selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
-        selectEnumXml.loadLegacy(shared, h.getSelectEnum(), "turnoutState");
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "stateAddressing",
+                "turnoutState",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

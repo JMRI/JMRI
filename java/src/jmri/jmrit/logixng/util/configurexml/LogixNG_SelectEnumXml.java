@@ -71,13 +71,21 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
      *
      * @param shared the shared element
      * @param selectEnum the LogixNG_SelectEnum
+     * @param addressingElementName the name of the element of the addressing, for example "state"
      * @param enumElementName the name of the element of the enum, for example "state"
+     * @param referenceElementName the name of the element of the reference, for example "state"
+     * @param localVariableElementName the name of the element of the local variable, for example "state"
+     * @param formulaElementName the name of the element of the formula, for example "state"
      * @throws JmriConfigureXmlException if an exception occurs
      */
     public void loadLegacy(
             Element shared,
             LogixNG_SelectEnum<E> selectEnum,
-            String enumElementName)
+            String addressingElementName,
+            String enumElementName,
+            String referenceElementName,
+            String localVariableElementName,
+            String formulaElementName)
             throws JmriConfigureXmlException {
 
         Element name = shared.getChild(enumElementName);
@@ -86,18 +94,18 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
         }
 
         try {
-            Element elem = shared.getChild("addressing");
+            Element elem = shared.getChild(addressingElementName);
             if (elem != null) {
                 selectEnum.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
 
-            elem = shared.getChild("reference");
+            elem = shared.getChild(referenceElementName);
             if (elem != null) selectEnum.setReference(elem.getTextTrim());
 
-            elem = shared.getChild("localVariable");
+            elem = shared.getChild(localVariableElementName);
             if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
 
-            elem = shared.getChild("formula");
+            elem = shared.getChild(formulaElementName);
             if (elem != null) selectEnum.setFormula(elem.getTextTrim());
 
         } catch (ParserException e) {

@@ -17953,11 +17953,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <state>
-        <addressing>Direct</addressing>
+        <addressing>LocalVariable</addressing>
         <enum>Closed</enum>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18027,11 +18027,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <state>
-        <addressing>LocalVariable</addressing>
+        <addressing>Formula</addressing>
         <enum>Thrown</enum>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18101,11 +18101,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <state>
-        <addressing>Formula</addressing>
+        <addressing>Reference</addressing>
         <enum>Toggle</enum>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18175,11 +18175,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <state>
-        <addressing>Reference</addressing>
+        <addressing>Direct</addressing>
         <enum>Unknown</enum>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26594,14 +26594,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed Feb 23 15:07:07 CET 2022</date>
+      <date>Wed Feb 23 19:34:23 CET 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Feb 23 15:07:07 CET 2022</date>
+      <date>Wed Feb 23 19:34:24 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-23T14:06:42Z+R27de092 on Wed Feb 23 15:07:07 CET 2022-->
+  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-23T18:33:57Z+R4dda0cc on Wed Feb 23 19:34:24 CET 2022-->
 </layout-config>
