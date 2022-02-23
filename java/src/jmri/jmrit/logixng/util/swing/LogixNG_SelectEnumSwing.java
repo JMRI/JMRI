@@ -14,12 +14,14 @@ import jmri.util.swing.JComboBoxUtil;
 /**
  * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectEnum.
  *
+ * @param <E> the type of enum
+ *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectEnumSwing {
+public class LogixNG_SelectEnumSwing<E extends Enum> {
 
     private JTabbedPane _tabbedPane;
-    private JComboBox<Enum> _enumComboBox;
+    private JComboBox<E> _enumComboBox;
     private JPanel _panelDirect;
     private JPanel _panelReference;
     private JPanel _panelLocalVariable;
@@ -30,7 +32,7 @@ public class LogixNG_SelectEnumSwing {
 
 
     public JPanel createPanel(
-            @CheckForNull LogixNG_SelectEnum selectEnum, Enum[] enumArray) {
+            @CheckForNull LogixNG_SelectEnum<E> selectEnum, E[] enumArray) {
 
         JPanel panel = new JPanel();
 
@@ -46,7 +48,7 @@ public class LogixNG_SelectEnumSwing {
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
 
         _enumComboBox = new JComboBox<>();
-        for (Enum e : enumArray) {
+        for (E e : enumArray) {
             _enumComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_enumComboBox);
@@ -86,7 +88,7 @@ public class LogixNG_SelectEnumSwing {
     }
 
     public boolean validate(
-            @Nonnull LogixNG_SelectEnum selectEnum,
+            @Nonnull LogixNG_SelectEnum<E> selectEnum,
             @Nonnull List<String> errorMessages) {
         try {
             if (_tabbedPane.getSelectedComponent() == _panelReference) {
@@ -118,7 +120,7 @@ public class LogixNG_SelectEnumSwing {
         return true;
     }
 
-    public void updateObject(@Nonnull LogixNG_SelectEnum selectEnum) {
+    public void updateObject(@Nonnull LogixNG_SelectEnum<E> selectEnum) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
             selectEnum.setEnum(_enumComboBox.getItemAt(_enumComboBox.getSelectedIndex()));

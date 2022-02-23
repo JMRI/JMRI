@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.util.configurexml;
 
-import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
@@ -11,9 +10,11 @@ import org.jdom2.Element;
 /**
  * Xml class for jmri.jmrit.logixng.util.LogixNG_SelectEnum.
  *
+ * @param <E> the type of enum
+ *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectEnumXml {
+public class LogixNG_SelectEnumXml<E extends Enum> {
 
     /**
      * Default implementation for storing the contents of a LogixNG_SelectEnum
@@ -22,7 +23,7 @@ public class LogixNG_SelectEnumXml {
      * @param tagName the name of the element
      * @return Element containing the complete info
      */
-    public Element store(LogixNG_SelectEnum selectEnum, String tagName) {
+    public Element store(LogixNG_SelectEnum<E> selectEnum, String tagName) {
 //        Element tableElement = new Element("enum");
         Element tableElement = new Element(tagName);
 
@@ -35,7 +36,8 @@ public class LogixNG_SelectEnumXml {
         return tableElement;
     }
 
-    public void load(Element enumElement, LogixNG_SelectEnum selectEnum) throws JmriConfigureXmlException {
+    public void load(Element enumElement, LogixNG_SelectEnum<E> selectEnum)
+            throws JmriConfigureXmlException {
 
         if (enumElement != null) {
             try {
@@ -74,7 +76,7 @@ public class LogixNG_SelectEnumXml {
      */
     public void loadLegacy(
             Element shared,
-            LogixNG_SelectEnum selectEnum,
+            LogixNG_SelectEnum<E> selectEnum,
             String enumElementName)
             throws JmriConfigureXmlException {
 

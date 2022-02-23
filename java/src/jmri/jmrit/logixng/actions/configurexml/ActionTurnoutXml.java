@@ -3,11 +3,10 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
-// import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.ActionTurnout.TurnoutState;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
-// import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -33,7 +32,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         ActionTurnout p = (ActionTurnout) o;
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
-        var selectEnumXml = new LogixNG_SelectEnumXml();
+        var selectEnumXml = new LogixNG_SelectEnumXml<TurnoutState>();
 
         Element element = new Element("ActionTurnout");
         element.setAttribute("class", this.getClass().getName());
@@ -54,7 +53,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         ActionTurnout h = new ActionTurnout(sys, uname);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
-        var selectEnumXml = new LogixNG_SelectEnumXml();
+        var selectEnumXml = new LogixNG_SelectEnumXml<TurnoutState>();
 
         loadCommon(h, shared);
 
@@ -63,31 +62,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
 
         selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
         selectEnumXml.loadLegacy(shared, h.getSelectEnum(), "turnoutState");
-/*
-        try {
-            Element elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
 
-            Element turnoutState = shared.getChild("turnoutState");
-            if (turnoutState != null) {
-                h.setBeanState(ActionTurnout.TurnoutState.valueOf(turnoutState.getTextTrim()));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setStateReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
-*/
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

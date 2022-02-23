@@ -16,26 +16,28 @@ import jmri.util.TypeConversionUtil;
 /**
  * Select namedBean for LogixNG actions and expressions.
  *
+ * @param <E> the type of enum
+ *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectEnum {
+public class LogixNG_SelectEnum<E extends Enum> {
 
     public static interface InUse {
         public boolean isInUse();
     }
 
     private final AbstractBase _base;
-    private final Enum[] _enumArray;
+    private final E[] _enumArray;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private Enum _enum;
+    private E _enum;
     private String _reference = "";
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectEnum(AbstractBase base, Enum[] enumArray, Enum initialEnum) {
+    public LogixNG_SelectEnum(AbstractBase base, E[] enumArray, E initialEnum) {
         _base = base;
         _enumArray = enumArray;
         _enum = initialEnum;
@@ -63,17 +65,17 @@ public class LogixNG_SelectEnum {
         return _addressing;
     }
 
-    public void setEnum(@Nonnull Enum e) {
+    public void setEnum(@Nonnull E e) {
         _base.assertListenersAreNotRegistered(log, "setEnum");
         _enum = e;
     }
 
-    public Enum getEnum() {
+    public E getEnum() {
         return _enum;
     }
 
-    public Enum getEnum(String name) {
-        for (Enum e : _enumArray) {
+    public E getEnum(String name) {
+        for (E e : _enumArray) {
             if (e.name().equals(name)) return e;
         }
         return null;

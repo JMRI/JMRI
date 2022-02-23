@@ -26,8 +26,8 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private final LogixNG_SelectNamedBeanSwing<Turnout> _selectNamedBeanSwing =
             new LogixNG_SelectNamedBeanSwing<>(InstanceManager.getDefault(TurnoutManager.class));
 
-    private final LogixNG_SelectEnumSwing _selectEnumSwing =
-            new LogixNG_SelectEnumSwing();
+    private final LogixNG_SelectEnumSwing<TurnoutState> _selectEnumSwing =
+            new LogixNG_SelectEnumSwing<>();
 
 
     @Override

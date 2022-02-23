@@ -20,8 +20,8 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
                     this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
-    private final LogixNG_SelectEnum _selectEnum =
-            new LogixNG_SelectEnum(this, TurnoutState.values(), TurnoutState.Thrown);
+    private final LogixNG_SelectEnum<TurnoutState> _selectEnum =
+            new LogixNG_SelectEnum<>(this, TurnoutState.values(), TurnoutState.Thrown);
 
 
     public ActionTurnout(String sys, String user)
