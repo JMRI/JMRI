@@ -14,7 +14,7 @@ import org.jdom2.Element;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectEnumXml<E extends Enum> {
+public class LogixNG_SelectEnumXml<E extends Enum<?>> {
 
     /**
      * Default implementation for storing the contents of a LogixNG_SelectEnum

@@ -18,7 +18,7 @@ import jmri.util.swing.JComboBoxUtil;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectEnumSwing<E extends Enum> {
+public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
     private JTabbedPane _tabbedPane;
     private JComboBox<E> _enumComboBox;

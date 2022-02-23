@@ -20,7 +20,7 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectEnum<E extends Enum> {
+public class LogixNG_SelectEnum<E extends Enum<?>> {
 
     public static interface InUse {
         public boolean isInUse();
