@@ -938,15 +938,15 @@ public class ImportConditional {
 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setBeanState(ActionTurnout.TurnoutState.Toggle);
+                        action.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Toggle);
                         break;
 
                     case Turnout.CLOSED:
-                        action.setBeanState(ActionTurnout.TurnoutState.Closed);
+                        action.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Closed);
                         break;
 
                     case Turnout.THROWN:
-                        action.setBeanState(ActionTurnout.TurnoutState.Thrown);
+                        action.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Thrown);
                         break;
 
                     default:

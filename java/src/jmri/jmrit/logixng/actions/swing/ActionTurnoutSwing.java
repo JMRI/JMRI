@@ -13,9 +13,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.ActionTurnout.TurnoutState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
-import jmri.util.swing.JComboBoxUtil;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -27,15 +26,8 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private final LogixNG_SelectNamedBeanSwing<Turnout> _selectNamedBeanSwing =
             new LogixNG_SelectNamedBeanSwing<>(InstanceManager.getDefault(TurnoutManager.class));
 
-    private JTabbedPane _tabbedPaneTurnoutState;
-    private JComboBox<TurnoutState> _stateComboBox;
-    private JPanel _panelTurnoutStateDirect;
-    private JPanel _panelTurnoutStateReference;
-    private JPanel _panelTurnoutStateLocalVariable;
-    private JPanel _panelTurnoutStateFormula;
-    private JTextField _turnoutStateReferenceTextField;
-    private JTextField _turnoutStateLocalVariableTextField;
-    private JTextField _turnoutStateFormulaTextField;
+    private final LogixNG_SelectEnumSwing _selectEnumSwing =
+            new LogixNG_SelectEnumSwing();
 
 
     @Override
@@ -44,56 +36,15 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
 
         panel = new JPanel();
 
-        _tabbedPaneTurnoutState = new JTabbedPane();
-        _panelTurnoutStateDirect = new javax.swing.JPanel();
-        _panelTurnoutStateReference = new javax.swing.JPanel();
-        _panelTurnoutStateLocalVariable = new javax.swing.JPanel();
-        _panelTurnoutStateFormula = new javax.swing.JPanel();
-
-        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Direct.toString(), _panelTurnoutStateDirect);
-        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Reference.toString(), _panelTurnoutStateReference);
-        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutStateLocalVariable);
-        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutStateFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (TurnoutState e : TurnoutState.values()) {
-            _stateComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-
-        _panelTurnoutStateDirect.add(_stateComboBox);
-
-        _turnoutStateReferenceTextField = new JTextField();
-        _turnoutStateReferenceTextField.setColumns(30);
-        _panelTurnoutStateReference.add(_turnoutStateReferenceTextField);
-
-        _turnoutStateLocalVariableTextField = new JTextField();
-        _turnoutStateLocalVariableTextField.setColumns(30);
-        _panelTurnoutStateLocalVariable.add(_turnoutStateLocalVariableTextField);
-
-        _turnoutStateFormulaTextField = new JTextField();
-        _turnoutStateFormulaTextField.setColumns(30);
-        _panelTurnoutStateFormula.add(_turnoutStateFormulaTextField);
-
-
         JPanel _tabbedPaneTurnout;
+        JPanel _tabbedPaneTurnoutState;
 
         if (action != null) {
             _tabbedPaneTurnout = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
-
-            switch (action.getStateAddressing()) {
-                case Direct: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateDirect); break;
-                case Reference: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateReference); break;
-                case LocalVariable: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateLocalVariable); break;
-                case Formula: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getStateAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getBeanState());
-            _turnoutStateReferenceTextField.setText(action.getStateReference());
-            _turnoutStateLocalVariableTextField.setText(action.getStateLocalVariable());
-            _turnoutStateFormulaTextField.setText(action.getStateFormula());
+            _tabbedPaneTurnoutState = _selectEnumSwing.createPanel(action.getSelectEnum(), TurnoutState.values());
         } else {
             _tabbedPaneTurnout = _selectNamedBeanSwing.createPanel(null);
+            _tabbedPaneTurnoutState = _selectEnumSwing.createPanel(null, TurnoutState.values());
         }
 
         JComponent[] components = new JComponent[]{
@@ -113,17 +64,9 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         ActionTurnout action = new ActionTurnout("IQDA1", null);
 
         _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        _selectEnumSwing.validate(action.getSelectEnum(), errorMessages);
 
-        try {
-            if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
-                action.setStateReference(_turnoutStateReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-
-        return true;
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -142,26 +85,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         }
         ActionTurnout action = (ActionTurnout)object;
         _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
-
-        try {
-            if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateDirect) {
-                action.setStateAddressing(NamedBeanAddressing.Direct);
-                action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
-                action.setStateAddressing(NamedBeanAddressing.Reference);
-                action.setStateReference(_turnoutStateReferenceTextField.getText());
-            } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateLocalVariable) {
-                action.setStateAddressing(NamedBeanAddressing.LocalVariable);
-                action.setStateLocalVariable(_turnoutStateLocalVariableTextField.getText());
-            } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateFormula) {
-                action.setStateAddressing(NamedBeanAddressing.Formula);
-                action.setStateFormula(_turnoutStateFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneTurnoutState has unknown selection");
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+        _selectEnumSwing.updateObject(action.getSelectEnum());
     }
 
     /** {@inheritDoc} */

@@ -393,7 +393,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 otherValue = getString(_memoryHandle.getBean().getValue());
                 break;
             case Table:
-                otherValue = getString(_selectTable.getTableData(getConditionalNG()));
+                otherValue = getString(_selectTable.evaluateTableData(getConditionalNG()));
                 break;
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_otherLocalVariable), false);

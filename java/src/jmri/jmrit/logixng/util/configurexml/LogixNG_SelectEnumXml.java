@@ -1,0 +1,106 @@
+package jmri.jmrit.logixng.util.configurexml;
+
+import jmri.*;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.logixng.NamedBeanAddressing;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
+import jmri.jmrit.logixng.util.parser.ParserException;
+
+import org.jdom2.Element;
+
+/**
+ * Xml class for jmri.jmrit.logixng.util.LogixNG_SelectEnum.
+ *
+ * @author Daniel Bergqvist (C) 2022
+ */
+public class LogixNG_SelectEnumXml {
+
+    /**
+     * Default implementation for storing the contents of a LogixNG_SelectEnum
+     *
+     * @param selectEnum the LogixNG_SelectTable object
+     * @param tagName the name of the element
+     * @return Element containing the complete info
+     */
+    public Element store(LogixNG_SelectEnum selectEnum, String tagName) {
+//        Element tableElement = new Element("enum");
+        Element tableElement = new Element(tagName);
+
+        tableElement.addContent(new Element("addressing").addContent(selectEnum.getAddressing().name()));
+        tableElement.addContent(new Element("enum").addContent(selectEnum.getEnum().name()));
+        tableElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
+        tableElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
+        tableElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
+
+        return tableElement;
+    }
+
+    public void load(Element enumElement, LogixNG_SelectEnum selectEnum) throws JmriConfigureXmlException {
+
+        if (enumElement != null) {
+            try {
+                Element elem = enumElement.getChild("addressing");
+                if (elem != null) {
+                    selectEnum.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
+
+                elem = enumElement.getChild("enum");
+                if (elem != null) {
+                    selectEnum.setEnum(selectEnum.getEnum(elem.getTextTrim()));
+                }
+
+                elem = enumElement.getChild("reference");
+                if (elem != null) selectEnum.setReference(elem.getTextTrim());
+
+                elem = enumElement.getChild("localVariable");
+                if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
+
+                elem = enumElement.getChild("formula");
+                if (elem != null) selectEnum.setFormula(elem.getTextTrim());
+
+            } catch (ParserException e) {
+                throw new JmriConfigureXmlException(e);
+            }
+        }
+    }
+
+    /**
+     * This method is for backward compability up to and including 4.99.4.Remove this class after 5.0.
+     *
+     * @param shared the shared element
+     * @param selectEnum the LogixNG_SelectEnum
+     * @param enumElementName the name of the element of the enum, for example "state"
+     * @throws JmriConfigureXmlException if an exception occurs
+     */
+    public void loadLegacy(
+            Element shared,
+            LogixNG_SelectEnum selectEnum,
+            String enumElementName)
+            throws JmriConfigureXmlException {
+
+        Element name = shared.getChild(enumElementName);
+        if (name != null) {
+            selectEnum.setEnum(selectEnum.getEnum(name.getTextTrim()));
+        }
+
+        try {
+            Element elem = shared.getChild("addressing");
+            if (elem != null) {
+                selectEnum.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("reference");
+            if (elem != null) selectEnum.setReference(elem.getTextTrim());
+
+            elem = shared.getChild("localVariable");
+            if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("formula");
+            if (elem != null) selectEnum.setFormula(elem.getTextTrim());
+
+        } catch (ParserException e) {
+            throw new JmriConfigureXmlException(e);
+        }
+    }
+
+}

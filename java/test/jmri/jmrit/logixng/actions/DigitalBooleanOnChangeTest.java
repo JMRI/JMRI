@@ -243,7 +243,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
 
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         _actionTurnout.getSelectNamedBean().setNamedBean(turnout);
-        _actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
+        _actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Thrown);
 
         // Ensure last execute is false
         _actionOnChange.execute(false, false);

@@ -21,10 +21,11 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
      * Default implementation for storing the contents of a LogixNG_SelectNamedBean
      *
      * @param selectNamedBean the LogixNG_SelectTable object
+     * @param tagName the name of the element
      * @return Element containing the complete info
      */
-    public Element store(LogixNG_SelectNamedBean<E> selectNamedBean) {
-        Element tableElement = new Element("namedBean");
+    public Element store(LogixNG_SelectNamedBean<E> selectNamedBean, String tagName) {
+        Element tableElement = new Element(tagName);
 
         tableElement.addContent(new Element("addressing").addContent(selectNamedBean.getAddressing().name()));
         NamedBeanHandle<E> table = selectNamedBean.getNamedBean();
@@ -42,16 +43,16 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
         if (namedBeanElement != null) {
             try {
-                Element name = namedBeanElement.getChild("name");
-                if (name != null) {
-                    E t = selectNamedBean.getManager().getNamedBean(name.getTextTrim());
-                    if (t != null) selectNamedBean.setNamedBean(t);
-                    else selectNamedBean.removeNamedBean();
-                }
-
                 Element elem = namedBeanElement.getChild("addressing");
                 if (elem != null) {
                     selectNamedBean.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
+
+                elem = namedBeanElement.getChild("name");
+                if (elem != null) {
+                    E t = selectNamedBean.getManager().getNamedBean(elem.getTextTrim());
+                    if (t != null) selectNamedBean.setNamedBean(t);
+                    else selectNamedBean.removeNamedBean();
                 }
 
                 elem = namedBeanElement.getChild("reference");

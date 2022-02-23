@@ -350,7 +350,7 @@ public class ActionMemory extends AbstractDigitalAction
                     break;
 
                 case CopyTableCellToMemory:
-                    Object value = _selectTable.getTableData(getConditionalNG());
+                    Object value = _selectTable.evaluateTableData(getConditionalNG());
                     memory.setValue(value);
                     break;
 

@@ -3,10 +3,11 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.NamedBeanAddressing;
+// import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
-import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
+// import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -32,6 +33,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         ActionTurnout p = (ActionTurnout) o;
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
+        var selectEnumXml = new LogixNG_SelectEnumXml();
 
         Element element = new Element("ActionTurnout");
         element.setAttribute("class", this.getClass().getName());
@@ -39,13 +41,8 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
 
         storeCommon(p, element);
 
-        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean()));
-
-        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("turnoutState").addContent(p.getBeanState().name()));
-        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         return element;
     }
@@ -57,12 +54,16 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         ActionTurnout h = new ActionTurnout(sys, uname);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
+        var selectEnumXml = new LogixNG_SelectEnumXml();
 
         loadCommon(h, shared);
 
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "turnout");
 
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(shared, h.getSelectEnum(), "turnoutState");
+/*
         try {
             Element elem = shared.getChild("stateAddressing");
             if (elem != null) {
@@ -86,7 +87,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
-
+*/
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

@@ -20,10 +20,11 @@ public class LogixNG_SelectTableXml {
      * Default implementation for storing the contents of a LogixNG_SelectTable
      *
      * @param selectTable the LogixNG_SelectTable object
+     * @param tagName the name of the element
      * @return Element containing the complete info
      */
-    public Element store(LogixNG_SelectTable selectTable) {
-        Element tableElement = new Element("table");
+    public Element store(LogixNG_SelectTable selectTable, String tagName) {
+        Element tableElement = new Element(tagName);
 
         Element tableNameElement = new Element("tableName");
         tableNameElement.addContent(new Element("addressing").addContent(selectTable.getTableNameAddressing().name()));
@@ -60,16 +61,19 @@ public class LogixNG_SelectTableXml {
         if (tableElement != null) {
             try {
                 Element tableName = tableElement.getChild("tableName");
-                Element name = tableName.getChild("name");
-                if (name != null) {
-                    NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(name.getTextTrim());
-                    if (t != null) selectTable.setTable(t);
-                    else selectTable.removeTable();
-                }
+
+                // Table name
 
                 Element elem = tableName.getChild("addressing");
                 if (elem != null) {
                     selectTable.setTableNameAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
+
+                elem = tableName.getChild("name");
+                if (elem != null) {
+                    NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(elem.getTextTrim());
+                    if (t != null) selectTable.setTable(t);
+                    else selectTable.removeTable();
                 }
 
                 elem = tableName.getChild("reference");
@@ -82,15 +86,17 @@ public class LogixNG_SelectTableXml {
                 if (elem != null) selectTable.setTableNameFormula(elem.getTextTrim());
 
 
+                // Table row
+
                 Element tableRow = tableElement.getChild("row");
                 elem = tableRow.getChild("addressing");
                 if (elem != null) {
                     selectTable.setTableRowAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
                 }
 
-                name = tableRow.getChild("name");
-                if (name != null) {
-                    selectTable.setTableRowName(name.getTextTrim());
+                elem = tableRow.getChild("name");
+                if (elem != null) {
+                    selectTable.setTableRowName(elem.getTextTrim());
                 }
 
                 elem = tableRow.getChild("reference");
@@ -103,15 +109,17 @@ public class LogixNG_SelectTableXml {
                 if (elem != null) selectTable.setTableRowFormula(elem.getTextTrim());
 
 
+                // Table column
+
                 Element tableColumn = tableElement.getChild("column");
                 elem = tableColumn.getChild("addressing");
                 if (elem != null) {
                     selectTable.setTableColumnAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
                 }
 
-                name = tableColumn.getChild("name");
-                if (name != null) {
-                    selectTable.setTableColumnName(name.getTextTrim());
+                elem = tableColumn.getChild("name");
+                if (elem != null) {
+                    selectTable.setTableColumnName(elem.getTextTrim());
                 }
 
                 elem = tableColumn.getChild("reference");

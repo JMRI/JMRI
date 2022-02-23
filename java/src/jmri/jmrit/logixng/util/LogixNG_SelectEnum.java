@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.util;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,54 +16,42 @@ import jmri.util.TypeConversionUtil;
 /**
  * Select namedBean for LogixNG actions and expressions.
  *
- * @param <E> the type of the named bean
- *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableChangeListener {
+public class LogixNG_SelectEnum {
 
     public static interface InUse {
         public boolean isInUse();
     }
 
     private final AbstractBase _base;
-    private final Class<E> _class;
-    private final Manager<E> _manager;
-    private final InUse _inUse;
+    private final Enum[] _enumArray;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<E> _handle;
+    private Enum _enum;
     private String _reference = "";
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager) {
+    public LogixNG_SelectEnum(AbstractBase base, Enum[] enumArray, Enum initialEnum) {
         _base = base;
-        _inUse = () -> true;
-        _class = clazz;
-        _manager = manager;
-    }
-
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, InUse inUse) {
-        _base = base;
-        _inUse = inUse;
-        _class = clazz;
-        _manager = manager;
+        _enumArray = enumArray;
+        _enum = initialEnum;
     }
 
 
-    public void copy(LogixNG_SelectNamedBean<E> copy) throws ParserException {
+    public void copy(LogixNG_SelectEnum copy) throws ParserException {
         copy.setAddressing(_addressing);
-        if (_handle != null) copy.setNamedBean(_handle);
+        copy.setEnum(_enum);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setFormula(_formula);
     }
 
-    public Manager<E> getManager() {
-        return _manager;
+    public Enum[] getEnumArray() {
+        return _enumArray;
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
@@ -78,39 +63,20 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _addressing;
     }
 
-    public void setNamedBean(@Nonnull String name) {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        E namedBean = _manager.getNamedBean(name);
-        if (namedBean != null) {
-            setNamedBean(namedBean);
-        } else {
-            removeNamedBean();
-            log.error("{} \"{}\" is not found", _manager.getBeanTypeHandled(), name);
+    public void setEnum(@Nonnull Enum e) {
+        _base.assertListenersAreNotRegistered(log, "setEnum");
+        _enum = e;
+    }
+
+    public Enum getEnum() {
+        return _enum;
+    }
+
+    public Enum getEnum(String name) {
+        for (Enum e : _enumArray) {
+            if (e.name().equals(name)) return e;
         }
-    }
-
-    public void setNamedBean(@Nonnull NamedBeanHandle<E> handle) {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        _handle = handle;
-        _manager.addVetoableChangeListener(this);
-    }
-
-    public void setNamedBean(@Nonnull E namedBean) {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        setNamedBean(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(namedBean.getDisplayName(), namedBean));
-    }
-
-    public void removeNamedBean() {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        if (_handle != null) {
-            _manager.removeVetoableChangeListener(this);
-            _handle = null;
-        }
-    }
-
-    public NamedBeanHandle<E> getNamedBean() {
-        return _handle;
+        return null;
     }
 
     public void setReference(@Nonnull String reference) {
@@ -154,10 +120,10 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
 
 
-    public E evaluateNamedBean(ConditionalNG conditionalNG) throws JmriException {
+    public Enum evaluateEnum(ConditionalNG conditionalNG) throws JmriException {
 
         if (_addressing == NamedBeanAddressing.Direct) {
-            return _handle != null ? _handle.getBean() : null;
+            return _enum;
         } else {
             String name;
 
@@ -185,61 +151,34 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                     throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
             }
 
-            E namedBean = null;
-            if (name != null) {
-                namedBean = _manager.getNamedBean(name);
-            }
-            return namedBean;
+            return getEnum(name);
         }
     }
 
     public String getDescription(Locale locale) {
-        String namedBean;
+        String enumName;
         switch (_addressing) {
             case Direct:
-                String namedBeanName;
-                if (_handle != null) {
-                    namedBeanName = _handle.getBean().getDisplayName();
-                } else {
-                    namedBeanName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", namedBeanName);
+                enumName = Bundle.getMessage(locale, "AddressByDirect", _enum.toString());
                 break;
 
             case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                enumName = Bundle.getMessage(locale, "AddressByReference", _reference);
                 break;
 
             case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                enumName = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
 
             case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                enumName = Bundle.getMessage(locale, "AddressByFormula", _formula);
                 break;
 
             default:
                 throw new IllegalArgumentException("invalid _addressing: " + _addressing.name());
         }
-        return namedBean;
+        return enumName;
     }
 
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (_inUse.isInUse() && (_class.isAssignableFrom(evt.getOldValue().getClass()))) {
-                if (evt.getOldValue().equals(getNamedBean().getBean())) {
-                    throw new PropertyVetoException(_base.getDisplayName(), evt);
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (_class.isAssignableFrom(evt.getOldValue().getClass())) {
-                if (evt.getOldValue().equals(getNamedBean().getBean())) {
-                    removeNamedBean();
-                }
-            }
-        }
-    }
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectNamedBean.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectEnum.class);
 }

@@ -68,10 +68,10 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
         JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
-        JUnitUtil.waitFor(() -> {return ActionTurnout.TurnoutState.Closed == action.getBeanState();});
+        JUnitUtil.waitFor(() -> {return ActionTurnout.TurnoutState.Closed == action.getSelectEnum().getEnum();});
 
         Assert.assertEquals("IT1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
-        Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getBeanState());
+        Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getSelectEnum().getEnum());
     }
 
     // The minimal setup for log4J

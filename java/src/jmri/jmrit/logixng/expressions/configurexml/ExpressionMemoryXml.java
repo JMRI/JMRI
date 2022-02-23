@@ -62,7 +62,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
         element.addContent(new Element("regEx").addContent(p.getRegEx()));
 
-        element.addContent(selectTableXml.store(p.getSelectTable()));
+        element.addContent(selectTableXml.store(p.getSelectTable(), "table"));
 
         return element;
     }

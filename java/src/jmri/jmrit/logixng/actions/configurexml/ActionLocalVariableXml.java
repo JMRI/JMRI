@@ -73,7 +73,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable())); // NOI18N
         element.addContent(new Element("formula").addContent(p.getFormula()));  // NOI18N
 
-        element.addContent(selectTableXml.store(p.getSelectTable()));
+        element.addContent(selectTableXml.store(p.getSelectTable(), "table"));
 
         return element;
     }

@@ -6,25 +6,20 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
- * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectNamedBean.
- *
- * @param <E> the type of the named bean
+ * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectEnum.
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
-
-    private final @Nonnull Manager<E> _manager;
+public class LogixNG_SelectEnumSwing {
 
     private JTabbedPane _tabbedPane;
-    private BeanSelectPanel<E> _namedBeanPanel;
+    private JComboBox<Enum> _enumComboBox;
     private JPanel _panelDirect;
     private JPanel _panelReference;
     private JPanel _panelLocalVariable;
@@ -34,12 +29,8 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
     private JTextField _formulaTextField;
 
 
-    public LogixNG_SelectNamedBeanSwing(@Nonnull Manager<E> manager) {
-        _manager = manager;
-    }
-
     public JPanel createPanel(
-            @CheckForNull LogixNG_SelectNamedBean<E> selectNamedBean) {
+            @CheckForNull LogixNG_SelectEnum selectEnum, Enum[] enumArray) {
 
         JPanel panel = new JPanel();
 
@@ -54,8 +45,12 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
 
-        _namedBeanPanel = new BeanSelectPanel<>(_manager, null);
-        _panelDirect.add(_namedBeanPanel);
+        _enumComboBox = new JComboBox<>();
+        for (Enum e : enumArray) {
+            _enumComboBox.addItem(e);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_enumComboBox);
+        _panelDirect.add(_enumComboBox);
 
         _referenceTextField = new JTextField();
         _referenceTextField.setColumns(30);
@@ -70,20 +65,20 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         _panelFormula.add(_formulaTextField);
 
 
-        if (selectNamedBean != null) {
-            switch (selectNamedBean.getAddressing()) {
+        if (selectEnum != null) {
+            switch (selectEnum.getAddressing()) {
                 case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
                 case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
                 case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + selectNamedBean.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + selectEnum.getAddressing().name());
             }
-            if (selectNamedBean.getNamedBean() != null) {
-                _namedBeanPanel.setDefaultNamedBean(selectNamedBean.getNamedBean().getBean());
+            if (selectEnum.getEnum() != null) {
+                _enumComboBox.setSelectedItem(selectEnum.getEnum());
             }
-            _referenceTextField.setText(selectNamedBean.getReference());
-            _localVariableTextField.setText(selectNamedBean.getLocalVariable());
-            _formulaTextField.setText(selectNamedBean.getFormula());
+            _referenceTextField.setText(selectEnum.getReference());
+            _localVariableTextField.setText(selectEnum.getLocalVariable());
+            _formulaTextField.setText(selectEnum.getFormula());
         }
 
         panel.add(_tabbedPane);
@@ -91,11 +86,11 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
     }
 
     public boolean validate(
-            @Nonnull LogixNG_SelectNamedBean<E> selectNamedBean,
+            @Nonnull LogixNG_SelectEnum selectEnum,
             @Nonnull List<String> errorMessages) {
         try {
             if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectNamedBean.setReference(_referenceTextField.getText());
+                selectEnum.setReference(_referenceTextField.getText());
             }
         } catch (IllegalArgumentException e) {
             errorMessages.add(e.getMessage());
@@ -103,15 +98,15 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         }
 
         try {
-            selectNamedBean.setFormula(_formulaTextField.getText());
+            selectEnum.setFormula(_formulaTextField.getText());
             if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Direct);
+                selectEnum.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Reference);
+                selectEnum.setAddressing(NamedBeanAddressing.Reference);
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.LocalVariable);
+                selectEnum.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Formula);
+                selectEnum.setAddressing(NamedBeanAddressing.Formula);
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
@@ -123,45 +118,29 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         return true;
     }
 
-    public void updateObject(@Nonnull LogixNG_SelectNamedBean<E> selectNamedBean) {
+    public void updateObject(@Nonnull LogixNG_SelectEnum selectEnum) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-            E namedBean = _namedBeanPanel.getNamedBean();
-            if (namedBean != null) {
-                NamedBeanHandle<E> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(namedBean.getDisplayName(), namedBean);
-                selectNamedBean.setNamedBean(handle);
-            } else {
-                selectNamedBean.removeNamedBean();
-            }
-        } else {
-            selectNamedBean.removeNamedBean();
+            selectEnum.setEnum(_enumComboBox.getItemAt(_enumComboBox.getSelectedIndex()));
         }
 
         try {
             if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Direct);
+                selectEnum.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Reference);
-                selectNamedBean.setReference(_referenceTextField.getText());
+                selectEnum.setAddressing(NamedBeanAddressing.Reference);
+                selectEnum.setReference(_referenceTextField.getText());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.LocalVariable);
-                selectNamedBean.setLocalVariable(_localVariableTextField.getText());
+                selectEnum.setAddressing(NamedBeanAddressing.LocalVariable);
+                selectEnum.setLocalVariable(_localVariableTextField.getText());
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Formula);
-                selectNamedBean.setFormula(_formulaTextField.getText());
+                selectEnum.setAddressing(NamedBeanAddressing.Formula);
+                selectEnum.setFormula(_formulaTextField.getText());
             } else {
-                throw new IllegalArgumentException("_tabbedPaneNamedBean has unknown selection");
+                throw new IllegalArgumentException("_tabbedPaneEnum has unknown selection");
             }
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
-    }
-
-    public void dispose() {
-        if (_namedBeanPanel != null) {
-            _namedBeanPanel.dispose();
         }
     }
 
