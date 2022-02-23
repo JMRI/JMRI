@@ -65,7 +65,7 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable()));
         element.addContent(new Element("otherFormula").addContent(p.getOtherFormula()));
 
-        element.addContent(selectTableXml.store(p.getSelectTable()));
+        element.addContent(selectTableXml.store(p.getSelectTable(), "table"));
 
         return element;
     }
