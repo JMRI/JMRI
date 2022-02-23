@@ -59,7 +59,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             return;
         }
 
-        TurnoutState state = (TurnoutState) _selectEnum.evaluateEnum(getConditionalNG());
+        TurnoutState state = _selectEnum.evaluateEnum(getConditionalNG());
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == TurnoutState.Toggle) {
