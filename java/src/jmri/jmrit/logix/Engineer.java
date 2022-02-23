@@ -1336,7 +1336,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                                     stop = true;
                                 } else if ( _warrant.getCurrentOrderIndex() < _endBlockIdx &&
                                         _endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
-                                    // At last speed change to set throttle was 0.0, but train has not
+                                    // At last speed change to set throttle was endSpeed, but train has not
                                     // reached the last block. Let loco creep to end block at current setting.
                                     if (log.isDebugEnabled())
                                         log.debug("Extending ramp to reach block {}. speed= {}",

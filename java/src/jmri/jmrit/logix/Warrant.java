@@ -826,7 +826,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             }
                             time += 10;
                         }
-                        victim.debugInfo();
+//                        victim.debugInfo();
                         log.debug("{}: _engineer state {} after {}ms", getDisplayName(), victim.getState().toString(), time);
                     }
                 }
@@ -1212,7 +1212,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         _message = allocateFromIndex(_idxCurrentOrder); // checks, allocates, sets Path etc
         if (_message != null ) {
-            log.warn("Cannot reStartTrain train for warrant \"{}\" at block \"{}\" ahead. - msg = {}",
+            log.warn("Cannot reStartTrain train for warrant \"{}\" at block \"{}\" ahead. {}",
                     getDisplayName(), getBlockAt(_idxCurrentOrder).getDisplayName(), _message);
             return false;
         }
@@ -1225,6 +1225,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     // returns true if block is owned and occupied by this warrant
     private boolean checkBlockForRunning(int idxBlockOrder) {
         BlockOrder bo = getBlockOrderAt(idxBlockOrder);
+        if (bo == null) {
+            _message = Bundle.getMessage("BlockNotInRoute", "?");
+            return false;
+        }
         _message = bo.setPath(this);    // checks for allocation etc.
         if (_message != null ) {
             return false;
