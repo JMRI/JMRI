@@ -1437,6 +1437,7 @@ public class JUnitUtil {
         "WindowMonitor-DispatchThread",
         "RMI Reaper",
         "RMI TCP Accept",
+        "RMI GC Daemon",
         "TimerQueue",
         "Java Sound Event Dispatcher",
         "Aqua L&F",                         // macOS
