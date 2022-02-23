@@ -1,9 +1,10 @@
 package jmri.jmrix;
 
 import java.util.List;
-import jmri.ProgListener;
-import jmri.ProgrammingMode;
+
+import jmri.*;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -17,7 +18,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen
  */
-public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
+public class AbstractProgrammerTest extends ProgrammerTestBase {
 
     @Test
     public void testDefaultViaBestMode() {
@@ -47,7 +48,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
                     abstractprogrammer.registerFromCV(cv1 = 7));
             Assert.assertEquals("test CV 8", 8,
                     abstractprogrammer.registerFromCV(cv1 = 8));
-        } catch (Exception e) {
+        } catch (ProgrammerException e) {
             Assert.fail("unexpected exception while cv = " + cv1);
         }
 
@@ -59,7 +60,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
             try {
                 abstractprogrammer.registerFromCV(cv1); // should assert
                 Assert.fail("did not throw as expected for cv = " + cv1);
-            } catch (Exception e) {
+            } catch (ProgrammerException e) {
                 jmri.util.JUnitAppender.assertWarnMessage("Unhandled register from cv:  "+cv1);
             }
         }
@@ -75,7 +76,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
             @Nonnull
             @Override
             public List<ProgrammingMode> getSupportedModes() {
-                java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
+                java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
                 
                 retval.add(ProgrammingMode.DIRECTMODE);
                 retval.add(ProgrammingMode.PAGEMODE);
