@@ -85,7 +85,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="10:09 PM">
+    <memory value="1:28 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -155,7 +155,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Feb 21 22:09:00 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Feb 23 01:28:32 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -18189,11 +18189,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <localVariable />
         <formula />
       </namedBean>
-      <stateAddressing>Direct</stateAddressing>
-      <turnoutState>Thrown</turnoutState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Thrown</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18261,11 +18263,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
-      <stateAddressing>LocalVariable</stateAddressing>
-      <turnoutState>Closed</turnoutState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>LocalVariable</addressing>
+        <enum>Closed</enum>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18333,11 +18337,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
-      <stateAddressing>Formula</stateAddressing>
-      <turnoutState>Thrown</turnoutState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>Formula</addressing>
+        <enum>Thrown</enum>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18405,11 +18411,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
-      <stateAddressing>Reference</stateAddressing>
-      <turnoutState>Toggle</turnoutState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>Reference</addressing>
+        <enum>Toggle</enum>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18477,11 +18485,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
-      <stateAddressing>Direct</stateAddressing>
-      <turnoutState>Unknown</turnoutState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Unknown</enum>
+        <reference>{IM2}</reference>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18548,11 +18558,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <localVariable />
         <formula />
       </namedBean>
-      <stateAddressing>Direct</stateAddressing>
-      <turnoutState>Inconsistent</turnoutState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Inconsistent</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -26893,9 +26905,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon Feb 21 22:09:04 CET 2022</date>
+      <date>Wed Feb 23 01:28:36 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-21T21:05:55Z+Ra8e2fc7 on Mon Feb 21 22:09:04 CET 2022-->
+  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-23T00:28:14Z+R6639734 on Wed Feb 23 01:28:36 CET 2022-->
 </layout-config>
