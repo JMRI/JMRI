@@ -18,9 +18,13 @@ import org.slf4j.LoggerFactory;
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         implements EcosListener {
 
-    public EcosSensorManager(EcosSystemConnectionMemo memo) {
+    public EcosSensorManager(@Nonnull EcosSystemConnectionMemo memo) {
         super(memo);
         tc = memo.getTrafficController();
+        init();
+    }
+        
+    private void init() {
         // listen for sensor creation
         // connect to the TrafficManager
         tc.addEcosListener(this);
@@ -34,10 +38,10 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         tc.sendEcosMessage(m, this);
     }
 
-    private EcosTrafficController tc;
+    private final EcosTrafficController tc;
     //The hash table simply holds the object number against the EcosSensor ref.
-    private Hashtable<Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
-    private Hashtable<Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
+    private final Hashtable<Integer, EcosSensor> _tecos = new Hashtable<>();   // stores known Ecos Object ids to DCC
+    private final Hashtable<Integer, Integer> _sport = new Hashtable<>();   // stores known Ecos Object ids to DCC
 
     /**
      * {@inheritDoc}
@@ -229,6 +233,12 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         return validateTrimmedMin1NumberSystemNameFormat(name,locale);
+    }
+
+    @Override
+    public void dispose() {
+        tc.removeEcosListener(this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class);
