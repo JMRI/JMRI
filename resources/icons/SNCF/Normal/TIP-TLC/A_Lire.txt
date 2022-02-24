@@ -1,6 +1,6 @@
 Certains TIP sont mis à dispositions en plus de ceux pris en compte.
 
-Codés : 
+Codés :
 TIFDark (Aspect 89)
 TIP1(Aspect 90)
 TIP2(Aspect 91)
