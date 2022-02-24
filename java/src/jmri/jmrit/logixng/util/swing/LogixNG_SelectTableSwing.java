@@ -364,13 +364,6 @@ public class LogixNG_SelectTableSwing {
             }
         }
 
-        // These lines must be after the _compareToTableBeanPanel has set the default bean
-        boolean enable =
-                (_tableNameAddressing != NamedBeanAddressing.Direct)
-                || (_compareToTableBeanPanel.getNamedBean() != null);
-        _selectRowNameButton.setEnabled(enable);
-        _selectColumnNameButton.setEnabled(enable);
-
         _tableNameLabel.setText(getTableNameDescription());
         _rowNameLabel.setText(getTableRowDescription());
         _columnNameLabel.setText(getTableColumnDescription());

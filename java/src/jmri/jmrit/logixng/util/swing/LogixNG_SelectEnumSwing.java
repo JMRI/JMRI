@@ -53,7 +53,11 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         _panelReference = new javax.swing.JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
-        _panelTable = new javax.swing.JPanel();
+        if (selectEnum != null) {
+            _panelTable = _selectTableSwing.createPanel(selectEnum.getSelectTable());
+        } else {
+            _panelTable = _selectTableSwing.createPanel(null);
+        }
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -79,12 +83,6 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         _formulaTextField = new JTextField();
         _formulaTextField.setColumns(30);
         _panelFormula.add(_formulaTextField);
-
-        if (selectEnum != null) {
-            _panelTable = _selectTableSwing.createPanel(selectEnum.getSelectTable());
-        } else {
-            _panelTable = _selectTableSwing.createPanel(null);
-        }
 
 
         if (selectEnum != null) {
@@ -130,6 +128,8 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
                 selectEnum.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
                 selectEnum.setAddressing(NamedBeanAddressing.Formula);
+            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+                selectEnum.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
@@ -161,6 +161,8 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
                 selectEnum.setAddressing(NamedBeanAddressing.Formula);
                 selectEnum.setFormula(_formulaTextField.getText());
+            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+                selectEnum.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPaneEnum has unknown selection");
             }

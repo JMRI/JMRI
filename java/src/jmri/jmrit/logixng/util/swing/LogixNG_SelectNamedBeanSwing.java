@@ -57,7 +57,11 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         _panelReference = new javax.swing.JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
-        _panelTable = new javax.swing.JPanel();
+        if (selectNamedBean != null) {
+            _panelTable = _selectTableSwing.createPanel(selectNamedBean.getSelectTable());
+        } else {
+            _panelTable = _selectTableSwing.createPanel(null);
+        }
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -79,12 +83,6 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         _formulaTextField = new JTextField();
         _formulaTextField.setColumns(30);
         _panelFormula.add(_formulaTextField);
-
-        if (selectNamedBean != null) {
-            _panelTable = _selectTableSwing.createPanel(selectNamedBean.getSelectTable());
-        } else {
-            _panelTable = _selectTableSwing.createPanel(null);
-        }
 
 
         if (selectNamedBean != null) {
@@ -130,6 +128,8 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                 selectNamedBean.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.Formula);
+            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+                selectNamedBean.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
@@ -171,6 +171,8 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.Formula);
                 selectNamedBean.setFormula(_formulaTextField.getText());
+            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+                selectNamedBean.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPaneNamedBean has unknown selection");
             }
