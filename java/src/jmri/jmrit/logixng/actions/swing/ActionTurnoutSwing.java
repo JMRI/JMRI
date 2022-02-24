@@ -24,10 +24,11 @@ import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
 
     private final LogixNG_SelectNamedBeanSwing<Turnout> _selectNamedBeanSwing =
-            new LogixNG_SelectNamedBeanSwing<>(InstanceManager.getDefault(TurnoutManager.class));
+            new LogixNG_SelectNamedBeanSwing<>(
+                    InstanceManager.getDefault(TurnoutManager.class), getJDialog(), this);
 
     private final LogixNG_SelectEnumSwing<TurnoutState> _selectEnumSwing =
-            new LogixNG_SelectEnumSwing<>();
+            new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
 
     @Override
@@ -97,6 +98,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     @Override
     public void dispose() {
         _selectNamedBeanSwing.dispose();
+        _selectEnumSwing.dispose();
     }
 
 

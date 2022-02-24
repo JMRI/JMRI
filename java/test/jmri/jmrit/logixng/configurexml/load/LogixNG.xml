@@ -85,7 +85,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="1:28 AM">
+    <memory value="2:03 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -155,7 +155,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Feb 23 01:28:32 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Feb 24 02:03:54 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -18188,6 +18188,28 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference />
         <localVariable />
         <formula />
+        <table>
+          <tableName>
+            <addressing>Direct</addressing>
+            <reference />
+            <localVariable />
+            <formula />
+          </tableName>
+          <row>
+            <addressing>Direct</addressing>
+            <name />
+            <reference />
+            <localVariable />
+            <formula />
+          </row>
+          <column>
+            <addressing>Direct</addressing>
+            <name />
+            <reference />
+            <localVariable />
+            <formula />
+          </column>
+        </table>
       </namedBean>
       <state>
         <addressing>Direct</addressing>
@@ -18195,6 +18217,28 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference />
         <localVariable />
         <formula />
+        <table>
+          <tableName>
+            <addressing>Direct</addressing>
+            <reference />
+            <localVariable />
+            <formula />
+          </tableName>
+          <row>
+            <addressing>Direct</addressing>
+            <name />
+            <reference />
+            <localVariable />
+            <formula />
+          </row>
+          <column>
+            <addressing>Direct</addressing>
+            <name />
+            <reference />
+            <localVariable />
+            <formula />
+          </column>
+        </table>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18262,6 +18306,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM1}</reference>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
+        <table>
+          <tableName>
+            <addressing>Direct</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Reference</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>LocalVariable</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </namedBean>
       <state>
         <addressing>LocalVariable</addressing>
@@ -18269,6 +18336,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM2}</reference>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
+        <table>
+          <tableName>
+            <addressing>Formula</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Direct</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Reference</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18336,6 +18426,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM1}</reference>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
+        <table>
+          <tableName>
+            <addressing>Formula</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Direct</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Reference</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </namedBean>
       <state>
         <addressing>Formula</addressing>
@@ -18343,6 +18456,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM2}</reference>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
+        <table>
+          <tableName>
+            <addressing>LocalVariable</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Formula</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Direct</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18410,6 +18546,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM1}</reference>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
+        <table>
+          <tableName>
+            <addressing>LocalVariable</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Formula</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Direct</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </namedBean>
       <state>
         <addressing>Reference</addressing>
@@ -18417,6 +18576,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM2}</reference>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
+        <table>
+          <tableName>
+            <addressing>Reference</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>LocalVariable</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Formula</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18484,6 +18666,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM1}</reference>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
+        <table>
+          <tableName>
+            <addressing>Reference</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>LocalVariable</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Formula</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </namedBean>
       <state>
         <addressing>Direct</addressing>
@@ -18491,6 +18696,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference>{IM2}</reference>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
+        <table>
+          <tableName>
+            <addressing>Table</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Direct</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Reference</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18557,6 +18785,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference />
         <localVariable />
         <formula />
+        <table>
+          <tableName>
+            <addressing>Table</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Direct</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>Reference</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </namedBean>
       <state>
         <addressing>Direct</addressing>
@@ -18564,6 +18815,29 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <reference />
         <localVariable />
         <formula />
+        <table>
+          <tableName>
+            <addressing>Direct</addressing>
+            <name>IQT1</name>
+            <reference>{tableRef}</reference>
+            <localVariable>tableVariable</localVariable>
+            <formula>"IT"+str(index)</formula>
+          </tableName>
+          <row>
+            <addressing>Reference</addressing>
+            <name>The row</name>
+            <reference>{rowRef}</reference>
+            <localVariable>rowVariable</localVariable>
+            <formula>"Row "+str(index)</formula>
+          </row>
+          <column>
+            <addressing>LocalVariable</addressing>
+            <name>The column</name>
+            <reference>{columnRef}</reference>
+            <localVariable>columnVariable</localVariable>
+            <formula>"Column "+str(index)</formula>
+          </column>
+        </table>
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26905,9 +27179,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Wed Feb 23 01:28:36 CET 2022</date>
+      <date>Thu Feb 24 02:03:57 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-23T00:28:14Z+R6639734 on Wed Feb 23 01:28:36 CET 2022-->
+  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-24T01:03:36Z+Rc470b46 on Thu Feb 24 02:03:57 CET 2022-->
 </layout-config>

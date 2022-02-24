@@ -22,10 +22,6 @@ import jmri.util.TypeConversionUtil;
  */
 public class LogixNG_SelectTable implements VetoableChangeListener {
 
-    public static interface InUse {
-        public boolean isInUse();
-    }
-
     private final AbstractBase _base;
     private final InUse _inUse;
 
@@ -35,6 +31,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     private String _tableNameLocalVariable = "";
     private String _tableNameFormula = "";
     private ExpressionNode _tableNameExpressionNode;
+    private LogixNG_SelectTable _tableNameSelectTable;
 
     private NamedBeanAddressing _tableRowAddressing = NamedBeanAddressing.Direct;
     private String _tableRowName = "";
@@ -42,6 +39,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     private String _tableRowLocalVariable = "";
     private String _tableRowFormula = "";
     private ExpressionNode _tableRowExpressionNode;
+    private LogixNG_SelectTable _tableRowSelectTable;
 
     private NamedBeanAddressing _tableColumnAddressing = NamedBeanAddressing.Direct;
     private String _tableColumnName = "";
@@ -49,6 +47,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     private String _tableColumnLocalVariable = "";
     private String _tableColumnFormula = "";
     private ExpressionNode _tableColumnExpressionNode;
+    private LogixNG_SelectTable _tableColumnSelectTable;
 
 
     public LogixNG_SelectTable(AbstractBase base, InUse inUse) {
@@ -63,20 +62,34 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         copy.setTableNameLocalVariable(_tableNameLocalVariable);
         copy.setTableNameReference(_tableNameReference);
         copy.setTableNameFormula(_tableNameFormula);
+        if (_tableNameSelectTable != null) {
+            _tableNameSelectTable.copy(copy._tableNameSelectTable);
+        }
+
         copy.setTableRowAddressing(_tableRowAddressing);
         copy.setTableRowName(_tableRowName);
         copy.setTableRowLocalVariable(_tableRowLocalVariable);
         copy.setTableRowReference(_tableRowReference);
         copy.setTableRowFormula(_tableRowFormula);
+        if (_tableRowSelectTable != null) {
+            _tableRowSelectTable.copy(copy._tableRowSelectTable);
+        }
+
         copy.setTableColumnAddressing(_tableColumnAddressing);
         copy.setTableColumnName(_tableColumnName);
         copy.setTableColumnLocalVariable(_tableColumnLocalVariable);
         copy.setTableColumnReference(_tableColumnReference);
         copy.setTableColumnFormula(_tableColumnFormula);
+        if (_tableColumnSelectTable != null) {
+            _tableColumnSelectTable.copy(copy._tableColumnSelectTable);
+        }
     }
 
-    public void setTableNameAddressing(@Nonnull NamedBeanAddressing addressing) {
+    public synchronized void setTableNameAddressing(@Nonnull NamedBeanAddressing addressing) {
         this._tableNameAddressing = addressing;
+        if ((_tableNameAddressing == NamedBeanAddressing.Table) && (_tableNameSelectTable == null)) {
+            _tableNameSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        }
     }
 
     public NamedBeanAddressing getTableNameAddressing() {
@@ -146,8 +159,18 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    public void setTableRowAddressing(@Nonnull NamedBeanAddressing addressing) {
+    public synchronized LogixNG_SelectTable getSelectTableName() {
+        if (_tableNameSelectTable == null) {
+            _tableNameSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        }
+        return _tableNameSelectTable;
+    }
+
+    public synchronized void setTableRowAddressing(@Nonnull NamedBeanAddressing addressing) {
         this._tableRowAddressing = addressing;
+        if ((_tableRowAddressing == NamedBeanAddressing.Table) && (_tableRowSelectTable == null)) {
+            _tableRowSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        }
     }
 
     public NamedBeanAddressing getTableRowAddressing() {
@@ -209,8 +232,18 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    public void setTableColumnAddressing(@Nonnull NamedBeanAddressing addressing) {
+    public synchronized LogixNG_SelectTable getSelectTableRow() {
+        if (_tableRowSelectTable == null) {
+            _tableRowSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        }
+        return _tableRowSelectTable;
+    }
+
+    public synchronized void setTableColumnAddressing(@Nonnull NamedBeanAddressing addressing) {
         this._tableColumnAddressing = addressing;
+        if ((_tableColumnAddressing == NamedBeanAddressing.Table) && (_tableColumnSelectTable == null)) {
+            _tableColumnSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        }
     }
 
     public NamedBeanAddressing getTableColumnAddressing() {
@@ -272,7 +305,12 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         _tableColumnName = columnName;
     }
 
-
+    public synchronized LogixNG_SelectTable getSelectTableColumn() {
+        if (_tableColumnSelectTable == null) {
+            _tableColumnSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        }
+        return _tableColumnSelectTable;
+    }
 
     private NamedTable evaluateTableBean(ConditionalNG conditionalNG) throws JmriException {
 
@@ -299,6 +337,11 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                                     _tableNameExpressionNode .calculate(
                                             conditionalNG.getSymbolTable()), false)
                             : null;
+                    break;
+
+                case Table:
+                    name = TypeConversionUtil.convertToString(
+                            _tableNameSelectTable.evaluateTableData(conditionalNG), false);
                     break;
 
                 default:
@@ -336,6 +379,10 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                                         conditionalNG.getSymbolTable()), false)
                         : null;
 
+                case Table:
+                    return TypeConversionUtil.convertToString(
+                            _tableRowSelectTable.evaluateTableData(conditionalNG), false);
+
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _tableRowAddressing.name());
         }
@@ -362,6 +409,10 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                                 _tableColumnExpressionNode.calculate(
                                         conditionalNG.getSymbolTable()), false)
                         : null;
+
+                case Table:
+                    return TypeConversionUtil.convertToString(
+                            _tableColumnSelectTable.evaluateTableData(conditionalNG), false);
 
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _tableColumnAddressing.name());
@@ -398,6 +449,15 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 namedBean = Bundle.getMessage(locale, "AddressByFormula", _tableNameFormula);
                 break;
 
+            case Table:
+                namedBean = Bundle.getMessage(
+                        locale,
+                        "AddressByTable",
+                        _tableNameSelectTable.getTableNameDescription(locale),
+                        _tableNameSelectTable.getTableRowDescription(locale),
+                        _tableNameSelectTable.getTableColumnDescription(locale));
+                break;
+
             default:
                 throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
         }
@@ -423,6 +483,15 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 row = Bundle.getMessage(locale, "AddressByFormula", _tableRowFormula);
                 break;
 
+            case Table:
+                row = Bundle.getMessage(
+                        locale,
+                        "AddressByTable",
+                        _tableRowSelectTable.getTableNameDescription(locale),
+                        _tableRowSelectTable.getTableRowDescription(locale),
+                        _tableRowSelectTable.getTableColumnDescription(locale));
+                break;
+
             default:
                 throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
         }
@@ -446,6 +515,15 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
             case Formula:
                 column = Bundle.getMessage(locale, "AddressByFormula", _tableColumnFormula);
+                break;
+
+            case Table:
+                column = Bundle.getMessage(
+                        locale,
+                        "AddressByTable",
+                        _tableColumnSelectTable.getTableNameDescription(locale),
+                        _tableColumnSelectTable.getTableRowDescription(locale),
+                        _tableColumnSelectTable.getTableColumnDescription(locale));
                 break;
 
             default:

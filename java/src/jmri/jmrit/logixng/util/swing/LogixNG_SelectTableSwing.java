@@ -151,11 +151,6 @@ public class LogixNG_SelectTableSwing {
     }
 
     private void selectTableNameFinished() {
-        boolean enable =
-                (_tableNameAddressing != NamedBeanAddressing.Direct)
-                || (_compareToTableBeanPanel.getNamedBean() != null);
-        _selectRowNameButton.setEnabled(enable);
-        _selectColumnNameButton.setEnabled(enable);
         _tableNameAddressing = _logixNG_DataDialog.getAddressing();
         _tableNameLabel.setText(getTableNameDescription());
     }
@@ -426,7 +421,7 @@ public class LogixNG_SelectTableSwing {
             String columnName =
                     _tableNameAddressing == NamedBeanAddressing.Direct
                     ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
+                    : _tableColumnNameTextField.getText();
             switch (_tableColumnAddressing) {
                 case Direct: selectTable.setTableColumnName(columnName); break;
                 case Reference: selectTable.setTableColumnReference(_tableColumnReferenceTextField.getText()); break;
@@ -477,7 +472,7 @@ public class LogixNG_SelectTableSwing {
             String columnName =
                     _tableNameAddressing == NamedBeanAddressing.Direct
                     ? _tableColumnNameComboBox.getItemAt(_tableColumnNameComboBox.getSelectedIndex())
-                    : _tableRowNameTextField.getText();
+                    : _tableColumnNameTextField.getText();
             switch (_tableColumnAddressing) {
                 case Direct: selectTable.setTableColumnName(columnName); break;
                 case Reference: selectTable.setTableColumnReference(_tableColumnReferenceTextField.getText()); break;

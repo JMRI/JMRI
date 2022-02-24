@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.JComboBoxUtil;
@@ -20,16 +21,27 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
+    private final JDialog _dialog;
+    private final LogixNG_SelectTableSwing _selectTableSwing;
+
     private JTabbedPane _tabbedPane;
     private JComboBox<E> _enumComboBox;
     private JPanel _panelDirect;
     private JPanel _panelReference;
     private JPanel _panelLocalVariable;
     private JPanel _panelFormula;
+    private JPanel _panelTable;
     private JTextField _referenceTextField;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
+
+    public LogixNG_SelectEnumSwing(
+            @Nonnull JDialog dialog,
+            @Nonnull SwingConfiguratorInterface swi) {
+        _dialog = dialog;
+        _selectTableSwing = new LogixNG_SelectTableSwing(_dialog, swi);
+    }
 
     public JPanel createPanel(
             @CheckForNull LogixNG_SelectEnum<E> selectEnum, E[] enumArray) {
@@ -41,11 +53,13 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         _panelReference = new javax.swing.JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
+        _panelTable = new javax.swing.JPanel();
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
+        _tabbedPane.addTab(NamedBeanAddressing.Table.toString(), _panelTable);
 
         _enumComboBox = new JComboBox<>();
         for (E e : enumArray) {
@@ -66,6 +80,12 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         _formulaTextField.setColumns(30);
         _panelFormula.add(_formulaTextField);
 
+        if (selectEnum != null) {
+            _panelTable = _selectTableSwing.createPanel(selectEnum.getSelectTable());
+        } else {
+            _panelTable = _selectTableSwing.createPanel(null);
+        }
+
 
         if (selectEnum != null) {
             switch (selectEnum.getAddressing()) {
@@ -73,6 +93,7 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
                 case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
                 case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
+                case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + selectEnum.getAddressing().name());
             }
             if (selectEnum.getEnum() != null) {
@@ -117,7 +138,9 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
             return false;
         }
 
-        return true;
+        _selectTableSwing.validate(selectEnum.getSelectTable(), errorMessages);
+
+        return errorMessages.isEmpty();
     }
 
     public void updateObject(@Nonnull LogixNG_SelectEnum<E> selectEnum) {
@@ -144,6 +167,12 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        _selectTableSwing.updateObject(selectEnum.getSelectTable());
+    }
+
+    public void dispose() {
+        _selectTableSwing.dispose();
     }
 
 }

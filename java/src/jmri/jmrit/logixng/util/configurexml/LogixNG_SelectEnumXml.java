@@ -24,22 +24,29 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
      * @return Element containing the complete info
      */
     public Element store(LogixNG_SelectEnum<E> selectEnum, String tagName) {
-//        Element tableElement = new Element("enum");
-        Element tableElement = new Element(tagName);
 
-        tableElement.addContent(new Element("addressing").addContent(selectEnum.getAddressing().name()));
-        tableElement.addContent(new Element("enum").addContent(selectEnum.getEnum().name()));
-        tableElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
-        tableElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
-        tableElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
-        return tableElement;
+        Element enumElement = new Element(tagName);
+
+        enumElement.addContent(new Element("addressing").addContent(selectEnum.getAddressing().name()));
+        enumElement.addContent(new Element("enum").addContent(selectEnum.getEnum().name()));
+        enumElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
+        enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
+        enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
+
+        enumElement.addContent(selectTableXml.store(selectEnum.getSelectTable(), "table"));
+
+        return enumElement;
     }
 
     public void load(Element enumElement, LogixNG_SelectEnum<E> selectEnum)
             throws JmriConfigureXmlException {
 
         if (enumElement != null) {
+
+            LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
             try {
                 Element elem = enumElement.getChild("addressing");
                 if (elem != null) {
@@ -59,6 +66,8 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
 
                 elem = enumElement.getChild("formula");
                 if (elem != null) selectEnum.setFormula(elem.getTextTrim());
+
+                selectTableXml.load(enumElement.getChild("table"), selectEnum.getSelectTable());
 
             } catch (ParserException e) {
                 throw new JmriConfigureXmlException(e);
