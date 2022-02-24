@@ -36,10 +36,10 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
     public EcosTurnoutManager(EcosSystemConnectionMemo memo) {
         super(memo);
-        init();
+        initEtm();
     }
     
-    private void init() {
+    private void initEtm() {
         tc = getMemo().getTrafficController();
 
         // listen for turnout creation
