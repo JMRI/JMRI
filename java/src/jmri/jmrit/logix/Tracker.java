@@ -422,7 +422,7 @@ public class Tracker {
                 // Was it the warranted train that entered the block?
                 // Can't tell who got notified first - tracker or warrant?
                 // is distance of 1 block OK?
-                if (Math.abs(w.getIndexOfBlock(block, 0) - idx) < 2) {
+                if (Math.abs(w.getIndexOfBlockAfter(block, 0) - idx) < 2) {
                     _statusMessage = msg;
                     return true;
                 }  // otherwise claim it for tracker
