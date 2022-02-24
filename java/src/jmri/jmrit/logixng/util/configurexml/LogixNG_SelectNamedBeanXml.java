@@ -38,7 +38,9 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
         namedBeanElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
 
-        namedBeanElement.addContent(selectTableXml.store(selectNamedBean.getSelectTable(), "table"));
+        if (selectNamedBean.getAddressing() == NamedBeanAddressing.Table) {
+            namedBeanElement.addContent(selectTableXml.store(selectNamedBean.getSelectTable(), "table"));
+        }
 
         return namedBeanElement;
     }
@@ -71,7 +73,9 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
                 elem = namedBeanElement.getChild("formula");
                 if (elem != null) selectNamedBean.setFormula(elem.getTextTrim());
 
-                selectTableXml.load(namedBeanElement.getChild("table"), selectNamedBean.getSelectTable());
+                if (namedBeanElement.getChild("table") != null) {
+                    selectTableXml.load(namedBeanElement.getChild("table"), selectNamedBean.getSelectTable());
+                }
 
             } catch (ParserException e) {
                 throw new JmriConfigureXmlException(e);

@@ -23,17 +23,25 @@ import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
  */
 public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
 
-    private final LogixNG_SelectNamedBeanSwing<Turnout> _selectNamedBeanSwing =
-            new LogixNG_SelectNamedBeanSwing<>(
-                    InstanceManager.getDefault(TurnoutManager.class), getJDialog(), this);
+    private LogixNG_SelectNamedBeanSwing<Turnout> _selectNamedBeanSwing;
+    private LogixNG_SelectEnumSwing<TurnoutState> _selectEnumSwing;
 
-    private final LogixNG_SelectEnumSwing<TurnoutState> _selectEnumSwing =
-            new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
+    public ActionTurnoutSwing() {
+    }
+
+    public ActionTurnoutSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionTurnout action = (ActionTurnout)object;
+
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(TurnoutManager.class), getJDialog(), this);
+
+        _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
         panel = new JPanel();
 

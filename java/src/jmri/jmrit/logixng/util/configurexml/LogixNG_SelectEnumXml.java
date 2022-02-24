@@ -35,7 +35,9 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
         enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
         enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
 
-        enumElement.addContent(selectTableXml.store(selectEnum.getSelectTable(), "table"));
+        if (selectEnum.getAddressing() == NamedBeanAddressing.Table) {
+            enumElement.addContent(selectTableXml.store(selectEnum.getSelectTable(), "table"));
+        }
 
         return enumElement;
     }
@@ -67,7 +69,9 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
                 elem = enumElement.getChild("formula");
                 if (elem != null) selectEnum.setFormula(elem.getTextTrim());
 
-                selectTableXml.load(enumElement.getChild("table"), selectEnum.getSelectTable());
+                if (enumElement.getChild("table") != null) {
+                    selectTableXml.load(enumElement.getChild("table"), selectEnum.getSelectTable());
+                }
 
             } catch (ParserException e) {
                 throw new JmriConfigureXmlException(e);

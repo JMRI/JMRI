@@ -85,10 +85,12 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    public synchronized void setTableNameAddressing(@Nonnull NamedBeanAddressing addressing) {
+    public void setTableNameAddressing(@Nonnull NamedBeanAddressing addressing) {
         this._tableNameAddressing = addressing;
-        if ((_tableNameAddressing == NamedBeanAddressing.Table) && (_tableNameSelectTable == null)) {
-            _tableNameSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        synchronized(this) {
+            if ((_tableNameAddressing == NamedBeanAddressing.Table) && (_tableNameSelectTable == null)) {
+                _tableNameSelectTable = new LogixNG_SelectTable(_base, _inUse);
+            }
         }
     }
 
@@ -159,17 +161,21 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    public synchronized LogixNG_SelectTable getSelectTableName() {
-        if (_tableNameSelectTable == null) {
-            _tableNameSelectTable = new LogixNG_SelectTable(_base, _inUse);
+    public LogixNG_SelectTable getSelectTableName() {
+        synchronized(this) {
+            if (_tableNameSelectTable == null) {
+                _tableNameSelectTable = new LogixNG_SelectTable(_base, _inUse);
+            }
         }
         return _tableNameSelectTable;
     }
 
-    public synchronized void setTableRowAddressing(@Nonnull NamedBeanAddressing addressing) {
+    public void setTableRowAddressing(@Nonnull NamedBeanAddressing addressing) {
         this._tableRowAddressing = addressing;
-        if ((_tableRowAddressing == NamedBeanAddressing.Table) && (_tableRowSelectTable == null)) {
-            _tableRowSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        synchronized(this) {
+            if ((_tableRowAddressing == NamedBeanAddressing.Table) && (_tableRowSelectTable == null)) {
+                _tableRowSelectTable = new LogixNG_SelectTable(_base, _inUse);
+            }
         }
     }
 
@@ -232,17 +238,21 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    public synchronized LogixNG_SelectTable getSelectTableRow() {
-        if (_tableRowSelectTable == null) {
-            _tableRowSelectTable = new LogixNG_SelectTable(_base, _inUse);
+    public LogixNG_SelectTable getSelectTableRow() {
+        synchronized(this) {
+            if (_tableRowSelectTable == null) {
+                _tableRowSelectTable = new LogixNG_SelectTable(_base, _inUse);
+            }
         }
         return _tableRowSelectTable;
     }
 
-    public synchronized void setTableColumnAddressing(@Nonnull NamedBeanAddressing addressing) {
+    public void setTableColumnAddressing(@Nonnull NamedBeanAddressing addressing) {
         this._tableColumnAddressing = addressing;
-        if ((_tableColumnAddressing == NamedBeanAddressing.Table) && (_tableColumnSelectTable == null)) {
-            _tableColumnSelectTable = new LogixNG_SelectTable(_base, _inUse);
+        synchronized(this) {
+            if ((_tableColumnAddressing == NamedBeanAddressing.Table) && (_tableColumnSelectTable == null)) {
+                _tableColumnSelectTable = new LogixNG_SelectTable(_base, _inUse);
+            }
         }
     }
 
@@ -305,9 +315,11 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         _tableColumnName = columnName;
     }
 
-    public synchronized LogixNG_SelectTable getSelectTableColumn() {
-        if (_tableColumnSelectTable == null) {
-            _tableColumnSelectTable = new LogixNG_SelectTable(_base, _inUse);
+    public LogixNG_SelectTable getSelectTableColumn() {
+        synchronized(this) {
+            if (_tableColumnSelectTable == null) {
+                _tableColumnSelectTable = new LogixNG_SelectTable(_base, _inUse);
+            }
         }
         return _tableColumnSelectTable;
     }
