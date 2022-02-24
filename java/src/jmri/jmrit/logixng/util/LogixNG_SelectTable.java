@@ -274,7 +274,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
 
 
-    private NamedTable getTableBean(ConditionalNG conditionalNG) throws JmriException {
+    private NamedTable evaluateTableBean(ConditionalNG conditionalNG) throws JmriException {
 
         if (_tableNameAddressing == NamedBeanAddressing.Direct) {
             return _tableHandle != null ? _tableHandle.getBean() : null;
@@ -314,7 +314,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    private String getTableRow(ConditionalNG conditionalNG) throws JmriException {
+    private String evaluateTableRow(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_tableRowAddressing) {
             case Direct:
@@ -341,7 +341,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    private String getTableColumn(ConditionalNG conditionalNG) throws JmriException {
+    private String evaluateTableColumn(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_tableColumnAddressing) {
             case Direct:
@@ -368,9 +368,9 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         }
     }
 
-    public Object getTableData(ConditionalNG conditionalNG) throws JmriException {
-        return getTableBean(conditionalNG).getCell(
-                getTableRow(conditionalNG), getTableColumn(conditionalNG));
+    public Object evaluateTableData(ConditionalNG conditionalNG) throws JmriException {
+        return evaluateTableBean(conditionalNG).getCell(
+                evaluateTableRow(conditionalNG), evaluateTableColumn(conditionalNG));
     }
 
     public String getTableNameDescription(Locale locale) {

@@ -17,57 +17,72 @@
     <div id="mainContent">
       <h2>Setting Roster Media</h2>
       <img src="images/DecProRosterMediaPane.png" alt="">
-      <p>The Roster Media pane is accessible when using DecoderPro in Advanced mode.<br>
-      <img src="images/DecProAdvancedMode.png" alt=""></p>
+      <p>The Roster Media pane is accessible when using DecoderPro from the contextual menu on a roster entry, from the "Labels & Media" button at the bottom right of the DecoderPro main window and from the "Labels and media" entry in the Actions menu.
+        <br>
+      </p>
 
       <h3>Image entry</h3>
-      Dropping an image file in the inner frame will update this entry (it has to be an image file,
+      <p>Dropping an image file in the inner frame will update this entry (it has to be an image file,
       hence after searching on the web for an image you like, save it on the dektop, and then drop
-      the file in the entry, dropping image content directly from browser window will not
-      work).<br>
-      The Remove button will remove the Image entry in current roster entry.<br>
-      Roster images are stored in &lt;JMRI Preferences folder&gt;/resources. When the image is
+      the file in the entry, dropping image content directly from browser window may work for some browsers
+      (the image will be downloaded and a local copy stored)).</p>
+      <p>The contextual menu (right click) on an image allows to remove the Image entry in current roster entry.</p>
+      <p>Roster images are stored in JMRI Preferences folder. When the image is
       updated or removed from the roster, the image file is not removed from its storage in
-      &lt;JMRI Preferences folder&gt;/resources.<br>
-      The Image entry is used as a background for JMRI Throttles <a href=
-      "ThrottlesPreferencesPane.shtml">when that option is enabled</a>.
+      JMRI Preferences folder.</p>
+      <p>The Icon entry is used as an icon for that roster entry.</p>
+      <p>The Image entry is used as a background for JMRI Throttles <a href=
+      "ThrottlesPreferencesPane.shtml">when that option is enabled</a>.</p>
+
       <h3>Icon entry</h3>
-      Dropping an image file in the inner frame will update this entry (it has to be an image file,
+      <p>Dropping an image file in the inner frame will update this entry (it has to be an image file,
       hence after searching on the web for an image you like, save it on the dektop, and then drop
-      the file in the entry, dropping image content directly from browser window will not
-      work).<br>
-      The Remove button will remove the Icon entry in current roster entry.<br>
-      Roster icons are stored in &lt;JMRI Preferences folder&gt;/resources. When the icon is
+      the file in the entry, dropping image content directly from browser window may work for some browsers
+      (the image will be downloaded and a local copy stored)).</p>
+      <p>The contextual menu (right click) on an image allows to remove the Image entry in current roster entry.</p>
+      <p>Roster icons are stored in JMRI Preferences folder. When the image is
       updated or removed from the roster, the image file is not removed from its storage in
-      &lt;JMRI Preferences folder&gt;/resources.<br>
-      The Icon entry is used in various Roster Combo Boxes in JMRI, and in the <a href=
-      "ThrottlesListWindow.shtml">Throttles List Window</a>.<br>
-      It is recommended to use GIF or PNG images with a transparent background and to have the
+      JMRI Preferences folder.</p>
+      <p>The Icon entry is used in various Roster Combo Boxes in JMRI, and in the <a href=
+      "ThrottlesListWindow.shtml">Throttles List Window</a>.</p>
+      <p>It is recommended to use GIF or PNG images with a transparent background and to have the
       images turned so that the locomotive head will be to the right. That will allow for easier
-      transformations of the image in later applications.<br>
-      <span style="font-style: italic;">Note: an easy way to find icons is to search for "train
-      GIF" or look at resources linked to the "<a href=
-      "http://www.fsz.bme.hu/traffic/indexe.htm">MM Traffic Screensaver</a>" in your favorite
-      Internet search engine.</span>
+      transformations of the image in later applications.</p>
+      <p><span style="font-style: italic;">Note: an easy way to find icons is to search for "train
+      GIF" or look at resources linked to the Traffic  Screensaver in your favorite Internet search engine.</span></p>
+
       <h3>Web reference</h3>
-      This entry is dedicated towards storing an URL, here I point to the Wikipedia entry for that
+      This entry is dedicated towards storing an URL, on the above screenshot it points to the Wikipedia entry for that
       roster prototype.<br>
 
       <h2>Roster Function Labels</h2>
       <img src="images/DecProFunctionLabels.png" alt="">
       <p>It is also recommended to fill in the Function Labels entries in the Function Labels pane
-      in DecoderPro (also accessible from Advanced mode). These entries will be used by the
+      in DecoderPro. These entries will be used by the
       <a href="BasicThrottleWindow.shtml">Function Panel in Throttle Windows</a>, and also by the
       <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">throttle apps</a> to
-      display label text instead of the function numbers.<br>
-      There is an option for JMRI Throttles that will show Throttle Function buttons <a href=
-      "ThrottlesPreferencesPane.shtml">only when an entry is defined here</a>.<br>
+      display label text instead of the function numbers, or even on/off icons.</p>
+      <ul>
+        <li><b>fn</b> in the function number</li>
+        <li><b>label</b> in the text for that function entry</li>
+        <li><b>lock</b> checked means this is a lockable function</li>
+        <li><b>off</b> is the function off icon</li>
+        <li><b>on</b> is the function on icon</li>
+        <li><b>shunt</b> enabled will switch the <a href="BasicThrottleWindow.shtml">JMRI native throttle slider to continuous mode</a> (from -100 to +100 instead of from 0 to 100) when that function is enabled, to be set on the "Slow" function for shunting</li>
+      </ul>
+
+      <p>Image are edited the same way than in the above window, note that the contextual menu on each image entry allows to remove curent image but also to open
+      a file browser directly in the JMRI icon ressources for function icons, SVG files are supported here and in native JMRI throttle window (allows for nice resizing)
+      but may not be supported in web throttles.</p>
+      <p>Functions images are stored in JMRI Preferences folder.
+        When a new image is dropped if a file exist with the same name and same content, the existing file is used.
+        When the image is updated or removed from the roster entry, the image file is not removed from its storage in JMRI Preferences folder.</p>
+      <p>There is an option for JMRI Throttles that will show Throttle Function buttons <a href=
+      "ThrottlesPreferencesPane.shtml">only when an entry is defined here</a>.
       Using the "Export current throttle customization to roster entry" in <a href=
       "ThrottleWindowMenus.shtml">Throttle Windows menu</a> will update these entries from the
-      Function Panel if required.<br>
-      See the Functions Panel documentation in the <a href="BasicThrottleWindow.shtml">Basic
-      Throttle Window description</a>.<br>
-      You might also want to have a look at Jynstruments for advanced function buttons.</p>
+      Function Panel if required. See the Functions Panel documentation in the <a href="BasicThrottleWindow.shtml">Basic
+      Throttle Window description</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

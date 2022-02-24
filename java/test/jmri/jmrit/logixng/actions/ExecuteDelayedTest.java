@@ -17,7 +17,7 @@ import org.junit.Test;
 
 /**
  * Test ExecuteDelayed
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
@@ -25,17 +25,17 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     LogixNG _logixNG;
     ConditionalNG _conditionalNG;
     ExecuteDelayed _executeDelayed;
-    
+
     @Override
     public ConditionalNG getConditionalNG() {
         return _conditionalNG;
     }
-    
+
     @Override
     public LogixNG getLogixNG() {
         return _logixNG;
     }
-    
+
     @Override
     public MaleSocket getConnectableChild() {
         DigitalMany action = new DigitalMany("IQDA999", null);
@@ -43,7 +43,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         return maleSocket;
     }
-    
+
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
@@ -51,7 +51,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
                 "   ! A%n" +
                 "      Socket not connected%n");
     }
-    
+
     @Override
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
@@ -62,24 +62,24 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
                 "            ! A%n" +
                 "               Socket not connected%n");
     }
-    
+
     @Override
     public NamedBean createNewBean(String systemName) {
         return new ExecuteDelayed(systemName, null);
     }
-    
+
     @Override
     public boolean addNewSocket() {
         return false;
     }
-    
+
     @Test
     public void testGetChild() {
         Assert.assertTrue("getChildCount() returns 1", 1 == _executeDelayed.getChildCount());
-        
+
         Assert.assertNotNull("getChild(0) returns a non null value",
                 _executeDelayed.getChild(0));
-        
+
         boolean hasThrown = false;
         try {
             _executeDelayed.getChild(3);
@@ -89,12 +89,12 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-    
+
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
     }
-    
+
     @Test
     public void testDescription() throws ParserException {
         ExecuteDelayed a1 = new ExecuteDelayed("IQDA321", null);
@@ -137,7 +137,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         a2.setUseIndividualTimers(true);
         Assert.assertEquals("strings are equal", "Execute A after by reference {IM1} in unit Hours. Ignore on repeat. Use individual timers", a2.getLongDescription());
     }
-    
+
     @Ignore
     @Test
     public void testTimer() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, JmriException {
@@ -145,8 +145,8 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         turnout.setState(Turnout.CLOSED);
         ActionTurnout actionTurnout = new ActionTurnout("IQDA2", null);
-        actionTurnout.setTurnout(turnout);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Thrown);
         MaleSocket actionTurnoutSocket =
                 InstanceManager.getDefault(DigitalActionManager.class)
                         .registerAction(actionTurnout);
@@ -161,35 +161,35 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("turnout is thrown", Turnout.THROWN == turnout.getState());
         _logixNG.setEnabled(false);
     }
-/*    
+/*
     @Ignore
     @ToDo("The first socket is a digital expression socket, not a digital action socket")
     @Test
     @Override
     public void testPropertyChangeListener1() throws SocketAlreadyConnectedException {
     }
-    
+
     @Ignore
     @ToDo("The first socket is a digital expression socket, not a digital action socket")
     @Test
     @Override
     public void testPropertyChangeListener2() throws SocketAlreadyConnectedException {
     }
-    
+
     @Ignore
     @ToDo("The first socket is a digital expression socket, not a digital action socket")
     @Test
     @Override
     public void testPropertyChangeListener3() throws SocketAlreadyConnectedException {
     }
-    
+
     @Ignore
     @ToDo("The first socket is a digital expression socket, not a digital action socket")
     @Test
     @Override
     public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
     }
-*/    
+*/
     @Ignore
     @Test
     @Override
@@ -198,7 +198,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         super.testIsActive();
 //        JUnitAppender.suppressErrorMessage("getConditionalNG() return null");
     }
-    
+
     @Ignore
     @Test
     @Override
@@ -206,7 +206,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(true);
         super.testMaleSocketIsActive();
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -217,10 +217,10 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _category = Category.OTHER;
         _isExternal = false;
-        
+
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         InstanceManager.getDefault(ConditionalNG_Manager.class).register(_conditionalNG);
@@ -233,7 +233,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         _conditionalNG.getChild(0).connect(maleSocket);
         _base = _executeDelayed;
         _baseMaleSocket = maleSocket;
-        
+
         if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
@@ -250,15 +250,15 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         _base = null;
         _baseMaleSocket = null;
     }
-    
-    
-    
-/*    
+
+
+
+/*
     public class MyTimer extends Timer {
-        
+
         private TimerTask _task;
 //        private long _delay;
-        
+
         @Override
         public void schedule(TimerTask task, long delay) {
             if (_task != null) {
@@ -267,47 +267,47 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
             _task = task;
 //            _delay = delay;
         }
-        
+
         @Override
         public void schedule(TimerTask task, Date time) {
             throw new UnsupportedOperationException("this method is not supported");
         }
-        
+
         @Override
         public void schedule(TimerTask task, long delay, long period) {
             throw new UnsupportedOperationException("this method is not supported");
         }
-        
+
         @Override
         public void schedule(TimerTask task, Date firstTime, long period) {
             throw new UnsupportedOperationException("this method is not supported");
         }
-        
+
         @Override
         public void scheduleAtFixedRate(TimerTask task, long delay, long period) {
             throw new UnsupportedOperationException("this method is not supported");
         }
-        
+
         @Override
         public void scheduleAtFixedRate(TimerTask task, Date firstTime, long period) {
             throw new UnsupportedOperationException("this method is not supported");
         }
-        
+
         @Override
         public void cancel() {
             _task = null;
 //            _delay = 0;
         }
-        
+
         @Override
         public int purge() {
             return 0;
         }
-        
+
         public void triggerTimer() {
             _task.run();
         }
-        
+
     }
-*/    
+*/
 }
