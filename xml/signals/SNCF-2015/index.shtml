@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI: Signals for French Railways</title>
+<!-- Style -->
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>
+JMRI: French-2015 Signaling Definition
+</h1>
+<p>
+this directory contains signaling definitions originally worked out of study of the French signals. This set is named <strong>SNCF-2015</strong> in JMRI.<br>
+Ce repertoire contient la definition des signaux etudies a partir de la signalisation Francaise.Vous trouverez ces signaux sous le nom de <strong>SNCF-2015</strong> dans JMRI.
+<p>***version 1.00***
+<p>
+    Remarks:</p>
+    <ul>
+   Les signaux suivants sont pris en charge :
+<li>2 Feux : Utilisation VL+S+(S) ou M+(M)+Cv.</li>
+<li>3 Feux sur chassis-Ecran type A </li>
+<li>4 Feux sur chassis-Ecran type B </li>
+<li>5 Feux sur chassis-Ecran type D </li>
+<li>7 Feux sur chassis-Ecran type F </li>
+<li>9 Feux sur chassis-Ecran type H </li>
+<li>6 Feux sur chassis-Ecran type R (Disque)</li>
+<li>Signaux mecaniques, Guidons manuel ou lumineux, Bande jaune Lumineuse(BJ).</li>
+<li>Pancartes Depot, Garage, Heurtoir, Impasse, Sas (effacable ou eclairable).</li>
+<li>Tableau Indicateur de Direction (TID).</li>
+<li>Tableau Indicateur de Provenance (TIP) (1 à 10 voies), utilisable en TID.</li>
+<li>Tableau d'entree et de sortie d'installations Permanentes de Contre Sens</li>
+<li>Tableau lumineux de correspondance pour voies convergentes (TLC).</li>
+<li>TIV a distance mobile et TIV de rappel mobile(30 a 140Km/h) et tableau «P» mobile.</li>
+<li>Signal lumineux de Maneuvre(SLM) a trois Feux Blancs.</li>
+<li>.</li>
+<li>Attention les signaux ne sont pas eteints lors du clignotement pour ne pas perdre l'information majeure ( exemple rouge clignotant= rouge simple+rouge eclat au lieu de eteint+rouge simple</li>
+</ul>
+<p></p>
+<p>Sources:</p>
+    <ul>
+    <li>Reglement S1A - Titre I IN 1482.</li>
+    <li>La Signalisation ferroviaire - Roger Retiveau - Département Edition de l'Association des Ingenieurs Anciens Eleves de l'Ecole Nationale des Ponts et
+Chaussees. © 1987 ISBN 2-85978-102-1</li>
+    </ul>
+<p>
+See the
+<a href="aspects.xml">Aspects page</a>.
+
+<p>
+Signal Mast definitions:</p>
+    <ul>
+    <li><a href="appearance-2F.xml">2Feux</a>
+    <li><a href="appearance-BLJ_GUIDON.xml">BLJ et guidon</a>
+    <li><a href="appearance-CibleA.xml">CibleA </a>
+    <li><a href="appearance-CibleB.xml">CibleB </a>
+    <li><a href="appearance-CibleD.xml">CibleD </a>
+    <li><a href="appearance-CibleF.xml">CibleF </a>
+    <li><a href="appearance-CibleH.xml">CibleH </a>
+    <li><a href="appearance-CMeca-A.xml">CMeca-A </a>
+    <li><a href="appearance-Disque.xml">Disque</a>
+    <li><a href="appearance-DisqueMeca.xml">DisqueMeca </a>
+    <li><a href="appearance-ID3.xml">ID3 </a>
+    <li><a href="appearance-ID4.xml">ID4 </a>
+    <li><a href="appearance-ID5.xml">ID5 </a>
+    <li><a href="appearance-Manoeuvre.xml">Manoeuvre</a>
+    <li><a href="appearance-Meca.xml">Meca</a>
+    <li><a href="appearance-Pancarte.xml">Pancarte </a>
+    <li><a href="appearance-SLM.xml">SLM</a>
+    <li><a href="appearance-SMeca.xml">SMeca</a>
+    <li><a href="appearance-TIDD.xml">TIDD</a>
+    <li><a href="appearance-TIP.xml">TIP</a>
+    <li><a href="appearance-TIVA.xml">TIVA</a>
+    <li><a href="appearance-TIVP.xml">TIVP</a>
+    <li><a href="appearance-TIVR.xml">TIVR</a>
+    <li><a href="appearance-TLC.xml">TLC</a>
+    </ul>
+
+    </div>
+ </div>
+</body>
+</html>
