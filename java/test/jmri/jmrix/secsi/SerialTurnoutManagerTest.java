@@ -33,7 +33,8 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         if (log.isDebugEnabled()) {
             log.debug("received turnout value {}", o);
         }
-        Assertions.assertNotNull((SerialTurnout) o);
+        Assertions.assertNotNull( o);
+        Assertions.assertTrue(o instanceof SerialTurnout);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
