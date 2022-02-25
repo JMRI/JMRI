@@ -73,7 +73,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
           <xsl:with-param name="delimiter" select="$delimiter" />
         </xsl:call-template>
       </xsl:when>
-      <xsl:otherwise><xsl:value-of 
+      <xsl:otherwise><xsl:value-of
                   select="$string" /></xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -401,31 +401,49 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 <!-- Index through ctcdata elements -->
 <xsl:template match="layout-config/ctcdata">
     <h2>CTC Data</h2>
-    <h3>Ctc Properties</h3>
+
+    <h3>CTC Properties</h3>
     <table border="1">
+      <tr>
+        <th>Type</th>
+        <th>Value</th>
+      </tr>
+      <!-- index through individual elements -->
+      <xsl:for-each select="./ctcProperties/*">
         <tr>
-            <th>Type</th>
-            <th>Value</th>
+          <td><xsl:value-of select="local-name()"/></td>
+          <td><xsl:value-of select="."/></td>
         </tr>
-    <!-- index through individual elements -->
-    <xsl:for-each select="./ctcProperties/*">
-        <tr><td><xsl:value-of select="local-name()"/></td>
-            <td><xsl:value-of select="."/></td> 
-        </tr>
-    </xsl:for-each>
+      </xsl:for-each>
     </table>
-    <h3>Ctc Other Data</h3>
+
+    <h3>CTC Other Data</h3>
     <table border="1">
+      <tr>
+        <th>Type</th>
+        <th>Value</th>
+      </tr>
+      <!-- index through individual elements -->
+      <xsl:for-each select="./ctcOtherData/*">
         <tr>
-            <th>Type</th>
-            <th>Value</th>
+          <td><xsl:value-of select="local-name()"/></td>
+          <td><xsl:value-of select="."/></td>
         </tr>
-    <!-- index through individual elements -->
-    <xsl:for-each select="./ctcOtherData/*">
-        <tr><td><xsl:value-of select="local-name()"/></td>
-            <td><xsl:value-of select="."/></td> 
+      </xsl:for-each>
+    </table>
+
+    <h3>CTC OS Sections:</h3>
+    <table border="1">
+      <tr><th>Switch #</th><th>Signal #</th><th>Column #</th><th>Code Button</th><th>Occupancy Sensor</th></tr>
+      <xsl:for-each select="ctcCodeButtonData">
+        <tr>
+          <td style="text-align: center"><xsl:value-of select="SwitchNumber" /></td>
+          <td style="text-align: center"><xsl:value-of select="SignalEtcNumber" /></td>
+          <td style="text-align: center"><xsl:value-of select="GUIColumnNumber" /></td>
+          <td style="text-align: center"><xsl:value-of select="CodeButtonInternalSensor" /></td>
+          <td style="text-align: center"><xsl:value-of select="OSSectionOccupiedExternalSensor" /></td>
         </tr>
-    </xsl:for-each>
+      </xsl:for-each>
     </table>
 </xsl:template>
 
@@ -489,7 +507,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
         <xsl:param name="name"/>
     <!-- index through individual conditional elements, looking for match -->
     <xsl:for-each select="/layout-config/conditionals/conditional">
-    <!-- BUG 2022-02-15: if logix system name has embedded lower case letters, next statement always fails 
+    <!-- BUG 2022-02-15: if logix system name has embedded lower case letters, next statement always fails
 		<xsl:if test='( @systemName = translate($name,$lcletters,$ucletters) )' >  -->
 		<xsl:if test='( @systemName = $name )' >
 		<!-- here have found correct conditional -->
@@ -794,7 +812,7 @@ value="<xsl:value-of select="@dataString"/>"
     transition time to <xsl:value-of select="@data"/> fast seconds
   </xsl:when>
   <xsl:when test="( @type = 29 )" >
-    Control audio: 
+    Control audio:
     <xsl:if test='@option != " "'> option= "<xsl:value-of select="@option"/>"</xsl:if>
     <xsl:if test='@systemName != " "'> systemName= "<xsl:value-of select="@systemName"/>"</xsl:if>
     <xsl:if test='@data != " "'> data= "<xsl:value-of select="@data"/>"</xsl:if>
@@ -843,9 +861,9 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:if test="( @enabled = 'no'  )"> [NOT Enabled]</xsl:if>
 </h2>
     <xsl:for-each select="ConditionalNGs/systemName">
-        <xsl:call-template name="oneConditionalNG"> 
+        <xsl:call-template name="oneConditionalNG">
                 <xsl:with-param name="name" select="."/>
-        </xsl:call-template>                                                                                     
+        </xsl:call-template>
     </xsl:for-each>
 </xsl:template>
 
@@ -855,9 +873,9 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:param name="name"/>
     <!-- index through individual conditional elements, looking for match -->
     <xsl:for-each select="/layout-config/LogixNGConditionalNGs/ConditionalNG">
-		<xsl:if test='( systemName = $name )' >   
+		<xsl:if test='( systemName = $name )' >
             <!-- here have found correct conditional -->
-            <h3>ConditionalNG 
+            <h3>ConditionalNG
               <xsl:value-of select="systemName"/>
               <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
               <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
@@ -875,7 +893,7 @@ value="<xsl:value-of select="@dataString"/>"
               <td><xsl:value-of select="systemName"/></td>
               <!-- Find type of action -->
               <xsl:call-template name="oneNGDigitalActionWithComment">
-                    <xsl:with-param name="systemname" select="systemName"/> 
+                    <xsl:with-param name="systemname" select="systemName"/>
               </xsl:call-template>
              </tr>
             </xsl:for-each>
@@ -904,7 +922,7 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:value-of select="."/>
         <br/>
     </xsl:for-each>
-    
+
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -920,10 +938,10 @@ value="<xsl:value-of select="@dataString"/>"
     <!-- index through individual elements -->
         <xsl:for-each select="Many/Socket">
         <tr>
-            <td><xsl:value-of select="socketName"/></td> 
-            <td><xsl:value-of select="systemName"/></td> 
+            <td><xsl:value-of select="socketName"/></td>
+            <td><xsl:value-of select="systemName"/></td>
             <td><xsl:call-template name="oneNGDigitalAction">
-                  <xsl:with-param name="systemname" select="systemName"/> 
+                  <xsl:with-param name="systemname" select="systemName"/>
             </xsl:call-template></td>
             <td><xsl:call-template name="oneNGDigitalExpression">
                   <xsl:with-param name="systemname" select="systemName"/>
@@ -932,7 +950,7 @@ value="<xsl:value-of select="@dataString"/>"
         </xsl:for-each>
     </table>
 </xsl:template>
- 
+
 <!-- ********************************************* -->
 <xsl:template name="oneNGDigitalAction">
         <xsl:param name="systemname"/>
@@ -977,12 +995,12 @@ value="<xsl:value-of select="@dataString"/>"
     <!-- index through individual elements -->
     <xsl:for-each select="./*">
         <tr><td><xsl:value-of select="local-name()"/></td>
-            <td><xsl:value-of select="systemName"/></td> 
-            <td><xsl:value-of select="./sensor"/></td> 
-            <td><xsl:value-of select="./turnout"/></td> 
-            <td><xsl:value-of select="./light"/></td> 
-            <td><xsl:value-of select="./memory"/></td> 
-            <td><xsl:value-of select="./signalMast"/></td> 
+            <td><xsl:value-of select="systemName"/></td>
+            <td><xsl:value-of select="./sensor"/></td>
+            <td><xsl:value-of select="./turnout"/></td>
+            <td><xsl:value-of select="./light"/></td>
+            <td><xsl:value-of select="./memory"/></td>
+            <td><xsl:value-of select="./signalMast"/></td>
             <xsl:if test="string-length(comment)!=0" > <td><xsl:value-of select="comment"/></td></xsl:if>
         </tr>
 
@@ -1012,12 +1030,12 @@ value="<xsl:value-of select="@dataString"/>"
     <xsl:for-each select="./*">
         <tr><td><xsl:value-of select="local-name()"/></td>
             <td><xsl:value-of select="systemName"/></td>
-            <td><xsl:value-of select="./sensor"/></td> 
-            <td><xsl:value-of select="./turnout"/></td> 
-            <td><xsl:value-of select="./light"/></td> 
-            <td><xsl:value-of select="./IfSocket/systemName"/></td> 
-            <td><xsl:value-of select="./ThenSocket/systemName"/></td> 
-            <td><xsl:value-of select="./ElseSocket/systemName"/></td> 
+            <td><xsl:value-of select="./sensor"/></td>
+            <td><xsl:value-of select="./turnout"/></td>
+            <td><xsl:value-of select="./light"/></td>
+            <td><xsl:value-of select="./IfSocket/systemName"/></td>
+            <td><xsl:value-of select="./ThenSocket/systemName"/></td>
+            <td><xsl:value-of select="./ElseSocket/systemName"/></td>
             <xsl:if test="string-length(comment)!=0" > <td><xsl:value-of select="comment"/></td></xsl:if>
         </tr>
 
