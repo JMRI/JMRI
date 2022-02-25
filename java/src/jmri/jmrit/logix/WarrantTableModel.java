@@ -579,13 +579,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             break;
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                fireTableRowsDeleted(row, row);
-                removeWarrant(w, true); // removes any warrant
+                fireTableRowDeleted(w, row, true);
             } else {
                 w.controlRunTrain(Warrant.ABORT);
                 if (_warNX.contains(w)) { // don't remove regular warrants
-                    fireTableRowsDeleted(row, row);
-                    removeWarrant(w, false);
+                    fireTableRowDeleted(w, row, false);
                 }
             }
             break;
@@ -669,6 +667,17 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         ThreadingUtil.runOnGUIEventually(()-> fireTableDataChanged());
     }
 
+    private void fireTableRowDeleted(Warrant w, int row, boolean all) {
+        ThreadingUtil.runOnGUIEventually(()-> {
+        removeWarrant(w, all);  // true any warrant, false NX only  
+        fireTableRowsDeleted(row, row);
+        });
+    }
+
+    private void fireTableRowUpdated(Warrant w, int row) {
+        ThreadingUtil.runOnGUIEventually(()-> fireTableRowsUpdated(row, row));
+    }
+
     private String _lastProperty;
     private long _propertyTime;
     @Override
@@ -694,11 +703,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     if (_warNX.contains(bean)) {
                         if ((property.equals("runMode") && ((Integer)e.getNewValue()).intValue() == Warrant.MODE_NONE) ||
                                 (property.equals("controlChange") && ((Integer)e.getNewValue()).intValue() == Warrant.ABORT)) {
-                            removeWarrant(bean, false);
-                            fireTableRowsDeleted(i, i);
+                            fireTableRowDeleted(bean, i, false);
                         }
                     } else {
-                        fireTableRowsUpdated(i, i);
+                        fireTableRowUpdated(bean, i);
                     }
                     break;
                 }

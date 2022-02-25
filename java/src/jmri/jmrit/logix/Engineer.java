@@ -1236,7 +1236,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             float scriptTrackSpeed = _speedUtil.getTrackSpeed(_normalSpeed);
 
             int warBlockIdx = _warrant.getCurrentOrderIndex();  // current train position
-            int cmdBlockIdx;    // commnd's train position
+            int cmdBlockIdx;    // script commnd's train position
             if (_currentCommand.getCommand().hasBlockName()) {
                 OBlock blk = (OBlock)_currentCommand.getBean();
                 cmdBlockIdx = _warrant.getIndexOfBlockBefore(warBlockIdx, blk);
