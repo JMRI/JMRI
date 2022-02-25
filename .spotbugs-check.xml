@@ -3,14 +3,10 @@
     <!-- This first section is used to fail CI if any unexpected bugs appear.
          We accept certain types of bugs at certain levels until we get them
          all cleared out. -->
-         
-    <!-- Suppress high bugs which we _don't_ want to fail CI until we can get them removed -->
+
+    <!-- Suppress SLF4J bugs which we _don't_ want to fail CI until we can get them removed -->
      <Match>
-        <Confidence value="1" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
-        <Or>
-           <Bug pattern="SLF4J_FORMAT_SHOULD_BE_CONST" />
-           <Bug pattern="SLF4J_PLACE_HOLDER_MISMATCH" />
-        </Or>
+        <Bug pattern="SLF4J_FORMAT_SHOULD_BE_CONST" />
      </Match>
 
     <!-- Suppress medium bugs which we _don't_ want to fail CI until we can get them removed -->
@@ -19,6 +15,8 @@
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="OVERRIDING_METHODS_MUST_INVOKE_SUPER" />
+           <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+           <Bug pattern="DCN_NULLPOINTER_EXCEPTION" /> <!-- 327 cases -->
         </Or>
      </Match>
 
@@ -27,8 +25,8 @@
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="LI_LAZY_INIT_STATIC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
+           <Bug pattern="OS_OPEN_STREAM_EXCEPTION_PATH" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
@@ -36,7 +34,6 @@
            <Bug pattern="WA_NOT_IN_LOOP" />
         </Or>
      </Match>
-
 
     <!-- what follows should be kept in sync with .spotbugs.xml -->
 
@@ -47,11 +44,6 @@
      <Match>
        <!-- Minor clarity issue -->
        <Bug pattern="RI_REDUNDANT_INTERFACES" />
-     </Match>
-
-     <Match>
-        <!-- Minimal messages can be very useful at DEBUG or TRACE level -->
-        <Bug pattern="SLF4J_SIGN_ONLY_FORMAT" />
      </Match>
 
      <Match>
@@ -80,14 +72,25 @@
        <Bug pattern="DM_DEFAULT_ENCODING" />
      </Match>
 
+    <!-- Suppress SLF4J bug which has many false positives due to ?: operator -->
      <Match>
-       <!-- JMRI code is often written to trust weird from other classes,
-            so the question of "malicious" is complicated. The rules in
-            this category should be restored in small batches   -->
-       <Bug category="MALICIOUS_CODE" />
+        <Bug pattern="SLF4J_UNKNOWN_ARRAY" />
      </Match>
 
-    <!-- items we're unlikely to restore -->
+    <!-- Very high-frequency "malicious code" warnings can't yet be checked -->
+    <!-- but we keep some others to improve code robustness and containment -->
+     <Match>
+        <Or>
+           <Bug pattern="EI_EXPOSE_REP" />
+           <Bug pattern="EI_EXPOSE_REP2" />
+           <Bug pattern="MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR" />
+           <Bug pattern="MS_MUTABLE_ARRAY" />
+           <Bug pattern="MS_EXPOSE_REP" />
+           <Bug pattern="MS_SHOULD_BE_FINAL" /><!-- we expose various constants for scripts -->
+        </Or>
+     </Match>
+
+     <!-- items we're unlikely to restore -->
 
      <Match>
        <!-- JMRI does not use serialization, permanently ignore -->

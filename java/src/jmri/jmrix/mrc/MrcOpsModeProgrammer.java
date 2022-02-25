@@ -41,7 +41,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     int addressLo = 0x00;
     int addressHi = 0x00;
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Forward a write request to an ops-mode write operation
@@ -64,7 +64,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         memo.getMrcTrafficController().sendMrcMessage(msg);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -75,7 +75,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -85,7 +85,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     // add 200mSec between commands, so MRC command station queue doesn't get overrun
@@ -95,12 +95,12 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         try {
             wait(200);
         } catch (InterruptedException e) {
-            log.debug("unexpected exception {}", e); // NOI18N
+            log.debug("unexpected exception", e); // NOI18N
         }
         super.notifyProgListenerEnd(value, status);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Types implemented here.
@@ -113,7 +113,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Can this ops-mode programmer read back values? For now, no, but maybe
@@ -126,7 +126,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return false;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -134,7 +134,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return mLongAddr;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -142,7 +142,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return mAddress;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -150,7 +150,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Ops-mode programming doesn't put the command station in programming mode,

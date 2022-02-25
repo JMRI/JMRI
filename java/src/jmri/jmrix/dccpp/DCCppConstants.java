@@ -29,10 +29,10 @@ public final class DCCppConstants {
     public static final int MAX_FUNCTION_NUMBER = 68; //
     public static final int REGISTER_UNALLOCATED = -1;
     public static final int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
-    
+
     // DCC++ over TCP Port Number
     public static final int DCCPP_OVER_TCP_PORT = 1235;
-    
+
     // Communications Port Info
     public static final int COMM_TYPE_SERIAL = 0;
     public static final int COMM_TYPE_ENET = 1;
@@ -41,7 +41,7 @@ public final class DCCppConstants {
     // Command Station Types
     public static final int DCCPP_UNO_1_0 = 1;
     public static final int DCCPP_ARDUINO_1_1 = 2;
-    public static final String[] CommandStationNames = {
+    static final String[] CommandStationNames = {
      "DCCPP Arduino Uno v1.0",
      "DCCPP Arduino V1.1",
     };
@@ -80,7 +80,7 @@ public final class DCCppConstants {
     public static final char LIST_REGISTER_CONTENTS = 'L';
     public static final char DIAG_CMD               = 'D'; // Send various diagnostics commands
     public static final char CONTROL_CMD            = '/'; // Send various control commands (e.g. </START 1224 4>), replies via DIAG_REPLY
- 
+
     // Message Replies
     public static final char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
     public static final char TURNOUT_REPLY    = 'H'; // <H id throw> or <X>
@@ -131,7 +131,7 @@ public final class DCCppConstants {
 
     public static final String OPS_WRITE_BYTE_REGEX = "\\s*w\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // TODO
     public static final String OPS_WRITE_BIT_REGEX = "\\s*b\\s*(\\d+)\\s+(\\d+)\\s+([0-7])\\s+([01])\\s*"; // TODO
-    
+
     public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
     public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
     public static final String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
@@ -146,7 +146,7 @@ public final class DCCppConstants {
     public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
     public static final String DIAG_CMD_REGEX         = "\\s*D\\s.*"; //D alone or followed by various commands
     public static final String CONTROL_CMD_REGEX      = "\\s*/\\s.*"; // slash followed by various commands
-    public static final String ESTOP_ALL_REGEX        = "\\s*!"; 
+    public static final String ESTOP_ALL_REGEX        = "\\s*!";
 
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";
@@ -164,7 +164,7 @@ public final class DCCppConstants {
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
     public static final String METER_REPLY_REGEX = " *c *(.+) +([\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";
-    
+
     public static final String TRACK_POWER_REPLY_REGEX =       "\\s*p\\s*([0,1])\\s*";
     public static final String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+).*";
     public static final String SENSOR_REPLY_REGEX =          "\\s*[Qq]\\s*(\\d+)\\s*";
@@ -178,7 +178,7 @@ public final class DCCppConstants {
     public static final String STATUS_REPLY_REGEX =       "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
     public static final String STATUS_REPLY_BSC_REGEX =   "i(DCC\\+\\+.*): V-(.*)\\+\\s\\/\\s(.*)"; // BaseStation Classic
     public static final String STATUS_REPLY_ESP32_REGEX = "iDCC\\+\\+.*ESP32.*: V-([\\d\\.]+)\\s+/\\s+(.*)"; // V1.0
-    public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([\\d\\.]*).*G-(.*)"; 
+    public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([\\d\\.]*).*G-(.*)";
     public static final String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+).*";
     public static final String COMM_TYPE_REPLY_REGEX =    "\\s*N\\s*(\\d+):\\s+((SERIAL)|(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})).*";
 
@@ -221,16 +221,16 @@ public final class DCCppConstants {
     public static final int MAX_LOCO_ADDRESS = 10293;
     public static final int MAX_CURRENT = 1024;
     public static final int METER_INTERVAL_MS = 1000;
-    
+
     //Turnout types (added in DCC-EX 3.1.7)
     public static final String TURNOUT_TYPE_DCC = "DCC";
     public static final String TURNOUT_TYPE_SERVO="SERVO";
     public static final String TURNOUT_TYPE_VPIN ="VPIN";
     public static final String TURNOUT_TYPE_LCN = "LCN";
-    
-    public static final String OUTPUT_TYPE = "OUTPUT";    
-    public static final String SENSOR_TYPE = "SENSOR";    
-    
+
+    public static final String OUTPUT_TYPE = "OUTPUT";
+    public static final String SENSOR_TYPE = "SENSOR";
+
     //Property Keys
     public static final String PROP_TYPE =     "Type";
     public static final String PROP_ID   =     "ID";

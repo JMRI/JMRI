@@ -8,11 +8,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -29,10 +29,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _otherMemoryHandle;
+
     private String _localVariable = "";
     private String _regEx = "";
     private boolean _listenToOtherMemory = true;
-//    private boolean _listenToOtherMemory = false;
+
+    private final LogixNG_SelectTable _selectTable =
+            new LogixNG_SelectTable(this, () -> {return _compareTo == CompareTo.Table;});
+
 
     public ExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -48,6 +52,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
         ExpressionMemory copy = new ExpressionMemory(sysName, userName);
         copy.setComment(getComment());
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        _selectTable.copy(copy._selectTable);
         copy.setMemoryOperation(_memoryOperation);
         copy.setCompareTo(_compareTo);
         copy.setCaseInsensitive(_caseInsensitive);
@@ -129,8 +134,12 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _otherMemoryHandle;
     }
 
+    public LogixNG_SelectTable getSelectTable() {
+        return _selectTable;
+    }
+
     public void setLocalVariable(@Nonnull String localVariable) {
-        assertListenersAreNotRegistered(log, "setOtherLocalVariable");
+        assertListenersAreNotRegistered(log, "setLocalVariable");
         _localVariable = localVariable;
     }
 
@@ -199,8 +208,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 boolean doVeto = false;
-                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) doVeto = true;
-                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) doVeto = true;
+                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if ((_compareTo == CompareTo.Memory)
+                        && (_otherMemoryHandle != null)
+                        && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
+                    doVeto = true;
+                }
                 if (doVeto) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
@@ -342,7 +357,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws JmriException {
         if (_memoryHandle == null) return false;
 
         // ConditionalVariable, line 661:  boolean compare(String value1, String value2, boolean caseInsensitive) {
@@ -356,6 +371,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 break;
             case Memory:
                 otherValue = getString(_otherMemoryHandle.getBean().getValue());
+                break;
+            case Table:
+                otherValue = getString(_selectTable.evaluateTableData(getConditionalNG()));
                 break;
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_localVariable), false);
@@ -436,26 +454,36 @@ public class ExpressionMemory extends AbstractDigitalExpression
         }
 
         String message;
-        String other;
+        String other1;
+        String other2 = null;
+        String other3 = null;
+
         switch (_compareTo) {
             case Value:
                 message = "Memory_Long_CompareConstant";
-                other = _constantValue;
+                other1 = _constantValue;
                 break;
 
             case Memory:
                 message = "Memory_Long_CompareMemory";
-                other = otherMemoryName;
+                other1 = otherMemoryName;
+                break;
+
+            case Table:
+                message = "Memory_Long_CompareTable";
+                other1 = _selectTable.getTableNameDescription(locale);
+                other2 = _selectTable.getTableRowDescription(locale);
+                other3 = _selectTable.getTableColumnDescription(locale);
                 break;
 
             case LocalVariable:
                 message = "Memory_Long_CompareLocalVariable";
-                other = _localVariable;
+                other1 = _localVariable;
                 break;
 
             case RegEx:
                 message = "Memory_Long_CompareRegEx";
-                other = _regEx;
+                other1 = _regEx;
                 break;
 
             default:
@@ -474,7 +502,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case GreaterThanOrEqual:
                 // fall through
             case GreaterThan:
-                return Bundle.getMessage(locale, message, memoryName, _memoryOperation._text, other);
+                return Bundle.getMessage(locale, message, memoryName, _memoryOperation._text, other1, other2, other3);
 
             case IsNull:
                 // fall through
@@ -484,7 +512,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case MatchRegex:
                 // fall through
             case NotMatchRegex:
-                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text, other);
+                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text, other1);
 
             default:
                 throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
@@ -570,6 +598,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
         Value(Bundle.getMessage("Memory_CompareTo_Value")),
         Memory(Bundle.getMessage("Memory_CompareTo_Memory")),
         LocalVariable(Bundle.getMessage("Memory_CompareTo_LocalVariable")),
+        Table(Bundle.getMessage("Memory_CompareTo_Table")),
         RegEx(Bundle.getMessage("Memory_CompareTo_RegularExpression"));
 
         private final String _text;

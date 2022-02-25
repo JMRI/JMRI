@@ -108,7 +108,7 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (SerialThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> new SerialThrottleManager(this));
+        return (SerialThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class<?> c) -> new SerialThrottleManager(this));
     }
 
     public void setThrottleManager(ThrottleManager t) {
@@ -119,7 +119,7 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> new SerialTurnoutManager(this));
+        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class<?> c) -> new SerialTurnoutManager(this));
     }
 
 

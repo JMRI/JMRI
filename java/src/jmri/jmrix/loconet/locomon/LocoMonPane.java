@@ -21,8 +21,8 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     public LocoMonPane() {
         super();
-        // Temporarily pre-initialize the system connection prefix based on the 
-        // default turnout manager's system name prefix.  This will be replaced 
+        // Temporarily pre-initialize the system connection prefix based on the
+        // default turnout manager's system name prefix.  This will be replaced
         // with the correct style in #initComponents(LocoNetSystemConnectionMemo)
         // but is needed here for Unit Testing
         systemConnectionPrefix = InstanceManager.getDefault(TurnoutManager.class).getSystemPrefix();
@@ -109,21 +109,6 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
             return raw.substring(0, 2);
         } else {
             return null;
-        }
-    }
-
-    /**
-     * Nested class to create one of these using old-style defaults.
-     * @deprecated since 4.19.7; use {@link LocoMonPaneAction} instead
-     */
-    @Deprecated
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        public Default() {
-            super(Bundle.getMessage("MenuItemLocoNetMonitor"),
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    LocoMonPane.class.getName(),
-                    jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
 

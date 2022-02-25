@@ -42,7 +42,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         rcTag = (RailCom) jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + pAddress);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Send an ops-mode write request to the XPressnet.
@@ -55,7 +55,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         defaultProgrammer.writeCV(CVname, val, new ProxyProgList());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -84,7 +84,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -99,7 +99,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         defaultProgrammer.confirmCV(cvName, val, new ProxyProgList());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Types implemented here.
@@ -110,7 +110,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         return defaultProgrammer.getSupportedModes();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -120,7 +120,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         notifyProgListenerEnd(progListener, 0, ProgListener.FailedTimeout);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -130,7 +130,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         }
         if (e.getPropertyName().equals("cvvalue")) {
             int repliedCv = (Integer) e.getOldValue();
-            log.info("{} {}", e.getOldValue(), e.getNewValue());
+            log.info("propertyChange {} {}", e.getOldValue(), e.getNewValue());
             if (repliedCv == cv) {
                 int newValue = (Integer) e.getNewValue();
                 stopTimer();
@@ -144,7 +144,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -152,7 +152,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         return pLongAddress;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -160,7 +160,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         return pAddress;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -121,14 +121,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _productID = "";
 
     /**
-     * Deprecated, use {@link #getMAXFNNUM} directly.
-     *
-     * @deprecated 4.17.1 to be removed in ??
-     */
-    @Deprecated
-    public static final int MAXFNNUM = Integer.parseInt(DEFAULT_MAXFNNUM);
-
-    /**
      * Get the highest valid Fn key number for this roster entry.
      * <dl>
      * <dt>The default value (28) can be overridden by a "maxFnNum" attribute in
@@ -1365,7 +1357,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             mRootElement = df.rootFromName(fullFilename);
         } catch (JDOMException
                 | IOException e) {
-            log.error("Exception while loading loco XML file: {} exception: {}", getFileName(), e);
+            log.error("Exception while loading loco XML file: {} exception", getFileName(), e);
         }
 
         try {
@@ -1747,7 +1739,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 w.write(newLine, 0, 1);
             }
         } catch (IOException e) {
-            log.error("Error printing RosterEntry: {}", e);
+            log.error("Error printing RosterEntry", e);
         }
     }
 
@@ -1775,7 +1767,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 k++;
             }
         } catch (IOException e) {
-            log.error("Error printing RosterEntry: {}", e);
+            log.error("Error printing RosterEntry", e);
         }
         return k;
     }
@@ -1825,7 +1817,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                         //last space and put in the vector as well as a line feed
                         endIndex = tokenPiece.lastIndexOf(" ") + 1;
                         if (log.isDebugEnabled()) {
-                            log.debug("/{}/ {} {}", tokenPiece, startIndex, endIndex);
+                            log.debug("tokenPiece /{}/ {} {}", tokenPiece, startIndex, endIndex);
                         }
                         textVector.addElement(tokenPiece.substring(0, endIndex));
                         textVector.addElement(newLine);

@@ -92,6 +92,8 @@
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
+              <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

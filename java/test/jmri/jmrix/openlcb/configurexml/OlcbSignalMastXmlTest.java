@@ -23,7 +23,7 @@ import org.junit.jupiter.api.*;
  * @author   Bob Jacobsen Copyright (C) 2018
  */
 public class OlcbSignalMastXmlTest {
-        
+
     private static OlcbSystemConnectionMemo memo;
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
@@ -40,12 +40,12 @@ public class OlcbSignalMastXmlTest {
         t.setOutputForAppearance("Approach", "1.2.3.4.5.6.7.11");
         t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
-        
+
         OlcbSignalMastXml x = new OlcbSignalMastXml();
-        
+
         Element e = x.store(t);
         Assert.assertNotNull("Element", e);
-        
+
         Assert.assertEquals("1.2.3.4.5.6.7.1", e.getChild("lit").getChild("lit").getValue());
         Assert.assertEquals("1.2.3.4.5.6.7.2", e.getChild("lit").getChild("notlit").getValue());
         Assert.assertEquals("1.2.3.4.5.6.7.3", e.getChild("held").getChild("held").getValue());
@@ -58,11 +58,14 @@ public class OlcbSignalMastXmlTest {
     }
 
     @BeforeAll
+    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
+       // this test is run separately because it leaves a lot of threads behind
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
-        
+
         messages = new java.util.ArrayList<>();
         connection = new AbstractConnection() {
             @Override
@@ -79,7 +82,7 @@ public class OlcbSignalMastXmlTest {
                 return connection;
             }
         });
-        
+
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
@@ -90,12 +93,14 @@ public class OlcbSignalMastXmlTest {
 
     @AfterAll
     public static void postClassTearDown() {
-        if(memo != null && memo.getInterface() !=null ) {
-           memo.getInterface().dispose();
+        if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false) {
+            if(memo != null && memo.getInterface() !=null ) {
+               memo.getInterface().dispose();
+            }
+            memo = null;
+            connection = null;
+            nodeID = null;
         }
-        memo = null;
-        connection = null;
-        nodeID = null;
         JUnitUtil.tearDown();
     }
 }

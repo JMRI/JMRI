@@ -2241,7 +2241,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             try {
                 new TimeTableImport().importSgn(_dataMgr, file);
             } catch (IOException ex) {
-                log.error("Import exception: {}", ex);  // NOI18N
+                log.error("Import exception", ex);  // NOI18N
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ImportFailed", "SGN"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
@@ -2271,7 +2271,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         try {
             feedbackList = new TimeTableCsvImport().importCsv(file);
         } catch (IOException ex) {
-            log.error("Import exception: {}", ex); // NOI18N
+            log.error("Import exception", ex); // NOI18N
             JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ImportCsvFailed", "CVS"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -2398,7 +2398,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             try {
                 hasErrors = new TimeTableCsvExport().exportCsv(file, layoutId, segmentId, scheduleId);
             } catch (IOException ex) {
-                log.error("Export exception: {}", ex);  // NOI18N
+                log.error("Export exception", ex);  // NOI18N
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ExportFailed"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N

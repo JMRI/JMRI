@@ -90,7 +90,7 @@ public class NBHSensor {
         return null;
     }
 
-    public NamedBeanHandle getBeanHandle() {
+    public NamedBeanHandle<?> getBeanHandle() {
         if (valid()) return _mNamedBeanHandleSensor;
         return null;
     }

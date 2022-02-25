@@ -87,7 +87,7 @@ public class DefaultLightControl implements LightControl {
         this._timeOnDuration = lc.getTimedOnDuration();
         this._controlSensor2Name = lc.getControlSensor2Name();
     }
-    
+
     /**
      * Test if a LightControl is equal to this one
      *
@@ -103,25 +103,25 @@ public class DefaultLightControl implements LightControl {
         if (that.getControlType() != this._controlType) return false;
         boolean _shouldReturn = true;
         switch(_controlType) {
-            case Light.NO_CONTROL : 
+            case Light.NO_CONTROL :
                 break;
-            case Light.SENSOR_CONTROL : 
+            case Light.SENSOR_CONTROL :
                 if ((! that.getControlSensorName().equals(this._controlSensorName)) ||
                     ( that.getControlSensorSense() != this._controlSensorSense)) _shouldReturn = false;
                 break;
-            case Light.FAST_CLOCK_CONTROL : 
+            case Light.FAST_CLOCK_CONTROL :
                 if ((that.getFastClockOffCombined() != this.getFastClockOffCombined()) ||
                     (that.getFastClockOnCombined() != this.getFastClockOnCombined())) _shouldReturn = false;
                 break;
-            case Light.TURNOUT_STATUS_CONTROL : 
+            case Light.TURNOUT_STATUS_CONTROL :
                 if ((! that.getControlTurnoutName().equals(this._controlTurnoutName)) ||
                     (that.getControlTurnoutState() != this._turnoutState)) _shouldReturn = false;
                 break;
-            case Light.TIMED_ON_CONTROL : 
+            case Light.TIMED_ON_CONTROL :
                 if ((! that.getTimedSensorName().equals(this._timedSensorName)) ||
                     (that.getTimedOnDuration() != this._timeOnDuration)) _shouldReturn = false;
                 break;
-            case Light.TWO_SENSOR_CONTROL : 
+            case Light.TWO_SENSOR_CONTROL :
                 if ((! that.getControlSensorName().equals(this._controlSensorName)) ||
                     (that.getControlSensorSense() != this._controlSensorSense) ||
                     (! that.getControlSensor2Name().equals(this._controlSensor2Name))) _shouldReturn = false;
@@ -132,7 +132,7 @@ public class DefaultLightControl implements LightControl {
         }
         return _shouldReturn;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public int hashCode() {
@@ -212,7 +212,7 @@ public class DefaultLightControl implements LightControl {
     public int getFastClockOffMin() {
         return _fastClockOffMin;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public int getFastClockOffCombined() {
@@ -311,7 +311,7 @@ public class DefaultLightControl implements LightControl {
     }
 
     // operational instance variables - not saved between runs
-    private Light _parentLight = null;        // Light that is being controlled   
+    private Light _parentLight = null;        // Light that is being controlled
     private boolean _active = false;
     private NamedBeanHandle<Sensor> _namedControlSensor = null;
     private PropertyChangeListener _sensorListener = null;
@@ -347,18 +347,18 @@ public class DefaultLightControl implements LightControl {
         if (_active) {
             return;
         }
-            
+
         if (_parentLight == null){
             log.error("No Parent Light when activating LightControl");
             return;
         }
-        
+
         // register LightControl with Parent Light to indicate Control
         // in use if user attempts to delete light
         _parentLight.addPropertyChangeListener(
             _parentLightListener = (PropertyChangeEvent e) -> {
         },_parentLight.toString(), getDescriptionText("") );
-        
+
         // activate according to control type
         switch (_controlType) {
             case Light.SENSOR_CONTROL:
@@ -433,7 +433,7 @@ public class DefaultLightControl implements LightControl {
                         // set initial state off
                         _parentLight.setState(Light.OFF);
                     }
-                    
+
                     addNamedTimedControlListener();
                     // listen for change in timed control sensor state
                     _active = true;
@@ -470,9 +470,9 @@ public class DefaultLightControl implements LightControl {
             default:
                 log.error("Unexpected control type when activating Light: {}", _parentLight);
         }
-        
+
     }
-    
+
     /**
      * Property Change Listener for Two Sensor.
      */
@@ -486,17 +486,17 @@ public class DefaultLightControl implements LightControl {
             }, sensor.getDisplayName(), getDescriptionText(_parentLight.getDisplayName()));
         return pcl;
     }
-    
+
     /**
      * Add a Timed Control Listener to a Sensor.
-     * 
+     *
      */
     private void addNamedTimedControlListener(){
         _namedTimedControlSensor.getBean().addPropertyChangeListener(
             _timedSensorListener = (PropertyChangeEvent e) -> {
                 if (e.getPropertyName().equals("KnownState")
                     && (int) e.getNewValue() == Sensor.ACTIVE
-                    && _timedControlTimer == null 
+                    && _timedControlTimer == null
                     && _parentLight.getEnabled()) {
                     // Turn light on
                     _parentLight.setState(Light.ON);
@@ -507,7 +507,7 @@ public class DefaultLightControl implements LightControl {
                     // Start the Timer to turn the light OFF
                     _timedControlTimer.start();
                 }
-            }, 
+            },
         _timedSensorName, getDescriptionText(_parentLight.getDisplayName()));
     }
 
@@ -537,7 +537,7 @@ public class DefaultLightControl implements LightControl {
             }
         }
     }
-    
+
     /**
      * Internal routine for handling Turnout change or startup
      * for the TURNOUT_STATUS_CONTROL Control Type
@@ -598,13 +598,13 @@ public class DefaultLightControl implements LightControl {
      * Internal routine for seeing if we have the latest time to control the FastClock Follower.
      * <p>
      * Takes previous day times
-     * 
+     *
      * @return True if we have the most recent time ( either on or off ), otherwise False.
      */
     private boolean isMasterFastClockFollower(){
         List<Integer> otherControlTimes= new ArrayList<>();
         List<Integer> thisControlTimes= new ArrayList<>();
-        
+
         // put all other times in a single List to compare
         _parentLight.getLightControlList().forEach((otherLc) -> {
             if (otherLc!=this && otherLc.getControlType()==Light.FAST_CLOCK_CONTROL) {
@@ -616,27 +616,27 @@ public class DefaultLightControl implements LightControl {
             }
         });
         // log.debug("{} other control times in list {}",otherControlTimes.size(),otherControlTimes);
-        
+
         thisControlTimes.add( getFastClockOnCombined() ); // yesterdayOnTime
         thisControlTimes.add( getFastClockOffCombined() ); // yesterdayOffTime
         thisControlTimes.add( getFastClockOnCombined()+1440 ); // todayOnTime
         thisControlTimes.add( getFastClockOffCombined()+1440 ); // todayOffTime
-        
+
         otherControlTimes.removeIf( e -> ( e > ( _timeNow +1440 ) )); // remove future times
         thisControlTimes.removeIf( e -> ( e > ( _timeNow +1440 ) )); // remove future times
-        
+
         if (otherControlTimes.isEmpty()){
             return true;
         }
         return Collections.max(thisControlTimes) >= Collections.max(otherControlTimes);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean onOffTimesFaulty() {
         return (getFastClockOnCombined()==getFastClockOffCombined());
     }
-    
+
     /**
      * @param time Combined hours / mins to check against.
      */
@@ -644,21 +644,21 @@ public class DefaultLightControl implements LightControl {
         return p -> ( !(p==this) && (
             p.getFastClockOnCombined() == time || p.getFastClockOffCombined() == time ) );
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean areFollowerTimesFaulty( List<LightControl> compareList ) {
         if (onOffTimesFaulty()){
             return true;
         }
-        return (compareList.stream().anyMatch(isFastClockEqual(getFastClockOnCombined())) || 
+        return (compareList.stream().anyMatch(isFastClockEqual(getFastClockOnCombined())) ||
             compareList.stream().anyMatch(isFastClockEqual(getFastClockOffCombined())));
     }
-    
+
     /**
      * Updates the local int of the FastClock Time
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getTime
     private void setTheTime(){
         Date now = _clock.getTime();
         _timeNow = now.getHours() * 60 + now.getMinutes();
@@ -712,7 +712,7 @@ public class DefaultLightControl implements LightControl {
             }
         }
     }
-    
+
     /**
      * Outputs Time and Light Change info to log file.
      * eg Output "DEBUG - 11:05 Setting Light My Light 2751 OFF"

@@ -72,7 +72,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
                     log.debug("skip updateLAF as already has className=={}", className);
                 }
             } catch (Exception ex) {
-                log.error("Exception while setting GUI look & feel: {}", ex);
+                log.error("Exception while setting GUI look & feel", ex);
                 result = false;
             }
         }

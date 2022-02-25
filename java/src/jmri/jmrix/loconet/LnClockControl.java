@@ -150,7 +150,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         return curRate;
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, Date.getMinutes
     @Override
     public void setTime(Date now) {
         curDays = now.getDate();
@@ -159,7 +159,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         setClock();
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getTime, Date.getHours
     @Override
     public Date getTime() {
         Date tem = clock.getTime();
@@ -186,7 +186,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         setClock();
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getDate, Date.getHours
     @Override
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         synchronizeWithInternalClock = clock.getSynchronize();
@@ -232,7 +232,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     /**
      * Corrects the LocoNet Fast Clock
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getDate, Date.getHours, Date.getMinutes
     public void newMinute() {
         // ignore if waiting on LocoNet clock read
         if (!inSyncWithInternalFastClock) {
@@ -271,7 +271,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
      *
      * @param s the LocoNetSlot object which has been changed
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getTime, Date.getHours
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         // only watch the clock slot

@@ -115,7 +115,7 @@ import jmri.util.JmriJFrame;
                 try {
                     editCsvTableName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
                 } catch (java.io.IOException ex) {
-                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    log.error("exception setting file location", ex);  // NOI18N
                     editCsvTableName.setText("");
                 }
             }
@@ -514,7 +514,7 @@ import jmri.util.JmriJFrame;
         }
 
         @Override
-        public Component getListCellRendererComponent(JList list, Object value,
+        public Component getListCellRendererComponent(JList<?> list, Object value,
                 int index, boolean isSelected, boolean cellHasFocus) {
             setText((value == null) ? "" : value.toString());
             return this;

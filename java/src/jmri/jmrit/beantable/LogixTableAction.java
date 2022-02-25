@@ -334,7 +334,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Logix> f) {
         loadSelectionMode();
         loadEditorMode();
 
@@ -469,14 +469,14 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
         item = new JMenuItem(Bundle.getMessage("CrossReference"));  // NOI18N
         item.addActionListener(new ActionListener() {
-            BeanTableFrame parent;
+            BeanTableFrame<?> parent;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 new RefDialog(parent);
             }
 
-            ActionListener init(BeanTableFrame f) {
+            ActionListener init(BeanTableFrame<?> f) {
                 parent = f;
                 return this;
             }
@@ -750,7 +750,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         _showReminder = true;
         // make an Add Logix Frame
         if (addLogixFrame == null) {
-            JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage", 
+            JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage",
                     "package.jmri.jmrit.beantable.LogixAddEdit");  // NOI18N
             // Create Logix
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
@@ -1781,7 +1781,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             FileUtil.appendTextToFile(file, tStr);
             FileUtil.appendTextToFile(file, textContent.getText());
         } catch (IOException e) {
-            log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
         }
     }
 

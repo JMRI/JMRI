@@ -222,15 +222,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     volatile OutputStream ostream = null;
     int[] offsetArray = null;
 
-    @Deprecated
-    static public SerialAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialAdapter();
-        }
-        return mInstance;
-    }
-    static volatile SerialAdapter mInstance = null;
-
     // code for handling the input characters
     Thread readerThread;
 

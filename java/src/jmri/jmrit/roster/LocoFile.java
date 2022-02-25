@@ -97,15 +97,21 @@ public class LocoFile extends XmlFile {
                     log.info("CV{} renamed to {} has value: {}", oldName, name, value);
                 }
 
+                // check whether the CV already exists, i.e. due to a variable definition
                 cvObject = cvModel.allCvMap().get(name);
-                if (cvObject == null) {
-                    // need to disable this warning as ESU files do not generate CV entries until panel load time
-                    // log.warn("CV "+name+" was in loco file, but not defined by the decoder definition");
+                if (cvObject == null && name.equals("19")) {
+                    log.info("CV19 special case triggered, kept without Variable");
                     cvModel.addCV(name, false, false, false);
                     cvObject = cvModel.allCvMap().get(name);
                 }
-                cvObject.setValue(Integer.parseInt(value));
-                cvObject.setState(CvValue.FROMFILE);
+                if (cvObject == null) {
+                    // No warning since ESU files do not generate CV entries until panel load time
+                    // plus this is a valid way to migrate a decoder definition, i.e. to remove a variable.
+                    log.debug("CV "+name+" was in loco file, but not defined by the decoder definition");
+                } else {
+                    cvObject.setValue(Integer.parseInt(value));
+                    cvObject.setState(CvValue.FROMFILE);
+                }
             }
         } else {
             log.error("no values element found in config file; CVs not configured for ID=\"{}\"", rosterName);
@@ -180,7 +186,8 @@ public class LocoFile extends XmlFile {
                 var.setValue(value);
             } else {
                 if (selectMissingVarResponse(item) == MessageResponse.REPORT) {
-                    log.warn("Did not find locofile variable \"{}\" in decoder definition, not loading", item);
+                    // not an warning, as this is how some definitions are migrated to remove erroneous variables
+                    log.debug("Did not find locofile variable \"{}\" in decoder definition, no variable loaded", item);
                 }
             }
         }

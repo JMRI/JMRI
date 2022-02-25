@@ -115,7 +115,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                     df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + filename);
 
                 } catch (Exception ex) {
-                    log.error("error during locomotive file output: {}", ex);
+                    log.error("error during locomotive file output", ex);
                 }
             }
         }

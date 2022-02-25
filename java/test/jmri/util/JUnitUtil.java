@@ -121,7 +121,7 @@ public class JUnitUtil {
 
     /**
      * When true, prints each setUp method to help identify which tests include a failure.
-     * When checkSetUpTearDownSequence is also true, this also sprints on execution of tearDown.
+     * When checkSetUpTearDownSequence is also true, this also prints on execution of tearDown.
      * <p>
      * Set from the jmri.util.JUnitUtil.printSetUpTearDownNames environment variable.
      */
@@ -331,6 +331,7 @@ public class JUnitUtil {
         }
     }
 
+    @SuppressWarnings("deprecation")        // Thread.stop()
     static void killThread(Thread t) {
         t.interrupt();
         try {
@@ -429,11 +430,13 @@ public class JUnitUtil {
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use Jemmy's wait routine.
+     * <p>
+     * The various waitFor(..) methods are much preferred to using this.
+     * They're faster and more reliable.  This is retained only for
+     * cases where there's nothing accessible to wait for.
      *
      * @param self currently ignored
-     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
@@ -443,12 +446,14 @@ public class JUnitUtil {
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use Jemmy's wait routine.
+     * <p>
+     * The various waitFor(..) methods are much preferred to using this.
+     * They're faster and more reliable.  This is retained only for
+     * cases where there's nothing accessible to wait for.
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait
-     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
@@ -1085,37 +1090,28 @@ public class JUnitUtil {
 
     /**
      * Leaves ShutDownManager, if any, in place,
-     * but removes its contents.  Instead of using this,
+     * but removes its contents.
+     * <p>
+     * Instead of using this,
      * it's better to have your test code remove _and_ _check_
      * for specific items; this just suppresses output from the
      * {@link #checkShutDownManager()} check down as part of the
      * default end-of-test code.
      *
      * @see #checkShutDownManager()
-     * @see #initShutDownManager()
-     * @deprecated 4.17.4 because tests should directly test and remove queued items;
-     *             we do not intend to remove this method soon but you should not use
-     *             it in new code.
      */
-    @Deprecated // 4.17.4 because tests should directly test and remove queued items;
-                // we do not intend to remove this method soon but you should not use
-                // it in new code.
     public static void clearShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        while (!list.isEmpty()) {
-            ShutDownTask task = list.get(0);
-            sm.deregister(task);
-            list = sm.tasks();  // avoid ConcurrentModificationException
-        }
+
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
         }
+
         List<Runnable> runnables = sm.getRunnables();
         while (!runnables.isEmpty()) {
             Runnable runnable = runnables.get(0);
@@ -1130,20 +1126,12 @@ public class JUnitUtil {
      * CI will flag these and tests will be improved.
      *
      * @see #clearShutDownManager()
-     * @see #initShutDownManager()
      */
     static void checkShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        while (!list.isEmpty()) {
-            ShutDownTask task = list.get(0);
-            log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
-            sm.deregister(task);
-            list = sm.tasks();  // avoid ConcurrentModificationException
-        }
+
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
@@ -1171,28 +1159,6 @@ public class JUnitUtil {
             log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
         }
 
-    }
-
-    /**
-     * Creates a new ShutDownManager.
-     * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
-     * Normally, this is not needed for tests, as
-     * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
-     * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
-     * @see #clearShutDownManager()
-     * @deprecated 4.17.5 should not be needed in new test code
-     */
-    @Deprecated // 4.17.5 should not be needed in new test code
-    public static void initShutDownManager() {
-        ShutDownManager manager = InstanceManager.getDefault(ShutDownManager.class);
-        List<ShutDownTask> tasks = manager.tasks();
-        while (!tasks.isEmpty()) {
-            manager.deregister(tasks.get(0));
-            tasks = manager.tasks(); // avoid ConcurrentModificationException
-        }
-        if (manager instanceof MockShutDownManager) {
-            ((MockShutDownManager) manager).resetShuttingDown();
-        }
     }
 
     public static void initStartupActionsManager() {
@@ -1471,6 +1437,7 @@ public class JUnitUtil {
         "WindowMonitor-DispatchThread",
         "RMI Reaper",
         "RMI TCP Accept",
+        "RMI GC Daemon",
         "TimerQueue",
         "Java Sound Event Dispatcher",
         "Aqua L&F",                         // macOS
@@ -1527,6 +1494,10 @@ public class JUnitUtil {
                  || name.startsWith("JmmDNS pool")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
                  || name.startsWith("SocketListener(")
+                 || name.startsWith("Libgraal")
+                 || name.startsWith("LibGraal")
+                 || name.startsWith("TruffleCompilerThread-")
+                 || ( name.startsWith("pool-") && name.endsWith("thread-1") )
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
                  || ( name.startsWith("SwingWorker-pool-1-thread-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
@@ -1543,10 +1514,6 @@ public class JUnitUtil {
                         String action = "Interrupt";
                         if (!killRemnantThreads) {
                             action = "Found";
-                            kill = false;
-                        }
-                        if (name.toUpperCase().startsWith("OLCB") || name.toUpperCase().startsWith("OPENLCB")) { // ugly special case
-                            action = "Skipping";
                             kill = false;
                         }
 

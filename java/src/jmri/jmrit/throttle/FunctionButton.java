@@ -11,10 +11,12 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
+import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.com.sun.ToggleOrPressButtonModel;
+import jmri.util.gui.GuiLafPreferencesManager;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -57,7 +59,6 @@ public class FunctionButton extends JToggleButton {
     private final static int BUT_MAX_WDTH = 256;
     private final static int BUT_MIN_WDTH = 100;
 
-    public final static int DEFAULT_FONT_SIZE = 12;
     public final static int DEFAULT_IMG_SIZE = 48;
 
     /**
@@ -106,7 +107,7 @@ public class FunctionButton extends JToggleButton {
         setModel(_model);
         //Add listener to components that can bring up popupMenu menus.
         addMouseListener(new PopupListener());
-        setFont(new Font("Monospaced", Font.PLAIN, DEFAULT_FONT_SIZE));
+        setFont(new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);
         updateLnF();
@@ -292,19 +293,6 @@ public class FunctionButton extends JToggleButton {
     /**
      * Change the state of the function.
      * Sets internal state, setSelected, and sends to listeners.
-     *
-     * @param newState The new state. True = Is on, False = Is off.
-     * @deprecated since 4.19.6; use
-     * {@link jmri.jmrit.throttle.FunctionButton#setSelected(boolean) } instead
-     */
-    @Deprecated
-    public void changeState(boolean newState) {
-        setSelected(newState);
-    }
-
-    /**
-     * Change the state of the function.
-     * Sets internal state, setSelected, and sends to listeners.
      * <p>
      * To update this button WITHOUT sending to layout, use setState.
      *
@@ -317,19 +305,6 @@ public class FunctionButton extends JToggleButton {
         for (int i = 0; i < listeners.size(); i++) {
             listeners.get(i).notifyFunctionStateChanged(identity, newState);
         }
-    }
-
-    /**
-     * Add a listener to this button, probably some sort of keypad panel.
-     *
-     * @param l The FunctionListener that wants notifications via the
-     *          FunctionListener.notifyFunctionStateChanged.
-     * @deprecated since 4.19.6; use
-     * {@link jmri.jmrit.throttle.FunctionButton#addFunctionListener(jmri.jmrit.throttle.FunctionListener) } instead
-     */
-    @Deprecated
-    public void setFunctionListener(FunctionListener l) {
-        addFunctionListener(l);
     }
 
     /**
@@ -436,7 +411,9 @@ public class FunctionButton extends JToggleButton {
         me.setAttribute("text", this.getButtonLabel());
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
-        me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        if (getFont().getSize() != InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()) {
+            me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        }
         me.setAttribute("buttonImageSize", String.valueOf(this.getButtonImageSize()));
         if (this.getIconPath().startsWith(FileUtil.getUserResourcePath())) {
             me.setAttribute("iconPath", this.getIconPath().substring(FileUtil.getUserResourcePath().length()));
@@ -477,7 +454,11 @@ public class FunctionButton extends JToggleButton {
             this.setText(e.getAttribute("text").getValue());
             this.setIsLockable(e.getAttribute("isLockable").getBooleanValue());
             this.setDisplay(e.getAttribute("isVisible").getBooleanValue());
-            this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+            if (e.getAttribute("fontSize") != null) {
+                this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+            } else {
+                this.setFont(new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()));
+            }
             this.setButtonImageSize( (e.getAttribute("buttonImageSize")!=null)?e.getAttribute("buttonImageSize").getIntValue():DEFAULT_IMG_SIZE);
             if ((e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {
                 if (checkFile(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue())) {
@@ -495,7 +476,7 @@ public class FunctionButton extends JToggleButton {
             }
             updateLnF();
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: {}", ex);
+            log.error("DataConverstionException in setXml", ex);
         }
     }
 

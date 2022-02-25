@@ -514,6 +514,8 @@
         for displaying them, cleaned up some code problems in the throttle, and created
         Jynstruments for improving the GUI</li>
 
+        <li>Pete Johnson, who provided instructions for use of Operations</li>
+
         <li>Richard Johnson, who provided info on DCC Concepts decoders</li>
 
         <li>Robert Johnson, who provided info on the DZ123 decoder</li>
@@ -529,7 +531,8 @@
         decoder.</li>
 
         <li>Klaus Killinger, <!-- klk32003 -->
-         who improved the sound support and has provided multiple sound projects</li>
+         who improved the sound support, has provided multiple sound projects,
+         and helped with Intellibox development.</li>
 
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
@@ -631,6 +634,10 @@
 
         <li>John McAleely, who contributed Hornby and Bachmann decoder definitions</li>
 
+        <li>Jordan McBride, <!-- TCSDCC-Jordan -->
+        who worked on the TCS decoder identification, new split value variable form,
+        and TCS decoder definitions.
+
         <li>Greg McCartney, <!-- gpmccartney -->
            who provided a <a href="https://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk and
           Western signal definition</a>, the <a href=
@@ -728,6 +735,8 @@
 
         <li>Pål <-paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
+
+        <li>Gopal Patnaik helped with Intellibox development.</li>
 
         <li>Howard G. Penny provided info on the NCE D14SR decoder, then went on to become an
         active developer, including providing the code for indexed CVs (ala QSI), better support of
@@ -898,6 +907,9 @@
         <li>Dima Stepanchuk, who provided a fix for the Packet Analyzer</li>
 
         <li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
+
+        <li>James Szinger, who helped with the Java 11 migration on Linux.
+
           <a id="T"></a>
         </li>
 
@@ -978,6 +990,9 @@
         Monitor</li>
 
         <li>Jack Walton, who created the Lenz LE080 decoder definition</li>
+
+        <li>Steve Walton, <-- swalton00 -->
+        who fixed the tag sorting.
 
         <li>George Warner, who changed all the TextFields to editable comboboxes (with drop-down
         menus); added a 2nd turnout circle for slips and added left, right & bottom options for the

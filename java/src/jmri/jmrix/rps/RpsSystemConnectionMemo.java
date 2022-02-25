@@ -59,7 +59,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         if (getDisabled()) {
             return null;
         }
-        return (RpsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> { return new RpsSensorManager(this); });
+        return (RpsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> { return new RpsSensorManager(this); });
     }
 
     /**
@@ -69,7 +69,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         if (getDisabled()) {
             return null;
         }
-        return (RpsReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class c) -> { return new RpsReporterManager(this); });
+        return (RpsReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class<?> c) -> { return new RpsReporterManager(this); });
     }
 
     /**
@@ -80,7 +80,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
      * @param locale  the locale for user messages
      * @return name, unchanged
      */
-    public String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+    public String validateSystemNameFormat(String name, Manager<?> manager, Locale locale) {
         manager.validateSystemNamePrefix(name, locale);
         String[] points = name.substring(manager.getSystemNamePrefix().length()).split(";");
         if (points.length < 3) {
@@ -123,7 +123,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(getSystemPrefix() + type))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }

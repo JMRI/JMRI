@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.*;
@@ -273,7 +274,7 @@ public abstract class FemaleSocketTestBase {
         Assert.assertTrue(_femaleSocket.validateName("Abc___"));
         Assert.assertTrue(_femaleSocket.validateName("Abc___fsdffs"));
         Assert.assertTrue(_femaleSocket.validateName("Abc3123__2341fsdf"));
-        
+
         // Invalid names
         Assert.assertFalse(_femaleSocket.validateName("12Abc"));  // Starts with a digit
         Assert.assertFalse(_femaleSocket.validateName("_Abc"));   // Starts with an underscore
@@ -282,7 +283,7 @@ public abstract class FemaleSocketTestBase {
         Assert.assertFalse(_femaleSocket.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
         Assert.assertFalse(_femaleSocket.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
     }
-    
+
     private boolean setName_verifyException(String newName, String expectedExceptionMessage) {
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         try {
@@ -411,6 +412,9 @@ public abstract class FemaleSocketTestBase {
 
     @Test
     public void testCategory() {
+        org.junit.Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        JDialog dialog = new JDialog();
+
         // Test that the classes method getCategory() returns the same value as
         // the factory.
         Map<Category, List<Class<? extends Base>>> map = _femaleSocket.getConnectableClasses();
@@ -420,6 +424,7 @@ public abstract class FemaleSocketTestBase {
             for (Class<? extends Base> clazz : entry.getValue()) {
                 // The class SwingToolsTest does not have a swing configurator
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
+                iface.setJDialog(dialog);
                 iface.getConfigPanel(new JPanel());
                 Base obj = iface.createNewObject(iface.getAutoSystemName(), null);
                 Assert.assertEquals("category is correct for "+((MaleSocket)obj).getObject().getClass().getName(), entry.getKey(), obj.getCategory());

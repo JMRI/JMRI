@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Print or Print Preview Action for CBUS Event Table
  */
 public class CbusEventTablePrintAction extends AbstractAction {
-    
+
     private final static int[] whichPrintColumns = {CbusEventTableDataModel.NODE_COLUMN,
         CbusEventTableDataModel.EVENT_COLUMN,CbusEventTableDataModel.NAME_COLUMN,
         CbusEventTableDataModel.NODENAME_COLUMN,CbusEventTableDataModel.COMMENT_COLUMN};
@@ -24,24 +24,24 @@ public class CbusEventTablePrintAction extends AbstractAction {
     private final String _title;
     private final CbusEventTableDataModel _model;
     private final boolean _preview;
-    
+
     /**
      * Create a new Save to CSV Action.
-     * 
+     *
      * @param actionName Action Name
      * @param model Table Model to use.
      * @param title Page Title.
      * @param preview True to preview, false to print.
      */
-    public CbusEventTablePrintAction(String actionName, @Nonnull CbusEventTableDataModel model, 
+    public CbusEventTablePrintAction(String actionName, @Nonnull CbusEventTableDataModel model,
         @Nonnull String title, boolean preview ){
         super(actionName);
         _model = model;
         _title = title;
         _preview = preview;
-        
+
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -61,7 +61,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
             writer.close();
         });
     }
-    
+
     /**
      * Self print or print preview the table.
      * <p>
@@ -69,26 +69,26 @@ public class CbusEventTablePrintAction extends AbstractAction {
      * Final column with size zero runs to extent of page width.
      * <p>
      * Printed with headings and vertical lines between each column. Data is
-     * word wrapped within a column. 
-     * 
+     * word wrapped within a column.
+     *
      * @param w the writer to print to
      */
     private void printTable(HardcopyWriter w ) {
-        
+
         // [AC] variable column sizes
-        
+
         // column header labels
         String[] columnStrings = new String[whichPrintColumns.length];
-        
+
         int[] columnWidth = new int[whichPrintColumns.length];
         // in a test, thats 86 chars on a line
-        
+
         colWidthLoop(columnStrings, columnWidth, w);
-        
+
         // Draw horizontal dividing line
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 w.getCharactersPerLine());
-        
+
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnWidth);
         w.setFontStyle(0);
@@ -96,18 +96,18 @@ public class CbusEventTablePrintAction extends AbstractAction {
                 w.getCharactersPerLine());
 
         getEachRow(w, columnStrings, columnWidth);
-        
-        
+
+
     }
-    
+
     private void colWidthLoop(String[] columnStrings, int[] columnWidth, HardcopyWriter w){
         int columnTotal = 0;
         for (int i = 0; i < whichPrintColumns.length; i++) {
             // Put each column header in the array
             columnStrings[i] = _model.getColumnName(whichPrintColumns[i]);
-            
+
             int columnworkedon=whichPrintColumns[i];
-            
+
             if (getColumnWidth(columnworkedon) == 0) {
                 // Fill to end of line
                 columnWidth[i] = w.getCharactersPerLine() - columnTotal;
@@ -117,16 +117,16 @@ public class CbusEventTablePrintAction extends AbstractAction {
             }
         }
     }
-    
+
     private void getEachRow(HardcopyWriter w, String[] columnStrings, int[] columnWidth){
-    
+
         // now print each row of data
         // create a base string the width of the column
         for (int i = 0; i < _model.getRowCount(); i++) {
             for (int k = 0; k < whichPrintColumns.length; k++) {
-                
+
                 int j=whichPrintColumns[k];
-                
+
                 //check for special, non string contents
                 if (_model.getValueAt(i, j) instanceof Integer) {
                     columnStrings[k] = (_model.getValueAt(i, j)).toString();
@@ -134,7 +134,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
                     columnStrings[k] = (String) _model.getValueAt(i, j);
                 }
             }
-            
+
             printColumns(w, columnStrings, columnWidth);
             w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                     w.getCharactersPerLine());
@@ -176,7 +176,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
                         }
                         // log.debug("1050 columnString {}",columnString);
                     }
-                    
+
                     // log.debug("1053 noword is {} ",noWord);
                     if (noWord) { // not breakable, hard break
                         columnString = columnStrings[i].substring(0, columnWidth[i]);
@@ -198,18 +198,18 @@ public class CbusEventTablePrintAction extends AbstractAction {
                     column = column + columnWidth[i] + 1;
                     // log.debug("1167 i is {} column is {} columnWidth[i] is {} ", i, column, columnWidth[i]);
                 }
-                w.write(w.getCurrentLineNumber(), w.getCharactersPerLine(), 
+                w.write(w.getCurrentLineNumber(), w.getCharactersPerLine(),
                     w.getCurrentLineNumber() + 1, w.getCharactersPerLine());
                 lineString = "\n";
                 w.write(lineString);
                 lineString = "";
             } catch (IOException e) {
-                log.warn("error during printing: {}", e);
+                log.warn("error during printing", e);
             }
         }
     }
-    
-    
+
+
     /**
      * Returns int of column width.
      * <p>
@@ -231,7 +231,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
                 return 8;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -241,5 +241,5 @@ public class CbusEventTablePrintAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventTablePrintAction.class);
-    
+
 }

@@ -341,7 +341,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (java.io.FileNotFoundException ex) {
-                log.error("exception {}", ex);
+                log.error("exception", ex);
             }
         }
     }
@@ -381,9 +381,9 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         return linesBuffer.toString();
     }
 
-    /** 
+    /**
      * Get access to the main text area.
-     * This is intended for use in e.g. scripting 
+     * This is intended for use in e.g. scripting
      * to extend the behaviour of the window.
      * @return the text area.
      */

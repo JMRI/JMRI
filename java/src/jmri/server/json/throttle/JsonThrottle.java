@@ -53,13 +53,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      */
     public static final String IDLE = "idle"; // NOI18N
     /**
-     * {@value #SPEED}
-     * 
-     * @deprecated since 4.15.7; use {@link jmri.server.json.JSON#SPEED} instead
-     */
-    @Deprecated
-    public static final String SPEED = JSON.SPEED; // NOI18N
-    /**
      * {@value #SPEED_STEPS}
      */
     public static final String SPEED_STEPS = "speedSteps"; // NOI18N
@@ -153,7 +146,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                             .getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", address),
                             id);
                 }
-                    
+
             }
             manager.put(address, throttle);
             manager.put(throttle, server);
@@ -209,7 +202,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                 case IDLE:
                     this.throttle.setSpeedSetting(0);
                     break;
-                case SPEED:
+                case JSON.SPEED:
                     this.throttle.setSpeedSetting((float) v.asDouble());
                     break;
                 case FORWARD:
@@ -271,7 +264,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         ObjectNode data = InstanceManager.getDefault(JsonThrottleManager.class).getObjectMapper().createObjectNode();
         String property = evt.getPropertyName();
         if (property.equals(Throttle.SPEEDSETTING)) { // NOI18N
-            data.put(SPEED, ((Number) evt.getNewValue()).floatValue());
+            data.put(JSON.SPEED, ((Number) evt.getNewValue()).floatValue());
         } else if (property.equals(Throttle.ISFORWARD)) { // NOI18N
             data.put(FORWARD, ((Boolean) evt.getNewValue()));
         } else if (property.startsWith(F) && !property.contains("Momentary")) { // NOI18N
@@ -341,7 +334,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     private ObjectNode getStatus() {
         ObjectNode data = InstanceManager.getDefault(JsonThrottleManager.class).getObjectMapper().createObjectNode();
         data.put(ADDRESS, this.throttle.getLocoAddress().getNumber());
-        data.put(SPEED, this.throttle.getSpeedSetting());
+        data.put(JSON.SPEED, this.throttle.getSpeedSetting());
         data.put(FORWARD, this.throttle.getIsForward());
         for ( int i = 0; i< this.throttle.getFunctions().length; i++ ) {
             data.put(Throttle.getFunctionString(i), this.throttle.getFunction(i));
@@ -356,7 +349,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     /**
      * Get the Throttle this JsonThrottle is a proxy for.
-     * 
+     *
      * @return the throttle or null if no throttle is set
      */
     // package private
