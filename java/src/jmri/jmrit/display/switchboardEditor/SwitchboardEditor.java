@@ -1540,7 +1540,7 @@ public class SwitchboardEditor extends Editor {
      */
     @Deprecated
     public void setShowUserName(Boolean on) {
-        setShowUserName(1);
+        setShowUserName(on ? 1 : 0);
     }
 
     public void setShowUserName(int label) {
