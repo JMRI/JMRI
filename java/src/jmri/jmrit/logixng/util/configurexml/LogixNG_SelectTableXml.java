@@ -26,6 +26,8 @@ public class LogixNG_SelectTableXml {
     public Element store(LogixNG_SelectTable selectTable, String tagName) {
         Element tableElement = new Element(tagName);
 
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
         Element tableNameElement = new Element("tableName");
         tableNameElement.addContent(new Element("addressing").addContent(selectTable.getTableNameAddressing().name()));
         NamedBeanHandle<NamedTable> table = selectTable.getTable();
@@ -35,6 +37,9 @@ public class LogixNG_SelectTableXml {
         tableNameElement.addContent(new Element("reference").addContent(selectTable.getTableNameReference()));
         tableNameElement.addContent(new Element("localVariable").addContent(selectTable.getTableNameLocalVariable()));
         tableNameElement.addContent(new Element("formula").addContent(selectTable.getTableNameFormula()));
+        if (selectTable.getTableNameAddressing() == NamedBeanAddressing.Table) {
+            tableNameElement.addContent(selectTableXml.store(selectTable.getSelectTableName(), "table"));
+        }
         tableElement.addContent(tableNameElement);
 
         Element tableRowElement = new Element("row");
@@ -43,6 +48,9 @@ public class LogixNG_SelectTableXml {
         tableRowElement.addContent(new Element("reference").addContent(selectTable.getTableRowReference()));
         tableRowElement.addContent(new Element("localVariable").addContent(selectTable.getTableRowLocalVariable()));
         tableRowElement.addContent(new Element("formula").addContent(selectTable.getTableRowFormula()));
+        if (selectTable.getTableRowAddressing() == NamedBeanAddressing.Table) {
+            tableRowElement.addContent(selectTableXml.store(selectTable.getSelectTableRow(), "table"));
+        }
         tableElement.addContent(tableRowElement);
 
         Element tableColumnElement = new Element("column");
@@ -51,6 +59,9 @@ public class LogixNG_SelectTableXml {
         tableColumnElement.addContent(new Element("reference").addContent(selectTable.getTableColumnReference()));
         tableColumnElement.addContent(new Element("localVariable").addContent(selectTable.getTableColumnLocalVariable()));
         tableColumnElement.addContent(new Element("formula").addContent(selectTable.getTableColumnFormula()));
+        if (selectTable.getTableColumnAddressing() == NamedBeanAddressing.Table) {
+            tableColumnElement.addContent(selectTableXml.store(selectTable.getSelectTableColumn(), "table"));
+        }
         tableElement.addContent(tableColumnElement);
 
         return tableElement;
@@ -59,6 +70,9 @@ public class LogixNG_SelectTableXml {
     public void load(Element tableElement, LogixNG_SelectTable selectTable) throws JmriConfigureXmlException {
 
         if (tableElement != null) {
+
+            LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
             try {
                 Element tableName = tableElement.getChild("tableName");
 
@@ -85,6 +99,11 @@ public class LogixNG_SelectTableXml {
                 elem = tableName.getChild("formula");
                 if (elem != null) selectTable.setTableNameFormula(elem.getTextTrim());
 
+                elem = tableName.getChild("table");
+                if (elem != null) {
+                    selectTableXml.load(elem, selectTable.getSelectTableName());
+                }
+
 
                 // Table row
 
@@ -108,6 +127,11 @@ public class LogixNG_SelectTableXml {
                 elem = tableRow.getChild("formula");
                 if (elem != null) selectTable.setTableRowFormula(elem.getTextTrim());
 
+                elem = tableRow.getChild("table");
+                if (elem != null) {
+                    selectTableXml.load(elem, selectTable.getSelectTableRow());
+                }
+
 
                 // Table column
 
@@ -130,6 +154,11 @@ public class LogixNG_SelectTableXml {
 
                 elem = tableColumn.getChild("formula");
                 if (elem != null) selectTable.setTableColumnFormula(elem.getTextTrim());
+
+                elem = tableColumn.getChild("table");
+                if (elem != null) {
+                    selectTableXml.load(elem, selectTable.getSelectTableColumn());
+                }
 
             } catch (ParserException e) {
                 throw new JmriConfigureXmlException(e);

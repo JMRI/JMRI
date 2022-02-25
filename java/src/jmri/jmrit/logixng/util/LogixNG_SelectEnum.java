@@ -22,12 +22,10 @@ import jmri.util.TypeConversionUtil;
  */
 public class LogixNG_SelectEnum<E extends Enum<?>> {
 
-    public static interface InUse {
-        public boolean isInUse();
-    }
-
     private final AbstractBase _base;
+    private final InUse _inUse;
     private final E[] _enumArray;
+    private final LogixNG_SelectTable _selectTable;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private E _enum;
@@ -39,8 +37,10 @@ public class LogixNG_SelectEnum<E extends Enum<?>> {
 
     public LogixNG_SelectEnum(AbstractBase base, E[] enumArray, E initialEnum) {
         _base = base;
+        _inUse = () -> true;
         _enumArray = enumArray;
         _enum = initialEnum;
+        _selectTable = new LogixNG_SelectTable(_base, _inUse);
     }
 
 
@@ -50,6 +50,7 @@ public class LogixNG_SelectEnum<E extends Enum<?>> {
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setFormula(_formula);
+        _selectTable.copy(copy._selectTable);
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
@@ -116,6 +117,10 @@ public class LogixNG_SelectEnum<E extends Enum<?>> {
         }
     }
 
+    public LogixNG_SelectTable getSelectTable() {
+        return _selectTable;
+    }
+
     public E evaluateEnum(ConditionalNG conditionalNG) throws JmriException {
 
         if (_addressing == NamedBeanAddressing.Direct) {
@@ -143,6 +148,11 @@ public class LogixNG_SelectEnum<E extends Enum<?>> {
                             : null;
                     break;
 
+                case Table:
+                    name = TypeConversionUtil.convertToString(
+                            _selectTable.evaluateTableData(conditionalNG), false);
+                    break;
+
                 default:
                     throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
             }
@@ -168,6 +178,15 @@ public class LogixNG_SelectEnum<E extends Enum<?>> {
 
             case Formula:
                 enumName = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
+
+            case Table:
+                enumName = Bundle.getMessage(
+                        locale,
+                        "AddressByTable",
+                        _selectTable.getTableNameDescription(locale),
+                        _selectTable.getTableRowDescription(locale),
+                        _selectTable.getTableColumnDescription(locale));
                 break;
 
             default:
