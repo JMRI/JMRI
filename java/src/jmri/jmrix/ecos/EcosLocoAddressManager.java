@@ -49,11 +49,15 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
     private String rosterAttribute;
     private EcosTrafficController tc;
     private Thread waitPrefLoad;
-    private Hashtable<String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
-    private Hashtable<Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
+    private Hashtable<String, EcosLocoAddress> _tecos = new Hashtable<>();   // stores known Ecos Object ids to DCC
+    private Hashtable<Integer, EcosLocoAddress> _tdcc = new Hashtable<>();  // stores known DCC Address to Ecos Object ids
 
     public EcosLocoAddressManager(@Nonnull EcosSystemConnectionMemo memo) {
         super(memo);
+        init();
+    }
+
+    private void init() {
         locoToRoster = new EcosLocoToRoster(getMemo());
         tc = getMemo().getTrafficController();
         p = getMemo().getPreferenceManager();
@@ -183,7 +187,7 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
 
     public List<String> getEcosObjectList() {
         String[] arr = new String[_tecos.size()];
-        List<String> out = new ArrayList<String>();
+        List<String> out = new ArrayList<>();
         Enumeration<String> en = _tecos.keys();
         int i = 0;
         while (en.hasMoreElements()) {
@@ -328,6 +332,10 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
         if (waitPrefLoad != null) {
             waitPrefLoad.interrupt();
         }
+    }
+    
+    protected boolean threadsRunning() {
+        return ( waitPrefLoad != null ? waitPrefLoad.isAlive() : false );
     }
 
     public boolean shutdownDispose() {
