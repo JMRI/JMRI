@@ -786,9 +786,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                }
                 fireCellUpdate(row, CONTROL_COLUMN);
             } else if (property.equals("RampBegin")) {
-                String ms = (String) e.getOldValue();
+//                String ms = (String) e.getOldValue();
                 String speedType = (String) e.getNewValue();
-                setFrameStatusText(Bundle.getMessage("RampStart", bean.getTrainName(), ms,
+                setFrameStatusText(Bundle.getMessage("RampStart", bean.getTrainName(),
                         speedType, bean.getCurrentBlockName()), myGreen, true);
             } else if (property.equals("ReadyToRun")) {
                 setFrameStatusText(Bundle.getMessage("TrainReady", bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);

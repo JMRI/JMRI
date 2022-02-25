@@ -25,23 +25,32 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
      * @return Element containing the complete info
      */
     public Element store(LogixNG_SelectNamedBean<E> selectNamedBean, String tagName) {
-        Element tableElement = new Element(tagName);
+        Element namedBeanElement = new Element(tagName);
 
-        tableElement.addContent(new Element("addressing").addContent(selectNamedBean.getAddressing().name()));
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
+        namedBeanElement.addContent(new Element("addressing").addContent(selectNamedBean.getAddressing().name()));
         NamedBeanHandle<E> table = selectNamedBean.getNamedBean();
         if (table != null) {
-            tableElement.addContent(new Element("name").addContent(table.getName()));
+            namedBeanElement.addContent(new Element("name").addContent(table.getName()));
         }
-        tableElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
-        tableElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
-        tableElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
+        namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
+        namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
+        namedBeanElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
 
-        return tableElement;
+        if (selectNamedBean.getAddressing() == NamedBeanAddressing.Table) {
+            namedBeanElement.addContent(selectTableXml.store(selectNamedBean.getSelectTable(), "table"));
+        }
+
+        return namedBeanElement;
     }
 
     public void load(Element namedBeanElement, LogixNG_SelectNamedBean<E> selectNamedBean) throws JmriConfigureXmlException {
 
         if (namedBeanElement != null) {
+
+            LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
             try {
                 Element elem = namedBeanElement.getChild("addressing");
                 if (elem != null) {
@@ -63,6 +72,10 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
                 elem = namedBeanElement.getChild("formula");
                 if (elem != null) selectNamedBean.setFormula(elem.getTextTrim());
+
+                if (namedBeanElement.getChild("table") != null) {
+                    selectTableXml.load(namedBeanElement.getChild("table"), selectNamedBean.getSelectTable());
+                }
 
             } catch (ParserException e) {
                 throw new JmriConfigureXmlException(e);

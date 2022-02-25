@@ -38,6 +38,7 @@
         <xs:enumeration value="Reference"/>
         <xs:enumeration value="LocalVariable"/>
         <xs:enumeration value="Formula"/>
+        <xs:enumeration value="Table"/>
       </xs:restriction>
     </xs:simpleType>
 
@@ -65,6 +66,7 @@
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
        </xs:sequence>
      </xs:complexType>
 
@@ -76,11 +78,9 @@
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
        </xs:sequence>
      </xs:complexType>
-
-
-
 
 
      <xs:complexType name="LogixNG_SelectTableType">
@@ -94,6 +94,7 @@
                <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+               <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
              </xs:sequence>
            </xs:complexType>
          </xs:element>
@@ -106,6 +107,7 @@
                <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+               <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
              </xs:sequence>
            </xs:complexType>
          </xs:element>
@@ -118,6 +120,7 @@
                <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+               <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
              </xs:sequence>
            </xs:complexType>
          </xs:element>

@@ -13,7 +13,7 @@ import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-// import org.jdom2.ProcessingInstruction;
+import org.jdom2.ProcessingInstruction;
 
 import jmri.jmrit.timetable.*;
 
@@ -36,11 +36,21 @@ public class TimeTableXml {
 
         // Create root element
         Element root = new Element("timetable-data");  // NOI18N
+
         root.setAttribute("noNamespaceSchemaLocation",  // NOI18N
                 "http://jmri.org/xml/schema/timetable.xsd",  // NOI18N
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));  // NOI18N
         Document doc = new Document(root);
+
+        // add XSLT processing instruction
+        // <?xml-stylesheet href="/xml/XSLT/timetable.xsl" type="text/xsl"?>
+        java.util.Map<String, String> m = new java.util.HashMap<>();
+        m.put("type", "text/xsl");
+        m.put("href", TimeTableXmlFile.xsltLocation + "timetable.xsl");
+        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+        doc.addContent(0, p);
+
         Element values;
 
         root.addContent(values = new Element("layouts"));  // NOI18N

@@ -353,7 +353,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
     }
 
-    static jmri.jmrit.display.layoutEditor.TransitCreationTool tct;
+    static volatile jmri.jmrit.display.layoutEditor.TransitCreationTool tct;
 
     private void setImageTypeList(ButtonGroup iconTypeGroup, JMenu iconSetMenu, final String item) {
         JRadioButtonMenuItem im;
