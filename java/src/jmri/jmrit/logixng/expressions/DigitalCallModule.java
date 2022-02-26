@@ -149,8 +149,6 @@ public class DigitalCallModule extends AbstractDigitalExpression implements Veto
 
         Module module = _moduleHandle.getBean();
 
-        ConditionalNG oldConditionalNG = getConditionalNG();
-
         FemaleSocket femaleSocket = module.getRootSocket();
 
         if (! (femaleSocket instanceof FemaleDigitalExpressionSocket)) {

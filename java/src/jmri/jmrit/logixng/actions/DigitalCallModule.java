@@ -149,8 +149,6 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
 
         Module module = _moduleHandle.getBean();
 
-        ConditionalNG oldConditionalNG = getConditionalNG();
-
         FemaleSocket femaleSocket = module.getRootSocket();
 
         if (! (femaleSocket instanceof FemaleDigitalActionSocket)) {
