@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-TIP</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+ <appearances>
+
+    <appearance>
+      <aspectname>TIPDark</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIPDark.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIPDark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIPDark.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP1</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP1.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP1.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP1.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP2</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP2.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP2.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP2.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP3</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP3.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP3.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP3.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP4</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP4.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP4.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP4.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP5</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP5.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP5.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP5.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP6</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP6.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP6.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP6.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP7</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP7.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP7.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP7.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP8</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP8.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP8.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP8.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP9</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP9.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP9.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP9.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIP10</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP10.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP10.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Normal/TIP-TLC/TIP10.gif</imagelink>
+    </appearance>
+ </appearances>
+
+  <specificappearances>
+  </specificappearances>
+
+ <!--
+<aspectMappings>
+ </aspectMappings>
+ -->
+
+</appearancetable>

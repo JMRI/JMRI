@@ -1,15 +1,13 @@
 package jmri.jmrix.ecos;
 
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+import jmri.*;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * Tests for the Bundle class
+ * Tests for EcosSystemConnectionMemo.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -18,7 +16,7 @@ public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<E
     @Override
     @Test
     public void testProvidesConsistManager() {
-        Assert.assertTrue("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+        Assertions.assertTrue( scm.provides(ConsistManager.class), "Provides ConsistManager");
     }
 
     @BeforeEach
@@ -28,18 +26,27 @@ public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<E
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        scm = new EcosSystemConnectionMemo();
-        scm.setEcosTrafficController(new EcosInterfaceScaffold());
+        scm = new EcosSystemConnectionMemo(new EcosInterfaceScaffold());
         scm.configureManagers();
         scm.getPreferenceManager().setPreferencesLoaded();
+        InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getPreferenceManager().ecosPreferencesShutDownTask);
+        
+        scm.getLocoAddressManager().terminateThreads();
+        JUnitUtil.waitFor(() -> { return !scm.getLocoAddressManager().threadsRunning(); });
         InstanceManager.store(scm, EcosSystemConnectionMemo.class);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getLocoAddressManager().ecosLocoShutDownTask);
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getLocoAddressManager().ecosLocoShutDownTask);
-        scm.getLocoAddressManager().terminateThreads();
+        EcosLocoAddressManager em = scm.getLocoAddressManager();
+        if ( em != null ) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(em.ecosLocoShutDownTask);
+            em.terminateThreads();
+            JUnitUtil.waitFor(() -> { return !em.threadsRunning(); });
+        }
+        
         scm.getTrafficController().terminateThreads();
         scm.dispose();
         JUnitUtil.tearDown();

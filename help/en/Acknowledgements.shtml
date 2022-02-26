@@ -507,6 +507,10 @@
         <li>Martin Jahner, who fixed the constant checkboxen and built a replacement library for
         Mac OS X</li>
 
+        <li>Jean-Christophe Janiszewski, <!-- John-Christopher95 -->
+        who created the SNCF signal system.
+        </li>
+
         <li>Jay Janzen, who debugged a RobotThrottle problem, and provided improvements for
         Dispatcher, including a fix to allow dispatcher to allocate to the end block.</li>
 
