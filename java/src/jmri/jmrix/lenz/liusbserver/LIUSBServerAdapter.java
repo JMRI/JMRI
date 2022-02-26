@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz.liusbserver;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -315,7 +317,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         }
 
         @Override
-        @SuppressWarnings("OverridingMethodsMustInvokeSuper")
+        @SuppressFBWarnings(value="OVERRIDING_METHODS_MUST_INVOKE_SUPER", 
+                justification="this object does not own SystemConnectionMemo")
         public void dispose() {
             // override to prevent super class from disposing of the
             // SystemConnectionMemo since this object does not own it
@@ -358,7 +361,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         }
 
         @Override
-        @SuppressWarnings("OverridingMethodsMustInvokeSuper")
+        @SuppressFBWarnings(value="OVERRIDING_METHODS_MUST_INVOKE_SUPER", 
+                justification="this object does not own SystemConnectionMemo")
         public void dispose() {
             // override to prevent super class from disposing of the
             // SystemConnectionMemo since this object does not own it
