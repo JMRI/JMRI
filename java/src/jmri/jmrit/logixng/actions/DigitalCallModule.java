@@ -17,19 +17,19 @@ import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
 /**
  * This action executes a module.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2020
  */
 public class DigitalCallModule extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Module> _moduleHandle;
     private final List<ParameterData> _parameterData = new ArrayList<>();
-    
+
     public DigitalCallModule(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -48,7 +48,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         }
         return manager.registerAction(copy);
     }
-    
+
     public void setModule(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setModule");
         Module memory = InstanceManager.getDefault(ModuleManager.class).getModule(memoryName);
@@ -59,19 +59,19 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
             log.error("memory \"{}\" is not found", memoryName);
         }
     }
-    
+
     public void setModule(@Nonnull NamedBeanHandle<Module> handle) {
         assertListenersAreNotRegistered(log, "setModule");
         _moduleHandle = handle;
         InstanceManager.getDefault(ModuleManager.class).addVetoableChangeListener(this);
     }
-    
+
     public void setModule(@Nonnull Module module) {
         assertListenersAreNotRegistered(log, "setModule");
         setModule(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(module.getDisplayName(), module));
     }
-    
+
     public void removeModule() {
         assertListenersAreNotRegistered(log, "setModule");
         if (_moduleHandle != null) {
@@ -79,11 +79,11 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
             _moduleHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<Module> getModule() {
         return _moduleHandle;
     }
-    
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -101,7 +101,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -117,66 +117,63 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
     public void returnSymbols(
             DefaultSymbolTable symbolTable, Collection<ParameterData> symbolDefinitions)
             throws JmriException {
-        
+
         for (ParameterData parameter : symbolDefinitions) {
             Object returnValue = symbolTable.getValue(parameter.getName());
-            
+
             switch (parameter.getReturnValueType()) {
                 case None:
                     break;
-                    
+
                 case LocalVariable:
                     symbolTable.getPrevSymbolTable()
                             .setValue(parameter.getReturnValueData(), returnValue);
                     break;
-                    
+
                 case Memory:
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(parameter.getReturnValueData());
                     if (m != null) m.setValue(returnValue);
                     break;
-                    
+
                 default:
                     log.error("definition.returnValueType has invalid value: {}", parameter.getReturnValueType().name());
                     throw new IllegalArgumentException("definition._returnValueType has invalid value: " + parameter.getReturnValueType().name());
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         if (_moduleHandle == null) return;
-        
+
         Module module = _moduleHandle.getBean();
-        
+
         ConditionalNG oldConditionalNG = getConditionalNG();
-        module.setCurrentConditionalNG(getConditionalNG());
-        
+
         FemaleSocket femaleSocket = module.getRootSocket();
-        
+
         if (! (femaleSocket instanceof FemaleDigitalActionSocket)) {
             log.error("module.rootSocket is not a FemaleDigitalActionSocket");
             return;
         }
-        
+
         ConditionalNG conditionalNG = getConditionalNG();
-        
+
         int currentStackPos = conditionalNG.getStack().getCount();
-        
+
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
         newSymbolTable.createSymbols(conditionalNG.getSymbolTable(), _parameterData);
         newSymbolTable.createSymbols(module.getLocalVariables());
         conditionalNG.setSymbolTable(newSymbolTable);
-        
+
         ((FemaleDigitalActionSocket)femaleSocket).execute();
-        
+
         returnSymbols(newSymbolTable, _parameterData);
-        
+
         conditionalNG.getStack().setCount(currentStackPos);
-        
+
         conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
-        
-        module.setCurrentConditionalNG(oldConditionalNG);
     }
 
     @Override
@@ -202,41 +199,45 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         } else {
             moduleName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        
+
         return Bundle.getMessage(locale, "DigitalCallModule_Long", moduleName);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        // A module never listen on beans
+        if (_moduleHandle != null) {
+            getConditionalNG().addCurrentConditionalNG_Listener(_moduleHandle.getBean());
+        }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        // A module never listen on beans
+        if (_moduleHandle != null) {
+            getConditionalNG().removeCurrentConditionalNG_Listener(_moduleHandle.getBean());
+        }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
         removeModule();
     }
-    
+
     public void addParameter(
             String name,
             InitialValueType initialValueType,
             String initialValueData,
             ReturnValueType returnValueType,
             String returnValueData) {
-        
+
         _parameterData.add(
                 new Module.ParameterData(
                         name,
@@ -245,16 +246,16 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
                         returnValueType,
                         returnValueData));
     }
-    
+
 //    public void removeParameter(String name) {
 //        _parameterData.remove(name);
 //    }
-    
+
     public List<ParameterData> getParameterData() {
         return _parameterData;
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModule.class);
-    
+
 }

@@ -17,7 +17,7 @@ import jmri.util.TypeConversionUtil;
 
 /**
  * Executes a digital action delayed.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ExecuteDelayed
@@ -36,16 +36,16 @@ public class ExecuteDelayed
     private TimerUnit _unit = TimerUnit.MilliSeconds;
     private boolean _resetIfAlreadyStarted;
     private boolean _useIndividualTimers;
-    
+
     private final InternalFemaleSocket _defaultInternalSocket = new InternalFemaleSocket();
-    
-    
+
+
     public ExecuteDelayed(String sys, String user) {
         super(sys, user);
         _socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -64,7 +64,7 @@ public class ExecuteDelayed
         copy.setUseIndividualTimers(_useIndividualTimers);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -77,7 +77,7 @@ public class ExecuteDelayed
         symbolTable.printSymbolTable(writer);
         return stringWriter.toString();
     }
-*/    
+*/
     /**
      * Get a new timer task.
      * @param conditionalNG  the ConditionalNG
@@ -88,7 +88,7 @@ public class ExecuteDelayed
     private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
 
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(symbolTable);
-        
+
         return new ProtectedTimerTask() {
             @Override
             public void execute() {
@@ -117,7 +117,7 @@ public class ExecuteDelayed
             }
         };
     }
-    
+
     private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
         synchronized(ExecuteDelayed.this) {
             if (!_useIndividualTimers && (_defaultTimerTask != null)) {
@@ -131,34 +131,34 @@ public class ExecuteDelayed
             TimerUtil.schedule(timerTask, timerDelay);
         }
     }
-    
+
     private long getNewDelay() throws JmriException {
-        
+
         switch (_stateAddressing) {
             case Direct:
                 return _delay;
-                
+
             case Reference:
                 return TypeConversionUtil.convertToLong(ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _stateReference));
-                
+
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
                         .convertToLong(symbolTable.getValue(_stateLocalVariable));
-                
+
             case Formula:
                 return _stateExpressionNode != null
                         ? TypeConversionUtil.convertToLong(
                                 _stateExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()))
                         : 0;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -173,16 +173,16 @@ public class ExecuteDelayed
             scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), timerDelay, timerStart);
         }
     }
-    
+
     public void setDelayAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
         parseDelayFormula();
     }
-    
+
     public NamedBeanAddressing getDelayAddressing() {
         return _stateAddressing;
     }
-    
+
     /**
      * Get the delay.
      * @return the delay
@@ -190,7 +190,7 @@ public class ExecuteDelayed
     public int getDelay() {
         return _delay;
     }
-    
+
     /**
      * Set the delay.
      * @param delay the delay
@@ -198,46 +198,46 @@ public class ExecuteDelayed
     public void setDelay(int delay) {
         _delay = delay;
     }
-    
+
     public void setDelayReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _stateReference = reference;
     }
-    
+
     public String getDelayReference() {
         return _stateReference;
     }
-    
+
     public void setDelayLocalVariable(@Nonnull String localVariable) {
         _stateLocalVariable = localVariable;
     }
-    
+
     public String getDelayLocalVariable() {
         return _stateLocalVariable;
     }
-    
+
     public void setDelayFormula(@Nonnull String formula) throws ParserException {
         _stateFormula = formula;
         parseDelayFormula();
     }
-    
+
     public String getDelayFormula() {
         return _stateFormula;
     }
-    
+
     private void parseDelayFormula() throws ParserException {
         if (_stateAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
-            
+
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _stateExpressionNode = parser.parseExpression(_stateFormula);
         } else {
             _stateExpressionNode = null;
         }
     }
-    
+
     /**
      * Get the unit
      * @return the unit
@@ -245,7 +245,7 @@ public class ExecuteDelayed
     public TimerUnit getUnit() {
         return _unit;
     }
-    
+
     /**
      * Set the unit
      * @param unit the unit
@@ -253,7 +253,7 @@ public class ExecuteDelayed
     public void setUnit(TimerUnit unit) {
         _unit = unit;
     }
-    
+
     /**
      * Get reset if timer is already started.
      * @return true if the timer should be reset if this action is executed
@@ -262,7 +262,7 @@ public class ExecuteDelayed
     public boolean getResetIfAlreadyStarted() {
         return _resetIfAlreadyStarted;
     }
-    
+
     /**
      * Set reset if timer is already started.
      * @param resetIfAlreadyStarted true if the timer should be reset if this
@@ -272,7 +272,7 @@ public class ExecuteDelayed
     public void setResetIfAlreadyStarted(boolean resetIfAlreadyStarted) {
         _resetIfAlreadyStarted = resetIfAlreadyStarted;
     }
-    
+
     /**
      * Get use individual timers.
      * @return true if the timer should use individual timers, false othervise
@@ -280,7 +280,7 @@ public class ExecuteDelayed
     public boolean getUseIndividualTimers() {
         return _useIndividualTimers;
     }
-    
+
     /**
      * Set reset if timer is already started.
      * @param useIndividualTimers true if the timer should use individual timers,
@@ -289,13 +289,13 @@ public class ExecuteDelayed
     public void setUseIndividualTimers(boolean useIndividualTimers) {
         _useIndividualTimers = useIndividualTimers;
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
                 return _socket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -333,28 +333,28 @@ public class ExecuteDelayed
     @Override
     public String getLongDescription(Locale locale) {
         String delay;
-        
+
         switch (_stateAddressing) {
             case Direct:
                 delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByDirect", _unit.getTimeWithUnit(_delay));
                 break;
-                
+
             case Reference:
                 delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByReference", _stateReference, _unit.toString());
                 break;
-                
+
             case LocalVariable:
                 delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByLocalVariable", _stateLocalVariable, _unit.toString());
                 break;
-                
+
             case Formula:
                 delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByFormula", _stateFormula, _unit.toString());
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
         }
-        
+
         return Bundle.getMessage(locale,
                 "ExecuteDelayed_Long",
                 _socket.getName(),
@@ -386,11 +386,11 @@ public class ExecuteDelayed
             if (!_socket.isConnected()
                     || !_socket.getConnectedSocket().getSystemName()
                             .equals(_socketSystemName)) {
-                
+
                 String socketSystemName = _socketSystemName;
-                
+
                 _socket.disconnect();
-                
+
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
@@ -410,12 +410,12 @@ public class ExecuteDelayed
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
@@ -426,19 +426,19 @@ public class ExecuteDelayed
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
-    
+
+
+
     private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
-        
+
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
-        
+
         public InternalFemaleSocket() {
             super(null, new FemaleSocketListener(){
                 @Override
@@ -452,7 +452,7 @@ public class ExecuteDelayed
                 }
             }, "A");
         }
-        
+
         @Override
         public void execute() throws JmriException {
             if (_socket != null) {
@@ -462,10 +462,10 @@ public class ExecuteDelayed
                 conditionalNG.setSymbolTable(oldSymbolTable);
             }
         }
-        
+
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExecuteDelayed.class);
-    
+
 }

@@ -146,6 +146,8 @@ public class DefaultConditionalNG extends AbstractBase
             DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
 
             try {
+                conditionalNG.setCurrentConditionalNG(conditionalNG);
+
                 conditionalNG.setSymbolTable(newSymbolTable);
                 if (femaleSocket != null) {
                     femaleSocket.execute();
@@ -187,6 +189,32 @@ public class DefaultConditionalNG extends AbstractBase
             }
         }
 
+    }
+
+    private final Set<Base> setCurrentConditionalNG_listeners = new HashSet<>();
+
+    /**
+     * Set the current ConditionalNG.
+     * @param conditionalNG the current ConditionalNG
+     */
+    @Override
+    public void setCurrentConditionalNG(ConditionalNG conditionalNG) {
+        if (this != conditionalNG) {
+            throw new UnsupportedOperationException("The new conditionalNG must be the same as myself");
+        }
+        for (Base b : setCurrentConditionalNG_listeners) {
+            b.setCurrentConditionalNG(conditionalNG);
+        }
+    }
+
+    @Override
+    public void addCurrentConditionalNG_Listener(Base b) {
+        setCurrentConditionalNG_listeners.add(b);
+    }
+
+    @Override
+    public void removeCurrentConditionalNG_Listener(Base b) {
+        setCurrentConditionalNG_listeners.add(b);
     }
 
     /** {@inheritDoc} */
