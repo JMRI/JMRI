@@ -1,0 +1,26 @@
+Certains TIP sont mis à dispositions en plus de ceux pris en compte.
+
+Codés :
+TIFDark (Aspect 89)
+TIP1(Aspect 90)
+TIP2(Aspect 91)
+TIP3(Aspect 92)
+TIP4(Aspect 93)
+TIP5(Aspect 94)
+TIP6(Aspect 95)
+TIP7(Aspect 96)
+TIP8(Aspect 97)
+TIP9(Aspect 98)
+TIP10(Aspect 99)
+En plus (à coder dans JMRI dans appearance-TIP.xml et aspects.xml) :
+TIP11
+TIP12
+TIP13
+TIP14
+TIP15
+	les autres images sont à créer si >15 voies.
+ne sont pas exisants mais peuvent êtres utiles pour un réseau en 5 ou 7.25" pour communiquer.
+TIPDD
+TIPEnd1
+TIPEnd2
+TIPsignalHS (croix de st-André-annule le signal-> Marche à vue à l'ouverture du signal).

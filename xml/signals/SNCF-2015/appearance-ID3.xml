@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-ID3</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+ <appearances>
+
+    <appearance>
+      <aspectname>IDDark3</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/IDDark_3.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/IDDark_3.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/IDDark_3.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>ID1_3</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/ID1_3.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/ID1_3.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/ID1_3.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>ID2_3</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/ID2_3.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/ID2_3.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/ID2_3.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>ID3_3</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/ID3_3.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/ID3_3.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/ID3_3.gif</imagelink>
+    </appearance>
+</appearances>
+
+  <specificappearances>
+  </specificappearances>
+
+<!--
+ <aspectMappings>
+ </aspectMappings>
+ -->
+
+</appearancetable>
