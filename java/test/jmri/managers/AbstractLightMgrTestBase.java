@@ -54,7 +54,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         // create
         Light t = l.newLight(getSystemName(getNumToTest1()), "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assertions.assertNotNull( t, "real object returned ");
         Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
@@ -64,7 +64,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         // create
         Light t = l.provide("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assertions.assertNotNull( t, "real object returned ");
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -73,13 +73,14 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         // create
         Light t = l.provideLight("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assertions.assertNotNull( t, "real object returned ");
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
     public void testProvideFailure() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideLight(""));
+        Throwable throwable = Assert.assertThrows(IllegalArgumentException.class, () -> l.provideLight(""));
+        Assertions.assertNotNull(throwable.getMessage(), "message exists in exception");
         jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -87,12 +88,12 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     public void testSingleObject() {
         // test that you always get the same representation
         Light t1 = l.newLight(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
+        Assertions.assertNotNull( t1, "t1 real object returned ");
         Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
         Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
 
         Light t2 = l.newLight(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assertions.assertNotNull( t2, "t2 real object returned ");
         // check
         Assert.assertTrue("same new ", t1 == t2);
     }
@@ -166,6 +167,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     /**
      * Number of light to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
+     * @return 9 by default.
      */
     protected int getNumToTest1() {
         return 9;
