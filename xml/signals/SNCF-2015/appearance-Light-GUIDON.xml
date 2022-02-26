@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable-no-check.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-Light-GUIDON</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+
+ <appearances>
+    <appearance>
+      <aspectname>BLJ</aspectname>
+      <show>yellow</show>
+      <reference>BLJ</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/BLJ.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/BLJ.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/BLJ.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>GuidonLF</aspectname>
+      <show>red</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/GuidonLF.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/GuidonLF.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/GuidonLF.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>GuidonLO</aspectname>
+      <show>dark</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/GuidonLO.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/GuidonLO.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/GuidonLO.gif</imagelink>
+    </appearance>
+ </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>GuidonLF</aspect>
+    </danger>
+    <permissive>
+      <aspect>GuidonLO</aspect>
+    </permissive>
+    <held>
+      <aspect>GuidonLO</aspect>
+    </held>
+    <dark>
+      <aspect>GuidonLO</aspect>
+    </dark>
+  </specificappearances>
+
+  <aspectMappings>
+
+    <aspectMapping>
+      <advancedAspect>GuidonLF</advancedAspect>
+      <ourAspect>Disque</ourAspect>
+    </aspectMapping>
+
+    </aspectMappings>
+
+
+</appearancetable>

@@ -14,7 +14,7 @@ import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.TypeConversionUtil;
 
 /**
- * Select namedBean for LogixNG actions and expressions.
+ * Select an enum value for LogixNG actions and expressions.
  *
  * @param <E> the type of enum
  *

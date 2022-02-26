@@ -23284,12 +23284,20 @@
       <ActionSocket>
         <socketName>b5eoozm7v8</socketName>
       </ActionSocket>
-      <delayAddressing>Direct</delayAddressing>
-      <delay>0</delay>
-      <delayReference />
-      <delayLocalVariable />
-      <delayFormula />
-      <unit>MilliSeconds</unit>
+      <timeToDelay>
+        <addressing>Direct</addressing>
+        <value>0</value>
+        <reference />
+        <localVariable />
+        <formula />
+      </timeToDelay>
+      <timerUnit>
+        <addressing>Direct</addressing>
+        <enum>MilliSeconds</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -23356,12 +23364,20 @@
       <ActionSocket>
         <socketName>qsleqygrxy</socketName>
       </ActionSocket>
-      <delayAddressing>Direct</delayAddressing>
-      <delay>100</delay>
-      <delayReference />
-      <delayLocalVariable />
-      <delayFormula />
-      <unit>MilliSeconds</unit>
+      <timeToDelay>
+        <addressing>Direct</addressing>
+        <value>100</value>
+        <reference />
+        <localVariable />
+        <formula />
+      </timeToDelay>
+      <timerUnit>
+        <addressing>Direct</addressing>
+        <enum>MilliSeconds</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -23428,12 +23444,20 @@
       <ActionSocket>
         <socketName>i9fbdv1y2r</socketName>
       </ActionSocket>
-      <delayAddressing>LocalVariable</delayAddressing>
-      <delay>0</delay>
-      <delayReference />
-      <delayLocalVariable>MyVar</delayLocalVariable>
-      <delayFormula />
-      <unit>MilliSeconds</unit>
+      <timeToDelay>
+        <addressing>LocalVariable</addressing>
+        <value>0</value>
+        <reference />
+        <localVariable>MyVar</localVariable>
+        <formula />
+      </timeToDelay>
+      <timerUnit>
+        <addressing>Direct</addressing>
+        <enum>MilliSeconds</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -23500,12 +23524,20 @@
       <ActionSocket>
         <socketName>uxmfn31vht</socketName>
       </ActionSocket>
-      <delayAddressing>Reference</delayAddressing>
-      <delay>0</delay>
-      <delayReference>{MyMemory}</delayReference>
-      <delayLocalVariable />
-      <delayFormula />
-      <unit>MilliSeconds</unit>
+      <timeToDelay>
+        <addressing>Reference</addressing>
+        <value>0</value>
+        <reference>{MyMemory}</reference>
+        <localVariable />
+        <formula />
+      </timeToDelay>
+      <timerUnit>
+        <addressing>Direct</addressing>
+        <enum>MilliSeconds</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -23572,12 +23604,20 @@
       <ActionSocket>
         <socketName>i8w6roy73w</socketName>
       </ActionSocket>
-      <delayAddressing>Formula</delayAddressing>
-      <delay>0</delay>
-      <delayReference />
-      <delayLocalVariable />
-      <delayFormula>MyVar + 10</delayFormula>
-      <unit>MilliSeconds</unit>
+      <timeToDelay>
+        <addressing>Formula</addressing>
+        <value>0</value>
+        <reference />
+        <localVariable />
+        <formula>MyVar + 10</formula>
+      </timeToDelay>
+      <timerUnit>
+        <addressing>Direct</addressing>
+        <enum>MilliSeconds</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -26594,14 +26634,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed Feb 23 19:34:23 CET 2022</date>
+      <date>Fri Feb 25 00:52:59 CET 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Feb 23 19:34:24 CET 2022</date>
+      <date>Fri Feb 25 00:52:59 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-23T18:33:57Z+R4dda0cc on Wed Feb 23 19:34:24 CET 2022-->
+  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-24T23:52:35Z+R33b934f on Fri Feb 25 00:52:59 CET 2022-->
 </layout-config>
