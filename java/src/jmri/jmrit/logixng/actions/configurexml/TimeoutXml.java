@@ -4,11 +4,11 @@ import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Timeout;
+import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectIntegerXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 
 import org.jdom2.Element;
-
-import jmri.jmrit.logixng.util.TimerUnit;
-import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -28,10 +28,13 @@ public class TimeoutXml extends jmri.managers.configurexml.AbstractNamedBeanMana
     public Element store(Object o) {
         Timeout p = (Timeout) o;
 
+        var selectDelayXml = new LogixNG_SelectIntegerXml();
+        var selectTimerUnitXml = new LogixNG_SelectEnumXml<TimerUnit>();
+
         Element element = new Element("Timeout");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         Element e2 = new Element("ExpressionSocket");
@@ -61,56 +64,41 @@ public class TimeoutXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         }
         element.addContent(e2);
 
-        element.addContent(new Element("delayAddressing").addContent(p.getDelayAddressing().name()));
-        element.addContent(new Element("delay").addContent(Integer.toString(p.getDelay())));
-        element.addContent(new Element("delayReference").addContent(p.getDelayReference()));
-        element.addContent(new Element("delayLocalVariable").addContent(p.getDelayLocalVariable()));
-        element.addContent(new Element("delayFormula").addContent(p.getDelayFormula()));
+        element.addContent(selectDelayXml.store(p.getSelectDelay(), "timeToDelay"));
+        element.addContent(selectTimerUnitXml.store(p.getSelectTimerUnit(), "timerUnit"));
 
-        element.addContent(new Element("unit").addContent(p.getUnit().name()));
-        
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         Timeout h = new Timeout(sys, uname);
 
+        var selectDelayXml = new LogixNG_SelectIntegerXml();
+        var selectTimerUnitXml = new LogixNG_SelectEnumXml<TimerUnit>();
+
         loadCommon(h, shared);
-        
-        Element delayElement = shared.getChild("delay");
-        int delay = 0;
-        if (delayElement != null) {
-            delay = Integer.parseInt(delayElement.getText());
-        }
-        h.setDelay(delay);
-        
-        Element unit = shared.getChild("unit");
-        if (unit != null) {
-            h.setUnit(TimerUnit.valueOf(unit.getTextTrim()));
-        }
-        
-        try {
-            Element elem = shared.getChild("delayAddressing");
-            if (elem != null) {
-                h.setDelayAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-            
-            elem = shared.getChild("delayReference");
-            if (elem != null) h.setDelayReference(elem.getTextTrim());
-            
-            elem = shared.getChild("delayLocalVariable");
-            if (elem != null) h.setDelayLocalVariable(elem.getTextTrim());
-            
-            elem = shared.getChild("delayFormula");
-            if (elem != null) h.setDelayFormula(elem.getTextTrim());
-            
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+
+        selectDelayXml.load(shared.getChild("timeToDelay"), h.getSelectDelay());
+        selectDelayXml.loadLegacy(
+                shared, h.getSelectDelay(),
+                "delayAddressing",
+                "delay",
+                "delayReference",
+                "delayLocalVariable",
+                "delayFormula");
+
+        selectTimerUnitXml.load(shared.getChild("timerUnit"), h.getSelectTimerUnit());
+        selectTimerUnitXml.loadLegacy(
+                shared, h.getSelectTimerUnit(),
+                "unitAddressing",   // Not used
+                "unit",
+                "unitReference",    // Not used
+                "unitLocalVariable",    // Not used
+                "unitFormula");     // Not used
 
         Element socketName = shared.getChild("ExpressionSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
@@ -118,17 +106,17 @@ public class TimeoutXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         if (socketSystemName != null) {
             h.setExpressionSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         socketName = shared.getChild("ActionSocket").getChild("socketName");
         h.getChild(1).setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("ActionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setActionSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeoutXml.class);
 }

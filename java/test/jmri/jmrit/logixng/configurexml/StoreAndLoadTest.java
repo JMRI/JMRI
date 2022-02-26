@@ -2389,29 +2389,29 @@ public class StoreAndLoadTest {
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.Direct);
-        timeout.setDelay(100);
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Direct);
+        timeout.getSelectDelay().setValue(100);
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.LocalVariable);
-        timeout.setDelayLocalVariable("MyVar");
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.LocalVariable);
+        timeout.getSelectDelay().setLocalVariable("MyVar");
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.Reference);
-        timeout.setDelayReference("{MyMemory}");
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Reference);
+        timeout.getSelectDelay().setReference("{MyMemory}");
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.Formula);
-        timeout.setDelayFormula("MyVar + 10");
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Formula);
+        timeout.getSelectDelay().setFormula("MyVar + 10");
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
