@@ -38,41 +38,50 @@
       <variable CV="2" item="Decoder Version" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Version No.</label>
+        <label xml:lang="cs">Verze SW</label>
 	  </variable>	  
       <variable CV="3" item="Serial Number" readOnly="yes" >
 		<splitVal highCV="4" upperMask="XXXXVVVV"/>
         <label>Decoder serial number</label>
+        <label xml:lang="cs">Sériové číslo</label>
       </variable>
       <variable CV="7" item="Manufacturer" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Id</label>
+        <label xml:lang="cs">ID výrobce</label>
       </variable>
       <variable CV="8" item="Developer Id" readOnly="yes" >
         <decVal/>
         <label>Developer Id</label>
+        <label xml:lang="cs">ID vývojáře</label>
       </variable>
       <variable CV="9" item="Product Id" readOnly="yes" >
         <decVal/>
         <label>Product Id</label>
+        <label xml:lang="cs">ID výrobku</label>
       </variable>
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
+                <label xml:lang="cs">Dlouhá adresa</label>
 	  </variable>
 
 	  <variable CV="98" item="Night Address" default="1">
 		<splitVal highCV="99" upperMask="XXXXXVVV"/>
-		<label>Long Address</label>
+		<label>Night Address</label>
+                <label xml:lang="cs">Adresa</label>
 	  </variable>
 
 	  <variable CV="78" item="Start Address Auto Reply" default="0">
 		<splitVal highCV="79" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
+                <label xml:lang="cs">Adresa</label>
 	  </variable>	
 
 	  <variable CV="80" item="Auto Reply No. Adresses" default="0">
 		<splitVal highCV="81" upperMask="XXXXXVVV"/>
 		<label>Number of Adresses</label>
+		<label xml:lang="cs">Počet adres</label>
 	  </variable>  
 
 <!--
@@ -86,24 +95,45 @@
 -->
       <variable item="Switch feedback for signal" CV="23" mask="XXXXXXVX">
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
         <label>Switch feedback for signal</label>
+        <label xml:lang="cs">Ohlas výhybky pro návěstidlo</label>
       </variable>
       <variable item="Flash LED at startup" CV="23" mask="XXXXXVXX">
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
         <label>Flash LED at startup</label>
+        <label xml:lang="cs">Blikat LED při startu</label>
       </variable>
       <variable item="LocoNet Connected" CV="23" mask="XXXXVXXX">
         <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No</choice>
+                <choice xml:lang="cs">Ne</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
         <label>LocoNet Connected</label>
+        <label xml:lang="cs">LocoNet připojen</label>
       </variable>
 <!--
 <SV svNumber="23" type="bits" start='7' length='1' name="Add SE delay" rw="1" advanced="1" minversion="3">
@@ -116,9 +146,17 @@
       <variable item="Add SE delay" CV="23" mask="VXXXXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
-          <enumChoice choice="No - Normal" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
+            <enumChoice choice="No" value="0">
+                <choice>No - Normal</choice>
+                <choice xml:lang="cs">Ne - normální</choice>
+            </enumChoice>
+            <enumChoice choice="Yes" value="1">
+                <choice>Yes</choice>
+                <choice xml:lang="cs">Ano</choice>
+            </enumChoice>   
         </enumVal>
+        <label>Add SE delay</label>
+        <label xml:lang="cs">Přidat zpoždění změna návěsti</label>
       </variable>
 
 <!-- <SV type="int2" name="Direction address 1" svNumber="24" minValue='0' maxValue='2048' rw="1"/> --> 
@@ -127,14 +165,17 @@
 	  <variable CV="24" item="Direction address 1" default="1">
 		<splitVal highCV="25" upperMask="XXXXVVVV"/>
 		<label>Direction address 1</label>
+                <label xml:lang="cs">Adresa směru 1</label>
 	  </variable>	  
 	  <variable CV="26" item="Direction address 2" default="1">
 		<splitVal highCV="27" upperMask="XXXXVVVV"/>
 		<label>Direction address 2</label>
+                <label xml:lang="cs">Adresa směru 2</label>
 	  </variable>	  
 	  <variable CV="28" item="Direction address 3" default="1">
 		<splitVal highCV="29" upperMask="XXXXVVVV"/>
 		<label>Direction address 3</label>
+                <label xml:lang="cs">Adresa směru 3</label>
 	  </variable>	  
 	  
 
@@ -144,27 +185,33 @@
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>2</value></qualifier>
 		<decVal min="1"/>
         <label>Std Fast1 blink frequency</label>
+        <label xml:lang="cs">Frekvence blikání rychlá 1</label>
       </variable>
       <variable item="Std Fast2 blink frequency" CV="83" mask="VVVVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>2</value></qualifier>
         <decVal min="1"/>
         <label>Std Fast2 blink frequency</label>
+        <label xml:lang="cs">Frekvence blikání rychlá 2</label>
       </variable>
 	  
 <!-- <SV type="int1" name="Std Hsi blink frequency" svNumber="84" minValue='1' rw="1"/>  -->
       <variable CV="84" item="Std Hsi blink frequency" >
         <decVal min="1"/>
         <label>Std Hsi blink frequency</label>
+        <label xml:lang="cs">Frekvence blikání normální</label>
       </variable>
 <!-- <SV type="int1" name="Std LED intensity" svNumber="85" minValue='1' rw="1"/>   -->
       <variable CV="85" item="Std LED intensity" >
         <decVal min="1"/>
         <label>Std LED intensity</label>
+        <label xml:lang="cs">Intenzita LED</label>
       </variable>
 <!-- <SV type="int1" name="LED Test Sequence" svNumber="38" rw="1" maxValue='64' minversion="3"/> -->
       <variable CV="38" item="LED Test Sequence" >
   		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <decVal max="64"/>
+        <label>LED Test Sequence</label>
+        <label xml:lang="cs">Testovací sekvence LED</label>
       </variable>
 
 <!--
@@ -175,25 +222,74 @@
 		<SV offset="3" type="int1" name="Yellow" rw="1"/>
 	</array>
 -->	  
-      <variable CV="86" item="Intensity bank 1, Green" ><decVal/></variable>
-      <variable CV="87" item="Intensity bank 1, Red" ><decVal/></variable>
-      <variable CV="88" item="Intensity bank 1, White" ><decVal/></variable>
-      <variable CV="89" item="Intensity bank 1, Yellow" ><decVal/></variable>
+      <variable CV="86" item="Intensity bank 1, Green" >
+          <decVal/>
+          <label>Green</label>
+          <label xml:lang="cs">Zelená</label>
+      </variable>
+      <variable CV="87" item="Intensity bank 1, Red" >
+          <decVal/>
+          <label>Red</label>
+          <label xml:lang="cs">Červená</label>
+      </variable>
+      <variable CV="88" item="Intensity bank 1, White" >
+          <decVal/>
+          <label>White</label>
+          <label xml:lang="cs">Bílá</label>
+      </variable>
+      <variable CV="89" item="Intensity bank 1, Yellow" >
+          <decVal/>
+          <label>Yellow</label>
+          <label xml:lang="cs">Žlutá</label>
+      </variable>
 
-      <variable CV="90" item="Intensity bank 2, Green" ><decVal/></variable>
-      <variable CV="91" item="Intensity bank 2, Red" ><decVal/></variable>
-      <variable CV="92" item="Intensity bank 2, White" ><decVal/></variable>
-      <variable CV="93" item="Intensity bank 2, Yellow" ><decVal/></variable>
+      <variable CV="90" item="Intensity bank 2, Green" >
+          <decVal/>
+          <label>Green</label>
+          <label xml:lang="cs">Zelená</label>
+      </variable>
+      <variable CV="91" item="Intensity bank 2, Red" >
+          <decVal/>
+          <label>Red</label>
+          <label xml:lang="cs">Červená</label>
+      </variable>
+      <variable CV="92" item="Intensity bank 2, White" >
+          <decVal/>
+          <label>White</label>
+          <label xml:lang="cs">Bílá</label>
+      </variable>
+      <variable CV="93" item="Intensity bank 2, Yellow" >
+          <decVal/>
+          <label>Yellow</label>
+          <label xml:lang="cs">Žlutá</label>
+      </variable>
 
-      <variable CV="94" item="Intensity bank 3, Green" ><decVal/></variable>
-      <variable CV="95" item="Intensity bank 3, Red" ><decVal/></variable>
-      <variable CV="96" item="Intensity bank 3, White" ><decVal/></variable>
-      <variable CV="97" item="Intensity bank 3, Yellow" ><decVal/></variable>
+      <variable CV="94" item="Intensity bank 3, Green" >
+          <decVal/>
+          <label>Green</label>
+          <label xml:lang="cs">Zelená</label>
+      </variable>
+      <variable CV="95" item="Intensity bank 3, Red" >
+          <decVal/>
+          <label>Red</label>
+          <label xml:lang="cs">Červená</label>
+      </variable>
+      <variable CV="96" item="Intensity bank 3, White" >
+          <decVal/>
+          <label>White</label>
+          <label xml:lang="cs">Bílá</label>
+      </variable>
+      <variable CV="97" item="Intensity bank 3, Yellow" >
+          <decVal/>
+          <label>Yellow</label>
+          <label xml:lang="cs">Žlutá</label>
+      </variable>
 	 
 	 
 	  <variable CV="700" item="Signal Select Start Address" default="0">
 	  <splitVal highCV="701" upperMask="XXXXVVVV"/>
 	  <label>Signal Sel Start Address</label>
+	  <label xml:lang="cs">Počáteční adresa voliče návěstidla</label>
 	  </variable>
 
 	<!-- <SV svNumber="900" type="bits" start='0' length='1' name="Input type Group 1" rw="1" minVersion='10'> -->
@@ -206,6 +302,8 @@
 			<enumChoice choice="BRG" value="4"/>
 			<enumChoice choice="BGR" value="5"/>
 		</enumVal>
+	  <label>RGB Color Order</label>
+	  <label xml:lang="cs">Pořadí barev RGB</label>
 	</variable>	
 
 	
@@ -214,54 +312,98 @@
 	<!-- <SV svNumber="30" type="int2" minValue='1'  maxValue='4070' name="Sensor Start Address Group 1" rw="1"/> -->
 	<variable CV="30" item="Sensor Start Address Group 1" default="1">
 		<splitVal highCV="31" upperMask="XXXXXVVV"/>
+	  <label>Sensor Start Address Group 1</label>
+	  <label xml:lang="cs">Počáteční adresa snímače skupina 1</label>
 	</variable>
 	<!-- <SV svNumber="32" type="bits" start='0' length='5' name="Number of used sensors Group 1" maxValue='16' rw="1"/> -->
 	<variable item="Number of used sensors Group 1" CV="32" mask="XXXVVVVV">
         <decVal max="16"/>
+	  <label>Number of used sensors Group 1</label>
+	  <label xml:lang="cs">Počet použitých snímačů skupina 1</label>
 	</variable>
 	<!-- <SV svNumber="40" type="int2" minValue='1'  maxValue='4070' name="Sensor Start Address Group 2" rw="1"/> -->
 	<variable CV="40" item="Sensor Start Address Group 2" default="1">
 		<splitVal highCV="41" upperMask="XXXXXVVV"/>
+	  <label>Sensor Start Address Group 2</label>
+	  <label xml:lang="cs">Počáteční adresa snímače skupina 2</label>
 	</variable>
 	<!-- <SV svNumber="39" type="bits" start='0' length='5' name="Number of used sensors Group 2" maxValue='16' rw="1"/> -->
 	<variable item="Number of used sensors Group 2" CV="39" mask="XXXVVVVV">
         <decVal max="16"/>
+	  <label>Number of used sensors Group 2</label>
+	  <label xml:lang="cs">Počet použitých snímačů skupina 2</label>
 	</variable>	  
 	<!-- <SV svNumber="32" type="bits" start='5' length='1' name="Sensor, Value for occupied state" rw="1" minVersion='1'> -->
 	<variable item="Sensor, Value for occupied state" CV="32" mask="XXVXXXXX">
 		<enumVal>
-			<enumChoice choice="NORMAL, occupied at LOW" value="1"/>
-			<enumChoice choice="Occupied at HIGH" value="0"/>
+            <enumChoice choice="NORMAL, occupied at LOW" value="1">
+                <choice>NORMAL, occupied at LOW</choice>
+                <choice xml:lang="cs">NORMÁLNÍ, Obsazeno při LOW</choice>
+            </enumChoice>
+            <enumChoice choice="Occupied at HIGH" value="0">
+                <choice>Occupied at HIGH</choice>
+                <choice xml:lang="cs">Obsazeno při HIGH</choice>
+            </enumChoice>
 		</enumVal>
+            <label>Sensor, Value for occupied state</label>
+            <label xml:lang="cs">Snímače, hodnota pro stav Obsazeno</label>
 	</variable>
 	<!-- <SV svNumber="32" type="bits" start='6' length='1' name="Sensor unconnected state" rw="1" minVersion='1'> -->
 	<variable item="Sensor unconnected state" CV="32" mask="XVXXXXXX">
 		<enumVal>
-			<enumChoice choice="NORMAL, always high" value="0"/>
-			<enumChoice choice="undefined, floating state" value="1"/>
+            <enumChoice choice="NORMAL, always high" value="0">
+                <choice>NORMAL, always high</choice>
+                <choice xml:lang="cs">NORMÁLNÍ, vždy HIGH</choice>
+            </enumChoice>
+            <enumChoice choice="undefined, floating state" value="1">
+                <choice>undefined, floating state</choice>
+                <choice xml:lang="cs">nedefinováno, plovoucí stav</choice>
+            </enumChoice>
 		</enumVal>
+            <label>Sensor unconnected state</label>
+            <label xml:lang="cs">Stav nepřipojeného snímače</label>
 	</variable>
 	<!-- <SV svNumber="33" type="bits" start='0' length='1' name="Input type Group 1" rw="1" minVersion='1'> -->
 	<variable item="Input type Group 1" CV="33" mask="XXXXXXXV">
 		<enumVal>
-			<enumChoice choice="Occupancy Sensor" value="0"/>
-			<enumChoice choice="Switch feedback" value="1"/>
+            <enumChoice choice="Occupancy Sensor" value="0">
+                <choice>Occupancy Sensor</choice>
+                <choice xml:lang="cs">Snímač obsazení</choice>
+            </enumChoice>
+            <enumChoice choice="Switch feedback" value="1">
+                <choice>Switch feedback</choice>
+                <choice xml:lang="cs">Ohlas výhybky</choice>
+            </enumChoice>
 		</enumVal>
+            <label>Input type Group 1</label>
+            <label xml:lang="cs">Typ vstupu skupina 1</label>
 	</variable>
 	<!-- <SV svNumber="33" type="bits" start='4' length='1' name="Input type Group 2" rw="1" minVersion='1'> -->
 	<variable item="Input type Group 2" CV="33" mask="XXXVXXXX">
 		<enumVal>
-			<enumChoice choice="Occupancy Sensor" value="0"/>
-			<enumChoice choice="Switch feedback" value="1"/>
-		</enumVal>
+            <enumChoice choice="Occupancy Sensor" value="0">
+                <choice>Occupancy Sensor</choice>
+                <choice xml:lang="cs">Snímač obsazení</choice>
+            </enumChoice>
+            <enumChoice choice="Switch feedback" value="1">
+                <choice>Switch feedback</choice>
+                <choice xml:lang="cs">Ohlas výhybky</choice>
+            </enumChoice>
+                </enumVal>
+            <label>Input type Group 2</label>
+            <label xml:lang="cs">Typ vstupu skupina 2</label>
 	</variable>
 	<!-- <SV svNumber="34" type="int2" name="Sensor filter Pre (ms)" rw="1"/> -->
 	<variable CV="34" item="Sensor filter Pre (ms)" default="1">
 		<splitVal highCV="35" upperMask="VVVVVVVV"/>
+            <label>Sensor filter Pre (ms)</label>
+            <label xml:lang="cs">Filtr zákmitů před Detekováno (ms)</label>
 	</variable>	  
 	<!-- <SV svNumber="36" type="int2" name="Sensor filter Succ (ms)" rw="1"/> -->
 	<variable CV="36" item="Sensor filter Succ (ms)" default="1">
 		<splitVal highCV="37" upperMask="VVVVVVVV"/>
+            <label>Sensor filter Succ (ms)</label>
+            <label xml:lang="cs">Filtr zákmitů po Detekováno (ms)</label>
 	</variable>	  
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
   
@@ -274,10 +416,12 @@
   
   <pane>
     <name>General decoder info</name>
+    <name xml:lang="cs">Všeobecné informace o dekodéru</name>
     <column>
 
       <label>
         <text>Address to decoder AND to first signal</text>
+        <text xml:lang="cs">Adresa dekodéru a prvního návěstidla</text>
       </label>
       <display item="Short Address"/>
       <label>
@@ -285,28 +429,29 @@
       </label>
       <label>
         <text>Night Address</text>
+        <text xml:lang="cs">Adresa intenzity noc</text>
       </label>
       <display item="Night Address"/>
       <label>
         <text> </text>
       </label>
-      <display item="Decoder Version" label="Software Version"/>
+      <display item="Decoder Version"/>
       <label>
         <text> </text>
       </label>
-      <display item="Manufacturer Id" label="Manufacturer Id"/>
+      <display item="Manufacturer"/>
       <label>
         <text> </text>
       </label>
-      <display item="Developer Id" label="Developer Id"/>
+      <display item="Developer Id"/>
       <label>
         <text> </text>
       </label>
-      <display item="Product Id" label="Product Id"/>
+      <display item="Product Id"/>
       <label>
         <text> </text>
       </label>
-      <display item="Author" label="version author"/>
+      <!-- <display item="Author" label="version author"/> -->
       <label>
         <text> </text>
       </label>
@@ -315,9 +460,11 @@
   
   <pane>
     <name>Signal general info</name>
+    <name xml:lang="cs">Všeobecné informace o návěstidle</name>
     <column>
       <label>
         <text>Address to first signal (and to the decoder)</text>
+        <text xml:lang="cs">Adresa dekodéru a prvního návěstidla</text>
       </label>
       <display item="Short Address"/>
       <label>
@@ -358,7 +505,10 @@
       <label>
         <text> </text>
       </label>
-      <label><text>Direction Control</text></label>
+      <label>
+          <text>Direction Control</text>
+        <text xml:lang="cs">Směrová závislost</text>
+      </label>
       <display item="Direction address 1"/>
       <display item="Direction address 2"/>
       <display item="Direction address 3"/>
@@ -369,6 +519,7 @@
 
       <label>
         <text>Auto Reply</text>
+        <text xml:lang="cs">Automatická odpověď</text>
       </label>
       <display item="Start Address Auto Reply"/>
       <display item="Auto Reply No. Adresses"/>
@@ -387,36 +538,45 @@
       <label>
         <text> </text>
      </label>
-      <label><text>Intensity bank 1</text></label>
-	<display item="Intensity bank 1, Green" label="Green"/>
-	<display item="Intensity bank 1, Red" label="Red"/>
-	<display item="Intensity bank 1, White" label="White"/>
-	<display item="Intensity bank 1, Yellow" label="Yellow"/>
+      <label>
+          <text>Intensity bank 1</text>
+        <text xml:lang="cs">Intenzita banka 1</text>
+      </label>
+	<display item="Intensity bank 1, Green" />
+	<display item="Intensity bank 1, Red" />
+	<display item="Intensity bank 1, White" />
+	<display item="Intensity bank 1, Yellow" />
       <label>
         <text> </text>
      </label>
-      <label><text>Intensity bank 2</text></label>
-	<display item="Intensity bank 2, Green" label="Green"/>
-	<display item="Intensity bank 2, Red" label="Red"/>
-	<display item="Intensity bank 2, White" label="White"/>
-	<display item="Intensity bank 2, Yellow" label="Yellow"/>
+      <label>
+          <text>Intensity bank 2</text>
+        <text xml:lang="cs">Intenzita banka 2</text>
+      </label>
+	<display item="Intensity bank 2, Green" />
+	<display item="Intensity bank 2, Red" />
+	<display item="Intensity bank 2, White" />
+	<display item="Intensity bank 2, Yellow" />
       <label>
         <text> </text>
      </label>
-      <label><text>Intensity bank 3</text></label>
-	<display item="Intensity bank 3, Green" label="Green"/>
-	<display item="Intensity bank 3, Red" label="Red"/>
-	<display item="Intensity bank 3, White" label="White"/>
-	<display item="Intensity bank 3, Yellow" label="Yellow"/>
+      <label>
+          <text>Intensity bank 3</text>
+        <text xml:lang="cs">Intenzita banka 3</text>
+      </label>
+	<display item="Intensity bank 3, Green" />
+	<display item="Intensity bank 3, Red" />
+	<display item="Intensity bank 3, White" />
+	<display item="Intensity bank 3, Yellow" />
 	
       <label>
         <text> </text>
      </label>
-	<display item="Signal Sel Start Address" label="Signal Sel Start Address"/>		 
+	<display item="Signal Sel Start Address"/>		 
       <label>
         <text> </text>
      </label>
-	<display item="RGB Color Order" label="RGB Color Order"/>	
+	<display item="RGB Color Order"/>	
 
     </column>
 
@@ -435,6 +595,7 @@
 <!-- <group name="Sensor input"> -->	  
 	<pane>
 		<name>Sensor input</name>
+		<name xml:lang="cs">Vstupní snímače</name>
 		<column>
 			<display item="Sensor Start Address Group 1"/>
 			<display item="Number of used sensors Group 1"/>

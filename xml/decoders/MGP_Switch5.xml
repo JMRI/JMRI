@@ -381,6 +381,8 @@
                 <choice xml:lang="cs">P/O + neznámý stav</choice>
             </enumChoice>   
         </enumVal>
+            <label>Feedback type</label>
+            <label xml:lang="cs">Typ ohlasu</label>
 	</variable>
 	<variable item="Switch when button is" CV="43">
         <enumVal>
@@ -777,7 +779,7 @@
           </enumChoice>
           <enumChoice choice="Switch Toggle" value="3">
                 <choice>Switch Toggle</choice>
-                <choice xml:lang="cs">Tlačítko</choice>
+                <choice xml:lang="cs">Přepnou</choice>
           </enumChoice>
           <enumChoice choice="Track Status" value="6">
                 <choice>Track Status</choice>
@@ -841,7 +843,7 @@
           </enumChoice>
           <enumChoice choice="Switch Toggle" value="3">
                 <choice>Switch Toggle</choice>
-                <choice xml:lang="cs">Tlačítko</choice>
+                <choice xml:lang="cs">Přepnout</choice>
           </enumChoice>
           <enumChoice choice="Track Status" value="6">
                 <choice>Track Status</choice>
@@ -899,25 +901,25 @@
                     <choice>Track Status</choice>
                     <choice xml:lang="cs">Stav koleje</choice>
               </enumChoice>
-              <enumChoice choice="Output, Servo sync Closed" value='20'>
-                    <choice>Output, Servo sync Closed</choice>
-                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Přímo</choice>
+              <enumChoice choice="Output - Servo Sync CLOSED" value='20'>
+                    <choice>Output - Servo Sync CLOSED</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Přímo</choice>
               </enumChoice>
-              <enumChoice choice="Output, Servo sync Thrown" value='21'>
-                    <choice>Output, Servo sync Thrown</choice>
-                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Do odbočky</choice>
+              <enumChoice choice="Output - Servo Sync THROWN" value='21'>
+                    <choice>Output - Servo Sync THROWN</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Do odbočky</choice>
               </enumChoice>
-              <enumChoice choice="Output, Servo sync Unknown" value='22'>
-                    <choice>Output, Servo sync Unknown</choice>
-                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Neznámý</choice>
+              <enumChoice choice="Output - Servo Sync Unknown" value='22'>
+                    <choice>Output - Servo Sync Unknown</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Neznámý</choice>
               </enumChoice>
-              <enumChoice choice="Output, Relay sync" value='23'>
-                    <choice>Output, Relay sync</choice>
-                    <choice xml:lang="cs">Výstup, Relé synchronizace</choice>
+              <enumChoice choice="Output - Relay sync" value='23'>
+                    <choice>Output - Relay sync</choice>
+                    <choice xml:lang="cs">Výstup - Relé synchronizace</choice>
               </enumChoice>
-              <enumChoice choice="Output, Relay sync opposite" value='24'>
-                    <choice>Output, Relay sync opposite</choice>
-                    <choice xml:lang="cs">Výstup, Relé synchronizace otočený</choice>
+              <enumChoice choice="Output - Relay sync opposite" value='24'>
+                    <choice>Output - Relay sync opposite</choice>
+                    <choice xml:lang="cs">Výstup - Relé synchronizace otočený</choice>
               </enumChoice>
         </enumVal>
             <label>Usage X3</label>
@@ -940,7 +942,7 @@
               </enumChoice>
               <enumChoice choice="Switch Toggle" value="3">
                     <choice>Switch Toggle</choice>
-                    <choice xml:lang="cs">Tlačítko</choice>
+                    <choice xml:lang="cs">Přepnout</choice>
               </enumChoice>
               <enumChoice choice="Track Status" value="6">
                     <choice>Track Status</choice>
@@ -1043,33 +1045,33 @@
                 <choice>Lock as Lock List</choice>
                 <choice xml:lang="cs">Zámek jako seznam zámků</choice>
           </enumChoice>
-            <enumChoice choice="Send Toggle" value="3">
-                <choice>Send Toggle</choice>
-                <choice xml:lang="cs">Tlačítko</choice>
+            <enumChoice choice="Switch Toggle" value="3">
+                <choice>Switch Toggle</choice>
+                <choice xml:lang="cs">Přepnout</choice>
           </enumChoice>
               <enumChoice choice="Track Status" value="6">
                     <choice>Track Status</choice>
                     <choice xml:lang="cs">Stav koleje</choice>
               </enumChoice>
-              <enumChoice choice="Output, Servo sync Closed" value='20'>
-                    <choice>Output, Servo sync Closed</choice>
-                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Přímo</choice>
+              <enumChoice choice="Output - Servo Sync CLOSED" value='20'>
+                    <choice>Output - Servo Sync CLOSED</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Přímo</choice>
               </enumChoice>
-              <enumChoice choice="Output, Servo sync Thrown" value='21'>
-                    <choice>Output, Servo sync Thrown</choice>
-                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Do odbočky</choice>
+              <enumChoice choice="Output - Servo Sync THROWN" value='21'>
+                    <choice>Output - Servo Sync THROWN</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Do odbočky</choice>
               </enumChoice>
-              <enumChoice choice="Output, Servo sync Unknown" value='22'>
-                    <choice>Output, Servo sync Unknown</choice>
-                    <choice xml:lang="cs">Výstup, Přestavník synchronizace Neznámý</choice>
+              <enumChoice choice="Output - Servo Sync Unknown" value='22'>
+                    <choice>Output - Servo Sync Unknown</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Neznámý</choice>
               </enumChoice>
-              <enumChoice choice="Output, Relay sync" value='23'>
-                    <choice>Output, Relay sync</choice>
-                    <choice xml:lang="cs">Výstup, Relé synchronizace</choice>
+              <enumChoice choice="Output - Relay sync" value='23'>
+                    <choice>Output - Relay sync</choice>
+                    <choice xml:lang="cs">Výstup - Relé synchronizace</choice>
               </enumChoice>
-              <enumChoice choice="Output, Relay sync opposite" value='24'>
-                    <choice>Output, Relay sync opposite</choice>
-                    <choice xml:lang="cs">Výstup, Relé synchronizace otočený</choice>
+              <enumChoice choice="Output - Relay sync opposite" value='24'>
+                    <choice>Output - Relay sync opposite</choice>
+                    <choice xml:lang="cs">Výstup - Relé synchronizace otočený</choice>
               </enumChoice>
         </enumVal>
             <label>Usage X4</label>
@@ -1078,23 +1080,74 @@
 	<variable item="Usage X4 new" CV="192">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
         <enumVal>
-			<enumChoice choice="Not used" value="0"/>
-			<enumChoice choice="Switch Closed" value="1"/>
-			<enumChoice choice="Switch Thrown" value="2"/>
-			<enumChoice choice="Switch Toggle" value="3"/>
-			<enumChoice choice="Track Status" value="6"/>
-			<enumChoice choice="Lock LOCAL" value="4"/>
-			<enumChoice choice="Lock as Lock List" value="5"/>
-			<enumChoice choice="Output - Servo Sync CLOSED" value='20'/>
-			<enumChoice choice="Output - Servo Sync THROWN" value='21'/>
-			<enumChoice choice="Output - Servo Sync Not CLOSED" value='22'/>
-			<enumChoice choice="Output - Servo Sync Not THROWN" value='23'/>
-			<enumChoice choice="Output - Servo Sync Unknown" value='24'/>
-			<enumChoice choice="Output - Servo Sync Moving C-T" value='25'/>
-			<enumChoice choice="Output - Servo Sync Moving T-C" value='26'/>
-			<enumChoice choice="Output - Relay Sync" value='30'/>
-			<enumChoice choice="Output - Relay Sync Opposite" value='31'/>
-			<enumChoice choice="Output - Servo LocoNet controlled" value='18'/>
+          <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Closed" value="1">
+                <choice>Switch Closed</choice>
+                <choice xml:lang="cs">Přepínač Přímo</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Thrown" value="2">
+                <choice>Switch Thrown</choice>
+                <choice xml:lang="cs">Přepínač Do odbočky</choice>
+          </enumChoice>
+            <enumChoice choice="Switch Toggle" value="3">
+                <choice>Switxh Toggle</choice>
+                <choice xml:lang="cs">Přepnout</choice>
+          </enumChoice>
+          <enumChoice choice="Lock LOCAL" value="4">
+                <choice>Lock LOCAL</choice>
+                <choice xml:lang="cs">MÍSTNÍ zámek</choice>
+          </enumChoice>
+          <enumChoice choice="Lock as Lock List" value="5">
+                <choice>Lock as Lock List</choice>
+                <choice xml:lang="cs">Zámek jako seznam zámků</choice>
+          </enumChoice>
+              <enumChoice choice="Track Status" value="6">
+                    <choice>Track Status</choice>
+                    <choice xml:lang="cs">Stav koleje</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync CLOSED" value='20'>
+                    <choice>Output - Servo Sync CLOSED</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync THROWN" value='21'>
+                    <choice>Output - Servo Sync THROWN</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Not CLOSED" value='22'>
+                    <choice>Output - Servo Sync Not CLOSED</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Není Přímo</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Not THROWN" value='23'>
+                    <choice>Output - Servo Sync Not THROWN</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Není Do odbočky</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Unknown" value='24'>
+                    <choice>Output - Servo Sync Unknown</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník synchronizace Neznámý</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Moving C-T" value='25'>
+                    <choice>Output - Servo Sync Moving C-T</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Přestavování P→O</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo Sync Moving T-C" value='26'>
+                    <choice>Output - Servo Sync Moving T-C</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník Synchronizace Přestavování O→P</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Relay Sync" value='30'>
+                    <choice>Output - Relay Sync</choice>
+                    <choice xml:lang="cs">Výstup - Relé synchronizace</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Relay Sync Opposite" value='31'>
+                    <choice>Output - Relay Sync Opposite</choice>
+                    <choice xml:lang="cs">Výstup - Relé synchronizace otočený</choice>
+              </enumChoice>
+              <enumChoice choice="Output - Servo LocoNet controlled" value='18'>
+                    <choice>Output - Servo LocoNet controlled</choice>
+                    <choice xml:lang="cs">Výstup - Přestavník řízené LocoNet</choice>
+              </enumChoice>
         </enumVal>
             <label>Usage X4</label>
             <label xml:lang="cs">Použití X4</label>
@@ -1408,7 +1461,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1472,7 +1525,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1536,7 +1589,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1600,7 +1653,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1664,7 +1717,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1721,7 +1774,7 @@
     <column>
       <label>
         <text>Address to decoder AND to first servo</text>
-        <text  xml:lang="cs">Adresa dekodéru a prvního přestavníku</text>
+        <text xml:lang="cs">Adresa dekodéru a prvního přestavníku</text>
       </label>
       <display item="Short Address"/>
       <label>
@@ -1876,7 +1929,7 @@
 
   <pane>
     <name>Extra HW connections</name>
-    <name xml:lang="cs">Doplňková HW připojení</name>
+    <name xml:lang="cs">Další HW připojení</name>
     <column>
       <display item="Usage X1"/>
       <display item="Usage X1 new"/>
@@ -1908,36 +1961,36 @@
     <name>Animation</name>
     <name xml:lang="cs">Samovrat</name>
     <column>
-      <display item="Autoreturn, time, servo 1" label="Autoreturn, time, servo 1"/>
-      <display item="Autoreturn, time, servo 1 new" label="Autoreturn, time, servo 1"/>
+      <display item="Autoreturn, time, servo 1"/>
+      <display item="Autoreturn, time, servo 1 new"/>
       <display item="Autoreturn, time factor, servo 1"/>
       <display item="Autoreturn, state, servo 1"/>
       <label>
         <text> </text>
       </label>
-      <display item="Autoreturn, time, servo 2" label="Autoreturn, time, servo 2"/>
-      <display item="Autoreturn, time, servo 2 new" label="Autoreturn, time, servo 2"/>
+      <display item="Autoreturn, time, servo 2"/>
+      <display item="Autoreturn, time, servo 2 new"/>
       <display item="Autoreturn, time factor, servo 2"/>
       <display item="Autoreturn, state, servo 2"/>
       <label>
         <text> </text>
       </label>
-      <display item="Autoreturn, time, servo 3" label="Autoreturn, time, servo 3"/>
-      <display item="Autoreturn, time, servo 3 new" label="Autoreturn, time, servo 3"/>
+      <display item="Autoreturn, time, servo 3"/>
+      <display item="Autoreturn, time, servo 3 new"/>
       <display item="Autoreturn, time factor, servo 3"/>
       <display item="Autoreturn, state, servo 3"/>
       <label>
         <text> </text>
       </label>
-      <display item="Autoreturn, time, servo 4" label="Autoreturn, time, servo 4"/>
-      <display item="Autoreturn, time, servo 4 new" label="Autoreturn, time, servo 4"/>
+      <display item="Autoreturn, time, servo 4"/>
+      <display item="Autoreturn, time, servo 4 new"/>
       <display item="Autoreturn, time factor, servo 4"/>
       <display item="Autoreturn, state, servo 4"/>
       <label>
         <text> </text>
       </label>
-      <display item="Autoreturn, time, servo 5" label="Autoreturn, time, servo 5"/>
-      <display item="Autoreturn, time, servo 5 new" label="Autoreturn, time, servo 5"/>
+      <display item="Autoreturn, time, servo 5"/>
+      <display item="Autoreturn, time, servo 5 new"/>
       <display item="Autoreturn, time factor, servo 5"/>
       <display item="Autoreturn, state, servo 5"/>
     </column>
@@ -1951,10 +2004,10 @@
         <text>Secondary trigger Servo 1</text>
         <text xml:lang="cs">Podružný spouštěč Přestavník 1</text>
       </label>
-      <display item="Secondary trigger 1, Type" label="Type"/>
-      <display item="Secondary trigger 1, When" label="When"/>
-      <display item="Secondary trigger 1, Command" label="Command"/>
-      <display item="Secondary trigger 1, Controlled Address" label="Controlled Address"/>
+      <display item="Secondary trigger 1, Type"/>
+      <display item="Secondary trigger 1, When"/>
+      <display item="Secondary trigger 1, Command"/>
+      <display item="Secondary trigger 1, Controlled Address"/>
       <label>
         <text> </text>
       </label>
@@ -1962,10 +2015,10 @@
         <text>Secondary trigger Servo 2</text>
         <text xml:lang="cs">Podružný spouštěč Přestavník 2</text>
       </label>
-      <display item="Secondary trigger 2, Type" label="Type"/>
-      <display item="Secondary trigger 2, When" label="When"/>
-      <display item="Secondary trigger 2, Command" label="Command"/>
-      <display item="Secondary trigger 2, Controlled Address" label="Controlled Address"/>
+      <display item="Secondary trigger 2, Type"/>
+      <display item="Secondary trigger 2, When"/>
+      <display item="Secondary trigger 2, Command"/>
+      <display item="Secondary trigger 2, Controlled Address"/>
       <label>
         <text> </text>
       </label>
@@ -1973,10 +2026,10 @@
         <text>Secondary trigger Servo 3</text>
         <text xml:lang="cs">Podružný spouštěč Přestavník 3</text>
       </label>
-      <display item="Secondary trigger 3, Type" label="Type"/>
-      <display item="Secondary trigger 3, When" label="When"/>
-      <display item="Secondary trigger 3, Command" label="Command"/>
-      <display item="Secondary trigger 3, Controlled Address" label="Controlled Address"/>
+      <display item="Secondary trigger 3, Type"/>
+      <display item="Secondary trigger 3, When"/>
+      <display item="Secondary trigger 3, Command"/>
+      <display item="Secondary trigger 3, Controlled Address"/>
       <label>
         <text> </text>
       </label>
@@ -1984,10 +2037,10 @@
         <text>Secondary trigger Servo 4</text>
         <text xml:lang="cs">Podružný spouštěč Přestavník 4</text>
       </label>
-      <display item="Secondary trigger 4, Type" label="Type"/>
-      <display item="Secondary trigger 4, When" label="When"/>
-      <display item="Secondary trigger 4, Command" label="Command"/>
-      <display item="Secondary trigger 4, Controlled Address" label="Controlled Address"/>
+      <display item="Secondary trigger 4, Type"/>
+      <display item="Secondary trigger 4, When"/>
+      <display item="Secondary trigger 4, Command"/>
+      <display item="Secondary trigger 4, Controlled Address"/>
       <label>
         <text> </text>
       </label>
@@ -1995,10 +2048,10 @@
         <text>Secondary trigger Servo 5</text>
         <text xml:lang="cs">Podružný spouštěč Přestavník 5</text>
       </label>
-      <display item="Secondary trigger 5, Type" label="Type"/>
-      <display item="Secondary trigger 5, When" label="When"/>
-      <display item="Secondary trigger 5, Command" label="Command"/>
-      <display item="Secondary trigger 5, Controlled Address" label="Controlled Address"/>
+      <display item="Secondary trigger 5, Type"/>
+      <display item="Secondary trigger 5, When"/>
+      <display item="Secondary trigger 5, Command"/>
+      <display item="Secondary trigger 5, Controlled Address"/>
     </column>
   </pane>
 
