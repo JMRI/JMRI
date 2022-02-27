@@ -27,7 +27,7 @@ public class MergCanmiosvo extends CbusSimulatedModuleProvider {
     }
     
     @Override
-    public void setDummyNodeParameters(@Nonnull CbusDummyNode node) {
+    public void configureDummyNode(@Nonnull CbusDummyNode node) {
         int[] _params = new int[]{
             20, /* 0 num parameters   */
             MANU_MERG, /* 1 manufacturer ID   */
@@ -58,11 +58,59 @@ public class MergCanmiosvo extends CbusSimulatedModuleProvider {
 
         node.getNodeParamManager().setParameters(_params);
 
-        int[] _nvArray = new int[38];
-        java.util.Arrays.fill(_nvArray, 0);
-        _nvArray[0]=37;
+        int[] _nvArray = new int[38]; // 37 NV's, +1 for the total in position 0
 
-        node.getNodeNvManager().setNVs( _nvArray ); //
+        java.util.Arrays.fill(_nvArray, 0);
+        _nvArray[0]=37; // 37 NV's
+        _nvArray[1]=0xFF;
+        _nvArray[2]=0;
+        _nvArray[3]=0xFF;
+        _nvArray[4]=0xFF;
+
+        // 5 - 36 are 8 repeats of 127, 127, 0, 0 for the 8 servo channels
+        _nvArray[5]=0xFF;
+        _nvArray[6]=0xFF;
+        _nvArray[7]=0;
+        _nvArray[8]=0;
+
+        _nvArray[9]=0xFF;
+        _nvArray[10]=0xFF;
+        _nvArray[11]=0;
+        _nvArray[12]=0;
+
+        _nvArray[13]=0xFF;
+        _nvArray[14]=0xFF;
+        _nvArray[15]=0;
+        _nvArray[16]=0;
+
+        _nvArray[17]=0xFF;
+        _nvArray[18]=0xFF;
+        _nvArray[19]=0;
+        _nvArray[20]=0;
+
+        _nvArray[21]=0xFF;
+        _nvArray[22]=0xFF;
+        _nvArray[23]=0;
+        _nvArray[24]=0;
+
+        _nvArray[25]=0xFF;
+        _nvArray[26]=0xFF;
+        _nvArray[27]=0;
+        _nvArray[28]=0;
+
+        _nvArray[29]=0xFF;
+        _nvArray[30]=0xFF;
+        _nvArray[31]=0;
+        _nvArray[32]=0;
+
+        _nvArray[33]=0xFF;
+        _nvArray[34]=0xFF;
+        _nvArray[35]=0;
+        _nvArray[36]=0;
+
+        _nvArray[37]=0;
+
+        node.getNodeNvManager().setNVs( _nvArray );
         node.setNodeNameFromName("MIO-SVO");
     }
 
