@@ -2,33 +2,25 @@ package jmri.jmrit.logixng.actions;
 
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.*;
-import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TimerUtil;
-import jmri.util.TypeConversionUtil;
 
 /**
  * Executes an action when the expression is True.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class Timeout extends AbstractDigitalAction
         implements FemaleSocketListener {
 
     private ProtectedTimerTask _timerTask;
-    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
-    private int _delay;
-    private String _stateReference = "";
-    private String _stateLocalVariable = "";
-    private String _stateFormula = "";
-    private ExpressionNode _stateExpressionNode;
-    private TimerUnit _unit = TimerUnit.MilliSeconds;
+    private final LogixNG_SelectInteger _selectDelay = new LogixNG_SelectInteger(this);
+    private final LogixNG_SelectEnum<TimerUnit> _selectTimerUnit =
+            new LogixNG_SelectEnum<>(this, TimerUnit.values(), TimerUnit.MilliSeconds);
     private String _expressionSocketSystemName;
     private String _actionSocketSystemName;
     private final FemaleDigitalExpressionSocket _expressionSocket;
@@ -46,7 +38,7 @@ public class Timeout extends AbstractDigitalAction
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -55,15 +47,11 @@ public class Timeout extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         Timeout copy = new Timeout(sysName, userName);
         copy.setComment(getComment());
-        copy.setDelayAddressing(_stateAddressing);
-        copy.setDelay(_delay);
-        copy.setDelayFormula(_stateFormula);
-        copy.setDelayLocalVariable(_stateLocalVariable);
-        copy.setDelayReference(_stateReference);
-        copy.setUnit(_unit);
+        _selectDelay.copy(copy._selectDelay);
+        _selectTimerUnit.copy(copy._selectTimerUnit);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -76,7 +64,7 @@ public class Timeout extends AbstractDigitalAction
     private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable) throws JmriException {
 
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(symbolTable);
-        
+
         return new ProtectedTimerTask() {
             @Override
             public void execute() {
@@ -98,40 +86,21 @@ public class Timeout extends AbstractDigitalAction
             }
         };
     }
-    
+
     private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long delay) throws JmriException {
         if (_timerTask != null) _timerTask.stopTimer();
         _timerTask = getNewTimerTask(conditionalNG, symbolTable);
         TimerUtil.schedule(_timerTask, delay);
     }
-    
-    private long getNewDelay() throws JmriException {
-        
-        switch (_stateAddressing) {
-            case Direct:
-                return _delay;
-                
-            case Reference:
-                return TypeConversionUtil.convertToLong(ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference));
-                
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToLong(symbolTable.getValue(_stateLocalVariable));
-                
-            case Formula:
-                return _stateExpressionNode != null
-                        ? TypeConversionUtil.convertToLong(
-                                _stateExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()))
-                        : 0;
-                
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
-        }
+
+    public LogixNG_SelectInteger getSelectDelay() {
+        return _selectDelay;
     }
-    
+
+    public LogixNG_SelectEnum<TimerUnit> getSelectTimerUnit() {
+        return _selectTimerUnit;
+    }
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -145,106 +114,27 @@ public class Timeout extends AbstractDigitalAction
                 }
                 return;
             }
-            
+
             // Don't restart timer if it's still running
             if (_timerTask != null) return;
-            
-            _timerDelay = getNewDelay() * _unit.getMultiply();
+
+            _timerDelay = _selectDelay.evaluateValue(getConditionalNG())
+                    * _selectTimerUnit.evaluateEnum(getConditionalNG()).getMultiply();
             _timerStart = System.currentTimeMillis();
             ConditionalNG conditonalNG = getConditionalNG();
-            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), _delay * _unit.getMultiply());
+            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), _timerDelay);
         }
     }
-    
-    public void setDelayAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _stateAddressing = addressing;
-        parseDelayFormula();
-    }
-    
-    public NamedBeanAddressing getDelayAddressing() {
-        return _stateAddressing;
-    }
-    
-    /**
-     * Get the delay.
-     * @return the delay
-     */
-    public int getDelay() {
-        return _delay;
-    }
-    
-    /**
-     * Set the delay.
-     * @param delay the delay
-     */
-    public void setDelay(int delay) {
-        _delay = delay;
-    }
-    
-    public void setDelayReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _stateReference = reference;
-    }
-    
-    public String getDelayReference() {
-        return _stateReference;
-    }
-    
-    public void setDelayLocalVariable(@Nonnull String localVariable) {
-        _stateLocalVariable = localVariable;
-    }
-    
-    public String getDelayLocalVariable() {
-        return _stateLocalVariable;
-    }
-    
-    public void setDelayFormula(@Nonnull String formula) throws ParserException {
-        _stateFormula = formula;
-        parseDelayFormula();
-    }
-    
-    public String getDelayFormula() {
-        return _stateFormula;
-    }
-    
-    private void parseDelayFormula() throws ParserException {
-        if (_stateAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-            
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _stateExpressionNode = parser.parseExpression(_stateFormula);
-        } else {
-            _stateExpressionNode = null;
-        }
-    }
-    
-    /**
-     * Get the unit
-     * @return the unit
-     */
-    public TimerUnit getUnit() {
-        return _unit;
-    }
-    
-    /**
-     * Set the unit
-     * @param unit the unit
-     */
-    public void setUnit(TimerUnit unit) {
-        _unit = unit;
-    }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
                 return _expressionSocket;
-                
+
             case 1:
                 return _actionSocket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -285,34 +175,26 @@ public class Timeout extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        String delay;
-        
-        switch (_stateAddressing) {
-            case Direct:
-                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByDirect", _unit.getTimeWithUnit(_delay));
-                break;
-                
-            case Reference:
-                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByReference", _stateReference, _unit.toString());
-                break;
-                
-            case LocalVariable:
-                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByLocalVariable", _stateLocalVariable, _unit.toString());
-                break;
-                
-            case Formula:
-                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByFormula", _stateFormula, _unit.toString());
-                break;
-                
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
+        String delay = _selectDelay.getDescription(locale);
+
+        if ((_selectDelay.getAddressing() == NamedBeanAddressing.Direct)
+                && (_selectTimerUnit.getAddressing() == NamedBeanAddressing.Direct)) {
+
+            return Bundle.getMessage(locale,
+                    "Timeout_Long",
+                    _expressionSocket.getName(),
+                    _actionSocket.getName(),
+                    _selectTimerUnit.getEnum().getTimeWithUnit(_selectDelay.getValue()));
         }
-        
+
+        String timeUnit = _selectTimerUnit.getDescription(locale);
+
         return Bundle.getMessage(locale,
-                "Timeout_Long",
+                "Timeout_Long_Indirect",
                 _expressionSocket.getName(),
                 _actionSocket.getName(),
-                delay);
+                delay,
+                timeUnit);
     }
 
     public FemaleDigitalExpressionSocket getExpressionSocket() {
@@ -346,7 +228,7 @@ public class Timeout extends AbstractDigitalAction
             if ( !_expressionSocket.isConnected()
                     || !_expressionSocket.getConnectedSocket().getSystemName()
                             .equals(_expressionSocketSystemName)) {
-                
+
                 String socketSystemName = _expressionSocketSystemName;
                 _expressionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -363,11 +245,11 @@ public class Timeout extends AbstractDigitalAction
             } else {
                 _expressionSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_actionSocket.isConnected()
                     || !_actionSocket.getConnectedSocket().getSystemName()
                             .equals(_actionSocketSystemName)) {
-                
+
                 String socketSystemName = _actionSocketSystemName;
                 _actionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -390,17 +272,17 @@ public class Timeout extends AbstractDigitalAction
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
@@ -409,13 +291,13 @@ public class Timeout extends AbstractDigitalAction
             _timerTask = null;
         }
     }
-    
-    
+
+
     private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
-        
+
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
-        
+
         public InternalFemaleSocket() {
             super(null, new FemaleSocketListener(){
                 @Override
@@ -429,7 +311,7 @@ public class Timeout extends AbstractDigitalAction
                 }
             }, "A");
         }
-        
+
         @Override
         public void execute() throws JmriException {
             if (_actionSocket != null) {
@@ -439,10 +321,10 @@ public class Timeout extends AbstractDigitalAction
                 conditionalNG.setSymbolTable(oldSymbolTable);
             }
         }
-        
+
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Timeout.class);
 
 }

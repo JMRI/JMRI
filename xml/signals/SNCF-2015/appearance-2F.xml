@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable-no-check.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-2F</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+
+ <appearances>
+    <appearance>
+      <aspectname>Semaphore</aspectname>
+      <show>red</show>
+      <reference>Semaphore, permissif ou non permissif</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/2F/2FS.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/2F/2FS.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/2F/2FS.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>Voie libre</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/2F/2FVL.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/2F/2FVL.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/2F/2FVL.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>ClearSlow</aspectname>
+      <show>green</show>
+      <reference>Voie libre avec ralentissement vitesse max 130km/h</reference>
+      <comment>flashgreen</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/2F/2FVLr.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/2F/2FVLr.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/2F/2FVLr.gif</imagelink>
+    </appearance>
+   <appearance>
+      <aspectname>Restricted</aspectname>
+      <show>red</show>
+      <reference>Rouge clignotant</reference>
+      <comment>flashred</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/2F/2FSa.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/2F/2FSa.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/2F/2FSa.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/2F/2FDark.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/2F/2FDark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/2F/2FDark.gif</imagelink>
+    </appearance>
+ </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Semaphore</aspect>
+    </danger>
+    <permissive>
+      <aspect>Clear</aspect>
+    </permissive>
+    <held>
+      <aspect>Semaphore</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Semaphore</advancedAspect>
+      <ourAspect>Restricted</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>ClearSlow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Not Lit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

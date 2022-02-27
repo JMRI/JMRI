@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-TIDD-TECS-TSCS</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+ <appearances>
+
+    <appearance>
+      <aspectname>TIDDL</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIDD/TIDDG.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIDD/TIDDG.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIDD/TIDDG.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIDDR</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIDD/TIDDD.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIDD/TIDDD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIDD/TIDDD.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TECS</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIDD/TECS.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIDD/TECS.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIDD/TECS.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TSCS</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIDD/TSCS.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIDD/TSCS.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIDD/TSCS.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIDD/TIDDDark.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIDD/TIDDDark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIDD/TIDDDark.gif</imagelink>
+    </appearance>
+ </appearances>
+
+  <specificappearances>
+  </specificappearances>
+
+<!--
+ <aspectMappings>
+ </aspectMappings>
+ -->
+
+</appearancetable>
