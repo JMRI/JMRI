@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Building with IntelliJ IDEA</title>
   <meta name="author" content="Egbert Broerse">
-  <meta name="keywords" content="JMRI technical code IntelliJ IDEA 2017.2 2018 2019.1 IDE">
+  <meta name="keywords" content="JMRI technical code IntelliJ IDEA 2017.2 2018 2019.1 2021.3 IDE">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -107,9 +107,9 @@
           width="240" height="114" alt="IntelliJ Edit vmoptions"></a>
         </li>
 
-        <li>IntelliJ 2016 and up are now ready to use for development with JMRI. The vmoptions file
-        is stored in <code>˜/Users/Preferences/IdeaIC2016.1/</code><br>
-          But in version 15, IntelliJ on OS X did not correctly name this vmoptions file ( <a href=
+        <li>IntelliJ 2016 and up are now ready to use for development with JMRI. The
+        <code>vmoptions</code> file is stored in <code>˜/Users/Preferences/IdeaIC2016.1/</code><br>
+          But in version 15, IntelliJ on OS X did not correctly name this file ( <a href=
           "https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read
           more</a>).<br>
           To correct this, close IntelliJ 15 and in Finder go to the
@@ -142,7 +142,7 @@
 
       <h3>Set Preferences</h3>
 
-      <p>Start IntelliJ and choose "Preferences" from the application menu (OS X) or "Settings from
+      <p>Start IntelliJ and choose "Preferences..." from the application menu (macOS) or "Settings from
       the File menu (Win).</p>
 
       <ol>
@@ -153,18 +153,20 @@
           "IntelliJ encoding prefs"></a>
         </li>
 
-        <li>From the Version Control -&gt; GitHub tab, enter "github.com" as the Host and enter
-        your Login credentials:<br>
-          <a href="images/IntelliJ/IjPrefsGitLogin.png"><img src=
-          "images/IntelliJ/IjPrefsGitLogin.png" width="375" height="243" alt=
-          "IntelliJ build Git Login prefs"></a>
+        <li>From the Version Control -&gt; GitHub tab choose Add... (the + sign) and select
+          Log In with Token. After you have created an account on GitHub, proceed by clicking
+          Generate... which will take you to your GitHub account web page. Choose the correct scope and click the green
+          Generate Token button. Copy and paste this string into the IntelliJ GitHub dialog:<br>
+          <a href="images/IntelliJ/IjPrefsAddGithub.png"><img src=
+          "images/IntelliJ/IjPrefsAddGithub.png" width="451" height="351" alt=
+          "IntelliJ build GitHub prefs"></a>
         </li>
 
-        <li>From the Build, Execution, Deployment -&gt; Java Compiler tab, select "1.8" as the
-        Project bytecode version. On the same page, select "Eclipse" from the Use complier
+        <li>From the Build, Execution, Deployment -&gt; Java Compiler tab, select "11" as the
+        Project bytecode version. On the same page, select "Eclipse" from the Use compiler
         drop-down:<br>
-          <a href="images/IntelliJ/IjPrefsJava18.png"><img src="images/IntelliJ/IjPrefsJava18.png"
-          width="408" height="263" alt="IntelliJ build java SDK prefs"></a>
+          <a href="images/IntelliJ/IjPrefsJava11.png"><img src="images/IntelliJ/IjPrefsJava11.png"
+          width="554" height="421" alt="IntelliJ build java SDK prefs"></a>
         </li>
 
         <li>Click OK to close the Preferences.</li>
@@ -263,6 +265,17 @@
       confirm:<br>
       <a href="images/IntelliJ/IjNewBranchMsg.png"><img src="images/IntelliJ/IjNewBranchMsg.png"
       width="312" height="50" alt="IntelliJ checkout branch OK"></a></p>
+
+      <h3>Project Settings</h3>
+      <p>To ensure that the Java Development Kit version 11 you intend to use is installed and will be used for this
+      JMRI project, go to File &gt; Project Structure...<br>
+      Start on the SDKs tab, where you can select or download and add JDKs.<br>
+      After you confirm a Java 11 SDK is available in the list, you can select it on the Project tab
+      under SDK:<br>
+      <a href="images/IntelliJ/IjProjectSettingSdk.png"><img src="images/IntelliJ/IjProjectSettingSdk.png"
+      width="598" height="243" alt="IntelliJ Project settings for JMRI"></a><br>
+      Click OK to close this dialog and apply the settings.
+      </p>
 
       <h3>Making Changes</h3>
 
