@@ -43,10 +43,11 @@ public abstract class CbusSimulatedModuleProvider implements JmriServiceProvider
     public abstract int getModuleId();
     
     /**
-     * For a given CbusDummyNode, set the Parameters.
-     * @param node the Node to set parameters to.
+     * For a given CbusDummyNode, configure it to the Simulation.
+     * This may include Node Parameters, Node Variables, events and event variables.
+     * @param node the Node to set to.
      */
-    public abstract void setDummyNodeParameters(@Nonnull CbusDummyNode node);
+    public abstract void configureDummyNode(@Nonnull CbusDummyNode node);
     
     /**
      * Descriptive String of Module Type.
@@ -81,7 +82,7 @@ public abstract class CbusSimulatedModuleProvider implements JmriServiceProvider
     @Nonnull
     public CbusDummyNode getNewDummyNode(CanSystemConnectionMemo memo, int nodeNumber ){
         CbusDummyNode nd = createNewDummyNode(memo, nodeNumber);
-        setDummyNodeParameters(nd);
+        configureDummyNode(nd);
         CbusNodeConstants.setTraits( nd );
         log.info("Simulated CBUS Module: {}", getModuleType() );
         return nd;

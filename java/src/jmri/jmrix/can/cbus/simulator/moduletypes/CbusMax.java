@@ -27,7 +27,7 @@ public class CbusMax extends CbusSimulatedModuleProvider {
     }
 
     @Override
-    public void setDummyNodeParameters(@Nonnull CbusDummyNode node) {
+    public void configureDummyNode(@Nonnull CbusDummyNode node) {
         // 255 parameters could have unintended future
         // consequences so staying with the standard 20
         // for now

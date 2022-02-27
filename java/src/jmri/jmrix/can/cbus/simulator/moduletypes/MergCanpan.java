@@ -25,7 +25,7 @@ public class MergCanpan extends CbusSimulatedModuleProvider {
     }
 
     @Override
-    public void setDummyNodeParameters(CbusDummyNode node) {
+    public void configureDummyNode(CbusDummyNode node) {
         int[] _params = new int[]{
             20, /* 0 num parameters   */
             MANU_MERG, /* 1 manufacturer ID   */
