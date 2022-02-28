@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- *
+ * Tests for CbusDummyNode.
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2019
  */
@@ -153,12 +153,7 @@ public class CbusDummyNodeTest {
         
         Assert.assertEquals(" 1 outbound not increased", 1,(tcis.outbound.size() ) );
         Assert.assertEquals(" 3 inbound  not increased", 3,(tcis.inbound.size() ) );
-        
-        t.flimButton();  // does nothing in node type 0
-        
-        Assert.assertEquals(" 1 outbound not increased", 1,(tcis.outbound.size() ) );
-        Assert.assertEquals(" 3 inbound  not increased", 3,(tcis.inbound.size() ) );
-        
+
         t.dispose();
         
     }
