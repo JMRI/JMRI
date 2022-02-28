@@ -351,6 +351,10 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 <xsl:when test="( @todir = 32 )" >South</xsl:when>
                                 <xsl:when test="( @todir = 64 )" >East</xsl:when>
                                 <xsl:when test="( @todir = 128 )" >West</xsl:when>
+                                <xsl:when test="( @todir = 80 )" >Northeast</xsl:when>
+                                <xsl:when test="( @todir = 96 )" >Southeast</xsl:when>
+                                <xsl:when test="( @todir = 144 )" >Northwest</xsl:when>
+                                <xsl:when test="( @todir = 160 )" >Southwest</xsl:when>
                                 <xsl:when test="( @todir = 256 )" >CW</xsl:when>
                                 <xsl:when test="( @todir = 512 )" >CCW</xsl:when>
                                 <xsl:when test="( @todir = 1024 )" >Left</xsl:when>
@@ -367,6 +371,10 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 <xsl:when test="( @fromdir = 32 )" >South</xsl:when>
                                 <xsl:when test="( @fromdir = 64 )" >East</xsl:when>
                                 <xsl:when test="( @fromdir = 128 )" >West</xsl:when>
+                                <xsl:when test="( @fromdir = 80 )" >Northeast</xsl:when>
+                                <xsl:when test="( @fromdir = 96 )" >Southeast</xsl:when>
+                                <xsl:when test="( @fromdir = 144 )" >Northwest</xsl:when>
+                                <xsl:when test="( @fromdir = 160 )" >Southwest</xsl:when>
                                 <xsl:when test="( @fromdir = 256 )" >CW</xsl:when>
                                 <xsl:when test="( @fromdir = 512 )" >CCW</xsl:when>
                                 <xsl:when test="( @fromdir = 1024 )" >Left</xsl:when>
