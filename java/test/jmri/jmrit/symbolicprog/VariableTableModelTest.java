@@ -120,6 +120,10 @@ public class VariableTableModelTest {
         Assert.assertEquals("find variable two ", 1, t.findVarIndex("two"));
         Assert.assertEquals("find nonexistant variable ", -1, t.findVarIndex("not there, eh?"));
 
+	// check reverse finding
+        Assert.assertEquals("find variable two ", 1, t.findVarIndex("two", true));
+        Assert.assertEquals("find variable one ", 0, t.findVarIndex("really two", true));
+        Assert.assertEquals("find nonexistant variable ", -1, t.findVarIndex("not there, eh?", true));	
     }
 
     // Check creating a longaddr type, walk through its programming
