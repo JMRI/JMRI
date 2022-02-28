@@ -57,7 +57,7 @@ public class LogixNG_SelectInteger {
         return _addressing;
     }
 
-    public void setValue(@Nonnull int value) {
+    public void setValue(int value) {
         _base.assertListenersAreNotRegistered(log, "setEnum");
         _value = value;
     }

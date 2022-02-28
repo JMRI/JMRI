@@ -53,6 +53,8 @@ public class SimpleTimebaseTest {
     public void testGetBeanType() {
         SimpleTimebase p = new SimpleTimebase(memo);
         Assert.assertEquals("Time", p.getBeanType());
+
+        p.dispose();
     }
 
     @Test
@@ -121,6 +123,7 @@ public class SimpleTimebaseTest {
         Assert.assertEquals(2.0, p.getRate(), 0.01);
         Assert.assertFalse(p.getRun());  // still
 
+        p.dispose();
     }
 
     double seenNewMinutes;
@@ -147,6 +150,8 @@ public class SimpleTimebaseTest {
         if (seenNewMinutes < seenOldMinutes) seenNewMinutes += 60.;
 
         Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
+
+        p.dispose();
     }
 
     @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
@@ -170,6 +175,8 @@ public class SimpleTimebaseTest {
         Assert.assertNotNull(l1.getTime());
         Assert.assertNotNull(l2.getTime());
         Assert.assertEquals(l1.getTime(), l2.getTime());
+
+        instance.dispose();
     }
 
     @Test
@@ -184,6 +191,8 @@ public class SimpleTimebaseTest {
         long delta = then.getTime() - now.getTime();
         Assert.assertTrue("delta ge 50 (nominal value)", delta >= 50);
         Assert.assertTrue("delta lt 150 (nominal value)", delta < 150);
+
+        p.dispose();
     }
 
     @BeforeEach

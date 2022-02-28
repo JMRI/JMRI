@@ -193,7 +193,7 @@
 			<enumVal>
 				<enumChoice choice="0/Thrown/Free" value="0">
                                     <choice>0/Thrown/Free</choice>
-                                    <choice xml:lang="cs">0 / Do odbočky / Volno</choice>
+                                    <choice xml:lang="cs">0 / Do odbočky / Neobsazeno</choice>
                                 </enumChoice>
 				<enumChoice choice="1/Closed/Occupied" value="1">
                                     <choice>1/Closed/Occupied</choice>
