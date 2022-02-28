@@ -45,10 +45,12 @@ public class LocoFile extends XmlFile {
      * @param cvModel An existing CvTableModel object which will have the CVs
      *                from the loco Element appended. It is intended, but not
      *                required, that this be empty.
+     * @param mfgID   Decoder manufacturer. Used to check if there's need for special
+     *                treatment.
      * @param family  Decoder family. Used to check if there's need for special
      *                treatment.
      */
-    public static void loadCvModel(Element loco, CvTableModel cvModel, String family) {
+    public static void loadCvModel(Element loco, CvTableModel cvModel, String mfgID, String family) {
         CvValue cvObject;
         // get the CVs and load
         String rosterName = loco.getAttributeValue("id");
@@ -100,15 +102,22 @@ public class LocoFile extends XmlFile {
                 // check whether the CV already exists, i.e. due to a variable definition
                 cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null && name.equals("19")) {
-                    log.info("CV19 special case triggered, kept without Variable");
+                    log.info("CV19 special case triggered, kept without Variable; {} {}", mfgID, family);
                     cvModel.addCV(name, false, false, false);
                     cvObject = cvModel.allCvMap().get(name);
                 }
                 if (cvObject == null) {
-                    // No warning since ESU files do not generate CV entries until panel load time
-                    // plus this is a valid way to migrate a decoder definition, i.e. to remove a variable.
-                    log.debug("CV "+name+" was in loco file, but not defined by the decoder definition");
-                } else {
+                    log.trace("undefined CV check with mfgID={} family={}", mfgID, family);
+                    if ( (mfgID != null && mfgID.equals("151")) || (family != null && family.startsWith("ESU ")) ) { // Electronic Solutions Ulm GmbH
+                        // ESU files do not generate CV entries until panel load time
+                        cvModel.addCV(name, false, false, false);
+                        cvObject = cvModel.allCvMap().get(name);
+                     } else {
+                        // this is a valid way to migrate a decoder definition, i.e. to remove a variable.
+                        log.info("CV "+name+" was in loco file, but not defined by the decoder definition; migrated");
+                    }
+                }
+                if (cvObject != null) {
                     cvObject.setValue(Integer.parseInt(value));
                     cvObject.setState(CvValue.FROMFILE);
                 }
