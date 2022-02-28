@@ -1102,8 +1102,8 @@ value="<xsl:value-of select="@dataString"/>"
         <td><xsl:value-of select="@watchedsignal1"/><br/>
             <xsl:value-of select="@watchedsignal2"/></td>
         <td><xsl:value-of select="@watchedturnout"/></td>
-        <td><xsl:for-each select="sensor">
-            <xsl:value-of select="@systemName"/><br/>
+        <td><xsl:for-each select="sensorname">
+            <xsl:value-of select="."/><br/>
             </xsl:for-each></td>
         <td><xsl:if test="@limitspeed1 = 'true'" >
                 Limit Speed Path 1<br/></xsl:if>
