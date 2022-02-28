@@ -501,7 +501,7 @@
 
     	<h4>Simple Signal Logic</h4>
             <ul>
-                <li></li>
+                <li>Improved XSLT web display to include sensors</li>
             </ul>
 
 	    <h4>USS CTC Logic</h4>
