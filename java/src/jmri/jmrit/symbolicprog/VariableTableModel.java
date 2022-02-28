@@ -1187,18 +1187,36 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     public int findVarIndex(String name) {
-        for (int i = 0; i < getRowCount(); i++) {
-            if (name.equals(getItem(i))) {
-                return i;
-            }
-            if (name.equals(getLabel(i))) {
-                return i;
-            }
-            if (name.equals("CV" + getCvName(i))) {
-                return i;
-            }
-        }
-        return -1;
+	return findVarIndex(name, false);
+    }
+    
+    public int findVarIndex(String name, boolean reverse) {
+        if(reverse) {
+	    for (int i = getRowCount() - 1; i >= 0; i--) {
+		if (name.equals(getItem(i))) {
+		    return i;
+		}
+		if (name.equals(getLabel(i))) {
+		    return i;
+		}
+		if (name.equals("CV" + getCvName(i))) {
+		    return i;
+		}
+	    }
+	} else {
+	    for (int i = 0; i < getRowCount(); i++) {
+		if (name.equals(getItem(i))) {
+		    return i;
+		}
+		if (name.equals(getLabel(i))) {
+		    return i;
+		}
+		if (name.equals("CV" + getCvName(i))) {
+		    return i;
+		}
+	    }
+	}
+	return -1;
     }
 
     public void dispose() {
