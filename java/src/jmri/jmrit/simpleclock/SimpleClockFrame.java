@@ -791,6 +791,14 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         super.windowClosing(e);
     }
 
+    @Override
+    public void dispose() {
+        if ( clock != null ) {
+            clock.removePropertyChangeListener(this);
+        }
+        super.dispose();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SimpleClockFrame.class);
 
 }
