@@ -168,7 +168,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
         ((LnTurnoutManager)l).mTurnoutNoRetry=false;
 
-        Turnout t = ((LnTurnoutManager)l).provideTurnout("LT1018");   // This is effectively an enquiry command
+        ((LnTurnoutManager)l).provideTurnout("LT1018");   // This is effectively an enquiry command
         LocoNetMessage m = new LocoNetMessage(new int[] {0xb0, 0x79, 0x37, 0x01});
         lnis.sendTestMessage(m);
         Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
