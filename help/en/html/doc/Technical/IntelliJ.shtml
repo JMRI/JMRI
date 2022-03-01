@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Building with IntelliJ IDEA</title>
   <meta name="author" content="Egbert Broerse">
-  <meta name="keywords" content="JMRI technical code IntelliJ IDEA 2017.2 2018 2019.1 IDE">
+  <meta name="keywords" content="JMRI technical code IntelliJ IDEA 2017.2 2018 2019.1 2021.3 IDE">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -107,9 +107,9 @@
           width="240" height="114" alt="IntelliJ Edit vmoptions"></a>
         </li>
 
-        <li>IntelliJ 2016 and up are now ready to use for development with JMRI. The vmoptions file
-        is stored in <code>˜/Users/Preferences/IdeaIC2016.1/</code><br>
-          But in version 15, IntelliJ on OS X did not correctly name this vmoptions file ( <a href=
+        <li>IntelliJ 2016 and up are now ready to use for development with JMRI. The
+        <code>vmoptions</code> file is stored in <code>˜/Users/Preferences/IdeaIC2016.1/</code><br>
+          But in version 15, IntelliJ on OS X did not correctly name this file ( <a href=
           "https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read
           more</a>).<br>
           To correct this, close IntelliJ 15 and in Finder go to the
@@ -140,9 +140,9 @@
       application settings, please tell <a href="https://groups.io/g/jmriusers">JMRI users</a> at
       Groups.io.</p>
 
-      <h3>Set Preferences</h3>
+      <a id="IjPrefs"></a><h3>Set Preferences</h3>
 
-      <p>Start IntelliJ and choose "Preferences" from the application menu (OS X) or "Settings from
+      <p>Start IntelliJ and choose "Preferences..." from the application menu (macOS) or "Settings from
       the File menu (Win).</p>
 
       <ol>
@@ -153,18 +153,27 @@
           "IntelliJ encoding prefs"></a>
         </li>
 
-        <li>From the Version Control -&gt; GitHub tab, enter "github.com" as the Host and enter
-        your Login credentials:<br>
-          <a href="images/IntelliJ/IjPrefsGitLogin.png"><img src=
-          "images/IntelliJ/IjPrefsGitLogin.png" width="375" height="243" alt=
-          "IntelliJ build Git Login prefs"></a>
+        <li>From the Version Control -&gt; GitHub tab choose Add... (the + sign) and select
+          Log In with Token...<br>
+          <a href="images/IntelliJ/IjPrefsGitHubLogin.png"><img src=
+          "images/IntelliJ/IjPrefsGitHubLogin.png" width="242" height="157" alt=
+          "IntelliJ build GitHub prefs"></a><br>
+          After you have created an account on GitHub, proceed by clicking
+          Generate... which will take you to your GitHub account web page.<br>
+          <a href="images/IntelliJ/IjPrefsAddGithub.png"><img src=
+          "images/IntelliJ/IjPrefsAddGithub.png" width="451" height="351" alt=
+          "IntelliJ build GitHub prefs"></a><br>
+          Choose the correct scope (repo, gist, read.org and workflow) and click the green
+          Generate Token button.<br>
+          Copy and paste this string into the IntelliJ Add GitHub Account dialog as your
+          Token and click Add Account.
         </li>
 
-        <li>From the Build, Execution, Deployment -&gt; Java Compiler tab, select "1.8" as the
-        Project bytecode version. On the same page, select "Eclipse" from the Use complier
-        drop-down:<br>
-          <a href="images/IntelliJ/IjPrefsJava18.png"><img src="images/IntelliJ/IjPrefsJava18.png"
-          width="408" height="263" alt="IntelliJ build java SDK prefs"></a>
+        <li>From the Build, Execution, Deployment -&gt; Java Compiler tab, select "11" as the
+        Project bytecode version.<br>
+        On the same page, select "Eclipse" from the Use compiler drop-down:<br>
+        <a href="images/IntelliJ/IjPrefsJava11.png"><img src="images/IntelliJ/IjPrefsJava11.png"
+        width="554" height="421" alt="IntelliJ build java SDK prefs"></a>
         </li>
 
         <li>Click OK to close the Preferences.</li>
@@ -186,7 +195,8 @@
         <li>If prompted, enter your GitHub username (Login) and Password in the authentication
         fields and click "Login":<br>
           <a href="images/IntelliJ/IjLoginGit.png"><img src="images/IntelliJ/IjLoginGit.png" width=
-          "200" height="110" alt="IntelliJ git login"></a>
+          "200" height="110" alt="IntelliJ git login"></a><br>
+          See <a href="#IjPrefs">IntelliJ Setup</a> above for detailed options to connect to GitHub.
         </li>
 
         <li>The Clone Repository pane should now appear. Select a Git Repository URL from your
@@ -264,12 +274,36 @@
       <a href="images/IntelliJ/IjNewBranchMsg.png"><img src="images/IntelliJ/IjNewBranchMsg.png"
       width="312" height="50" alt="IntelliJ checkout branch OK"></a></p>
 
+      <h3>Project Settings</h3>
+      <p><span class="since">since 5.0 </span>To ensure that the Java Development Kit version 11 you
+      intend to use for compiling JMRI is installed and will be used for this JMRI project, go to
+      File &gt; Project Structure...<br>
+      <p>To manage the Java Development Kits available on your local computer, the
+      Platform Settings &gt; SDKs tab allows downloading, renaming and uninstalling
+      JDKs as well as other packages such as Python:<br>
+      <a href="images/IntelliJ/IjPlatformSettings.png"><img
+      src="images/IntelliJ/IjPlatformSettings.png"
+      width="588" height="334" alt="IntelliJ Platform dialog"></a><br>
+      <a href="images/IntelliJ/IjPlatformDownloadJdk.png"><img src="images/IntelliJ/IjPlatformDownloadJdk.png"
+      width="295" height="106" alt="IntelliJ JDK dropdown"></a><br>
+      </p>
+
+      <p>Now switch to the Project Settings &gt; Project tab, where you can select your
+      JDK of choice:<br>
+      <a href="images/IntelliJ/IjProjectSettingsSdkDropdown.png"><img
+      src="images/IntelliJ/IjProjectSettingsSdkDropdown.png"
+      width="320" height="199" alt="IntelliJ Project SDK menu"></a><br>
+      <a href="images/IntelliJ/IjProjectSettingsSdk.png"><img src="images/IntelliJ/IjProjectSettingsSdk.png"
+      width="598" height="243" alt="IntelliJ Project settings for JMRI"></a><br>
+      Click OK to close this dialog and apply the settings.
+      </p>
+
       <h3>Making Changes</h3>
 
       <p>To work on the JMRI code, always start a new Branch so that your own "original" will stay
       intact. In most cases, you will create this new branch off from <code>master</code>, your
       personal copy of the main JMRI code.<br>
-      To create a new Branch in IntelliJ, first check out master. To make it currect, first do VCS
+      To create a new Branch in IntelliJ, first check out master. To make it current, first do VCS
       &gt; Git &gt; Pull... from JMRI-master, and VCS &gt; Git &gt; Push... to create a current
       base.<br>
       Now then from the <strong>Git Branches</strong> pane, select "+ New Branch":<br>
@@ -300,28 +334,29 @@
 
       <ol>
         <li>Ant needs a JDK (Java Development Kit) in order to run the supplied "build.xml" file.
-        The IntelliJ IDEA download comes with a JDK, but you have to configure ant to use the right
-        JDK.<br>
-          To verify the JDK is set to java 1.8, open the Ant Build tab [1] and select the
-          Properties button [2] at the top right of the pane.<br>
-          As "Run under JDK:" select <strong>1.8 (java version 1.8.xxx)</strong> if not already
+        The IntelliJ IDEA download comes with a JDK, but you have to configure <code>ant</code>
+        to use the correct JDK.<br>
+          To verify the JDK is set to java 11, open the Ant Build tab [1] and select one of the items in the list.
+          Next, click the Properties button [2] at the top right of the pane and choose the Execution tab.<br>
+          As "Run under JDK:" select <strong>Project JDK (name as set in Project Structure)</strong> if not already
           set:<br>
           <a href="images/IntelliJ/IjAntPropertiesOpen.png"><img src=
           "images/IntelliJ/IjAntPropertiesOpen.png" width="340" height="196" alt=
           "IntelliJ Ant menu"></a>&nbsp; <a href=
           "images/IntelliJ/IjAntBuildFilePropertiesPane.png"><img src=
-          "images/IntelliJ/IjAntBuildFilePropertiesPane.png" width="318" height="175" alt=
+          "images/IntelliJ/IjAntBuildFilePropertiesPane.png" width="382" height="275" alt=
           "IntelliJ Ant Settings"></a><br>
           Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).
         </li>
 
-        <li>Select a file in one of the JMRI ant folders in the Ant Build list, right click, and
+        <li>Select a file in one of the JMRI ant folders in the Ant Build list,
+          right click, and
         select "Run Target", simply double-click or press the green triangle "Run" button at the
         top of the pane. This should start the ant build. Follow any messages in the Event Log that
         pops up from the bottom edge of the Project window.</li>
 
         <li>A new JMRI checkout should build cleanly. If not, do ant clean (meaning: double-click
-        the <strong>clean</strong> item on the Ant Built list before contacting the <a href=
+        the <strong>clean</strong> item on the Ant Built list) before contacting the <a href=
         "https://jmri-developers.groups.io/g/jmri">jmri-developers.groups.io</a> for assistance.
         </li>
       </ol>
@@ -819,6 +854,14 @@
         shown below by going to Window -&gt; Preferences and selecting
         "Java -&gt; Compiler -&gt; Errors/Warnings".
         -->
+
+      <h4>Run/Debug Error</h4>
+      <p>If you see a message similar to this:<br>
+      <a href="images/IntelliJ/IjAntErrorDialog.png"><img src="images/IntelliJ/IjAntErrorDialog.png" width=
+      "593" height="345" alt="IntelliJ Ant error"></a><br>
+      the SDK name as set in the Project Structure &gt; Project Settings &gt; SDK tab does not match any of the JDKs
+      installed. Fix it by choosing a different Java 11 JDK as described <a href="#setant">above</a>.
+      </p>
 
       <h2 id="more">More Help</h2>
 
