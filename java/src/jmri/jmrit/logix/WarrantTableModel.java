@@ -579,6 +579,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             break;
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
+                w.deAllocate();
                 fireTableRowDeleted(w, row, true);
             } else {
                 w.controlRunTrain(Warrant.ABORT);

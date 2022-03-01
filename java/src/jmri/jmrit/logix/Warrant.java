@@ -794,6 +794,53 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         });
     }
 
+    // Get engineer thread to TERMINATED state - didn't answer CI test problem, but let it be.
+    private void killEngineer(Engineer engineer, boolean abort, boolean functionFlag) {
+        engineer.stopRun(abort, functionFlag); // releases throttle
+        engineer.interrupt();
+        if (!engineer.getState().equals(Thread.State.TERMINATED)) {
+            Thread curThread = Thread.currentThread();
+            if (!curThread.equals(_engineer)) {
+                kill( engineer, abort, functionFlag, curThread);
+            } else {   // can't join yourself if called by _engineer
+                class Killer implements Runnable {
+                    Engineer victim;
+                    boolean abortFlag;
+                    boolean functionFlag;
+                    Killer (Engineer v, boolean a, boolean f) {
+                        victim = v;
+                        abortFlag = a;
+                        functionFlag = f;
+                    }
+                    @Override
+                    public void run() {
+                        kill(victim, abortFlag, functionFlag, victim);
+                    }
+                }
+                final Runnable killer = new Killer(engineer, abort, functionFlag);
+                synchronized (killer) {
+                    Thread hit = jmri.util.ThreadingUtil.newThread(killer,
+                            getDisplayName()+" Killer");
+                    hit.start();
+                }
+            }
+        }
+    }
+
+    private void kill(Engineer eng, boolean a, boolean f, Thread monitor) {
+        long time = 0;
+        while (!eng.getState().equals(Thread.State.TERMINATED) && time < 100) {
+            try {
+                eng.stopRun(a, f); // releases throttle
+                monitor.join(10);
+            } catch (InterruptedException ex) {
+                log.info("victim.join() interrupted. warrant {}", getDisplayName());
+            }
+            time += 10;
+        }
+        log.debug("{}: engineer state {} after {}ms", getDisplayName(), eng.getState().toString(), time);
+    }
+
     public void stopWarrant(boolean abort, boolean turnOffFunctions) {
         _delayStart = false;
         clearWaitFlags(true);
@@ -803,43 +850,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         _curSignalAspect = null;
         cancelDelayRamp();
+        // insulate possible non-GUI thread making a block state change
+        ThreadingUtil.runOnGUI(()-> deAllocate());
+
         if (_engineer != null) {
-            _engineer.stopRun(abort, turnOffFunctions); // releases throttle
-            _engineer.interrupt();
-            if ((!_engineer.getState().equals(Thread.State.TERMINATED))) {
-                class Killer implements Runnable {
-                    Engineer victim;
-                    boolean functionFlag;
-                    Killer (Engineer v, boolean f) {
-                        victim = v;
-                        functionFlag = f;
-                    }
-                    @Override
-                    public void run() {
-                        long time = 0;
-                        while (!victim.getState().equals(Thread.State.TERMINATED) && time < 100) {
-                            try {
-                                victim.stopRun(abort, functionFlag); // releases throttle
-                                victim.join(10);
-                            } catch (InterruptedException ex) {
-                                log.info("victim.join() interrupted. warrant {}", getDisplayName());
-                            }
-                            time += 10;
-                        }
-//                        victim.debugInfo();
-                        log.debug("{}: _engineer state {} after {}ms", getDisplayName(), victim.getState().toString(), time);
-                    }
-                }
-                final Runnable killer = new Killer(_engineer, turnOffFunctions);
-                synchronized (killer) {
-                    Thread hit = jmri.util.ThreadingUtil.newThread(killer,
-                            getDisplayName()+" Killer");
-                    hit.start();
-                }
-            }
+            killEngineer(_engineer, abort, turnOffFunctions);
             _engineer = null;
         }
-        deAllocate();
 
         int oldMode = _runMode;
         int newMode;
@@ -1072,7 +1089,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         // let WarrantFrame do the abort. (WarrantFrame listens for "abortLearn")
                         fireRunStatus("abortLearn", -MODE_LEARN, _idxCurrentOrder);
                     } else {
-                        fireRunStatus("controlChange", null, ABORT);
                         stopWarrant(true, true);
                     }
                     break;
@@ -1170,7 +1186,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         if (ret) {
-            if (_trace || log.isDebugEnabled()) {
+            if (idx != ABORT && (_trace || log.isDebugEnabled())) { // stopWarrant does fireRunStatus
                 OBlock block = getBlockAt(_idxCurrentOrder); 
                 Bundle.getMessage("controlChange",
                         getTrainName(), Bundle.getMessage(Warrant.RUN_STATE[state], block.getDisplayName()),
@@ -1332,26 +1348,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 _student.notifyThrottleFound(throttle);
             }
         } else {
-            if (_engineer != null && !_engineer.getState().equals(Thread.State.TERMINATED)) {
-                // should not happen
-                log.error(_engineer.debugInfo());
-                if (!Thread.currentThread().equals(_engineer)) {
-                    try {   // can't join yourself if called by _engineer
-                        _engineer.join(200);
-                    } catch (InterruptedException ex) {
-                        log.info("_engineer.join() interrupted. warrant {}", getDisplayName());
-                    }
-                    if (log.isDebugEnabled()) {
-                        log.debug(_engineer.debugInfo());
-                    }
-                }   // else can't do anything but hope this instance of_engineer terminates
-                _engineer = null;
+            if (_engineer != null) {    // should not happen
+                killEngineer(_engineer, true, true);
             }
+            _engineer = new Engineer(this, throttle);
 
             if (!_noRamp) { // _noRamp makes immediate speed changes
                 _speedUtil.getBlockSpeedTimes(_commands);   // initialize SpeedUtil
             }
-             _engineer = new Engineer(this, throttle);
             if (_tempRunBlind) {
                 _engineer.setRunOnET(true);
             }

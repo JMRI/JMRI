@@ -364,8 +364,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                            _warrant.getDisplayName(), block.getDisplayName(), isRamping());
                }
            } else {
-               log.warn("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
-                       _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
+               if (log.isDebugEnabled()) {
+                   log.debug("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
+                           _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
+               }
            }
         }
 
@@ -618,8 +620,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     }
 
     String debugInfo() {
-        StringBuffer info = new StringBuffer("\nEngineer ");
-        info.append(getName()); info.append(", Thread.State= "); info.append(getState());
+        StringBuffer info = new StringBuffer("\n");
+        info.append(getName()); info.append("on warrant= "); info.append(_warrant.getDisplayName());
+        info.append("\nThread.State= "); info.append(getState());
         info.append(", isAlive= "); info.append(isAlive());
         info.append(", isInterrupted= "); info.append(isInterrupted());
         info.append("\n\tThrottle setting= "); info.append(getSpeedSetting());
@@ -1011,12 +1014,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             log.info(msg);
         }
         Engineer.setFrameStatusText(msg, color, true);
-        try {
-            _checker.join(100);
-        } catch (InterruptedException ie) {
-        } finally {
-            _checker = null;
-        }
+        _checker = null;
     }
 
     private class CheckForTermination extends Thread {
@@ -1235,19 +1233,25 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
             float scriptTrackSpeed = _speedUtil.getTrackSpeed(_normalSpeed);
 
-            int warBlockIdx = _warrant.getCurrentOrderIndex();  // current train position
-            int cmdBlockIdx;    // script commnd's train position
-            if (_currentCommand.getCommand().hasBlockName()) {
-                OBlock blk = (OBlock)_currentCommand.getBean();
-                cmdBlockIdx = _warrant.getIndexOfBlockBefore(warBlockIdx, blk);
-                if (cmdBlockIdx > warBlockIdx) {
-                    log.error("{}: {} Ramp cmd#{} of block {} not train block {}",
-                          _warrant.getDisplayName(), (_rampDown ? "DOWN" : "UP"), _idxCurrentCommand+1, 
-                          blk.getDisplayName(), _warrant.getCurrentBlockName());
+            int warBlockIdx = _warrant.getCurrentOrderIndex();  // block of current train position
+            int cmdBlockIdx = -1;    // block of script commnd's train position
+            int cmdIdx = _idxCurrentCommand;
+            while (cmdIdx >= 0) {
+                ThrottleSetting cmd  = _commands.get(--cmdIdx);
+                if (cmd.getCommand().hasBlockName()) {
+                    OBlock blk = (OBlock)cmd.getBean();
+                    int idx = _warrant.getIndexOfBlockBefore(warBlockIdx, blk);
+                    if (idx >= 0) {
+                        cmdBlockIdx = idx;
+                    } else {
+                        cmdBlockIdx = _warrant.getIndexOfBlockAfter(blk, warBlockIdx);
+                    }
+                    break;
                 }
-            } else {
-                cmdBlockIdx = warBlockIdx;
             }
+            if (cmdBlockIdx < 0) {
+                cmdBlockIdx = warBlockIdx;
+           }
 
             synchronized (this) {
                 try {
@@ -1279,7 +1283,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                             if (!stop && rampDist >= cmdDist && _idxCurrentCommand < commandIndexLimit) {
                                 warBlockIdx = _warrant.getCurrentOrderIndex();  // current train position
                                 if (_currentCommand.getCommand().hasBlockName()) {
-                                    cmdBlockIdx = _warrant.getIndexOfBlockBefore(warBlockIdx, (OBlock)_currentCommand.getBean());
+                                    int idx = _warrant.getIndexOfBlockBefore(warBlockIdx, (OBlock)_currentCommand.getBean());
+                                    if (idx >= 0) {
+                                        cmdBlockIdx = idx;
+                                    }
                                 }
                                 if (cmdBlockIdx <= warBlockIdx) {
                                     cmdVal = _currentCommand.getValue();
@@ -1369,7 +1376,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                             if (!stop && rampDist >= cmdDist && _idxCurrentCommand < commandIndexLimit) {
                                 warBlockIdx = _warrant.getCurrentOrderIndex();  // current train position
                                 if (_currentCommand.getCommand().hasBlockName()) {
-                                    cmdBlockIdx = _warrant.getIndexOfBlockBefore(warBlockIdx, (OBlock)_currentCommand.getBean());
+                                    int idx = _warrant.getIndexOfBlockBefore(warBlockIdx, (OBlock)_currentCommand.getBean());
+                                    if (idx >= 0) {
+                                        cmdBlockIdx = idx;
+                                    }
                                 }
                                 if (cmdBlockIdx <= warBlockIdx) {
                                     cmdVal = _currentCommand.getValue();
