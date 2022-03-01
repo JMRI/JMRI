@@ -1197,7 +1197,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @return index of the first matching variable found.
      */
     public int findVarIndex(String name) {
-	return findVarIndex(name, false);
+        return findVarIndex(name, false);
     }
     
     /**
@@ -1216,31 +1216,31 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     public int findVarIndex(String name, boolean searchFromEnd) {
         if(searchFromEnd) {
-	    for (int i = getRowCount() - 1; i >= 0; i--) {
-		if (name.equals(getItem(i))) {
-		    return i;
-		}
-		if (name.equals(getLabel(i))) {
-		    return i;
-		}
-		if (name.equals("CV" + getCvName(i))) {
-		    return i;
-		}
-	    }
-	} else {
-	    for (int i = 0; i < getRowCount(); i++) {
-		if (name.equals(getItem(i))) {
-		    return i;
-		}
-		if (name.equals(getLabel(i))) {
-		    return i;
-		}
-		if (name.equals("CV" + getCvName(i))) {
-		    return i;
-		}
-	    }
-	}
-	return -1;
+            for (int i = getRowCount() - 1; i >= 0; i--) {
+                if (name.equals(getItem(i))) {
+                    return i;
+                }
+                if (name.equals(getLabel(i))) {
+                    return i;
+                }
+                if (name.equals("CV" + getCvName(i))) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < getRowCount(); i++) {
+                if (name.equals(getItem(i))) {
+                    return i;
+                }
+                if (name.equals(getLabel(i))) {
+                    return i;
+                }
+                if (name.equals("CV" + getCvName(i))) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     public void dispose() {
