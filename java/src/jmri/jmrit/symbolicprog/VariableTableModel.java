@@ -1186,12 +1186,36 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return null;
     }
 
+    /**
+     * Returns the index of the first variable that matches a given name string.
+     * <p>
+     * Checks the search string against every variable's "item", the true name, 
+     * then against their "label" (default language only) and finally the
+     * CV name before moving on to the next variable if none of those match.
+     *
+     * @param name search string.
+     * @return index of the first matching variable found.
+     */
     public int findVarIndex(String name) {
 	return findVarIndex(name, false);
     }
     
-    public int findVarIndex(String name, boolean reverse) {
-        if(reverse) {
+    /**
+     * Returns the index of a variable that matches a given name string.
+     * <p>
+     * Checks the search string against every variable's "item", the true name, 
+     * then against their "label" (default language only) and finally the
+     * CV name before moving on to the next variable if none of those match.
+     *
+     * Depending on the second parameter, it will return the index of the first
+     * or last variable in our internal rowVector that matches the given string.
+     *
+     * @param name search string.
+     * @param searchFromEnd If true, will start searching from the end.
+     * @return index of the first matching variable found.
+     */
+    public int findVarIndex(String name, boolean searchFromEnd) {
+        if(searchFromEnd) {
 	    for (int i = getRowCount() - 1; i >= 0; i--) {
 		if (name.equals(getItem(i))) {
 		    return i;
