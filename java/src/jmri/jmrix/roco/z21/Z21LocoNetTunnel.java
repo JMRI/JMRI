@@ -37,10 +37,13 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
      * Build a new LocoNet tunnel.
      * @param memo system connection.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21LocoNetTunnel(Z21SystemConnectionMemo memo) {
         // save the SystemConnectionMemo.
         _memo = memo;
+        init();
+    }
+
+    private void init() {
 
         // configure input and output pipes to use for
         // the communication with the LocoNet implementation.
@@ -289,6 +292,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     @SuppressWarnings("deprecation") // Thread.stop
     public void dispose(){
+        _memo.getTrafficController().removez21Listener(this);
        if(lsc != null){
           lsc.dispose();
        }
