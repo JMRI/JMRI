@@ -292,16 +292,16 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     @SuppressWarnings("deprecation") // Thread.stop
     public void dispose(){
-        Z21TrafficController tc = _memo.getTrafficController();
-        if ( tc != null ) {
-            tc.removez21Listener(this);
-        }
        if(lsc != null){
           lsc.dispose();
        }
-       if(_memo != null){
-          _memo.dispose();
-       }
+        if( _memo != null ) {
+            Z21TrafficController tc = _memo.getTrafficController();
+            if ( tc != null ) {
+                tc.removez21Listener(this);
+            }
+           _memo.dispose();
+        }
        sourceThread.stop();
        try {
           sourceThread.join();
