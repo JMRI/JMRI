@@ -167,7 +167,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                     int sw2 = lastSWREQ.getElement(2);
                     addr = address(sw1, sw2);
 
-                    if (addr < 1017) { // enquiries are above this
+                    if (addr < 1017 || addr > 1020) { // enquiries are above this
                         fastcontroller.sendLocoNetMessage(lastSWREQ);
                     }
                 }
