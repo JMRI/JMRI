@@ -2,12 +2,17 @@
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page              -->
 <!-- Used by default when the panel file is displayed in a web browser      -->
-<!-- This version corresponds to the 4.19.2 schema update                    -->
+<!-- This version corresponds to the 4.19.2 schema update                   -->
 
-<!-- Some updates have been made for 4.19.2 schema (2022-02-18 )            -->
-<!--   [This includes addition of logixNG and ctcdata]                      -->
-<!--   [Additional reformatting was done to logix display]                  -->
-<!--   [Additional info for turnout, sensors, lights.]                      -->
+<!-- Updates made for 4.19.2 schema and additional JMRI capabilities:
+   [Added formatting for logixNG and ctcdata]                   (2022-02-18)
+   [Reformatting was done to logix display]                     (2022-02-18)           
+   [Added info for turnout, sensors, lights, signal masts.]     (2022-03-01)
+   [Added additional directions for blocks.]                    (2022-03-01)                       
+   [Added info for ctc code buttons.]                           (2022-03-01)      
+   [Added formatting for panel editor and layout editor.]       (2022-03-01)      
+   [Bug fix in SSL related to displaying sensor names.]         (2022-03-01)      
+-->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022.     -->
 
@@ -41,13 +46,13 @@
 
 <html>
 	<head>
-		<title>JMRI panel file</title>
+		<title>JMRI Panel File Contents</title>
 	</head>
 
 	<body>
-		<h1>JMRI panel file</h1>
-        <h4>[NOTE: Not all detailed attributes are displayed.  Please check the underlying XML file.]</h4>
-
+		<h1>JMRI Panel File Contents</h1>
+        <h4>[Not all detailed attributes are displayed.  Please check the underlying XML file.]<br/>
+        [Help maintain this JMRI capability: Please report any unformatted data to the JMRI Development Team.]</h4>
                 <xsl:apply-templates/>
 
         <p></p>
@@ -73,19 +78,30 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
           <xsl:with-param name="delimiter" select="$delimiter" />
         </xsl:call-template>
       </xsl:when>
-      <xsl:otherwise><xsl:value-of
+      <xsl:otherwise><xsl:value-of 
                   select="$string" /></xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
 <!-- *************************************************************************************** -->
-<!-- Index through turnouts elements -->
+<!-- Index through turnouts types -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/turnouts">
 <h2>Turnouts (<xsl:call-template name="substring-after-last">
   <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" />
   </xsl:call-template>
 )</h2>
+     <table border="1">
+     <xsl:for-each select="operations">
+       <tr><td>Operations automate:</td><td><xsl:value-of select="@automate" /></td></tr>
+     </xsl:for-each>
+     <xsl:if test='defaultclosedspeed !="" or defaultthrownspeed !=""'>
+       <tr><td>Default closed speed:</td><td><xsl:value-of select="defaultclosedspeed" /></td></tr>
+       <tr><td>Default thrown speed:</td><td><xsl:value-of select="defaultthrownspeed" /></td></tr>
+     </xsl:if>
+     </table>
+     <br/>
+     
     <table border="1">
     <tr>
       <th>System Name</th>
@@ -97,9 +113,17 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
       <th>Comment</th>
     </tr>
     <!-- index through individual turnout elements -->
-    <xsl:apply-templates/>
+    <xsl:apply-templates select="turnout"/>
     </table>
 </xsl:template>
+
+<xsl:template match="operations">  
+</xsl:template>
+<xsl:template match="defaultclosedspeed">  
+</xsl:template>
+<xsl:template match="defaultthrownspeed">
+</xsl:template>
+
 
 <!-- *************************************************************************************** -->
 <!-- Index through lights elements -->
@@ -116,7 +140,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
             <th>Comment</th>
         </tr>
         <!-- index through individual light elements -->
-        <xsl:apply-templates/>
+        <xsl:apply-templates select="light"/>
     </table>
 </xsl:template>
 
@@ -165,7 +189,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- each one becomes a separate table       -->
 <xsl:template match="layout-config/signalmastlogics">
 <h2>Signal Mast Logics</h2>
-Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
+Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
     <!-- index through individual signalmastlogic elements -->
     <xsl:call-template name="oneSML"/>
 </xsl:template>
@@ -350,7 +374,11 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 <xsl:when test="( @todir = 16 )" >North</xsl:when>
                                 <xsl:when test="( @todir = 32 )" >South</xsl:when>
                                 <xsl:when test="( @todir = 64 )" >East</xsl:when>
+                                <xsl:when test="( @todir = 80 )" >Northeast</xsl:when>
+                                <xsl:when test="( @todir = 96 )" >Southeast</xsl:when>
                                 <xsl:when test="( @todir = 128 )" >West</xsl:when>
+                                <xsl:when test="( @todir = 144 )" >Northwest</xsl:when>
+                                <xsl:when test="( @todir = 160 )" >Southwest</xsl:when>
                                 <xsl:when test="( @todir = 256 )" >CW</xsl:when>
                                 <xsl:when test="( @todir = 512 )" >CCW</xsl:when>
                                 <xsl:when test="( @todir = 1024 )" >Left</xsl:when>
@@ -366,7 +394,11 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 <xsl:when test="( @fromdir = 16 )" >North</xsl:when>
                                 <xsl:when test="( @fromdir = 32 )" >South</xsl:when>
                                 <xsl:when test="( @fromdir = 64 )" >East</xsl:when>
+                                <xsl:when test="( @fromdir = 80 )" >Northeast</xsl:when>
+                                <xsl:when test="( @fromdir = 96 )" >Southeast</xsl:when>
                                 <xsl:when test="( @fromdir = 128 )" >West</xsl:when>
+                                <xsl:when test="( @fromdir = 144 )" >Northwest</xsl:when>
+                                <xsl:when test="( @fromdir = 160 )" >Southwest</xsl:when>
                                 <xsl:when test="( @fromdir = 256 )" >CW</xsl:when>
                                 <xsl:when test="( @fromdir = 512 )" >CCW</xsl:when>
                                 <xsl:when test="( @fromdir = 1024 )" >Left</xsl:when>
@@ -401,50 +433,51 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 <!-- Index through ctcdata elements -->
 <xsl:template match="layout-config/ctcdata">
     <h2>CTC Data</h2>
-
-    <h3>CTC Properties</h3>
+    <h3>Ctc Properties</h3>
     <table border="1">
-      <tr>
-        <th>Type</th>
-        <th>Value</th>
-      </tr>
-      <!-- index through individual elements -->
-      <xsl:for-each select="./ctcProperties/*">
         <tr>
-          <td><xsl:value-of select="local-name()"/></td>
-          <td><xsl:value-of select="."/></td>
+            <th>Type</th>
+            <th>Value</th>
         </tr>
-      </xsl:for-each>
+    <!-- index through individual elements -->
+    <xsl:for-each select="./ctcProperties/*">
+        <tr><td><xsl:value-of select="local-name()"/></td>
+            <td><xsl:value-of select="."/></td> 
+        </tr>
+    </xsl:for-each>
     </table>
-
-    <h3>CTC Other Data</h3>
+    <h3>Ctc Other Data</h3>
     <table border="1">
-      <tr>
-        <th>Type</th>
-        <th>Value</th>
-      </tr>
-      <!-- index through individual elements -->
-      <xsl:for-each select="./ctcOtherData/*">
         <tr>
-          <td><xsl:value-of select="local-name()"/></td>
-          <td><xsl:value-of select="."/></td>
+            <th>Type</th>
+            <th>Value</th>
         </tr>
-      </xsl:for-each>
+    <!-- index through individual elements -->
+    <xsl:for-each select="./ctcOtherData/*">
+        <tr><td><xsl:value-of select="local-name()"/></td>
+            <td><xsl:value-of select="."/></td> 
+        </tr>
+    </xsl:for-each>
     </table>
-
-    <h3>CTC OS Sections:</h3>
+    <h3>Ctc Code Buttons</h3>
     <table border="1">
-      <tr><th>Switch #</th><th>Signal #</th><th>Column #</th><th>Code Button</th><th>Occupancy Sensor</th></tr>
-      <xsl:for-each select="ctcCodeButtonData">
         <tr>
-          <td style="text-align: center"><xsl:value-of select="SwitchNumber" /></td>
-          <td style="text-align: center"><xsl:value-of select="SignalEtcNumber" /></td>
-          <td style="text-align: center"><xsl:value-of select="GUIColumnNumber" /></td>
-          <td style="text-align: center"><xsl:value-of select="CodeButtonInternalSensor" /></td>
-          <td style="text-align: center"><xsl:value-of select="OSSectionOccupiedExternalSensor" /></td>
+            <th>Switch<br/>Number</th>
+            <th>Signal Etc<br/>Number</th>
+            <th>GUI Column<br/>Number</th>
+            <th>Code Button<br/>Internal Sensor</th>
+            <th>OS Section Occupied<br/>External Sensor</th>
         </tr>
-      </xsl:for-each>
-    </table>
+    <!-- index through individual elements -->
+       <xsl:for-each select="./ctcCodeButtonData">
+        <tr><td><xsl:value-of select="./SwitchNumber"/></td>
+            <td><xsl:value-of select="./SignalEtcNumber"/></td>
+            <td><xsl:value-of select="./GUIColumnNumber"/></td>
+            <td><xsl:value-of select="./CodeButtonInternalSensor"/></td>
+            <td><xsl:value-of select="./OSSectionOccupiedExternalSensor"/></td> 
+        </tr>
+    </xsl:for-each>
+     </table>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -507,7 +540,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
         <xsl:param name="name"/>
     <!-- index through individual conditional elements, looking for match -->
     <xsl:for-each select="/layout-config/conditionals/conditional">
-    <!-- BUG 2022-02-15: if logix system name has embedded lower case letters, next statement always fails
+    <!-- BUG 2022-02-15: if logix system name has embedded lower case letters, next statement always fails 
 		<xsl:if test='( @systemName = translate($name,$lcletters,$ucletters) )' >  -->
 		<xsl:if test='( @systemName = $name )' >
 		<!-- here have found correct conditional -->
@@ -812,7 +845,7 @@ value="<xsl:value-of select="@dataString"/>"
     transition time to <xsl:value-of select="@data"/> fast seconds
   </xsl:when>
   <xsl:when test="( @type = 29 )" >
-    Control audio:
+    Control audio: 
     <xsl:if test='@option != " "'> option= "<xsl:value-of select="@option"/>"</xsl:if>
     <xsl:if test='@systemName != " "'> systemName= "<xsl:value-of select="@systemName"/>"</xsl:if>
     <xsl:if test='@data != " "'> data= "<xsl:value-of select="@data"/>"</xsl:if>
@@ -861,9 +894,9 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:if test="( @enabled = 'no'  )"> [NOT Enabled]</xsl:if>
 </h2>
     <xsl:for-each select="ConditionalNGs/systemName">
-        <xsl:call-template name="oneConditionalNG">
+        <xsl:call-template name="oneConditionalNG"> 
                 <xsl:with-param name="name" select="."/>
-        </xsl:call-template>
+        </xsl:call-template>                                                                                     
     </xsl:for-each>
 </xsl:template>
 
@@ -873,9 +906,9 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:param name="name"/>
     <!-- index through individual conditional elements, looking for match -->
     <xsl:for-each select="/layout-config/LogixNGConditionalNGs/ConditionalNG">
-		<xsl:if test='( systemName = $name )' >
+		<xsl:if test='( systemName = $name )' >   
             <!-- here have found correct conditional -->
-            <h3>ConditionalNG
+            <h3>ConditionalNG 
               <xsl:value-of select="systemName"/>
               <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
               <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
@@ -893,7 +926,7 @@ value="<xsl:value-of select="@dataString"/>"
               <td><xsl:value-of select="systemName"/></td>
               <!-- Find type of action -->
               <xsl:call-template name="oneNGDigitalActionWithComment">
-                    <xsl:with-param name="systemname" select="systemName"/>
+                    <xsl:with-param name="systemname" select="systemName"/> 
               </xsl:call-template>
              </tr>
             </xsl:for-each>
@@ -922,7 +955,7 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:value-of select="."/>
         <br/>
     </xsl:for-each>
-
+    
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -938,10 +971,10 @@ value="<xsl:value-of select="@dataString"/>"
     <!-- index through individual elements -->
         <xsl:for-each select="Many/Socket">
         <tr>
-            <td><xsl:value-of select="socketName"/></td>
-            <td><xsl:value-of select="systemName"/></td>
+            <td><xsl:value-of select="socketName"/></td> 
+            <td><xsl:value-of select="systemName"/></td> 
             <td><xsl:call-template name="oneNGDigitalAction">
-                  <xsl:with-param name="systemname" select="systemName"/>
+                  <xsl:with-param name="systemname" select="systemName"/> 
             </xsl:call-template></td>
             <td><xsl:call-template name="oneNGDigitalExpression">
                   <xsl:with-param name="systemname" select="systemName"/>
@@ -950,7 +983,7 @@ value="<xsl:value-of select="@dataString"/>"
         </xsl:for-each>
     </table>
 </xsl:template>
-
+ 
 <!-- ********************************************* -->
 <xsl:template name="oneNGDigitalAction">
         <xsl:param name="systemname"/>
@@ -995,12 +1028,12 @@ value="<xsl:value-of select="@dataString"/>"
     <!-- index through individual elements -->
     <xsl:for-each select="./*">
         <tr><td><xsl:value-of select="local-name()"/></td>
-            <td><xsl:value-of select="systemName"/></td>
-            <td><xsl:value-of select="./sensor"/></td>
-            <td><xsl:value-of select="./turnout"/></td>
-            <td><xsl:value-of select="./light"/></td>
-            <td><xsl:value-of select="./memory"/></td>
-            <td><xsl:value-of select="./signalMast"/></td>
+            <td><xsl:value-of select="systemName"/></td> 
+            <td><xsl:value-of select="./sensor"/></td> 
+            <td><xsl:value-of select="./turnout"/></td> 
+            <td><xsl:value-of select="./light"/></td> 
+            <td><xsl:value-of select="./memory"/></td> 
+            <td><xsl:value-of select="./signalMast"/></td> 
             <xsl:if test="string-length(comment)!=0" > <td><xsl:value-of select="comment"/></td></xsl:if>
         </tr>
 
@@ -1030,12 +1063,12 @@ value="<xsl:value-of select="@dataString"/>"
     <xsl:for-each select="./*">
         <tr><td><xsl:value-of select="local-name()"/></td>
             <td><xsl:value-of select="systemName"/></td>
-            <td><xsl:value-of select="./sensor"/></td>
-            <td><xsl:value-of select="./turnout"/></td>
-            <td><xsl:value-of select="./light"/></td>
-            <td><xsl:value-of select="./IfSocket/systemName"/></td>
-            <td><xsl:value-of select="./ThenSocket/systemName"/></td>
-            <td><xsl:value-of select="./ElseSocket/systemName"/></td>
+            <td><xsl:value-of select="./sensor"/></td> 
+            <td><xsl:value-of select="./turnout"/></td> 
+            <td><xsl:value-of select="./light"/></td> 
+            <td><xsl:value-of select="./IfSocket/systemName"/></td> 
+            <td><xsl:value-of select="./ThenSocket/systemName"/></td> 
+            <td><xsl:value-of select="./ElseSocket/systemName"/></td> 
             <xsl:if test="string-length(comment)!=0" > <td><xsl:value-of select="comment"/></td></xsl:if>
         </tr>
 
@@ -1043,6 +1076,47 @@ value="<xsl:value-of select="@dataString"/>"
 
     </xsl:for-each>
     </table>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="layout-config/paneleditor">
+<h2>Panel: <xsl:value-of select="@name"/></h2>
+    <table border="1">
+    <!-- index through individual panel elements -->
+    <tr>
+      <th>Item</th><th>Name</th><th>Value/Description</th>
+    </tr>
+    <xsl:apply-templates/>
+    </table>
+
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="layout-config/LayoutEditor">
+<h2>Layout Panel: <xsl:value-of select="@name"/></h2>
+
+<h3>Track Drawing Options</h3>
+<table border="1">
+<xsl:for-each select="./layoutTrackDrawingOptions/*">
+    <tr>
+        <td><xsl:value-of select="name()"/></td>
+        <td><xsl:value-of select="."/></td>
+    </tr>
+</xsl:for-each>
+</table>
+
+<h3>Elements</h3>
+    <table border="1">
+    <!-- index through individual panel elements -->
+    <tr>
+      <th>Item</th><th>Name</th><th>Value/Description</th>
+    </tr>
+    <xsl:apply-templates/>
+    </table>
+</xsl:template>
+
+<!-- ****** layoutTrackDrawingOptions handled within Layout Editor ************************* -->
+<xsl:template match="layoutTrackDrawingOptions">
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -1114,7 +1188,7 @@ value="<xsl:value-of select="@dataString"/>"
             <xsl:if test="@distantsignal = 'true'" >
                 Distant Signal<br/></xsl:if>
             </td>
-        <td><xsl:value-of select="comment"/>
+         <td><xsl:value-of select="comment"/>
             </td>
     </tr>
 </xsl:template>
@@ -1518,60 +1592,47 @@ value="<xsl:value-of select="@dataString"/>"
 </xsl:template>
 
 <!-- *************************************************************************************** -->
-<xsl:template match="paneleditor">
-<h2>Panel: <xsl:value-of select="@name"/></h2>
-
-    <!-- index through individual panel elements -->
-    <xsl:apply-templates/>
-
-</xsl:template>
-
-<!-- *************************************************************************************** -->
-<xsl:template match="LayoutEditor">
-<h2>Layout Panel: <xsl:value-of select="@name"/></h2>
-    <!-- index through individual panel elements -->
-    <xsl:apply-templates/>
-</xsl:template>
-
-<!-- *************************************************************************************** -->
 <xsl:template match="signalheadicon">
-Signalhead Icon "<xsl:value-of select="@signalhead"/>"<br/>
+<tr><td>Signalhead Icon </td><td><xsl:value-of select="@signalhead"/></td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="signalmasticon">
-Signalmast Icon "<xsl:value-of select="@signalmast"/>"<br/>
+<tr><td>Signalmast Icon </td><td><xsl:value-of select="@signalmast"/></td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="turnouticon">
-Turnout Icon "<xsl:value-of select="@turnout"/>"<br/>
+<tr><td>Turnout Icon </td><td><xsl:value-of select="@turnout"/></td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="sensoricon">
-Sensor Icon "<xsl:value-of select="@sensor"/>"<br/>
+<tr><td>Sensor Icon </td><td><xsl:value-of select="@sensor"/></td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="positionablelabel">
-Positionable Label
+<tr><td>Positionable Label
 <xsl:choose>
-  <xsl:when test="( @text != '' )" >
-  text: "<xsl:value-of select="@text"/>"
-  </xsl:when>
+  <xsl:when test="( @text != '' )" >Text </xsl:when>
+  <xsl:when test="( icon/@url != '' )" >Icon </xsl:when>
 </xsl:choose>
+</td>
+<td></td><td>
 <xsl:choose>
-  <xsl:when test="( icon/@url != '' )" >
-  icon: <xsl:value-of select="icon/@url"/>
-  </xsl:when>
+  <xsl:when test="( @text != '' )" >"<xsl:value-of select="@text"/>"</xsl:when>
+  <xsl:when test="( icon/@url != '' )" ><xsl:value-of select="icon/@url"/></xsl:when>
 </xsl:choose>
-<br/>
+</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layoutturnout">
-Layout Turnout
+<tr><td>Layout Turnout</td>
+<td><xsl:value-of select="@ident"/> / <xsl:value-of select="@turnoutname"/></td>
+<td>
  (
 <xsl:choose>
   <xsl:when test="( @type = 1 )" >RH</xsl:when>
@@ -1582,11 +1643,9 @@ Layout Turnout
   <xsl:when test="( @type = 6 )" >LH  XOver</xsl:when>
   <xsl:when test="( @type = 7 )" >Single Slip</xsl:when>
   <xsl:when test="( @type = 8 )" >Double Slip</xsl:when>
-  <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
+  <xsl:otherwise>type="<xsl:value-of select="@type"/>"</xsl:otherwise>
 </xsl:choose>
  )
-ident="<xsl:value-of select="@ident"/>"
-turnoutname="<xsl:value-of select="@turnoutname"/>",
 <xsl:choose>
   <xsl:when test="( @blockname != '' )" >
   block: "<xsl:value-of select="@blockname"/>"
@@ -1612,26 +1671,15 @@ turnoutname="<xsl:value-of select="@turnoutname"/>",
   D to "<xsl:value-of select="@connectdname"/>"
   </xsl:when>
 </xsl:choose>
-<br/>
-</xsl:template>
-
-<!-- *************************************************************************************** -->
-<xsl:template match="layoutTrackDrawingOptions">
-Track Drawing Options:<br/>
-<table border="1">
-<xsl:for-each select="*">
-    <tr>
-        <td><xsl:value-of select="name()"/></td>
-        <td><xsl:value-of select="."/></td>
-    </tr>
-</xsl:for-each>
-</table>
-<br/>
+</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="tracksegment">
-Track Segment ident="<xsl:value-of select="@ident"/>"
+<tr><td>Track Segment</td>
+<td><xsl:value-of select="@ident"/></td>
+<td>
 <xsl:choose>
   <xsl:when test="( @blockname != '' )" >
   block: "<xsl:value-of select="@blockname"/>"
@@ -1639,13 +1687,15 @@ Track Segment ident="<xsl:value-of select="@ident"/>"
 </xsl:choose>
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@type1"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@type2"/>)
-<br/>
+</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layoutSlip">
-Layout Slip
-ident="<xsl:value-of select="@ident"/>"
+<tr><td>Layout Slip</td>
+    <td><xsl:value-of select="@ident"/></td>
+    <td>
 <xsl:choose>
   <xsl:when test="( @blockname != '' )" >
   block: "<xsl:value-of select="@blockname"/>"
@@ -1666,77 +1716,87 @@ ident="<xsl:value-of select="@ident"/>"
         <xsl:value-of select="name()"/>:<xsl:value-of select="turnout"/>,<xsl:value-of select="turnoutB"/>
     )
 </xsl:for-each>
-<br/>
+   </td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="memoryicon">
-Memory Icon memory="<xsl:value-of select="@memory"/>"
-<br/>
+<tr><td>Memory Icon </td><td><xsl:value-of select="@memory"/></td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="indicatortrackicon">
-Indicator Track Icon block="<xsl:value-of select="occupancyblock"/>"
-paths:
-<xsl:for-each select="paths/*"> "<xsl:value-of select="."/>" <xsl:text> </xsl:text></xsl:for-each>
-<br/>
+<tr><td>Indicator Track Icon</td>
+   <td></td>
+   <td>
+   block="<xsl:value-of select="occupancyblock"/>"
+   paths:
+      <xsl:for-each select="paths/*"> "<xsl:value-of select="."/>" <xsl:text> </xsl:text></xsl:for-each>
+   </td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** DUP??? -->
 <xsl:template match="indicatorturnouticon">
-Indicator Turnout Icon
+<tr><td>Indicator Turnout Icon </td>
+    <td>
 block="<xsl:value-of select="occupancyblock"/>"
 turnout="<xsl:value-of select="turnout"/>"
 paths:
 <xsl:for-each select="paths/*"> "<xsl:value-of select="."/>" <xsl:text> </xsl:text></xsl:for-each>
-<br/>
+    </td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="BlockContentsIcon">
-Block Contents Icon block="<xsl:value-of select="@blockcontents"/>"
-<br/>
+<tr><td>Block Contents Icon </td><td><xsl:value-of select="@blockcontents"/></td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="PortalIcon">
-Portal Icon
-portalName="<xsl:value-of select="@portalName"/>"
-to Block Name="<xsl:value-of select="@toBlockName"/>"
-from Block Name="<xsl:value-of select="@fromBlockName"/>"
-<br/>
+<tr><td>Portal Icon</td>
+    <td><xsl:value-of select="@portalName"/></td>
+    <td>
+        to Block Name="<xsl:value-of select="@toBlockName"/>"
+        from Block Name="<xsl:value-of select="@fromBlockName"/>"
+    </td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="positionablepoint">
-Positionable Point ident="<xsl:value-of select="@ident"/>"
+<tr><td>Positionable Point </td>
+    <td><xsl:value-of select="@ident"/></td>
+    <td>
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@text"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@text"/>)
-<br/>
+    </td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="locoicon">
-Loco icon "<xsl:value-of select="@text"/>"<br/>
+<tr><td>Loco icon </td><td><xsl:value-of select="@text"/>"</td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="LightIcon">
-Light Icon "<xsl:value-of select="@light"/>"<br/>
+<tr><td>Light Icon </td><td><xsl:value-of select="@light"/></td></tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="multisensoricon">
-Multisensor Icon
-    <xsl:for-each select="active">"<xsl:value-of select="@sensor"/>" </xsl:for-each>
-<br/>
+<tr><td>Multisensor Icon</td>
+    <td><xsl:for-each select="active">"<xsl:value-of select="@sensor"/>" </xsl:for-each></td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <!-- Display version number in header -->
 <xsl:template match="layout-config/jmriversion">
-    JMRI version # <xsl:value-of select="major"/>.<xsl:value-of select="minor"/>.<xsl:value-of select="test"/><xsl:value-of select="modifier"/>
+    JMRI version used to create this panel xml file: <xsl:value-of select="major"/>.<xsl:value-of select="minor"/>.<xsl:value-of select="test"/><xsl:value-of select="modifier"/>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
