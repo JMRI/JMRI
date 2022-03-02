@@ -207,7 +207,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem introduced in JMRI 4.99.3 that
+                prevents the function settings from being properly stored.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -501,7 +502,7 @@
 
     	<h4>Simple Signal Logic</h4>
             <ul>
-                <li></li>
+                <li>Improved XSLT web display to include sensors</li>
             </ul>
 
 	    <h4>USS CTC Logic</h4>
