@@ -1791,6 +1791,8 @@ public class FileUtilSupport extends Bean {
      * @since 2.7.2
      */
     private String pathFromPortablePath(@CheckForNull Profile profile, @Nonnull String path) {
+        // As this method is called in Log4J setup, should not
+        // contain standard logging statements.
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
                 path = path.substring(PROGRAM.length());
@@ -1832,10 +1834,9 @@ public class FileUtilSupport extends Bean {
         }
         try {
             // if path cannot be converted into a canonical path, return null
-            log.debug("Using {}", path);
             return new File(path.replace(SEPARATOR, File.separatorChar)).getCanonicalPath();
         } catch (IOException ex) {
-            log.warn("Cannot convert {} into a usable filename.", path, ex);
+            System.err.println("Cannot convert " + path + " into a usable filename. " + ex.getMessage());
             return null;
         }
     }
