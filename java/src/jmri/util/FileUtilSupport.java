@@ -955,7 +955,7 @@ public class FileUtilSupport extends Bean {
                     }
                      this.setProgramPath(loadingDir); // NOI18N
                } catch (java.io.UnsupportedEncodingException e) {
-                    System.out.println("Unsupported URL when trying to locate program directory: " + path2 );
+                    System.err.println("Unsupported URL when trying to locate program directory: " + path2 );
                     // best guess
                     this.setProgramPath("."); // NOI18N
                 }
