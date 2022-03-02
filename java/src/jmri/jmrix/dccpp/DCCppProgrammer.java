@@ -34,17 +34,17 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // response to a request to a programming request. 
     protected boolean _service_mode = false;  // TODO: Is this even meaningful for DCC++?
 
-    public DCCppProgrammer(DCCppTrafficController tc) {
+    static protected final int LISTENER_MASK = DCCppInterface.CS_INFO | DCCppInterface.COMMINFO | DCCppInterface.INTERFACE;
+
+    public DCCppProgrammer(@Nonnull DCCppTrafficController tc) {
         // error if more than one constructed?
-
         _controller = tc;
+        init();
+    }
 
+    private void init() {
         // connect to listen
-        controller().addDCCppListener(DCCppInterface.CS_INFO
-                | DCCppInterface.COMMINFO
-                | DCCppInterface.INTERFACE,
-                this);
-
+        controller().addDCCppListener(LISTENER_MASK, this);
         setMode(ProgrammingMode.DIRECTBYTEMODE);
     }
 
@@ -93,9 +93,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      */
     @Override
     public boolean getCanWrite(String addr) {
-        if (log.isDebugEnabled()) {
-            log.debug("check CV {}", addr);
-        }
+        log.debug("check CV {}", addr);
         log.debug("cs Type: {} CS Build: {}", controller().getCommandStation().getStationType(), controller().getCommandStation().getBuild());
         if (!getCanWrite()) {
             return false; // check basic implementation first
@@ -293,10 +291,14 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         notifyProgListenerEnd(temp,value,status);
     }
 
-    DCCppTrafficController _controller;
+    private final DCCppTrafficController _controller;
 
     protected DCCppTrafficController controller() {
         return _controller;
+    }
+
+    public void dispose() {
+        controller().removeDCCppListener(LISTENER_MASK, this);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppProgrammer.class);

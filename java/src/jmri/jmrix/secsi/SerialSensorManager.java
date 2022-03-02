@@ -45,11 +45,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return (SecsiSystemConnectionMemo) memo;
     }
 
-    // Free resources when no longer used
-    @Override
-    public void dispose() {
-    }
-
     /**
      * {@inheritDoc}
      * <p>

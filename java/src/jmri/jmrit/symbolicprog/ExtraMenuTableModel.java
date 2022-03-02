@@ -71,6 +71,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
     private boolean hasOpsModeFlag = false;
 
     protected void flagIfOpsMode(String mode) {
+        log.trace(" flagIfOpsMode {}", mode);
         if (mode.startsWith("OPS")) {
             hasOpsModeFlag = true;
         }

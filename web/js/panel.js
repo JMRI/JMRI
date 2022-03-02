@@ -581,7 +581,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
                             $widget['icon' + INCONSISTENT] = $(this).find('inconsistent').attr('url');
                             $widget['icon5'] = $(this).find('upperWestToLowerEast').attr('url');
-                            $widget['icon7'] = $widget['icon' + INCONSISTENT]; // state 7 loaded later
+                            $widget['icon7'] = $widget['icon' + INCONSISTENT]; // state 7 loaded later where supported
                             $widget['icon9'] = $(this).find('lowerWestToLowerEast').attr('url');
                             $widget['icon11'] = $(this).find('lowerWestToUpperEast').attr('url');
 
@@ -1374,7 +1374,6 @@ function $handleClick(e) {
         });
     } else if (this.className.startsWith('slipturnouticon')) {
         // special handling of slipturnouticon, which has (at least) 2 turnouts
-        //log.warn("handleClick for " + this.id + " under development");
         var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget); // determine next state from current state
         var $turnoutWestNewState = 0;
@@ -1794,7 +1793,7 @@ var $setWidgetState = function($id, $newState, data) {
 
     // if undefined widget this must be a LE slip or a PE slipTurnoutIcon
     if (isUndefined($widget)) {
-        // does it have "e" or "w" suffix? it';'s a slipTurnoutIcon
+        // does it have "e" or "w" suffix? it's a slipTurnoutIcon
         if ($id.endsWith("e") || $id.endsWith("w")) {
             if (jmri_logging) {
                 log.log("$setWidgetState STI " + $id + " to state " + $newState);
@@ -1844,15 +1843,20 @@ var $setWidgetState = function($id, $newState, data) {
                 $widget.slipState = INCONSISTENT;
             } else {
                 // fix some special sequences, as in java/src/jmri/jmrit/display/SlipTurnoutIcon.java#displayState(state)
-                $widget.slipState = ($widget.slipStateEast << 1) | ($widget.slipStateWest >> 1) | 0x01;
+                if ($widget.turnoutType == "threeWay" && $widget.slipStateWest == THROWN && $widget.slipStateEast == CLOSED) {
+                    // ignore slipStateEast CLOSED (slipstate 7), use slipstate 11 instead, like Panel SlipTurnoutIcon.java
+                    $widget.slipState = (THROWN << 1) | ($widget.slipStateWest >> 1) | 0x01;
+                } else {
+                    $widget.slipState = ($widget.slipStateEast << 1) | ($widget.slipStateWest >> 1) | 0x01;
+                }
             }
-            //log.log("#### $setWidgetState(slipturnouticon " + $slipID + ", " + $widget.slipState +
-            //    "); (was " + $widget.slipState + ")");
+            log.log("#### $setWidgetState(slipturnouticon " + $slipID + ", " + $widget.slipState +
+                "); (was " + $widget.slipState + ")");
             $newState = $widget.slipState;
             // is overwritten by $newState at end of method, so temp only to pass next if-statement and redraw correctly
             $id = $slipID;
 
-        // does it have "l" or "r" suffix? it's a slip
+        // does it have "l" or "r" suffix? it's an LE slip
         } else if ($id.endsWith("l") || $id.endsWith("r")) {
             if (jmri_logging) {
                 log.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);

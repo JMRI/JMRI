@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable-no-check.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-Manual_GUIDON</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+
+ <appearances>
+    <appearance>
+      <aspectname>GuidonMF</aspectname>
+      <show>red</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/GuidonMF.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/GuidonMF.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/GuidonMF.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>GuidonMO</aspectname>
+      <show>green</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/GuidonMO.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/GuidonMO.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/GuidonMO.gif</imagelink>
+    </appearance>
+
+ </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>GuidonMF</aspect>
+    </danger>
+    <permissive>
+      <aspect>GuidonMO</aspect>
+    </permissive>
+    <held>
+      <aspect>GuidonMO</aspect>
+    </held>
+    <dark>
+      <aspect>GuidonMO</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>GuidonMF</advancedAspect>
+      <ourAspect>Disque</ourAspect>
+    </aspectMapping>
+    </aspectMappings>
+</appearancetable>

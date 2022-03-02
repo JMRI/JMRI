@@ -1458,7 +1458,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 LocoFile.loadVariableModel(mRootElement.getChild("locomotive"), varModel);
             }
 
-            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, getDecoderFamily());
+            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, getManufacturerID(), getDecoderFamily());
         } catch (Exception ex) {
             log.error("Error reading roster entry", ex);
             try {

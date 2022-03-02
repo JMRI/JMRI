@@ -507,12 +507,18 @@
         <li>Martin Jahner, who fixed the constant checkboxen and built a replacement library for
         Mac OS X</li>
 
+        <li>Jean-Christophe Janiszewski, <!-- John-Christopher95 -->
+        who created the SNCF signal system.
+        </li>
+
         <li>Jay Janzen, who debugged a RobotThrottle problem, and provided improvements for
         Dispatcher, including a fix to allow dispatcher to allocate to the end block.</li>
 
         <li>Lionel Jeanson, who added images to the roster, updated the throttle to add preferences
         for displaying them, cleaned up some code problems in the throttle, and created
         Jynstruments for improving the GUI</li>
+
+        <li>Pete Johnson, who provided instructions for use of Operations</li>
 
         <li>Richard Johnson, who provided info on DCC Concepts decoders</li>
 
@@ -529,7 +535,8 @@
         decoder.</li>
 
         <li>Klaus Killinger, <!-- klk32003 -->
-         who improved the sound support and has provided multiple sound projects</li>
+         who improved the sound support, has provided multiple sound projects,
+         and helped with Intellibox development.</li>
 
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
@@ -732,6 +739,8 @@
 
         <li>Pål <-paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
+
+        <li>Gopal Patnaik helped with Intellibox development.</li>
 
         <li>Howard G. Penny provided info on the NCE D14SR decoder, then went on to become an
         active developer, including providing the code for indexed CVs (ala QSI), better support of

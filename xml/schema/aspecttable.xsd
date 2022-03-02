@@ -31,7 +31,7 @@
 
     <xs:annotation>
         <xs:documentation>
-          Top level elements without child elements become properties of the Signal System name bean.  
+          Top level elements without child elements become properties of the Signal System name bean.
           We therefore allow unlimited extension of those at the end of the aspecttable element.
           Only the first of multiple occurrances is kept as a property.
         </xs:documentation>
@@ -46,20 +46,20 @@
 
         <xs:element name="date" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="reference" minOccurs="0" maxOccurs="unbounded"></xs:element>
-     
+
         <xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" >
           <xs:annotation><xs:documentation>
           DocBook element(s) providing copyright information in standard form.
           Must be present.
           </xs:documentation></xs:annotation>
         </xs:element>
-        
+
         <xs:element ref="docbook:authorgroup" minOccurs="1" maxOccurs="unbounded" >
           <xs:annotation><xs:documentation>
           DocBook element(s) describing the authors in standard form
           </xs:documentation></xs:annotation>
         </xs:element>
-        
+
         <xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" >
           <xs:annotation><xs:documentation>
           DocBook element(s) describing the revision history in standard form
@@ -72,24 +72,24 @@
         </xs:documentation></xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              
+
               <xs:element name="aspect" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:annotation><xs:documentation>
-                  Top level elements without child elements become properties of the aspect.  
+                  Top level elements without child elements become properties of the aspect.
                   We therefore allow unlimited extension of those at the end of the aspect element.
                   Only the first of multiple occurrances is kept as a property.
                   </xs:documentation></xs:annotation>
-                  
+
                   <xs:sequence>
-                    
+
                     <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1">
                       <xs:annotation><xs:documentation>
-                      This must match zero or one "aspectname" element 
+                      This must match zero or one "aspectname" element
                       in each appearance definition file.
                       </xs:documentation></xs:annotation>
                     </xs:element>
-                    
+
                     <xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
                     <xs:element name="rule" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
                     <xs:element name="indication" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
@@ -108,6 +108,7 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
+                    <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="dccAspect" minOccurs="0" maxOccurs="1">
                       <xs:simpleType>
                         <xs:restriction base="xs:integer">
@@ -116,7 +117,7 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    
+
                     <!-- next line causes a "Unique Particle Attribution" error -->
                     <!-- <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/> -->
 
@@ -125,7 +126,7 @@
               </xs:element>
             </xs:sequence>
           </xs:complexType>
-          
+
         </xs:element>
 
         <xs:element name="imagetypes" minOccurs="0" maxOccurs="1">
@@ -142,7 +143,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-                
+
         <xs:element name="appearancefiles" minOccurs="1" maxOccurs="1">
         <xs:annotation><xs:documentation>
         ******** Table of appearance XML filename **********
@@ -159,23 +160,23 @@
         </xs:element>
 
       <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
-      
+
       </xs:sequence>
     </xs:complexType>
-    
+
     <!-- aspect names must be unique -->
     <xs:key name="uniqueAspectName">
         <xs:annotation><xs:documentation>The uniqueAspectName check constrains each aspect name value to be unique. </xs:documentation></xs:annotation>
         <xs:selector xpath="./aspects/aspect/name"/>
         <xs:field xpath="."/>
       </xs:key>
-  
+
     <!-- appearance files must be unique -->
     <xs:key name="uniqueAppearanceFile">
         <xs:annotation><xs:documentation>The uniqueAppearanceFile check constrains each appearance file reference to be unique. </xs:documentation></xs:annotation>
         <xs:selector xpath="./appearancefiles/appearancefile"/>
         <xs:field xpath="@href"/>
     </xs:key>
-  
+
   </xs:element>
 </xs:schema>

@@ -47,6 +47,13 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
+    COMMAND_STATION_DCS210PLUS("DCS210+ (Advanced Command Station)",  // NOI18N
+            ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            "LnThrottleManager", "SlotManager",  // NOI18N
+            IdleSupport.SUPPORTS_OPC_IDLE,
+            MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
+            LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
     COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
             ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
@@ -150,6 +157,13 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT),
     COMMAND_STATION_USB_DCS240_ALONE("DCS240 USB interface as standalone programmer", // NOI18N
+            ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            "LnThrottleManager", "SlotManager",  // NOI18N
+            IdleSupport.NO_OPC_IDLE_SUPPORT,
+            MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
+            LocoResetSupport.NO_LOCO_RESET_SUPPORT),
+    COMMAND_STATION_USB_DCS210Plus_ALONE("DCS210+ USB interface as standalone programmer", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
             ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N

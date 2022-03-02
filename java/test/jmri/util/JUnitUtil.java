@@ -1437,6 +1437,7 @@ public class JUnitUtil {
         "WindowMonitor-DispatchThread",
         "RMI Reaper",
         "RMI TCP Accept",
+        "RMI GC Daemon",
         "TimerQueue",
         "Java Sound Event Dispatcher",
         "Aqua L&F",                         // macOS
@@ -1494,6 +1495,7 @@ public class JUnitUtil {
                  || name.startsWith("ForkJoinPool.commonPool-worker")
                  || name.startsWith("SocketListener(")
                  || name.startsWith("Libgraal")
+                 || name.startsWith("LibGraal")
                  || name.startsWith("TruffleCompilerThread-")
                  || ( name.startsWith("pool-") && name.endsWith("thread-1") )
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts

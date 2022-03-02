@@ -941,6 +941,7 @@ public class FileUtilSupport extends Bean {
                 // find from jar or class files location
                 String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
                 String path2 = (new File(path1)).getParentFile().getPath();
+                path2 = path2.replaceAll("\\+", "%2B"); // convert + chars to UTF-8 to get through the decode
                 try {
                     String loadingDir = java.net.URLDecoder.decode(path2, "UTF-8");
                     log.trace("Program location from Classloader: {}", loadingDir);

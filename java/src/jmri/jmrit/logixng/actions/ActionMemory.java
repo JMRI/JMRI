@@ -4,7 +4,6 @@ import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -12,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -32,33 +32,14 @@ public class ActionMemory extends AbstractDigitalAction
     private NamedBeanHandle<Memory> _otherMemoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.SetToString;
     private String _otherConstantValue = "";
-//    private String _otherTableCell = "";
     private String _otherLocalVariable = "";
     private String _otherFormula = "";
     private ExpressionNode _otherExpressionNode;
     private boolean _listenToMemory = true;
-//    private boolean _listenToMemory = false;
 
-    private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<NamedTable> _tableHandle;
-    private String _tableNameReference = "";
-    private String _tableNameLocalVariable = "";
-    private String _tableNameFormula = "";
-    private ExpressionNode _tableNameExpressionNode;
+    private final LogixNG_SelectTable _selectTable =
+            new LogixNG_SelectTable(this, () -> {return _memoryOperation == MemoryOperation.CopyTableCellToMemory;});
 
-    private NamedBeanAddressing _tableRowAddressing = NamedBeanAddressing.Direct;
-    private String _tableRowName = "";
-    private String _tableRowReference = "";
-    private String _tableRowLocalVariable = "";
-    private String _tableRowFormula = "";
-    private ExpressionNode _tableRowExpressionNode;
-
-    private NamedBeanAddressing _tableColumnAddressing = NamedBeanAddressing.Direct;
-    private String _tableColumnName = "";
-    private String _tableColumnReference = "";
-    private String _tableColumnLocalVariable = "";
-    private String _tableColumnFormula = "";
-    private ExpressionNode _tableColumnExpressionNode;
 
     public ActionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -85,21 +66,7 @@ public class ActionMemory extends AbstractDigitalAction
         copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setOtherFormula(_otherFormula);
         copy.setListenToMemory(_listenToMemory);
-        copy.setTableNameAddressing(_tableNameAddressing);
-        if (_tableHandle != null) copy.setTable(_tableHandle);
-        copy.setTableNameLocalVariable(_tableNameLocalVariable);
-        copy.setTableNameReference(_tableNameReference);
-        copy.setTableNameFormula(_tableNameFormula);
-        copy.setTableRowAddressing(_tableRowAddressing);
-        copy.setTableRowName(_tableRowName);
-        copy.setTableRowLocalVariable(_tableRowLocalVariable);
-        copy.setTableRowReference(_tableRowReference);
-        copy.setTableRowFormula(_tableRowFormula);
-        copy.setTableColumnAddressing(_tableColumnAddressing);
-        copy.setTableColumnName(_tableColumnName);
-        copy.setTableColumnLocalVariable(_tableColumnLocalVariable);
-        copy.setTableColumnReference(_tableColumnReference);
-        copy.setTableColumnFormula(_tableColumnFormula);
+        _selectTable.copy(copy._selectTable);
         return manager.registerAction(copy);
     }
 
@@ -243,6 +210,10 @@ public class ActionMemory extends AbstractDigitalAction
         return _otherMemoryHandle;
     }
 
+    public LogixNG_SelectTable getSelectTable() {
+        return _selectTable;
+    }
+
     public void setListenToMemory(boolean listenToMemory) {
         this._listenToMemory = listenToMemory;
     }
@@ -250,39 +221,7 @@ public class ActionMemory extends AbstractDigitalAction
     public boolean getListenToMemory() {
         return _listenToMemory;
     }
-/*
-    // Table tab
-    public void setOtherTableCell(@Nonnull String tableCell) {
-        if ((! tableCell.isEmpty()) && (! ReferenceUtil.isReference(tableCell))) {
-            throw new IllegalArgumentException("The table reference \"" + tableCell + "\" is not a valid reference");
-        }
-        _otherTableCell = tableCell;
-    }
 
-    public String getOtherTableCell() {
-        return _otherTableCell;
-    }
-
-    /*.*
-     * Convert a table reference between direct table mode "table[row, col]"" and reference
-     * table mode "{table[row, col]}".
-     * @param string The current value.
-     * @param toReference If true, return reference table mode, false for direct table mode.
-     * @return the desired mode format.
-     *./
-    public static String convertTableReference(String string, boolean toReference) {
-        String tableString = string == null ? "" : string.trim();
-        boolean referenceFormat = ReferenceUtil.isReference(tableString);
-
-        if (toReference) {
-            if (referenceFormat) return tableString;
-            return "{" + tableString + "}";
-        }
-
-        if (! referenceFormat) return tableString;
-        return tableString.isEmpty() ? "" : tableString.substring(1, tableString.length() - 1);
-    }
-*/
     // Variable tab
     public void setOtherLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setOtherLocalVariable");
@@ -306,225 +245,11 @@ public class ActionMemory extends AbstractDigitalAction
     private void parseOtherFormula() throws ParserException {
         if (_memoryOperation == MemoryOperation.CalculateFormula) {
             Map<String, Variable> variables = new HashMap<>();
-/*
-            SymbolTable symbolTable =
-                    InstanceManager.getDefault(LogixNG_Manager.class)
-                            .getSymbolTable();
-
-            if (symbolTable == null && 1==1) return;    // Why does this happens?
-//            if (symbolTable == null && 1==1) return;    // Nothing we can do if we don't have a symbol table
-            if (symbolTable == null) throw new RuntimeException("Daniel AA");
-            if (symbolTable.getSymbols() == null) throw new RuntimeException("Daniel BB");
-            if (symbolTable.getSymbols().values() == null) throw new RuntimeException("Daniel BB");
-
-            for (SymbolTable.Symbol symbol : symbolTable.getSymbols().values()) {
-                variables.put(symbol.getName(),
-                        new LocalVariableExpressionVariable(symbol.getName()));
-            }
-*/
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _otherExpressionNode = parser.parseExpression(_otherFormula);
         } else {
             _otherExpressionNode = null;
         }
-    }
-
-
-    public void setTableNameAddressing(@Nonnull NamedBeanAddressing addressing) {
-        this._tableNameAddressing = addressing;
-    }
-
-    public NamedBeanAddressing getTableNameAddressing() {
-        return _tableNameAddressing;
-    }
-
-    public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
-        assertListenersAreNotRegistered(log, "setTable");
-        _tableHandle = handle;
-        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setTable(@Nonnull NamedTable table) {
-        assertListenersAreNotRegistered(log, "setTable");
-        setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(table.getDisplayName(), table));
-    }
-
-    public void removeTable() {
-        assertListenersAreNotRegistered(log, "setTable");
-        if (_tableHandle != null) {
-            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
-            _tableHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<NamedTable> getTable() {
-        return _tableHandle;
-    }
-
-    public void setTableNameReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _tableNameReference = reference;
-    }
-
-    public String getTableNameReference() {
-        return _tableNameReference;
-    }
-
-    public void setTableNameLocalVariable(@Nonnull String localVariable) {
-        _tableNameLocalVariable = localVariable;
-    }
-
-    public String getTableNameLocalVariable() {
-        return _tableNameLocalVariable;
-    }
-
-    public void setTableNameFormula(@Nonnull String formula) throws ParserException {
-        _tableNameFormula = formula;
-        parseTableNameFormula();
-    }
-
-    public String getTableNameFormula() {
-        return _tableNameFormula;
-    }
-
-    private void parseTableNameFormula() throws ParserException {
-        if (_tableNameAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _tableNameExpressionNode = parser.parseExpression(_tableNameFormula);
-        } else {
-            _tableNameExpressionNode = null;
-        }
-    }
-
-    public void setTableRowAddressing(@Nonnull NamedBeanAddressing addressing) {
-        this._tableRowAddressing = addressing;
-    }
-
-    public NamedBeanAddressing getTableRowAddressing() {
-        return _tableRowAddressing;
-    }
-
-    /**
-     * Get name of row
-     * @return name
-     */
-    public String getTableRowName() {
-        return _tableRowName;
-    }
-
-    /**
-     * Set name of column
-     * @param rowName name
-     */
-    public void setTableRowName(@Nonnull String rowName) {
-        _tableRowName = rowName;
-    }
-
-    public void setTableRowReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _tableRowReference = reference;
-    }
-
-    public String getTableRowReference() {
-        return _tableRowReference;
-    }
-
-    public void setTableRowLocalVariable(@Nonnull String localVariable) {
-        _tableRowLocalVariable = localVariable;
-    }
-
-    public String getTableRowLocalVariable() {
-        return _tableRowLocalVariable;
-    }
-
-    public void setTableRowFormula(@Nonnull String formula) throws ParserException {
-        _tableRowFormula = formula;
-        parseTableRowFormula();
-    }
-
-    public String getTableRowFormula() {
-        return _tableRowFormula;
-    }
-
-    private void parseTableRowFormula() throws ParserException {
-        if (_tableRowAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _tableRowExpressionNode = parser.parseExpression(_tableRowFormula);
-        } else {
-            _tableRowExpressionNode = null;
-        }
-    }
-
-    public void setTableColumnAddressing(@Nonnull NamedBeanAddressing addressing) {
-        this._tableColumnAddressing = addressing;
-    }
-
-    public NamedBeanAddressing getTableColumnAddressing() {
-        return _tableColumnAddressing;
-    }
-
-    public void setTableColumnReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _tableColumnReference = reference;
-    }
-
-    public String getTableColumnReference() {
-        return _tableColumnReference;
-    }
-
-    public void setTableColumnLocalVariable(@Nonnull String localVariable) {
-        _tableColumnLocalVariable = localVariable;
-    }
-
-    public String getTableColumnLocalVariable() {
-        return _tableColumnLocalVariable;
-    }
-
-    public void setTableColumnFormula(@Nonnull String formula) throws ParserException {
-        _tableColumnFormula = formula;
-        parseTableColumnFormula();
-    }
-
-    public String getTableColumnFormula() {
-        return _tableColumnFormula;
-    }
-
-    private void parseTableColumnFormula() throws ParserException {
-        if (_tableColumnAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _tableColumnExpressionNode = parser.parseExpression(_tableColumnFormula);
-        } else {
-            _tableColumnExpressionNode = null;
-        }
-    }
-
-    /**
-     * Get name of column
-     * @return name
-     */
-    public String getTableColumnName() {
-        return _tableColumnName;
-    }
-
-    /**
-     * Set name of column
-     * @param columnName name
-     */
-    public void setTableColumnName(@Nonnull String columnName) {
-        _tableColumnName = columnName;
     }
 
     private void addRemoveVetoListener() {
@@ -540,8 +265,14 @@ public class ActionMemory extends AbstractDigitalAction
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 boolean doVeto = false;
-                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) doVeto = true;
-                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) doVeto = true;
+                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if ((_memoryOperation == MemoryOperation.CopyMemoryToMemory)
+                        && (_otherMemoryHandle != null)
+                        && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
+                    doVeto = true;
+                }
                 if (doVeto) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("ActionMemory_MemoryInUseMemoryActionVeto", getDisplayName()), e); // NOI18N
@@ -554,100 +285,6 @@ public class ActionMemory extends AbstractDigitalAction
     @Override
     public Category getCategory() {
         return Category.ITEM;
-    }
-
-    private NamedTable getTableBean(ConditionalNG conditionalNG) throws JmriException {
-
-        if (_tableNameAddressing == NamedBeanAddressing.Direct) {
-            return _tableHandle != null ? _tableHandle.getBean() : null;
-        } else {
-            String name;
-
-            switch (_tableNameAddressing) {
-                case Reference:
-                    name = ReferenceUtil.getReference(
-                            conditionalNG.getSymbolTable(), _tableColumnReference);
-                    break;
-
-                case LocalVariable:
-                    SymbolTable symbolTable = conditionalNG.getSymbolTable();
-                    name = TypeConversionUtil
-                            .convertToString(symbolTable.getValue(_tableColumnLocalVariable), false);
-                    break;
-
-                case Formula:
-                    name = _tableNameExpressionNode  != null
-                            ? TypeConversionUtil.convertToString(
-                                    _tableNameExpressionNode .calculate(
-                                            conditionalNG.getSymbolTable()), false)
-                            : null;
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("invalid _addressing state: " + _tableColumnAddressing.name());
-            }
-
-            NamedTable table = null;
-            if (name != null) {
-                table = InstanceManager.getDefault(NamedTableManager.class)
-                        .getNamedBean(name);
-            }
-            return table;
-        }
-    }
-
-    private String getTableRow(ConditionalNG conditionalNG) throws JmriException {
-
-        switch (_tableRowAddressing) {
-            case Direct:
-                return _tableRowName;
-
-            case Reference:
-                return ReferenceUtil.getReference(
-                        conditionalNG.getSymbolTable(), _tableRowReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = conditionalNG.getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_tableRowLocalVariable), false);
-
-            case Formula:
-                return _tableRowExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _tableRowExpressionNode.calculate(
-                                        conditionalNG.getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _tableRowAddressing.name());
-        }
-    }
-
-    private String getTableColumn(ConditionalNG conditionalNG) throws JmriException {
-
-        switch (_tableColumnAddressing) {
-            case Direct:
-                return _tableColumnName;
-
-            case Reference:
-                return ReferenceUtil.getReference(
-                        conditionalNG.getSymbolTable(), _tableColumnReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = conditionalNG.getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_tableColumnLocalVariable), false);
-
-            case Formula:
-                return _tableColumnExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _tableColumnExpressionNode.calculate(
-                                        conditionalNG.getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _tableColumnAddressing.name());
-        }
     }
 
     /** {@inheritDoc} */
@@ -713,8 +350,7 @@ public class ActionMemory extends AbstractDigitalAction
                     break;
 
                 case CopyTableCellToMemory:
-                    Object value = getTableBean(conditionalNG).getCell(
-                            getTableRow(conditionalNG), getTableColumn(conditionalNG));
+                    Object value = _selectTable.evaluateTableData(getConditionalNG());
                     memory.setValue(value);
                     break;
 
@@ -771,87 +407,6 @@ public class ActionMemory extends AbstractDigitalAction
         return Bundle.getMessage(locale, "ActionMemory_Short");
     }
 
-    private String getTableNameDescription(Locale locale) {
-        String namedBean;
-        switch (_tableNameAddressing) {
-            case Direct:
-                String tableName;
-                if (_tableHandle != null) {
-                    tableName = _tableHandle.getBean().getDisplayName();
-                } else {
-                    tableName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", tableName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _tableNameReference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _tableNameLocalVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _tableNameFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _tableNameAddressing: " + _tableNameAddressing.name());
-        }
-        return namedBean;
-    }
-
-    private String getTableRowDescription(Locale locale) {
-        String row;
-        switch (_tableRowAddressing) {
-            case Direct:
-                row = Bundle.getMessage(locale, "AddressByDirect", _tableRowName);
-                break;
-
-            case Reference:
-                row = Bundle.getMessage(locale, "AddressByReference", _tableRowReference);
-                break;
-
-            case LocalVariable:
-                row = Bundle.getMessage(locale, "AddressByLocalVariable", _tableRowLocalVariable);
-                break;
-
-            case Formula:
-                row = Bundle.getMessage(locale, "AddressByFormula", _tableRowFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableRowAddressing.name());
-        }
-        return row;
-    }
-
-    private String getTableColumnDescription(Locale locale) {
-        String column;
-        switch (_tableColumnAddressing) {
-            case Direct:
-                column = Bundle.getMessage(locale, "AddressByDirect", _tableColumnName);
-                break;
-
-            case Reference:
-                column = Bundle.getMessage(locale, "AddressByReference", _tableColumnReference);
-                break;
-
-            case LocalVariable:
-                column = Bundle.getMessage(locale, "AddressByLocalVariable", _tableColumnLocalVariable);
-                break;
-
-            case Formula:
-                column = Bundle.getMessage(locale, "AddressByFormula", _tableColumnFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
-        }
-        return column;
-    }
-
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean;
@@ -900,9 +455,9 @@ public class ActionMemory extends AbstractDigitalAction
             case CopyMemoryToMemory:
                 return Bundle.getMessage(locale, "ActionMemory_Long_CopyMemoryToMemory", namedBean, copyToMemoryName);
             case CopyTableCellToMemory:
-                String tableName = getTableNameDescription(locale);
-                String rowName = getTableRowDescription(locale);
-                String columnName = getTableColumnDescription(locale);
+                String tableName = _selectTable.getTableNameDescription(locale);
+                String rowName = _selectTable.getTableRowDescription(locale);
+                String columnName = _selectTable.getTableColumnDescription(locale);
                 return Bundle.getMessage(locale, "ActionMemory_Long_CopyTableCellToMemory", namedBean, tableName, rowName, columnName);
             case CalculateFormula:
                 return Bundle.getMessage(locale, "ActionMemory_Long_Formula", namedBean, _otherFormula);

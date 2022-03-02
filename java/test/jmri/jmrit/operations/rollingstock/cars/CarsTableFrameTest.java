@@ -285,6 +285,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(ctf.addButton);
 
         JUnitUtil.dispose(ctf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -305,6 +306,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         jbo.doClick();
 
         jfo.dispose(); // also clears the edit car window
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -325,6 +327,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         jbo.doClick();
 
         jfo.dispose(); // also clears the set car window
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -343,6 +346,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("Moves", 5, c1.getMoves());
 
         jfo.dispose(); // also clears the set car window
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -368,6 +372,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("Wait", 5, c1.getWait());
 
         jfo.dispose(); // also clears the set car window
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -388,6 +393,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Assert.assertFalse("Not selected", c1.isSelected());
 
         jfo.dispose();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     private void loadCars() {
