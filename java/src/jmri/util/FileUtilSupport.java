@@ -925,32 +925,37 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the JMRI program directory. If the program directory has not been
-     * previously sets, first sets the program directory to the value specified
-     * in the Java System property <code>jmri.path.program</code>, or
-     * <code>.</code> if that property is not set.
+     * Get the JMRI program directory.
+     * <p>
+     * If the program directory has not been
+     * previously set, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>
+     * <p>
+     * If this property is unset, finds from jar or class files location.
+     * <p>
+     * If this fails, returns <code>.</code> .
      *
      * @return JMRI program directory as a String.
      */
     @Nonnull
     @CheckReturnValue
     public String getProgramPath() {
+        // As this method is called in Log4J setup, should not
+        // contain standard logging statements.
         if (programPath == null) {
             if (System.getProperty("jmri.path.program") == null) {
-                log.debug("jmri.path.program property not set");
                 // find from jar or class files location
                 String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
                 String path2 = (new File(path1)).getParentFile().getPath();
                 path2 = path2.replaceAll("\\+", "%2B"); // convert + chars to UTF-8 to get through the decode
                 try {
                     String loadingDir = java.net.URLDecoder.decode(path2, "UTF-8");
-                    log.trace("Program location from Classloader: {}", loadingDir);
                     if (loadingDir.endsWith("target")) {
                         loadingDir = loadingDir.substring(0, loadingDir.length()-6);
                     }
                      this.setProgramPath(loadingDir); // NOI18N
                } catch (java.io.UnsupportedEncodingException e) {
-                    log.error("Unsupported URL when trying to locate program directory: {}", path2);
+                    System.out.println("Unsupported URL when trying to locate program directory: " + path2 );
                     // best guess
                     this.setProgramPath("."); // NOI18N
                 }
