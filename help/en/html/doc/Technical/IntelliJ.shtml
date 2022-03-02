@@ -141,7 +141,7 @@
       application settings, please tell <a href="https://groups.io/g/jmriusers">JMRI users</a> at
       Groups.io.</p>
 
-      <a id="IjPrefs"></a><h3>Set Preferences</h3>
+      <h3 id="IjPrefs">Set Preferences</h3>
 
       <p>Start IntelliJ and choose "Preferences..." from the application menu (macOS) or "Settings from
       the File menu (Win).</p>
@@ -281,23 +281,31 @@
       File &gt; Project Structure...<br>
       <p>To manage the Java Development Kits available on your local computer, the
       Platform Settings &gt; SDKs tab allows downloading, renaming and uninstalling
-      JDKs as well as other packages such as Python:<br>
-      <a href="images/IntelliJ/IjPlatformSettings.png"><img
-      src="images/IntelliJ/IjPlatformSettings.png"
-      alt="IntelliJ Platform dialog"></a><br>
-      <a href="images/IntelliJ/IjPlatformDownloadJdk.png"><img src="images/IntelliJ/IjPlatformDownloadJdk.png"
-      alt="IntelliJ JDK dropdown"></a><br>
-      </p>
+      JDKs as well as other packages such as Python:</p>
+      <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjPlatformSettings.png"><img src="images/IntelliJ/IjPlatformSettings.png"
+          alt="IntelliJ Platform dialog"></a></div>
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjPlatformDownloadJdk.png"><img src="images/IntelliJ/IjPlatformDownloadJdk.png"
+          alt="IntelliJ JDK dropdown"></a>
+        </div>
+      </div>
 
       <p>Now switch to the Project Settings &gt; Project tab, where you can select your
-      JDK of choice:<br>
-      <a href="images/IntelliJ/IjProjectSettingsSdkDropdown.png"><img
-      src="images/IntelliJ/IjProjectSettingsSdkDropdown.png"
-      alt="IntelliJ Project SDK menu"></a><br>
-      <a href="images/IntelliJ/IjProjectSettingsSdk.png"><img src="images/IntelliJ/IjProjectSettingsSdk.png"
-      alt="IntelliJ Project settings for JMRI"></a><br>
-      Click OK to close this dialog and apply the settings.
-      </p>
+      JDK of choice:</p>
+      <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjProjectSettingsSdkDropdown.png"><img
+          src="images/IntelliJ/IjProjectSettingsSdkDropdown.png"
+          alt="IntelliJ Project SDK menu"></a>
+        </div>
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjProjectSettingsSdk.png"><img src="images/IntelliJ/IjProjectSettingsSdk.png"
+          alt="IntelliJ Project settings for JMRI"></a>
+        </div>
+      </div>
+      <p>Click OK to close this dialog and apply the settings.</p>
 
       <h3>Making Changes</h3>
 
@@ -340,14 +348,21 @@
           To verify the JDK is set to java 11, open the Ant Build tab [1] and select one of the items in the list.
           Next, click the Properties button [2] at the top right of the pane and choose the Execution tab.<br>
           As "Run under JDK:" select <strong>Project JDK (name as set in Project Structure)</strong> if not already
-          set:<br>
-          <a href="images/IntelliJ/IjAntPropertiesOpen.png"><img src=
-          "images/IntelliJ/IjAntPropertiesOpen.png" alt=
-          "IntelliJ Ant menu"></a>&nbsp; <a href=
-          "images/IntelliJ/IjAntBuildFilePropertiesPane.png"><img src=
-          "images/IntelliJ/IjAntBuildFilePropertiesPane.png" alt=
-          "IntelliJ Ant Settings"></a><br>
-          Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).
+          set:
+          <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+            <div class="flex-item-50">
+              <a href="images/IntelliJ/IjAntPropertiesOpen.png"><img src=
+              "images/IntelliJ/IjAntPropertiesOpen.png" alt=
+              "IntelliJ Ant menu"></a>
+            </div>
+            <div class="flex-item-50">
+              <a href=
+              "images/IntelliJ/IjAntBuildFilePropertiesPane.png"><img src=
+              "images/IntelliJ/IjAntBuildFilePropertiesPane.png" alt=
+              "IntelliJ Ant Settings"></a><br>
+              Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).
+            </div>
+          </div>
         </li>
 
         <li>Select a file in one of the JMRI ant folders in the Ant Build list,
@@ -524,13 +539,20 @@
         alt="IntelliJ Project Setting Sources tab - tests"></li>
 
         <li>In the column to the right both choices will be visible.<br>
-          From now on you will also see these special icons in the Project file listing:<br>
-          <a href="images/IntelliJ/IjProjectCompilepathsSet.png"><img src=
-          "images/IntelliJ/IjProjectCompilepathsSet.png" alt=
-          "SRC and TEST folders highlighted in Ij Project File List"></a>&nbsp; <a href=
-          "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png"><img src=
-          "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png" alt=
-          "JMRI Project Settings - Build - Compiler Output Paths screen"></a>
+          From now on you will also see these special icons in the Project file listing:
+          <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+            <div class="flex-item-50">
+              <a href="images/IntelliJ/IjProjectCompilepathsSet.png"><img src=
+              "images/IntelliJ/IjProjectCompilepathsSet.png" alt=
+              "SRC and TEST folders highlighted in Ij Project File List"></a>
+            </div>
+            <div class="flex-item-50">
+              <a href=
+              "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png"><img src=
+              "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png" alt=
+              "JMRI Project Settings - Build - Compiler Output Paths screen"></a>
+            </div>
+          </div>
         </li>
 
         <li>From the <strong>Build</strong> menu select <strong>Build Project</strong> or
@@ -592,13 +614,20 @@
           Here's another example, showing a JUnit template filled in for a single class. For
           coverage, "Fork mode" must be set to "none" on the Configuration tab. Choose IntellJ as
           the code coverage runner on the Code Coverage tab, and don't forget to fill in the
-          class(es) you want to have checked for coverage, see 2.:<br>
-          <a href="images/IntelliJ/IjDebugConfigJunit1.png"><img src=
-          "images/IntelliJ/IjDebugConfigJunit1.png" alt=
-          "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>&nbsp; <a href=
-          "images/IntelliJ/IjDebugConfigJunit2.png"><img src=
-          "images/IntelliJ/IjDebugConfigJunit2.png" alt=
-          "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>
+          class(es) you want to have checked for coverage, see 2.:
+          <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+            <div class="flex-item-50">
+              <a href="images/IntelliJ/IjDebugConfigJunit1.png"><img src=
+              "images/IntelliJ/IjDebugConfigJunit1.png" alt=
+              "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>
+            </div>
+            <div class="flex-item-50">
+              <a href=
+              "images/IntelliJ/IjDebugConfigJunit2.png"><img src=
+              "images/IntelliJ/IjDebugConfigJunit2.png" alt=
+              "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>
+            </div>
+          </div>
         </li>
 
         <li>To run a debug session, start by opening a .java file and set a Breakpoint on a line in

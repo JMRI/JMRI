@@ -32,19 +32,19 @@
       this link</a> to display its source HTML code.</p>
 
       <h3 id="propose">Proposing Changes Online</h3>
-      <a href="images/GitHubPencil.png"><img src="images/GitHubPencil.png" class="floatRight"
-      height="50" width="142" alt="GitHub screen shot"></a>
+      <a href="images/GitHubPencil.png"><img src="images/GitHubPencil.png"
+      alt="GitHub screen shot"></a>
       <p>If you want to suggest a change to a file, for example a web page like this one, first get
       a free <a href="https://github.com/join">GitHub account</a> and sign in.</p>
 
       <p>Then go to the file you want to change and click the pencil icon on the upper-right of the
       page.</p>
 
-      <p><a href="images/GitHubProposeFileChange.png"><img src="images/GitHubProposeFileChange.png"
-      class="floatRight" height="135" width="221" alt="GitHub screen shot"></a> This will, after a
-      second or two, give you a page where you can edit the contents of the file with your
-      suggested change. Don't worry, you're not actually changing JMRI's original code, just your
-      personal copy of the code.</p>
+      <a href="images/GitHubProposeFileChange.png"><img src="images/GitHubProposeFileChange.png"
+      alt="GitHub screen shot"></a>
+      <p>This will, after a second or two, give you a page where you can edit the contents of the
+      file with your suggested change. Don't worry, you're not actually changing JMRI's original
+      code, just your personal copy of the code.</p>
 
       <p>Then fill out the form at the bottom with a useful subject line, and a description of why
       this is a good change, and click the "Propose file change" button. This saves your edits to
@@ -105,13 +105,13 @@
 
         <li>Click the "Clone in Desktop" button on the top right.<br>
           <a href="images/GitHubCloneDeskop.png"><img src="images/GitHubCloneDeskop.png" alt=
-          "Clone to desktop button in GitHub web" height="315" width="409"></a>
+          "Clone to desktop button in GitHub web"></a>
         </li>
 
         <li>The GitHub Desktop application will show a dialog where you can select the download
         location. Change that if desired:<br>
           <a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" alt=
-          "Clone dialog in GitHub Desktop Mac" height="184" width="267"></a><br>
+          "Clone dialog in GitHub Desktop Mac"></a><br>
           and click "Clone".
         </li>
 
@@ -125,7 +125,7 @@
       <p>After the download is complete, there are menu items under the application "Repository"
       menu to access the code directory:<br>
       <a href="images/GitDtRepoSettingsMenu.png"><img src="images/GitDtRepoSettingsMenu.png" alt=
-      "Repository menu in GitHub Desktop" height="175" width="275"></a><br>
+      "Repository menu in GitHub Desktop"></a><br>
       You can also navigate there directly using your file system.</p>
 
       <p>Inside, you'll find directories called <code>xml</code>, <code>resources</code>,
@@ -160,7 +160,8 @@
 <code>
   $ git clone https://github.com/JMRI/JMRI.git
   </code>
-</pre>This will create a new "JMRI" directory and download the code into it.
+</pre>
+      This will create a new "JMRI" directory and download the code into it.
       <p>If you have already gotten a copy of the code on your computer and want to update it to
       the most recent contents of the main JMRI repository, start in the JMRI code directory and
       to:</p>
