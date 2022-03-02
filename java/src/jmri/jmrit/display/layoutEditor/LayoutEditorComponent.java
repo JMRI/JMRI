@@ -100,6 +100,11 @@ class LayoutEditorComponent extends JComponent {
                 if (layoutEditor.isDrawLayoutTracksLabel()) {
                     drawLayoutTracksLabel(g2);
                 }
+                if (jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences().getShowTrainSymbolSetting()) {
+                    for (jmri.jmrit.vsdecoder.VSDecoder vsd : jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderList()) {
+                        vsd.draw(g2);
+                    }
+                }
             } else if (layoutEditor.getTurnoutCircles()) {
                 if (layoutEditor.allControlling()) {
                     drawTurnoutControls(g2);
