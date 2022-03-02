@@ -537,12 +537,12 @@ so handling that is part of your user-error handling.
       <p>In the <strong>Languages</strong> tab, the program displays 
           all found languages and the number of translated keys.</p>
       <a href="images/TranslatorsHelperLanguages.png"><img src="images/TranslatorsHelperLanguages.png"
-      height="602" width="574" alt="tab Languages"></a>
+      alt="tab Languages"></a>
       <p>In the <strong>Files</strong> tab it is possible to select a specific language. 
           The table below the selection shows all found .properties files 
           and the number of translated keys.</p>
       <a href="images/TranslatorsHelperFiles.png"><img src="images/TranslatorsHelperFiles.png"
-      height="602" width="574" alt="tab Files"></a>
+      alt="tab Files"></a>
       
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -87,8 +87,7 @@
       by providing access to hardware-specific <code>Managers</code>, from which you can get the
       hardware-specific items that represent what you want to access on the layout.</p>
       <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png"
-      class="floatRight" height="261" width="247" style="border:1px solid blue" alt=
-      "package structure"></a>
+      alt="package structure"></a>
       <p>Because we have different hardware implementations in subpackages of the
       <code>jmrix</code> package, those are also accessed via the
       <code>ConnectionManager</code>classes, which provide access to generally-defined objects.</p>
@@ -114,8 +113,7 @@
           Contains commonly useful <strong>t</strong>ools and extensions.<br>
           It can depend on jmri.* and externals. It must not depend on jmrix.* <a href=
           "images/OverallImplementationStructure.png"><img src=
-          "images/OverallImplementationStructure.png" class="floatRight" height="261" width="360"
-          style="border:1px solid blue" alt="implementation structure"></a>
+          "images/OverallImplementationStructure.png" alt="implementation structure"></a>
         </dd>
 
         <dt>jmrix</dt>
@@ -150,9 +148,8 @@
           utilities.
           <p>This is an exception to the idea that packages should not directly reference classes
           across the tree: these utility classes are generally available for use. <a href=
-          "images/OverallAppDependencies.png"><img src="images/OverallAppDependencies.png" class=
-          "floatRight" height="456" width="325" style="border:1px solid blue" alt=
-          "dependencies"></a></p>
+          "images/OverallAppDependencies.png"><img src="images/OverallAppDependencies.png"
+          alt="dependencies"></a></p>
         </dd>
 
         <dt>apps</dt>

@@ -278,11 +278,12 @@
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; hello_world2
         System.out.println("World");
     }
-</pre>There is two parts here. First, beginning with "&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD" is the
-code we want to have. This code goes down to the line "=======". Below that are the lines of code that
-someone else wants to have, and that code goes down to "&gt;&gt;&gt;&gt;&gt;&gt;&gt; hello_world2".
-In this case, I have used the branch "hello_world2" to get a conflict, but most often you will have
-merged master into your branch so this line will be "&gt;&gt;&gt;&gt;&gt;&gt;&gt; master".
+</pre>
+      <p>There is two parts here. First, beginning with "&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD" is the
+      code we want to have. This code goes down to the line "=======". Below that are the lines of code that
+      someone else wants to have, and that code goes down to "&gt;&gt;&gt;&gt;&gt;&gt;&gt; hello_world2".<br>
+      In this case, I have used the branch "hello_world2" to get a conflict, but most often you will have
+      merged master into your branch so this line will be "&gt;&gt;&gt;&gt;&gt;&gt;&gt; master".</p>
       <p>What we need to do is to decide if we should keep the original code, replace it with our
       own, or do something different. The key is to understand what the code does and to make a
       good decision. If in question, please ask at the JMRI developer mailing list.</p>

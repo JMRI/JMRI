@@ -391,7 +391,7 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       </ul>
 
       <p>You can navigate using the bar along the top of the page:<br>
-      <img src="images/JenkinsByPackage.png" width="513" height="340" alt=
+      <img src="images/JenkinsByPackage.png" alt=
       "The JaCoCo coverage report for JMRI in Jenkins"></p>
 
       <h2 id="write">Writing Tests</h2>
