@@ -541,10 +541,8 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
         <xsl:param name="name"/>
     <!-- index through individual conditional elements, looking for match -->
     <xsl:for-each select="/layout-config/conditionals/conditional">
-    <!-- BUG 2022-02-15: if logix system name has embedded lower case letters, next statement always fails 
-		<xsl:if test='( @systemName = translate($name,$lcletters,$ucletters) )' >  -->
-		<xsl:if test='( @systemName = $name )' >
-		<!-- here have found correct conditional -->
+            <xsl:if test='( @systemName = $name )' >
+	    <!-- here have found correct conditional -->
             <h3>Conditional <xsl:value-of select="@systemName"/>
             <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if>
             </h3>
