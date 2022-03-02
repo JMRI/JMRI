@@ -11,7 +11,8 @@
    [Added additional directions for blocks.]                    (2022-03-01)                       
    [Added info for ctc code buttons.]                           (2022-03-01)      
    [Added formatting for panel editor and layout editor.]       (2022-03-01)      
-   [Bug fix in SSL related to displaying sensor names.]         (2022-03-01)      
+   [Bug fix in SSL related to displaying sensor names.]         (2022-03-01)
+   [Changed some text alignment to center for readability]      (2022-03-02)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022.     -->
@@ -93,11 +94,11 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 )</h2>
      <table border="1">
      <xsl:for-each select="operations">
-       <tr><td>Operations automate:</td><td><xsl:value-of select="@automate" /></td></tr>
+       <tr><td>Operations automate:</td><td style="text-align:center"><xsl:value-of select="@automate" /></td></tr>
      </xsl:for-each>
      <xsl:if test='defaultclosedspeed !="" or defaultthrownspeed !=""'>
-       <tr><td>Default closed speed:</td><td><xsl:value-of select="defaultclosedspeed" /></td></tr>
-       <tr><td>Default thrown speed:</td><td><xsl:value-of select="defaultthrownspeed" /></td></tr>
+       <tr><td>Default closed speed:</td><td style="text-align:center"><xsl:value-of select="defaultclosedspeed" /></td></tr>
+       <tr><td>Default thrown speed:</td><td style="text-align:center"><xsl:value-of select="defaultthrownspeed" /></td></tr>
      </xsl:if>
      </table>
      <br/>
@@ -216,9 +217,9 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
                             <xsl:value-of select="sensorName"/>: <xsl:value-of select="sensorState"/><br/>
                         </xsl:for-each>
                     </td>
-                    <td><xsl:value-of select="enabled"/></td>
-                    <td><xsl:value-of select="useLayoutEditor"/></td>
-                    <td><xsl:value-of select="comment"/></td>
+                    <td style="text-align:center"><xsl:value-of select="enabled"/></td>
+                    <td style="text-align:center"><xsl:value-of select="useLayoutEditor"/></td>
+                    <td style="text-align:center"><xsl:value-of select="comment"/></td>
                 </tr>
             </xsl:for-each>
         </table>
@@ -420,7 +421,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
                         </tr>
                         </xsl:for-each></table></td>
                     <td><xsl:value-of select="@length"/></td>
-                    <td><xsl:value-of select="permissive"/></td>
+                    <td style="text-align:center"><xsl:value-of select="permissive"/></td>
                 </tr>
             </xsl:for-each>
             </table>
@@ -433,7 +434,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through ctcdata elements -->
 <xsl:template match="layout-config/ctcdata">
     <h2>CTC Data</h2>
-    <h3>Ctc Properties</h3>
+    <h3>CTC Properties</h3>
     <table border="1">
         <tr>
             <th>Type</th>
@@ -446,7 +447,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
         </tr>
     </xsl:for-each>
     </table>
-    <h3>Ctc Other Data</h3>
+    <h3>CTC Other Data</h3>
     <table border="1">
         <tr>
             <th>Type</th>
@@ -459,7 +460,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
         </tr>
     </xsl:for-each>
     </table>
-    <h3>Ctc Code Buttons</h3>
+    <h3>CTC Code Buttons</h3>
     <table border="1">
         <tr>
             <th>Switch<br/>Number</th>
@@ -470,9 +471,9 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
         </tr>
     <!-- index through individual elements -->
        <xsl:for-each select="./ctcCodeButtonData">
-        <tr><td><xsl:value-of select="./SwitchNumber"/></td>
-            <td><xsl:value-of select="./SignalEtcNumber"/></td>
-            <td><xsl:value-of select="./GUIColumnNumber"/></td>
+        <tr><td style="text-align:center"><xsl:value-of select="./SwitchNumber"/></td>
+            <td style="text-align:center"><xsl:value-of select="./SignalEtcNumber"/></td>
+            <td style="text-align:center"><xsl:value-of select="./GUIColumnNumber"/></td>
             <td><xsl:value-of select="./CodeButtonInternalSensor"/></td>
             <td><xsl:value-of select="./OSSectionOccupiedExternalSensor"/></td> 
         </tr>
@@ -591,11 +592,11 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
   <xsl:when test="( @operator = 3 )" >And not </xsl:when>
   <xsl:when test="( @operator = 4 )" ></xsl:when>  <!-- None -->
   <xsl:when test="( @operator = 5 )" >Or</xsl:when>
-  <xsl:otherwise>(operator="<xsl:value-of select="@operator"/>") </xsl:otherwise>
+  <xsl:otherwise><xsl:value-of select="@operator"/></xsl:otherwise>
 </xsl:choose>
 </td>
 <!-- decode type -->
-<td>
+<td style="text-align:center">
 <xsl:choose>
   <xsl:when test="( @type = 1 )" >Sensor Active</xsl:when>
   <xsl:when test="( @type = 2 )" >Sensor Inactive</xsl:when>
@@ -619,10 +620,10 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
   <xsl:when test="( @type = 20 )" >Signal Memory Compare</xsl:when>
   <xsl:when test="( @type = 21 )" >Signal Head Lunar</xsl:when>
   <xsl:when test="( @type = 22 )" >Signal Head Flashing Lunar</xsl:when>
-  <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
+  <xsl:otherwise><xsl:value-of select="@type"/></xsl:otherwise>
 </xsl:choose>
 </td>
-<td>
+<td style="text-align:center">
 <xsl:if test='@negated = "yes"'>Yes</xsl:if>
 </td>
 <td>
@@ -643,7 +644,7 @@ num2="<xsl:value-of select="@num2"/>"
 value="<xsl:value-of select="@dataString"/>"
 </xsl:if>
 </td>
-<td>
+<td style="text-align:center">
 <xsl:value-of select="@triggersCalc"/>
 </td>
 </tr>
@@ -1164,7 +1165,7 @@ value="<xsl:value-of select="@dataString"/>"
             <xsl:value-of select="../../signalheads/signalhead[@systemName=$matchto]/@userName"/>
             <xsl:value-of select="../../signalheads/signalhead[@userName=$matchto]/@systemName"/>
         </td>
-        <td><xsl:if test="@mode = '1'" >
+        <td style="text-align:center"><xsl:if test="@mode = '1'" >
                 Single<br/></xsl:if>
             <xsl:if test="@mode = '2'" >
                 Main<br/></xsl:if>
@@ -1205,9 +1206,9 @@ value="<xsl:value-of select="@dataString"/>"
         <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
         <td><xsl:value-of select="userName"/></td>
         <td> <xsl:value-of select="@feedback"/> </td>
-        <td><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
-        <td><xsl:if test="( @locked = 'true' )" >Yes</xsl:if></td>
-        <td><xsl:if test="( @automate != 'Default' )" >Yes</xsl:if></td>
+        <td style="text-align:center"><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
+        <td style="text-align:center"><xsl:if test="( @locked = 'true' )" >Yes</xsl:if></td>
+        <td style="text-align:center"><xsl:if test="( @automate != 'Default' )" >Yes</xsl:if></td>
         <td><xsl:value-of select="comment"/></td>
     </tr>
 </xsl:template>
@@ -1250,14 +1251,14 @@ value="<xsl:value-of select="@dataString"/>"
     <td><xsl:value-of select="userName"/></td>
     <td><xsl:value-of select="@occupancysensor"/></td>
     <td><xsl:value-of select="@memory"/></td>
-    <td><xsl:choose>
+    <td style="text-align:center"><xsl:choose>
         <xsl:when test="( @occupiedsense = 2 )" >ACTIVE</xsl:when>
         <xsl:when test="( @occupiedsense = 4 )" >INACTIVE</xsl:when>
         <xsl:otherwise><xsl:value-of select="@occupiedsense"/></xsl:otherwise>
         </xsl:choose></td>
-    <td><xsl:value-of select="@trackcolor"/></td>
-    <td><xsl:value-of select="@occupiedcolor"/></td>
-    <td><xsl:value-of select="@extracolor"/></td>
+    <td style="text-align:center"><xsl:value-of select="@trackcolor"/></td>
+    <td style="text-align:center"><xsl:value-of select="@occupiedcolor"/></td>
+    <td style="text-align:center"><xsl:value-of select="@extracolor"/></td>
 </tr>
 </xsl:template>
 
@@ -1279,8 +1280,8 @@ value="<xsl:value-of select="@dataString"/>"
             <br/>
         </xsl:for-each></td>
         <td><xsl:value-of select="@length"/></td>
-        <td><xsl:value-of select="@curve"/></td>
-        <td><xsl:value-of select="@permissive"/></td>
+        <td style="text-align:center"><xsl:value-of select="@curve"/></td>
+        <td style="text-align:center"><xsl:value-of select="@permissive"/></td>
     </tr>
 </xsl:template>
 
@@ -1332,12 +1333,12 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="signalmast">
     <tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
         <td><xsl:value-of select="userName"/></td>
-        <td align="center"><xsl:choose>
+        <td style="text-align:center"><xsl:choose>
             <xsl:when test="( @class = 'jmri.implementation.configurexml.SignalHeadSignalMastXml' )" >SH Mast</xsl:when>
             <xsl:when test="( @class = 'jmri.implementation.configurexml.MatrixSignalMastXml' )" >MX Mast</xsl:when>
             <xsl:otherwise>Other</xsl:otherwise>
         </xsl:choose></td>
-        <td align="center">
+        <td style="text-align:center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -1358,8 +1359,8 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="dccsignalmast">
     <tr><td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
-        <td align="center">DCC Mast</td>
-        <td align="center">
+        <td style="text-align:center">DCC Mast</td>
+        <td style="text-align:center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -1373,7 +1374,7 @@ value="<xsl:value-of select="@dataString"/>"
         </td>
         <td><xsl:value-of select="comment"/></td>
         <td></td>
-        <td align="right">
+        <td style="text-align:right">
             <xsl:for-each select="aspect">
                 <xsl:value-of select="@defines"/>:
                 <xsl:value-of select="number"/><br/>
@@ -1385,8 +1386,8 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="turnoutsignalmast">
     <tr><td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
-        <td align="center">Turnout<br/>Mast</td>
-        <td align="center">
+        <td style="text-align:center">Turnout<br/>Mast</td>
+        <td style="text-align:center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -1400,7 +1401,7 @@ value="<xsl:value-of select="@dataString"/>"
         </td>
         <td><xsl:value-of select="comment"/></td>
         <td></td>
-        <td align="right">
+        <td style="text-align:right">
             <xsl:for-each select="aspect">
                 <xsl:if test='(turnout != "")'>
                     <xsl:value-of select="@defines"/>:
@@ -1415,8 +1416,8 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="virtualsignalmast">
     <tr><td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
-        <td align="center">Virtual<br/>Mast</td>
-        <td align="center">
+        <td style="text-align:center">Virtual<br/>Mast</td>
+        <td style="text-align:center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -1437,8 +1438,8 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="matrixsignalmast">
     <tr><td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
-        <td align="center">Matrix Mast</td>
-        <td align="center">
+        <td style="text-align:center">Matrix Mast</td>
+        <td style="text-align:center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -1459,7 +1460,7 @@ value="<xsl:value-of select="@dataString"/>"
                 </xsl:for-each>
             </xsl:for-each>
         </td>
-        <td align="right">
+        <td style="text-align:right">
             <xsl:for-each select="bitStrings">
                 <xsl:for-each select="bitString">
                     <xsl:value-of select="@aspect"/> =
