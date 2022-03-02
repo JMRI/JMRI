@@ -29,14 +29,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -45,6 +45,8 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
     private javax.swing.JCheckBox cbAutoStartEngine;
     private javax.swing.JCheckBox cbAutoLoadVSDFile;
+    private javax.swing.JCheckBox cbShowTrainSymbol;
+    private javax.swing.JCheckBox cbUseBlocks;
     private javax.swing.JTextField tfDefaultVSDFilePath;
     private javax.swing.JTextField tfDefaultVSDFileName;
     private javax.swing.JLabel labelDefaultVSDFilePath;
@@ -103,6 +105,8 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
         cbAutoStartEngine = new javax.swing.JCheckBox();
         cbAutoLoadVSDFile = new javax.swing.JCheckBox();
+        cbShowTrainSymbol = new javax.swing.JCheckBox();
+        cbUseBlocks       = new javax.swing.JCheckBox();
         tfDefaultVSDFilePath = new javax.swing.JTextField(40);
         tfDefaultVSDFileName = new javax.swing.JTextField(40);
         JButton jbPathBrowse = new javax.swing.JButton(Bundle.getMessage("Browse"));
@@ -135,6 +139,8 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         // Get label strings from the resource bundle and assign it.
         cbAutoStartEngine.setText(Bundle.getMessage("AutoStartEngine"));
         cbAutoLoadVSDFile.setText(Bundle.getMessage("AutoLoadVSDFile"));
+        cbShowTrainSymbol.setText(Bundle.getMessage("ShowTrainSymbol"));
+        cbUseBlocks.setText(Bundle.getMessage("UseBlocks"));
         tfDefaultVSDFilePath.setColumns(30);
         tfDefaultVSDFilePath.setColumns(30);
         labelDefaultVSDFilePath.setText(Bundle.getMessage("DefaultVSDFilePath"));
@@ -150,6 +156,8 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         };
         cbAutoStartEngine.addActionListener(al);
         cbAutoLoadVSDFile.addActionListener(al);
+        cbShowTrainSymbol.addActionListener(al);
+        cbUseBlocks.addActionListener(al);
         tfDefaultVSDFilePath.addActionListener(al);
         tfDefaultVSDFileName.addActionListener(al);
 
@@ -186,20 +194,22 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
         prefsPane.add(cbAutoStartEngine, setConstraints(new Insets(2, 10, 2, 2), 0, 0, 2, GridBagConstraints.NONE)); //1
         prefsPane.add(cbAutoLoadVSDFile, setConstraints(new Insets(2, 10, 2, 2), 0, 1, 2, GridBagConstraints.NONE)); //2
+        prefsPane.add(cbShowTrainSymbol, setConstraints(new Insets(2, 10, 2, 2), 0, 2, 2, GridBagConstraints.NONE)); //3
+        prefsPane.add(cbUseBlocks, setConstraints(new Insets(2, 10, 2, 2), 0, 3, 2, GridBagConstraints.NONE)); //4
 
-        prefsPane.add(labelDefaultVSDFilePath, setConstraints(new Insets(2, 10, 2, 2), 0, 2, 1, GridBagConstraints.NONE)); //5
-        prefsPane.add(tfDefaultVSDFilePath, setConstraints(new Insets(2, 10, 2, 2), 1, 2, 3, GridBagConstraints.HORIZONTAL)); //3
-        prefsPane.add(jbPathBrowse, setConstraints(new Insets(2, 2, 2, 2), 5, 2, 1, GridBagConstraints.NONE)); //3
+        prefsPane.add(labelDefaultVSDFilePath, setConstraints(new Insets(2, 10, 2, 2), 0, 4, 1, GridBagConstraints.NONE)); //5
+        prefsPane.add(tfDefaultVSDFilePath, setConstraints(new Insets(2, 10, 2, 2), 1, 4, 3, GridBagConstraints.HORIZONTAL)); //5
+        prefsPane.add(jbPathBrowse, setConstraints(new Insets(2, 2, 2, 2), 5, 4, 1, GridBagConstraints.NONE)); //5
 
-        prefsPane.add(labelDefaultVSDFileName, setConstraints(new Insets(2, 10, 2, 2), 0, 3, 1, GridBagConstraints.NONE)); //6
-        prefsPane.add(tfDefaultVSDFileName, setConstraints(new Insets(2, 10, 2, 2), 1, 3, 2, GridBagConstraints.HORIZONTAL)); //4
-        prefsPane.add(jbFileBrowse, setConstraints(new Insets(2, 2, 2, 2), 5, 3, 1, GridBagConstraints.NONE)); //3
+        prefsPane.add(labelDefaultVSDFileName, setConstraints(new Insets(2, 10, 2, 2), 0, 5, 1, GridBagConstraints.NONE)); //6
+        prefsPane.add(tfDefaultVSDFileName, setConstraints(new Insets(2, 10, 2, 2), 1, 5, 2, GridBagConstraints.HORIZONTAL)); //6
+        prefsPane.add(jbFileBrowse, setConstraints(new Insets(2, 2, 2, 2), 5, 5, 1, GridBagConstraints.NONE)); //6
 
-        prefsPane.add(amPanel, setConstraints(new Insets(2, 10, 2, 2), 0, 6, 2, GridBagConstraints.HORIZONTAL));
+        prefsPane.add(amPanel, setConstraints(new Insets(2, 10, 2, 2), 0, 6, 2, GridBagConstraints.HORIZONTAL)); //7
 
-        controlPane.add(jbSave, setConstraints(new Insets(5, 3, 5, 2), 2, 100, 1, GridBagConstraints.NONE)); //7
-        controlPane.add(jbCancel, setConstraints(new Insets(5, 3, 5, 2), 0, 100, 1, GridBagConstraints.NONE)); //8
-        controlPane.add(jbApply, setConstraints(new Insets(5, 3, 5, 5), 1, 100, 1, GridBagConstraints.NONE)); //9
+        controlPane.add(jbSave, setConstraints(new Insets(5, 3, 5, 2), 2, 100, 1, GridBagConstraints.NONE)); //8
+        controlPane.add(jbCancel, setConstraints(new Insets(5, 3, 5, 2), 0, 100, 1, GridBagConstraints.NONE)); //9
+        controlPane.add(jbApply, setConstraints(new Insets(5, 3, 5, 5), 1, 100, 1, GridBagConstraints.NONE)); //10
 
         this.add(prefsPane, setConstraints(new Insets(2, 2, 2, 2), 0, 0, 1, GridBagConstraints.NONE));
         this.add(controlPane, setConstraints(new Insets(2, 2, 2, 2), 0, 1, 1, GridBagConstraints.NONE));
@@ -213,6 +223,8 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         }
         cbAutoStartEngine.setSelected(tp.isAutoStartingEngine());
         cbAutoLoadVSDFile.setSelected(tp.isAutoLoadingDefaultVSDFile());
+        cbShowTrainSymbol.setSelected(tp.getShowTrainSymbolSetting());
+        cbUseBlocks.setSelected(tp.getUseBlocksSetting());
         tfDefaultVSDFilePath.setText(tp.getDefaultVSDFilePath());
         tfDefaultVSDFileName.setText(tp.getDefaultVSDFileName());
         switch (tp.getAudioMode()) {
@@ -230,6 +242,8 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         VSDecoderPreferences tp = new VSDecoderPreferences();
         tp.setAutoStartEngine(cbAutoStartEngine.isSelected());
         tp.setAutoLoadDefaultVSDFile(cbAutoLoadVSDFile.isSelected());
+        tp.setShowTrainSymbolSetting(cbShowTrainSymbol.isSelected());
+        tp.setUseBlocksSetting(cbUseBlocks.isSelected());
         tp.setDefaultVSDFilePath(tfDefaultVSDFilePath.getText());
         tp.setDefaultVSDFileName(tfDefaultVSDFileName.getText());
         tp.setListenerPosition(VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition());
