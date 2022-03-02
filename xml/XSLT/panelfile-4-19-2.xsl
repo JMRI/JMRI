@@ -60,7 +60,7 @@
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
-<p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+<p/>JMRI, DecoderPro, PanelPro, OperationsPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
 	</body>
 </html>
