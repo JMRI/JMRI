@@ -73,7 +73,13 @@
         <h4>LocoNet</h4>
             <ul>
                 <li>Added Digitrax DCS210Plus command station</li>
-            </ul>
+                <li>A storm of LocoNet messages could result if certain command station models
+                    have track power turned off whem JMRI starts. The status enquiry messages would
+                    fail, and JMRI would repeat them in an effort to get complete information from the layout.
+                    This release no longer retries messages in that case. If you are not getting
+                    initial status from some devices on your layout, you should power up
+                    your LocoNet system, including track power, before starting JMRI.
+                </ul>
 
         <h4>Maple</h4>
             <ul>
@@ -379,7 +385,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Improved XSLT display of all elements.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -398,6 +404,7 @@
         <ul>
           <li><i>Copy</i> now works in the LogixNG table. With <i>Copy</i>,
           you can copy the entire LogixNG to a new LogixNG with all its ConditionalNGs.</li>
+	  <li>Improved XSLT display of all elements.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -415,7 +422,7 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Improved XSLT display of all elements.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
@@ -461,7 +468,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Improved XSLT display of all elements.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -487,7 +494,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Improved XSLT display of all elements.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -597,6 +604,7 @@
             <li>Developers: The
                 <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
                 has been updated.</li>
-            <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.
+            <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.</li>
+	    <li>Improved XSLT display of many elements in panel XML files.</li>
         </ul>
 
