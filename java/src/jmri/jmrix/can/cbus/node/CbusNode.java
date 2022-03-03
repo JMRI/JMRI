@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus.node;
 
 // import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.slf4j.Logger;
@@ -34,7 +36,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      * @param connmemo The CAN Connection to use
      * @param nodenumber The Node Number
      */
-    public CbusNode ( CanSystemConnectionMemo connmemo, int nodenumber ){
+    public CbusNode ( @CheckForNull CanSystemConnectionMemo connmemo, int nodenumber ){
         super(connmemo,nodenumber);
         
         _sendsWRACKonNVSET = true;

@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import static jmri.jmrix.can.cbus.CbusConstants.*;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -88,154 +87,7 @@ public class CbusNodeConstants {
             }
         }
     }
-    
-    // reset a Dummy Node to its virgin condition
-    public static void setDummyNodeParameters( CbusDummyNode thisNode, int manu, int type ){
-        
-        if ( manu == MANU_MERG ) { // MERG MODULE
-            if ( type == 29 ) { // CANPAN
-                
-                int[] _params = new int[]{ 
-                20, /* 0 num parameters   */
-                MANU_MERG, /* 1 manufacturer ID   */
-                89, /* 2 Minor code version   */
-                29, /* 3 Manufacturer module identifier   */
-                128, /* 4 Number of supported events   */
-                13, /* 5 Number of Event Variables per event   */
-                1, /* 6 Number of Node Variables   */
-                1, /* 7 Major version   */
-                13, /* 8 Node flags   */ 
-                13, /* 9 Processor type   */
-                1, /* 10 Bus type   */
-                0, /* 11 load address, 1/4 bytes   */
-                8, /* 12 load address, 2/4 bytes   */
-                0, /* 13 load address, 3/4 bytes   */
-                0, /* 14 load address, 4/4 bytes   */
-                0, /* 15 CPU manufacturer's id 1/4  */
-                0, /* 16 CPU manufacturer's id 2/4  */
-                0, /* 17 CPU manufacturer's id 3/4  */
-                0, /* 18 CPU manufacturer's id 4/4  */
-                1, /* 19 CPU manufacturer code   */
-                1, /* 20 Beta revision   */
-                };
-                
-                thisNode.getNodeParamManager().setParameters(_params);
-                thisNode.getNodeNvManager().setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
-                thisNode.setNodeNameFromName("PAN");
-            }
-            
-            else if ( type == 255 ) {
-                
-                // 255 parameters could have unintended future
-                // consequences so staying with the standard 20
-                // for now
-                int[] _params = new int[]{ 
-                20, /* 0 num parameters   */
-                MANU_MERG, /* 1 manufacturer ID   */
-                89, /* 2 Minor code version   */
-                255, /* 3 Manufacturer module identifier   */
-                255, /* 4 Number of supported events   */
-                255, /* 5 Number of Event Variables per event   */
-                255, /* 6 Number of Node Variables   */
-                1, /* 7 Major version   */
-                13, /* 8 Node flags   */ 
-                13, /* 9 Processor type   */
-                1, /* 10 Bus type   */
-                0, /* 11 load address, 1/4 bytes   */
-                8, /* 12 load address, 2/4 bytes   */
-                0, /* 13 load address, 3/4 bytes   */
-                0, /* 14 load address, 4/4 bytes   */
-                0, /* 15 CPU manufacturer's id 1/4  */
-                0, /* 16 CPU manufacturer's id 2/4  */
-                0, /* 17 CPU manufacturer's id 3/4  */
-                0, /* 18 CPU manufacturer's id 4/4  */
-                1, /* 19 CPU manufacturer code   */
-                1, /* 20 Beta revision   */
-                };
-                
-                thisNode.getNodeParamManager().setParameters(_params);
-                
-                int[] nvArray = new int[256];
-                nvArray[0]=255;
-                for (int i = 1; i < nvArray.length; i++) {
-                    nvArray[i] = i;
-                }
-                
-                // create array of event variables
-                int[] evVarArray = new int[255];
-                for (int i = 0; i < evVarArray.length; i++) {
-                    evVarArray[i] = i+1;
-                }
-                
-                for (int i = 1; i < 256; i++) {
-                    
-                    CbusNodeEvent singleEv = new CbusNodeEvent(thisNode._memo,i,i,-1,i,255);
-                    singleEv.setEvArr(evVarArray);
-                    thisNode.getNodeEventManager().addNewEvent(singleEv);
-                    
-                }
-                
-                thisNode.getNodeNvManager().setNVs( nvArray );
-                thisNode.setNodeNameFromName("TSTMAXND");
-                
-            }
-            
-            else {
-            
-                // default MERG module in SLiM mode
-                thisNode.getNodeParamManager().setParameters( new int[]{ 8,MANU_MERG,0,0,0,0,0,0,0 } );
-                thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
-            }
-        }
-        
-        else if ( manu == SPROG_DCC ) { // SPROG DCC MODULE
-            if ( type == 1 ) { // Pi-SPROG 3
-                
-                int[] _params = new int[]{ 
-                20, /* 0 num parameters   */
-                SPROG_DCC, /* 1 manufacturer ID   */
-                'f', /* 2 Minor code version   */
-                1, /* 3 Manufacturer module identifier   */
-                0, /* 4 Number of supported events   */
-                0, /* 5 Number of Event Variables per event   */
-                1, /* 6 Number of Node Variables   */
-                3, /* 7 Major version   */
-                0, /* 8 Node flags   */ 
-                25, /* 9 Processor type   */
-                0, /* 10 Bus type   */
-                0, /* 11 load address, 1/4 bytes   */
-                8, /* 12 load address, 2/4 bytes   */
-                4, /* 13 load address, 3/4 bytes   */
-                0, /* 14 load address, 4/4 bytes   */
-                0, /* 15 CPU manufacturer's id 1/4  */
-                0, /* 16 CPU manufacturer's id 2/4  */
-                0, /* 17 CPU manufacturer's id 3/4  */
-                0, /* 18 CPU manufacturer's id 4/4  */
-                1, /* 19 CPU manufacturer code   */
-                1, /* 20 Beta revision   */
-                };
-                
-                thisNode.getNodeParamManager().setParameters(_params);
-                thisNode.getNodeNvManager().setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
-                thisNode.setNodeNameFromName("PSPROG3");
-            }
-            
-            else {
-                // default SPROG DCC module in SLiM mode
-                thisNode.getNodeParamManager().setParameters( new int[]{ 8,SPROG_DCC,0,0,0,0,0,0,0 } );
-                thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
-            }
-        }
-        
-        else {
-            thisNode.getNodeParamManager().setParameters( new int[]{ 8,MANU_MERG,0,0,0,0,0,0,0 } );
-            thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
-        }
-        
-        setTraits( thisNode );
-        
-    }
-    
+
     /**
      * Return a string representation of a decoded Module Manufacturer
      * @param man manufacturer int
@@ -459,12 +311,12 @@ public class CbusNodeConstants {
     
     
     /*
-     * Populate hashmap with format strings
-     *
+     * Populate hashmap with format strings.
+     * Visible name of module, not the CBUS NAME OPC Response.
      */
     private static Map<Integer, String> createType44Map() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(1, "CANPiSPRG3"); // NOI18N
+        result.put(1, "Pi-SPROG 3"); // NOI18N
         result.put(2, "CANSPROG3P"); // NOI18N
         result.put(3, "CANSPROG"); // NOI18N
         result.put(4, "SBOOST"); // NOI18N
