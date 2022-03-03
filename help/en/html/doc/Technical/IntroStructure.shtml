@@ -96,7 +96,8 @@
 
       <p>(The help/en/packages section of the in-program help files are also organized this
       way)</p>
-
+      <a href="images/OverallImplementationStructure.png"><img src=
+      "images/OverallImplementationStructure.png" class="floatRight" alt="implementation structure"></a>
       <p>More specifically:</p>
 
       <dl>
@@ -111,9 +112,8 @@
 
         <dd>
           Contains commonly useful <strong>t</strong>ools and extensions.<br>
-          It can depend on jmri.* and externals. It must not depend on jmrix.* <a href=
-          "images/OverallImplementationStructure.png"><img src=
-          "images/OverallImplementationStructure.png" alt="implementation structure"></a>
+          It can depend on <code>jmri.*</code> and externals. It must not depend on
+          <code>jmrix.*</code>
         </dd>
 
         <dt>jmrix</dt>
@@ -147,9 +147,7 @@
           jmri.jmrit or jmri.jmrix packages. The jmri.util.swing subpackage provides Swing
           utilities.
           <p>This is an exception to the idea that packages should not directly reference classes
-          across the tree: these utility classes are generally available for use. <a href=
-          "images/OverallAppDependencies.png"><img src="images/OverallAppDependencies.png"
-          alt="dependencies"></a></p>
+          across the tree: these utility classes are generally available for use.</p>
         </dd>
 
         <dt>apps</dt>
@@ -160,7 +158,11 @@
         and system-specific tool objects for an application; that dependency is from the apps
         package)</dd>
       </dl>
-      Although it's not always honored, the tree structure here is important: Packages should
+
+      <a href="images/OverallAppDependencies.png"><img src="images/OverallAppDependencies.png"
+      class="floatRight" alt="dependencies"></a>
+
+      <p>Although it's not always honored, the tree structure here is important: Packages should
       <em>not</em> reference across the tree. Code in <code>jmri.jmrit</code> is welcome to
       reference classes in the <code>jmri</code> package, but should not reference directly to
       classes in <code>jmri.jmrix</code>. Classes should reference the interfaces in
@@ -176,7 +178,7 @@
       existing structure violations in addition to new ones because we haven't yet cleaned up some
       historical issues. There's also <code>jmri.ArchitectureTest</code> which is run as part of
       our <a href="ContinuousIntegration.shtml">CI tests</a>, and catches new violations of a
-      subset of the constraints.
+      subset of the constraints.</p>
       <p>Similarly, we have conventions for where to locate <a href="Swing.shtml">Swing GUI
       code</a> and <a href="XmlPersistance.shtml">persistance (store/load) code</a> that limits how
       embedded in them main code they become.</p>
@@ -242,7 +244,7 @@
       request of a TurnoutManager. This is also an interface, with a similar implementation
       pattern. In turn, you get that TurnoutManager from the InstanceManager.</p>
 
-      <p>The role of the generic Manager&lt;T&gt; class</p>
+      <p>The role of the generic <code>Manager&lt;T&gt;</code> class</p>
 
       <p>NamedBean and addressing as part of the Manager's role.</p>
 

@@ -32,12 +32,12 @@
       this link</a> to display its source HTML code.</p>
 
       <h3 id="propose">Proposing Changes Online</h3>
-      <a href="images/GitHubPencil.png"><img src="images/GitHubPencil.png"
-      alt="GitHub screen shot"></a>
+
       <p>If you want to suggest a change to a file, for example a web page like this one, first get
       a free <a href="https://github.com/join">GitHub account</a> and sign in.</p>
 
-      <p>Then go to the file you want to change and click the pencil icon on the upper-right of the
+      <p><a href="images/GitHubPencil.png"><img src="images/GitHubPencil.png"
+      class="floatRight" alt="GitHub screen shot"></a>Then go to the file you want to change and click the pencil icon on the upper-right of the
       page.</p>
 
       <a href="images/GitHubProposeFileChange.png"><img src="images/GitHubProposeFileChange.png"

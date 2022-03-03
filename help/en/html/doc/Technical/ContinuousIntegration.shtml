@@ -51,8 +51,7 @@
       <a href="https://docs.github.com/en/actions">GitHub actions</a>
       to test every proposed change entered into our GitHub code repository
       before it gets merged.</p>
-      <a href="images/ActionSettings.png"><img src="images/ActionSettings.png"
-      alt="github actions"></a>
+
       <ul>
         <li>
           <a href="#winCI">Windows CI tests</a>
@@ -76,8 +75,12 @@
       </ul>
       <p>These checks are defined by files in the <code>.github/</code> directory.</p>
 
-      <p>These normally run both on PRs to the main JMRI/JMRI repository, but also on pushes and
-      PRs to your own repository. If you want to turn that off,</p>
+      <p>They normally run both on PRs to the main <code>JMRI/JMRI</code> repository,
+      but also on pushes and PRs to your own repository.</p>
+
+      <p>If you want to turn that off,</p>
+      <a href="images/ActionSettings.png"><img src="images/ActionSettings.png"
+      class="floatRight" alt="github actions"></a>
 
       <ol>
         <li>On the page for your own repository, select "Settings"</li>
@@ -87,6 +90,7 @@
         <li>Pick on option for what can run. The bottom option turns everything off for you
         locally.</li>
       </ol>
+
       <p>Note that if you turn this off, the "Actions" tab won't show in the GitHub web interface
         until you turn it back on.</p>
 
