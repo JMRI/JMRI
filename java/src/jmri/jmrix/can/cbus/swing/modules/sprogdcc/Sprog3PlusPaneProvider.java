@@ -19,7 +19,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = CbusConfigPaneProvider.class)
 public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
     
-    String type = "CANSPROG3P";
+    String type = "Pi-SPROG 3";
     
     public static final int CMD_STATION_NUMBER = 1;
     public static final int USER_FLAGS = 2;

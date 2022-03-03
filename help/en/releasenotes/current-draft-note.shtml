@@ -73,7 +73,13 @@
         <h4>LocoNet</h4>
             <ul>
                 <li>Added Digitrax DCS210Plus command station</li>
-            </ul>
+                <li>A storm of LocoNet messages could result if certain command station models
+                    have track power turned off whem JMRI starts. The status enquiry messages would
+                    fail, and JMRI would repeat them in an effort to get complete information from the layout.
+                    This release no longer retries messages in that case. If you are not getting
+                    initial status from some devices on your layout, you should power up
+                    your LocoNet system, including track power, before starting JMRI.
+                </ul>
 
         <h4>Maple</h4>
             <ul>
