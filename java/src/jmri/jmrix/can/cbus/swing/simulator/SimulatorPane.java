@@ -3,13 +3,9 @@ package jmri.jmrix.can.cbus.swing.simulator;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
+import javax.swing.*;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
@@ -44,9 +40,10 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         
-        try {
-            _sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
-        } catch (NullPointerException e) {
+        // todo - run on memo, not instance
+        _sim = jmri.InstanceManager.getNullableDefault(CbusSimulator.class);
+         
+        if ( _sim == null ) {
             jmri.util.ThreadingUtil.runOnLayout( ()->{
                 _sim = new CbusSimulator(memo);
             });
@@ -93,10 +90,14 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         }
 
         for ( int i=0 ; ( i < _sim.getNumNd() ) ; i++ ) {
-            NdPane thispanend = new NdPane(_sim.getNd(i)); // id , type
+            NdPane thispanend = new NdPane(_sim.getNd(i), memo); // id , type
             _ndPanes.add(thispanend);
             thispanend.setVisible(true);
         }
+        // and add an Empty pane
+        NdPane thispanend = new NdPane(null, memo); // id , type
+        _ndPanes.add(thispanend);
+        thispanend.setVisible(true);
         
         for ( int i=0 ; ( i < _sim.getNumEv() ) ; i++ ) {
             EvResponderPane thispane = new EvResponderPane(_sim.getEv(i)); // id , mode
@@ -147,7 +148,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
         JMenuItem newNd = new JMenuItem(Bundle.getMessage("CbusNode"));
         newNd.addActionListener ((ActionEvent e) -> {
-            NdPane thispanend = new NdPane(_sim.getNewNd());
+            NdPane thispanend = new NdPane( null, memo);
             _ndPanes.add(thispanend);
             revalidate();
         });
