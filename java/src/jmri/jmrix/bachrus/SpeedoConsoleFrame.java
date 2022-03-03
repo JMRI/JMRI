@@ -894,6 +894,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     circ = 50.2655F;
                     readerLabel.setText(Bundle.getMessage("Reader60"));
                     break;
+                case 103:
+                    circ = 50.2655F;
+                    readerLabel.setText(Bundle.getMessage("Reader60"));
+                    break;
                 default:
                     speedTextField.setText(Bundle.getMessage("ReaderErr"));
                     log.error("Invalid reader type");
