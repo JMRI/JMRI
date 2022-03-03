@@ -450,7 +450,7 @@ public final class FnMapPanelESU extends JPanel {
                             thisVar = null;
                         }
 
-                        int iVar = varModel.findVarIndex(name);  // now pick up the varModel entry we just created
+                        int iVar = varModel.findVarIndex(name, true);  // now pick up the varModel entry we just created
 
                         // hopefully we found it!
                         if (iVar >= 0) {

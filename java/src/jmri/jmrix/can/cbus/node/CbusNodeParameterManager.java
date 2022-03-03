@@ -123,6 +123,36 @@ public class CbusNodeParameterManager {
      * Get a Single Parameter value
      * <p>
      * eg. for param. array [3,1,2,3] index 2 returns 2
+     * <p>
+     * Para 0 Number of parameters
+     * <p>
+     * Para 1 The manufacturer ID
+     * <p>
+     * Para 2 Minor code version as an alphabetic character (ASCII)
+     * <p>
+     * Para 3 Manufacturer module identifier as a HEX numeric
+     * <p>
+     * Para 4 Number of supported events as a HEX numeric
+     * <p>
+     * Para 5 Number of Event Variables per event as a HEX numeric
+     * <p>
+     * Para 6 Number of supported Node Variables as a HEX numeric
+     * <p>
+     * Para 7 Major version
+     * <p>
+     * Para 8 Node flags
+     * <p>
+     * Para 9 Processor type
+     * <p>
+     * Para 10 Bus type
+     * <p>
+     * Para 11-14 load address, 4 bytes
+     * <p>
+     * Para 15-18 CPU manufacturer's id as read from the chip config space, 4 bytes
+     * <p>
+     * Para 19 CPU manufacturer code
+     * <p>
+     * Para 20 Beta revision (numeric), or 0 if release
      *
      * @param index of which parameter, 0 gives the total parameters
      * @return Full Parameter value for a particular index, -1 if unknown

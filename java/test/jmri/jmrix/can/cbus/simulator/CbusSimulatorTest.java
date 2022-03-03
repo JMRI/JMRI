@@ -25,22 +25,20 @@ public class CbusSimulatorTest {
     @Test
     public void testStartedCounts() {
         Assert.assertTrue("cs 1 ", t.getNumCS() == 1);
-        Assert.assertTrue("nd 1 ", t.getNumNd() == 1);
+        Assert.assertTrue("No nodes auto started ", t.getNumNd() == 0);
         Assert.assertTrue("ev 1 ", t.getNumEv() == 1);
         
         Assert.assertNotNull("cs get ", t.getCS(0));
-        Assert.assertNotNull("nd get ", t.getNd(0));
+       //  Assert.assertNotNull("nd get ", t.getNd(0));
         Assert.assertNotNull("ev get ", t.getEv(0));
     }
     
     @Test
     public void testgetNew() {
         Assert.assertNotNull("cs get new", t.getNewCS());
-        Assert.assertNotNull("nd get new", t.getNewNd());
         Assert.assertNotNull("ev get new", t.getNewEv());
         
         Assert.assertTrue("cs 2 ", t.getNumCS() == 2);
-        Assert.assertTrue("nd 2 ", t.getNumNd() == 2);
         Assert.assertTrue("ev 2 ", t.getNumEv() == 2);        
         
     }

@@ -83,6 +83,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @return the module provider, null if not known
      */
     final static public CbusConfigPaneProvider getProviderByName(String name) {
+        loadInstances();
         CbusConfigPaneProvider p = instanceMap.get(name);
         return p;
     }
@@ -94,6 +95,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @return the module provider
      */
     final static public CbusConfigPaneProvider getProviderByNode(CbusNode node) {
+        loadInstances();
         CbusConfigPaneProvider p = instanceMap.get(node.getName());
         if (p != null) {
             return p;
@@ -116,7 +118,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @return all instance map sorted in name order.
      */
     final static public Map<String, CbusConfigPaneProvider> getInstancesMap() {
-        if (instanceMap == null) loadInstances();
+        loadInstances();
         return Collections.unmodifiableMap(instanceMap);
     }
 
@@ -127,7 +129,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @return unmodifiable collection.
      */
     final static public Collection<CbusConfigPaneProvider> getInstancesCollection() {
-        if (instanceMap == null) loadInstances();
+        loadInstances();
         return Collections.unmodifiableCollection(instanceMap.values());
     }
 
