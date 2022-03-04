@@ -455,7 +455,7 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>Provide the ability to copy the content from an existing route when creating a new route.</li>
        </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>

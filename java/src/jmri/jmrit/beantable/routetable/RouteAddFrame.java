@@ -2,7 +2,7 @@ package jmri.jmrit.beantable.routetable;
 
 import jmri.InstanceManager;
 import jmri.Route;
-import jmri.routeManager;
+import jmri.RouteManager;
 
 import javax.swing.*;
 import java.awt.*;
