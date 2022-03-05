@@ -34,8 +34,8 @@ public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void kpfTest() {
-        SpeedoReply m  = new SpeedoReply("V3.0%\n*0012;");
-        Assert.assertEquals("toString","V3.0%\n*0012;", m.toString());
+        SpeedoReply m  = new SpeedoReply("V3.0%\r\n*0012;");
+        Assert.assertEquals("toString","V3.0%\r\n*0012;", m.toString());
         Assert.assertEquals("getSeries",103, m.getSeries());
         Assert.assertEquals("getCount",12, m.getCount());
     }

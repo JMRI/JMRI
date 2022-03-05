@@ -49,11 +49,12 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
     public int getCount() {
         log.debug("getCount of n= {} '{}'", _nDataChars, this);
         // KPF-Zeller formatting
-        if (_nDataChars == 12) {
+        if (_nDataChars == 13) {
             try {
-                log.trace("selected out '{}'", this.toString().substring(7, 11));
-                return Integer.parseInt(this.toString().substring(7, 11), 10);
+                log.trace("selected out '{}'", this.toString().substring(8, 12));
+                return Integer.parseInt(this.toString().substring(8, 12), 10);
             } catch (NumberFormatException ex) {
+                log.trace("return 0 because of fault");
                 return 0;
             }
         }
@@ -82,7 +83,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
     public int getSeries() {
         log.debug("getSeries of n= {} '{}'", _nDataChars, this);
         // KPF-Zeller formatting
-        if (_nDataChars == 12) {
+        if (_nDataChars == 13) {
             return 103;
         }
         // bachrus formatting
