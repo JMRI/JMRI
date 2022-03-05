@@ -39,18 +39,17 @@
       <p>If using versions of Eclipse older than "Mars", the <a href=
       "http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be installed in Eclipse.</p>
 
-      <p>Also note that at the time of writing this help document that JMRI requires Java version
-      8. You must confirm that JRE 8 is the default Java Runtime Environment. Eclipse recommends
-      installing release "Luna" or later for Java 8, but there are workarounds described
-      online.</p>
+      <p>Also note that since version 4.99 JMRI requires Java version
+      11. You must confirm that JRE 11 is the default Java Runtime Environment.</p>
 
-      <h2 id="getwgit">Eclipse version "Proton" and later</h2>
-      The "Proton" and later versions of Eclipse require a Maven project update after downloading
+      <h2 id="getgit">Eclipse version "Proton" and later</h2>
+      <p>The "Proton" and later versions of Eclipse require a Maven project update after downloading
       the JMRI source files. To do this, right click "jmri [...]" in the Package Explorer, then in
       the menu, select "Maven" and in the sub menu "Update project ...". After the update is
-      complete, do a project clean to rebuild the source files.
+      complete, do a project clean to rebuild the source files.</p>
+
       <h2>Getting the JMRI Source using Git</h2>
-      To get the source code from GitHub using Git you need to do the following:
+      <p>To get the source code from GitHub using Git you need to do the following:</p>
       <ol>
         <li>Go to <a href="https://github.com/">GitHub.com</a> and create an account.
         </li>
@@ -65,7 +64,7 @@
         screen should appear.</li>
       </ol>
       <a href="images/EclipseSourceGitRepository.png"><img src=
-      "images/EclipseSourceGitRepository.png" width="350" height="312" alt="Eclipse Git pane"></a>
+      "images/EclipseSourceGitRepository.png" alt="Eclipse Git pane"></a>
       <ol>
         <li>Enter the URI "https://github.com/JMRI/JMRI".</li>
 
@@ -74,8 +73,7 @@
         <li>Click the "Next" button and the Branch Selection screen should appear.</li>
       </ol>
       <a href="images/EclipseGitBranchSelection.png"><img src=
-      "images/EclipseGitBranchSelection.png" width="350" height="312" alt=
-      "Eclipse Branch pane"></a>
+      "images/EclipseGitBranchSelection.png" alt="Eclipse Branch pane"></a>
       <ol>
         <li>Select the branches you want to install. If you're not sure which branches you need,
         select just the "master" branch. This branch contains the latest code for JMRI.</li>
@@ -94,7 +92,7 @@
 
       <p>After the import is complete the Eclipse Package Explorer should look like this:</p>
       <a href="images/EclipsePackageExplorer.png"><img src="images/EclipsePackageExplorer.png"
-      width="350" height="312" alt="Eclipse Package Explorer pane"></a>
+      alt="Eclipse Package Explorer pane"></a>
       <p>Note that the first build can take a while and will require Internet access.</p>
 
       <p>If you get the error "Cannot read lifecycle mapping for artifact", open the "Run" menu,
@@ -215,7 +213,7 @@
           your username and password. After pressing "Finish" the "Configure Push" window should
           look like the image below:</p>
           <a href="images/EclipseConfigurePush.png"><img src="images/EclipseConfigurePush.png"
-          width="350" height="322" alt="Eclipse Error pane"></a>
+          alt="Eclipse Error pane"></a>
           <p>Press either the "Save and Push" or the "Save" button. Later when you want to push new
           changes to your repository on GitHub, you can simply commit them as described above, and
           then use the "Push" icon in the Synchronize window.</p>

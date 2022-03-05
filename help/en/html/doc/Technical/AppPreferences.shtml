@@ -15,8 +15,6 @@
     <div id="mainContent">
       <!-- created by pasting output of pandoc  -@-from=markdown -@-to=html AppPreferences.txt into
             this div (remove @ between the hyphens (-), not allowed in an HTML comment) -->
-      <!-- 2018 note that this output may contain invalid characters like curly quotes, which should be
-            replaced by straight quotes before uploading -->
 
       <h1 id="jmri-preferences">JMRI Preferences</h1>
 

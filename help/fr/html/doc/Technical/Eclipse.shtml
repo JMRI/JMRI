@@ -49,7 +49,7 @@
 			Java Runtime Environment par d&#233;faut. Eclipse recommande l'installation 
 			de la parution Luna pour Java 8, mais il existe des solutions de contournement d&#233;crites en ligne. </p>
 
-	<a name="getwgit"></a>
+	<a name="getgit"></a>
 	<h2>Obtention de la Source JMRI en utilisant Git</h2>
 	
 	Pour obtenir le code source depuis GitHub en utilisant Git, vous devez faire 

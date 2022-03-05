@@ -18,7 +18,7 @@
     <div id="mainContent">
       <h1><a id="TopOfPage"></a>JMRI: LogixNG Documentation</h1>
 
-      <p class="noted">LogixNG, along with its documentation, is still evolving. Some of the text
+      <p class="noted">LogixNG, along with its documentation, is still evolving. Some text
       is based on the original Logix documents.</p>
 
       <p>JMRI has for a long time had the tool Logix which can be used to create rules, for example
@@ -26,7 +26,7 @@
       job well, but is difficult to extend with new functionality.</p>
 
       <p>LogixNG, short for Logix Next Generation, is a complete rethink of the concept. It's
-      modular, which means it's easy to extend LogixNG with new functionality and it's easy to test
+      modular, which means it's easy to extend LogixNG with new functionality, and it's easy to test
       each part of LogixNG.</p>
 
       <p>LogixNG have building blocks that are similar to Logix. A <em>LogixNG</em> is the same as
@@ -38,19 +38,19 @@
       the layout. For example, if the memory IM1 has the value "IT1", the reference {IM1} points to
       the turnout IT1. This means that if an action has the command "set turnout {IM1} to thrown",
       it means that LogixNG reads the memory IM1, which in this example has the value IT1, and then
-      sets the turnout IT1 to thrown. This is similar to the Logix Indirect using
+      sets the turnout IT1 to Thrown. This is similar to the Logix Indirect using
       <strong>@memoryName</strong>.</p>
 
-      <p>References can be used to change which turnout to use, which is very useful to setup
+      <p>References can be used to change which turnout to use, which is very useful to set up
       generic rules. If a particular rule is common for many places on the layout, references can
       be use to use that single rule for all these cases.</p>
 
       <p>LogixNG also adds tables to JMRI. A table is similar to Memory but has one or two
       dimensions. Each row and each column in the table may be given a name, which means that a
       single cell in the table can be referred to with the row name and the column name. Tables are
-      in particular intended to be used together with references, to make it easy to setup complex
+      in particular intended to be used together with references, to make it easy to set up complex
       configurations. A table can be created in a spreadsheet software like Microsoft Excel or
-      LibreOffice Calc and then exported as an CSV file and imported to JMRI.</p>
+      LibreOffice Calc and then exported as an CSV file and imported into JMRI.</p>
 
       <ul>
         <li>
@@ -125,11 +125,10 @@
       <a id="preferences"></a>
       <h2>LogixNG Preferences</h2>
 
-      <p>LogixNG has settings the can be set in JMRI <strong>Preferences ⇒ LogixNG</strong>.</p>
+      <p>LogixNG has settings that can be set in JMRI <strong>Preferences ⇒ LogixNG</strong>.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/Preferences.png"><img src="images/Preferences.png" alt=
-        "LogixNG Preferences" width="297" height="198"></a>
+        <a href="images/Preferences.png"><img src="images/Preferences.png" alt="LogixNG Preferences"></a>
       </div>
 
       <dl>
@@ -142,7 +141,7 @@
 
         <dt>Install Debugger</dt>
 
-        <dd>There is an option in the LogixNG editor list for debugging a CondditionalNG. This has
+        <dd>There is an option in the LogixNG editor list for debugging a ConditionalNG. This has
         to be enabled during start up to work.</dd>
 
         <dt>Show system names and user names</dt>
@@ -306,15 +305,15 @@
         </ul>
 
        is the LogixNG table entry, its ConditionalNGs
-      and the expresssions and actions defined for the
+      and the expressions and actions defined for the
  -->
       <a id="system_names"></a>
       <h2>LogixNG system names</h2>
 
       <p>System names in JMRI consists of a system prefix and a type letter. For LogixNG, the
-      system prefix is usually 'I' and the type letter is 'Q'. But LogixNG consists of several sub
-      types and if all of them would have its own type letter, the letters in the alphabet would
-      run out. Therefore LogixNG has sub type letters, except for LogixNG itself.</p>
+      system prefix is usually 'I' and the type letter is 'Q'. But LogixNG consists of several
+      subtypes and if all of them would have its own type letter, the letters in the alphabet would
+      run out. Therefore, LogixNG has subtype letters, except for LogixNG itself.</p>
 
       <p>There is usually no need to work directly with system names and it's recommended to let
       JMRI to auto generate them. But they can be created manually if desired.</p>
@@ -390,9 +389,9 @@
         </tr>
       </table>
 
-      <p>"Auto system name" refers to system names that are generated automaticly.</p>
+      <p>"Auto system name" refers to system names that are generated automatically.</p>
 
-      <p>All system names consists of the system prefix, the type letter, possible a sub type,
+      <p>All system names consists of the system prefix, the type letter, possible a subtype,
       possible :AUTO: and a number. The number may begin with zeros and the system name IQ1 is
       different from the system name IQ0001.</p>
 
@@ -401,7 +400,7 @@
 
       <h3>LogixNG table structure</h3>
 
-      <p>A Table is a data type that holds a two dimensional array, like a spreadsheet.</p>
+      <p>A Table is a data type that holds a two-dimensional array, like a spreadsheet.</p>
 
       <p>Example:</p>
 
@@ -487,13 +486,13 @@
       {IM2}, it will read that memory and if that memory has a string as a value, it will use that
       string value to find the turnout. So if the memory IM2 has the value IT5, and the
       ActionTurnout has the turnout [IM2], the ActionTurnout will read the memory IM2 and find out
-      that it points to the turnout IT5 and therefore do it's action on turnout IT5. The benefit of
+      that it points to the turnout IT5 and therefore do its action on turnout IT5. The benefit of
       this is that the Memory can be changed during execution and therefore the same ActionTurnout
       can be used to access different turnouts at different times.</p>
 
       <p>It's possible to use indirect access recursive. If a ActionTurnout has the turnout {IM5},
       and that Memory has the value {IM14}, and that the Memory IM14 has the value IT3, the
-      ActionTurnout will access IT3. The ActionTurnout has an indirect turnout IM5 so it will read
+      ActionTurnout will access IT3. The ActionTurnout has an indirect turnout IM5, so it will read
       that Memory. And since that memory has the value {IM14} which also is an indirect access, it
       will read the memory IM14 and find out that it has the value IT3, and therefore use IT3. This
       is also true for tables. If the cell IQT1[5,3] has the value '{IM3}', and the memory IM3 has
@@ -613,7 +612,7 @@
       names in the table IQT1. It's also possible to write {Yard table[__columns__]} and {Yard
       table[__rows__]}. You can even use this syntax in ActionMemory to assign a Memory the list of
       column names or row names. Note however that column names or row names that are empty is seen
-      as colums or rows with a comment and therefore they are not included.</p>
+      as columns or rows with a comment, and therefore they are not included.</p>
 
       <p>Tables are loaded by a start up action. They are created in a spreadsheet, like Microsoft
       Excel or LibreOffice Calc and then exported to a CSV file, separated by TAB characters. The
@@ -654,9 +653,9 @@
       lists all currently defined LogixNG by their System Name and User Name. The table also shows
       whether a LogixNG is "Enabled". The last column of the table provides an easy way to edit a
       LogixNG and its ConditionalNGs. Clicking the <strong>Select</strong> choice box for a
-      LogixNG, will drop down a menu with four choices; <strong>Edit</strong>,
-      <strong>Browse</strong>, <strong>Copy</strong> and <strong>Delete</strong>. Each choice will
-      bring up a pane for the corresponding operation.</p>
+      LogixNG, will drop down a menu with four choices: <strong>Edit</strong>,
+      <strong>Browse</strong>, <strong>Copy</strong> and <strong>Delete</strong>.<br>
+      Each choice will bring up a pane for the corresponding operation.</p>
 
       <h4>LogixNG Table controls</h4>
 
@@ -693,7 +692,7 @@
             <li>ConditionalNG Variable References<br>
               <a href="../../package/jmri/jmrit/beantable/images/VariableReferences.png"><img src=
               "../../package/jmri/jmrit/beantable/images/VariableReferences.png" alt=
-              "Variable Reference Window" height="320" width="339"></a>
+              "Variable Reference Window"></a>
             </li>
           </ul>
         </li>
@@ -746,7 +745,7 @@
 
       <p>The only time when the ConditionalNGs are evaluated in the order listed is when all of
       their states are UNKNOWN, such as when the LogixNG is being enabled. ConditionalNGs are
-      evaluated when one of their expressions changes its state. If an entity is used as a
+      evaluated when one of their expressions changes its state. If an entity is used as an
       expression in more than one conditionalNG, it is indeterminate which conditionalNG is
       evaluated first.</p>
 
@@ -772,12 +771,13 @@
       <div style="margin-left: 2em">
         <a href="../../package/jmri/jmrit/beantable/images/ConditionalNGBrowser.png"><img src=
         "../../package/jmri/jmrit/beantable/images/ConditionalNGBrowser.png" alt=
-        "ConditionalNG Browser Window" height="296" width="562"></a>
+        "ConditionalNG Browser Window"></a>
       </div>
 
       <p>Selecting the <strong>Copy</strong> item from the drop down <strong>select</strong> menu
       on the LogixNG Table will show a series of dialog windows that provide a way to copy the
       LogixNG and any or all of its ConditionalNG to a new or existing LogixNG.</p>
+
       <a id="conditionalng"></a>
       <h2>ConditionalNGs</h2>
 
@@ -865,7 +865,7 @@
       <h3>The Logical Expression</h3>
 
       <p>The logical expression section contains a table of state variables, with two buttons and a
-      drop down menu box below. The drop down menu allows the choice of what logical operators to
+      dropdown menu box below. The dropdown menu allows the choice of what logical operators to
       use in the antecedent. The choices are: all <strong>AND</strong>'s, all <strong>OR</strong>'s
       or <strong>Mixed</strong>. Mixed allows the user to specify any combination of AND's, OR's
       and NOT's. When this choice is made the logical expression requires parentheses in order to
@@ -875,8 +875,8 @@
 
       <p>The first column in the expression table is the row number of the variable. The next
       column displays the logic operation preceding the variable in the expression. In the case of
-      "Mixed" a choice box allows the user to choose an operation. However these choices can be
-      changed in the antecedent text field and it is the text field expression that the
+      "Mixed" a choice box allows the user to choose an operation. However, these choices can be
+      changed in the antecedent text field. It is the text field expression that the
       ConditionalNG uses to determine its state. The third column contains a choice box that allows
       the user to select the NOT operator as needed.</p>
 
@@ -920,7 +920,7 @@
       again. <em>Please remember after editing the System Name and data items to click a different
       cell in the table before clicking <strong>Check State Variables</strong> (or <strong>Update
       ConditionalNG</strong> at the bottom of the window) so that the program is notified that you
-      have finished your entry. Otherwise your entry may not take effect, and an error may be
+      have finished your entry. Otherwise, your entry may not take effect, and an error may be
       reported unnecessarily.</em></p>
       <a id="thepolicy"></a>
       <h3>Triggering the Actions</h3>
@@ -1101,7 +1101,7 @@
       <h2>Additional Notes</h2>
 
       <p>This section contains questions and answers that normally are not needed by LogixNG users,
-      but in some cases were important or of interest for previous versions of LogixNG.</p>
+      but in some cases were important or of interest using previous versions of LogixNG.</p>
 
       <ul>
         <li>
@@ -1113,7 +1113,7 @@
           when the LogixNG is created, after it is edited, or when it is loaded from a
           configuration file. This method starts listeners for items in the expressions of the
           LogixNG's ConditionalNGs. When any of these listeners fires (indicating that the watched
-          property of a expression has changed), the LogixNG is calculated, resulting in
+          property of an expression has changed), the LogixNG is calculated, resulting in
           appropriate actions being taken, provided the LogixNG is enabled.</p>
         </li>
 
@@ -1127,7 +1127,7 @@
           following paragraphs describe a couple of those situations, but there are others.</p>
 
           <p>Occasionally a "logic loop" can result if triggering is not suppressed. For example,
-          if the state of a turnout is tested in a expression, and the same turnout is set in an
+          if the state of a turnout is tested in an expression, and the same turnout is set in an
           action of the same or another ConditionalNG of the same LogixNG, continuous triggering (a
           logic loop) could result. The easiest way out of this dilemma is to test the turnout,
           without using it as a triggering entity. This is done by unchecking Triggers Calculation
@@ -1151,11 +1151,11 @@
           best way to avoid a "logic loop" is to be aware of situations that can lead to a loop,
           and plan your logic to avoid such situations.</p>
 
-          <p>A "logic loop" can result within a single LogixNG when a expression (sensor, turnout,
+          <p>A "logic loop" can result within a single LogixNG when an expression (sensor, turnout,
           etc.) that triggers the LogixNG is also changed by that same LogixNG. The LogixNG editor
           will detect some situations that could result in a loop, and will issue a warning when
           you close the LogixNG. <strong>Heed these warnings!</strong> A warning doesn't mean that
-          a loop definitely will result if you continue. The warning message is a "wake up call"
+          a loop definitely will result if you continue. The warning message is a "wake-up call"
           that you should study carefully what you're doing to make sure a loop won't result.</p>
 
           <p>A more complicated situation involving two or more LogixNGs can also result in a
@@ -1172,9 +1172,9 @@
           <p>When they do occur, "logic loops" can be a bit scary to trouble shoot. Your computer
           may appear to be locked up, or slowed to a crawl as the loop uses up most of the
           available computer time. Fortunately JMRI provides tools to help in design and debugging.
-          Unchecking "Triggers Calculation" for a expression (discussed above), can help you design
+          Unchecking "Triggers Calculation" for an expression (discussed above), can help you design
           around loops when you have identified the LogixNG causing the looping problem. To get
-          around the lock up or slow down problem, start with all your LogixNGs disabled, (see
+          around the lockup or slow down problem, start with all your LogixNGs disabled, (see
           below) then enable them one by one until you discover the loop.</p>
 
           <p>If the panel file containing LogixNGs loads automatically when the program starts up,
@@ -1253,12 +1253,12 @@
       <ul>
         <li>Using a Memory that has the name of the NamedBean</li>
 
-        <li>Using a NamedBeanMap to lookup the name of the NamedBean</li>
+        <li>Using a NamedBeanMap to look up the name of the NamedBean</li>
       </ul>
 
       <p>Using a Memory that has the name of the NamedBean</p>
 
-      <p>Lets say we have an ActionTurnout that should throw a particulat turnout. But we wnat to
+      <p>Lets say we have an ActionTurnout that should throw a particular turnout. But we want to
       be able to select which turnout to throw at a later time. We can solve that by storing the
       system name or user name in a Memory. We then tell the ActionTurnout to read the Memory and
       lookup the turnout on the fly.</p>
@@ -1269,28 +1269,28 @@
       <h3>Warning</h3>
 
       <p>There is one major drawback with this. Since LogixNG doesn't know in advance which
-      NamedBeans will be accessed indirectly, it's not possible for LogixNG to automaticly register
+      NamedBeans will be accessed indirectly, it's not possible for LogixNG to automatically register
       listeners to the named beans that should trigger on change. For example, an ExpressionTurnout
       registers a listener on the turnout, if the name of the turnout is given, but if the
       ExpressionTurnout is using indirect addressing of the turnout, it's not able to do that.</p>
 
       <p>The solution is to use the ActionListenOnBeans and tell this action which beans to listen
-      on. Any time any property of any of the named beans this action listen to, the ConditionalNG
-      will be executed.</p>
+      on. Any time any property of any of the named beans this action listens to changes, the
+      ConditionalNG will be executed.</p>
 
       <p>Example:</p>
 
-      <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's expressions and wants
+      <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in its expressions and wants
       each of them to trigger on change. Turnouts IT1 and IT3 and IT4 are directly accessed in
       expressions and IT2, IT3 and IT5 is indirect accessed.</p>
 
-      <p>Each turnout that is directly addressed in an expression will the ConditionalNG listen to
-      automaticly, so IT1, IT3 and IT4 will be listen to. But in order to listen on turnouts IT2
+      <p>The ConditionalNG will automatically listen to each turnout that is directly addressed in an
+      expression, so IT1, IT3 and IT4 will be listened to. But in order to listen on turnouts IT2
       and IT5, the ActionListenOnBeans needs to be used.</p>
 
       <p>The ActionListenOnBeans can be placed anythere in the ConditionalNG tree, as long as it
       and its parents are enabled. If you disable this action, or any of its parent actions, the
-      ActionListenOnBeans will not listen on its named beans.</p>
+      ActionListenOnBeans will not listen to its named beans.</p>
 
       <h3>Special actions</h3>
 
@@ -1328,12 +1328,12 @@
 
       <p>This action has a list of items. Either a constant list, or it can use a NamedBeanMap.</p>
 
-      <p>The ActionForEach action loops thru the list. It takes the first item in the list, assigns
+      <p>The ActionForEach action loops through the list. It takes the first item in the list, assigns
       it to a Memory, and then executes its child action. Then it takes the second item in the
       list, assigns it to the Memory, and executes the child action.</p>
       <a id="digital_actions"></a>
-      <h2>List of digital actions</h2>
 
+      <h2>List of digital actions</h2>
       <p>This section lists all the digital actions that is currently available with LogixNG.</p>
 
       <p>Digital actions do something. Example: Set sensor IS2 to ON. Throw turnout LT52.</p>
@@ -1345,7 +1345,7 @@
       <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
       sure if these ideas are worth keeping. /Daniel</p>
 
-      <p style="color:blue">Items in blue is not up to date with documentation. The documentation
+      <p style="color:blue">Items in blue is not up-to-date with documentation. The documentation
       tells how they should work, but the code is not finished yet. /Daniel</p>
 
       <ul>
@@ -1400,7 +1400,7 @@
           <p><strong>DoStringAction</strong>
           </p>
 
-          <p>The DoStringAction reads an string child expression and executes an string child
+          <p>The DoStringAction reads a string child expression and executes a string child
           action.</p>
         </li>
 
@@ -1448,7 +1448,7 @@
           mainly included to demonstrate the possibilities of LogixNG, but it may be useful in some
           cases, for example when a Raspberry Pi computer runs the layout and there is no keyboard
           and mouse connected to the Raspberry Pi computer. It's then possible to use a sensor to
-          shutdown the computer.</p>
+          shut down the computer.</p>
         </li>
       </ul>
       <a id="digital_boolean_actions"></a>
@@ -1467,7 +1467,7 @@
       <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
       sure if these ideas are worth keeping. /Daniel</p>
 
-      <p style="color:blue">Items in blue is not up to date with documentation. The documentation
+      <p style="color:blue">Items in blue is not up-to-date with documentation. The documentation
       tells how they should work, but the code is not finished yet. /Daniel</p>
 
       <ul>
@@ -1494,7 +1494,7 @@
       <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
       sure if these ideas are worth keeping. /Daniel</p>
 
-      <p style="color:blue">Items in blue is not up to date with documentation. The documentation
+      <p style="color:blue">Items in blue is not up-to-date with documentation. The documentation
       tells how they should work, but the code is not finished yet. /Daniel</p>
 
       <ul>
@@ -1503,8 +1503,8 @@
           </p>
 
           <p>The And expression has a number of child expressions and answers <strong>true</strong>
-          if and only if all of the child expressions answers <strong>true</strong>. If any of the
-          child expressions answer <strong>false</strong>, the <strong>And</strong> expression
+          if and only if all the child expressions answer <strong>true</strong>. If any of the
+          child expressions answers <strong>false</strong>, the <strong>And</strong> expression
           answers <strong>false</strong>.</p>
         </li>
 
@@ -1514,7 +1514,7 @@
 
           <p>The Antecedent expression has a formula together with a number of child expressions.
           It evaluates the formula with the results from the child expressions. The Antecedent
-          expression follows the same rules as in a Conditional in Logix. A Antecedent formula can
+          expression follows the same rules as in a Conditional in Logix. An Antecedent formula can
           have parentheses and the words <strong>AND</strong> and <strong>OR</strong> to build the
           formula.</p>
         </li>
@@ -1620,10 +1620,10 @@
           <p>Example usages for this expression:</p>
 
           <ul>
-            <li>Wait on a timer. For example, when turnout IT1 is thrown, wait 5 seconds until
+            <li>Wait on a timer. For example, when turnout IT1 changes to Thrown, wait 5 seconds until
             expression becomes true.</li>
 
-            <li>Wait on a timer. For example, when turnout IT1 is thrown, let the expression be
+            <li>Wait on a timer. For example, when turnout IT1 changes to Thrown, let the expression be
             true for 5 seconds.</li>
           </ul>
         </li>
@@ -1632,7 +1632,7 @@
           <p><strong>Timer</strong>
           </p>
 
-          <p>The Timer expression waits some time then it's reset.</p>
+          <p>The Timer expression waits some time before it resets.</p>
         </li>
 
         <li>
