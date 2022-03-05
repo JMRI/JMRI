@@ -70,6 +70,12 @@
                 <li></li>
             </ul>
 
+        <h4>KPH-Zeller</h4>
+            <ul>
+                <li>Initial support for the
+                    <a href="https://kpf-zeller.de/kpf/rollenstand/index.php">KPH-Zeller roller speedometer</a>.</li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li>Added Digitrax DCS210Plus command station</li>
