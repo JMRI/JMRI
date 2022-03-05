@@ -924,7 +924,16 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     protected void calcSpeed() {
         float thisScale = (selectedScale == -1) ? customScale : selectedScale;
-        if (series > 0) {
+        if (series == 103) {
+            // KPH-Zeller
+            // calculate kph: r/sec * circumference converted to hours and kph in scaleFace
+            sampleSpeed = (float) ( (count/8.) * (5.95+0.9) / 3600 / 1.0E6 * thisScale * speedTestScaleFactor);
+            // data arrives at constant rate, so we don't average nor switch range
+            avSpeed = sampleSpeed;
+            log.debug("New KPH-Zeller sample: {} Average: {}", sampleSpeed, avSpeed);
+
+        } else if (series > 0 && series <= 6) {
+            // Bachrus
             // Scale the data and calculate kph
             try {
                 freq = 1500000 / count;
@@ -933,7 +942,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 log.error("Exception calculating sampleSpeed", ae);
             }
             avFn(sampleSpeed);
-            log.debug("New sample: {} Average: {}", sampleSpeed, avSpeed);
+            log.debug("New Bachruns sample: {} Average: {}", sampleSpeed, avSpeed);
             log.debug("Acc: {} range: {}", acc, range);
             switchRange();
         }
