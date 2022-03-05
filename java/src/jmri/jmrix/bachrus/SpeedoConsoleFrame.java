@@ -927,7 +927,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (series == 103) {
             // KPH-Zeller
             // calculate kph: r/sec * circumference converted to hours and kph in scaleFace
-            sampleSpeed = (float) ( (count/8.) * (5.95+0.9) / 3600 / 1.0E6 * thisScale * speedTestScaleFactor);
+            sampleSpeed = (float) ( (count/8.) * (5.95+0.9) * 3600 / 1.0E6 * thisScale * speedTestScaleFactor);
             // data arrives at constant rate, so we don't average nor switch range
             avSpeed = sampleSpeed;
             log.debug("New KPH-Zeller sample: {} Average: {}", sampleSpeed, avSpeed);
