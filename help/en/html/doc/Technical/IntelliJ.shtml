@@ -72,7 +72,7 @@
         <li>In GitHub web, go to the JMRI/JMRI repo and "Fork" the JMRI repository to your own
         remote copy. To do this, log on to your account at <a href=
         "https://github.com/">GitHub.com</a> and navigate to the JMRI repository <a href=
-        "https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a> In the upper right hand
+        "https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a> In the upper right-hand
         corner of the page you will find a button labeled "Fork". Press the "Fork" button to create
         your own repository of the JMRI source. (see <a href="getgitcode.shtml#get">Getting the
         Code</a>).
@@ -154,7 +154,7 @@
           alt="IntelliJ encoding prefs"></a>
         </li>
 
-        <li>From the Version Control -&gt; GitHub tab choose Add... (the + sign) and select
+        <li>From the Version Control -&gt; GitHub tab choose Add... (the + sign), and select
           Log In with Token...<br>
           <a href="images/IntelliJ/IjPrefsGitHubLogin.png"><img src=
           "images/IntelliJ/IjPrefsGitHubLogin.png"
@@ -256,17 +256,17 @@
 
         <li>the <strong>Version Control</strong> tab at the bottom.</li>
 
-        <li>the <strong>Git: master</strong> at the bottom righthand corner, showing the current
+        <li>the <strong>Git: master</strong> at the bottom right-hand corner, showing the current
         Branch ("master") with a menu to change to another Branch.</li>
       </ol>
 
-      <p>You can also access this panel from the main VCS -&gt; Git -&gt; Branches... menu or right
-      clicking the JMRI Project folder and selecting Git -&gt; Repository -&gt; Branches...<br>
+      <p>You can also access this panel from the main VCS -&gt; Git -&gt; Branches... menu or
+        right-clicking the JMRI Project folder and selecting Git -&gt; Repository -&gt; Branches...<br>
       <a href="images/IntelliJ/IjGitRepoMenu.png"><img src="images/IntelliJ/IjGitRepoMenu.png"
       alt="IntelliJ Project Git context menu"></a></p>
 
       <p>To check out another Branch from the remote repo, select its name under "Remote Branches",
-      right click and select "Checkout as new local branch":<br>
+      right-click and select "Checkout as new local branch":<br>
       <a href="images/IntelliJ/IjNewBranch.png"><img src="images/IntelliJ/IjNewBranch.png"
       alt="IntelliJ checkout branch"></a></p>
 
@@ -319,12 +319,12 @@
       <a href="images/IntelliJ/IjGitBranches.png"><img src="images/IntelliJ/IjGitBranches.png"
       alt="IntelliJ main project window"></a><br>
       Supply a name i.e. <code>my-dialog-2</code> and click OK.<br>
-      Note: Starting your Branch name with a unique two letter combination will make it stand out
+      Note: Starting the name of your Branch with a unique two letter combination will make it stand out
       from the long list much better than a name like <code>patch-1</code>.</p>
 
       <p>In special cases, you might want to branch from one of your own active branches, or from a
-      different branch or Tag in the JMRI Github repository.<br>
-      To branch from a tag, select "Checkout Tag or Revision..." from the Git:branch drop down at
+      different branch or Tag in the JMRI GitHub repository.<br>
+      To branch from a tag, select "Checkout Tag or Revision..." from the Git:branch dropdown at
       bottom right:<br>
       <img src="images/IntelliJ/IjGitCheckoutTag.png" alt=
       "IntelliJ Checkout Tag option"><br>
@@ -388,7 +388,7 @@
         <li>From the main menubar open the "Build" menu and select a JMRI package like
         <code>panelpro</code> or</li>
 
-        <li>Open the Ant Build tab and from the "Ant Build" list, right click the desired package
+        <li>Open the Ant Build tab and from the "Ant Build" list, right-click the desired package
         i.e. <code>decoderpro</code> and select "&gt; Run Target".</li>
       </ol>
 
@@ -414,9 +414,9 @@
 
       <h3>Pulling</h3>
 
-      <p>It is also good practice to "Pull" all of the recent changes from the main JMRI repository
+      <p>It is also good practice to "Pull" all recent changes from the main JMRI repository
       before performing your Commits. After a "pull" your workspace and eventually your remote
-      GitHub repository will be in synch with the main JMRI repository and you will see recent work
+      GitHub repository will be in sync with the main JMRI repository, and you will see recent work
       by others. To perform a "Pull":</p>
 
       <ul>
@@ -441,7 +441,7 @@
           own repo or JMRI's as in the example).<br>
           [2] From the displayed list, select the appropriate Branch to merge (you might also Pull
           an extra Branch to switch to later).<br>
-          If what you expect is not in the list, click the Refres button [3].
+          If what you expect is not in the list, click the Refresh button [3].
         </li>
 
         <li>To conclude, click "Pull" and answer how you would like to combine the new data into
@@ -538,26 +538,19 @@
         <img src="images/IntelliJ/IjProjectSettingsSourcesStep2_tests.png"
         alt="IntelliJ Project Setting Sources tab - tests"></li>
 
-        <li>In the column to the right both choices will be visible.<br>
+        <li>In the column to the right both choices will be visible:<br>
+          <a href="images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png"><img src=
+          "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png" alt=
+          "JMRI Project Settings - Build - Compiler Output Paths screen"></a><br>
           From now on you will also see these special icons in the Project file listing:
-          <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
-            <div class="flex-item-50">
-              <a href="images/IntelliJ/IjProjectCompilepathsSet.png"><img src=
-              "images/IntelliJ/IjProjectCompilepathsSet.png" alt=
-              "SRC and TEST folders highlighted in Ij Project File List"></a>
-            </div>
-            <div class="flex-item-50">
-              <a href=
-              "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png"><img src=
-              "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png" alt=
-              "JMRI Project Settings - Build - Compiler Output Paths screen"></a>
-            </div>
-          </div>
+          <a href="images/IntelliJ/IjProjectCompilepathsSet.png"><img src=
+          "images/IntelliJ/IjProjectCompilepathsSet.png" alt=
+          "SRC and TEST folders highlighted in Ij Project File List"></a>
         </li>
 
         <li>From the <strong>Build</strong> menu select <strong>Build Project</strong> or
-        <strong>Build Module 'JMRI'</strong> (and wait for up to 20 minutes, do some stretch
-        exercises etc).</li>
+        <strong>Build Module 'JMRI'</strong> (and wait a couple of minutes, do some stretch
+        exercises in the meantime).</li>
       </ol>
 
       <p>We've documented the following steps to help you get started using the built-in Debug
@@ -663,13 +656,13 @@
       <h3 id="test">Testing with IntelliJ</h3>
 
       <p>Besides Debug, there's also a "Run ... with Coverage" option available in the Run menu and
-      tool bar.</p>
+      toolbar.</p>
 
       <p>When you create or edit a <a href="JUnit.shtml">test</a> (located in your Project at
       JMRI.java.test etc.) you can test it in one of the following ways:</p>
 
       <ul>
-        <li>part of the <code>alltest</code> Ant Build (double click in the IntelliJ Ant Build
+        <li>part of the <code>alltest</code> Ant Build (double-click in the IntelliJ Ant Build
         right hand column to run)</li>
 
         <li>run it on its own using the <code>test-single</code> Ant Task</li>
@@ -722,14 +715,14 @@
           See the <a href="SpotBugs.shtml">JMRI SpotBugs help</a>.
         </li>
 
-        <li>Next, from the <strong>Ant Build</strong> tab select the <strong>spotbugs</strong> ant
-        task, wait for up to 20 minutes (do some stretch exercises etc), followed by SpotBugs
-        doings its duty. The analysis results show up as an htnl page called spotbugs.html that is
-        placed in the root of the JMRI Module. Right click to open it with your favorite
-        browser.</li>
+        <li>Next, from the <strong>Ant</strong> tab select the <strong>(3rd) JMRI &gt; spotbugs</strong>
+        task, wait a couple of minutes (do some stretch exercises etc.), followed by SpotBugs
+        doings its duty. The analysis results show up as an html page called <code>spotbugs.html</code>
+        that is placed in the root of the JMRI Module on teh Project tab.<br>
+        Right click to open it with your favorite browser.</li>
         <!-- update once a plugin is available for SpotBugs:
 
-        <li>When you right click on any file icon in the
+        <li>When you right-click on any file icon in the
         <code>src</code> or <code>test</code> folders, the
           <b>SpotBugs</b> context menu allows you to <b>Analyze Selected File(s)</b> and more:<br>
           <img src="images/IntelliJ/IjFbContextMenuOnFile.png"
@@ -830,7 +823,7 @@
 
       <p>Click on any line to view the changes that were Committed at that point in time (listed to
       the right).<br>
-      To reset your repo (HEAD) back to a certain point, right click on the corresponding line and
+      To reset your repo (HEAD) back to a certain point, right-click on the corresponding line and
       select "Reset Current Branch to Here..." (and confirm).<br>
       <a href="images/IntelliJ/IjResetBranchTo.png"><img src="images/IntelliJ/IjResetBranchTo.png"
       alt="IntelliJ History reset"></a><br>
@@ -880,7 +873,7 @@
         <h2 id="errors">Compiler Errors and Warnings</h2>
 
         The default IntelliJ compiler configuration may produce some unnecessary
-        warnings. You can adjust the warnings to match the screen shots as
+        warnings. You can adjust the warnings to match the screenshots as
         shown below by going to Window -&gt; Preferences and selecting
         "Java -&gt; Compiler -&gt; Errors/Warnings".
         -->

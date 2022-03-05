@@ -79,17 +79,17 @@ it.
           "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/ParametersAreNonnullByDefault.html">
           javax.annotation.ParametersAreNonnullByDefault</a> on the class declaration (the start of
           the class) to set @Nonnull for an entire class. Note that SpotBugs won't let you compare
-          an @Nonnull value to null; that's an error that SpotBugs wants to find via static
-          analysis. If your annotating a part of the external API, and you want to double-check at
+          a @Nonnull value to null; that's an error that SpotBugs wants to find via static
+          analysis. If you are annotating a part of the external API, and you want to double-check at
           runtime, use <a href=
           "https://docs.oracle.com/javase/8/docs/api/java/util/Objects.html#requireNonNull-T-">java.util.Objects.requireNonNull(..)</a>,
           for example:
 
-          <pre style="font-family: monospace;">
-        public Car(@Nonnull Engine engine, @Nonnull Transmission transmission) {
-            this.engine = java.util.Objects.requireNonNull(engine, "Engine cannot be null");
-            this.transmission = java.util.Objects.requireNonNull(transmission, "Transmission cannot be null");
-        }
+<pre style="font-family: monospace;">
+   public Car(@Nonnull Engine engine, @Nonnull Transmission transmission) {
+       this.engine = java.util.Objects.requireNonNull(engine, "Engine cannot be null");
+        this.transmission = java.util.Objects.requireNonNull(transmission, "Transmission cannot be null");
+   }
 </pre>
         </li>
 
@@ -105,8 +105,8 @@ it.
           <a href=
           "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/OverridingMethodsMustInvokeSuper.html">
           <code>javax.annotation.OverridingMethodsMustInvokeSuper</code></a> - Used to annotate a
-          method that, if overridden, must (or should) be invoke super in the overriding method.
-          Examples of such methods include finalize() and clone().
+          method that, if overridden, must (or should) invoke super in the overriding method.
+          Examples of such methods include <code>finalize()</code> and <code>clone()</code>.
           <p>Note this replaces the deprecated <a href=
           "http://findbugs.sourceforge.net/manual/annotations.html"><code>edu.umd.cs.findbugs.annotations.OverrideMustInvoke</code></a>.</p>
         </li>
@@ -115,13 +115,13 @@ it.
           <a href=
           "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckReturnValue.html">
           <code>javax.annotation.CheckReturnValue</code></a> - annotates a method to say the method
-          has no side-effects, so there's no point in calling it without checking its return value.
+          has no side effects, so there is no point in calling it without checking its return value.
         </li>
 
         <li>
           <a href=
           "http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html"><code>net.jcip.annotations.Immutable</code></a>
-          - An object of this class can't be changed after it's created. This allows both better
+          - An object of this class can't be changed after it was created. This allows both better
           checking of logic, and also simplifies use by your colleagues, so it's good to create
           classes that have this property and then annotate them.
         </li>
@@ -206,10 +206,10 @@ it.
         </li>
 
         <li>You have to tell the JMRI build systems where that installation is. You can do that
-        with various environment variables, etc, but the most straight-forward is to add a line
+        with various environment variables etc. but the most straight-forward is to add a line
         like the following to your <a href="StartUpScripts.shtml">local.properties</a> file:
 
-          <pre style="font-family: monospace;">
+    <pre style="font-family: monospace;">
     spotbugs.home = /Users/jake/.spotbugs/spotbugs-4.2.3
     </pre>
         </li>
@@ -217,7 +217,7 @@ it.
         <li>In order to check for spotbugs issues in logging statements, we use the <a href=
         "https://www.kengo-toda.jp/findbugs-slf4j/">Findbugs-slf4j</a> plugin by KengoTODA. To use
         this plugin in ant builds, download the plugin and install it in the plugin directory of
-        your spotbugs installation.
+        your Spotbugs installation.
         </li>
 
         <li>Then run SpotBugs in ant via:
@@ -270,9 +270,9 @@ it.
         <dd>Static, as opposed to non-static, inner classes (classes defined within another class)
         take less space because they don't maintain references to the containing object. This
         warning suggests moving an anonymous (defined in-line to the code) inner class to a regular
-        (defined not in-line) class so it can be made static. Although probably a small
+        (defined not in-line) class, so it can be made static. Although probably a small
         improvement, it's a bit of work for a small improvement. We have enough of them that we've
-        turned off the warning, and will come back to it some later time.</dd>
+        turned off the warning, and we'll come back to it later.</dd>
 
         <dt>
           <a href=
@@ -295,7 +295,7 @@ it.
 
         <dt>Se,SvVI</dt>
 
-        <dd>This is a large class of warnings associated with Java serialization. JMRI doesn't used
+        <dd>This is a large class of warnings associated with Java serialization. JMRI doesn't use
         serialization, and is unlikely to do so in the future, so we suppress these to raise the
         average quality of the issued warnings.</dd>
 
