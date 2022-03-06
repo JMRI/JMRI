@@ -268,7 +268,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             try {
                 dest.useLayoutEditor(false);
             } catch (JmriException e) {
-                log.error("{}", e.getLocalizedMessage(), e);
+                log.error(" ",  e);
             }
         });
     }
