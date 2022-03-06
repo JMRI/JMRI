@@ -895,7 +895,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     readerLabel.setText(Bundle.getMessage("Reader60"));
                     break;
                 case 103:
-                    circ = (float) ((5.95+0.9) * 2. * Math.PI);
+                    circ = (float) ((5.95+0.9) * Math.PI);
                     readerLabel.setText(Bundle.getMessage("Reader103"));
                     break;
                 default:
