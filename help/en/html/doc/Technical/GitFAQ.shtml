@@ -67,9 +67,9 @@
 
         <dd>
           You can set your local repository to pull automatically from the JMRI master on GitHub
-          and push to your fork (also on GitHub): <a href=
-          "/web/images/GitHubWorkflow.png"><img src="/web/images/GitHubWorkflow.png" class=
-          "floatRight" height="25%" width="25%" alt="GitHub Work Flow"></a>
+          and push to your fork (also on GitHub):<br>
+          <a href="/web/images/GitHubWorkflow.png"><img src="/web/images/GitHubWorkflow.png"
+          height="25%" width="25%" alt="GitHub Work Flow"></a>
           <p>That horizontal arrow is the "Pull Request" (and subsequent pull) that records
           information about how things get into the repository.</p>
 
@@ -221,14 +221,14 @@ you push, on the other hand, it goes to your own repository.
           <ul>
             <li>Clone the JMRI repo to your local system by picking an item from the "Clone" tab in
             the File -&gt; Clone repository... menu and clicking "Clone":<br>
-              <a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" width=
-              "267" height="184" alt="GitHub Desktop PR dialog"></a>
+              <a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png"
+              alt="GitHub Desktop PR dialog"></a>
             </li>
 
             <li>Check your GitHub URL in the "Remote" tab from the Repository -&gt; Repository
             Settings menu as:<br>
-              <a href="images/GhDtRepoSetting.png"><img src="images/GhDtRepoSetting.png" width=
-              "260" height="98" alt="GitHub Desktop Repo Setting"></a>
+              <a href="images/GhDtRepoSetting.png"><img src="images/GhDtRepoSetting.png"
+              alt="GitHub Desktop Repo Setting"></a>
             </li>
 
             <li>Make your changes locally, test them, etc.<br>
@@ -236,21 +236,21 @@ you push, on the other hand, it goes to your own repository.
               returning to the GitHub Desktop application, reviewing all changes noticed by the
               program, enter a Summary [1] and Description [2] and finally clicking the Commit to
               &lt;branch&gt; [3] button:<br>
-              <a href="images/GhDtWindow.png"><img src="images/GhDtWindow.png" width="410" height=
-              "256" alt="GitHub Desktop Window"></a>
+              <a href="images/GhDtWindow.png"><img src="images/GhDtWindow.png"
+              alt="GitHub Desktop Window"></a>
               <p>After your Commit, a white dot will appear near the end of the line that looks
               like a siding in a <em>track plan</em>. Click it to read the title. To see the files
               changed at another point in time, click an older commit dot:<br>
               <a href="images/GhDtWindowSeeCommit.png"><img src="images/GhDtWindowSeeCommit.png"
-              width="456" height="79" alt="GitHub Desktop Commit"></a></p>
+              alt="GitHub Desktop Commit"></a></p>
 
               <p>After a commit, your new edits are only added to your local copy of your branch.
               To have them show up in a place other people can see them, either click the
               <strong>Sync</strong> button at top right, choose Sync (Cmd-S) from the Repository
-              menu or make Github Desktop automatically syncing after every commit by checking the
+              menu or make Github Desktop automatically sync after every commit by checking the
               Automatically Sync after Committing menu item in the Edit menu:<br>
-              <a href="images/GhDtSyncSetting.png"><img src="images/GhDtSyncSetting.png" width=
-              "154" height="122" alt="GitHub Desktop auto sync menu"></a></p>
+              <a href="images/GhDtSyncSetting.png"><img src="images/GhDtSyncSetting.png"
+              alt="GitHub Desktop auto sync menu"></a></p>
             </li>
 
             <li>When you've worked on something in GhDt for a week or more, other people definitely
@@ -259,8 +259,8 @@ you push, on the other hand, it goes to your own repository.
             choose "Pull" from the "Repository" menu).<br>
               You will see an animation of a small branch symbol in a circle, moving from the
               straight white line down to the line below it:<br>
-              <a href="images/GhDtUpdateFrom.png"><img src="images/GhDtUpdateFrom.png" width="456"
-              height="79" alt="GitHub Desktop Pull"></a>
+              <a href="images/GhDtUpdateFrom.png"><img src="images/GhDtUpdateFrom.png"
+              alt="GitHub Desktop Pull"></a>
               <p>This tells you that new code has been copied to your repo, and in a few seconds
               this new code is also copied to your computer, so you can view it or use it, unless
               they've been working on the same lines of code (See Resolve a Merge Conflict,
@@ -273,15 +273,15 @@ you push, on the other hand, it goes to your own repository.
               <table>
                 <tr>
                   <td>
-                    <a href="images/GhDtPRCreate.png"><img src="images/GhDtPRCreate.png" width=
-                    "129" height="215" alt="GitHub Desktop Create PR dialog"></a>
+                    <a href="images/GhDtPRCreate.png"><img src="images/GhDtPRCreate.png"
+                    alt="GitHub Desktop Create PR dialog"></a>
                   </td>
                   <td>The name of the PR button will change into <strong>#123</strong><br>
                   signaling you can't make another PR in this branch<br>
                   from here (but you can still commit extra edits to it):</td>
                   <td>
-                    <a href="images/GhDtPRCreated.png"><img src="images/GhDtPRCreated.png" width=
-                    "129" height="215" alt="GitHub Desktop PR Created message"></a>
+                    <a href="images/GhDtPRCreated.png"><img src="images/GhDtPRCreated.png"
+                    alt="GitHub Desktop PR Created message"></a>
                   </td>
                 </tr>
               </table>
@@ -440,8 +440,8 @@ changes were picked up and merged in, you can then commit them to your branch:
                 <li>Click the "Add a Branch (+)" button, provide a name for your new branch and
                 using the From: pop-up, select the branch from where you want to create the new
                 branch:<br>
-                  <a href="images/GhDtNewBranch.png"><img src="images/GhDtNewBranch.png" width=
-                  "208" height="122" alt="GitHub Desktop Repo Setting"></a>
+                  <a href="images/GhDtNewBranch.png"><img src="images/GhDtNewBranch.png"
+                  alt="GitHub Desktop Repo Setting"></a>
                 </li>
 
                 <li>To delete a branch, select it in the "Show Branches" pop-up menu, and then
@@ -449,7 +449,7 @@ changes were picked up and merged in, you can then commit them to your branch:
                   You can't do that with the master branch, so don't work in that, always work in a
                   named branch.<br>
                   <a href="images/GhDtDeleteBranch.png"><img src="images/GhDtDeleteBranch.png"
-                  width="156" height="79" alt="GitHub Desktop Repo Setting"></a>
+                  alt="GitHub Desktop Repo Setting"></a>
                 </li>
               </ul>
             </li>
@@ -521,18 +521,18 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
           change from one person was inserted into master, and you have prepared changes to the
           same line, GitHub Desktop asks you to help decide what to do by displaying the following
           Conflict screen (Note the orange dots next to one of the file names):<br>
-          <a href="images/GhDtConflictNote.png"><img src="images/GhDtConflictNote.png" width="410"
-          height="255" alt="GitHub Merge Conflict Note"></a>
+          <a href="images/GhDtConflictNote.png"><img src="images/GhDtConflictNote.png"
+          alt="GitHub Merge Conflict Note"></a>
           <p>Click on that name and choose Show in Finder or Open with External Editor (GhDt itself
           has no edit tools).<br>
           To find the spot where the Conflict occurred, look for the <code>&lt;&lt;&lt; HEAD ====
           &gt;&gt;&gt; master</code> markers that were inserted by GitHub:<br>
-          <a href="images/GhDtConfictmark.png"><img src="images/GhDtConfictmark.png" width="212"
-          height="184" alt="GitHub Merge Conflict marking in code"></a><br>
+          <a href="images/GhDtConfictmark.png"><img src="images/GhDtConfictmark.png"
+          alt="GitHub Merge Conflict marking in code"></a><br>
           Choose which of both versions you wish to keep (or make some combination) and remove the
           <code>&lt; === &gt;</code> lines!<br>
-          <a href="images/GhDtConflictFixed.png"><img src="images/GhDtConflictFixed.png" width=
-          "212" height="184" alt="GitHub Merge Conflict solved in code"></a></p>
+          <a href="images/GhDtConflictFixed.png"><img src="images/GhDtConflictFixed.png"
+          alt="GitHub Merge Conflict solved in code"></a></p>
 
           <p>This new proposal should still be Committed to JMRI, so give it a fitting title i.e.
           "Solve conflict" and click Commit (and Sync). This extra commit will be added to your PR
@@ -615,8 +615,8 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
           ends.<br>
           For example, in Espresso check that Line Endings are set to <strong>Unix (LF)</strong>
           before starting to edit any JMRI file:<br>
-          <a href="images/EspressoPrefsLF.png"><img src="images/EspressoPrefsLF.png" width="226"
-          height="219" alt="Espresso LF Preference setting"></a></p>
+          <a href="images/EspressoPrefsLF.png"><img src="images/EspressoPrefsLF.png"
+          alt="Espresso LF Preference setting"></a></p>
         </dd>
 
         <dt id="testPR">Testing a Pull Request</dt>
@@ -625,7 +625,7 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
           <p>Pull requests are just a special case of a branch. If you want to test them before
           merging them into master, you can bring them into your local repository and work with
           them. <a href="images/GitHubPullPRLinks.png"><img src="images/GitHubPullPRLinks.png"
-          class="floatRight" width="392" height="104" alt="GitHub Web PR screen"></a></p>
+          class="floatRight"alt="GitHub Web PR screen"></a></p>
 
           <p>In some cases, GitHub Web makes specific instructions available right on the
           pull-request itself. Look near the bottom of the discussion thread, in the last
@@ -646,7 +646,7 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
                 <u>user</u>:<u>branch</u>
               </blockquote>
               <a href="images/GitHubPRbranchInfo.png"><img src="images/GitHubPRbranchInfo.png"
-              width="446" height="114" alt="GitHub Web branch screen"></a>
+              alt="GitHub Web branch screen"></a>
             </li>
 
             <li>Next, pull that branch onto your own machine with the command:
