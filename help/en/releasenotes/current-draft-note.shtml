@@ -70,10 +70,10 @@
                 <li></li>
             </ul>
 
-        <h4>KPH-Zeller</h4>
+        <h4>KPF-Zeller</h4>
             <ul>
                 <li>Initial support for the
-                    <a href="https://kpf-zeller.de/kpf/rollenstand/index.php">KPH-Zeller roller speedometer</a>.</li>
+                    <a href="https://kpf-zeller.de/kpf/rollenstand/index.php">KPF-Zeller roller speedometer</a>.</li>
             </ul>
 
         <h4>LocoNet</h4>
