@@ -328,6 +328,10 @@
             </li>
 
             <li>
+              <a href="bachrus/index.shtml">KPF-Zeller</a>
+            </li>
+
+            <li>
               <a href="maple/index.shtml">Maple Systems</a>
             </li>
 
@@ -1422,6 +1426,24 @@
           <dd>
             <p class="dl">Configure: <a href="misc/DccSpecialties.shtml">Hare, Wabbit, Block
             Watcher or PSX family products</a>.</p>
+
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im">
+            <a href=
+            "https://kpf-zeller.de/kpf/rollenstand/index.php"
+            target="_blank"><img src="https://kpf-zeller.de/images/logos/logo_lang_logo_logo.png" width="100" height="33" alt=
+            "Bachrus"></a>
+          </dt>
+
+          <dt>
+            <a href="bachrus/index.shtml">KPF-Zeller</a>
+          </dt>
+
+          <dd>
+            <p class="dl">Configure: <a href="bachrus/index.shtml">KPF-Zeller Model Train
+            Speedometer</a></p>
 
             <p>&nbsp;</p>
           </dd>
