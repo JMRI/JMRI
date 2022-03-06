@@ -66,16 +66,25 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     }
 
     // Most of the following methods will inherit Javadoc from SignalMastLogic.java
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setFacingBlock(LayoutBlock facing) {
         facingBlock = facing;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public LayoutBlock getFacingBlock() {
         return facingBlock;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public LayoutBlock getProtectingBlock(@Nonnull SignalMast dest) {
         if (!destList.containsKey(dest)) {
@@ -84,11 +93,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(dest).getProtectingBlock();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public SignalMast getSourceMast() {
         return source;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void replaceSourceMast(SignalMast oldMast, SignalMast newMast) {
         if (oldMast != source) {
@@ -117,6 +132,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         firePropertyChange("updatedSource", oldMast, newMast);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast) {
         if (!destList.containsKey(oldMast)) {
@@ -144,6 +162,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         firePropertyChange("updatedDestination", oldMast, newMast);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setDestinationMast(SignalMast dest) {
         if (destList.containsKey(dest)) {
@@ -158,6 +179,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         // make new dest mast appear in (update of) SignallingSourcePanel Table by having that table listen to PropertyChange Events from SML TODO
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isDestinationValid(SignalMast dest) {
         if (dest == null) {
@@ -166,6 +190,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.containsKey(dest);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<SignalMast> getDestinationList() {
         List<SignalMast> out = new ArrayList<>();
@@ -176,6 +203,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return out;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public String getComment(SignalMast dest) {
         if (!destList.containsKey(dest)) {
@@ -184,6 +214,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(dest).getComment();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setComment(String comment, SignalMast dest) {
         if (!destList.containsKey(dest)) {
@@ -192,6 +225,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(dest).setComment(comment);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setStore(int store, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -200,6 +236,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setStore(store);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public int getStoreState(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -208,6 +247,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getStoreState();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setEnabled(SignalMast dest) {
         if (!destList.containsKey(dest)) {
@@ -216,6 +258,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(dest).setEnabled();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setDisabled(SignalMast dest) {
         if (!destList.containsKey(dest)) {
@@ -224,6 +269,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(dest).setDisabled();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isEnabled(SignalMast dest) {
         if (!destList.containsKey(dest)) {
@@ -232,6 +280,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(dest).isEnabled();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isActive(SignalMast dest) {
         if (!destList.containsKey(dest)) {
@@ -240,6 +291,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(dest).isActive();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public SignalMast getActiveDestination() {
         for (SignalMast sm : getDestinationList()) {
@@ -250,6 +304,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return null;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean removeDestination(SignalMast dest) {
         int oldSize = destList.size();
@@ -262,6 +319,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.isEmpty();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void disableLayoutEditorUse() {
         destList.values().forEach(dest -> {
@@ -273,6 +333,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         });
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void useLayoutEditor(boolean boo, SignalMast destination) throws JmriException {
         if (!destList.containsKey(destination)) {
@@ -357,11 +420,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return errorCount;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void removeDirectionSensors() {
         //TODO find aaway of easilty identifying the ones we added.
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean useLayoutEditor(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -370,6 +439,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).useLayoutEditor();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void useLayoutEditorDetails(boolean turnouts, boolean blocks, SignalMast destination) throws JmriException {
         if (!destList.containsKey(destination)) {
@@ -382,6 +454,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean useLayoutEditorBlocks(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -390,6 +465,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).useLayoutEditorBlocks();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean useLayoutEditorTurnouts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -398,6 +476,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).useLayoutEditorTurnouts();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public Section getAssociatedSection(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -406,6 +487,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAssociatedSection();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setAssociatedSection(Section sec, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -414,6 +498,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setAssociatedSection(sec);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean allowAutoMaticSignalMastGeneration(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -422,6 +509,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).allowAutoSignalMastGen();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void allowAutoMaticSignalMastGeneration(boolean allow, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -430,6 +520,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).allowAutoSignalMastGen(allow);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void allowTurnoutLock(boolean lock, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -438,6 +531,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).allowTurnoutLock(lock);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isTurnoutLockAllowed(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -446,6 +542,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).isTurnoutLockAllowed();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -454,6 +553,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setTurnouts(turnouts);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -462,6 +564,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setAutoTurnouts(turnouts);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setBlocks(Hashtable<Block, Integer> blocks, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -470,6 +575,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setBlocks(blocks);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -478,6 +586,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setAutoBlocks(blocks);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setMasts(Hashtable<SignalMast, String> masts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -486,6 +597,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setMasts(masts);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setAutoMasts(Hashtable<SignalMast, String> masts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -494,6 +608,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setAutoMasts(masts, true);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -502,6 +619,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).setSensors(sensors);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void addSensor(String sensorName, int state, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -514,6 +634,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void removeSensor(String sensorName, SignalMast destination) {
         Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
@@ -529,6 +652,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<Block> getBlocks(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -537,6 +663,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getBlocks();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<Block> getAutoBlocks(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -545,6 +674,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAutoBlocks();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<Block> getAutoBlocksBetweenMasts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -553,6 +685,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAutoBlocksBetweenMasts();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<Turnout> getTurnouts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -561,6 +696,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getTurnouts();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -579,6 +717,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<Turnout> getAutoTurnouts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -587,6 +728,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAutoTurnouts();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<Sensor> getSensors(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -595,6 +739,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getSensors();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<NamedBeanHandle<Sensor>> getNamedSensors(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -603,6 +750,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getNamedSensors();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<SignalMast> getSignalMasts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -611,6 +761,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getSignalMasts();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<SignalMast> getAutoMasts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -619,6 +772,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAutoSignalMasts();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void initialise() {
         Enumeration<SignalMast> en = destList.keys();
@@ -627,6 +783,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void initialise(SignalMast destination) {
         if (disposing) {
@@ -639,6 +798,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         destList.get(destination).initialise();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination) {
         if (disposing) {
@@ -651,6 +813,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).setupLayoutEditorTurnoutDetails(blks);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setupLayoutEditorDetails() {
         if (disposing) {
@@ -703,6 +868,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return false;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean areBlocksIncluded(List<Block> blks) {
         Enumeration<SignalMast> en = destList.keys();
@@ -723,6 +891,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return false;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public int getBlockState(Block block, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -731,6 +902,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getBlockState(block);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isBlockIncluded(Block block, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -739,6 +913,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).isBlockIncluded(block);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isTurnoutIncluded(Turnout turnout, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -747,6 +924,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).isTurnoutIncluded(turnout);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isSensorIncluded(Sensor sensor, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -755,6 +935,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).isSensorIncluded(sensor);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public boolean isSignalMastIncluded(SignalMast signal, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -763,6 +946,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).isSignalMastIncluded(signal);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public int getAutoBlockState(Block block, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -771,6 +957,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAutoBlockState(block);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public int getSensorState(Sensor sensor, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -779,6 +968,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getSensorState(sensor);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public int getTurnoutState(Turnout turnout, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -787,6 +979,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getTurnoutState(turnout);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public int getAutoTurnoutState(Turnout turnout, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -795,6 +990,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAutoTurnoutState(turnout);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public String getSignalMastState(SignalMast mast, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -803,6 +1001,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getSignalMastState(mast);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public String getAutoSignalMastState(SignalMast mast, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -811,6 +1012,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getAutoSignalMastState(mast);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public float getMaximumSpeed(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -901,9 +1105,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     aspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE);
                 }
             } else {
-                for (int i = 0; i < advancedAspect.length; i++) {
-                    if (!getSourceMast().isAspectDisabled(advancedAspect[i])) {
-                        aspect = advancedAspect[i];
+                for (String advancedAspect1 : advancedAspect) {
+                    if (!getSourceMast().isAspectDisabled(advancedAspect1)) {
+                        aspect = advancedAspect1;
                         break;
                     }
                 }
@@ -1041,6 +1245,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         });
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void setConflictingLogic(SignalMast sm, LevelXing lx) {
         if (sm == null) {
@@ -1068,6 +1275,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void removeConflictingLogic(SignalMast sm, LevelXing lx) {
         if (sm == source) {
@@ -2242,7 +2452,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                             turnoutSettings.put(ls.getTurnout(), taState);
                             int tbState = ls.getTurnoutBState(slipState);
                             turnoutSettings.put(ls.getTurnoutB(), tbState);
-                        } else {
+                        } else if ( lt != null ) {
                             String t = lt.getTurnoutName();
                             // temporary = why is this looking up the Turnout instead of using getTurnout()?
                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
@@ -2694,7 +2904,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     }
 
     /**
-     * The listener on the destination Signal Mast
+     * The listener on the destination Signal Mast.
      */
     protected PropertyChangeListener propertyDestinationMastListener = new PropertyChangeListener() {
         @Override
@@ -2708,7 +2918,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     };
 
     /**
-     * The listener on the source Signal Mast
+     * The listener on the source Signal Mast.
      */
     protected PropertyChangeListener propertySourceMastListener = new PropertyChangeListener() {
         @Override
@@ -2817,6 +3027,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         super.dispose(); // release any prop change listeners
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMastLogic");
@@ -2836,6 +3049,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     public void setState(int i) {
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
