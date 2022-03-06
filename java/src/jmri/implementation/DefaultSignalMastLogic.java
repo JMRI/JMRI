@@ -268,7 +268,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             try {
                 dest.useLayoutEditor(false);
             } catch (JmriException e) {
-                log.error(" ",  e);
+                log.error("Could not disable LayoutEditor ",  e);
             }
         });
     }
@@ -286,7 +286,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             // TODO: what is this?
             log.debug("userLayoutEditor finds layout list size is {}", layout.size());
             for (LayoutEditor findeditor : layout) {
-                log.debug("{}", findeditor.getLayoutName());
+                log.debug("layouteditor {}", findeditor.getLayoutName());
                 if (facingBlock == null) {
                     facingBlock = InstanceManager.getDefault(LayoutBlockManager.class).getFacingBlockByMast(getSourceMast(), findeditor);
                 }
@@ -961,7 +961,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
 
                              If the diverg flag has not been set then we will check.
                              */
-                            log.debug("{}",advancedAspect[i]);
+                            log.debug("advanced aspect {}",advancedAspect[i]);
                             if ((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable) || (!divergRoute)) && (nonDivergAspects.contains(i))) {
                                 log.debug("In list");
                                 if ((strSpeed != null) && (!strSpeed.isEmpty())) {
@@ -2213,7 +2213,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<>();
             LinkedHashMap<Block, Integer> block = new LinkedHashMap<>();
             for (int i = 0; i < lblks.size(); i++) {
-                log.debug("{}",lblks.get(i).getDisplayName());
+                log.debug("layoutblock {}",lblks.get(i).getDisplayName());
                 block.put(lblks.get(i).getBlock(), Block.UNOCCUPIED);
                 if ((i > 0)) {
                     int nxtBlk = i + 1;
