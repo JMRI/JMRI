@@ -718,7 +718,7 @@
         <li>Next, from the <strong>Ant</strong> tab select the <strong>(3rd) JMRI &gt; spotbugs</strong>
         task, wait a couple of minutes (do some stretch exercises etc.), followed by SpotBugs
         doings its duty. The analysis results show up as an html page called <code>spotbugs.html</code>
-        that is placed in the root of the JMRI Module on teh Project tab.<br>
+        that is placed in the root of the JMRI Module on the Project tab.<br>
         Right click to open it with your favorite browser.</li>
         <!-- update once a plugin is available for SpotBugs:
 
