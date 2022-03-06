@@ -79,6 +79,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
      * <dt>6</dt><dd>Reader 60</dd>
      * <dt>103</dt><dd>KPR-Zeller</dd>
      * </dl>
+     * @return type code for specific reply content
      */
     public int getSeries() {
         log.debug("getSeries of n= {} '{}'", _nDataChars, this);
