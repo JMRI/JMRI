@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Bachrus</title>
   <meta name="author" content="Andrew Crosland">
-  <meta name="keywords" content="Bachrus java model railroad JMRI install windows">
+  <meta name="keywords" content="Bachrus KPF-Zeller java model railroad JMRI install windows">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -14,34 +14,42 @@
     <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: Bachrus</h1>
+      <h1>Hardware Support: Speedometers</h1>
 
-      <p>JMRI supports the Bachrus MTS-DCC Model train Speedometer, which is an input only device,
-      to capture speed information from a reader module on a Bachrus "Saddle" running stand.</p>
+      <p>JMRI supports the Bachrus MTS-DCC Model train Speedometer,
+      and the KPF-Zeller Speedometer, which are input-only devices,
+      to capture speed information from a locomotive on a running stand.</p>
 
       <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Bachrus MTS-DCC Model train Speedometer</h3>
 
-      <p>When the Bachrus MTS-DCC is set as a JMRI Layout Connection Preference, the Speedo Console
+          <h4 id="documentation">Third Party info</h4>
+
+          <p>Bachrus has retired as of 2018. Information on the Bachrus Speedometer products stored on
+          the WaybackMachine from the <a href=
+          "https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php">Bachrus
+          website</a>.</p>
+
+      <h3>KPF-Zeller Speedometer</h3>
+
+      For more information on the KPF-Zeller hardware, see
+      <a href="https://kpf-zeller.de/kpf/rollenstand/index.php">their web site</a>.
+
+      <h2 id="usage">Usage</h2>
+
+      <p>When a speedometer is set as a JMRI Layout Connection Preference, the Speedo Console
       tool can be used to display scale running speed for any scale from Z to O and beyond.</p>
       <a href="images/dial.jpg"><img src="images/dial.jpg" width="336" height="373" alt=
       "Speedometer dial display"></a><br>
       Left hand side of Speedo panel
-      <p>When the Bachrus MTS-DCC is set as a layout connection alongside a DCC hardware system the
+      <p>When a speedometer is set as a layout connection alongside a DCC hardware system the
       speedo utility allows automated measurement of a DCC decoder equipped loco's speed
       profile.</p>
       <a href="images/profile.jpg"><img src="images/profile.jpg" width="543" height="373" alt=
       "Speedometer speed profile graph"></a><br>
       Right hand side of Speedo panel
-      <h2 id="documentation">Documentation</h2>
 
-      <h3>Third Party info</h3>
-
-      <p>Bachrus has retired as of 2018. Information on the Bachrus Speedometer products stored on
-      the WaybackMachine from the <a href=
-      "https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php">Bachrus
-      website</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
