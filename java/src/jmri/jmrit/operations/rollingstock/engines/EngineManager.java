@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 
 import org.jdom2.Element;
@@ -24,8 +23,6 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class EngineManager extends RollingStockManager<Engine>
         implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
-
-    protected Hashtable<String, Consist> _consistHashTable = new Hashtable<>(); // stores Consists by number
 
     public EngineManager() {
     }
