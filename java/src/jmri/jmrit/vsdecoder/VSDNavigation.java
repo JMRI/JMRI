@@ -492,7 +492,7 @@ public class VSDNavigation {
 
             case SINGLE_SLIP:
             case DOUBLE_SLIP: {
-                log.warn("{}.navigate(...); slips should be being handled by LayoutSlip sub-class", tv.getName());
+                log.warn("TurnoutView {}.navigate(...); slips should be being handled by LayoutSlip sub-class", tv.getName());
                 break;
             }
             default: { // OOPS! we're lost!

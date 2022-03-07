@@ -83,24 +83,21 @@ public class VSDGeoFile extends XmlFile {
         // Another list to provide a flag for circling or non-circling routes
         circlelist = new ArrayList<>();
 
-        File file = new File(FileUtil.getUserFilesPath() + VSDGeoDataFileName);
-
         models = null;
         geofile_ok = false;
+
+        File file = new File(FileUtil.getUserFilesPath() + VSDGeoDataFileName);
+        if (!file.exists()) {
+            log.debug("File {} for train tracking is not available", VSDGeoDataFileName);
+            lf_version = 1; // assume "location following"
+            return;
+        }
 
         // Try to load data from the file
         try {
             root = rootFromFile(file);
-        } catch (java.io.FileNotFoundException e1) {
-            log.debug("File {} for train tracking is not available", VSDGeoDataFileName);
-            root = null;
-        } catch (Exception e2) {
-            log.error("Exception while loading file", VSDGeoDataFileName, e2);
-            root = null;
-        }
-        if (root == null) {
-            // no VSDGeoData file available
-            lf_version = 1; // assume "location following"
+        } catch (Exception e) {
+            log.error("Exception while loading file {}", VSDGeoDataFileName, e);
             return;
         }
 
@@ -303,7 +300,7 @@ public class VSDGeoFile extends XmlFile {
                     } else {
                         // If a radius is defined (radius > 0), rotate-ypos must exist!
                         if (blockParameter[setup_index][j][0] > 0.0f) {
-                            log.warn("{}: Element rotate-ypos not found", VSDGeoDataFileName);
+                            log.warn("File {}: Element rotate-ypos not found", VSDGeoDataFileName);
                                 num_issues++;
                             }
                     }
@@ -312,7 +309,7 @@ public class VSDGeoFile extends XmlFile {
                         blockParameter[setup_index][j][4] = Float.parseFloat(n);
                         log.debug(" length: {}", n);
                     } else {
-                        log.warn("{}: Element length not found", VSDGeoDataFileName);
+                        log.warn("File {}: Element length not found", VSDGeoDataFileName);
                         num_issues++;
                     }
                     n = c1.getChildText("end-position");
@@ -424,7 +421,7 @@ public class VSDGeoFile extends XmlFile {
                     if (userName2 != null) {
                         lblk = lm.getByUserName(userName2);
                         if (lblk != null) {
-                            log.debug("{}, block system name: {}, user name: {}", le.getTitle(), bl.getSystemName(), userName2);
+                            log.debug("File {}, block system name: {}, user name: {}", le.getTitle(), bl.getSystemName(), userName2);
                             int tsInBlock = 0;
                             // List of all LayoutTracks in the block
                             ArrayList<LayoutTrack> layoutTracksInBlock = new ArrayList<>();
