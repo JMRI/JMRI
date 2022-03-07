@@ -136,12 +136,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
                     } catch (InterruptedException ex) {
                         return; // stop waiting if slot is found or error occurs
                     }
-                    String msg = "No response to slot request for {}, attempt {}"; // NOI18N
+                    String msg = "";
                     if (attempts < maxAttempts) {
                         slotManager.slotFromLocoAddress(address.getNumber(), list);
-                        msg += ", trying again."; // NOI18N
+                        msg = ", trying again."; // NOI18N
                     }
-                    log.debug(msg, address, attempts);
+                    log.debug("No response to slot request for {}, attempt {} {}", address, attempts, msg); // NOI18N
                     attempts++;
                 }
                 log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
