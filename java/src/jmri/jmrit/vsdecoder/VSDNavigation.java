@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * a Block check.
  *
  * Concept for direction change, e.g.:
- *  EndBumper ---- TrackSegment ------ Anchor--->
+ *  EndBumper ---- TrackSegment ------ Anchor
  *  lastTrack      returnTrack     returnLastTrack
  *
  * <hr>
