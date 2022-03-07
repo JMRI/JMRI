@@ -182,13 +182,20 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             log.debug("set turnout retry: {}", mTurnoutNoRetry);
         }
 
-        InstanceManager.store(getPowerManager(), PowerManager.class);
+        PowerManager pm = getPowerManager();
+        if ( pm != null ) {
+            InstanceManager.store(pm, PowerManager.class);
+        }
 
-        InstanceManager.setSensorManager(
-                getSensorManager());
+        SensorManager lsm = getSensorManager();
+        if ( lsm != null ) {
+            InstanceManager.setSensorManager(lsm);
+        }
 
-        InstanceManager.setTurnoutManager(
-                getTurnoutManager());
+        TurnoutManager ltm = getTurnoutManager();
+        if ( ltm != null ) {
+            InstanceManager.setTurnoutManager(ltm);
+        }
 
         InstanceManager.setLightManager(
                 getLightManager());
