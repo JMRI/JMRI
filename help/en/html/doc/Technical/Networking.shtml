@@ -159,7 +159,7 @@
         <li>For <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">remote
         throttles</a> such as the iPhone or Android. (<a href=
         "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
-        (<a href="http://withrottle.com">WiThrottle product web site</a>) (<a href=
+        (<a href="http://withrottle.com">WiThrottle product website</a>) (<a href=
         "https://enginedriver.mstevetodd.com">Android Engine
         Driver page</a>)
           <p>This is advertised on Bonjour/Zeroconf as a "_withrottle._tcp.local." service.</p>

@@ -158,7 +158,7 @@
 
       <h2 id="independent">Independent Checks with Jenkins</h2>
       <p>JMRI uses the <a href="http://jenkins-ci.org/">Jenkins</a> continuous integration engine for
-      integration and test builds. This includes keeping our <a href="WebSite.shtml">web site</a>
+      integration and test builds. This includes keeping our <a href="WebSite.shtml">website</a>
       up to date as changes are committed, building installer packages from development builds, and
       building final releases.</p>
 
