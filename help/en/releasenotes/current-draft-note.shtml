@@ -70,6 +70,12 @@
                 <li></li>
             </ul>
 
+        <h4>KPF-Zeller</h4>
+            <ul>
+                <li>Initial support for the
+                    <a href="https://kpf-zeller.de/kpf/rollenstand/index.php">KPF-Zeller roller speedometer</a>.</li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li>Added Digitrax DCS210Plus command station</li>
@@ -474,7 +480,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added waitSignalMastState, waitSignalHeadState to AbstractAutomat support.</li>
         </ul>
 
     <h3>Signals</h3>
