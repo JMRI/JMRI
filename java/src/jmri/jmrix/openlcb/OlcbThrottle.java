@@ -11,9 +11,7 @@ import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.VersionedValueListener;
 import org.openlcb.implementations.throttle.RemoteTrainNode;
-import org.openlcb.implementations.throttle.ThrottleImplementation;
 import org.openlcb.implementations.throttle.TractionThrottle;
-import org.openlcb.messages.TractionControlRequestMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,31 +72,7 @@ public class OlcbThrottle extends AbstractThrottle {
         speedListener = new VersionedValueListener<Float>(ot.getSpeed()) {
             @Override
             public void update(Float speedAndDir) {
-                float newSpeed;
-                float direction = Math.copySign(1.0f, speedAndDir);
-                if (speedAndDir.isNaN()) {
-                    // e-stop
-                    newSpeed = -1.0f;
-                    direction = isForward ? 1.0f : -1.0f;
-                } else {
-                    newSpeed = speedAndDir / (126 * (float) MPH);
-                    if (direction < 0) {
-                        newSpeed = -newSpeed;
-                    }
-                }
-                float oldSpeed;
-                boolean oldDir;
-                synchronized(OlcbThrottle.this) {
-                    oldSpeed = speedSetting;
-                    oldDir = isForward;
-                    speedSetting = newSpeed;
-                    isForward = direction > 0;
-                    log.debug("Speed listener update old {} new {}", oldSpeed, speedSetting);
-                    firePropertyChange(SPEEDSETTING, oldSpeed, speedSetting);
-                    if (oldDir != isForward) {
-                        firePropertyChange(ISFORWARD, oldDir, isForward);
-                    }
-                }
+                updateSpeedAndDirFromNetwork(speedAndDir);
             }
         };
         for (int i = 0; i <= 28; i++) {
@@ -161,6 +135,40 @@ public class OlcbThrottle extends AbstractThrottle {
         // notify 
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
+    }
+
+    /**
+     * Called when the speed and direction value is updated from a network feedback. This is
+     * typically originating from another throttle, possibly controlling another consist member.
+     * @param speedAndDir speed and direction in meters per second, negative for reverse; -0.0 is
+     *                   different than +0.0
+     */
+    private void updateSpeedAndDirFromNetwork(Float speedAndDir) {
+        float newSpeed;
+        float direction = Math.copySign(1.0f, speedAndDir);
+        if (speedAndDir.isNaN()) {
+            // e-stop
+            newSpeed = -1.0f;
+            direction = isForward ? 1.0f : -1.0f;
+        } else {
+            newSpeed = speedAndDir / (126 * (float) MPH);
+            if (direction < 0) {
+                newSpeed = -newSpeed;
+            }
+        }
+        float oldSpeed;
+        boolean oldDir;
+        synchronized(this) {
+            oldSpeed = speedSetting;
+            oldDir = isForward;
+            speedSetting = newSpeed;
+            isForward = direction > 0;
+            log.debug("Speed listener update old {} new {}", oldSpeed, speedSetting);
+            firePropertyChange(SPEEDSETTING, oldSpeed, speedSetting);
+            if (oldDir != isForward) {
+                firePropertyChange(ISFORWARD, oldDir, isForward);
+            }
+        }
     }
 
     /** 
