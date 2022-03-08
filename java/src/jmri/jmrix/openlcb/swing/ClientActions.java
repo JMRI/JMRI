@@ -141,6 +141,17 @@ public class ClientActions {
                 return value;
             }
 
+            @Override
+            public void makeSensor(String ev, String mdesc) {
+                jmri.Sensor sensor =
+                        jmri.InstanceManager.sensorManagerInstance()
+                                .provideSensor(memo.getSystemPrefix() + "S" + ev);
+                if (mdesc.length() > 0) {
+                    sensor.setUserName(mdesc);
+                }
+                log.debug("make sensor MS{} [{}]", ev, mdesc);
+            }
+
             JPanel gpane = null;
             JTextField desc = null;
             JFormattedTextField evt1 = null;
