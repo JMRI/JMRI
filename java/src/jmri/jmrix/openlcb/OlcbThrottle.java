@@ -73,19 +73,31 @@ public class OlcbThrottle extends AbstractThrottle {
 
         speedListener = new VersionedValueListener<Float>(ot.getSpeed()) {
             @Override
-            public void update(Float aFloat) {
-                float newValue;
-                if (aFloat.isNaN()) {
-                    newValue = -1.0f;
+            public void update(Float speedAndDir) {
+                float newSpeed;
+                float direction = Math.copySign(1.0f, speedAndDir);
+                if (speedAndDir.isNaN()) {
+                    // e-stop
+                    newSpeed = -1.0f;
+                    direction = isForward ? 1.0f : -1.0f;
                 } else {
-                    newValue = aFloat / (126 * (float) MPH);
+                    newSpeed = speedAndDir / (126 * (float) MPH);
+                    if (direction < 0) {
+                        newSpeed = -newSpeed;
+                    }
                 }
                 float oldSpeed;
+                boolean oldDir;
                 synchronized(OlcbThrottle.this) {
                     oldSpeed = speedSetting;
-                    speedSetting = newValue;
+                    oldDir = isForward;
+                    speedSetting = newSpeed;
+                    isForward = direction > 0;
                     log.debug("Speed listener update old {} new {}", oldSpeed, speedSetting);
                     firePropertyChange(SPEEDSETTING, oldSpeed, speedSetting);
+                    if (oldDir != isForward) {
+                        firePropertyChange(ISFORWARD, oldDir, isForward);
+                    }
                 }
             }
         };
