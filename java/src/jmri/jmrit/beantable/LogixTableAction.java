@@ -1031,7 +1031,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         var name = "";
         var index = _copyCombo.getSelectedIndex();
         if (index > 0) {
-            var logix = _logixManager.getLogix((String) _copyCombo.getItemAt(index));
+            var logix = _logixManager.getLogix(_copyCombo.getItemAt(index));
             if (logix != null) {
                 var userName = logix.getUserName();
                 if (userName != null) {
