@@ -63,9 +63,9 @@ public class CbusParameters {
     
     
     /**
-     * Create parameters from int []
+     * Create parameters from byte []
      * 
-     * @param d int [] array 
+     * @param d byte [] array 
      */
     public CbusParameters(byte [] d) {
         this();
@@ -170,12 +170,16 @@ public class CbusParameters {
      * @return the load address
      */
     public int getLoadAddress() {
-        int la = (paramData[LOAD_ADDR_IDX]
-                + paramData[LOAD_ADDR_IDX+1]*256
-                + paramData[LOAD_ADDR_IDX+2]*256*256
-                + paramData[LOAD_ADDR_IDX+3]*256*256*256);
-        log.debug("Load address is {}", la);
-        return la;
+        if (paramData[NUM_PARAM_IDX] == 7) {
+            return 0x800;
+        } else {
+            int la = (paramData[LOAD_ADDR_IDX]
+                    + paramData[LOAD_ADDR_IDX+1]*256
+                    + paramData[LOAD_ADDR_IDX+2]*256*256
+                    + paramData[LOAD_ADDR_IDX+3]*256*256*256);
+            log.debug("Load address is {}", la);
+            return la;
+        }
     }
     
     

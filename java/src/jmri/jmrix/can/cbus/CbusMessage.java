@@ -581,6 +581,70 @@ public class CbusMessage {
     }
 
     /**
+     * CBUS bootloader v1.0 format message to request device ID.
+     *
+     * @param header CAN ID - overridden by call to setHeader
+     * @return ready to send CanMessage
+     */
+    static public CanMessage getBootDevId(int header) {
+        CanMessage m = new CanMessage(8, header);
+        m.setExtended(true);
+        m.setHeader(0x4);
+        m.setElement(0, 0);
+        m.setElement(1, 0);
+        m.setElement(2, 0);
+        m.setElement(3, 0);
+        m.setElement(4, 0x0D);
+        m.setElement(5, CbusConstants.CBUS_BOOT_DEVID);
+        m.setElement(6, 0);
+        m.setElement(7, 0);
+        return m;
+    }
+
+    /**
+     * CBUS bootloader v1.0 format message to request bootloader ID.
+     *
+     * @param header CAN ID - overridden by call to setHeader
+     * @return ready to send CanMessage
+     */
+    static public CanMessage getBootId(int header) {
+        CanMessage m = new CanMessage(8, header);
+        m.setExtended(true);
+        m.setHeader(0x4);
+        m.setElement(0, 0);
+        m.setElement(1, 0);
+        m.setElement(2, 0);
+        m.setElement(3, 0);
+        m.setElement(4, 0x0D);
+        m.setElement(5, CbusConstants.CBUS_BOOT_BOOTID);
+        m.setElement(6, 0);
+        m.setElement(7, 0);
+        return m;
+    }
+
+    /**
+     * CBUS bootloader v1.0 format message to set memory region write enables
+     *
+     * @param enables enable bits for memory regions
+     * @param header CAN ID - overridden by call to setHeader
+     * @return ready to send CanMessage
+     */
+    static public CanMessage getBootEnables(int enables, int header) {
+        CanMessage m = new CanMessage(8, header);
+        m.setExtended(true);
+        m.setHeader(0x4);
+        m.setElement(0, 0);
+        m.setElement(1, 0);
+        m.setElement(2, 0);
+        m.setElement(3, 0);
+        m.setElement(4, 0x0D);
+        m.setElement(5, CbusConstants.CBUS_BOOT_ENABLES);
+        m.setElement(6, enables & 0xFF);
+        m.setElement(7, 0);
+        return m;
+    }
+
+    /**
      * Microchip AN247 format message to write 8 bytes of data
      *
      * @param d data array, 8 length, values 0-255
@@ -679,6 +743,32 @@ public class CbusMessage {
      */
     public static boolean isBootConfirm(CanReply r) {
         if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTC)) {
+            return (true);
+        }
+        return (false);
+    }
+
+    /**
+     * Tests if incoming CanReply is a device ID reply.
+     *
+     * @param r CanReply
+     * @return True if is a Boot Confirm
+     */
+    public static boolean isBootDevId(CanReply r) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_DEVID)) {
+            return (true);
+        }
+        return (false);
+    }
+
+    /**
+     * Tests if incoming CanReply is a bootloader ID reply.
+     *
+     * @param r CanReply
+     * @return True if is a Boot Confirm
+     */
+    public static boolean isBootId(CanReply r) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTID)) {
             return (true);
         }
         return (false);
