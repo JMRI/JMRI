@@ -1148,6 +1148,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             float speed = ((Float) e.getNewValue());
+            log.debug("Throttle panel speed updated to {} increment {}", speed,
+                    throttle.getSpeedIncrement());
             setSpeedValues( throttle.getSpeedIncrement(), speed);
         } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();

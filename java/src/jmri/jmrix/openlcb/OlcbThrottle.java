@@ -3,12 +3,24 @@ package jmri.jmrix.openlcb;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.SystemConnectionMemo;
+
+import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
+import org.openlcb.implementations.VersionedValueListener;
+import org.openlcb.implementations.throttle.RemoteTrainNode;
 import org.openlcb.implementations.throttle.ThrottleImplementation;
+import org.openlcb.implementations.throttle.TractionThrottle;
+import org.openlcb.messages.TractionControlRequestMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.openlcb.messages.TractionControlRequestMessage.MPH;
 
 /**
  * An implementation of DccThrottle for OpenLCB.
@@ -30,6 +42,7 @@ public class OlcbThrottle extends AbstractThrottle {
         // actual state, but I don't know how to do this
         synchronized(this) {
             this.speedSetting = 0;
+            speedStepMode = SpeedStepMode.NMRA_DCC_128;
         }
         // Functions default to false
         this.isForward = true;
@@ -43,26 +56,55 @@ public class OlcbThrottle extends AbstractThrottle {
         if (iface.getDatagramService() == null) {
             log.error("Failed to access Datagram Service");
         }
+        ot = new TractionThrottle(iface);
+        NodeID nid;
         if (address instanceof OpenLcbLocoAddress) {
-            oti = new ThrottleImplementation(
-                    ((OpenLcbLocoAddress) address).getNode(),
-                    iface.getNodeStore(),
-                    iface.getDatagramService()
-            );
+            nid = ((OpenLcbLocoAddress) address).getNode();
         } else {
-            oti = new ThrottleImplementation(
-                    this.address.getNumber(),
-                    this.address.isLongAddress(),
-                    iface.getNodeStore(),
-                    iface.getDatagramService()
-            );
+            int dccAddress = this.address.getNumber();
+            if (this.address.isLongAddress()) {
+                nid = new NodeID(new byte[]{6, 1, 0, 0, (byte) (((dccAddress >> 8) & 0xFF) | 0xC0),
+                        (byte) (dccAddress & 0xFF)});
+            } else {
+                nid = new NodeID(new byte[]{6, 1, 0, 0, 0, (byte) (dccAddress & 0xFF)});
+            }
         }
-        oti.start();
+        ot.start(new RemoteTrainNode(nid, iface));
+
+        speedListener = new VersionedValueListener<Float>(ot.getSpeed()) {
+            @Override
+            public void update(Float aFloat) {
+                float newValue;
+                if (aFloat.isNaN()) {
+                    newValue = -1.0f;
+                } else {
+                    newValue = aFloat / (126 * (float) MPH);
+                }
+                float oldSpeed;
+                synchronized(OlcbThrottle.this) {
+                    oldSpeed = speedSetting;
+                    speedSetting = newValue;
+                    log.debug("Speed listener update old {} new {}", oldSpeed, speedSetting);
+                    firePropertyChange(SPEEDSETTING, oldSpeed, speedSetting);
+                }
+            }
+        };
+        for (int i = 0; i <= 28; i++) {
+            int finalI = i;
+            fnListeners.add(new VersionedValueListener<Boolean>(ot.getFunction(finalI)) {
+                @Override
+                public void update(Boolean state) {
+                   updateFunction(finalI, state);
+                }
+            });
+        }
     }
 
-    final ThrottleImplementation oti;
+    final TractionThrottle ot;
 
     final DccLocoAddress address;
+    VersionedValueListener<Float> speedListener;
+    List<VersionedValueListener<Boolean>> fnListeners = new ArrayList<>();
 
     /** 
      * {@inheritDoc} 
@@ -98,10 +140,11 @@ public class OlcbThrottle extends AbstractThrottle {
 
         // send to OpenLCB
         if (speed >= 0.0) {
-            oti.setSpeed(speed * 100.0, isForward);
+            speedListener.setFromOwner(getSpeedAndDir());
         } else {
-            oti.doEmergencyStop();
+            speedListener.setFromOwner(Float.NaN);
         }
+        log.debug("Speed set update old {} new {} int", oldSpeed, speedSetting);
 
         // notify 
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
@@ -116,9 +159,21 @@ public class OlcbThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         synchronized(this) {
-            setSpeedSetting(speedSetting);  // send the command
+            speedListener.setFromOwner(getSpeedAndDir());
         }
         firePropertyChange(ISFORWARD, old, isForward);
+    }
+
+    /**
+     * @return the speed and direction as an OpenLCB value.
+     */
+    private float getSpeedAndDir() {
+        float sp = speedSetting * 126 * (float)MPH;
+        if (speedSetting < 0) {
+            // e-stop is encoded as negative speed setting.
+            sp = 0;
+        }
+        return Math.copySign(sp, isForward ? 1.0f : -1.0f);
     }
 
     /** 
@@ -128,7 +183,7 @@ public class OlcbThrottle extends AbstractThrottle {
     public void setFunction(int functionNum, boolean newState) {
         updateFunction(functionNum, newState);
         // send to OpenLCB
-        oti.setFunction(functionNum, (newState ? 1 : 0));
+        fnListeners.get(functionNum).setFromOwner(newState);
     }
 
     /** 
@@ -136,7 +191,12 @@ public class OlcbThrottle extends AbstractThrottle {
      */
     @Override
     public void throttleDispose() {
-        log.debug("throttleDispose() called");
+        log.debug("throttleDispose() called for address {}", address);
+        speedListener.release();
+        for (VersionedValueListener<Boolean> l: fnListeners) {
+            l.release();
+        }
+        ot.release();
         finishRecord();
     }
 
