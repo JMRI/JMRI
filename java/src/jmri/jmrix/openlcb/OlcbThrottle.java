@@ -203,7 +203,9 @@ public class OlcbThrottle extends AbstractThrottle {
     public void setFunction(int functionNum, boolean newState) {
         updateFunction(functionNum, newState);
         // send to OpenLCB
-        fnListeners.get(functionNum).setFromOwner(newState);
+        if (functionNum >= 0 && functionNum < fnListeners.size()) {
+            fnListeners.get(functionNum).setFromOwner(newState);
+        }
     }
 
     /** 

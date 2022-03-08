@@ -1,6 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import jmri.DccLocoAddress;
+import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.can.TestTrafficController;
 
@@ -371,6 +372,27 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
+    /**
+     * Test of getSpeedStepMode method, of class OlcbThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedStepMode() {
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
+        Assert.assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getSpeedIncrement method, of class OlcbThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = SpeedStepMode.NMRA_DCC_128.increment;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0001);
+    }
 
     @Override
     @BeforeEach
