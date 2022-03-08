@@ -179,6 +179,7 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         mr1.setElement(2, 0x63);
         t.sendTestMessage(mr1);
 
+        JUnitUtil.waitFor(()-> t.outbound.size() > 1, "2 messages outbound");
         Assert.assertEquals("inquire message sent", 2, t.outbound.size());
         Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
