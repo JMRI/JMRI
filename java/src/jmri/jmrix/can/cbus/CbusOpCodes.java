@@ -217,6 +217,15 @@ public class CbusOpCodes {
                     case CbusConstants.CBUS_BOOT_TEST: // 4
                         sb.append(Bundle.getMessage("decodeCBUS_BOOT_TEST"));
                         break;
+                    case CbusConstants.CBUS_BOOT_DEVID: // 5
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_DEVID"));
+                        break;
+                    case CbusConstants.CBUS_BOOT_BOOTID: // 6
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_BOOTID"));
+                        break;
+                    case CbusConstants.CBUS_BOOT_ENABLES: // 7
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_ENABLES"));
+                        break;
                     default:
                         break;
                 }
@@ -235,6 +244,12 @@ public class CbusOpCodes {
                         break;
                     case CbusConstants.CBUS_EXT_BOOTC: // 2
                         sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTC"));
+                        break;
+                    case CbusConstants.CBUS_EXT_DEVID: // 3
+                        sb.append(Bundle.getMessage("decodeCBUS_EXT_DEVID"));
+                        break;
+                    case CbusConstants.CBUS_EXT_BOOTID: // 4
+                        sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTID"));
                         break;
                     default:
                         break;

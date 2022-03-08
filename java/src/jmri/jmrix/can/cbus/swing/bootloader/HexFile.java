@@ -37,7 +37,6 @@ public class HexFile {
      * Create a new HexFile object and initialize data to unprogrammed state.
      *
      * @param fileName file name to use for the hex file
-     * @param eepromStart start address of EEPROM for the device
      */
     public HexFile(String fileName) {
         name = fileName;
@@ -215,7 +214,6 @@ public class HexFile {
      * 
      * @param offset    address of data to retrieve
      * @param len       number of bytes to retrieve
-     * @param hexData   the array to get the data from
      * @return          array of bytes
      */
     private byte [] getBytes(int offset, int len) {
