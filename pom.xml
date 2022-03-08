@@ -1467,11 +1467,6 @@
             <version>2.0.6</version>
         </dependency>
         <dependency>
-            <groupId>com.apple</groupId>
-            <artifactId>AppleJavaExtensions</artifactId>
-            <version>1.5</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
             <version>1.9.0</version>

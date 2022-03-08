@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an SprogMessage
  *
+ * The format of a KPF-Zeller message is <code>*0000;V3.0%\n</code>
+ * but because we terminate on ";", it comes across as
+ * <code>V3.0%\n*0000;</code>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2010
  */
@@ -43,6 +47,18 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCount() {
+        log.debug("getCount of n= {} '{}'", _nDataChars, this);
+        // KPF-Zeller formatting
+        if (_nDataChars == 13) {
+            try {
+                log.trace("selected out '{}'", this.toString().substring(8, 12));
+                return Integer.parseInt(this.toString().substring(8, 12), 10);
+            } catch (NumberFormatException ex) {
+                log.trace("return 0 because of fault");
+                return 0;
+            }
+        }
+        // bachrus formatting
         // don't return 0 as it will cause an exception
         if (_nDataChars < 9) {
             return -1;
@@ -54,7 +70,24 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    /**
+     * Series numbers define the actual hardware, i.e. wheel circumference.
+     * <dl>
+     * <dt>0</dt><dd>none, ignore</dd>
+     * <dt>4</dt><dd>Reader 40</dd>
+     * <dt>5</dt><dd>Reader 50</dd>
+     * <dt>6</dt><dd>Reader 60</dd>
+     * <dt>103</dt><dd>KPR-Zeller</dd>
+     * </dl>
+     * @return type code for specific reply content
+     */
     public int getSeries() {
+        log.debug("getSeries of n= {} '{}'", _nDataChars, this);
+        // KPF-Zeller formatting
+        if (_nDataChars == 13) {
+            return 103;
+        }
+        // bachrus formatting
         if (_nDataChars < 7) {
             return 0;
         }
@@ -80,7 +113,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * skipPrefix is not used at this point in time, but is 
+     * skipPrefix is not used at this point in time, but is
      * defined as abstract in AbstractMRReply
      */
     @Override
