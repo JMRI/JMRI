@@ -402,7 +402,8 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>Change the system name input for the Copy command to use a combo box.  This makes it
+          easier to select an existing Logix as the copy destination.</li>
         </ul>
 
     <h3>LogixNG</h3>
