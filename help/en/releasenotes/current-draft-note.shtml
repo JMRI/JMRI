@@ -538,7 +538,8 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li></li>
+            <li>Add a <strong>Copy Stops</strong> button. This is used to copy the stops for an
+            existing train to the new train.</li>
         </ul>
 
    <h3>Tracker</h3>

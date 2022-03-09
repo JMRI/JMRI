@@ -155,10 +155,12 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     // ------------ Button bar components ------------
     JPanel _leftButtonBar;
     JPanel _addButtonPanel;
+    JPanel _copyButtonPanel;
     JPanel _deleteButtonPanel;
     JPanel _moveButtonPanel;
     JPanel _graphButtonPanel;
     JButton _addButton = new JButton();
+    JButton _copyButton = new JButton();
     JButton _deleteButton = new JButton();
     JButton _displayButton = new JButton();
     JButton _printButton = new JButton();
@@ -229,6 +231,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _addButtonPanel = new JPanel();
         _addButtonPanel.add(_addButton);
         _leftButtonBar.add(_addButtonPanel);
+
+        // ------------ Copy Button ------------
+        _copyButton = new JButton(Bundle.getMessage("CopyStopsButton"));    // NOI18N
+        _copyButton.setToolTipText(Bundle.getMessage("HintCopyButton"));       // NOI18N
+        _copyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                copyPressed();
+            }
+        });
+        _copyButtonPanel = new JPanel();
+        _copyButtonPanel.add(_copyButton);
+        _leftButtonBar.add(_copyButtonPanel);
 
         // ------------ Delete Button ------------
         _deleteButton = new JButton(Bundle.getMessage("DeleteLayoutButtonText")); // NOI18N
@@ -348,6 +363,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         pack();
         _addButtonPanel.setVisible(false);
+        _copyButtonPanel.setVisible(false);
         _deleteButtonPanel.setVisible(false);
         _graphButtonPanel.setVisible(false);
     }
@@ -996,6 +1012,60 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         // Switch to new node
         _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Copy the stops from an existing train.
+     */
+    void copyPressed() {
+        var selectedTrain = copyTrainSelection();
+        if (selectedTrain != null) {
+            for (var stop : _dataMgr.getStops(selectedTrain.getTrainId(), 0, true)) {
+                // Create stop
+                var newSeq = _dataMgr.getStops(_curNodeId, 0, false).size();
+                var newStop = new Stop(_curNodeId, newSeq + 1);
+
+                // Clone stop
+                newStop.setStationId(stop.getStationId());
+                newStop.setDuration(stop.getDuration());
+                newStop.setNextSpeed(stop.getNextSpeed());
+                newStop.setStagingTrack(stop.getStagingTrack());
+                newStop.setStopNotes(stop.getStopNotes());
+
+                // Build tree content
+                _leafNode = new TimeTableTreeNode(buildNodeText("Stop", newStop, 0),  // NOI18N
+                         "Stop", newStop.getStopId(), newSeq + 1);    // NOI18N
+                _curNode.add(_leafNode);
+                _timetableModel.nodeStructureChanged(_curNode);
+            }
+        }
+    }
+
+    /**
+     * Select the train whose stops will be added to the new train.
+     * @return the selected train or null if there is no selection made.
+     */
+    Train copyTrainSelection() {
+        var newTrain = _dataMgr.getTrain(_curNodeId);
+        var trainList = _dataMgr.getTrains(newTrain.getScheduleId(), 0, true);
+        trainList.remove(newTrain);
+
+        var trainArray = new Train[trainList.size()];
+        trainList.toArray(trainArray);
+
+        try {
+            var choice = JOptionPane.showInputDialog(
+                    null,
+                    Bundle.getMessage("LabelCopyStops"),  // NOI18N
+                    Bundle.getMessage("TitleCopyStops"),  // NOI18N
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    trainArray,
+                    null);
+            return (Train) choice;
+        } catch (HeadlessException ex) {
+            return null;
+        }
     }
 
     /**
@@ -2590,6 +2660,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         // Reset button bar
         _addButtonPanel.setVisible(false);
+        _copyButtonPanel.setVisible(false);
         _deleteButtonPanel.setVisible(false);
         _moveButtonPanel.setVisible(false);
         _graphButtonPanel.setVisible(false);
@@ -2653,6 +2724,12 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Train":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddStopButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
+
+                var stops = _dataMgr.getStops(_curNodeId, 0, false);
+                if (stops.size() == 0) {
+                    _copyButtonPanel.setVisible(true);
+                }
+
                 _deleteButton.setText(Bundle.getMessage("DeleteTrainButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
