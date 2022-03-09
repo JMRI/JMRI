@@ -39,7 +39,7 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all
       <h2>Details</h2>
 
       <p>Our source code up to JMRI version 2.12 was distributed using CVS. (We also kept the
-      <a href="WebSite.shtml">web site</a> in CVS, if you'd like to work with it directly.) If you
+      <a href="WebSite.shtml">website</a> in CVS, if you'd like to work with it directly.) If you
       want to work with the code, a few minutes installing CVS is well worth it. We're sorry, but
       we just can't support other methods (sending .zip files, etc), as they're just too error
       prone.</p>

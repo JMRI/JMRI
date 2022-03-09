@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Understanding the Data Management</title>
-  <meta name="Author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
   <!-- Sortable tables -->
   <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
 
@@ -68,12 +68,12 @@
 
       <p class="noted">This page includes information intended for advanced users of JMRI. Basic
       information on commands to load and store your work is available <a href=
-      "LoadStoreWork.shtml">here.</a> The additional information containted on the current page is
+      "LoadStoreWork.shtml">here</a>. The additional information on the current page is
       not necessary for ordinary, day-to-day use of JMRI but may be of interest to those who want
       to understand in more detail when, how, and where JMRI stores the data you and the system
       create and update.</p>
 
-      <p>As you work with JMRI, you will create and update many different items within its various
+      <p>As you work with JMRI, you will create and update many different items within JMRI's various
       applications and tools. You may also develop and run "scripts" (external programs) that will
       do that as well. JMRI will update some of these at certain points during train operation.
       Although JMRI tries to hide lots of technical details from you, some model railroaders want
@@ -109,7 +109,7 @@
         <li>Operations Elements: data related to operating your railroad (manually or with some
         degree of automation) such as warrants, paths, and dozens of other things. Operational
         elements are entered in various "Tools" listed in PanelPro including <a href=
-        "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">"Dispatacher..."</a>.
+        "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">"Dispatcher..."</a>.
         </li>
 
         <li>System Preferences: all the things you enter under Preferences, either in DecoderPro or
@@ -232,10 +232,10 @@
           <td class="who">UC/US</td>
           <td class="cmd">5</td>
           <!-- In Image Index Editor or <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>:
-          "Store Image Index" under the File poulldown menu. -->
+          "Store Image Index" under the File pulldown menu. -->
 
           <td class="store">Image/icon files where specified (default is the User Files Location
-          directory). Image index in catalogTrees.xml in the Preferences locaiton.</td>
+          directory). Image index in catalogTrees.xml in the Preferences location.</td>
           <td>
           </td>
         </tr>
@@ -313,7 +313,7 @@
           <td class="cmd">2, 3(a), 3(b)</td>
           <!-- "Save->" under the File pulldown on each Table window. In
           <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>: "Store Panels" under
-          the File poulldown menu. -->
+          the File pulldown menu. -->
 
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
@@ -330,7 +330,7 @@
           <td class="cmd">2, 3(a), 3(b)</td>
           <!-- "Save->" under the File pulldown on each Table window. In
           <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>: "Store Panels" under
-          the File poulldown menu. -->
+          the File pulldown menu. -->
 
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
@@ -527,7 +527,7 @@
           </td>
           <td class="who">UC/US</td>
           <td class="cmd">1</td>
-          <td class="store">In subdirectories under Config File locaiton.</td>
+          <td class="store">In subdirectories under Config File location.</td>
           <td>✔</td>
         </tr>
 
@@ -537,7 +537,7 @@
           <td class="where">Select different items in Preferences window under Edit pulldown</td>
           <td class="who">UC/US</td>
           <td class="cmd">1</td>
-          <td class="store">In several different files in the Settings Location.</td>
+          <td class="store">In several files in the Settings Location.</td>
           <td>✔</td>
         </tr>
 

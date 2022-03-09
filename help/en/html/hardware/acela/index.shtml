@@ -41,7 +41,7 @@
 
       <h3>CTI Modules</h3>
       As described in the Acela documentation on the <a href=
-      "http://www.cti-electronics.com/app_sw.htm">CTI web site</a>, several CTI modules are
+      "http://www.cti-electronics.com/app_sw.htm">CTI website</a>, several CTI modules are
       available:
       <ul>
         <li>A CTI Acela module (currently only released with a serial interface) that performs most
@@ -154,7 +154,7 @@
       <h3>Third Party info</h3>
 
       <p>More information on the Acela hardware can be found on the <a href=
-      "http://www.cti-electronics.com/app_sw.htm">CTI web site</a>.</p>
+      "http://www.cti-electronics.com/app_sw.htm">CTI website</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

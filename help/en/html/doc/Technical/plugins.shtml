@@ -182,15 +182,14 @@
         <dt id="StartupActionFactory">
           <a href=
           "https://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a>
-          <a href="images/StartUpActionExample.png"><img src="images/StartUpActionExample.png"
-          class="floatRight" height="148" width="256" alt="startup action"></a>
         </dt>
 
         <dd>
-          Startup Actions can be run at application start or attached to the application's main
-          window as a button. Implementations of this factory class appear as possible selections
-          for the Perform Action.. and Attach Action to Button.. selections in the Add button on
-          the Startup pane in Preferences.
+          <img src="images/StartUpActionExample.png" alt="startup action"><br>
+          Startup Actions can be run at application start or via a button attached to the application's
+          main window. Implementations of this factory class appear as possible selections
+          for the Perform Action... and Attach Action to Button... selections in the Add... button on
+          the Startup pane in JMRI Preferences.
           <p>One example is <a href=
           "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/roster/swing/RosterFrameStartupActionFactory.java">
           the RosterFrameStartupActionFactory class</a> which opens the DecoderPro roster window.
@@ -201,11 +200,10 @@
         <dt>
           <a href=
           "https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a>
-          <a href="images/StartUpModelExample.png"><img src="images/StartUpModelExample.png" class=
-          "floatRight" height="182" width="197" alt="startup model"></a>
         </dt>
 
         <dd>
+          <img src="images/StartUpModelExample.png" alt="startup model"><br>
           Startup Models provide a mechanism to define optional items to be automatically run
           during the startup process itself. They can take user-specified arguments.
           Implementations of this class appear under the "Add" button in the Startup pane of the

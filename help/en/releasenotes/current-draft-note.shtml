@@ -70,6 +70,12 @@
                 <li></li>
             </ul>
 
+        <h4>KPF-Zeller</h4>
+            <ul>
+                <li>Initial support for the
+                    <a href="https://kpf-zeller.de/kpf/rollenstand/index.php">KPF-Zeller roller speedometer</a>.</li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li>Added Digitrax DCS210Plus command station</li>
@@ -462,7 +468,7 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>Provide the ability to copy the content from an existing route when creating a new route.</li>
        </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
@@ -474,7 +480,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added waitSignalMastState, waitSignalHeadState to AbstractAutomat support.</li>
         </ul>
 
     <h3>Signals</h3>

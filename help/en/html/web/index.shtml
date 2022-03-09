@@ -28,7 +28,7 @@
 
       <ul>
         <li>If you're using a Bonjour/Zeroconf-enabled web browser like Safari you should see a "My
-        JMRI Railroad" web site in the "Bonjour" tab.</li>
+        JMRI Railroad" website in the "Bonjour" tab.</li>
 
         <li>Otherwise, enter the starting URL, which will be something like
         "http://192.168.1.7:12080" (or if you're browsing on the same computer right now,
@@ -70,7 +70,7 @@
             <dt>Disable power control in menus</dt>
 
             <dd>The menus on many of the JMRI web pages include a layout power button. You can
-            disable this button to ensure that users of the web site can see the power status, but
+            disable this button to ensure that users of the website can see the power status, but
             cannot turn off or turn on layout power.</dd>
 
             <dt>Start automatically with application</dt>

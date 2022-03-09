@@ -550,7 +550,7 @@
 
       <ul>
         <li>The LocoNet Firmware Download tool is similar to the "DigiIPL.exe" and "DigiIPLII.exe"
-        which have been released by Digitrax. "DigiIPLII.exe" is available from their web site as
+        which have been released by Digitrax. "DigiIPLII.exe" is available from their website as
         part of the SoundLoader2 package. Support for the DigiIPLII.exe program is provided by
         Digitrax. Note that DigiIPLII.exe is intended for use with Digitrax products and is not
         able to perform firmware updates on at least some non-Digitrax hardware.</li>

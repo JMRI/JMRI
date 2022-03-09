@@ -72,7 +72,7 @@
         <li>In GitHub web, go to the JMRI/JMRI repo and "Fork" the JMRI repository to your own
         remote copy. To do this, log on to your account at <a href=
         "https://github.com/">GitHub.com</a> and navigate to the JMRI repository <a href=
-        "https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a> In the upper right hand
+        "https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a> In the upper right-hand
         corner of the page you will find a button labeled "Fork". Press the "Fork" button to create
         your own repository of the JMRI source. (see <a href="getgitcode.shtml#get">Getting the
         Code</a>).
@@ -84,36 +84,37 @@
 
       <h3>Set vmoptions</h3>
 
-      <h4>On OS X</h4>
+      <h4>On macOS</h4>
 
       <ul>
         <li>Open IntelliJ</li>
 
         <li>From the Help menu, select "Edit Custom VM Options":<br>
           <a href="images/IntelliJ/IjVMOptionsMenu.png"><img src=
-          "images/IntelliJ/IjVMOptionsMenu.png" width="251" height="170" alt=
+          "images/IntelliJ/IjVMOptionsMenu.png" alt=
           "IntelliJ Edit vmoptions menu"></a>
         </li>
 
-        <li>In the dialog, answer "Yes" to create a copy of the application's vmoptions file:<br>
+        <li>In the dialog, answer "Yes" to create a copy of the application's
+          <code>vmoptions</code> file:<br>
           <a href="images/IntelliJ/IjVMOptionsDialog.png"><img src=
-          "images/IntelliJ/IjVMOptionsDialog.png" width="248" height="97" alt=
+          "images/IntelliJ/IjVMOptionsDialog.png" alt=
           "IntelliJ Edit vmoptions dialog"></a>
         </li>
 
         <li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and
         select Save All from the File menu:<br>
           <a href="images/IntelliJ/IjVMOptions.png"><img src="images/IntelliJ/IjVMOptions.png"
-          width="240" height="114" alt="IntelliJ Edit vmoptions"></a>
+          alt="IntelliJ Edit vmoptions"></a>
         </li>
 
         <li>IntelliJ 2016 and up are now ready to use for development with JMRI. The
-        <code>vmoptions</code> file is stored in <code>˜/Users/Preferences/IdeaIC2016.1/</code><br>
+        <code>vmoptions</code> file is stored in <code>&tilde;/Users/Preferences/IdeaIC2016.1/</code><br>
           But in version 15, IntelliJ on OS X did not correctly name this file ( <a href=
           "https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read
           more</a>).<br>
           To correct this, close IntelliJ 15 and in Finder go to the
-          <code>˜/Library/Preferences/IdeaIC15/</code> folder.<br>
+          <code>&tilde;/Library/Preferences/IdeaIC15/</code> folder.<br>
           Rename the newly created file <code>idea64.vmoptions</code> to
           <code>idea.vmoptions</code> (effectively removing the "64" part).
         </li>
@@ -135,12 +136,12 @@
       this file is used instead of the file located in the IntelliJ IDEA installation folder.</p>
 
       <p>More info on setting these important vmoptions is available on the <a href=
-      "https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">Idea web site</a>.<br>
+      "https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">Idea website</a>.<br>
       Note: If you have a hint how to set this at the Project level instead of tinkering with local
       application settings, please tell <a href="https://groups.io/g/jmriusers">JMRI users</a> at
       Groups.io.</p>
 
-      <a id="IjPrefs"></a><h3>Set Preferences</h3>
+      <h3 id="IjPrefs">Set Preferences</h3>
 
       <p>Start IntelliJ and choose "Preferences..." from the application menu (macOS) or "Settings from
       the File menu (Win).</p>
@@ -149,19 +150,19 @@
         <li>From the Editor -&gt; File Encodings tab, check "Transparent native-to-ascii
         conversion":<br>
           <a href="images/IntelliJ/IjPrefsFileEncodings.png"><img src=
-          "images/IntelliJ/IjPrefsFileEncodings.png" width="516" height="263" alt=
-          "IntelliJ encoding prefs"></a>
+          "images/IntelliJ/IjPrefsFileEncodings.png"
+          alt="IntelliJ encoding prefs"></a>
         </li>
 
-        <li>From the Version Control -&gt; GitHub tab choose Add... (the + sign) and select
+        <li>From the Version Control -&gt; GitHub tab choose Add... (the + sign), and select
           Log In with Token...<br>
           <a href="images/IntelliJ/IjPrefsGitHubLogin.png"><img src=
-          "images/IntelliJ/IjPrefsGitHubLogin.png" width="242" height="157" alt=
-          "IntelliJ build GitHub prefs"></a><br>
+          "images/IntelliJ/IjPrefsGitHubLogin.png"
+          alt="IntelliJ build GitHub prefs"></a><br>
           After you have created an account on GitHub, proceed by clicking
           Generate... which will take you to your GitHub account web page.<br>
           <a href="images/IntelliJ/IjPrefsAddGithub.png"><img src=
-          "images/IntelliJ/IjPrefsAddGithub.png" width="451" height="351" alt=
+          "images/IntelliJ/IjPrefsAddGithub.png" alt=
           "IntelliJ build GitHub prefs"></a><br>
           Choose the correct scope (repo, gist, read.org and workflow) and click the green
           Generate Token button.<br>
@@ -173,7 +174,7 @@
         Project bytecode version.<br>
         On the same page, select "Eclipse" from the Use compiler drop-down:<br>
         <a href="images/IntelliJ/IjPrefsJava11.png"><img src="images/IntelliJ/IjPrefsJava11.png"
-        width="554" height="421" alt="IntelliJ build java SDK prefs"></a>
+        alt="IntelliJ build java SDK prefs"></a>
         </li>
 
         <li>Click OK to close the Preferences.</li>
@@ -188,49 +189,49 @@
 
         <li>From the main menu bar select File -&gt; New -&gt; Project from Version Control -&gt;
         GitHub<br>
-          <a href="images/IntelliJ/IjImportMenu.png"><img src="images/IntelliJ/IjImportMenu.png"
-          width="366" height="100" alt="IntelliJ Git import pane"></a>
+        <a href="images/IntelliJ/IjImportMenu.png"><img src="images/IntelliJ/IjImportMenu.png"
+        alt="IntelliJ Git import pane"></a>
         </li>
 
         <li>If prompted, enter your GitHub username (Login) and Password in the authentication
         fields and click "Login":<br>
-          <a href="images/IntelliJ/IjLoginGit.png"><img src="images/IntelliJ/IjLoginGit.png" width=
-          "200" height="110" alt="IntelliJ git login"></a><br>
-          See <a href="#IjPrefs">IntelliJ Setup</a> above for detailed options to connect to GitHub.
+        <a href="images/IntelliJ/IjLoginGit.png"><img src="images/IntelliJ/IjLoginGit.png"
+        alt="IntelliJ git login"></a><br>
+        See <a href="#IjPrefs">IntelliJ Setup</a> above for detailed options to connect to GitHub.
         </li>
 
         <li>The Clone Repository pane should now appear. Select a Git Repository URL from your
         account and point to your local repo folder as "Parent Directory":<br>
-          <a href="images/IntelliJ/IjCloneRepo.png"><img src="images/IntelliJ/IjCloneRepo.png"
-          width="313" height="100" alt="IntelliJ Git import pane3"></a><br>
-          Optionally click "Test" at top right to check your connection:<br>
-          <a href="images/IntelliJ/IjCloneTest.png"><img src="images/IntelliJ/IjCloneTest.png"
-          width="315" height="100" alt="IntelliJ Git import pane3"></a><br>
+        <a href="images/IntelliJ/IjCloneRepo.png"><img src="images/IntelliJ/IjCloneRepo.png"
+        alt="IntelliJ Git import pane3"></a><br>
+        Optionally click "Test" at top right to check your connection:<br>
+        <a href="images/IntelliJ/IjCloneTest.png"><img src="images/IntelliJ/IjCloneTest.png"
+        alt="IntelliJ Git import pane3"></a>
         </li>
 
         <li>Click "Clone" and follow progress in the indicator at the bottom of the Project
         window:<br>
-          <a href="images/IntelliJ/IjCloningProgress.png"><img src=
-          "images/IntelliJ/IjCloningProgress.png" width="410" height="37" alt=
-          "IntelliJ Git clone progress"></a>
+        <a href="images/IntelliJ/IjCloningProgress.png"><img src=
+        "images/IntelliJ/IjCloningProgress.png"
+        alt="IntelliJ Git clone progress"></a>
         </li>
 
         <li>In the pane that opens after download is complete, check the location on disk,<br>
           confirm the project name (like the original i.e. "JMRI") and click "Next":<br>
           <a href="images/IntelliJ/IjImportProject1.png"><img src=
-          "images/IntelliJ/IjImportProject1.png" width="396" height="97" alt=
+          "images/IntelliJ/IjImportProject1.png" alt=
           "IntelliJ Git import pane1"></a>
         </li>
 
         <li>Select "Create project from existing sources" and click "Next" again:<br>
           <a href="images/IntelliJ/IjImportProject2.png"><img src=
-          "images/IntelliJ/IjImportProject2.png" width="396" height="123" alt=
+          "images/IntelliJ/IjImportProject2.png" alt=
           "IntelliJ Git import pane2"></a>
         </li>
 
         <li>Click "Mark all" and then "Finish":<br>
           <a href="images/IntelliJ/IjImportProject3.png"><img src=
-          "images/IntelliJ/IjImportProject3.png" width="396" height="119" alt=
+          "images/IntelliJ/IjImportProject3.png" alt=
           "IntelliJ Git import pane3"></a>
         </li>
       </ol>
@@ -242,7 +243,7 @@
       <p>After cloning is completed, the IntelliJ Project window should look like this (OS X
       example):<br>
       <a href="images/IntelliJ/IjProjectPanel.png"><img src="images/IntelliJ/IjProjectPanel.png"
-      width="342" height="372" alt="IntelliJ main project window"></a></p>
+      alt="IntelliJ main project window"></a></p>
 
       <p>Along the edges of the window are several groups of tools, often used are:</p>
 
@@ -255,24 +256,24 @@
 
         <li>the <strong>Version Control</strong> tab at the bottom.</li>
 
-        <li>the <strong>Git: master</strong> at the bottom righthand corner, showing the current
+        <li>the <strong>Git: master</strong> at the bottom right-hand corner, showing the current
         Branch ("master") with a menu to change to another Branch.</li>
       </ol>
 
-      <p>You can also access this panel from the main VCS -&gt; Git -&gt; Branches... menu or right
-      clicking the JMRI Project folder and selecting Git -&gt; Repository -&gt; Branches...<br>
+      <p>You can also access this panel from the main VCS -&gt; Git -&gt; Branches... menu or
+        right-clicking the JMRI Project folder and selecting Git -&gt; Repository -&gt; Branches...<br>
       <a href="images/IntelliJ/IjGitRepoMenu.png"><img src="images/IntelliJ/IjGitRepoMenu.png"
-      width="407" height="142" alt="IntelliJ Project Git context menu"></a></p>
+      alt="IntelliJ Project Git context menu"></a></p>
 
       <p>To check out another Branch from the remote repo, select its name under "Remote Branches",
-      right click and select "Checkout as new local branch":<br>
-      <a href="images/IntelliJ/IjNewBranch.png"><img src="images/IntelliJ/IjNewBranch.png" width=
-      "292" height="236" alt="IntelliJ checkout branch"></a></p>
+      right-click and select "Checkout as new local branch":<br>
+      <a href="images/IntelliJ/IjNewBranch.png"><img src="images/IntelliJ/IjNewBranch.png"
+      alt="IntelliJ checkout branch"></a></p>
 
       <p>When the information from the new Branch is downloaded, the Message Center will
       confirm:<br>
       <a href="images/IntelliJ/IjNewBranchMsg.png"><img src="images/IntelliJ/IjNewBranchMsg.png"
-      width="312" height="50" alt="IntelliJ checkout branch OK"></a></p>
+      alt="IntelliJ checkout branch OK"></a></p>
 
       <h3>Project Settings</h3>
       <p><span class="since">since 5.0 </span>To ensure that the Java Development Kit version 11 you
@@ -280,23 +281,31 @@
       File &gt; Project Structure...<br>
       <p>To manage the Java Development Kits available on your local computer, the
       Platform Settings &gt; SDKs tab allows downloading, renaming and uninstalling
-      JDKs as well as other packages such as Python:<br>
-      <a href="images/IntelliJ/IjPlatformSettings.png"><img
-      src="images/IntelliJ/IjPlatformSettings.png"
-      width="588" height="334" alt="IntelliJ Platform dialog"></a><br>
-      <a href="images/IntelliJ/IjPlatformDownloadJdk.png"><img src="images/IntelliJ/IjPlatformDownloadJdk.png"
-      width="295" height="106" alt="IntelliJ JDK dropdown"></a><br>
-      </p>
+      JDKs as well as other packages such as Python:</p>
+      <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjPlatformSettings.png"><img src="images/IntelliJ/IjPlatformSettings.png"
+          alt="IntelliJ Platform dialog"></a></div>
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjPlatformDownloadJdk.png"><img src="images/IntelliJ/IjPlatformDownloadJdk.png"
+          alt="IntelliJ JDK dropdown"></a>
+        </div>
+      </div>
 
       <p>Now switch to the Project Settings &gt; Project tab, where you can select your
-      JDK of choice:<br>
-      <a href="images/IntelliJ/IjProjectSettingsSdkDropdown.png"><img
-      src="images/IntelliJ/IjProjectSettingsSdkDropdown.png"
-      width="320" height="199" alt="IntelliJ Project SDK menu"></a><br>
-      <a href="images/IntelliJ/IjProjectSettingsSdk.png"><img src="images/IntelliJ/IjProjectSettingsSdk.png"
-      width="598" height="243" alt="IntelliJ Project settings for JMRI"></a><br>
-      Click OK to close this dialog and apply the settings.
-      </p>
+      JDK of choice:</p>
+      <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjProjectSettingsSdkDropdown.png"><img
+          src="images/IntelliJ/IjProjectSettingsSdkDropdown.png"
+          alt="IntelliJ Project SDK menu"></a>
+        </div>
+        <div class="flex-item-50">
+          <a href="images/IntelliJ/IjProjectSettingsSdk.png"><img src="images/IntelliJ/IjProjectSettingsSdk.png"
+          alt="IntelliJ Project settings for JMRI"></a>
+        </div>
+      </div>
+      <p>Click OK to close this dialog and apply the settings.</p>
 
       <h3>Making Changes</h3>
 
@@ -308,20 +317,20 @@
       base.<br>
       Now then from the <strong>Git Branches</strong> pane, select "+ New Branch":<br>
       <a href="images/IntelliJ/IjGitBranches.png"><img src="images/IntelliJ/IjGitBranches.png"
-      width="323" height="172" alt="IntelliJ main project window"></a><br>
+      alt="IntelliJ main project window"></a><br>
       Supply a name i.e. <code>my-dialog-2</code> and click OK.<br>
-      Note: Starting your Branch name with a unique two letter combination will make it stand out
+      Note: Starting the name of your Branch with a unique two letter combination will make it stand out
       from the long list much better than a name like <code>patch-1</code>.</p>
 
       <p>In special cases, you might want to branch from one of your own active branches, or from a
-      different branch or Tag in the JMRI Github repository.<br>
-      To branch from a tag, select "Checkout Tag or Revision..." from the Git:branch drop down at
+      different branch or Tag in the JMRI GitHub repository.<br>
+      To branch from a tag, select "Checkout Tag or Revision..." from the Git:branch dropdown at
       bottom right:<br>
-      <img src="images/IntelliJ/IjGitCheckoutTag.png" width="457" height="92" alt=
+      <img src="images/IntelliJ/IjGitCheckoutTag.png" alt=
       "IntelliJ Checkout Tag option"><br>
       In the dialog, start typing the name of the Tag you saw in GitHub web:<br>
       <a href="images/IntelliJ/IjGitCheckoutTagDialog.png"><img src=
-      "images/IntelliJ/IjGitCheckoutTagDialog.png" width="346" height="127" alt=
+      "images/IntelliJ/IjGitCheckoutTagDialog.png" alt=
       "IntelliJ Checkout Tag dialog"></a><br>
       Click "OK" and provide a name for the new branch.</p>
 
@@ -339,14 +348,21 @@
           To verify the JDK is set to java 11, open the Ant Build tab [1] and select one of the items in the list.
           Next, click the Properties button [2] at the top right of the pane and choose the Execution tab.<br>
           As "Run under JDK:" select <strong>Project JDK (name as set in Project Structure)</strong> if not already
-          set:<br>
-          <a href="images/IntelliJ/IjAntPropertiesOpen.png"><img src=
-          "images/IntelliJ/IjAntPropertiesOpen.png" width="340" height="196" alt=
-          "IntelliJ Ant menu"></a>&nbsp; <a href=
-          "images/IntelliJ/IjAntBuildFilePropertiesPane.png"><img src=
-          "images/IntelliJ/IjAntBuildFilePropertiesPane.png" width="382" height="275" alt=
-          "IntelliJ Ant Settings"></a><br>
-          Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).
+          set:
+          <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+            <div class="flex-item-50">
+              <a href="images/IntelliJ/IjAntPropertiesOpen.png"><img src=
+              "images/IntelliJ/IjAntPropertiesOpen.png" alt=
+              "IntelliJ Ant menu"></a>
+            </div>
+            <div class="flex-item-50">
+              <a href=
+              "images/IntelliJ/IjAntBuildFilePropertiesPane.png"><img src=
+              "images/IntelliJ/IjAntBuildFilePropertiesPane.png" alt=
+              "IntelliJ Ant Settings"></a><br>
+              Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).
+            </div>
+          </div>
         </li>
 
         <li>Select a file in one of the JMRI ant folders in the Ant Build list,
@@ -372,7 +388,7 @@
         <li>From the main menubar open the "Build" menu and select a JMRI package like
         <code>panelpro</code> or</li>
 
-        <li>Open the Ant Build tab and from the "Ant Build" list, right click the desired package
+        <li>Open the Ant Build tab and from the "Ant Build" list, right-click the desired package
         i.e. <code>decoderpro</code> and select "&gt; Run Target".</li>
       </ol>
 
@@ -398,40 +414,40 @@
 
       <h3>Pulling</h3>
 
-      <p>It is also good practice to "Pull" all of the recent changes from the main JMRI repository
+      <p>It is also good practice to "Pull" all recent changes from the main JMRI repository
       before performing your Commits. After a "pull" your workspace and eventually your remote
-      GitHub repository will be in synch with the main JMRI repository and you will see recent work
+      GitHub repository will be in sync with the main JMRI repository, and you will see recent work
       by others. To perform a "Pull":</p>
 
       <ul>
         <li>Select your project i.e. <strong>JMRI</strong> in the Project tab, right click and
         select "Git" -&gt; "Repository" -&gt; "Pull..." from the context menu:<br>
           <a href="images/IntelliJ/IjGitPullMenu.png"><img src="images/IntelliJ/IjGitPullMenu.png"
-          width="408" height="117" alt="IntelliJ Pull"></a><br>
+          alt="IntelliJ Pull"></a><br>
           or from the VCS menu select "Git" -&gt; "Pull..."
         </li>
 
         <li>You may be asked first to confirm the origin of your remote repo, in our case
         "JMRI/JMRI":<br>
           <a href="images/IntelliJ/IjGitRemoteConfig.png"><img src=
-          "images/IntelliJ/IjGitRemoteConfig.png" width="203" height="74" alt=
+          "images/IntelliJ/IjGitRemoteConfig.png" alt=
           "IntelliJ Pull options"></a>
         </li>
 
         <li>The Pull Changes dialog opens:<br>
           <a href="images/IntelliJ/IjPullDialog.png"><img src="images/IntelliJ/IjPullDialog.png"
-          width="313" height="197" alt="IntelliJ Pull dialog"></a><br>
+          alt="IntelliJ Pull dialog"></a><br>
           [1] Select a remote repository (depending on the way you want to manage that, either your
           own repo or JMRI's as in the example).<br>
           [2] From the displayed list, select the appropriate Branch to merge (you might also Pull
           an extra Branch to switch to later).<br>
-          If what you expect is not in the list, click the Refres button [3].
+          If what you expect is not in the list, click the Refresh button [3].
         </li>
 
         <li>To conclude, click "Pull" and answer how you would like to combine the new data into
         the existing local repo:<br>
           <a href="images/IntelliJ/IjPullOptionsdialog.png"><img src=
-          "images/IntelliJ/IjPullOptionsdialog.png" width="256" height="107" alt=
+          "images/IntelliJ/IjPullOptionsdialog.png" alt=
           "IntelliJ Pull options"></a>
         </li>
       </ul>
@@ -446,7 +462,7 @@
           i.e. <strong>JMRI</strong> in the Project tab, right click and select "Git" -&gt; "Commit
           Directory..." from the context menu:<br>
           <a href="images/IntelliJ/IjCommitMenu1.png"><img src="images/IntelliJ/IjCommitMenu1.png"
-          width="345" height="372" alt="IntelliJ Commit menu"></a>
+          alt="IntelliJ Commit menu"></a>
         </li>
 
         <li>In the Commit Changes pane, enter a Commit Message [1] describing your changes/fix
@@ -454,7 +470,7 @@
           Select the files [2] you wish to commit and deselect files you don't.<br>
           Choose your name from the list as Author [3]:<br>
           <a href="images/IntelliJ/IjCommitPush2.png"><img src="images/IntelliJ/IjCommitPush2.png"
-          width="361" height="284" alt="IntelliJ Commit"></a>
+          alt="IntelliJ Commit"></a>
         </li>
 
         <li>Click the "Commit" button [4] to add your saved edits to the local GitHub
@@ -464,14 +480,14 @@
         this set of changes from your local repository to your remote repository on GitHub right
         after the Commit (so others can access it and study it for inclusion into JMRI).<br>
           <a href="images/IntelliJ/IjCommitPush.png"><img src="images/IntelliJ/IjCommitPush.png"
-          width="181" height="98" alt="IntelliJ Commit and Push"></a>
+          alt="IntelliJ Commit and Push"></a>
         </li>
 
         <li>In the Push Commits pane, review your description.<br>
           For certain users there's an option to change the repo to which you want to push your
           local branch to:<br>
           <a href="images/IntelliJ/IjPushSelectRepoOrigin.png"><img src=
-          "images/IntelliJ/IjPushSelectRepoOrigin.png" width="286" height="62" alt=
+          "images/IntelliJ/IjPushSelectRepoOrigin.png" alt=
           "IntelliJ Push Dialog Option"></a><br>
           Click on the underlined part of the top line to see that pop-up. You should push to a
           (new) branch on "origin", your personal remote repository.<br>
@@ -481,14 +497,14 @@
         <li>To push to your GitHub repository after a local Commit, just select "Push..." from the
         "VCS" -&gt; Git menu:<br>
           <a href="images/IntelliJ/IjGitPushOptions.png"><img src=
-          "images/IntelliJ/IjGitPushOptions.png" width="300" height="279" alt=
+          "images/IntelliJ/IjGitPushOptions.png" alt=
           "IntelliJ Push options"></a>
         </li>
 
         <li>If this went fine, a confirmation will appear at bottom left over the Version Control
         tab:<br>
-          <a href="images/IntelliJ/IjVCSmenu.png"><img src="images/IntelliJ/IjVCSmenu.png" width=
-          "210" height="69" alt="IntelliJ Push OK balloon"></a>
+          <a href="images/IntelliJ/IjVCSmenu.png"><img src="images/IntelliJ/IjVCSmenu.png"
+          alt="IntelliJ Push OK balloon"></a>
         </li>
       </ul>
 
@@ -514,27 +530,27 @@
 
         <li>In the file tree, select the <strong>JMRI &gt; java &gt; src</strong> folder icon and
         click on <strong>Mark as: <u>S</u>ources</strong> (the blue icon).<br>
-        <img src="images/IntelliJ/IjProjectSettingsSourcesStep1_class.png" width="577" height="359"
+        <img src="images/IntelliJ/IjProjectSettingsSourcesStep1_class.png"
         alt="IntelliJ Project Setting Sources tab - sources"></li>
 
         <li>Repeat for the test classes by selecting <strong>JMRI &gt; java &gt; test</strong> and
         clicking on the green <strong>Mark as: <u>T</u>ests</strong> icon.<br>
-        <img src="images/IntelliJ/IjProjectSettingsSourcesStep2_tests.png" width="573" height="356"
+        <img src="images/IntelliJ/IjProjectSettingsSourcesStep2_tests.png"
         alt="IntelliJ Project Setting Sources tab - tests"></li>
 
-        <li>In the column to the right both choices will be visible.<br>
-          From now on you will also see these special icons in the Project file listing:<br>
+        <li>In the column to the right both choices will be visible:<br>
+          <a href="images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png"><img src=
+          "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png" alt=
+          "JMRI Project Settings - Build - Compiler Output Paths screen"></a><br>
+          From now on you will also see these special icons in the Project file listing:
           <a href="images/IntelliJ/IjProjectCompilepathsSet.png"><img src=
-          "images/IntelliJ/IjProjectCompilepathsSet.png" width="114" height="145" alt=
-          "SRC and TEST folders highlighted in Ij Project File List"></a>&nbsp; <a href=
-          "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png"><img src=
-          "images/IntelliJ/IjProjectJmriSetting1ModulesPaths.png" width="484" height="141" alt=
-          "JMRI Project Settings - Build - Compiler Output Paths screen"></a>
+          "images/IntelliJ/IjProjectCompilepathsSet.png" alt=
+          "SRC and TEST folders highlighted in Ij Project File List"></a>
         </li>
 
         <li>From the <strong>Build</strong> menu select <strong>Build Project</strong> or
-        <strong>Build Module 'JMRI'</strong> (and wait for up to 20 minutes, do some stretch
-        exercises etc).</li>
+        <strong>Build Module 'JMRI'</strong> (and wait a couple of minutes, do some stretch
+        exercises in the meantime).</li>
       </ol>
 
       <p>We've documented the following steps to help you get started using the built-in Debug
@@ -544,28 +560,28 @@
         <li>In IntelliJ, start by opening Preferences &gt; Build, Execution, Deployment and check
         "Generate debugging info":<br>
           <a href="images/IntelliJ/IjDebugPrefs.png"><img src="images/IntelliJ/IjDebugPrefs.png"
-          width="327" height="218" alt="IntelliJ Preferences - Build - Java Compiler screen"></a>
+          alt="IntelliJ Preferences - Build - Java Compiler screen"></a>
         </li>
 
         <li>Choose "Debug..." from the Run menu:<br>
           <a href="images/IntelliJ/IjDebug1Menu.png"><img src="images/IntelliJ/IjDebug1Menu.png"
-          width="188" height="72" alt="IntelliJ Debug - Run menu"></a><br>
+          alt="IntelliJ Debug - Run menu"></a><br>
           On the small "Debug" pane that appears, click "Edit Configurations..."<br>
           Alternatively, on the top right, click on "Add Configuration...":<br>
-          <img src="images/IntelliJ/IjDebug1Button.png" width="396" height="98" alt=
+          <img src="images/IntelliJ/IjDebug1Button.png" alt=
           "IntelliJ Debug/Run Configuration pane">
         </li>
 
         <li>On the top left of the new pane that appears, click the + sign (Add New
         Configuration).<br>
-        <img src="images/IntelliJ/IjDebug2Plus.png" width="134" height="91" alt=
+        <img src="images/IntelliJ/IjDebug2Plus.png" alt=
         "IntelliJ Debug/Run Configuration - New button"><br>
         Or simply type Command + N.<br>
         Select "JAR Application" in the list.</li>
 
         <li>This opens the "Run/Debug Configurations" pane:<br>
           <a href="images/IntelliJ/IjDebug3ConfigPaneJar.png"><img src=
-          "images/IntelliJ/IjDebug3ConfigPaneJar.png" width="522" height="427" alt=
+          "images/IntelliJ/IjDebug3ConfigPaneJar.png" alt=
           "IntelliJ Debug/Run Configuration - Edit New Config pane"></a><br>
 
           <ul>
@@ -591,36 +607,43 @@
           Here's another example, showing a JUnit template filled in for a single class. For
           coverage, "Fork mode" must be set to "none" on the Configuration tab. Choose IntellJ as
           the code coverage runner on the Code Coverage tab, and don't forget to fill in the
-          class(es) you want to have checked for coverage, see 2.:<br>
-          <a href="images/IntelliJ/IjDebugConfigJunit1.png"><img src=
-          "images/IntelliJ/IjDebugConfigJunit1.png" width="582" height="424" alt=
-          "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>&nbsp; <a href=
-          "images/IntelliJ/IjDebugConfigJunit2.png"><img src=
-          "images/IntelliJ/IjDebugConfigJunit2.png" width="582" height="424" alt=
-          "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>
+          class(es) you want to have checked for coverage, see 2.:
+          <div class="flex-container"><!-- flex is a set for responsive positioning on different screen sizes -->
+            <div class="flex-item-50">
+              <a href="images/IntelliJ/IjDebugConfigJunit1.png"><img src=
+              "images/IntelliJ/IjDebugConfigJunit1.png" alt=
+              "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>
+            </div>
+            <div class="flex-item-50">
+              <a href=
+              "images/IntelliJ/IjDebugConfigJunit2.png"><img src=
+              "images/IntelliJ/IjDebugConfigJunit2.png" alt=
+              "IntelliJ Debug/Run Configuration - Edit New Config pane"></a>
+            </div>
+          </div>
         </li>
 
         <li>To run a debug session, start by opening a .java file and set a Breakpoint on a line in
         your code by clicking in the left margin of the central edit pane:<br>
-        <img src="images/IntelliJ/IjDebug5Breakpoint.png" width="302" height="184" alt=
+        <img src="images/IntelliJ/IjDebug5Breakpoint.png" alt=
         "IntelliJ Debug Breakpoint in margin"></li>
 
         <li>We're now ready to start a Debug session by clicking the Bug button at the top right,
         making sure our "JMRI DP debug" configuration is selected in the drop down to the left of
         it:<br>
-        <img src="images/IntelliJ/IjDebug4StartDebug.png" width="272" height="79" alt=
+        <img src="images/IntelliJ/IjDebug4StartDebug.png" alt=
         "IntelliJ Debug select your config set"></li>
 
         <li>After a while, at the bottom of the main IntelliJ IDE interface, the Debug pane
         appears, stopping just before your Breakpoint or an Exception:<br>
           <a href="images/IntelliJ/IjDebug6DebugInterface.png"><img src=
-          "images/IntelliJ/IjDebug6DebugInterface.png" width="434" height="157" alt=
+          "images/IntelliJ/IjDebug6DebugInterface.png" alt=
           "IntelliJ Debug code execution stopped at Breakpoint"></a>
         </li>
 
         <li>Inspect the current values of the active variables, and click the Step Into button to
         execute 1 line of code:<br>
-        <img src="images/IntelliJ/IjDebug7StepInto.png" width="346" height="30" alt=
+        <img src="images/IntelliJ/IjDebug7StepInto.png" alt=
         "IntelliJ Debug Step Into buttons"></li>
       </ol>
 
@@ -633,13 +656,13 @@
       <h3 id="test">Testing with IntelliJ</h3>
 
       <p>Besides Debug, there's also a "Run ... with Coverage" option available in the Run menu and
-      tool bar.</p>
+      toolbar.</p>
 
       <p>When you create or edit a <a href="JUnit.shtml">test</a> (located in your Project at
       JMRI.java.test etc.) you can test it in one of the following ways:</p>
 
       <ul>
-        <li>part of the <code>alltest</code> Ant Build (double click in the IntelliJ Ant Build
+        <li>part of the <code>alltest</code> Ant Build (double-click in the IntelliJ Ant Build
         right hand column to run)</li>
 
         <li>run it on its own using the <code>test-single</code> Ant Task</li>
@@ -657,15 +680,15 @@
       Build column, choosing "Properties". Open the "Properties" tab, click the + (Add) sign at
       lower left and enter <code>test.includes</code> in the Name column and the path to your test
       under Value, starting with either <code>apps.</code> or <code>jmri.</code> as shown:<br>
-      <a href="images/IntelliJ/IjAntProps.png"><img src="images/IntelliJ/IjAntProps.png" width=
-      "318" height="174" alt="IntelliJ Ant Property"></a></p>
+      <a href="images/IntelliJ/IjAntProps.png"><img src="images/IntelliJ/IjAntProps.png"
+      alt="IntelliJ Ant Property"></a></p>
 
       <p>The Code Coverage of your test can be checked by running Debug With Coverage. Unless you
       install the Jacoco application, IntelliJ runs its own coverage scheme:<br>
       After tests have completed the Coverage pane opens. Double-click a class line to open the
       code page. In the left margin coverage is marked:<br>
       <a href="images/IntelliJ/IjCoverageResultPane.png"><img src=
-      "images/IntelliJ/IjCoverageResultPane.png" width="444" height="170" alt=
+      "images/IntelliJ/IjCoverageResultPane.png" alt=
       "IntelliJ Ant Property"></a></p>
 
       <p>To run a single <code>@Test</code> test inside the file window, make sure you have set up
@@ -673,7 +696,7 @@
       you open a Test file, in the left margin a green Run Test arrow will show next to every test.
       Click it and select one of the 3 options from the combo:<br>
       <a href="images/IntelliJ/IjFileRunTestIcon.png"><img src=
-      "images/IntelliJ/IjFileRunTestIcon.png" width="363" height="151" alt=
+      "images/IntelliJ/IjFileRunTestIcon.png" alt=
       "IntelliJ Run @Test"></a></p>
 
       <h2 id="spotbugs">Running SpotBugs</h2>
@@ -692,19 +715,19 @@
           See the <a href="SpotBugs.shtml">JMRI SpotBugs help</a>.
         </li>
 
-        <li>Next, from the <strong>Ant Build</strong> tab select the <strong>spotbugs</strong> ant
-        task, wait for up to 20 minutes (do some stretch exercises etc), followed by SpotBugs
-        doings its duty. The analysis results show up as an htnl page called spotbugs.html that is
-        placed in the root of the JMRI Module. Right click to open it with your favorite
-        browser.</li>
+        <li>Next, from the <strong>Ant</strong> tab select the <strong>(3rd) JMRI &gt; spotbugs</strong>
+        task, wait a couple of minutes (do some stretch exercises etc.), followed by SpotBugs
+        doings its duty. The analysis results show up as an html page called <code>spotbugs.html</code>
+        that is placed in the root of the JMRI Module on the Project tab.<br>
+        Right click to open it with your favorite browser.</li>
         <!-- update once a plugin is available for SpotBugs:
 
-        <li>When you right click on any file icon in the
+        <li>When you right-click on any file icon in the
         <code>src</code> or <code>test</code> folders, the
           <b>SpotBugs</b> context menu allows you to <b>Analyze Selected File(s)</b> and more:<br>
-          <img src="images/IntelliJ/IjFbContextMenuOnFile.png" width="363" height="170"
+          <img src="images/IntelliJ/IjFbContextMenuOnFile.png"
                alt="SpotBugs context menu">&nbsp;
-          <img src="images/IntelliJ/IjSpotbugsToolbar.png" width="152" height="188"
+          <img src="images/IntelliJ/IjSpotbugsToolbar.png"
                alt="SpotBugs Plug-In toolbar active"><br>
           The Bugs toolbar provides access to the same functions, ranging from file to class, package, Module and
           scope.<br>
@@ -712,9 +735,9 @@
           active.</li>
         <li>Either choice will start a compilation of the classes involved, followed by SpotBugs analyzing the
           code structure. Watch the progress bar either at the bottom of the IntelliJ window or in a dialog:<br>
-          <img src="images/IntelliJ/IjFbProgressbar.png" width="494" height="104"
+          <img src="images/IntelliJ/IjFbProgressbar.png"
                alt="SpotBugs Analysis progress dialog">&nbsp;
-          <img src="images/IntelliJ/IjBuildtaskProgressbar.png" width="217" height="110"
+          <img src="images/IntelliJ/IjBuildtaskProgressbar.png"
                alt="SpotBugs background task indicator">
         </li>
       <li>Once the SpotBugs analysis has completed, its tab pane at bottom left in IntelliJ at the JI (bug) icon will
@@ -722,7 +745,7 @@
         Click <b>more...</b> to see a summary of your settings.<br>
         Browse the bugs, code preview bug details and suggested fixes (click image to enlarge):<br>
         <a href="images/IntelliJ/IjFbAnalysisDetails.png"><img
-                src="images/IntelliJ/IjFbAnalysisDetails.png" width="644" height="296"
+                src="images/IntelliJ/IjFbAnalysisDetails.png"
                 alt="SpotBugs plugin in action"></a>
       </li> -->
       </ol>
@@ -740,22 +763,22 @@
       "Git" menu (it's the one but last item, supported by the Git plugin).<br>
       Note: Be sure to select your own repository <code>origin:</code> if you see multiple options
       to choose from in this submenu:<br>
-      <img src="images/IntelliJ/IjGitPRViaOwnRepo.png" width="664" height="100" alt=
+      <img src="images/IntelliJ/IjGitPRViaOwnRepo.png" alt=
       "IntelliJ Git Menu"></p>
 
       <p>Fill in a title and comment for your PR:<br>
       <a href="images/IntelliJ/IjGitPRCreate.png"><img src="images/IntelliJ/IjGitPRCreate.png"
-      width="531" height="241" alt="IntelliJ Git Create PR"></a></p>
+      alt="IntelliJ Git Create PR"></a></p>
 
       <p>Unless your change is intended for a special branch like a previous release, you would set
       the PR Target Branch to "master" as shown above. Otherwise, use the combo box to change the
       branch where you want your new changes to be added:<br>
       <a href="images/IntelliJ/IjGitCreatePrSelectBaseBranch.png"><img src=
-      "images/IntelliJ/IjGitCreatePrSelectBaseBranch.png" width="300" height="168" alt=
+      "images/IntelliJ/IjGitCreatePrSelectBaseBranch.png" alt=
       "IntelliJ Git Create PR Base Branch"></a></p>
 
       <p>To create a PR from GitHub web - outside IntelliJ - start by signing on to the <a href=
-      "http://github.com">GitHub web site</a>, selecting your repository & branch and clicking the
+      "http://github.com">GitHub website</a>, selecting your repository & branch and clicking the
       <a href="gitdeveloper.shtml#pull">Pull Request button</a>. For more info, see the <a href=
       "gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
 
@@ -772,19 +795,19 @@
       Properties you checked "Insert space around key-value delimiter", or your edits will mess up
       the work already in place.</p>
       <a href="images/IntelliJ/IjPrefsEditorProperties.png"><img src=
-      "images/IntelliJ/IjPrefsEditorProperties.png" width="490" height="285" alt=
+      "images/IntelliJ/IjPrefsEditorProperties.png" alt=
       "IntelliJ Props Editor Style Setting"></a>
       <p>To easily edit Resource Bundle <code>.properties</code> files, containing translations in
       different languages, select a closed 'Bundle' folder in the Project file list and type Cmd +
       arrow down key, or double click one of the language files. This will open a window with a
       list of coded keywords on the left and a text box for every translation to the right:<br>
       <a href="images/IntelliJ/IjEditProperties.png"><img src=
-      "images/IntelliJ/IjEditProperties.png" width="649" height="311" alt=
+      "images/IntelliJ/IjEditProperties.png" alt=
       "IntelliJ Bundle edit window"></a></p>
 
       <p>When you open a specific language file, at the bottom of the screen you can switch views
       by clicking the <strong>Resource Bundle</strong> or the <strong>Text</strong> tab:<br>
-      <img src="images/IntelliJ/IjResourceJump.png" width="396" height="169" alt=
+      <img src="images/IntelliJ/IjResourceJump.png" alt=
       "IntelliJ Bundle edit menu"></p>
 
       <h4>Reset HEAD</h4>
@@ -795,32 +818,32 @@
       window to view a "Track Plan" of the history of your Branch, all the way back to the
       different parts that made JMRI:<br>
       <a href="images/IntelliJ/IjVersionControlPane.png"><img src=
-      "images/IntelliJ/IjVersionControlPane.png" width="634" height="161" alt=
+      "images/IntelliJ/IjVersionControlPane.png" alt=
       "IntelliJ Version Control tab"></a></p>
 
       <p>Click on any line to view the changes that were Committed at that point in time (listed to
       the right).<br>
-      To reset your repo (HEAD) back to a certain point, right click on the corresponding line and
+      To reset your repo (HEAD) back to a certain point, right-click on the corresponding line and
       select "Reset Current Branch to Here..." (and confirm).<br>
       <a href="images/IntelliJ/IjResetBranchTo.png"><img src="images/IntelliJ/IjResetBranchTo.png"
-      width="172" height="197" alt="IntelliJ History reset"></a><br>
+      alt="IntelliJ History reset"></a><br>
       Confirm the way you want to save or discard your Commits after that point in the dialog:<br>
       <a href="images/IntelliJ/IjResetBranchDialog.png"><img src=
-      "images/IntelliJ/IjResetBranchDialog.png" width="234" height="149" alt=
+      "images/IntelliJ/IjResetBranchDialog.png" alt=
       "IntelliJ Reset HEAD dialog"></a></p>
 
       <h4>Master password</h4>
 
       <p>To securely store your GitHub login, you might periodically be asked to unlock it:<br>
       <a href="images/IntelliJ/IjMasterPasswd.png"><img src="images/IntelliJ/IjMasterPasswd.png"
-      width="232" height="110" alt="IntelliJ Git Master Pwd dialog"></a></p>
+      alt="IntelliJ Git Master Pwd dialog"></a></p>
 
       <h4>Error: Can't start Git</h4>
 
       <p>On macOS, when you run into this error, usually when starting IntelliJ for the first time
       after a system update:<br>
       <a href="images/IntelliJ/IjXcodeGitProblem1.png"><img src=
-      "images/IntelliJ/IjXcodeGitProblem1.png" width="373" height="110" alt=
+      "images/IntelliJ/IjXcodeGitProblem1.png" alt=
       "IntelliJ Git error"></a></p>
 
       <ol>
@@ -829,8 +852,8 @@
         <li>If that does not fix it, quit IntelliJ and start the Apple Xcode application.<br>
           You will be asked to agree with its licence agreement, and that will reenable the Git
           installation to be used inside IntelliJ as well as Xcode.<br>
-          <a href="images/IntelliJ/IjXcode1.png"><img src="images/IntelliJ/IjXcode1.png" width=
-          "223" height="111" alt="IntelliJ Git error"></a>
+          <a href="images/IntelliJ/IjXcode1.png"><img src="images/IntelliJ/IjXcode1.png"
+          alt="IntelliJ Git error"></a>
         </li>
       </ol>
 
@@ -850,15 +873,15 @@
         <h2 id="errors">Compiler Errors and Warnings</h2>
 
         The default IntelliJ compiler configuration may produce some unnecessary
-        warnings. You can adjust the warnings to match the screen shots as
+        warnings. You can adjust the warnings to match the screenshots as
         shown below by going to Window -&gt; Preferences and selecting
         "Java -&gt; Compiler -&gt; Errors/Warnings".
         -->
 
       <h4>Run/Debug Error</h4>
       <p>If you see a message similar to this:<br>
-      <a href="images/IntelliJ/IjAntErrorDialog.png"><img src="images/IntelliJ/IjAntErrorDialog.png" width=
-      "593" height="345" alt="IntelliJ Ant error"></a><br>
+      <a href="images/IntelliJ/IjAntErrorDialog.png"><img src="images/IntelliJ/IjAntErrorDialog.png"
+      alt="IntelliJ Ant error"></a><br>
       the SDK name as set in the Project Structure &gt; Project Settings &gt; SDK tab does not match any of the JDKs
       installed. Fix it by choosing a different Java 11 JDK as described <a href="#setant">above</a>.
       </p>

@@ -156,17 +156,17 @@
           <p>For some reason, the programming operation ended early and the command station
           returned to normal mode (left service mode) before it should have.</p>
 
-          <p>This error can occur when some operations are performed in JMRI durring programming.
-          Turning track power on durring a programming operation on an XpressNet is one example of
+          <p>This error can occur when some operations are performed in JMRI during programming.
+          Turning track power on during a programming operation on an XpressNet is one example of
           how to create this error.</p>
 
-          <p>If you haven't performed any operations durring your programming sequence, this error,
-          might indicate that you've selected the wrong command station type in the preferences.
-          Check that. If that's correct and it's still happening, ask for help on the JMRI users
+          <p>If you haven't performed any operations during your programming sequence, this error,
+          might indicate that you've selected the wrong command station type in JMRI Preferences.
+          Check that. If that's set correctly and error 310 still shows up, ask for help on the JMRI users
           list.</p>
         </dd>
 
-        <dt><strong>311 - Communcation Error Between PC and Command Station</strong>
+        <dt><strong>311 - Communication Error Between PC and Command Station</strong>
         </dt>
 
         <dd>

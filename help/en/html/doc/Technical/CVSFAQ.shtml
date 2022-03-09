@@ -118,7 +118,7 @@ with your own changes still present.
       etc. directories.</p>
 
       <p>Finally, there's a bunch of information that's not part of the application development
-      areas, including the "scripts" directory of tools for building releases, the web site, and
+      areas, including the "scripts" directory of tools for building releases, the website, and
       others.</p>
 
       <p>We store all these separately in CVS so that you can check out just the ones you need.</p>
