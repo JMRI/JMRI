@@ -140,10 +140,19 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 4  4","Bootloader: Verify boot mode",CbusOpCodes.decode(m));
     
         m.setElement(5, 5);
-        Assert.assertEquals("extended 4  5","Unknown Extended Frame",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 4  5","Bootloader: Request device ID",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 6);
+        Assert.assertEquals("extended 4  6","Bootloader: Request bootloader ID",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 7);
+        Assert.assertEquals("extended 4  7","Bootloader: Memory write enables",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 8);
+        Assert.assertEquals("extended 4  8","Unknown Extended Frame",CbusOpCodes.decode(m));
         
         m.setHeader(5);
-        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 05 06 07",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 08 06 07",CbusOpCodes.decode(m));
         
         
         m = new CanMessage( new int[]{0},0x10000004 );

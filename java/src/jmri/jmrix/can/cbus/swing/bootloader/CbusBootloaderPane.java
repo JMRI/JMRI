@@ -1043,7 +1043,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     hardwareParams.setValid(true);
                     log.debug("Failed to read module parameters from node {}", nodeNumber);
                     addToLog(MessageFormat.format(Bundle.getMessage("BootNodeParametersFailed"), nodeNumber));
-                    log.debug("Looking for module in boot mode", nodeNumber);
+                    log.debug("Looking for module in boot mode");
                     addToLog(Bundle.getMessage("BootNodeParametersNext"));
                     moduleCheckBox.setSelected(true);
                     setCheckBootTimeout();
