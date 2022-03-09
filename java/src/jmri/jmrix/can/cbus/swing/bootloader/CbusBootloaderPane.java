@@ -141,6 +141,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         CHECK_BOOT_MODE,
         WAIT_BOOT_DEVID,
         WAIT_BOOT_ID,
+        ENABLES_SENT,
+        INIT_SENT,
         PROG_DATA,
         PROG_PAUSE,
         CHECK_SENT
@@ -659,25 +661,47 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     // and start programming.
                     showBootId(r);
                     sendBootEnables();
-                    startProgramming(hardwareParams.getLoadAddress());
+                    initialise(hardwareParams.getLoadAddress());
+                } else {
+                    protocolError();
+                }
+                break;
+                
+            case ENABLES_SENT:
+                clearAckTimeout();
+                if (CbusMessage.isBootOK(r)) {
+                    // We had a response to the enables so start programming.
+                    initialise(hardwareParams.getLoadAddress());
+                } else {
+                    protocolError();
+                }
+                break;
+                        
+            case INIT_SENT:
+                clearAckTimeout();
+                if (CbusMessage.isBootOK(r)) {
+                    // We had a response to the initislise so start programming.
+                    writeNextData();
                 } else {
                     protocolError();
                 }
                 break;
                         
             case PROG_DATA:
+                clearAckTimeout();
                 if (CbusMessage.isBootOK(r)) {
                     // Acknowledge received for CBUS protocol
-                    clearAckTimeout();
                     writeNextData();
+                } else if (CbusMessage.isBootError(r)){
+                    // TODO:
                 }
                 break;
                 
             case CHECK_SENT:
+                clearCheckTimeout();
                 if (CbusMessage.isBootOK(r)) {
                     sendReset();
                 } else if (CbusMessage.isBootError(r)) {
-                    clearCheckTimeout();
                     // Checksum verify failed
                     log.error("Node {} checksum failed", nodeNumber);
                     addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumFailed"), nodeNumber));
@@ -743,6 +767,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             enables |= 4;
         }
         
+        bootState = BootState.ENABLES_SENT;
+        setAckTimeout();
         CanMessage m = CbusMessage.getBootEnables(enables, 0);
         log.debug("Send boot enables {}", enables);
         addToLog(MessageFormat.format(Bundle.getMessage("BootEnables"), enables));
@@ -915,7 +941,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
 
     /**
-     * Setup to start programming
+     * Initialise programming
      * 
      * We normally start at the address from the parameters, unless the hex file 
      * start address is higher, e.g., in the case of a CANCAB language file which
@@ -923,7 +949,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      *
      * @param loadAddress Start address from parameters
      */
-    private void startProgramming(int loadAddress) {
+    private void initialise(int loadAddress) {
         if (hexFile.getProgStart() > loadAddress) {
             bootAddress = hexFile.getProgStart();
         } else {
@@ -931,13 +957,13 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         }
         checksum = 0;
         dataFramesSent = 0;
-        log.debug("Start Programming at address {}", Integer.toHexString(bootAddress));
+        log.debug("Initialise at address {}", Integer.toHexString(bootAddress));
         addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
         // Initialise the bootloader
+        setAckTimeout();
         CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
         tc.sendCanMessage(m, null);
-        bootState = BootState.PROG_DATA;
-        writeNextData();
+        bootState = BootState.INIT_SENT;
     }
 
     
@@ -1177,7 +1203,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 bootProtocol = BootProtocol.AN247;
                 log.debug("Found AN247 bootloader");
                 addToLog(Bundle.getMessage("BootIdAn247"));
-                startProgramming(hardwareParams.getLoadAddress());
+                initialise(hardwareParams.getLoadAddress());
             }
         };
         TimerUtil.schedule(devIdTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);
