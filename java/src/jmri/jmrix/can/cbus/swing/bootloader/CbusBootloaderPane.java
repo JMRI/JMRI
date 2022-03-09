@@ -644,10 +644,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 clearDevIdTimeout();
                 if (CbusMessage.isBootDevId(r)) {
                     // We had a response to the Device ID request so we can proceed with the new protocol
+                    showDevId(r);
                     bootProtocol = BootProtocol.CBUS_1_0;
                     requestBootId();
                 } else {
-                    // TODO: protocol error
+                    protocolError();
                 }
                 break;
                 
@@ -656,12 +657,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (CbusMessage.isBootId(r)) {
                     // We had a response to the bootloader ID request so send the write enables
                     // and start programming.
-                    showBootID(r);
-                    // TODO: wait for ack before starting programming.
+                    showBootId(r);
                     sendBootEnables();
                     startProgramming(hardwareParams.getLoadAddress());
                 } else {
-                    // TODO: Protocol Error
+                    protocolError();
                 }
                 break;
                         
@@ -683,15 +683,41 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumFailed"), nodeNumber));
                     endProgramming();
                 } else {
-                    // TODO: Protocol error
+                    protocolError();
                 }
                 break;
         }
     }
 
     
-    void showBootID(CanReply r) {
-        log.debug("Found bootloader Major: {} Minor: {} algo: {} error: {}",
+    /**
+     * Show the device ID
+     * 
+     * Manufacturere and device from cbusdefs.h, device ID from the device
+     * 
+     * @param r device ID reply
+     */
+    void showDevId(CanReply r) {
+        log.debug("Found device ID Manu: {} Dev: {} Device ID: {}",
+                r.getElement(1),
+                r.getElement(2),
+                r.getElement(3)<<24 + r.getElement(4)<<16 + r.getElement(5)<<8 + r.getElement(4));
+        addToLog(MessageFormat.format(Bundle.getMessage("DevIdCbus"),
+                r.getElement(1),
+                r.getElement(2),
+                r.getElement(3)<<24 + r.getElement(4)<<16 + r.getElement(5)<<8 + r.getElement(4)));
+    }
+    
+   
+    /**
+     * Show the bootloader ID
+     * 
+     * Major/Minor version number, checksum algorithm error report capability
+     * 
+     * @param r 
+     */
+    void showBootId(CanReply r) {
+        log.debug("Found bootloader Major: {} Minor: {} Algo: {} Reports: {}",
                 r.getElement(1),
                 r.getElement(2),
                 r.getElement(3),
@@ -723,6 +749,13 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         tc.sendCanMessage(m, null);
     }
     
+    
+    /**
+     * Protocol Error
+     */
+    void protocolError() {
+        // TODO:
+    }
     
     /**
      * Is Programming Needed
@@ -1172,7 +1205,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 bootIdTask = null;
-                // TODO: Protocol error
+                protocolError();
             }
         };
         TimerUtil.schedule(bootIdTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);
