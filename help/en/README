@@ -5,7 +5,7 @@ plus the actual content.
 
 There are several content subtrees:
   manual - a help version of the original DecoderPro manual
-  html - a help-customized version of the web site
+  html - a help-customized version of the website
   package - package-sensitive help, organized by Java package
 
 The template-no-sidebar.shtml and template-sidebar.shtml files

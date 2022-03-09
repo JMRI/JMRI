@@ -804,7 +804,7 @@
       <p>The 15 mA current source block in the diagram above may be implemented in a wide variety
       of ways. As an example, Dick Bronson shows a circuit for a 15 mA current source that can be
       used to provide LocoNet Data Signal termination at his <a href=
-      "http://www.rr-cirkits.com">RR-CirKits web site</a> on the <a href=
+      "http://www.rr-cirkits.com">RR-CirKits website</a> on the <a href=
       "http://www.rr-cirkits.com/Notebook/Standalone-LocoNet.html">Notebook page for Standalone
       LocoNet</a>. Look for the section titled "Pull Up" which shows a circuit using two 2N2222 NPN
       transistors and two resistors. The circuit node shown as <strong>LN</strong> should be
@@ -1211,7 +1211,7 @@
       <a href="http://www.logicrailtech.com">the Logic Rail Technologies website</a>.</p>
 
       <p>Information and support for products by CML Electronics is now provided by Sig-naTrak® by
-      GFB Designs at <a href="https://www.signatrak.co.uk/">the Sig-naTrak® web site</a>.</p>
+      GFB Designs at <a href="https://www.signatrak.co.uk/">the Sig-naTrak® website</a>.</p>
 
       <p>Information and support for products by Tam Valley Depot may be found at <a href=
       "http://www.tamvalleydepot.com/">the TAM Valley Depot website</a>.</p>

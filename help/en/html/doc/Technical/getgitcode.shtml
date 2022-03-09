@@ -57,7 +57,7 @@
       <h2 id="get">Get Your Own Copy</h2>
 
       <p>Our source code is distributed using <a href="https://git-scm.com">Git</a>. (We also keep
-      the <a href="WebSite.shtml">web site</a> in Git, if you'd like to work with the source for
+      the <a href="WebSite.shtml">website</a> in Git, if you'd like to work with the source for
       that directly.) If you want to work with the JMRI code, the full <a href="WebSite.shtml">web
       site</a>, or any other large part of JMRI, spending a couple minutes getting Git set up is
       well worth it. We're sorry, but we just can't support other methods (sending around

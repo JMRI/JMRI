@@ -41,7 +41,7 @@
           Script...</strong></li>
 
           <li><strong>Panels ⇒ Thread Monitor</strong> has moved to <strong>Scripting ⇒ Thread
-          Moniitor</strong></li>
+          Monitor</strong></li>
 
           <li><strong>Panels ⇒ Script Output</strong> has moved to <strong>Scripting ⇒ Script
           Output</strong></li>
@@ -209,11 +209,11 @@
         <h3 id="startAction">Loading table content and panels during startup</h3>
 
         <p>The <strong>Preferences ⇒ Start Up</strong> option includes an <strong>Action</strong>
-        to load a file during the start up proces. Click on the <strong>Add</strong> button and
+        to load a file during the startup process. Click on the <strong>Add</strong> button and
         select <strong>Open File...</strong>. The operating system <strong>Open File</strong>
         dialog will be displayed with the <strong>user file location</strong> selected. Select a
         file and click on <strong>Open</strong>. The new action will be added to the action list.
-        Click on the Preferences <strong>Save</strong> button to retain the start up action
+        Click on the Preferences <strong>Save</strong> button to retain the startup action
         change.</p>
 
         <p><a href="#TopOfPage">[Go to top of page]</a>
@@ -221,11 +221,11 @@
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h2 id="usave">Things you need to take action to "store" or "save"</h2>
+      <h2 id="usave">When to take action to "store" or "save"</h2>
 
       <div class="para">
         <p>JMRI will sometimes (but not always) notify you when you might want to "save" or
-        "store." These are the places user action may be required:</p>
+        "store." These are the places where user action may be required:</p>
 
         <ul>
           <li>
@@ -352,7 +352,7 @@
         different tools you use within JMRI and you will always have what you worked on the next
         time. And if there is a problem, remember that JMRI keeps backup files when it writes your
         data to permanent storage, either automatically or by your command, so look for files with
-        the ".bak" suffix and you'll be able to recover from most missteps.</p>
+        the ".bak" suffix, and you'll be able to recover from most missteps.</p>
 
         <p><a href="#TopOfPage">[Go to top of page]</a>
         </p>
@@ -367,7 +367,7 @@
         in working with PanelPro is to almost always use <strong>"Store ALL table content and
         panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}" or
         <strong>"Store ALL table content and panels...</strong> {<em>Old: <strong>Store
-        Panels...</strong></em>}" where it appears, and to rename the file you are saving so you
+        Panels...</strong></em>}" where it appears, and to rename the file you are saving, so you
         have multiple versions named by you to go back to if necessary.</p>
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -396,14 +396,14 @@
             automatically stored when data is changed.
           </li>
 
-          <li>Block values may be restored, dependant on block occupancy and track power
+          <li>Block values may be restored, dependent on block occupancy and track power
           status.</li>
 
           <li>ID Tags are stored on exit, with their Time last seen and last Reporter position.
           When restored on startup, these Reporters will also be created.</li>
 
-          <li>Connection specific tools, e.g. MERG CBUS Event Table may also be have store /
-          restoration settings.</li>
+          <li>Connection specific tools, e.g. MERG CBUS Event Table may also have their own store /
+          restore settings.</li>
         </ul>
         <br>
 

@@ -26,7 +26,7 @@
         <dd>A better tool for programming decoders. DecoderPro simplifies the job of configuring
         complicated DCC decoders by providing screens on which you can select the various options
         and values you want.<br>
-        Open DecoderPro by double clicking its icon in the JMRI installation folder.</dd>
+        Open DecoderPro by double-clicking its icon in the JMRI installation folder.</dd>
 
         <dt>
           <a href="./PanelPro/index.shtml">PanelPro™</a>
@@ -34,7 +34,7 @@
 
         <dd>Operating CRT based CTC control panels that reflect the real-time state of your
         railroad <em>and</em> let you control it - almost like a Prototype dispatcher!<br>
-        Open PanelPro by double clicking its icon in the JMRI installation folder.</dd>
+        Open PanelPro by double-clicking its icon in the JMRI installation folder.</dd>
 
         <dt>
           <a href="./DispatcherPro/index.shtml">DispatcherPro™</a>
@@ -48,7 +48,7 @@
         </dt>
 
         <dd>Create Train Manifests that detail the work your train crews will perform during an
-        operations session. The Manifest lists of car pick up and set outs, shows where the cars
+        Operations session. The Manifest lists of car pick up and set outs, shows where the cars
         are located, and provides the cars' destinations.</dd>
 
         <dt>
@@ -70,7 +70,7 @@
 
       <h2 id="jythonapp">Jython Applications for JMRI...</h2>
 
-      <p>Some JMRI users have implemented sophiticated capabilities using the <a href=
+      <p>Some JMRI users have implemented sophisticated capabilities using the <a href=
       "../tools/scripting/index.shtml">JMRI jython scripting facilities.</a> These are listed
       <a href="../tools/scripting/JythonApps.shtml">here</a>.</p>
 

@@ -44,7 +44,7 @@
 
       <p>Our source code up to JMRI version 4.1.2 was distributed using <a href=
       "http://subversion.apache.org/">Subversion</a>. (Until then we also kept the <a href=
-      "WebSite.shtml">web site</a> in Subversion, if you'd like to work with it directly.) If you
+      "WebSite.shtml">website</a> in Subversion, if you'd like to work with it directly.) If you
       want to work with the code, a few minutes installing Subversion is well worth it. We're
       sorry, but we just can't support other methods (sending .zip files, etc), as they're just too
       error prone.</p>

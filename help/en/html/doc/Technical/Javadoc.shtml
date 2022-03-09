@@ -232,7 +232,7 @@ a list inside a paragraph.
         <dt>uploadjavadoc</dt>
 
         <dd>
-          Upload the current documentation in the local doc/ directory to the jmri.org web site.
+          Upload the current documentation in the local doc/ directory to the jmri.org website.
           This is done automatically by the <a href="ContinuousIntegration.shtml">CI system</a>, so
           you generally don't have to deal with it.
         </dd>
