@@ -299,7 +299,7 @@
       <p>All the scripts discussed here can be found in <a href="../../../../../jython/MQTT/">the
       JMRI distribution jython directory under "MQTT."</a> More information about scripting with
       JMRI is provided under <a href="../../tools/scripting/index.shtml">Scripting</a> in the JMRI
-      Help and web site. Custom scripts for MQTT will typically use the <a href=
+      Help and website. Custom scripts for MQTT will typically use the <a href=
       "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttAdapter.html">MQTT Adapter object and
       methods.</a></p>
 

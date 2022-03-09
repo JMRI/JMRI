@@ -46,7 +46,7 @@
       JMRI supports the SPROG both as a Decoder Programmer, and as a mini-Command Station. For more
       information on these capabilities, see the <a href=
       "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a> on the <a href=
-      "http://www.sprog-dcc.co.uk/">SPROG web site</a>.
+      "http://www.sprog-dcc.co.uk/">SPROG website</a>.
       <p>Note that there are several different versions of the SPROG hardware, and even more
       versions of the SPROG software.<br>
       The following SPROG models operate with the current version of JMRI:</p>
@@ -89,7 +89,7 @@
             <li>On Windows 7 and earlier users may need to have a driver installed. For more
             information on that, see the <a href=
             "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a> on the
-            <a href="http://www.sprog-dcc.co.uk/">SPROG web site</a>.<br>
+            <a href="http://www.sprog-dcc.co.uk/">SPROG website</a>.<br>
               Windows 7 users may also be interested in <a href=
               "https://www.youtube.com/watch?v=JUG7dsXi2cI">this video</a>.
             </li>
@@ -225,7 +225,7 @@
       <h3>Third Party info</h3>
 
       <p>For more information on the SPROG, see <a href=
-      "http://www.sprog-dcc.co.uk/index.shtml">the SPROG web site</a>.<br>
+      "http://www.sprog-dcc.co.uk/index.shtml">the SPROG website</a>.<br>
       They have a useful <a href="http://www.sprog-dcc.co.uk/faq.shtml#General">FAQ page</a>.</p>
 
       <p>There's a SPROG User Group at <a href="https://groups.io/g/sprog-dcc/topics"></a>.</p>

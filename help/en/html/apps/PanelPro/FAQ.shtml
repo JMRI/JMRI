@@ -90,9 +90,9 @@
             deal". And, in my opinion, it is not something you should attempt to teach yourself -
             or to do it alone with just the help/guidance of online lists such as this one. I am
             not saying "don't use online" ... I'm saying that if you want to do this as easily as
-            possible then you should seek out those who have gone before and enlist their
-            face-to-face support/guidance. Yes, you can do it your self - no, that's not the best
-            way to do this and you will find you make -many- mistakes that will cause considerable
+            possible, you should seek out those who have gone before and enlist their
+            face-to-face support/guidance. Yes, you can do it all by yourself - no, that's not the best
+            way to do this as you will find you make -many- mistakes that will cause considerable
             delays and rework. Many layout automation projects have gotten stalled for just this
             very reason.<br>
             <br>
@@ -107,7 +107,7 @@
 
         <dd>
           There are several ways to save your panel. This is because the program has to store both
-          configuration (turnouts, sensors, etc) and layout (the details of your specific panel)
+          configuration (turnouts, sensors, etc.) and layout (the details of your specific panel)
           information.<br>
           <br>
           Usually, the easiest way is to use just one file to contain everything. For example, you
@@ -137,7 +137,7 @@
           tables.
         </dd>
 
-        <dt id="showfile">How can I see my saved configuration, including Turnouts etc and
+        <dt id="showfile">How can I see my saved configuration, including Turnouts etc. and
         panels?</dt>
 
         <dd>
@@ -157,7 +157,7 @@
 
             <li>Select the Start-up tab.</li>
 
-            <li>From the drop down list at bottom left, select "Add", then "Open File..."</li>
+            <li>From the dropdown list at bottom left, select "Add", then "Open File..."</li>
 
             <li>In the dialog box that opens, select the file in which you have stored the
             configuration/panels.<br>
@@ -181,7 +181,7 @@
         <dd>
           The best place to put your own files is in the JMRI Preferences directory (all JMRI apps
           use <a href="../../setup/Files.shtml#location">the same directory</a>). You should put
-          any locally-modified versions of files here so they don't get overwritten by a new
+          any locally-modified versions of files here, so they don't get overwritten by a new
           version of the program. Any files that the program writes to contain local information,
           e.g. roster entries, are also written here.<br>
           <br>
@@ -192,8 +192,8 @@
             directory.</li>
 
             <li>On a Macintosh, look in the Preferences folder of the current System Folder if
-            running MacOS 8 or 9, or the Library/Preferences folder in your user directory on Mac
-            OS X.</li>
+            running Mac OS8 or OS9, or the Library/Preferences folder in your user directory on
+            macOS.</li>
 
             <li>On Windows, this can be in a number of places depending on which Windows version
             you're running and whether you have multiple users configured; Search for a "JMRI"

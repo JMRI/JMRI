@@ -168,7 +168,7 @@ You can repeat this as many times as you'd like as you're working on
 your changes. Each time, the most recent changes are pushed up and made
 available.
 
-Finally, when your change is ready to submit, go to the GitHub web site
+Finally, when your change is ready to submit, go to the GitHub website
 to link:gitdeveloper.shtml#pull[fill out and submit a pull request].
 
 Eventually, somebody will look at the pull request and decide whether to
@@ -242,7 +242,7 @@ and select "Run Target", then "jar".
 It is possible for Apache NetBeans users to create a release package for
 use on the Windows platform. This requires installation of the Nullsoft
 Scriptable Install System (NSIS), which can be downloaded from
-http://sourceforge.net/projects/nsis[the NSIS project web site] on
+http://sourceforge.net/projects/nsis[the NSIS project website] on
 SourceForge.
 
 Once NSIS is installed on the computer, it is necessary to create a file
@@ -268,7 +268,7 @@ modified, the Windows package may be created by running the
 
 Apache NetBeans has nice tools for working with XML files, including
 editing and validating them. JMRI uses XInclude to include XML fragments
-in other XML files via URLs to https://jmri.org/xml[the JMRI web site]. JMRI programs convert these at run time to local file references; however Apache NetBeans must be configured to do this if you want to edit JMRI XML files while offline.
+in other XML files via URLs to https://jmri.org/xml[the JMRI website]. JMRI programs convert these at run time to local file references; however Apache NetBeans must be configured to do this if you want to edit JMRI XML files while offline.
 
 To configure Apache NetBeans to allow offline XML editing:
 

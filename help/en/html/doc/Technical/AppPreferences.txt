@@ -47,7 +47,7 @@ The XML elements for JMRI preferences are stored in two different files within a
 
 A manager for preferences using either of these files manages a type of preference, for example, connection configurations or table state. The manager uses the methods in [AuxiliaryConfiguration](http://www.jmri.org/JavaDoc/doc/jmri/profile/AuxiliaryConfiguration.html) to get, put, or remove these XML elements. These methods all require the Element or the Element's name and if the Element is shared or private.
 
-XML elements for JMRI preferences must all have valid and resolvable namespaces. These namespaces *do not* have to be unique to or defined within the jmri.org web site.
+XML elements for JMRI preferences must all have valid and resolvable namespaces. These namespaces *do not* have to be unique to or defined within the jmri.org website.
 
 ### preferences.xml
 
