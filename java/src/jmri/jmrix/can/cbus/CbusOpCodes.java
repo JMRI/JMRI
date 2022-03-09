@@ -198,6 +198,7 @@ public class CbusOpCodes {
         StringBuilder sb = new StringBuilder(Bundle.getMessage("decodeBootloader"));
         switch (msg.getHeader()) {
             case 4: // outgoing Bootload Command
+                int newAddress;
                 int newChecksum;
                 switch (msg.getElement(5)) { // data payload of bootloader control frames
                     case CbusConstants.CBUS_BOOT_NOP: // 0
@@ -207,8 +208,8 @@ public class CbusOpCodes {
                         sb.append(Bundle.getMessage("decodeCBUS_BOOT_RESET"));
                         break;
                     case CbusConstants.CBUS_BOOT_INIT: // 2
-                        newChecksum = ( msg.getElement(2)*65536+msg.getElement(1)*256+msg.getElement(0)  );
-                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_INIT",newChecksum));
+                        newAddress = ( msg.getElement(2)*65536+msg.getElement(1)*256+msg.getElement(0)  );
+                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_INIT",newAddress));
                         break;
                     case CbusConstants.CBUS_BOOT_CHECK: // 3
                         newChecksum = ( msg.getElement(7)*256+msg.getElement(6)  );
