@@ -616,7 +616,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
 
     String debugInfo() {
         StringBuffer info = new StringBuffer("\n");
-        info.append(getName()); info.append("on warrant= "); info.append(_warrant.getDisplayName());
+        info.append(getName()); info.append(" on warrant= "); info.append(_warrant.getDisplayName());
         info.append("\nThread.State= "); info.append(getState());
         info.append(", isAlive= "); info.append(isAlive());
         info.append(", isInterrupted= "); info.append(isInterrupted());
@@ -1022,7 +1022,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             oldWarrant = oldWar;
             newWarrant = newWar;
             waitTime = limit;
-            if (log.isDebugEnabled()) log.debug("checkForTermination of {}, waitTime= {})",
+            if (log.isDebugEnabled()) log.debug("checkForTermination of \"{}\", before launching \"{}\". waitTime= {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), waitTime);
          }
 
