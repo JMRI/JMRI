@@ -1167,18 +1167,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         memo = new LocoNetSystemConnectionMemo(){
             @Override
             public LnPredefinedMeters getPredefinedMeters(){
+                // no meters to prevent slot reads
                 return null;
             }
             @Override
             public LnSensorManager getSensorManager(){
+                // no Sensormanager to prevent it from sending interrogation messages
                 return null;
             }
             @Override
             public LnTurnoutManager getTurnoutManager() {
+                // not required for tests
                 return null;
             }
             @Override
             public LnPowerManager getPowerManager() {
+                // no Powermanager to prevent it from sending slot 0 read message
                 return null;
             }
         };
