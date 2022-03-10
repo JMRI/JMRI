@@ -16,9 +16,14 @@
     <div id="mainContent">
       <h1>JMRI: Viewing XML Files</h1>
 
-      <p>JMRI stores information about its operations and information that you create in XML files. For example, when you use the JMRI "Store Files" command in PanelPro, your tables and panels (depending on which command you select) are stored in an XML file. Other XML files hold preferences, control information, operational information, decoder contents, your roster, and more. </p>
+      <p>JMRI stores information about its operations and information that you create in XML files. For 
+      example, when you use the JMRI "Store Files" command in PanelPro, your tables and panels (depending
+      on which command you select) are stored in an XML file. Other XML files hold preferences, control 
+      information, operational information, decoder contents, your roster, and more. </p>
       
-      <p>Although XML is a structured text format, it is complicated and not particularly easy to read. Most JMRI-created XML files can be displayed with more formatting (easier to read and print) in a web browser using "XSLT stylesheets" (provided in the JMRI distribution). This <a href=
+      <p>Although XML is a structured text format, it is complicated and not particularly easy to read.
+      Most JMRI-created XML files can be displayed with more formatting (easier to read and print) in a
+      web browser using "XSLT stylesheets" (provided in the JMRI distribution). This <a href=
       "https://jmri.org/xml/samples/TwoColumnMachine.xml">sample panel XML file</a> is an example of how
       this formatting looks.</p>
 
@@ -30,12 +35,16 @@
       browser's icon. On some platforms, you'll need to open it from the "File" menu.
 
       <br>Unfortunately, this approach doesn't always work because not all browsers properly
-      implement the use of XSLT. If the first browser you try doesn't display the XML file (usually just showing a blank page), try a different browser. Early versions of Internet Explorer are  particularly problematic although the most recent versions work well. Mozilla, Safari, Opera, and Chrome also work, while Firefox seems to work properly on some platforms and not on others.
-      (There might also be options that affect whether it works. Here's more <a href=
-      "https://jmri.org/xml/XSLT/README">technical background</a>)
+      implement the use of XSLT. If the first browser you try doesn't display the XML file (usually just
+      showing a blank page), try a different browser. Early versions of Internet Explorer are  particularly
+      problematic although the most recent versions work well. Mozilla, Safari, Opera, and Chrome also work,
+      while Firefox seems to work properly on some platforms and not on others. (There might also be options
+      that affect whether it works. Here's more <a href="https://jmri.org/xml/XSLT/README">technical background</a>)
       </li>
       
-      <li>Use the <a href="../../web/index.shtml">JMRI mini web server</a> that is included in JMRI (version 2.9.4 and later). The file you want to view must also have been stored with JMRI 2.9.4 or later (if it is older than that, load it into JMRI 2.9.4 or later and store it again).  Then:
+      <li>Use the <a href="../../web/index.shtml">JMRI mini web server</a> that is included in JMRI (version 
+      2.9.4 and later). The file you want to view must also have been stored with JMRI 2.9.4 or later (if it 
+      is older than that, load it into JMRI 2.9.4 or later and store it again).  Then:
 
       <ul>
         <li>Start JMRI (either DecoderPro or PanelPro). No layout connection is needed.</li>
@@ -46,7 +55,8 @@
                <li>DecoderPro: <strong>Actions ⇒ Start Web Server</strong>.</li>
             </ul>
 
-        <li>Open any web browser on your computer and enter the URL "<a href="http://localhost:12080" target="_blank">http://localhost:12080</a>"
+        <li>Open any web browser on your computer and enter the URL "<a href="http://localhost:12080" 
+        target="_blank">http://localhost:12080</a>"
         </li>
 
         <li>You should now see the JMRI "home page" for your layout, like the example below.<br>
@@ -54,8 +64,9 @@
         "/dist" link at bottom right. If it is within your preferences directory, click on the
         "/prefs" link. Some of the key files in your /prefs directory are:
            <ul>
-             <li>Panel files ([named by you].xml), containing details of any panels and tables you created within PanelPro
-             <li>Roster (roster.xml), listing information about your locomotives from DecoderPro            
+             <li>Panel files ([named by you].xml), containing details of any panels and tables you created within
+             PanelPro</li>
+             <li>Roster (roster.xml), listing information about your locomotives from DecoderPro</li>          
            </ul>      
         You can also click on any listed sub-directories to get to your files.
         </li>
