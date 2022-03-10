@@ -658,10 +658,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 clearBootIdTimeout();
                 if (CbusMessage.isBootId(r)) {
                     // We had a response to the bootloader ID request so send the write enables
-                    // and start programming.
                     showBootId(r);
                     sendBootEnables();
-                    initialise(hardwareParams.getLoadAddress());
                 } else {
                     protocolError();
                 }
@@ -921,6 +919,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     void writeNextData() {
         boolean written;
 
+        bootState = BootState.PROG_DATA;
         log.debug("writeNextData()");
         if (bootProtocol == BootProtocol.AN247) {
             written = writeNextDataAn247();
@@ -962,8 +961,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         // Initialise the bootloader
         setAckTimeout();
         CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-        tc.sendCanMessage(m, null);
         bootState = BootState.INIT_SENT;
+        tc.sendCanMessage(m, null);
     }
 
     
