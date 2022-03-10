@@ -703,33 +703,63 @@ public class CbusMessage {
      * @return true if the message is a bootloader data write
      */
     public static boolean isBootWriteData(CanMessage m) {
-        if (m.isExtended() && (m.getHeader() == 0x5)) {
+        if (m.isExtended() && (m.getHeader() == 0x5) && (m.getNumDataElements() == 8)) {
             return (true);
         }
         return (false);
     }
 
     /**
-     * Tests if incoming CanReply is a Boot Error.
+     * Tests if incoming CanReply is a Boot Command Error.
      *
      * @param r CanReply
-     * @return True if is a Boot Error
+     * @return True if is a Boot Command Error
      */
     public static boolean isBootError(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_ERROR)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_ERROR)
+                && (r.getNumDataElements() == 1)) {
             return (true);
         }
         return (false);
     }
 
     /**
-     * Tests if incoming CanReply is a Boot OK.
+     * Tests if incoming CanReply is a Boot Data Error.
      *
      * @param r CanReply
-     * @return True if is a Boot OK
+     * @return True if is a Boot Data Error
+     */
+    public static boolean isBootDataError(CanReply r) {
+        if (r.isExtended() && (r.getHeader() == 0x10000005) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_ERROR)
+                && (r.getNumDataElements() == 1)) {
+            return (true);
+        }
+        return (false);
+    }
+
+    /**
+     * Tests if incoming CanReply is a Boot Command OK.
+     *
+     * @param r CanReply
+     * @return True if is a Boot COmmand OK
      */
     public static boolean isBootOK(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_OK)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_OK)
+                && (r.getNumDataElements() == 1)) {
+            return (true);
+        }
+        return (false);
+    }
+
+    /**
+     * Tests if incoming CanReply is a Boot Data OK.
+     *
+     * @param r CanReply
+     * @return True if is a Boot Data OK
+     */
+    public static boolean isBootDataOK(CanReply r) {
+        if (r.isExtended() && (r.getHeader() == 0x10000005) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_OK)
+                && (r.getNumDataElements() == 1)) {
             return (true);
         }
         return (false);
@@ -742,7 +772,8 @@ public class CbusMessage {
      * @return True if is a Boot Confirm
      */
     public static boolean isBootConfirm(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTC)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTC)
+                && (r.getNumDataElements() == 1)) {
             return (true);
         }
         return (false);
@@ -755,7 +786,8 @@ public class CbusMessage {
      * @return True if is a Boot Confirm
      */
     public static boolean isBootDevId(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_DEVID)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_DEVID)
+                && (r.getNumDataElements() == 7)) {
             return (true);
         }
         return (false);
@@ -768,7 +800,8 @@ public class CbusMessage {
      * @return True if is a Boot Confirm
      */
     public static boolean isBootId(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTID)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTID)
+                && (r.getNumDataElements() == 5)) {
             return (true);
         }
         return (false);

@@ -131,7 +131,7 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 4  1","Bootloader: Issue soft reset, leave boot mode",CbusOpCodes.decode(m));
         
         m.setElement(5, 2);
-        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum to 131,333 and verify",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum and set address to 131,333",CbusOpCodes.decode(m));
         
         m.setElement(5, 3);
         Assert.assertEquals("extended 4  3","Bootloader: Boot Check with checksum 1,798",CbusOpCodes.decode(m));
@@ -157,16 +157,39 @@ public class CbusOpCodesTest {
         
         m = new CanMessage( new int[]{0},0x10000004 );
         m.setExtended(true);
-        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Error",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Command Error",CbusOpCodes.decode(m));
         
         m.setElement(0, 1);
-        Assert.assertEquals("extended 10000004 1","Bootloader: Boot OK",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Command OK",CbusOpCodes.decode(m));
         
         m.setElement(0, 2);
-        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 2","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
         
         m.setElement(0, 3);
-        Assert.assertEquals("extended 10000004 1","Unknown Extended Frame",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 3","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 4);
+        Assert.assertEquals("extended 10000004 4","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        
+        m = new CanMessage( new int[]{5,4,3,2,1},0x10000004  );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000004 5","Bootloader: Device ID",CbusOpCodes.decode(m));
+
+        m = new CanMessage( new int[]{6,5,4,3,2,1,0},0x10000004  );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000004 6","Bootloader: Bootloader ID",CbusOpCodes.decode(m));
+
+        
+        m = new CanMessage( new int[]{0},0x10000005 );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000005 0","Bootloader: Boot Data Error",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 1);
+        Assert.assertEquals("extended 10000005 1","Bootloader: Boot Data OK",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 2);
+        Assert.assertEquals("extended 10000005 2","Unknown Extended Frame",CbusOpCodes.decode(m));
         
     }
     
