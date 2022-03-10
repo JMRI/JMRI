@@ -723,11 +723,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         log.debug("Found device ID Manu: {} Dev: {} Device ID: {}",
                 r.getElement(1),
                 r.getElement(2),
-                r.getElement(3)<<24 + r.getElement(4)<<16 + r.getElement(5)<<8 + r.getElement(4));
+                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4));
         addToLog(MessageFormat.format(Bundle.getMessage("DevIdCbus"),
                 r.getElement(1),
                 r.getElement(2),
-                r.getElement(3)<<24 + r.getElement(4)<<16 + r.getElement(5)<<8 + r.getElement(4)));
+                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4)));
     }
     
    
