@@ -1027,8 +1027,8 @@ this name.
       available now:</p>
 
       <ul>
-        <li>JComboBox format: <a href="images/ComboBox.png"><img src="images/ComboBox.png" class=
-        "floatRight" height="50" width="75" alt="combobox"></a>
+        <li>JComboBox format:<br>
+        <a href="images/ComboBox.png"><img src="images/ComboBox.png" alt="combobox"></a>
 
           <pre style="font-family: monospace;">
         import jmri.swing.NamedBeanComboBox;
@@ -1046,8 +1046,8 @@ this name.
 </pre>
         </li>
 
-        <li>Table format: <a href="images/TableSelector.png"><img src="images/TableSelector.png"
-        class="floatRight" height="119" width="175" alt="table selector"></a>
+        <li>Table format:<br>
+        <a href="images/TableSelector.png"><img src="images/TableSelector.png" alt="table selector"></a>
 
           <pre style="font-family: monospace;">
 

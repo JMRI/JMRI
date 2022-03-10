@@ -109,7 +109,7 @@
           <li>
             <strong>manual</strong> - the most recent version of the DecoderPro et al manuals
             reformatted for use in the help system. (Older ones are stored in the <a href=
-            "WebSite.shtml">main web site</a>)
+            "WebSite.shtml">main website</a>)
           </li>
         </ul>
 
@@ -135,7 +135,7 @@
       <h2 id="web">Web Access to Help Pages</h2>
 
       <div>
-        <p>It is inconvenient to have to maintain two separate web pages for the main web site and
+        <p>It is inconvenient to have to maintain two separate web pages for the main website and
         the help system. To reduce the need for that, we use a particular form for the web pages in
         the help system. [Additional information can also be found <a href=
         "WebSite.shtml">here.</a>]</p>
@@ -388,7 +388,7 @@
 
       <div>
         <p>Changes to Help pages which have been merged should show up automatically on the
-        <a href="WebSite.shtml">JMRI.org web site</a> after a short while. There's a <a href=
+        <a href="WebSite.shtml">JMRI.org website</a> after a short while. There's a <a href=
         "https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Jenkins job</a> that
         handles periodic updates for the static (from repository, unlike e.g. Javadoc) pages.</p>
 
@@ -402,7 +402,7 @@
       <div>
         <p>When you integrate support for new hardware into JMRI, you should also create a page or
         pages for the help system and the web. There are several steps involved to ensure that your
-        new hardware help is integrated into the JMRI Help system and its web site. All references
+        new hardware help is integrated into the JMRI Help system and its website. All references
         below to files are to the <a href="https://github.com/JMRI/JMRI">JMRI Repository
         structure</a> in Github. Note use of capitalization in references to (fictitious) product
         "X" from manufacturer "M":</p>

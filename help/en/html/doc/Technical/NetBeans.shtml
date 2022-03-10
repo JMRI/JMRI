@@ -17,7 +17,7 @@
     <div id="mainContent">
       <!-- this was created by running the command `asciidoctorj -a toc NetBeans.adoc`
             and copying the contents of body element in the resultant NetBeans.html file -->
-
+      <!-- manual clean-up is required to make this shtml responsive -->
       <h1>JMRI Code: Building with Apache NetBeans</h1>
 
       <div id="toc" class="toc">
@@ -123,18 +123,14 @@
           <h2 id="introduction">Introduction</h2>
 
           <div class="sectionbody">
-            <div class="paragraph">
-              <p><a href="https://netbeans.apache.org">Apache NetBeans</a> makes a great platform
-              for working with JMRI. The JMRI code is set up to work with Apache NetBeans with
-              almost no additional setup.</p>
-            </div>
+            <p><a href="https://netbeans.apache.org">Apache NetBeans</a> makes a great platform
+            for working with JMRI. The JMRI code is set up to work with Apache NetBeans with
+            almost no additional setup.</p>
 
-            <div class="paragraph">
-              <p>Apache NetBeans is a very powerful Integrated Development Environment (IDE), which
-              can make working with the JMRI code pretty easy. But it takes a little getting used
-              to, and reading the <a href="https://netbeans.apache.org/help">tutorials</a> will be
-              helpful.</p>
-            </div>
+            <p>Apache NetBeans is a very powerful Integrated Development Environment (IDE), which
+            can make working with the JMRI code pretty easy. But it takes a little getting used
+            to, and reading the <a href="https://netbeans.apache.org/help">tutorials</a> will be
+            helpful.</p>
           </div>
         </div>
 
@@ -166,19 +162,15 @@
             <div class="sect2">
               <h3 id="linux">Linux</h3>
 
-              <div class="paragraph">
-                <p>Apache NetBeans can also be installed as a <a href=
-                "https://snapcraft.io/netbeans">snap package</a> for Linux.</p>
-              </div>
+              <p>Apache NetBeans can also be installed as a <a href=
+              "https://snapcraft.io/netbeans">snap package</a> for Linux.</p>
             </div>
 
             <div class="sect2">
               <h3 id="macos">macOS</h3>
 
-              <div class="paragraph">
-                <p>Apache NetBeans and the Java 8 JDK can be installed using <a href=
-                "https://brew.sh">Homebrew</a> from the terminal:</p>
-              </div>
+              <p>Apache NetBeans and the Java 8 JDK can be installed using <a href=
+              "https://brew.sh">Homebrew</a> from the terminal:</p>
 
               <div class="listingblock">
                 <div class="content">
@@ -199,29 +191,23 @@
                       </div>
                     </td>
                     <td class="content">
-                      <div class="paragraph">
-                        <p>Due to different handling of Line Endings characters (<code>LF / CR
-                        LF</code>) between Windows and other systems - namely Unix and OS X (see
-                        <a href="GitFAQ.shtml#lineends">Handling Line Ends</a>) - it is of the
-                        utmost importance that all Windows users adopt the following settings for
-                        their development environment. This is absolutely required so that Git can
-                        track individual changes on files that you commit.</p>
-                      </div>
+                      <p>Due to different handling of Line Endings characters (<code>LF / CR
+                      LF</code>) between Windows and other systems - namely Unix and OS X (see
+                      <a href="GitFAQ.shtml#lineends">Handling Line Ends</a>) - it is of the
+                      utmost importance that all Windows users adopt the following settings for
+                      their development environment. This is absolutely required so that Git can
+                      track individual changes on files that you commit.</p>
 
-                      <div class="paragraph">
-                        <p>If you don’t follow these instructions, you’ll mess up the line endings
-                        in the files you commit, which will in turn make their revision history
-                        much harder to access. Files in this condition will not be accepted as pull
-                        requests.</p>
-                      </div>
+                      <p>If you don’t follow these instructions, you’ll mess up the line endings
+                      in the files you commit, which will in turn make their revision history
+                      much harder to access. Files in this condition will not be accepted as pull
+                      requests.</p>
 
-                      <div class="paragraph">
-                        <p>As a first step, as JMRI has adopted <code>LF</code> as a convention for
-                        Line Endings, it is required to set the <code>core.autocrlf</code> setting
-                        to <code>true</code> (see <a href=
-                        "https://help.github.com/articles/dealing-with-line-endings">"Dealing with
-                        line endings" on GitHub Help)</a></p>
-                      </div>
+                      <p>As a first step, as JMRI has adopted <code>LF</code> as a convention for
+                      Line Endings, it is required to set the <code>core.autocrlf</code> setting
+                      to <code>true</code> (see <a href=
+                      "https://help.github.com/articles/dealing-with-line-endings">"Dealing with
+                      line endings" on GitHub Help)</a></p>
                     </td>
                   </tr>
                 </table>
@@ -236,11 +222,9 @@
                       </div>
                     </td>
                     <td class="content">
-                      <div class="paragraph">
-                        <p>You <strong>must</strong> install and configure the <a href=
-                        "https://plugins.netbeans.apache.org/catalogue/?id=31">"Change
-                        Line Endings on Save" plugin</a> before using Git via Apache NetBeans.</p>
-                      </div>
+                      <p>You <strong>must</strong> install and configure the <a href=
+                      "https://plugins.netbeans.apache.org/catalogue/?id=31">"Change
+                      Line Endings on Save" plugin</a> before using Git via Apache NetBeans.</p>
                     </td>
                   </tr>
                 </table>
@@ -296,13 +280,11 @@
               <div class="sect3">
                 <h4 id="configuration">Configuration</h4>
 
-                <div class="paragraph">
-                  <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><span class=
-                  "image related right"><img src=
-                  "images/NetbeansChangeLineEndingsPluginConfiguration.png" alt=
-                  "Configuration Window" width="237" height="168"></span></a>
-                  </p>
-                </div>
+                <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><span class=
+                "image related right"><img src=
+                "images/NetbeansChangeLineEndingsPluginConfiguration.png" alt=
+                "Configuration Window"></span></a>
+                </p>
 
                 <div class="olist arabic">
                   <ol class="arabic">
@@ -430,7 +412,7 @@
               <h3 id="creating_a_pull_request">Creating a Pull Request</h3>
 
               <div class="paragraph">
-                <p>A "Pull Request" (PR) is an easy way to gather up all your changes, even if they
+                <p>A "Pull Request" (PR) is an easy way to gather all your changes, even if they
                 span multiple files, into something that you can then submit for inclusion in the
                 main JMRI repository.</p>
               </div>
@@ -469,7 +451,7 @@
               <div class="ulist">
                 <ul>
                   <li>
-                    <p>Use the Apache NetBeans [Team] &gt; [Remote] &gt; [Push …​] menu choice. (If
+                    <p>Use the Apache NetBeans [Team] &gt; [Remote] &gt; [Push...] menu choice. (If
                     you try to use the "Push to Upstream" choice, it will try to write back to the
                     main repository, and will fail.)</p>
                   </li>
@@ -502,14 +484,14 @@
               </div>
 
               <div class="paragraph">
-                <p>Finally, when your change is ready to submit, go to the GitHub web site to
+                <p>Finally, when your change is ready to submit, go to the GitHub website to
                 <a href="gitdeveloper.shtml#pull">fill out and submit a pull request</a>.</p>
               </div>
 
               <div class="paragraph">
                 <p>Eventually, somebody will look at the pull request and decide whether to merge
                 it in. Sometimes they’ll ask for additional changes. In that case, you can update
-                the pull request by just pushing new changes to the your repository, where they’ll
+                the pull request by just pushing new changes to your repository, where they’ll
                 automatically be picked up.</p>
               </div>
             </div>
@@ -542,9 +524,9 @@
               <div class="paragraph">
                 <p><a href="images/netbeans-project-warning.png"><span class=
                 "image related right"><img src="images/netbeans-project-warning.png" alt=
-                "Project warnings" width="192"></span></a> The first time you open the JMRI project
+                "Project warnings"></span></a> The first time you open the JMRI project
                 in Apache NetBeans, a warning icon will be shown on the project. This warning
-                indicates Apache NetBeans has a problem with the project. Ususally the first time
+                indicates Apache NetBeans has a problem with the project. Usually the first time
                 warning indicates that build artifacts are missing.</p>
               </div>
 
@@ -561,16 +543,16 @@
                   <li>
                     <p>Choose <span class="menuseq"><strong class="menu">shortcut
                     menu</strong>&nbsp;<strong class="caret">›</strong> <strong class=
-                    "menuitem">Resolve Project Problems…​</strong></span> (the shortcut menu is
+                    "menuitem">Resolve Project Problems…</strong></span> (the shortcut menu is
                     usually opened by right-clicking on the project) <a href=
-                    "images/netbeans-resolve-project-problems-menu.png">Show example…​</a></p>
+                    "images/netbeans-resolve-project-problems-menu.png">Show example...</a></p>
                   </li>
 
                   <li>
-                    <p><a href="images/netbeans-resolve-project-problems.png"><span class=
+                    <a href="images/netbeans-resolve-project-problems.png"><span class=
                     "image related right"><img src="images/netbeans-resolve-project-problems.png"
-                    alt="Resolve Project Problems dialog" width="331"></span></a>Click
-                    <strong class="button">Resolve…​</strong></p>
+                    alt="Resolve Project Problems dialog"></span></a>Click
+                    <strong class="button">Resolve...</strong>
                   </li>
 
                   <li>
@@ -628,7 +610,7 @@
               <div class="paragraph">
                 <p><a href="images/netbeans-run-project.png"><span class=
                 "image related right"><img src="images/netbeans-run-project.png" alt=
-                "Select Main Class for Execution dialog" width="246"></span></a> To run a JMRI
+                "Select Main Class for Execution dialog"></span></a> To run a JMRI
                 application, choose <span class="menuseq"><strong class=
                 "menu">Run</strong>&nbsp;<strong class="caret">›</strong> <strong class=
                 "menuitem">Run Project (JMRI)</strong></span> or click the Run icon in the tool
@@ -745,13 +727,13 @@
               <p>It is possible for Apache NetBeans users to create a release package for use on
               the Windows platform. This requires installation of the Nullsoft Scriptable Install
               System (NSIS), which can be downloaded from <a href=
-              "http://sourceforge.net/projects/nsis">the NSIS project web site</a> on
+              "http://sourceforge.net/projects/nsis">the NSIS project website</a> on
               SourceForge.</p>
             </div>
 
             <div class="paragraph">
               <p>Once NSIS is installed on the computer, it is necessary to create a file called
-              local.properties in the same directory as JMRI’s build.xml file. This file is
+              local.properties in the same directory as JMRI's build.xml file. This file is
               specifically <em>not</em> checked in via GitHub, so that your machine-specific tool
               installation paths are <em>not</em> checked in to GitHub. Create the file, and add a
               variable definition with the correct path to the directory which includes the NSIS
@@ -789,7 +771,7 @@
             <div class="paragraph">
               <p>Apache NetBeans has nice tools for working with XML files, including editing and
               validating them. JMRI uses XInclude to include XML fragments in other XML files via
-              URLs to <a href="https://jmri.org/xml">the JMRI web site</a>. JMRI programs convert
+              URLs to <a href="https://jmri.org/xml">the JMRI website</a>. JMRI programs convert
               these at run time to local file references; however Apache NetBeans must be
               configured to do this if you want to edit JMRI XML files while offline.</p>
             </div>
@@ -807,7 +789,7 @@
                 </li>
 
                 <li>
-                  <p>Click <strong class="button">Add Catalog…​</strong></p>
+                  <p>Click <strong class="button">Add Catalog...</strong></p>
                 </li>
 
                 <li>
@@ -815,7 +797,7 @@
                 </li>
 
                 <li>
-                  <p>Click <strong class="button">Browse…​</strong></p>
+                  <p>Click <strong class="button">Browse...</strong></p>
                 </li>
 
                 <li>
@@ -888,7 +870,7 @@
                   <p>Under "Team" → "Remote" select "Fetch" (not Fetch from Upstream)<br>
                   <a href="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png"><span class=
                   "image"><img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" alt=
-                  "image" width="236" height="212"></span></a></p>
+                  "image"></span></a></p>
                 </li>
 
                 <li>
@@ -896,16 +878,16 @@
                   you do this, you’ll be able to select by name in the top choice)<br>
                   <a href="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png"><span class=
                   "image"><img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" alt=
-                  "image" width="247" height="147"></span></a></p>
+                  "image"></span></a></p>
                 </li>
 
                 <li>
                   <p>On the next screen to select a branch, you can either select all of them
                   (there’s a button) or find and select just the name of the branch that holds the
                   desired change:<br>
-                  <a href="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png"><span class=
-                  "image"><img src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" alt=
-                  "image" width="339" height="101"></span></a></p>
+                  <a href="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png"><img
+                  src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" alt=
+                  "image"></a></p>
                 </li>
 
                 <li>
@@ -914,33 +896,31 @@
               </ul>
             </div>
 
-            <div class="paragraph">
-              <p>At this point, you’ve pulled my changes onto your local machine, but you’re not
-              using them yet. To have those files appear locally for Apache NetBeans to build:</p>
-            </div>
+            <p>At this point, you’ve pulled my changes onto your local machine, but you’re not
+            using them yet. To have those files appear locally for Apache NetBeans to build:</p>
 
             <div class="ulist">
               <ul>
                 <li>
-                  <p>Back on the main menu, select "Team" → "Checkout" → "Checkout Revision…​". On
+                  <p>Back on the main menu, select "Team" → "Checkout" → "Checkout Revision...". On
                   the window you get, click "Select":<br>
                   <a href="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png"><span class=
                   "image"><img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" alt=
-                  "image" width="268" height="208"></span></a></p>
+                  "image"></span></a></p>
                 </li>
 
                 <li>
                   <p>In the upper left, find the imported branch you want, which in the example is
                   "bobjacobsen/ast-clock-power-bit". Either click to highlight (show) and then
-                  click "Select", or just double click on it. (Don’t worry about the upper right or
+                  click "Select", or just double-click on it. (Don’t worry about the upper right or
                   the lower box, they’ll be automatically set right)<br>
                   <a href="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png"><span class=
                   "image"><img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" alt=
-                  "image" width="321" height="259"></span></a></p>
+                  "image"></span></a></p>
                 </li>
 
                 <li>
-                  <p>Back on the "Checkout Revision …​" window, make sure the "Checkout as New
+                  <p>Back on the "Checkout Revision..." window, make sure the "Checkout as New
                   Branch" is <span class="underline">not</span> checked, and then click
                   "Checkout"</p>
                 </li>
@@ -966,7 +946,7 @@
                   branch. The process is similar, and simpler. Choose <span class=
                   "menuseq"><strong class="menu">Team</strong>&nbsp;<strong class=
                   "caret">›</strong> <strong class="submenu">Checkout</strong>&nbsp;<strong class=
-                  "caret">›</strong> <strong class="menuitem">Checkout Revision…​</strong></span>,
+                  "caret">›</strong> <strong class="menuitem">Checkout Revision...</strong></span>,
                   type <code>master</code> in the <em>Checkout Selected Revision</em> box, and
                   click <strong class="button">Checkout</strong></td>
                 </tr>

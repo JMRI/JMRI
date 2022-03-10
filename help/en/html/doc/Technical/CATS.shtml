@@ -23,7 +23,7 @@
 
       <p>The Crandic Automated Traffic System (CATS) is a JMRI-based application by Rodney Black
       for controlling and operating a model railroad. There's more information on the <a href=
-      "http://cats4ctc.org/">CATS web site</a>.</p>
+      "http://cats4ctc.org/">CATS website</a>.</p>
 
       <p>JMRI is a library, and CATS is a large, separately maintained application that uses the
       library. As such, CATS provides an important reference case for JMRI developers as they
@@ -36,7 +36,7 @@
       <p>CATS development does not use a public code repository, and the code is not generally
       available while it's being developed. Rodney Black periodically makes releases available,
       including source code, as zip-file archives at the <a href="http://cats4ctc.wikidot.com">CATS
-      web site</a>, see the download links at the bottom of the <a href=
+      website</a>, see the download links at the bottom of the <a href=
       "http://cats4ctc.wikidot.com/main:downloads">CATS license page</a>.</p>
 
       <p>As of early 2016, the current CATS distribution (2038) works with JMRI 4.0.1 through to

@@ -1906,11 +1906,11 @@
       Manifest or switch list. See <a href="#SwitchList">Switch Lists</a> for more details.
       <h3>Format</h3>
       If you would like your Manifest and switch lists printed in a tabular (columns) format select
-      the "Tabular" checkbox. The program determines the maximum character length for each of the
-      attribute's names (Road, Number, Type, Length, Color, Load, etc.) when determining the width
+      the "Tabular" checkbox. The program uses the longest character length for each of the
+      attribute's names (Road, Number, Type, Length, Color, Load, etc.) to set the width
       of each column. Location names and track names can be up to 25 characters, so you might want
-      to consider reasonable length names when using the "Tabular" feature. FYI, the program
-      reports the maximum track and location names to the system console when creating Manifests.
+      to consider shorter length names when using the "Tabular" feature. FYI, the program
+      reports the longest attribute, track and location names to the system console when creating Manifests.
       You can access the system console from the main menu bar under "Help".
       <p>There are three options with regards to how your Manifests and switch lists are formated.
       "Standard" provides one line for each car pick up or set out. The "Two Column" format creates
@@ -3594,13 +3594,16 @@
       <p><img src="images/EditCarAttribute.png" alt="">
       </p>
 
-      <h4>Add Button</h4>
-      To add a new car attribute name, enter the desired text in the text box and press the "Add"
-      button. When you first enter a new car attribute name, it will show up at the start of the
-      list. Later when your restart the program it will be sorted in the correct order.
-      <p>You can also use the "hyphen" feature when creating new car type, road, and load names.
+   <h4>Add Button</h4>
+   To add a new car attribute name, enter the desired text in the text box and press the "Add"
+   button. FYI, the program when building a train will report to the system console the longest name
+   for each car attribute. This is important if you decide to use the tabular format for your Manifests
+   and switch lists, as the program will use the longest name to determine the spacing required for each
+   attribute.
+
+   <p>You can also use the "hyphen" feature when creating new car type, road, and load names.
       The program will drop the characters after the hyphen when printing a Manifest or switch
-      list.</p>
+      list. </p>
 
       <h4>Delete Button</h4>
       To delete a car attribute name, select the name you want to delete in the menu box and press

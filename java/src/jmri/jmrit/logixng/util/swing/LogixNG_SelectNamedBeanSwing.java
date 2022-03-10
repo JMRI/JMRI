@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
@@ -22,6 +23,8 @@ import jmri.util.swing.BeanSelectPanel;
 public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
 
     private final @Nonnull Manager<E> _manager;
+    private final JDialog _dialog;
+    private final LogixNG_SelectTableSwing _selectTableSwing;
 
     private JTabbedPane _tabbedPane;
     private BeanSelectPanel<E> _namedBeanPanel;
@@ -29,13 +32,19 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
     private JPanel _panelReference;
     private JPanel _panelLocalVariable;
     private JPanel _panelFormula;
+    private JPanel _panelTable;
     private JTextField _referenceTextField;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
 
-    public LogixNG_SelectNamedBeanSwing(@Nonnull Manager<E> manager) {
+    public LogixNG_SelectNamedBeanSwing(
+            @Nonnull Manager<E> manager,
+            @Nonnull JDialog dialog,
+            @Nonnull SwingConfiguratorInterface swi) {
         _manager = manager;
+        _dialog = dialog;
+        _selectTableSwing = new LogixNG_SelectTableSwing(_dialog, swi);
     }
 
     public JPanel createPanel(
@@ -48,11 +57,17 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         _panelReference = new javax.swing.JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
+        if (selectNamedBean != null) {
+            _panelTable = _selectTableSwing.createPanel(selectNamedBean.getSelectTable());
+        } else {
+            _panelTable = _selectTableSwing.createPanel(null);
+        }
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
+        _tabbedPane.addTab(NamedBeanAddressing.Table.toString(), _panelTable);
 
         _namedBeanPanel = new BeanSelectPanel<>(_manager, null);
         _panelDirect.add(_namedBeanPanel);
@@ -76,6 +91,7 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                 case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
                 case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
+                case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + selectNamedBean.getAddressing().name());
             }
             if (selectNamedBean.getNamedBean() != null) {
@@ -112,6 +128,8 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                 selectNamedBean.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.Formula);
+            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+                selectNamedBean.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
@@ -120,7 +138,9 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
             return false;
         }
 
-        return true;
+        _selectTableSwing.validate(selectNamedBean.getSelectTable(), errorMessages);
+
+        return errorMessages.isEmpty();
     }
 
     public void updateObject(@Nonnull LogixNG_SelectNamedBean<E> selectNamedBean) {
@@ -151,18 +171,23 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.Formula);
                 selectNamedBean.setFormula(_formulaTextField.getText());
+            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+                selectNamedBean.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPaneNamedBean has unknown selection");
             }
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        _selectTableSwing.updateObject(selectNamedBean.getSelectTable());
     }
 
     public void dispose() {
         if (_namedBeanPanel != null) {
             _namedBeanPanel.dispose();
         }
+        _selectTableSwing.dispose();
     }
 
 }

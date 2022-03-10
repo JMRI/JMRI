@@ -25,14 +25,11 @@ import jmri.util.TypeConversionUtil;
  */
 public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableChangeListener {
 
-    public static interface InUse {
-        public boolean isInUse();
-    }
-
     private final AbstractBase _base;
+    private final InUse _inUse;
     private final Class<E> _class;
     private final Manager<E> _manager;
-    private final InUse _inUse;
+    private final LogixNG_SelectTable _selectTable;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<E> _handle;
@@ -47,6 +44,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         _inUse = () -> true;
         _class = clazz;
         _manager = manager;
+        _selectTable = new LogixNG_SelectTable(_base, _inUse);
     }
 
     public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, InUse inUse) {
@@ -54,6 +52,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         _inUse = inUse;
         _class = clazz;
         _manager = manager;
+        _selectTable = new LogixNG_SelectTable(_base, _inUse);
     }
 
 
@@ -63,6 +62,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setFormula(_formula);
+        _selectTable.copy(copy._selectTable);
     }
 
     public Manager<E> getManager() {
@@ -152,7 +152,9 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         }
     }
 
-
+    public LogixNG_SelectTable getSelectTable() {
+        return _selectTable;
+    }
 
     public E evaluateNamedBean(ConditionalNG conditionalNG) throws JmriException {
 
@@ -179,6 +181,11 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                                     _expressionNode.calculate(
                                             conditionalNG.getSymbolTable()), false)
                             : null;
+                    break;
+
+                case Table:
+                    name = TypeConversionUtil.convertToString(
+                            _selectTable.evaluateTableData(conditionalNG), false);
                     break;
 
                 default:
@@ -216,6 +223,15 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
             case Formula:
                 namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
+
+            case Table:
+                namedBean = Bundle.getMessage(
+                        locale,
+                        "AddressByTable",
+                        _selectTable.getTableNameDescription(locale),
+                        _selectTable.getTableRowDescription(locale),
+                        _selectTable.getTableColumnDescription(locale));
                 break;
 
             default:
