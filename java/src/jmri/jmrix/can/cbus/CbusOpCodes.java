@@ -255,6 +255,7 @@ public class CbusOpCodes {
                             default:
                                 break;
                         }
+                        break;
                     case 5:     // 5 data
                         switch (msg.getElement(0)) { // data payload of bootloader control frames
                             case CbusConstants.CBUS_EXT_DEVID: // 3
@@ -263,6 +264,7 @@ public class CbusOpCodes {
                             default:
                                 break;
                         }
+                        break;
                     case 7:     // 7 data
                         switch (msg.getElement(0)) { // data payload of bootloader control frames
                             case CbusConstants.CBUS_EXT_BOOTID: // 4
@@ -271,6 +273,7 @@ public class CbusOpCodes {
                             default:
                                 break;
                         }
+                        break;
                     default:    // All other data - not used
                         break;
                 }
