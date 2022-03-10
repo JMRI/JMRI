@@ -248,9 +248,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                     executeComand(_currentCommand, System.currentTimeMillis() - cmdStart);
                     _idxCurrentCommand++;
                 }
-                if (_checker != null) {
-                    break;
-                }
             }
         }
         // shut down
@@ -364,10 +361,8 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                            _warrant.getDisplayName(), block.getDisplayName(), isRamping());
                }
            } else {
-               if (log.isDebugEnabled()) {
-                   log.debug("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
+               log.warn("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
                            _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
-               }
            }
         }
 
@@ -899,7 +894,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         _warrant.fireRunStatus("SensorWaitCommand", null, name);
                     }
                 } catch (InterruptedException ie) {
-                    log.error("Engineer interrupted at _waitForSensor ",ie);
+                    log.error("Engineer interrupted at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
                     _warrant.debugInfo();
                     Thread.currentThread().interrupt();
                 } finally {
@@ -958,9 +953,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 log.debug("Loco address {} finishes warrant {} and starts warrant {}",
                         warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(), warrant.getDisplayName());
             }
-            long time =  30000L;    // max wait time to launch is any commands et after this + 20 seconds..
+            long time =  0;
             for (int i = _idxCurrentCommand+1; i < _commands.size(); i++) {
-                time += _commands.get(i).getTime();
+                ThrottleSetting cmd = _commands.get(i);
+                time += cmd.getTime();
             }
             _warrant.deAllocate();
             // same address so this warrant (_warrant) must release the throttle before (warrant) can acquire it
@@ -1020,32 +1016,34 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private class CheckForTermination extends Thread {
         Warrant oldWarrant;
         Warrant newWarrant;
-        long timeLimit;
+        long waitTime; // time to finish remaining commands
 
         CheckForTermination(Warrant oldWar, Warrant newWar, int num, long limit) {
             oldWarrant = oldWar;
             newWarrant = newWar;
-            timeLimit = limit;
-            if (log.isDebugEnabled()) log.debug("checkForTermination({}, {}, {}, {})",
-                    oldWarrant.getDisplayName(), newWarrant.getDisplayName(), num, timeLimit);
+            waitTime = limit;
+            if (log.isDebugEnabled()) log.debug("checkForTermination of {}, waitTime= {})",
+                    oldWarrant.getDisplayName(), newWarrant.getDisplayName(), waitTime);
          }
 
         @Override
         public void run() {
             long time = 0;
-            while (time <= timeLimit && _throttle != null) {
-                if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
-                    break;
-                }
-                try {
-                    Thread.sleep(100);
-                    time += 100;
-                } catch (InterruptedException ie) {
-                    time = timeLimit;
-                } finally {
+            synchronized (this) {
+                while (time <= waitTime || oldWarrant.getRunMode() != Warrant.MODE_NONE) {
+                    try {
+                        wait(100);
+                        time += 100;
+                    } catch (InterruptedException ie) {
+                        log.error("Engineer interrupted at CheckForTermination of \"{}\"", oldWarrant.getDisplayName(), ie);
+                        _warrant.debugInfo();
+                        Thread.currentThread().interrupt();
+                        time = waitTime;
+                    } finally {
+                    }
                 }
             }
-            if (time >= timeLimit || log.isDebugEnabled()) {
+            if (time > waitTime || log.isDebugEnabled()) {
                 log.info("Waited {}ms for warrant \"{}\" to terminate. runMode={}",
                         time, oldWarrant.getDisplayName(), oldWarrant.getRunMode());
             }
