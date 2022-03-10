@@ -1054,12 +1054,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         trainList.toArray(trainArray);
 
         try {
+            var icon = new ImageIcon(jmri.util.FileUtil.getProgramPath() + jmri.Application.getLogo());
             var choice = JOptionPane.showInputDialog(
                     null,
                     Bundle.getMessage("LabelCopyStops"),  // NOI18N
                     Bundle.getMessage("TitleCopyStops"),  // NOI18N
                     JOptionPane.QUESTION_MESSAGE,
-                    null,
+                    icon,
                     trainArray,
                     null);
             return (Train) choice;
