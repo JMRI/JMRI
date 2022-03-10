@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -143,10 +144,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JRadioButton numButton = new JRadioButton(Bundle.getMessage("Numeric"));
     protected JRadioButton dialButton = new JRadioButton(Bundle.getMessage("Dial"));
     protected SpeedoDial speedoDialDisplay = new SpeedoDial();
-    protected ButtonGroup dirGroup = new ButtonGroup();
-    protected JRadioButton dirFwdButton = new JRadioButton(Bundle.getMessage("Forward"));
-    protected JRadioButton dirRevButton = new JRadioButton(Bundle.getMessage("Reverse"));
-    protected JRadioButton toggleGridButton = new JRadioButton(Bundle.getMessage("ToggleGrid"));
+    protected JToggleButton dirFwdButton = new JToggleButton(Bundle.getMessage("ScanForward"));
+    protected JToggleButton dirRevButton = new JToggleButton(Bundle.getMessage("ScanReverse"));
+    protected JToggleButton toggleGridButton = new JToggleButton(Bundle.getMessage("ToggleGrid"));
 
     GraphPane profileGraphPane;
 
@@ -739,8 +739,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         dirRevButton.setToolTipText(Bundle.getMessage("TTMeasRev"));
         dirFwdButton.setForeground(Color.RED);
         dirRevButton.setForeground(Color.BLUE);
-        dirGroup.add(dirFwdButton);
-        dirGroup.add(dirRevButton);
         profileControlPane.add(dirFwdButton);
         profileControlPane.add(dirRevButton);
         toggleGridButton.setSelected(true);
