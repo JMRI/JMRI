@@ -92,6 +92,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
      */
     @Override
     public boolean load(Element shared, Element perNode) {
+        if (jmri.Application.getApplicationName().equals("JmriFaceless")) {
+            return true;
+        }
+
         boolean result = true;
         Attribute a;
         // find coordinates

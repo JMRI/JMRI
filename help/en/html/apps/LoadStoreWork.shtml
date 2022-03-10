@@ -50,8 +50,7 @@
           Entry</strong></li>
         </ul>
 
-        <p>The text for the panel and table specific File menus is now consistent. The table store
-        without panels is now <strong>Store Only table content (No Panels)...</strong>.</p>
+        <p>The text for the panel and table specific File menus is now consistent.</p>
 
         <p>The panel <strong>Close</strong> button <strong>hides</strong> the panel. It can be
         shown using the Window menu or <strong>Panels ⇒ Show Panel</strong>. To delete a panel, use
@@ -276,9 +275,6 @@
               <li>
                 <strong>Tables</strong>: <em>Tools ⇒ Tables ⇒ [Specific Table]</em>, Select:
                 <ul>
-                  <li><strong>File ⇒ Store ⇒ Store Only table content (No Panels)...</strong>
-                  {<em>Old: <strong>Store configuration</strong></em>}.</li>
-
                   <li><strong>File ⇒ Store ⇒ Store ALL table content and panels...</strong>
                   {<em>Old: <strong>Store configuration and panels</strong></em>}.</li>
                 </ul>
@@ -368,7 +364,8 @@
         panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}" or
         <strong>"Store ALL table content and panels...</strong> {<em>Old: <strong>Store
         Panels...</strong></em>}" where it appears, and to rename the file you are saving, so you
-        have multiple versions named by you to go back to if necessary.</p>
+        have multiple versions named by you to go back to if necessary.  <strong><em>As of 4.99.4,
+        the option to store without panels has been removed.</em></strong></p>
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
