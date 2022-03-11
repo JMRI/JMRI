@@ -17,8 +17,8 @@
       <h1>JMRI: Viewing XML Files</h1>
 
       <p>JMRI stores information about its operations and information that you create in XML files. For 
-      example, when you use the JMRI "Store Files" command in PanelPro, your tables and panels (depending
-      on which command you select) are stored in an XML file. Other XML files hold preferences, control 
+      example, when you use the PanelPro command <strong>File ⇒ Store</strong>, your tables and panels
+      are stored in an XML file. Other XML files hold preferences, control 
       information, operational information, decoder contents, your roster, and more. </p>
       
       <p>Although XML is a structured text format, it is complicated and not particularly easy to read.
