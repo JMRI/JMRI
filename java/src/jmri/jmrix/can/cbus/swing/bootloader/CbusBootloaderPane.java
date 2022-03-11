@@ -148,7 +148,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         INIT_SENT,
         PROG_DATA,
         PROG_PAUSE,
-        CHECK_SENT
+        CHECK_SENT,
+        NOP_SENT
     }
     protected BootState bootState = BootState.IDLE;
     
@@ -252,7 +253,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         moduleCheckBox.setText(Bundle.getMessage("BootIgnoreParams"));
         moduleCheckBox.setVisible(true);
         moduleCheckBox.setEnabled(true);
-        moduleCheckBox.setSelected(true);
+        moduleCheckBox.setSelected(false);
         moduleCheckBox.setToolTipText(Bundle.getMessage("BootIgnoreParamsTT"));
         
         JPanel modulePane = new JPanel();
@@ -472,7 +473,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             try {
                 hexFile.openRd();
                 hexFile.read();
-                if (moduleCheckBox.isSelected()) {
+                if (!moduleCheckBox.isSelected()) {
                     fileParams = new CbusParameters().validate(hexFile, hardwareParams);
                     if (fileParams.areValid()) {
                         addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
@@ -483,6 +484,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     }
                 } else {
                     addToLog(Bundle.getMessage("BootHexFileIgnoringParameters"));
+                    programButton.setEnabled(true);
                 }
                 if (hardwareParams.getLoadAddress() == 0) {
                     // Special case of rewriting the bootloader for Pi-SPROG One
@@ -705,6 +707,17 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 }
                 break;
                 
+            case NOP_SENT:
+                clearAckTimeout();
+                if (CbusMessage.isBootOK(r)) {
+                    // Acknowledge received for NOP sent after skipping
+                    bootState = BootState.PROG_DATA;
+                    writeNextData();
+                } else {
+                    protocolError();
+                }
+                break;
+                
             case CHECK_SENT:
                 clearCheckTimeout();
                 if (CbusMessage.isBootOK(r)) {
@@ -805,6 +818,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 return true;
             }
         }
+        log.debug("Programming not required");
         return false;
     }
 
@@ -843,6 +857,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     boolean writeNextDataAn247() {
         byte [] d;
 
+        log.debug("writeNextDataAn247()");
         if ((bootAddress == 0x7f8) && (hexForBootloader == true)) {
             log.debug("Pause for bootloader reset");
             // Special case for Pi-SPROG One, pause at end of bootloader code to allow time for node to reset
@@ -855,6 +870,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             // Skip frames that are in unprogrammed state
             d = hexFile.getData(bootAddress, 8);
             while (!isProgrammingNeeded(d) && (bootAddress < hexFile.getProgEnd())) {
+                dataFramesSent++;
                 log.debug("Skip frame {} at address {}", dataFramesSent, Integer.toHexString(bootAddress));
                 addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
                 skipFlag = true;
@@ -889,10 +905,14 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     boolean writeNextDataCbus() {
         byte [] d;
 
+        log.debug("writeNextDataCbus()");
         if (skipFlag == false) {
             // Skip frames that are in unprogrammed state
             d = hexFile.getData(bootAddress, 8);
             while (!isProgrammingNeeded(d) && (bootAddress < hexFile.getProgEnd())) {
+                dataFramesSent++;
+                log.debug("Skip frame {} at address {}", dataFramesSent, Integer.toHexString(bootAddress));
+                addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
                 skipFlag = true;
                 bootAddress += 8;
                 d = hexFile.getData(bootAddress, 8);
@@ -902,6 +922,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (skipFlag == true) {
                     // Send NOP to adjust the address after skipping, reply will come back here
                     // with skipFlag true
+                    log.debug("Send new address after skipping {}", Integer.toHexString(bootAddress));
+                    addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
+                    bootState = BootState.NOP_SENT;
                     CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
                     tc.sendCanMessage(m, null);
                 } else {
@@ -912,6 +935,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             }
         } else {
             // We have been skipping, sent NOP address update and received ACK, so send data
+            skipFlag = false;
             if (bootAddress < hexFile.getProgEnd()) {
                 d = hexFile.getData(bootAddress, 8);
                 sendData(bootAddress, d, CbusNode.BOOT_LONG_TIMEOUT_TIME);
@@ -930,7 +954,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         boolean written;
 
         bootState = BootState.PROG_DATA;
-        log.debug("writeNextData()");
         if (bootProtocol == BootProtocol.AN247) {
             written = writeNextDataAn247();
         } else {
@@ -1318,9 +1341,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Stop timer for ACK timeout
      */
     private void clearAckTimeout() {
-        if (dataTask != null) {
-            dataTask.cancel();
-            dataTask = null;
+        if (ackTask != null) {
+            ackTask.cancel();
+            ackTask = null;
         }
     }
 
@@ -1331,7 +1354,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Error condition if no ACK received
      */
     private void setAckTimeout() {
-        log.debug("Set ACK Timeout called");
         clearAckTimeout(); // resets if timer already running
         ackTask = new TimerTask() {
             @Override
