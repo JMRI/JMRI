@@ -25,6 +25,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -273,6 +276,10 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             readNodeParamsButtonActionPerformed(e);
         });
 
+        FileFilter filter = new FileNameExtensionFilter("Hex file", new String[] {"hex"});
+        hexFileChooser.setFileFilter(filter);
+        hexFileChooser.addChoosableFileFilter(filter);
+        
         openFileChooserButton = new JButton(Bundle.getMessage("BootChooseFile"));
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setEnabled(false);
@@ -687,11 +694,14 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                         
             case PROG_DATA:
                 clearAckTimeout();
-                if (CbusMessage.isBootOK(r)) {
+                if (CbusMessage.isBootDataOK(r)) {
                     // Acknowledge received for CBUS protocol
                     writeNextData();
                 } else if (CbusMessage.isBootError(r)){
                     // TODO:
+                    endProgramming();
+                } else {
+                    protocolError();
                 }
                 break;
                 
@@ -956,7 +966,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         }
         checksum = 0;
         dataFramesSent = 0;
-        log.debug("Initialise at address {}", Integer.toHexString(bootAddress));
+        log.debug("Initialise at address {}", "0x"+Integer.toHexString(bootAddress));
         addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
         // Initialise the bootloader
         setAckTimeout();
@@ -1321,6 +1331,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Error condition if no ACK received
      */
     private void setAckTimeout() {
+        log.debug("Set ACK Timeout called");
         clearAckTimeout(); // resets if timer already running
         ackTask = new TimerTask() {
             @Override
