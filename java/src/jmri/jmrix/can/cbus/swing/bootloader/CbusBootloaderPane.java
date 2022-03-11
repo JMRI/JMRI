@@ -736,7 +736,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * 
      * Major/Minor version number, checksum algorithm error report capability
      * 
-     * @param r 
+     * @param r Bootloader ID reply
      */
     void showBootId(CanReply r) {
         log.debug("Found bootloader Major: {} Minor: {} Algo: {} Reports: {}",
