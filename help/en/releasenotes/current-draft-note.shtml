@@ -615,7 +615,7 @@
             <li>Improved XSLT display of many elements in panel XML files.</li>
             <li>Remove the <em>Store Only table content (No Panels)...</em> option from the File menu
             used by the PanelPro tables.</li>
-            <li>Don't load panels (PE/CPE/LE/SE) during xml data file loading when running the
-            <strong>JmriFaceless</strong> application.</li>
+            <li>When running the <strong>JmriFaceless</strong> application, the panels (PE/CPE/LE/SE)
+            in the xml data file (aka Panel file) are not loaded.</li>
         </ul>
 

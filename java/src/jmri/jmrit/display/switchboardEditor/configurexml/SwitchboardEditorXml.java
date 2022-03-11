@@ -92,7 +92,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
      */
     @Override
     public boolean load(Element shared, Element perNode) {
-        if (jmri.Application.getApplicationName().equals("JmriFaceless")) {
+        if (java.awt.GraphicsEnvironment.isHeadless()) {
             return true;
         }
 
