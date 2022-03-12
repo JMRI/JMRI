@@ -101,13 +101,23 @@ public class SCWarrantTest extends WarrantTest {
         });
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
-        try {
-            sWest.setState(Sensor.INACTIVE);
-            JUnitUtil.waitFor(100);
-            sSouth.setState(Sensor.ACTIVE);
-        } catch (jmri.JmriException e) {
-            Assert.fail("Unexpected Exception: " + e);
-        }
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                sWest.setState(Sensor.INACTIVE);
+            } catch (jmri.JmriException e) {
+                Assert.fail("Unexpected Exception: " + e);
+            }
+        });
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                sSouth.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) {
+                Assert.fail("Unexpected Exception: " + e);
+            }
+        });
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(() -> {
