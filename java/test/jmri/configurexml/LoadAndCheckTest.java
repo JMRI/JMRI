@@ -4,6 +4,7 @@ import java.io.File;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -42,6 +43,9 @@ public class LoadAndCheckTest {
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
         Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
 
+        JUnitAppender.assertWarnMessage("Converting route system name IR1 to IO1");
+        JUnitAppender.assertWarnMessage("System names for 1 Routes changed; this may have operational impacts.");
+
     }
 
     @Test
@@ -77,6 +81,9 @@ public class LoadAndCheckTest {
 
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
         Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+
+        JUnitAppender.assertWarnMessage("Converting route system name IR1 to IO1");
+        JUnitAppender.assertWarnMessage("System names for 1 Routes changed; this may have operational impacts.");
 
     }
 

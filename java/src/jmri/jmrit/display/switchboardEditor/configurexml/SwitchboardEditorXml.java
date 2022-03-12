@@ -92,6 +92,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
      */
     @Override
     public boolean load(Element shared, Element perNode) {
+        if (java.awt.GraphicsEnvironment.isHeadless()) {
+            return true;
+        }
+
         boolean result = true;
         Attribute a;
         // find coordinates

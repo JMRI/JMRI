@@ -539,7 +539,8 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li></li>
+            <li>Add a <strong>Copy Stops</strong> button. This is used to copy the stops for an
+            existing train to the new train.</li>
         </ul>
 
    <h3>Tracker</h3>
@@ -612,6 +613,10 @@
                 <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
                 has been updated.</li>
             <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.</li>
-	    <li>Improved XSLT display of many elements in panel XML files.</li>
+            <li>Improved XSLT display of many elements in panel XML files.</li>
+            <li>Remove the <em>Store Only table content (No Panels)...</em> option from the File menu
+            used by the PanelPro tables.</li>
+            <li>When running the <strong>JmriFaceless</strong> application, the panels (PE/CPE/LE/SE)
+            in the xml data file (aka Panel file) are not loaded.</li>
         </ul>
 
