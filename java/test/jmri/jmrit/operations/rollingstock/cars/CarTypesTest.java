@@ -1,14 +1,17 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.Locale;
+
 import javax.swing.JComboBox;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations CarTypes class Last manually cross-checked on
@@ -92,40 +95,41 @@ public class CarTypesTest extends OperationsTestCase {
     @Test
     public void testAddAndDeleteCarTypes() {
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
-        ct.getNames(); //Load predefined car types
-
-        ct.addName("Type New1");
-        Assert.assertTrue("Car Types Add New1", ct.containsName("Type New1"));
-        Assert.assertFalse("Car Types Never Added New2", ct.containsName("Type New2"));
-        ct.addName("Type New3");
-        Assert.assertTrue("Car Types Still Has New1", ct.containsName("Type New1"));
-        Assert.assertTrue("Car Types Add New3", ct.containsName("Type New3"));
-        ct.replaceName("Type New3", "Type New4");
-        Assert.assertFalse("Car Types replace New3", ct.containsName("Type New3"));
-        Assert.assertTrue("Car Types replace New3 with New4", ct.containsName("Type New4"));
-        String[] types = ct.getNames();
-        Assert.assertEquals("First type name", "Type New4", types[0]);
-        Assert.assertEquals("2nd type name", "Type New1", types[1]);
+        String[] types =ct.getNames(); //Load predefined car types
+        Assert.assertEquals("default type quantity", 33, types.length);
+        ct.addName("New1");
+        Assert.assertTrue("Car Types Add New1", ct.containsName("New1"));
+        Assert.assertFalse("Car Types Never Added New2", ct.containsName("New2"));
+        ct.addName("New3");
+        Assert.assertTrue("Car Types Still Has New1", ct.containsName("New1"));
+        Assert.assertTrue("Car Types Add New3", ct.containsName("New3"));
+        ct.replaceName("New3", "New4");
+        Assert.assertFalse("Car Types replace New3", ct.containsName("New3"));
+        Assert.assertTrue("Car Types replace New3 with New4", ct.containsName("New4"));
+        types = ct.getNames();
+        Assert.assertEquals("First type name", "New4", types[24]);
+        Assert.assertEquals("2nd type name", "New1", types[23]);
 
         JComboBox<String> box = ct.getComboBox();
-        Assert.assertEquals("First comboBox type name", "Type New4", box.getItemAt(0));
-        Assert.assertEquals("2nd comboBox type name", "Type New1", box.getItemAt(1));
+        Assert.assertEquals("First comboBox type name", "New4", box.getItemAt(24));
+        Assert.assertEquals("2nd comboBox type name", "New1", box.getItemAt(23));
 
-        ct.deleteName("Type New4");
-        Assert.assertFalse("Car Types Delete New4", ct.containsName("Type New4"));
-        ct.deleteName("Type New1");
-        Assert.assertFalse("Car Types Delete New1", ct.containsName("Type New1"));
+        ct.deleteName("New4");
+        Assert.assertFalse("Car Types Delete New4", ct.containsName("New4"));
+        Assert.assertTrue("Car Types confirm New1", ct.containsName("New1"));
+        ct.deleteName("New1");
+        Assert.assertFalse("Car Types Delete New1", ct.containsName("New1"));
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         defaultLocale = Locale.getDefault(); // save the default locale.
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         // reset the default locale
         Locale.setDefault(defaultLocale);

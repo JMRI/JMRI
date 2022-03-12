@@ -19,6 +19,7 @@
     <enumChoice choice="None">
 	    <choice>No blink</choice>
 	    <choice xml:lang="de">Keine Puls</choice>
+	    <choice xml:lang="cs">Bez blikání</choice>
     </enumChoice>
     <enumChoice choice="PWM 1">
 	    <choice>PWM 1</choice>

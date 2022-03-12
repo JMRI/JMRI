@@ -8,10 +8,10 @@ import java.io.PipedOutputStream;
 /**
  * DCCppPortControllerScaffold.java
  *
- * Description:	test implementation of DCCppPortController
+ * test implementation of DCCppPortController
  *
- * @author	Bob Jacobsen Copyright (C) 2006
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2006
+ * @author Mark Underwood Copyright (C) 2015
  */
 class DCCppPortControllerScaffold extends DCCppSimulatorPortController {
 

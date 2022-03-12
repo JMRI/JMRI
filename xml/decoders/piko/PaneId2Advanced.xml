@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2021</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Egbert</firstname>
+                <surname>Broerse</surname>
+            </personname>
+        </author>
+        <author>
+            <personname>
+                <firstname>Konrad</firstname>
+                <surname>Malkowski</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2019-02-20</date>
+            <authorinitials>EB</authorinitials>
+            <revremark>Initial version, adapted from Uhlenbrock/soundPane7outputs.xml</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2021-01-31</date>
+            <authorinitials>KM</authorinitials>
+            <revremark>Initial version, adapted from Uhlenbrock/Pane2Advanced.xml</revremark>
+        </revision>
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliDrive2, Piko Smart 4.1/Sound 4.1 (non exhaustive list) -->
+    </revhistory>
+
+    <name>IntelliDrive2</name>
+    <column>
+        <label>
+            <text>Hardware testing required</text>
+            <text xml:lang="de">Zu Überprüfen mit Decoder</text>
+            <text xml:lang="cs">Požadováno testování hardware (dekodéru)</text>
+        </label>
+        <label><text>      </text></label>
+        <label>
+            <text>Decoder Programming Lock</text>
+            <text xml:lang="de">Decoder Programmierschloss</text>
+            <text xml:lang="nl">Decoder Programmeerslot</text>
+            <text xml:lang="cs">Zámek programování dekodéru</text>
+        </label>
+        <display item="Decoder Lock ID"/>
+        <display item="Decoder Lock Index"/>
+        <label><text>      </text></label>
+        <!-- CVs 50-51 -->
+        <display item="Use Motorola 2" format="checkbox"/>
+        <display item="Use Motorola 3" format="checkbox"/>
+        <display item="Flip Light Outputs" format="checkbox"/>
+        <display item="Light Frequency"/>
+        <display item="SUSI1 Task"/>
+        <display item="SUSI2 Task"/>
+        <display item="A8 Function"/>
+        <display item="Intellimatic" format="checkbox"/>
+        <label><text>      </text></label>
+        <display item="Motor Control" format="checkbox"/>
+        <display item="Motor Control PIDSX"/>
+        <display item="Dynamic Pulse Duration" format="checkbox"/>
+        <label><text>      </text></label>
+        <label>
+            <text>Motor Management Settings</text>
+            <text xml:lang="de">Motorregelung</text>
+            <text xml:lang="nl">Motorregeling</text>
+            <text xml:lang="cs">Správa nastavení motoru</text>
+        </label>
+        <display item="Motor Management 1"/>
+        <display item="Motor Management 2"/>
+        <display item="Motor Management 3"/>
+        <label><text>      </text></label>
+        <label>
+            <text>Accel/Decel Delays</text>
+            <text xml:lang="de">Anfahrt-/Bremsverzögerung</text>
+            <text xml:lang="nl">Wegrij-/Remvertraging</text>
+            <text xml:lang="cs">Zpoždění Zrychlení/Zpomalení</text>
+        </label>
+        <grid gridy="2" weightx="1" ipadx="4">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="Accel2"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Decel2"/>
+            </griditem>
+            <griditem gridx="1" gridy="0" anchor="LINE_END">
+                <display item="Accel3"/>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="LINE_END">
+                <display item="Decel3"/>
+            </griditem>
+            <griditem gridx="0" gridy="2" anchor="LINE_END">
+                <display item="ABV2 F Key"/>
+            </griditem>
+            <griditem gridx="1" gridy="2" anchor="LINE_END">
+                <display item="ABV3 F Key"/>
+            </griditem>
+        </grid>
+    </column>
+
+    <column>
+        <row>
+            <group exclude="76560">
+                <!-- BEGIN - Function Mapping Shift Grid in IntelliDrive2-->
+                <grid gridy="3" weightx="1" ipadx="1">
+                    <!--SUSI Function Key header-->
+                    <griditem gridx="0" gridy="2" anchor="LINE_END"><label><text>F22</text></label></griditem>
+                    <griditem gridx="1" gridy="2" anchor="CENTER"><label><text>F23</text></label></griditem>
+                    <griditem gridx="2" gridy="2" anchor="CENTER"><label><text>F24</text></label></griditem>
+                    <griditem gridx="3" gridy="2" anchor="CENTER"><label><text>F25</text></label></griditem>
+                    <griditem gridx="4" gridy="2" anchor="CENTER"><label><text>F26</text></label></griditem>
+                    <griditem gridx="5" gridy="2" anchor="CENTER"><label><text>F27</text></label></griditem>
+                    <griditem gridx="6" gridy="2" anchor="CENTER"><label><text>F28</text></label></griditem>
+                    <!--SUSI Function Key checkboxes-->
+                    <griditem gridx="0" gridy="4" anchor="LINE_END">
+                        <display item="SUSI F22" format="checkbox">
+                            <label>Activate Function in SUSI:</label>
+                            <label xml:lang="de">Funktion aktivieren in SUSI:</label>
+                            <label xml:lang="nl">Activeer functie in SUSI:</label>
+                            <label xml:lang="cs">Aktivujte funkci v SUSI:</label>
+                        </display>
+                    </griditem>
+                    <griditem gridx="1" gridy="4" anchor="CENTER">
+                        <display item="SUSI F23" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="4" anchor="CENTER">
+                        <display item="SUSI F24" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="4" anchor="CENTER">
+                        <display item="SUSI F25" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="4" gridy="4" anchor="CENTER">
+                        <display item="SUSI F26" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="5" gridy="4" anchor="CENTER">
+                        <display item="SUSI F27" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="6" gridy="4" anchor="CENTER">
+                        <display item="SUSI F28" format="checkbox" label=""/>
+                    </griditem>
+                    <!--end Grid-->
+                </grid>
+            </group>
+        </row>
+        <label><text>      </text></label>
+        <separator/>
+        <label><text>      </text></label>
+        <label>
+            <text>Switching Tango</text>
+            <text xml:lang="de">Rangiertango</text>
+            <text xml:lang="nl">Rangeertango</text>
+            <text xml:lang="cs">Posunovací Tango</text>
+        </label>
+        <display item="Rangiertango Step"/>
+        <display item="Rangiertango Pushtime"/>
+        <display item="Rangiertango Pulltime"/>
+        <label><text>      </text></label>
+        <separator/>
+        <label><text>      </text></label>
+        <label>
+            <text>Special Light Effects</text>
+            <text xml:lang="cs">Zvláštní světelné efekty</text>
+        </label>
+        <!-- BEGIN - Advanced Function Mapping Grid Out 1-4 -->
+        <grid gridy="5" weightx="1" ipadx="4">
+            <!-- BEGIN - Row 1 (headers)-->
+            <group exclude="73115">
+                <griditem gridx="0" gridy="0" anchor="LINE_END"><label><text>AUX0</text></label></griditem>
+                <griditem gridx="1" gridy="0" anchor="CENTER"><label><text>AUX1</text></label></griditem>
+                <griditem gridx="2" gridy="0" anchor="CENTER"><label><text>AUX2</text></label></griditem>
+            </group>
+            <!-- BEGIN - Row 2 (Blend in/out)-->
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Light Blend A0" format="checkbox">
+                    <label>Blend In/Blend Out on:</label>
+                    <label xml:lang="de">Eind- u. Ausblenden an:</label>
+                    <label xml:lang="nl">In/-Uitfaden op:</label>
+                    <label xml:lang="cs">Rozsvěcení/Zhasínání na:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="CENTER">
+                <display item="Light Blend A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="1" anchor="CENTER">
+                <display item="Light Blend A2" format="checkbox" label=""/>
+            </griditem>
+            <!-- BEGIN - Row 3 (Flicker)-->
+            <griditem gridx="0" gridy="2" anchor="LINE_END">
+                <display item="Light Flicker A0" format="checkbox">
+                    <label>Flicker Effect on:</label>
+                    <label xml:lang="de">Feuerbuchsenflackern an:</label>
+                    <label xml:lang="nl">Flakkereffect op:</label>
+                    <label xml:lang="cs">Efekt blikání na:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A2" format="checkbox" label=""/>
+            </griditem>
+            <!-- BEGIN - Row 4 (Energy Save)-->
+            <griditem gridx="0" gridy="3" anchor="LINE_END">
+                <display item="Light Energy A0" format="checkbox">
+                    <label>Energy Save Effect on:</label>
+                    <label xml:lang="de">Energiesparlampeneffekt an:</label>
+                    <label xml:lang="nl">Spaarlampeffect op:</label>
+                    <label xml:lang="cs">Efekt úspory energie na:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="3" anchor="CENTER">
+                <display item="Light Energy A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="3" anchor="CENTER">
+                <display item="Light Energy A2" format="checkbox" label=""/>
+            </griditem>
+            <!-- BEGIN - Row 5 (Neon)-->
+            <griditem gridx="0" gridy="4" anchor="LINE_END">
+                <display item="Light Neon A0" format="checkbox">
+                    <label>Neon Light Start Effect on:</label>
+                    <label xml:lang="de">Neonröhren Einschalteffekt an:</label>
+                    <label xml:lang="nl">TL-buis inschakeleffect op:</label>
+                    <label xml:lang="cs">Efekt startu zářivky na:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="4" anchor="CENTER">
+                <display item="Light Neon A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="4" anchor="CENTER">
+                <display item="Light Neon A2" format="checkbox" label=""/>
+            </griditem>
+        </grid>
+        <label><text>      </text></label>
+        <grid gridy="3" weightx="1" ipadx="4">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="Light Blend Time"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Light Flicker Rythm"/>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="LINE_END">
+                <display item="Light Flicker Change"/>
+            </griditem>
+            <griditem gridx="2" gridy="1" anchor="LINE_END">
+                <display item="Light Flicker Bright" format="checkbox"/>
+            </griditem>
+            <griditem gridx="0" gridy="2" anchor="LINE_END">
+                <display item="Light Energy Start"/>
+            </griditem>
+            <griditem gridx="1" gridy="2" anchor="LINE_END">
+                <display item="Light Energy Time"/>
+            </griditem>
+            <griditem gridx="0" gridy="3" anchor="LINE_END">
+                <display item="Light Neon Time"/>
+            </griditem>
+            <griditem gridx="1" gridy="3" anchor="LINE_END">
+                <display item="Light Neon Flashes"/>
+            </griditem>
+        </grid>
+        <label><text>      </text></label>
+        <separator/>
+        <label><text>      </text></label>
+        <!--More vars here-->
+    </column>
+</pane>

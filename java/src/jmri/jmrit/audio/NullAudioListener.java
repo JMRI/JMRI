@@ -33,7 +33,7 @@ public class NullAudioListener extends AbstractAudioListener {
     public NullAudioListener(String systemName) {
         super(systemName);
         if (log.isDebugEnabled()) {
-            log.debug("New NullAudioListener: " + systemName);
+            log.debug("New NullAudioListener: {}", systemName);
         }
     }
 
@@ -46,7 +46,7 @@ public class NullAudioListener extends AbstractAudioListener {
     public NullAudioListener(String systemName, String userName) {
         super(systemName, userName);
         if (log.isDebugEnabled()) {
-            log.debug("New NullAudioListener: " + userName + " (" + systemName + ")");
+            log.debug("New NullAudioListener: {} ({})", userName, systemName);
         }
     }
 
@@ -58,9 +58,8 @@ public class NullAudioListener extends AbstractAudioListener {
     @Override
     protected void cleanup() {
         if (log.isDebugEnabled()) {
-            log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
+            log.debug("Cleanup NullAudioBuffer ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(NullAudioListener.class);

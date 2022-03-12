@@ -601,6 +601,9 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             re.setDecoderFamily(decoderFile.getFamily());
             re.setDecoderModel(decoderFile.getModel());
             re.setId(rosterIdField.getText());
+            re.setDeveloperID(decoderFile.getDeveloperID());
+            re.setManufacturerID(decoderFile.getManufacturerID());
+            re.setProductID(decoderFile.getProductID());
             Roster.getDefault().addEntry(re);
         }
 

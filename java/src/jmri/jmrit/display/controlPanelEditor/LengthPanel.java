@@ -1,8 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.Dimension;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,39 +18,32 @@ import jmri.jmrit.logix.OBlock;
 
 public class LengthPanel extends JPanel
 {
-    private OBlock _block;
+    private final OBlock _block;
     private float _length;
-    private JTextField _lengthField;
-    private boolean _lengthKeyedIn = false;
-    private JToggleButton _units;
+    private String _label ;
+    private final JTextField _lengthField;
+    private final JToggleButton _units;
+    private static final java.text.DecimalFormat _lenFormat = new java.text.DecimalFormat("###,##0.0");
+    
+    public static final String PATH_LENGTH    = "pathLength" ;
+    public static final String BLOCK_LENGTH   = "blockLength" ;
+    public static final String ENTRANCE_SPACE = "entranceSpace" ;
+    
 
-    LengthPanel(OBlock block, String label) {
+    LengthPanel(OBlock block, String label, String tip) {
         _block = block;
-
+        _label = label ;
+        
         JPanel pp = new JPanel();
         _lengthField = new JTextField();
-        _lengthField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                _lengthKeyedIn = true;
-            }
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-          });
 
-        _lengthField.setText("0.0");
+        _lengthField.setText(_lenFormat.format(0f));
         pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _lengthField, label, true, "TooltipPathLength"));
+                false, _lengthField, _label, true, tip));
         _lengthField.setPreferredSize(new Dimension(100, _lengthField.getPreferredSize().height));
         _units = new JToggleButton("", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
-        _units.addActionListener((ActionEvent event) -> {
-            changeUnits();
-        });
+        _units.addActionListener((ActionEvent event) -> changeUnits());
         pp.add(_units);
         add(pp);
     }
@@ -60,7 +51,7 @@ public class LengthPanel extends JPanel
     protected void changeUnits() {
         String len = _lengthField.getText();
         if (len == null || len.length() == 0) {
-            if (_block.isMetric()) {
+            if (_block != null && _block.isMetric()) {
                 _units.setText("cm");
             } else {
                 _units.setText("in");
@@ -68,12 +59,12 @@ public class LengthPanel extends JPanel
             return;
         }
         try {
-            float f = Float.parseFloat(len);
+            float f = Float.parseFloat(len.replace(',', '.'));
             if (_units.isSelected()) {
-                _lengthField.setText(Float.toString(f / 2.54f));
+                _lengthField.setText(_lenFormat.format(f / 2.54f));
                 _units.setText("in");
             } else {
-                _lengthField.setText(Float.toString(f * 2.54f));
+                _lengthField.setText(_lenFormat.format(f * 2.54f));
                 _units.setText("cm");
             }
         } catch (NumberFormatException nfe) {
@@ -89,9 +80,9 @@ public class LengthPanel extends JPanel
     protected void setLength(float len) {
         _length = len;
         if (_units.isSelected()) {
-            _lengthField.setText(Float.toString(len / 25.4f));
+            _lengthField.setText(_lenFormat.format(len / 25.4f));
         } else {
-            _lengthField.setText(Float.toString(len / 10));
+            _lengthField.setText(_lenFormat.format(len / 10));
         }
     }
 
@@ -103,27 +94,34 @@ public class LengthPanel extends JPanel
             if (num == null || num.length() == 0) {
                 num = "0.0";
             }
-            f = Float.parseFloat(num);
+            f = Float.parseFloat(num.replace(',', '.'));
         } catch (NumberFormatException nfe) {
         }
-        if (f < 0.0f) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", num),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            _lengthKeyedIn = false;
-            if (_units.isSelected()) {
-                _length = f * 25.4f;
+        
+        if (_label.equals(PATH_LENGTH) || _label.equals(BLOCK_LENGTH)) {
+            if (f < 0.0f) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", num),
+                        Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             } else {
-                _length = f * 10f;
-            }
+                if (_units.isSelected()) {
+                    _length = f * 25.4f;
+                } else {
+                    _length = f * 10f;
+                }
+            }            
+        } else {
+            // ENTRANCE_SPACE
+                if (_units.isSelected()) {
+                    _length = f * 25.4f;
+                } else {
+                    _length = f * 10f;
+                }            
         }
         return _length;
     }
-    protected boolean isChanged() {
-        return _lengthKeyedIn;
+
+    protected boolean isChanged(float len) {
+        return Math.abs(getLength() - len) > .5;
     }
 
-    protected void setChanged(boolean set) {
-        _lengthKeyedIn = set;
-    }
 }

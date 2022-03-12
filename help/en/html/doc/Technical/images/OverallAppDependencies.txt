@@ -1,0 +1,32 @@
+@startuml
+
+package jmri {}
+
+
+package jmri.jmrit {}
+
+package jmri.jmrix {}
+package jmri.jmrix.loconet {}
+package jmri.jmrix.nce {}
+
+jmri +-- jmri.jmrit
+
+jmri +-- jmri.jmrix
+
+jmri.jmrix +-- jmri.jmrix.nce
+jmri.jmrix +-- jmri.jmrix.loconet
+
+package apps {}
+package apps.DecoderPro {}
+package apps.PanelPro {}
+
+jmri +-- apps
+jmri.jmrit +-- apps
+jmri.jmrix +-- apps
+jmri.jmrix.nce +-- apps
+jmri.jmrix.loconet +-- apps
+
+apps +-- apps.DecoderPro
+apps +-- apps.PanelPro
+
+@enduml

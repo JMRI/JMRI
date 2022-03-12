@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 99</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+</head>
+
+<body>
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 99</h1>
+
+<h2>Note to reviewers of JMRI. When to merge LogixNG?</h2>
+
+LogixNG is a huge PR. Around 800 files, where most of them are new. On the other hand, almost all of LogixNG are
+in separate folders and if it's not used by the user, the impact on the rest of JMRI should be minimal.
+
+
+
+<h2>Version numbers</h2>
+
+LogixNG has been developed for the last two years. Once consequence is that there are version numbers for older
+versions of JMRI that needs to be changed once it's time to release LogixNG. The ones I'm aware of now is:
+
+<ul>
+<li>help/en/releasenotes/current-draft-note.shtml</li>
+<li>xml/schema/layout-4-19-2.xsd</li>
+<li>xml/schema/logixng/... - the schema files has version numbers and all of these needs to be changed.</li>
+</ul>
+
+
+
+<h2>File structure</h2>
+
+Almost all of LogixNG is in separate folders with a few exceptions. The exceptions are:
+
+<ul>
+<li>help/en/releasenotes/current-draft-note.shtml</li>
+<li>java/src/apps/Apps.java - Setup the LogixNGs when the application starts</li>
+<li>java/src/apps/AppsBase.java - Setup the LogixNGs when the application starts</li>
+<li>java/src/jmri/configurexml/LoadXmlConfigAction.java - Setup the LogixNGs when loaded</li>
+<li>java/src/jmri/jmrit/Bundle.properties</li>
+<li>java/src/jmri/jmrit/ToolsMenu.java - Adds the LogixNG menu items</li>
+<li>java/src/jmri/jmrit/beantable/AbstractLogixNGTableAction.java - abstract class for the LogixNG bean tables</li>
+<li>java/src/jmri/jmrit/beantable/BeanTableBundle.properties</li>
+<li>java/src/jmri/jmrit/beantable/BeanTableStartupActionFactory.java</li>
+<li>java/src/jmri/jmrit/beantable/ListedTableFrame.java - Add LogixNG bean tables to the list of bean tables</li>
+<li>java/src/jmri/jmrit/beantable/LogixNGModuleTableAction.java</li>
+<li>java/src/jmri/jmrit/beantable/LogixNGTableAction.java</li>
+<li>java/src/jmri/jmrit/beantable/LogixNGTableTableAction.java</li>
+<li>java/test/jmri/configurexml/LoadAndStoreTestBase.java - REMOVE THIS!!!</li>
+<li>java/test/jmri/jmrit/beantable/LogixNGTableActionTest.java</li>
+<li>java/test/jmri/util/JUnitUtil.java - the method initLogixNGManager()</li>
+<li>xml/schema/layout-4-19-2.xsd - includes the LogixNG schema files</li>
+</ul>
+
+
+<p>
+
+The folders for LogixNG are:
+
+<ul>
+<li>java/src/jmri/jmrit/logixng/ - Tests for LogixNG</li>
+<li>java/test/jmri/jmrit/logixng/ - Tests for LogixNG</li>
+<li>java/src/jmri/jmrix/loconet/logixng/ - LocoNet actions and expressions for LogixNG</li>
+<li>java/test/jmri/jmrix/loconet/logixng/ - Tests for LocoNet actions and expressions for LogixNG</li>
+<li>xml/schema/logixng/ - schema files for LogixNG</li>
+</ul>
+
+
+
+
+<h2>Tests</h2>
+
+There is not enough tests of LogixNG to be satisfied, but much of the code base are tested. LogixNG has the benefit
+of having a huge amount of small classes, there most of the classes is quite easy to test. On the other hand, due to
+the size of LogixNG, there is a huge amount of code that needs to be written to test LogixNG throughout.
+<p>
+
+
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>

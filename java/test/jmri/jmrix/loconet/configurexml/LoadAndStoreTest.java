@@ -3,8 +3,13 @@ package jmri.jmrix.loconet.configurexml;
 import jmri.jmrix.loconet.*;
 
 import java.io.File;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test that configuration files can be read and then stored again consistently.
@@ -20,28 +25,34 @@ import org.junit.runners.Parameterized;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
-@RunWith(Parameterized.class)
 public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
-    @Parameterized.Parameters(name = "{0} (pass={1})")
-    public static Iterable<Object[]> data() {
+    public static Stream<Arguments> data() {
         return getFiles(new File("java/test/jmri/jmrix/loconet/configurexml"), false, true);
     }
 
-    public LoadAndStoreTest(File file, boolean pass) {
-        super(file, pass, SaveType.Config, false);
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
+    @MethodSource("data")
+    public void loadAndStoreTest(File file, boolean pass) throws Exception {
+        super.loadLoadStoreFileCheck(file);
     }
-    
+
+    public LoadAndStoreTest() {
+        super(SaveType.Config, false);
+    }
+
+
     LocoNetSystemConnectionMemo memo1;
     LocoNetInterfaceScaffold lnis1;
-    
+
     LocoNetSystemConnectionMemo memo2;
     LocoNetInterfaceScaffold lnis2;
-    
+
     /**
      * {@inheritDoc}
      * Ensure that a LocoNet connection is available
      */
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -54,7 +65,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         memo1.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
         memo1.configureManagers(); // Does this generate autonomous loconet traffic? Needs a wait?
         jmri.InstanceManager.store(memo1,LocoNetSystemConnectionMemo.class);
-        
+
         // 2nd LocoNet connection L2
         memo2 = new LocoNetSystemConnectionMemo();
         lnis2 = new LocoNetInterfaceScaffold(memo1);
@@ -63,7 +74,21 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         memo2.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
         memo2.configureManagers(); // Does this generate autonomous loconet traffic? Needs a wait?
         jmri.InstanceManager.store(memo2,LocoNetSystemConnectionMemo.class);
-        
+
         jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LnTrafficController.class, lnis1);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Ensure that a LocoNet connection is available
+     */
+    @AfterEach
+    @Override
+    public void tearDown() {
+        memo1.dispose();
+        memo2.dispose();
+        jmri.util.JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
+        jmri.util.JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
+        super.tearDown();
     }
 }

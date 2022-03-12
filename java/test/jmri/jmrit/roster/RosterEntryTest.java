@@ -9,12 +9,13 @@ import jmri.InstanceManager;
 import jmri.util.*;
 
 import org.jdom2.JDOMException;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2018
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2018
  */
 public class RosterEntryTest {
 
@@ -244,6 +245,7 @@ public class RosterEntryTest {
                 .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family", "91")
                         .setAttribute("model", "33")
+                        .setAttribute("comment", "decoder comment")
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
@@ -257,6 +259,8 @@ public class RosterEntryTest {
         Assert.assertEquals("XML Element ", e.toString(), o.toString());
         Assert.assertEquals("family ", "91", o.getChild("decoder").getAttribute("family").getValue());
         Assert.assertEquals("model ", "33", o.getChild("decoder").getAttribute("model").getValue());
+        Assert.assertEquals("comment", "decoder comment", o.getChild("decoder").getAttribute("comment").getValue());
+        Assert.assertEquals("default maxFnNum ", "28", o.getChild("decoder").getAttribute("maxFnNum").getValue());
     }
 
     @Test
@@ -468,14 +472,14 @@ public class RosterEntryTest {
                 .getChild("value").getText());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

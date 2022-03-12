@@ -61,7 +61,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * <p>
      * This implementation combines the keys in
      * {@link ArbitraryPropertySupport#getPropertyNames()} with the results of
-     * {@link Beans#getIntrospectedPropertyNames(java.lang.Object)}.
+     * {@link BeanUtil#getIntrospectedPropertyNames(java.lang.Object)}.
      *
      * @return a Set of names
      * @see BeanInterface#getPropertyNames()

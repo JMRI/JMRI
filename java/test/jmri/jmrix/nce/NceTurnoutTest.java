@@ -2,27 +2,35 @@ package jmri.jmrix.nce;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnoutTestBase;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        super.setUp();
         // prepare an interface
         tcis = new NceTrafficControlScaffold();
 
         t = new NceTurnout(tcis, "NT", 4);
+    }
+
+    @AfterEach
+    @Override
+    public void tearDown() {
+        // prepare an interface
+        if (tcis !=null ) tcis.terminateThreads();
+        super.tearDown();
     }
 
     @Override
@@ -41,7 +49,8 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     @Test
     public void testCanLockModes() {
-        // prepare an interface
+        // prepare an interface, dropping old one
+        if (tcis !=null ) tcis.terminateThreads();
         tcis = new NceTrafficControlScaffold() {
             @Override
             public int getUsbSystem() { return NceTrafficController.USB_SYSTEM_NONE; }
@@ -73,7 +82,8 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:
         // Assert.assertEquals("content", "93 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
-        Assert.assertEquals("content", "AD 00 04 04 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+        Assert.assertEquals("content",
+                "AD 00 04 04 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Override
@@ -81,7 +91,8 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:
         //Assert.assertEquals("content", "93 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
-        Assert.assertEquals("content", "AD 00 04 03 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
+        Assert.assertEquals("content",
+                "AD 00 04 03 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
 }

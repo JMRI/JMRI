@@ -9,17 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -42,6 +32,8 @@ import jmri.util.table.ButtonRenderer;
  */
 public class AutomationTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+    protected static final String POINTER = "    -->";
+    
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int CURRENT_COLUMN = ID_COLUMN + 1;
@@ -208,6 +200,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+            case CURRENT_COLUMN:
             case ACTION_COLUMN:
             case TRAIN_COLUMN:
             case ROUTE_COLUMN:
@@ -324,6 +317,9 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
         AutomationItem item = _list.get(row);
         switch (col) {
+            case CURRENT_COLUMN:
+                setCurrent(item);
+                break;
             case ACTION_COLUMN:
                 setAction(value, item);
                 break;
@@ -358,7 +354,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private String getCurrentPointer(int row, AutomationItem item) {
         if (_automation.getCurrentAutomationItem() == item) {
-            return "    -->"; // NOI18N
+            return POINTER;
         } else {
             return "";
         }
@@ -411,6 +407,11 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private String getStatus(AutomationItem item) {
         return item.getStatus();
+    }
+    
+    private void setCurrent(AutomationItem item) {
+        _automation.setCurrentAutomationItem(item);
+        _automation.resetAutomationItems(item);
     }
 
     private void setAction(Object value, AutomationItem item) {

@@ -12,10 +12,11 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 public interface Dcc4PcPanelInterface {
 
     /**
-     * 2nd stage of initialization, invoked after the constuctor is complete.
+     * 2nd stage of initialization, invoked after the constructor is complete.
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo system connection.
      */
     public void initComponents(Dcc4PcSystemConnectionMemo memo);
 

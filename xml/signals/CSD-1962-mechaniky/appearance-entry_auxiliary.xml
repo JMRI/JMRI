@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2020-07-15</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Image types</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -35,31 +41,36 @@
     <appearance>
       <aspectname>Stůj</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv_n.gif</imagelink>
+      <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv_n.gif</imagelink>
+      <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Výstraha</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_2pv.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_2pv_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_2pv_n.gif</imagelink>
+      <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_2pv.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Vjezd odbočkou</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2pv.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2pv_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2pv_n.gif</imagelink>
+      <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2pv.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opatrně na přivolávací návěst</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv_n.gif</imagelink>
+      <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -84,6 +95,10 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Vjezd odbočkou</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
       <ourAspect>Vjezd odbočkou</ourAspect>
     </aspectMapping>
   </aspectMappings>

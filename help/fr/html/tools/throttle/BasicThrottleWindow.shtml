@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -226,7 +226,7 @@ Voir <a href="../scripting/Jynstruments.shtml"> l&#224; pour plus d'informations
 <br>
 La fen&#234;tre du R&#233;gulateur est jynstrumentable, en particulier avec des commandes de fonction plus avanc&#233;es. <br>
 <br>
-A l'heure actuelle <a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/"> 3 &#233;chantillons Jynstruments  sont livr&#233;s </a>,
+A l'heure actuelle <a href="https://jmri.org/jython/Jynstruments/ThrottleFrame/"> 3 &#233;chantillons Jynstruments  sont livr&#233;s </a>,
 un pour la lumi&#232;re, l'un pour la corne et un pour le sifflet (fonction 0, 1 et 2).
 Mais ce n'est qu'un &#233;chantillon, ayez un &#339;il sur le code et personnalisez le pour vos besoins sp&#233;cifiques sur votre d&#233;codeur. <br>
 
@@ -236,7 +236,7 @@ Jynstrumentable, donc ici nous d&#233;posons le Jynstruments sur </span> <span s
 lui-m&#234;me, non pas sur la barre d'outils.
 </span>
 
-		<!--#include virtual="/Footer" -->
+		<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

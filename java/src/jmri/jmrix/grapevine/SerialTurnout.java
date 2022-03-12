@@ -48,31 +48,14 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a turnout command.
+     * {@inheritDoc}
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
-        // implementing classes will typically have a function/listener to get
-        // updates from the layout, which will then call
-        //  public void firePropertyChange(String propertyName,
-        //      Object oldValue,
-        //      Object newValue)
-        // _once_ if anything has changed state (or set the commanded state directly)
-
-        // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
-                return;
-            } else {
-                // send a CLOSED command
-                sendMessage(true ^ getInverted());
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(false ^ getInverted());
+    protected void forwardCommandChangeToLayout(int newState) {
+        try {
+            sendMessage(stateChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 

@@ -1,27 +1,29 @@
 package jmri.jmrit.symbolicprog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.JLabel;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2014
  * @author Paul Bender, Copyright 2017
  */
 public class QualifierCombinerTest {
 
     // Service routine for tests
-    ProgDebugger p;
+    ProgDebugger p = new ProgDebugger();
     CvTableModel cvtable;
     VariableTableModel model;
     VariableValue v1;
@@ -45,17 +47,90 @@ public class QualifierCombinerTest {
     }
 
     @Test
-    public void testCtor(){
-       ArrayList<Qualifier> q=new ArrayList<Qualifier>();
-       q.add(new TestArithmeticQualifier(v1,5,"gt"));
-       q.add(new TestArithmeticQualifier(v1,10,"lt"));
-       QualifierCombiner qc = new QualifierCombiner(q);
-       Assert.assertNotNull("Exists",qc); 
+    public void testVariableGeAndLe() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
+
+        // test "ge", "le"
+        ArithmeticQualifier aq1 = new TestArithmeticQualifier(variable, 10, "ge");
+        ArithmeticQualifier aq2 = new TestArithmeticQualifier(variable, 20, "le");
+
+        ArrayList<Qualifier> q=new ArrayList<Qualifier>();
+        q.add(aq1);
+        q.add(aq2);
+        QualifierCombiner qc = new QualifierCombiner(q);
+        
+        Assert.assertEquals(false, qc.currentDesiredState());  // initially 3 above
+        
+        cv.setValue(10);
+        Assert.assertEquals(true, qc.currentDesiredState());
+        
+        cv.setValue(20);
+        Assert.assertEquals(true, qc.currentDesiredState());
+        
+        cv.setValue(5);
+        Assert.assertEquals(false, qc.currentDesiredState());
+
+        cv.setValue(25);
+        Assert.assertEquals(false, qc.currentDesiredState());
+
     }
 
+    @Test
+    public void testVariableNeAndNe() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
-    // The minimal setup for log4J
-    @Before
+        // test "ge", "le"
+        ArithmeticQualifier aq1 = new TestArithmeticQualifier(variable, 1, "ne");
+        ArithmeticQualifier aq2 = new TestArithmeticQualifier(variable, 7, "ne");
+
+        ArrayList<Qualifier> q=new ArrayList<Qualifier>();
+        q.add(aq1);
+        q.add(aq2);
+        QualifierCombiner qc = new QualifierCombiner(q);
+        
+        Assert.assertEquals(true, qc.currentDesiredState());  // initially 3 above
+        
+        cv.setValue(2);
+        Assert.assertEquals(true, qc.currentDesiredState());
+        
+        cv.setValue(6);
+        Assert.assertEquals(true, qc.currentDesiredState());
+        
+        cv.setValue(1);
+        Assert.assertEquals(false, qc.currentDesiredState());
+
+        cv.setValue(7);
+        Assert.assertEquals(false, qc.currentDesiredState());
+
+    }
+
+    @Test
+    public void testVariableNeAndNeFromXml() {
+    }
+
+    protected HashMap<String, CvValue> createCvMap() {
+        HashMap<String, CvValue> m = new HashMap<String, CvValue>();
+        return m;
+    }
+
+    VariableValue makeVar(String label, String comment, String cvName,
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String item) {
+        return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
+    }
+
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -114,7 +189,7 @@ public class QualifierCombinerTest {
         v3 = model.findVar("three");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

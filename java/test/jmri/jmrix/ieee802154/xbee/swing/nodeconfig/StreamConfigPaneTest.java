@@ -1,19 +1,19 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeInterfaceScaffold;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of StreamConfigPane 
  *
- * @author	Paul Bender Copyright (C) 2018
+ * @author Paul Bender Copyright (C) 2018
  */
 public class StreamConfigPaneTest {
 
@@ -27,7 +27,7 @@ public class StreamConfigPaneTest {
         Assert.assertNotNull("exists", pane);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initConnectionConfigManager();
@@ -39,7 +39,7 @@ public class StreamConfigPaneTest {
         node.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         node = null;
         tc = null;

@@ -1,22 +1,22 @@
 package jmri.jmrit.decoderdefn;
 
 import javax.swing.JLabel;
+
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * DecoderFileTest.java
  *
- * @author	Bob Jacobsen, Copyright (C) 2001, 2002
+ * @author Bob Jacobsen, Copyright (C) 2001, 2002
  */
 public class DecoderFileTest {
 
@@ -299,6 +299,7 @@ public class DecoderFileTest {
     // static variables for the test XML structures
     Element root = null;
     public Element decoder = null;
+    public Element model = null;
     Document doc = null;
 
     // provide a test document in the above static variables
@@ -315,6 +316,11 @@ public class DecoderFileTest {
                         .setAttribute("mfg", "Digitrax")
                         .setAttribute("defnVersion", "242")
                         .setAttribute("comment", "DH142 decoder: FX, transponding")
+                        .addContent(model = new Element("model")
+                                .setAttribute("model", "33")
+                                .setAttribute("maxFnNum", "31")
+                                .setAttribute("productID", "567")
+                        )
                 )
                 .addContent(new Element("programming")
                         .setAttribute("direct", "byteOnly")
@@ -365,12 +371,12 @@ public class DecoderFileTest {
         return;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

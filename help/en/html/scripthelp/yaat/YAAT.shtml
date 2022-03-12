@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>YAAT</title><!--#include virtual="/Style.shtml" -->
+
+  <style type="text/css">
+    dt {padding-top: 10px;}
+  </style>
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>YetAnotherAutoTrain.py -- Data driven automatic trains</h1>
+
+      <p>Jython (Java based Python) scripting is a common tool for running trains automatically.
+      The Python language is relatively easy to use and provides easy access to JMRI facilities,
+      such as turnouts, sensors, blocks, etc. Access to JMRI throttles provides the ability to
+      control locomotives.</p>
+
+      <p>The typical script sets turnouts, acquires a locomotive, runs the locomotive while keeping
+      track of its location. Some scripts use occupancy sensors for the location, others rely on
+      time durations.</p>
+
+      <p>Frequently the original script needs modifications as additional details are added. When a
+      second train is added which has to share track with the first one, the script becomes ever
+      more complicated.</p>
+
+      <p>YAAT is designed to eliminate the programming by using text files that contain English
+      like phrases. For example:</p>
+
+      <pre>
+      sensor = sensors.getSensor('S-Sensor')
+      If sensor is not None:
+          sensor.setKnownState(ACTIVE)
+      </pre>vs.
+
+      <pre>
+      Set sensor S-Sensor active
+      </pre>
+      <p>Each train has its own text file, but they can coordinate actions by using JMRI sensors,
+      etc.</p>
+
+      <h2>Using YAAT</h2>
+
+      <p>YAAT works by referencing JMRI objects, such as turnouts, sensors, etc. This means that
+      the layout definition needs to accurately describe the layout that will run the trains that
+      YAAT will be controlling.</p>
+
+      <p>Some of the YAAT actions have specific requirements. The signal head and signal mast
+      actions are obvious. The block actions need to have blocks assigned to Layout Editor track
+      components, such as track segments and turnouts.</p>
+
+      <p>Since the <strong>YetAnotherAutoTrain.py</strong> script needs to be modified, the script
+      should be copied from the JMRI install location to the user files location. See <strong>Help
+      ⇒ Locations</strong>.</p>
+
+      <h3>Global Settings</h3>
+
+      <dl>
+        <dt>logLevel</dt>
+
+        <dd>YAAT sends logging information to either the JMRI system console or the script monitor
+        located at <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>⇒
+        Script Output</strong>. Zero is no logging, 4 provides the maximum detail.</dd>
+
+        <dt>statusSensor</dt>
+
+        <dd>Optional. Provide feedback to JMRI indicating that one or more train threads are
+        running.</dd>
+
+        <dt>masterSensor</dt>
+
+        <dd>Optional. If this sensor becomes active, YAAT will terminate all of the train threads.
+        NOTE: Trains might keep running at their last speed.</dd>
+
+        <dt>saveYAATcompiles</dt>
+
+        <dd>
+          If set to True, the train compiles will be retained. See <a href="#CompTrains">Compiled
+          Trains</a>.
+        </dd>
+      </dl>
+
+      <h3>Trains</h3>
+
+      <p>Each train needs a set of actions. The orignal design had the actions included in the
+      script file. That feature will be removed in a future release.</p>
+
+      <p>Define actions:</p>
+
+      <dl>
+        <dt>External File</dt>
+
+        <dd>Create a text file with one action per line. Blank lines and lines starting with a
+        comment character, #, are ok. Add the train name and file name to the
+        <strong>trainList</strong>. The file name can be the complete path or the file name can
+        include a keyword for the location, such as "preference:" which is replaced by the path to
+        the user files location at run time.</dd>
+
+        <dt>File of files</dt>
+
+        <dd>In addition to modifying the script's trainList, it is possible to create a text file
+        that has the same format as the <strong>trainList</strong>. If the file exists, its
+        contents will be added to the <strong>trainList</strong>. The file is located in the
+        <strong>yaat</strong> directory in the user files location. The filename is
+        <strong>TrainList.txt</strong>. This file is optional.</dd>
+
+        <dt>Embedded</dt>
+
+        <dd>The actions are added to a Python list. Each action is enclosed in single or double
+        quotes and end with a comma at the end of the line. The embedded method requires a unique
+        block of code at the end of the script for each embedded action list. <em>Note: This method
+        will be removed in a future release. It requires too much manual code
+        modification.</em></dd>
+      </dl>
+
+      <h2>Action Phrases</h2>
+
+      <p>The following descriptions used the following formatting:</p>
+
+      <ul>
+        <li>&lt;?? | ??&gt; — List of choices</li>
+
+        <li>&lt;????&gt; — Required values, usually names or numbers</li>
+
+        <li>Brackets, [], are optional phrases</li>
+
+        <li>Text and names are case sensitive</li>
+      </ul>
+
+      <h3>Standard Actions</h3>
+
+      <dl>
+        <dt>Assign &lt;long | short&gt; address &lt;dccaddr&gt;[ as &lt;train name&gt;[ in
+        &lt;block name&gt;]]</dt>
+
+        <dd>Create a JMRI throttle using the DCC addresss. If a block name is supplied, the
+        optional train name will be used for block tracking.</dd>
+
+        <dt>Loop</dt>
+
+        <dd>Marks the end of the one time start up actions, such as the throttle assignment,
+        positioning a train before starting repeating actions, etc.</dd>
+
+        <dt>Print &lt;message text&gt;</dt>
+
+        <dd>Display a message in the script output window or the system console log. Useful for
+        debugging.</dd>
+
+        <dt>Repeat if sensor &lt;sensor name&gt; is &lt;active | inactive&gt;</dt>
+
+        <dd>Skip the remaining steps and start over. Use the same sensor as Stop with the opposite
+        test. This provides a cleanup section before Stop. Requires that a "Loop" action was
+        included in the action list.</dd>
+
+        <dt>Set block &lt;block name&gt; &lt;occupied | unoccupied | reserved | free&gt;</dt>
+
+        <dd>The occupied and unoccupied states are used to simulate train movement. It works best
+        if a simulation sensor is used in conjunction with an If statement. Reserved and free
+        control the alternate track color.</dd>
+
+        <dt>Set direction to &lt;forward | reverse&gt;</dt>
+
+        <dt>Set function key &lt;0 to 28&gt; &lt;on | off&gt;[, wait &lt;n&gt; seconds]</dt>
+
+        <dd>Set the function key on or off. The number can be from 0 to 28. If seconds is greater
+        than zero, the opposite action will be performed after the number of seconds has
+        passed.</dd>
+
+        <dt>Set route &lt;route name&gt;</dt>
+
+        <dt>Set sensor &lt;sensor name&gt; &lt;active | inactive&gt;</dt>
+
+        <dd>Can be used to pass status to other trains.</dd>
+
+        <dt>Set speed to &lt;0 to 1.0&gt;</dt>
+
+        <dt>Set turnout &lt;turnout name&gt; &lt;closed | thrown&gt;[, wait &lt;n&gt; seconds]</dt>
+
+        <dd>The process will wait for up to 5 seconds for turnout feedback. If seconds is entered
+        and greater than zero, a wait allows the turnout command to complete, capacitors to
+        recharge, etc.</dd>
+
+        <dt>Start when sensor &lt;sensor name&gt; is &lt;active | inactive&gt;</dt>
+
+        <dd>An optional action that defers running the train until the condition has been
+        satisfied. This can also be used to pause a train between runs.</dd>
+
+        <dt>Stop if sensor &lt;sensor name&gt; is &lt;active | inactive&gt;</dt>
+
+        <dd>This action needs to be the last one in the list. If the sensor state matches, the
+        throttle will be released and the script stopped. If it does not, the script will do the
+        sequence of actions again. If the Stop action is missing, the script will run forever,
+        until the script thread is killed, or JMRI is stopped.</dd>
+
+        <dt>Wait for &lt;n&gt; seconds</dt>
+
+        <dd>Wait until the time has expired. Normally used for station stops.</dd>
+
+        <dt>Wait for block &lt;block name&gt; to become &lt;occupied | unoccupied | reserved |
+        free&gt;</dt>
+
+        <dt>Wait for sensor &lt;sensor name&gt; to become &lt;active | inactive&gt;</dt>
+
+        <dt>Wait for signal head &lt;head name&gt; to [not] show &lt;appearance name&gt; [or
+        ...]</dt>
+
+        <dd>The appearance names are language specific. Use the signal head table to get the
+        available appearance names.</dd>
+
+        <dt>Wait for signal mast &lt;mast name&gt; to [not] display &lt;aspect name&gt; [or
+        ...]</dt>
+
+        <dd>Use the signal mast table to get the valid aspect names. Remember that the names vary
+        based on signal mast type.</dd>
+
+        <dt>Wait while signal mast &lt;mast name&gt; speed is less than &lt;aspect name&gt;
+        speed</dt>
+
+        <dd>Use the signal mast table to get the valid aspect names. Remember that the names vary
+        based on signal mast type.</dd>
+      </dl>
+
+      <h3>If/Else/Endif Actions</h3>
+
+      <p>The <strong><em>If</em></strong> and <strong><em>Endif</em></strong> actions are required.
+      The <strong><em>Else</em></strong> action is optional and is used to separate the true and
+      false actions. Nesting is supported.</p>
+
+      <dl>
+        <dt>If block &lt;block name&gt; is &lt;occupied | unoccupied | reserved | free&gt;</dt>
+
+        <dt>If sensor &lt;sensor name&gt; is &lt;active | inactive&gt;</dt>
+
+        <dt>If signal head &lt;head name&gt; does [not] show &lt;appearance&gt; [or ...]</dt>
+
+        <dt>If signal mast &lt;mast name&gt; does [not] display &lt;aspect&gt; [or ...]</dt>
+
+        <dt>If speed for signal mast &lt;mast name&gt; is &lt;eq | ne | lt | gt | le | ge&gt;
+        &lt;speed name&gt;</dt>
+
+        <dd>For information on speed names, look at the JMRI install location:
+        xml/signals/signalSpeeds.xml</dd>
+
+        <dt>Else</dt>
+
+        <dt>Endif</dt>
+      </dl>
+
+      <h3>GoSub/Sub/EndSub Actions</h3>
+
+      <p>The sub routines are placed at the end of an embedded list or text file. The sub routines
+      cannot be nested, but a sub routine can call another sub routine. The sub routine name cannot
+      have spaces. Control returns to the statement after the CallSub when the sub routine is
+      finished.</p>
+
+      <dl>
+        <dt>CallSub &lt;subname&gt;</dt>
+
+        <dt>Sub &lt;subname&gt;</dt>
+
+        <dt>EndSub &lt;subname&gt;</dt>
+      </dl>
+
+      <h3>Dispatcher Support (Created by Bill Fitch)</h3>
+
+      <dl>
+        <dt>Dispatch using file &lt;traininfo.xml&gt;[, type &lt;USER, value &lt;dccAddress&gt; |
+        ROSTER, value &lt;roster entry name&gt; | OPERATIONS, value &lt;train name&gt;&gt;]</dt>
+
+        <dd>
+          The Dispatcher train info filename is required. The optional USER, ROSTER and OPERATIONS
+          keywords can override the train info content. Examples:
+          <ul>
+            <li>Dispatch using file routefrom1-2.xml (uses the train info xml file set up by "Save
+            Train info" in "Create New Train" in dispatcher)</li>
+
+            <li>Dispatch using file routefrom1-2.xml, type USER, value 3 (uses train with dcc
+            address 3 instead of the train in the xml file</li>
+
+            <li>Dispatch using file routefrom1-2.xml, type ROSTER, value diesel104 (uses diesel104
+            from roster instead of the train in the xml file)</li>
+          </ul>
+          The &lt;traininfo.xml&gt; file will have been generated by dispatcher prior to running
+          YAAT and will have been placed in preference:dispatcher/traininfo by dispatcher. Note:
+          "preference:" is the keyword for the user files location.
+        </dd>
+      </dl>
+
+      <h2>YAAT Demo</h2>
+
+      <p>A demonstration system is available at <a href="YAAT.jmri.zip">YAAT Demo</a>. The zip file
+      is a JMRI profile. After expanding the zip file, place the <strong>YAAT.jmri</strong>
+      directory next to the other profiles and it should show up in the profile list. The demo
+      panel is based on JMRI 4.20.</p>
+
+      <h3>Running the demo</h3>
+
+      <p>After starting <strong>PanelPro</strong>, click on the <strong>Open Panel File</strong>
+      button and select <strong>yaat demo.xml</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/yaat_demo.png"><img src="images/yaat_demo.png" alt="YAAT demo" height="576"
+        width="1023"></a>
+      </div>
+
+      <p>Click on the <strong>Load YAAT</strong> button to start the process. After several seconds
+      the button label will change to <strong>Running</strong>. Click on the
+      <strong>Paused</strong> button to start a train. The button label will change to
+      <strong>Run</strong>. Cllcking again will pause the train when it finishes a loop. Click on
+      <strong>Stop</strong> to terimnate the train and remove it from the system.</p>
+
+      <p>The <strong>Stop Threads</strong> button will terminate all trains immediately. Active
+      trains might continue running at the last throttle setting.</p>
+
+      <h2>Advanced Features</h2>
+
+      <h3 id="CompTrains">Compiled Trains</h3>
+
+      <p>The standard YAAT process compiles each train from its text file or from the embedded
+      content. THe result of the compile process is a set of tokens that are interpreted while the
+      train is running. The duration of the compile step depends on the number of trains and the
+      number of actions.</p>
+
+      <p>If the <strong>saveYAATcompiles</strong> option is true, a compiled train will be used
+      instead of doing the compile step.</p>
+
+      <p>A compiled train is located at the preference:yaatp/&lt;trainname&gt; directory. When YAAT
+      is started, the date/time for each train source file is checked. If it is greater than the
+      compiled train, if any, the compile will occur. Otherwise the compiled version will be
+      loaded. Embedded trains are always compiled.</p>
+
+      <h3>Custom Extensions</h3>
+
+      <p>An extension is a separate Python file that contains additional actions.</p>
+
+      <p>Each action requires a <strong>do&lt;name&gt;</strong> method (def) and a
+      <strong>compile&lt;name&gt;</strong> method (def). The format of an action name is
+      <strong>verb_noun</strong>, such as <strong>Set_memory...</strong> The typical space for
+      built-in actions is replaced with an underscore.</p>
+
+      <p>The custom actions are added to the <strong>customExtensions</strong> dictionary. The key
+      is the file name and the data is a list of actions.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

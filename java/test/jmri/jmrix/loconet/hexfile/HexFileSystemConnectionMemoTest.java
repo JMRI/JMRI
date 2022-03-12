@@ -1,37 +1,34 @@
 package jmri.jmrix.loconet.hexfile;
 
+import jmri.jmrix.loconet.LnSystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class HexFileSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class HexFileSystemConnectionMemoTest extends LnSystemConnectionMemoTestBase<HexFileSystemConnectionMemo> {
 
-
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
-       JUnitUtil.setUp();
-       HexFileSystemConnectionMemo memo = new HexFileSystemConnectionMemo();
-       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
-       memo.setLnTrafficController(lnis);
-       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
-       memo.configureManagers();
-       scm = memo;
+        super.setUp();
+        scm = new HexFileSystemConnectionMemo();
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(scm);
+        scm.setLnTrafficController(lnis);
+        scm.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        scm.configureManagers();
     }
-   
+
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-        ((HexFileSystemConnectionMemo)scm).dispose();
-        JUnitUtil.tearDown();
+        scm.dispose();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class);
-
 }

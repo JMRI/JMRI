@@ -2,14 +2,15 @@ package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPPowerManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPPowerManager class
+ * Test for the jmri.jmrix.srcp.SRCPPowerManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
@@ -73,20 +74,19 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @Disabled("unsolicited state changes are currently ignored")
     @ToDo("class under test needs modification to respond to unsolicited state changes.  Once that is in place, remove this overriden test")
     public void testStateOn(){
     }
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @Disabled("unsolicited state changes are currently ignored")
     @ToDo("class under test needs modification to respond to unsolicited state changes.  Once that is in place, remove this overriden test")
     public void testStateOff(){
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -95,7 +95,7 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         p = new SRCPPowerManager(memo, 1);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

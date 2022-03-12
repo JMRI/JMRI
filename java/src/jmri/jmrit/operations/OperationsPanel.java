@@ -1,35 +1,24 @@
 package jmri.jmrit.operations;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.GridBagConstraints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import jmri.InstanceManager;
-import jmri.implementation.swing.SwingShutDownTask;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.swing.JTablePersistenceManager;
-import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.swing.JTablePersistenceManager;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 
 /**
  * Panel for operations
@@ -45,14 +34,6 @@ public class OperationsPanel extends JPanel {
         super();
     }
 
-    public void initMinimumSize() {
-        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight250));
-    }
-
-    public void initMinimumSize(Dimension dimension) {
-        setMinimumSize(dimension);
-    }
-
     public void dispose() {
         // The default method does nothing.
     }
@@ -65,26 +46,6 @@ public class OperationsPanel extends JPanel {
         gc.weighty = 100.0;
         this.add(c, gc);
     }
-
-//    protected void addItemLeft(JComponent c, int x, int y) {
-//        GridBagConstraints gc = new GridBagConstraints();
-//        gc.gridx = x;
-//        gc.gridy = y;
-//        gc.weightx = 100.0;
-//        gc.weighty = 100.0;
-//        gc.anchor = GridBagConstraints.WEST;
-//        this.add(c, gc);
-//    }
-
-//    protected void addItemWidth(JComponent c, int width, int x, int y) {
-//        GridBagConstraints gc = new GridBagConstraints();
-//        gc.gridx = x;
-//        gc.gridy = y;
-//        gc.gridwidth = width;
-//        gc.weightx = 100.0;
-//        gc.weighty = 100.0;
-//        this.add(c, gc);
-//    }
 
     protected void addItem(JPanel p, JComponent c, int x, int y) {
         GridBagConstraints gc = new GridBagConstraints();
@@ -128,16 +89,6 @@ public class OperationsPanel extends JPanel {
 
     private static final int MIN_CHECKBOXES = 5;
     private static final int MAX_CHECKBOXES = 11;
-
-    /**
-     * Gets the number of checkboxes(+1) that can fix in one row see
-     * OperationsFrame.minCheckboxes and OperationsFrame.maxCheckboxes
-     *
-     * @return the number of checkboxes, minimum is 5 (6 checkboxes)
-     */
-    protected int getNumberOfCheckboxesPerLine() {
-        return getNumberOfCheckboxesPerLine(this.getPreferredSize());
-    }
 
     protected int getNumberOfCheckboxesPerLine(Dimension size) {
         if (size == null) {
@@ -222,11 +173,8 @@ public class OperationsPanel extends JPanel {
      *
      * @param scrollPane the pane containing the textArea
      * @param textArea   the textArea to adjust
+     * @param size the preferred size
      */
-    protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
-        this.adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
-    }
-
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea, Dimension size) {
         FontMetrics metrics = getFontMetrics(textArea.getFont());
         int columnWidth = metrics.charWidth('m');
@@ -244,11 +192,13 @@ public class OperationsPanel extends JPanel {
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true if a default instance of the
-     *         {@link jmri.swing.JTablePersistenceManager} is available; false
-     *         otherwise
      */
-    public boolean loadTableDetails(JTable table) {
+    public void loadTableDetails(JTable table) {
+        loadTableDetails(table, getWindowFrameRef());
+        persist(table);
+    }
+    
+    public static void loadTableDetails(JTable table, String name) {
         if (table.getRowSorter() == null) {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
             table.setRowSorter(sorter);
@@ -269,14 +219,32 @@ public class OperationsPanel extends JPanel {
         // give each cell a bit of space between the vertical lines and text
         table.setIntercellSpacing(new Dimension(3, 1));
         // table must have a name
-        table.setName(getWindowFrameRef() + ":table"); // NOI18N
+        table.setName(name + ":table"); // NOI18N
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
         if (manager.isPresent()) {
             manager.get().resetState(table);
-            manager.get().persist(table);
-            return true;
         }
-        return false;
+    }
+    
+    public static void persist(JTable table) {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().persist(table);
+        }
+    }
+    
+    public static void cacheState(JTable table) {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().cacheState(table);
+        }
+    }
+    
+    public static void saveTableState() {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().setPaused(false); // cheater way to save preferences.
+        }
     }
 
     protected void clearTableSort(JTable table) {
@@ -285,69 +253,13 @@ public class OperationsPanel extends JPanel {
         }
     }
 
-    protected synchronized void createShutDownTask() {
-        InstanceManager.getDefault(OperationsManager.class)
-                .setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
-                        Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
-                    @Override
-                    public boolean checkPromptNeeded() {
-                        if (Setup.isAutoSaveEnabled()) {
-                            storeValues();
-                            return true;
-                        }
-                        return !OperationsXml.areFilesDirty();
-                    }
-
-                    @Override
-                    public boolean doPrompt() {
-                        storeValues();
-                        return true;
-                    }
-
-                    @Override
-                    public boolean doClose() {
-                        storeValues();
-                        return true;
-                    }
-                });
-    }
-
     protected void storeValues() {
         OperationsXml.save();
     }
 
-//    protected String lineWrap(String s) {
-//        return this.lineWrap(s, this.getPreferredSize());
-//    }
-
-//    protected String lineWrap(String s, Dimension size) {
-//        int numberChar = 80;
-//        if (size != null) {
-//            JLabel X = new JLabel("X");
-//            numberChar = size.width / X.getPreferredSize().width;
-//        }
-//
-//        String[] sa = s.split(NEW_LINE);
-//        StringBuilder so = new StringBuilder();
-//
-//        for (int i = 0; i < sa.length; i++) {
-//            if (i > 0) {
-//                so.append(NEW_LINE);
-//            }
-//            StringBuilder sb = new StringBuilder(sa[i]);
-//            int j = 0;
-//            while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
-//                sb.replace(j, j + 1, NEW_LINE);
-//            }
-//            so.append(sb);
-//        }
-//        return so.toString();
-//    }
-
-    
-//    protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
-
- // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
+/*
+ * Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
+ */
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
         JPanel pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
@@ -357,31 +269,7 @@ public class OperationsPanel extends JPanel {
         pane.setMinimumSize(new Dimension(500, 130));
         pane.setMaximumSize(new Dimension(2000, 170));
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-//        pane.addAncestorListener(this); // used to determine if scrollbar is showing
     }
-
-//    @Override
-//    public void ancestorAdded(AncestorEvent event) {
-////  log.debug("Ancestor Added");
-//        // do nothing
-//    }
-//
-//    @Override
-//    public void ancestorRemoved(AncestorEvent event) {
-////  log.debug("Ancestor Removed");
-//        // do nothing
-//    }
-//
-//    @Override
-//    public void ancestorMoved(AncestorEvent event) {
-//        if (pad != null) {
-//            if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
-//                pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
-//    log.debug("Scrollbar visible: {}", pad.isVisible());
-//            }
-//        }
-//    }
 
     protected String getWindowFrameRef() {
         Container c = this.getTopLevelAncestor();
@@ -389,6 +277,30 @@ public class OperationsPanel extends JPanel {
             return ((JmriJFrame) c).getWindowFrameRef();
         }
         return null;
+    }
+    public static JPanel getColorChooserPanel(String text, JColorChooser chooser) {
+        return getColorChooserPanel(Bundle.getMessage("TextColor"), TrainCommon.getTextColor(text), chooser);
+    }
+    
+    public static JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser) {
+        JPanel pTextColorPanel = new JPanel();
+        pTextColorPanel.setBorder(BorderFactory.createTitledBorder(title));
+        chooser.setColor(color);
+        AbstractColorChooserPanel commentColorPanels[] = {new SplitButtonColorChooserPanel()};
+        chooser.setChooserPanels(commentColorPanels);
+        chooser.setPreviewPanel(new JPanel());
+        pTextColorPanel.add(chooser);
+        return pTextColorPanel;
+    }
+
+    public static void loadFontSizeComboBox(JComboBox<Integer> box) {
+        // load font sizes 7 through 18
+        for (int i = 7; i < 19; i++) {
+            box.addItem(i);
+        }
+        Dimension size = box.getPreferredSize();
+        size = new Dimension(size.width + 10, size.height);
+        box.setPreferredSize(size);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);

@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.routes;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RoutesTableModelTest extends OperationsTestCase {
 
@@ -15,7 +16,4 @@ public class RoutesTableModelTest extends OperationsTestCase {
         RoutesTableModel t = new RoutesTableModel();
         Assert.assertNotNull("exists",t);
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(RoutesTableModelTest.class);
-
 }

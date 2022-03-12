@@ -16,6 +16,10 @@ public class MarklinNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction 
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
+     * @param s pane name.
+     * @param wi the window interface.
+     * @param paneClass pane class.
+     * @param memo system connection.
      */
     public MarklinNamedPaneAction(String s, WindowInterface wi, String paneClass, MarklinSystemConnectionMemo memo) {
         super(s, wi, paneClass);

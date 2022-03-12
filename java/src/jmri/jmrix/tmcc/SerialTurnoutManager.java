@@ -1,9 +1,12 @@
 package jmri.jmrix.tmcc;
 
 import java.util.Locale;
-import jmri.JmriException;
-import jmri.Turnout;
+
+import javax.annotation.Nonnull;
+
+import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * System names are "TTnnn", where T is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
 
@@ -27,19 +30,24 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public TmccSystemConnectionMemo getMemo() {
         return (TmccSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // validate the system name
         String sName = validateSystemNameFormat(systemName);
         // does this turnout already exist?
         Turnout t = getBySystemName(sName);
         if (t != null) {
             log.debug("Turnout already exists");
-            return null;
+            return t;
         }
         // create the turnout
         log.debug("new SerialTurnout with addr = {}", systemName.substring(getSystemPrefix().length() + 1));
@@ -66,24 +74,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
 
     // Turnout address format is more than a simple number.
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
-    }
-
-    @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
-        try {
-            return makeSystemName(curAddress);
-        } catch (IllegalArgumentException ex) {
-            throw new JmriException(ex);
-        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(name, 1, 99, locale);
     }
 
@@ -91,7 +91,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         NameValidity validity = super.validSystemNameFormat(systemName);
         if (validity == NameValidity.VALID) {
             int num;

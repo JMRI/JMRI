@@ -1,14 +1,6 @@
-# Restart a Raspberry Pi or other Linux machine cleanly
-#
-# Run this from a Logix or button to safely restart the machine
-#
-# From a sequence by Dave Sand
+# Shuts down JMRI cleanly, then tells the OS to restart itself 
+# Typically run from a Logix or button
 
-import java
-import jmri
+# Note: this version maintained for compatibility, use RestartOS.py  
 
-# start the machine restarting in 1 minute (requires that you can "sudo" without a password)
-java.lang.Runtime.getRuntime().exec("sudo shutdown -r +1")
-
-# do an immediate graceful shutdown of JMRI
-shutdown.shutdown()
+shutdown.restartOS()

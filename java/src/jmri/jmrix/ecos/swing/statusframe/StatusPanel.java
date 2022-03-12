@@ -5,7 +5,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.JmriException;
 import jmri.jmrix.ecos.EcosListener;
 import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosReply;

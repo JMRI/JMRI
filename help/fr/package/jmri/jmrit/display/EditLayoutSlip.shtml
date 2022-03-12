@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -62,7 +62,7 @@
       vous permet de configurer les &eacute;tats de sortie pour les
       deux aiguillages qui forment la travers&eacute;e et de tester
       ceux-ci avant de confirmer la configuration.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

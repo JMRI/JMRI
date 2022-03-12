@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,14 +23,20 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Removed spaces from folder and icon names.</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
   <name>Double Arm Semaphore High Signal</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
   <description>Appearances for B&amp;O two arm semaphore mast signals.</description>
-  
+
   <appearances>
 
    <appearance>
@@ -38,7 +44,7 @@
       <show>green</show>
 	  <show>red</show>
       <reference>Page 128</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-281-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-281-2_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -46,23 +52,23 @@
       <show>yellow</show>
 	  <show>red</show>
       <reference>Page 133</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-285-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-285-2_Arm.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Slow Approach Slow</aspectname>
       <show>red</show>
       <show>green</show>
       <reference>Page 135</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-287-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-287-2_Arm.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>lunar</show>
       <reference>Page 137</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-290-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-290-2_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -71,7 +77,7 @@
 	  <show>red</show>
       <reference>Page 138</reference>
       <comment>Normal speed route appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-292-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-292-2_Arm.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -80,11 +86,11 @@
     <danger>
       <aspect>Stop</aspect>
     </danger>
-	
+
 	<permissive>
       <aspect>Restricting</aspect>
     </permissive>
-	
+
     <held>
       <aspect>Stop</aspect>
     </held>
@@ -104,7 +110,7 @@
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -118,7 +124,7 @@
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -132,7 +138,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -186,7 +192,7 @@
 	  <ourAspect>Approach</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
@@ -200,5 +206,5 @@
     </aspectMapping>
 
   </aspectMappings>
-  
-</appearancetable>  
+
+</appearancetable>

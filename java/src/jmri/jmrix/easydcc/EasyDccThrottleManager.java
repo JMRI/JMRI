@@ -22,6 +22,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor
+     * @param memo system connection.
      */
     public EasyDccThrottleManager(EasyDccSystemConnectionMemo memo) {
         super(memo);

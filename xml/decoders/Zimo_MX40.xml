@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2017 - 2021 All rights reserved                     -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation.    See the "COPYING" file for a copy  -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="W.D.Kok" version="1.00" lastUpdated="20210403"/>
+  <!-- Version 1.00 - Initial version                           -->
+  <decoder>
+    <family name="Zimo Early model (1996-97)" mfg="Zimo">
+      <model model="Zimo MX40/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiss</label>
+          <label xml:lang="nl">Wit</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+          <label xml:lang="nl">Geel</label>
+        </output>
+        <output name="3" label="Output 2">
+          <label xml:lang="de">Ausgang 2</label>
+          <label xml:lang="nl">Uitgang 2</label>
+        </output>
+        <output name="4" label="Output 3">
+          <label xml:lang="de">Ausgang 3</label>
+          <label xml:lang="nl">Uitgang 3</label>
+        </output>
+        <output name="5" label="Output 4">
+          <label xml:lang="de">Ausgang 4</label>
+          <label xml:lang="nl">Uitgang 4</label>
+        </output>
+        <output name="6" label="Output 5">
+          <label xml:lang="de">Ausgang 5</label>
+          <label xml:lang="nl">Uitgang 5</label>
+        </output>
+        <size length="21" width="12" height="5.5" units="mm"/>
+      </model>
+      <model model="Zimo MX40L/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiss</label>
+          <label xml:lang="nl">Wit</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+          <label xml:lang="nl">Geel</label>
+        </output>
+        <output name="3" label="Output 2">
+          <label xml:lang="de">Ausgang 2</label>
+          <label xml:lang="nl">Uitgang 2</label>
+        </output>
+        <output name="4" label="Output 3">
+          <label xml:lang="de">Ausgang 3</label>
+          <label xml:lang="nl">Uitgang 3</label>
+        </output>
+        <output name="5" label="Output 4">
+          <label xml:lang="de">Ausgang 4</label>
+          <label xml:lang="nl">Uitgang 4</label>
+        </output>
+        <output name="6" label="Output 5">
+          <label xml:lang="de">Ausgang 5</label>
+          <label xml:lang="nl">Uitgang 5</label>
+        </output>
+        <size length="26" width="12" height="5.5" units="mm"/>
+      </model>
+      <model model="Zimo MX40R/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="NEM652">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiss</label>
+          <label xml:lang="nl">Wit</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+          <label xml:lang="nl">Geel</label>
+        </output>
+        <output name="3" label="Output 2">
+          <label xml:lang="de">Ausgang 2</label>
+          <label xml:lang="nl">Uitgang 2</label>
+        </output>
+        <output name="4" label="Output 3">
+          <label xml:lang="de">Ausgang 3</label>
+          <label xml:lang="nl">Uitgang 3</label>
+        </output>
+        <output name="5" label="Output 4">
+          <label xml:lang="de">Ausgang 4</label>
+          <label xml:lang="nl">Uitgang 4</label>
+        </output>
+        <output name="6" label="Output 5">
+          <label xml:lang="de">Ausgang 5</label>
+          <label xml:lang="nl">Uitgang 5</label>
+        </output>
+        <size length="21" width="12" height="5.5" units="mm"/>
+      </model>
+      <model model="Zimo MX41/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiss</label>
+          <label xml:lang="nl">Wit</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+          <label xml:lang="nl">Geel</label>
+        </output>
+        <output name="3" label="Output 2">
+          <label xml:lang="de">Ausgang 2</label>
+          <label xml:lang="nl">Uitgang 2</label>
+        </output>
+        <output name="4" label="Output 3">
+          <label xml:lang="de">Ausgang 3</label>
+          <label xml:lang="nl">Uitgang 3</label>
+        </output>
+        <output name="5" label="Output 4">
+          <label xml:lang="de">Ausgang 4</label>
+          <label xml:lang="nl">Uitgang 4</label>
+        </output>
+        <output name="6" label="Output 5">
+          <label xml:lang="de">Ausgang 5</label>
+          <label xml:lang="nl">Uitgang 5</label>
+        </output>
+        <size length="21" width="12" height="5.5" units="mm"/>
+      </model>
+      <model model="Zimo MX41L/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="Wires">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiss</label>
+          <label xml:lang="nl">Wit</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+          <label xml:lang="nl">Geel</label>
+        </output>
+        <output name="3" label="Output 2">
+          <label xml:lang="de">Ausgang 2</label>
+          <label xml:lang="nl">Uitgang 2</label>
+        </output>
+        <output name="4" label="Output 3">
+          <label xml:lang="de">Ausgang 3</label>
+          <label xml:lang="nl">Uitgang 3</label>
+        </output>
+        <output name="5" label="Output 4">
+          <label xml:lang="de">Ausgang 4</label>
+          <label xml:lang="nl">Uitgang 4</label>
+        </output>
+        <output name="6" label="Output 5">
+          <label xml:lang="de">Ausgang 5</label>
+          <label xml:lang="nl">Uitgang 5</label>
+        </output>
+        <size length="26" width="12" height="5.5" units="mm"/>
+      </model>
+      <model model="Zimo MX41R/N (red label)" maxInputVolts="15-24V" maxTotalCurrent="0.8A (peak=25A, 5 sec.)" formFactor="HO" connector="NEM652">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiss</label>
+          <label xml:lang="nl">Wit</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+          <label xml:lang="nl">Geel</label>
+        </output>
+        <output name="3" label="Output 2">
+          <label xml:lang="de">Ausgang 2</label>
+          <label xml:lang="nl">Uitgang 2</label>
+        </output>
+        <output name="4" label="Output 3">
+          <label xml:lang="de">Ausgang 3</label>
+          <label xml:lang="nl">Uitgang 3</label>
+        </output>
+        <output name="5" label="Output 4">
+          <label xml:lang="de">Ausgang 4</label>
+          <label xml:lang="nl">Uitgang 4</label>
+        </output>
+        <output name="6" label="Output 5">
+          <label xml:lang="de">Ausgang 5</label>
+          <label xml:lang="nl">Uitgang 5</label>
+        </output>
+        <size length="21" width="12" height="5.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+      <variable item="Vstart" CV="2">
+        <decVal/>
+        <label>Vstart</label>
+        <label xml:lang="it">Velocità Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="cs">Rozjezdové napětí</label>
+        <label xml:lang="de">Abfahrgeschwindigkeit</label>
+        <label xml:lang="nl">Startsnelheid</label>
+        <comment>A value of 255 corresponds to 100%</comment>
+        <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
+        <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
+        <comment xml:lang="cs">Hodnota 255 odpovídá 100%</comment>
+        <comment xml:lang="nl">Een waarde van 255 betekent 100%</comment>
+      </variable>
+      <variable item="Vhigh" CV="5">
+        <decVal/>
+        <label>Vhigh</label>
+        <label xml:lang="it">Velocità Massimi</label>
+        <label xml:lang="fr">Vmax</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <label xml:lang="nl">Max. snelheid</label>
+        <label xml:lang="cs">Maximální napětí</label>
+      </variable>
+      <!--Read only = "yes" -->
+      <!-- CV7-8 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <!-- Signal mode -->
+      <variable CV="49" default="0" comment="Range 0-255" item="Signal-A">
+        <decVal max="255"/>
+        <label>Acceleration (signal mode)</label>
+        <label xml:lang="de">Beschleunigung (Signalbetrieb)</label>
+        <label xml:lang="nl">Optrekvertraging (signaalmodus)</label>
+        <tooltip>&lt;html&gt;Acceleration in signal mode.&lt;br&gt;
+                             Time in 0.4 x sec for acceleration process from standstill to maximum speed&lt;br&gt;
+                             in case of starting from a "holding section" at full controller position.&lt;br&gt;
+                             (Range: 0-255, Default: 0) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Beschleunigung im signaalmodus.&lt;br&gt;
+                                           Zeit in 0,4 x sec für Beschleunigungsvorgang von Stillstand bis Maximalgeschwindigkeit&lt;br&gt;
+                                           im Falle des Anfahrens aus einem “Halteabschnitt” bei voller Regler Stellung.&lt;br&gt;
+                                           (Bereich: 0-255, voreingestellt: 0) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Acceleratie in signaal bedrijf.&lt;br&gt;
+                                           Tijd in 0,4 x sec voor acceleratieproces van stilstand naar maximumsnelheid in geval&lt;br&gt;
+                                           van het wegrijden uit een "stopsectie" bij volledig open gedraaide regelaar.&lt;br&gt;
+                                           (Bereik: 0-255, standaardinstelling: 0) &lt;/html&gt;</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="50" default="0" comment="Range 0-255" item="Signal-B">
+        <decVal max="255"/>
+        <label>Deceleration (signal mode)</label>
+        <label xml:lang="de">Bremsrate (Signalbetrieb)</label>
+        <label xml:lang="nl">Afremvertraging (signaalmodus)</label>
+        <tooltip>&lt;html&gt;Deceleration in signal mode.&lt;br&gt;
+                             Time in 0.4 x sec for braking from full speed to standstill&lt;br&gt;
+                             in case of re-entry into a "holding section".&lt;br&gt;
+                             (Range: 0-255, Default: ) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bremsrate im Signalbetrieb.&lt;br&gt;
+                                           Zeit in 0,4 x sec für Bremsvorgang von voller Geschwindigkeit bis&lt;br&gt;
+                                           zum Stillstand im Falle des Einfahrens in einen “Halteabschnitt”.&lt;br&gt;
+                                           (Bereich: 0-255, voreingestellt: 0) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Afremmen in de signaalmodus.&lt;br&gt;
+                                           Tijd in 0,4 x sec voor het remmen van volle snelheid naar&lt;br&gt;
+                                           stilstand in geval van het inrijden van een "stopsectie".&lt;br&gt;
+                                           (Bereik: 0-255, standaardinstelling: 0) &lt;/html&gt;</tooltip>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable CV="52" default="9" comment="Range 0-28" item="Signal-C">
+        <decVal max="28"/>
+        <label>Speed level "U"</label>
+        <label xml:lang="de">Geschwindigkeitsstufe “U”</label>
+        <label xml:lang="nl">Snelheid level "U"</label>
+        <tooltip>&lt;html&gt;Internal speed level (divided into 28 levels) for signal-dependent speed level "U"&lt;br&gt;
+                             (this applies for signal-dependent speed limits 1/6 and 2/6).&lt;br&gt;
+                             (Range: 0-28, Default: 9) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Interne Geschwindigkeitsstufe (eingeteilt in 28 Stufen) für signalabhängige Geschwindigkeitsstufe “U”&lt;br&gt;
+                                           (diese kommt für signalabhängige Geschwindigkeitsbeschränkungen 1/6 und 2/6 zur Wirkung).&lt;br&gt;
+                                           (Bereich: 0-28 voreingestellt: 9) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Intern snelheids levels (verdeeld in 28 levels) voor signaalafhankelijk snelheids level "U"&lt;br&gt;
+                                           (dit geldt voor signaalafhankelijke snelheidslimieten 1/6 en 2/6).&lt;br&gt;
+                                           (Bereik: 0-28, standaardinstelling: 9) &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <variable CV="54" default="18" comment="Range 0-28" item="Signal-D">
+        <decVal max="28"/>
+        <label>Speed level "L"</label>
+        <label xml:lang="de">Geschwindigkeitsstufe “L”</label>
+        <label xml:lang="nl">Snelheid level "L"</label>
+        <tooltip>&lt;html&gt;Internal speed level (divided into 28 levels) for signal-dependent speed level "L"&lt;br&gt;
+                             (this applies for signal-dependent speed limits 3/6, 4/6 and 5/6).&lt;br&gt;
+                             (Range: 0-28, Default: 18) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Interne Geschwindigkeitsstufe (eingeteilt in 28 Stufen) für signalabhängige Geschwindigkeitsstufe “L”&lt;br&gt;
+                                           (diese kommt für signalabhängige Geschwindigkeitsbeschränkungen 3/6, 4/6 und 5/6 zur Wirkung).&lt;br&gt;
+                                           (Bereich: 0-28 voreingestellt: 18) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Intern snelheids levels (verdeeld in 28 levels) voor signaalafhankelijk snelheids level "L"&lt;br&gt;
+                                           (dit geldt voor signaalafhankelijke snelheidslimieten 3/6, 4/6 en 5/6).&lt;br&gt;
+                                           (Bereik: 0-28, standaardinstelling: 18) &lt;/html&gt;</tooltip>
+        <comment>Range 0-28</comment>
+      </variable>
+      <!-- Speed Table -->
+      <variable CV="67" comment="Range 0-255" item="Speed Table">
+        <speedTableVal min="0" max="255" entries="28"/>
+        <label>                   Speed Table (CV67-94) (0-255)</label>
+        <label xml:lang="de">                   programmierbare Fahrkurve (CV67-94) (0-255)</label>
+        <label xml:lang="nl">                   Instelbare snelheid’s tabel (CV67-94) (0-255)</label>
+      </variable>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+      <constant item="F2 controls output 3" minOut="3" default="1"/>
+      <constant item="F3 controls output 4" minOut="4" default="1"/>
+      <constant item="F4 controls output 5" minOut="5" default="1"/>
+      <constant item="F5 controls output 6" minOut="6" default="1"/>
+    </variables>
+  </decoder>
+  <pane nameFmt="label"> <!-- Zimo -->
+    <name>Zimo</name>
+    <column>
+      <row>
+        <label>
+          <text>&lt;html&gt;&lt;h2&gt;&lt;u&gt;Signal mode&lt;/h2&gt;&lt;/u&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;h2&gt;&lt;u&gt;Signal Modus&lt;/h2&gt;&lt;/u&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;h2&gt;&lt;u&gt;Signaal Modus&lt;/h2&gt;&lt;/u&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <grid gridy="next" weightx="1" ipadx="10">
+            <griditem gridx="0" gridy="0" gridwidth="3">
+              <label>
+                <text>&lt;html&gt;&lt;h3&gt;&lt;u&gt;Signal Dependent Speed Limits&lt;/h3&gt;&lt;/u&gt;&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;&lt;h3&gt;&lt;u&gt;Signalabhängige Geschwindigkeits-Limits&lt;/h3&gt;&lt;/u&gt;&lt;/html&gt;</text>
+                <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;&lt;u&gt;Signaalafhankelijke snelheidslimieten&lt;/h3&gt;&lt;/u&gt;&lt;/html&gt;</text>
+              </label>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1">
+              <label>
+                <text> </text>
+              </label>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <label>
+                <text>Speed level "U"</text>
+                <text xml:lang="de">Geschwindigkeitsstufe “U”</text>
+                <text xml:lang="nl">Snelheid level "U"</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1" anchor="LINE_START">
+              <row>
+                <display item="Signal-C" label=""/>
+                <display item="Signal-C" format="hslider" label=""/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <label>
+                <text>Speed level "L"</text>
+                <text xml:lang="de">Geschwindigkeitsstufe “L”</text>
+                <text xml:lang="nl">Snelheid level "L"</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1" anchor="LINE_START">
+              <row>
+                <display item="Signal-D" label=""/>
+                <display item="Signal-D" format="hslider" label=""/>
+              </row>
+            </griditem>
+          </grid>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>      </text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>      </text>
+          </label>
+        </column>
+        <column>
+          <grid gridy="next" weightx="1" ipadx="10">
+            <griditem gridx="0" gridy="0" gridwidth="3">
+              <label>
+                <text>&lt;html&gt;&lt;h3&gt;&lt;u&gt;Acceleration and deceleration&lt;/h3&gt;&lt;/u&gt;&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;&lt;h3&gt;&lt;u&gt;Beschleunigung und Bremsrate&lt;/h3&gt;&lt;/u&gt;&lt;/html&gt;</text>
+                <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;&lt;u&gt;Optrekvertraging en afremvertraging&lt;/h3&gt;&lt;/u&gt;&lt;/html&gt;</text>
+              </label>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1">
+              <label>
+                <text> </text>
+              </label>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <label>
+                <text>Acceleration (signal mode)</text>
+                <text xml:lang="de">Beschleunigung (Signalbetrieb)</text>
+                <text xml:lang="nl">Optrekvertraging (signaalmodus)</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1" anchor="LINE_START">
+              <row>
+                <display item="Signal-A" label=""/>
+                <display item="Signal-A" format="hslider" label=""/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <label>
+                <text>Deceleration (signal mode)</text>
+                <text xml:lang="de">Bremsrate (Signalbetrieb)</text>
+                <text xml:lang="nl">Afremvertraging (signaalmodus)</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1" anchor="LINE_START">
+              <row>
+                <display item="Signal-B" label=""/>
+                <display item="Signal-B" format="hslider" label=""/>
+              </row>
+            </griditem>
+          </grid>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <label>
+          <text> </text>
+        </label>
+      <row>
+        <label>
+          <text>The configuration variables CV49 to 54 are only to be used for systems that use the Zimo-HLU procedure.</text>
+          <text xml:lang="de">Die Konfigurationsvariablen CV49 bis 54 sind nur zu gebrauchen bei Systemen die das Zimo-HLU verfahren gebrauchen.</text>
+          <text xml:lang="nl">De configuratievariabelen CV49 tot en met 54 kunnen alleen worden gebruikt voor systemen die de Zimo-HLU-vervaren gebruiken.</text>
+        </label>
+      </row>
+    </column>
+  </pane>
+</decoder-config>

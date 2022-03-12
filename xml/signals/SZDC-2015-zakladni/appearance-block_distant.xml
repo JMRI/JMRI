@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-05-12</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Speed map</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -59,6 +65,19 @@
       <advancedAspect>Volno</advancedAspect>
       <ourAspect>Volno</ourAspect>
     </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 40</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 60</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Stůj</advancedAspect>
       <ourAspect>Výstraha</ourAspect>

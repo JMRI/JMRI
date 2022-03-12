@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane -->  
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>20-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+  </revhistory>
+  <variable label="Function assignment automatic idle" CV="378" default="0" comment="Range 0-29" item="Sound Group 1 Option 14">
+    <decVal max="29"/>
+    <label>Function assignment automatic idle</label>
+    <label xml:lang="de">Funktionszuordnung  automatischer Leerlauf</label>
+    <label xml:lang="nl">Functietoewijzing automatisch in leerloop</label>
+    <tooltip>&lt;html&gt;When the corresponding function key is pressed,&lt;br&gt;
+                        the automatic idling after the time period from&lt;br&gt;
+                        CV350 has elapsed. If no function key is assigned,&lt;br&gt;
+                        the automatic idle is always effective.&lt;br&gt;(0-29)&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;Wenn die entsprechende Funktionstaste gedrückt ist,&lt;br&gt;
+                                      wirkt der automatische Leerlauf nach Verstreichen&lt;br&gt;
+                                      der Zeitdauer aus CV350. Ist keine Funktionstaste&lt;br&gt;
+                                      zugeordnet wirkt der automatische Leerlauf immer.&lt;br&gt;(0-29)&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="nl">&lt;html&gt;Wanneer de bijbehorende functietoets is ingedrukt,&lt;br&gt;
+                                      werkt de automatische overgegaan naar stationair,&lt;br&gt;
+                                      wanneer de tijdsduur van CV350 is verstreken.&lt;br&gt;
+                                      Als er geen functietoets toegewezen wordt,&lt;br&gt;
+                                      werkt stationair altijd.&lt;br&gt;(0-29)&lt;/html&gt;</tooltip>
+  </variable>
+  <variable CV="379" default="0" comment="Range 0-29" item="Sound Group 1 Option 15">
+    <decVal max="29"/>
+    <label>Function assignment Forced acceleration</label>
+    <label xml:lang="de">Funktionszuordnung Zwangsbeschleunigung</label>
+    <label xml:lang="nl">Functietoewijzing Gedwongen versnelling</label>
+    <tooltip>&lt;html&gt;When the corresponding function key is pressed,&lt;br&gt;
+                        the driving noise even during a deceleration in&lt;br&gt;
+                        acceleration.&lt;br&gt;(0-29)&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;Wenn die entsprechende Funktionstaste gedrückt ist,&lt;br&gt;
+                                      verbleibt das Fahrgeräusch auch während einer&lt;br&gt;
+                                      Verzögerung in der Beschleunigung.&lt;br&gt;(0-29)&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="nl">&lt;html&gt;Wanneer de bijbehorende functietoets wordt ingedrukt,&lt;br&gt;(0-29)
+                                      blijft het rijgeluid zelfs tijdens een vertraging in&lt;br&gt;
+                                      de acceleratie.&lt;br&gt;(0-29)&lt;/html&gt;</tooltip>
+  </variable>
+</variables>

@@ -1,9 +1,5 @@
 package jmri.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -644,6 +640,18 @@ public class StringUtil {
             return (Integer.parseInt(sb.toString()));  
         }
         return -1;
+    }
+    
+    /**
+     * Increment the last number found in a string.
+     * @param str Initial string to increment.
+     * @param increment number to increment by.
+     * @return null if not possible, else incremented String.
+     */
+    @CheckForNull
+    public static String incrementLastNumberInString(@Nonnull String str, int increment){
+        int num = getLastIntFromString(str);
+        return ( (num == -1) ? null : replaceLast(str,String.valueOf(num),String.valueOf(num+increment)));
     }
 
     /**

@@ -28,7 +28,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class VSDOptionsDialog extends JDialog {
 
@@ -71,6 +71,6 @@ public class VSDOptionsDialog extends JDialog {
         dispose();
     }
 
-    // Log not used... yet...
     //    private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialog.class);
+
 }

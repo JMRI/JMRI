@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -394,7 +394,7 @@ Le circuit de sortie peut aussi avoir une configuration état initiale ou config
 </ul>
 N'oubliez pas de sauvegarder votre nouvelle configuration en utilisant le bouton Enregistrer dans la fenêtre Préférences. Aussi n'oubliez pas d'enregistrer une copie de votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml) dans un endroit sûr.
 
-  <!--#include virtual="/Footer" -->
+  <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

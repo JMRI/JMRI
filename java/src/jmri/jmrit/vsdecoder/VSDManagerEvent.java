@@ -1,6 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.util.EventObject;
+
+/**
+ * Process Manager Events.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -14,15 +18,13 @@ package jmri.jmrit.vsdecoder;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-import java.util.EventObject;
-
 public class VSDManagerEvent extends EventObject {
 
     public static enum EventType {
 
-        NONE, DECODER_LIST_CHANGE, PROFILE_LIST_CHANGE
+        NONE, PROFILE_LIST_CHANGE
     }  // propertyChangeEvents fired by the Manager.
 
     VSDManagerEvent.EventType type;
@@ -47,10 +49,10 @@ public class VSDManagerEvent extends EventObject {
     }
 
     public VSDManagerEvent.EventType getType() {
-        return (type);
+        return type;
     }
 
     public Object getData() {
-        return (data);
+        return data;
     }
 }

@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
 
@@ -115,7 +115,7 @@ et autre fichiers associ&#233;s, dans votre r&#233;pertoire JMRI de plus haut-ni
 Si vous avez compil&#233; CATS localement, vous n'avez pas besoin des fichiers cats.jar ou designer.jar.
 <p>
 Puis ex&#233;cutez le script appropri&#233; "cats.csh" (Linux, Mac OS X) et "cats.bat" (Windows) 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

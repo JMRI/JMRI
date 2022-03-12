@@ -2,10 +2,15 @@ package jmri.jmrit.roster.swing.rostergroup;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.util.swing.WindowInterface;
@@ -31,6 +36,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
      * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
+     * @param s action title though may be changed?
      *
      */
     public RosterGroupTableAction(String s) {
@@ -71,7 +77,11 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
                 selectCombo.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        comboSelected(e, selectCombo.getSelectedItem().toString());
+                        try {
+                            comboSelected(e, selectCombo.getSelectedItem().toString());
+                        } catch (Exception ex) {
+                            log.debug("Null pointer exception");
+                        }
                     }
                 });
                 selectCombo.setVisible(true);
@@ -140,4 +150,5 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
+    private final static Logger log = LoggerFactory.getLogger(RosterGroupTableAction.class);
 }

@@ -2,12 +2,13 @@ package jmri.util;
 
 import java.util.Comparator;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.StringUtil class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class PreferNumericComparatorTest {
 
@@ -33,6 +34,13 @@ public class PreferNumericComparatorTest {
         Assert.assertEquals(" 1 < 2", -1, c.compare("1", "2"));
         Assert.assertEquals(" 1 < 10", -1, c.compare("1", "10"));
         Assert.assertEquals(" 2 < 10 ", -1, c.compare("2", "10"));
+    }
+
+    @Test
+    public void testBigNumber() {  // these should default to lexical compares
+        Comparator<String> c = new PreferNumericComparator();
+        Assert.assertEquals(" 99999999999999 = 99999999999999", 0, c.compare("99999999999999", "99999999999999"));
+        Assert.assertEquals(" 99999999999999 < 99999999999998", -1, c.compare("99999999999998", "99999999999999"));
     }
 
     @Test

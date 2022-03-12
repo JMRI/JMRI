@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a Z21ConfigFrame object
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21ConfigAction extends AbstractAction {
 
@@ -42,7 +42,7 @@ public class Z21ConfigAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("Z21ConfigAction starting Z21ConfigFrame: Exception: {}",ex);
+            log.warn("Z21ConfigAction starting Z21ConfigFrame: ",ex);
         }
         f.setVisible(true);
 

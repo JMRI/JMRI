@@ -1,8 +1,11 @@
 package jmri.jmrix.loconet;
 
+import jmri.CommandStation;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -391,19 +394,19 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo.store(slotmanager, CommandStation.class);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new LnPr2ThrottleManager(memo));
         instance = new Pr2Throttle(memo,new jmri.DccLocoAddress(5,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

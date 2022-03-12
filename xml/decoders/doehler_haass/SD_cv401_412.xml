@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+   </revhistory>
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->    
+  <variable CV="401" item="Function Swapping F1" default="1" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F1</label>
+    <label xml:lang="de">Funktionsvertauschung F1</label>
+  </variable>
+  <variable CV="402" item="Function Swapping F2" default="2" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F2</label>
+    <label xml:lang="de">Funktionsvertauschung F2</label>
+  </variable>
+  <variable CV="403" item="Function Swapping F3" default="3" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F3</label>
+    <label xml:lang="de">Funktionsvertauschung F3</label>
+  </variable>
+  <variable CV="404" item="Function Swapping F4" default="4" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F4</label>
+    <label xml:lang="de">Funktionsvertauschung F4</label>
+  </variable>
+  <variable CV="405" item="Function Swapping F5" default="5" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F5</label>
+    <label xml:lang="de">Funktionsvertauschung F5</label>
+  </variable>
+  <variable CV="406" item="Function Swapping F6" default="6" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F6</label>
+    <label xml:lang="de">Funktionsvertauschung F6</label>
+  </variable>
+  <variable CV="407" item="Function Swapping F7" default="7" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F7</label>
+    <label xml:lang="de">Funktionsvertauschung F7</label>
+  </variable>
+  <variable CV="408" item="Function Swapping F8" default="8" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F8</label>
+    <label xml:lang="de">Funktionsvertauschung F8</label>
+  </variable>
+  <variable CV="409" item="Function Swapping F9" default="9" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F9</label>
+    <label xml:lang="de">Funktionsvertauschung F9</label>
+  </variable>
+  <variable CV="410" item="Function Swapping F10" default="10" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F10</label>
+    <label xml:lang="de">Funktionsvertauschung F10</label>
+  </variable>
+  <variable CV="411" item="Function Swapping F11" default="11" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F11</label>
+    <label xml:lang="de">Funktionsvertauschung F11</label>
+  </variable>
+  <variable CV="412" item="Function Swapping F12" default="12" exclude="SUSI sound modules">
+    <decVal/>
+    <label>Function Swapping F12</label>
+    <label xml:lang="de">Funktionsvertauschung F12</label>
+  </variable>
+  <!-- END SIMILAR CV --> 
+</variables>

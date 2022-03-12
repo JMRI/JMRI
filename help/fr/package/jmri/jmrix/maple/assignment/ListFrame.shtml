@@ -22,7 +22,7 @@
 
 <body>
   charset=iso-8859-1"&gt; <!-- /Style -->
-   <!--#include virtual="/Header" -->
+   <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -87,7 +87,7 @@
       INACTIF.</p>
 
       <p>* Maple = &Atilde;&permil;cran Tactile ** HMI = Interface
-      Homme Machine</p><!--#include virtual="/Footer" -->
+      Homme Machine</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

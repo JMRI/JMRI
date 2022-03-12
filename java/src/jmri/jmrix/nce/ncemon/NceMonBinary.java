@@ -1,11 +1,13 @@
 package jmri.jmrix.nce.ncemon;
 
 import java.text.MessageFormat;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A utility class for formatting NCE binary command and replies into
@@ -17,8 +19,6 @@ import org.slf4j.LoggerFactory;
 public class NceMonBinary {
 
     private static final Logger log = LoggerFactory.getLogger(NceMonBinary.class);
-
-    private int replyType = REPLY_UNKNOWN;
 
     private static final int REPLY_UNKNOWN = 0;
     private static final int REPLY_STANDARD = 1;
@@ -32,6 +32,8 @@ public class NceMonBinary {
     private static final int REPLY_THREE = '3';// CV address or data out of range
     private static final int REPLY_FOUR = '4'; // byte count out of range
     private static final int REPLY_OK = '!';   // command completed successfully
+
+    private int replyType = REPLY_UNKNOWN;
 
     /**
      * Creates a command message for the log, in a human-friendly form if
@@ -157,6 +159,9 @@ public class NceMonBinary {
                 if (m.getNumDataElements() == 5) {
                     // byte three is the Op_1
                     switch (m.getElement(3)) {
+                        case (0):
+                            return MessageFormat.format(Bundle.getMessage("LOCO_CMD_Op1_00"),
+                                    new Object[]{getLocoAddress(m), m.getElement(4)});
                         case (1):
                             return MessageFormat.format(Bundle.getMessage("LOCO_CMD_Op1_01"),
                                     new Object[]{getLocoAddress(m), m.getElement(4)});

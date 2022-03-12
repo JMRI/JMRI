@@ -2,6 +2,13 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -11,11 +18,6 @@ import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores trains using xml files. Also stores various train parameters
@@ -39,26 +41,14 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     static final String BUILD_STATUS = "buildstatus"; // NOI18N
     static final String MANIFESTS = "manifests"; // NOI18N
     static final String SWITCH_LISTS = "switchLists"; // NOI18N
-    static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
-    static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
+    public static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
+    public static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
     static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
     static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
     static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
     static final String BUILD_STATUS_BACKUPS = "buildStatusBackups"; // NOI18N
 
     public TrainManagerXml() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainManagerXml instance() {
-        return InstanceManager.getDefault(TrainManagerXml.class);
     }
 
     @Override
@@ -99,14 +89,14 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
         // suppress rootFromName(name) warning message by checking to see if file exists
         if (findFile(name) == null) {
-            log.debug(name + " file could not be found");
+            log.debug("{} file could not be found", name);
             fileLoaded = true; // set flag, could be the first time
             return;
         }
         // find root
         Element root = rootFromName(name);
         if (root == null) {
-            log.debug(name + " file could not be read");
+            log.debug("{} file could not be read", name);
             return;
         }
 
@@ -124,6 +114,13 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
         log.debug("Trains have been loaded!");
         InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
+        
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+            if (train.getStatusCode() == Train.CODE_BUILDING) {
+                log.warn("Reseting train {}, was building when saved", train.getName());
+                train.reset();
+            }
+        }
         setDirty(false); // clear dirty flag
     }
 
@@ -337,7 +334,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
      * @return CSV switch list File.
      */
     public File createCsvSwitchListFile(String name) {
-        return createFile(getDefaultCsvSwitchListFileName(name), false); // don't backup
+        return createFile(getDefaultCsvSwitchListFileName(name), true); // create backup
     }
 
     public File getCsvSwitchListFile(String name) {
@@ -349,7 +346,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         return getDefaultCsvSwitchListDirectoryName() + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
-    private String getDefaultCsvSwitchListDirectoryName() {
+    public String getDefaultCsvSwitchListDirectoryName() {
         return OperationsXml.getFileLocation()
                 + OperationsXml.getOperationsDirectoryName()
                 + File.separator

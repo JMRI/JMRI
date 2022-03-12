@@ -2,7 +2,10 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -18,20 +21,13 @@ public class Z21LnStreamPortPacketizerTest extends jmri.jmrix.loconet.streamport
 
     private LocoNetSystemConnectionMemo memo;
     private Z21LnStreamPortController apc;
-           
-    private DataOutputStream ostream;  // Traffic controller writes to this
-    
-    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
-    private DataInputStream tostream; // so we can read it from this
 
-    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
-    private DataOutputStream tistream; // tests write to this
-    
+    private DataOutputStream ostream;  // Traffic controller writes to this
+
     private DataInputStream istream;   // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
@@ -40,12 +36,10 @@ public class Z21LnStreamPortPacketizerTest extends jmri.jmrix.loconet.streamport
         try {
            PipedInputStream tempPipe;
            tempPipe = new PipedInputStream();
-           tostream = new DataInputStream(tempPipe);
            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
 
            tempPipe = new PipedInputStream();
            istream = new DataInputStream(tempPipe);
-           tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
            apc = new Z21LnStreamPortController(memo, istream, ostream, "Test Stream Port");
        } catch (java.io.IOException ioe) {
            Assert.fail("failed to initialize port controller");
@@ -53,7 +47,7 @@ public class Z21LnStreamPortPacketizerTest extends jmri.jmrix.loconet.streamport
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         memo = null;
@@ -62,15 +56,13 @@ public class Z21LnStreamPortPacketizerTest extends jmri.jmrix.loconet.streamport
         apc.dispose();
         apc = null;
         istream = null;
-        tistream = null;
         ostream = null;
-        tostream = null;
         JUnitUtil.tearDown();
     }
 
     @Override
     @Test
-    @Ignore("may be causing hang on travis and appveyor")
+    @Disabled("may be causing hang on travis and appveyor")
     public void testStartThreads() {
        ((Z21LnStreamPortPacketizer)lnp).connectPort(apc);
        lnp.startThreads();

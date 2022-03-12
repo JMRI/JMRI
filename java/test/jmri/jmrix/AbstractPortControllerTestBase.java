@@ -2,13 +2,13 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Comparator;
-import java.util.ResourceBundle;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
-import jmri.NamedBean;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
+import jmri.SystemConnectionMemo;
+
+import org.mockito.Mockito;
 
 /**
  * @author Bob Jacobsen Copyright (C) 2015
@@ -20,34 +20,30 @@ public abstract class AbstractPortControllerTestBase {
         apc.isDirty();
     }
 
+    @Test
+    public void testDefaultMethod() {
+        Assert.assertFalse("default false", apc.isOptionTypeText("foo"));
+        jmri.util.JUnitAppender.assertErrorMessage("did not find option foo for type");
+    }
+
     // from here down is testing infrastructure
     protected AbstractPortController apc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        apc = new AbstractPortControllerScaffold();
+        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
+        apc = new AbstractPortControllerScaffold(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        apc = null;
     }
 
     public static class AbstractPortControllerScaffold extends AbstractPortController {
 
-        public AbstractPortControllerScaffold() {
-            super(new SystemConnectionMemo("", "") {
-
-                @Override
-                protected ResourceBundle getActionModelResourceBundle() {
-                    return null;
-                }
-
-                @Override
-                public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-                    return null;
-                }
-            });
+        public AbstractPortControllerScaffold(SystemConnectionMemo memo) {
+            super(memo);
         }
 
         @Override

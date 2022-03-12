@@ -10,7 +10,7 @@ import javax.vecmath.Point3d;
  *
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class Ash2_1AlgorithmTest extends AbstractAlgorithmTestBase {
 

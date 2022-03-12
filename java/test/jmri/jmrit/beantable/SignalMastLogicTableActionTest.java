@@ -5,7 +5,9 @@ import jmri.SignalMastLogic;
 import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 import javax.swing.*;
@@ -50,13 +52,13 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
 
     @Test
     @Override
-    @Ignore("no add button on signal mast logic table")
+    @Disabled("no add button on signal mast logic table")
     public void testAddButton() {
     }
 
     @Test
     @Override
-    @Ignore("no add button on signal mast logic table")
+    @Disabled("no add button on signal mast logic table")
     public void testAddThroughDialog() {
     }
 
@@ -258,20 +260,21 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable";
         a = new SignalMastLogicTableAction();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

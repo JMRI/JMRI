@@ -8,7 +8,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 /**
  * Swing action to create and register an RpsTrackingFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class AlignmentPanelAction extends AbstractAction {
 

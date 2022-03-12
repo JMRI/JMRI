@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -23,12 +24,12 @@ import jmri.ReporterManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
+import jmri.server.json.JsonRequest;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -36,7 +37,7 @@ import org.junit.Test;
  */
 public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<IdTag, JsonIdTagHttpService> {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -47,7 +48,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         JUnitUtil.initReporterManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager();
@@ -62,7 +63,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         JsonNode result;
         // test idTag with defaults
-        result = service.doGet(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+        result = service.doGet(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(JsonIdTag.IDTAG, result.path(JSON.TYPE).asText());
         assertEquals("ID1", result.path(JSON.DATA).path(JSON.NAME).asText());
@@ -76,7 +77,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         JUnitUtil.waitFor(() -> {
             return idTag1.getState() == IdTag.SEEN;
         }, "IdTag to be seen");
-        result = service.doGet(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+        result = service.doGet(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(IdTag.SEEN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         assertEquals(reporter1.getSystemName(), result.path(JSON.DATA).path(JsonReporter.REPORTER).asText());
@@ -84,14 +85,14 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
                 result.path(JSON.DATA).path(JSON.TIME).asText());
         // change idTag state
         idTag1.setState(IdTag.UNKNOWN);
-        result = service.doGet(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+        result = service.doGet(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         assertEquals(reporter1.getSystemName(), result.path(JSON.DATA).path(JsonReporter.REPORTER).asText());
         try {
             // add an invalid idTag by using a turnout name instead of a idTag name
             assertNull(manager.getIdTag("IT1"));
-            service.doGet(JsonIdTag.IDTAG, "IT1", NullNode.getInstance(), locale, 0);
+            service.doGet(JsonIdTag.IDTAG, "IT1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -106,24 +107,24 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         JsonNode message = mapper.createObjectNode().put(JSON.NAME, "ID1").put(JsonReporter.REPORTER, "IR1");
         assertNull("No reporter", idTag1.getWhereLastSeen());
         try {
-            service.doPost(JsonIdTag.IDTAG, "ID1", message, locale, 0);
+            service.doPost(JsonIdTag.IDTAG, "ID1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals("404 Not Found", 404, ex.getCode());
         }
         // set existing reporter
         Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
-        service.doPost(JsonIdTag.IDTAG, "ID1", message, locale, 0);
+        service.doPost(JsonIdTag.IDTAG, "ID1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals("IdTag has reporter", reporter1, idTag1.getWhereLastSeen());
         // set null reporter
         message = mapper.createObjectNode().put(JSON.NAME, "ID1").putNull(JsonReporter.REPORTER);
-        service.doPost(JsonIdTag.IDTAG, "ID1", message, locale, 0);
+        service.doPost(JsonIdTag.IDTAG, "ID1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull("No reporter", idTag1.getWhereLastSeen());
         try {
             // add an invalid idTag by using a turnout name instead of a idTag name
             assertNull(manager.getIdTag("IT1"));
             message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JSON.STATE, IdTag.SEEN);
-            service.doPost(JsonIdTag.IDTAG, "IT1", message, locale, 0);
+            service.doPost(JsonIdTag.IDTAG, "IT1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -136,14 +137,14 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         // add a idTag
         assertNull(manager.getIdTag("ID1"));
         JsonNode message = mapper.createObjectNode().put(JSON.NAME, "ID1");
-        JsonNode result = service.doPut(JsonIdTag.IDTAG, "ID1", message, locale, 0);
+        JsonNode result = service.doPut(JsonIdTag.IDTAG, "ID1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertNotNull(manager.getIdTag("ID1"));
         try {
             // add an invalid idTag by using a turnout name instead of a idTag name
             assertNull(manager.getIdTag("IT1"));
             message = mapper.createObjectNode().put(JSON.NAME, "II1");
-            service.doPut(JsonIdTag.IDTAG, "", message, locale, 0); // use invalid idTag name
+            service.doPut(JsonIdTag.IDTAG, "", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0)); // use invalid idTag name
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -158,9 +159,9 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
         manager.provide("ID1");
         // delete an idTag
-        assertNotNull(manager.getBeanBySystemName("ID1"));
-        service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
-        assertNull(manager.getBeanBySystemName("ID1"));
+        assertNotNull(manager.getBySystemName("ID1"));
+        service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        assertNull(manager.getBySystemName("ID1"));
         manager.provide("ID1").addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -169,10 +170,10 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
             }
         }, "ID1", "Test Listener");
         // delete an idTag with a named listener ref
-        assertNotNull(manager.getBeanBySystemName("ID1"));
+        assertNotNull(manager.getBySystemName("ID1"));
         try {
             // first attempt should fail on conflict
-            service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+            service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -180,13 +181,13 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
             assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
-        assertNotNull(manager.getBeanBySystemName("ID1"));
+        assertNotNull(manager.getBySystemName("ID1"));
         // will throw if prior catch failed
-        service.doDelete(JsonIdTag.IDTAG, "ID1", message, locale, 0);
-        assertNull(manager.getBeanBySystemName("ID1"));
+        service.doDelete(JsonIdTag.IDTAG, "ID1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        assertNull(manager.getBySystemName("ID1"));
         try {
             // deleting again should throw an exception
-            service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+            service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -201,7 +202,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     public void testDoGetList() throws Exception {
         InstanceManager.getDefault(IdTagManager.class).provide("test");
         JsonIdTagHttpService instance = new JsonIdTagHttpService(mapper);
-        JsonNode result = instance.doGetList(JsonIdTag.IDTAG, mapper.createObjectNode(), locale, 0);
+        JsonNode result = instance.doGetList(JsonIdTag.IDTAG, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals(1, result.size());
         validate(result);
     }

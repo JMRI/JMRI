@@ -37,6 +37,14 @@ valueSpeedIncrement = 0.01
 
 delay4double = 500 # delay for double tap on button (ms)
 
+depErr="""Required dependency must be installed!
+
+ You need to install WiiRemoteJ library :
+       https://github.com/micromu/WiiRemoteJ/raw/master/WiiRemoteJ.jar
+
+ Copy the jar file your JMRI lib folder. 
+    """
+
 import java
 import java.awt
 import java.awt.event
@@ -52,12 +60,19 @@ import java.util.Calendar as Calendar
 import java.lang.Runnable as Runnable
 import thread
 import javax.swing.SwingUtilities as SwingUtilities
-import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
-import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
-import wiiremotej.WiiRemoteJ as WiiRemoteJ
-import wiiremotej.event.WRButtonEvent as WRButtonEvent
 import javax.swing.JButton as JButton
 import javax.swing.ImageIcon as ImageIcon
+import javax.swing.JOptionPane as JOptionPane
+import javax.swing.JTextArea as JTextArea
+import javax.swing.JFrame as JFrame
+try:
+    import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
+    import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
+    import wiiremotej.WiiRemoteJ as WiiRemoteJ
+    import wiiremotej.event.WRButtonEvent as WRButtonEvent
+except:
+    JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
+
 
 class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiDeviceDiscoveryListener, WiiRemoteListener, Runnable):
     #Wiimote discoverer events

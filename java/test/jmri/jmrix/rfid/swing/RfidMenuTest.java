@@ -1,13 +1,13 @@
 package jmri.jmrix.rfid.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for RfidMenu class.
@@ -25,7 +25,7 @@ public class RfidMenuTest {
       Assert.assertNotNull("RfidMenu constructor",new RfidMenu(memo));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -33,7 +33,7 @@ public class RfidMenuTest {
         memo = new RfidSystemConnectionMemo();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         memo=null;
         JUnitUtil.tearDown();

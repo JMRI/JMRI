@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -130,7 +130,7 @@
           l'adresse d'un noeud de Grapevine. Il ouvre une <a href=
           "RenumberFrame.shtml">nouvelle fen&Atilde;&ordf;tre</a> .</p>
 
-          <!--#include virtual="/Footer" -->
+          <!--#include virtual="/Footer.shtml" -->
         </dd>
       </dl>
     </div>

@@ -1,9 +1,12 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.util.Comparator;
+
+import org.jdom2.Element;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import org.jdom2.Element;
 
 /**
  * Represents the lengths that engines can have.
@@ -17,18 +20,6 @@ public class EngineLengths extends RollingStockAttribute implements InstanceMana
     public static final String ENGINELENGTHS_NAME_CHANGED_PROPERTY = "EngineLengthsName"; // NOI18N
 
     public EngineLengths() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized EngineLengths instance() {
-        return InstanceManager.getDefault(EngineLengths.class);
     }
 
     @Override
@@ -60,6 +51,11 @@ public class EngineLengths extends RollingStockAttribute implements InstanceMana
         // need to keep old name so location manager can replace properly
         super.deleteName(oldName);
     }
+    
+    @Override
+    public void sort() {
+        list.sort(Comparator.comparingInt(Integer::parseInt));
+    }
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
@@ -68,7 +64,7 @@ public class EngineLengths extends RollingStockAttribute implements InstanceMana
      *
      */
     public void store(Element root) {
-        store(root, Xml.LENGTHS, Xml.LENGTH, Xml.ENGINE_LENGTHS);
+        store(root, Xml.LENGTHS, Xml.LENGTH);
     }
 
     public void load(Element root) {

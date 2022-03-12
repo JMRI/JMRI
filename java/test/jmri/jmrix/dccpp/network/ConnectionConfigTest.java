@@ -1,10 +1,8 @@
 package jmri.jmrix.dccpp.network;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for ConnectionConfig class.
@@ -13,16 +11,16 @@ import org.junit.Test;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @Before
+   @BeforeEach
    @Override
    public void setUp() {
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
-        cc = new ConnectionConfig();
+        cc = new ConnectionConfig(new DCCppEthernetAdapter()); // adapter assumed in test
    }
 
-   @After
+   @AfterEach
    @Override
    public void tearDown(){
         cc = null;

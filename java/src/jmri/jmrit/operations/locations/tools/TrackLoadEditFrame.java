@@ -509,7 +509,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         // remove car types not serviced by this location and track
         for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
             String type = comboBoxTypes.getItemAt(i);
-            if (_track != null && !_track.acceptsTypeName(type)) {
+            if (_track != null && !_track.isTypeNameAccepted(type)) {
                 comboBoxTypes.removeItem(type);
             }
         }
@@ -517,7 +517,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         // remove car types not serviced by this location and track
         for (int i = comboBoxShipTypes.getItemCount() - 1; i >= 0; i--) {
             String type = comboBoxShipTypes.getItemAt(i);
-            if (_track != null && !_track.acceptsTypeName(type)) {
+            if (_track != null && !_track.isTypeNameAccepted(type)) {
                 comboBoxShipTypes.removeItem(type);
             }
         }

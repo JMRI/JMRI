@@ -1,16 +1,16 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 
 /**
  * JMRIClientPowerManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientPowerManager class
+ * Test for the jmri.jmrix.jmriclient.JMRIClientPowerManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
 public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
@@ -73,8 +73,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
         return ((stc.outbound.elementAt(index))).toString().equals("POWER IDLE\n");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -82,7 +81,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
         p = new JMRIClientPowerManager(new JMRIClientSystemConnectionMemo(stc));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

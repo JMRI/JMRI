@@ -8,14 +8,13 @@ import jmri.spi.JsonServiceFactory;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- *
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
 public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpService, JsonUtilSocketService> {
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{JSON.GOODBYE,
                 JSON.HELLO,
                 JSON.METADATA,
@@ -28,38 +27,33 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
                 JSON.SYSTEM_CONNECTION,
                 JSON.SYSTEM_CONNECTIONS,
                 JSON.CONFIG_PROFILE,
-                JSON.CONFIG_PROFILES};
+                JSON.CONFIG_PROFILES,
+                JSON.VERSION
+        };
     }
 
     @Override
-    public String[] getSentTypes() {
+    public String[] getSentTypes(String version) {
         // retain ERROR on behalf of JsonException for schema handling
         // retain LIST on behalf of JSON servers for schema handling
         // retain PONG on behalf of JSON servers for schema handling
-        return new String[]{JsonException.ERROR,
-            JSON.CONFIG_PROFILE,
-            JSON.LIST,
-            JSON.NETWORK_SERVICE,
-            JSON.PANEL,
-            JSON.PONG,
-            JSON.SYSTEM_CONNECTION};
+        return new String[]{JsonException.ERROR, JSON.LIST, JSON.PONG};
     }
 
     @Override
-    public String[] getReceivedTypes() {
+    public String[] getReceivedTypes(String version) {
         // retain LOCALE on behalf of JSON servers for schema handling
         // retain PING on behalf of JSON servers for schema handling
-        return new String[]{JSON.LOCALE,
-            JSON.PING};
+        return new String[]{JSON.LOCALE, JSON.PING};
     }
 
     @Override
-    public JsonUtilSocketService getSocketService(JsonConnection connection) {
+    public JsonUtilSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonUtilSocketService(connection);
     }
 
     @Override
-    public JsonUtilHttpService getHttpService(ObjectMapper mapper) {
+    public JsonUtilHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonUtilHttpService(mapper);
     }
 

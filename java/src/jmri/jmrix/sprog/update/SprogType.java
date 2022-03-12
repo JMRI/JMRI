@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to hold SPROG type
  *
- * @author	Andrew crosland Copyright (C) 2012
+ * @author Andrew crosland Copyright (C) 2012
  */
 public class SprogType {
 
@@ -38,7 +38,7 @@ public class SprogType {
      */
     public SprogType(int type) {
         if (log.isDebugEnabled()) {
-            log.debug("SprogType(int) ctor, type: " + type);
+            log.debug("SprogType(int) ctor, type: {}", type);
         }
         sprogType = type;
     }

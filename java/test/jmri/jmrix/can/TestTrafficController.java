@@ -6,10 +6,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Test scaffold to replace the TrafficController
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class TestTrafficController extends TrafficController {
-    private final static Logger log = LoggerFactory.getLogger(TestTrafficController.class);
 
     public CanMessage rcvMessage = null;
     public CanReply sndMessage = null;
@@ -59,4 +58,7 @@ public class TestTrafficController extends TrafficController {
     @Override
     public void forwardMessage(jmri.jmrix.AbstractMRListener l, jmri.jmrix.AbstractMRMessage r) {
     }
+
+    private final static Logger log = LoggerFactory.getLogger(TestTrafficController.class);
+
 }

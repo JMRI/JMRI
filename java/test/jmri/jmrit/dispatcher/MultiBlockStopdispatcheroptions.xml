@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcheroptions.xsl" type="text/xsl"?>
+<!DOCTYPE dispatcheroptions SYSTEM "/xml/DTD/dispatcher-options.dtd">
+<dispatcheroptions>
+  <!--Written by JMRI version 4.23.5-master-202101291243+R8ff8652 on Sat May 08 14:18:06 EDT 2021-->
+  <options lename="Test Multi Block Stopping" useconnectivity="yes" trainsfrom="TRAINSFROMUSER" autoallocate="yes" autorelease="yes" autoturnouts="yes" trustknownturnouts="no" minthrottleinterval="100" fullramptime="10000" hasoccupancydetection="yes" sslcheckdirectionsensors="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="yes" nameinallocatedblock="yes" supportvsdecoder="no" layoutscale="N" usescalemeters="yes" userosterentryinblock="no" stoppingspeedname="RestrictedSlow" usesignaltype="sectionsallocated" />
+</dispatcheroptions>

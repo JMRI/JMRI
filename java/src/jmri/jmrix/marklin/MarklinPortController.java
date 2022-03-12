@@ -10,6 +10,8 @@ public abstract class MarklinPortController extends jmri.jmrix.AbstractNetworkPo
     /**
      * Base class. Implementations will provide InputStream and OutputStream
      * objects to MarklinTrafficController classes, who in turn will deal in messages.
+     *
+     * @param connectionMemo for access to connection objects
      */
     protected MarklinPortController(MarklinSystemConnectionMemo connectionMemo) {
         super(connectionMemo);

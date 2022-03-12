@@ -165,13 +165,14 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
                     // normal request
                     if (log.isDebugEnabled()) {
-                        log.debug("forwarding message: " + m.getMessage());
+                        log.debug("forwarding message: {}", m.getMessage());
                     }
                     controller.sendLocoNetMessage(m.getMessage());
                     // and go round again
-                } catch (Exception e) {
-                    // just report error and continue
-                    log.error("Exception in ServiceThread: ", e);
+                } catch (InterruptedException e) {
+                    // request to terminate
+                    this.interrupt();
+                    break;
                 }
             }
             running = false;

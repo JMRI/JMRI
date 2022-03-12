@@ -1,7 +1,12 @@
 package jmri.jmrix.ecos.swing;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.Icon;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
+import jmri.jmrix.swing.SystemConnectionNamedPaneAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
@@ -12,22 +17,24 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
+public class EcosNamedPaneAction extends SystemConnectionNamedPaneAction<EcosSystemConnectionMemo> {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
+     * @param s action title string.
+     * @param wi window interface.
+     * @param paneClass pane class string.
+     * @param memo system connection.
      */
     public EcosNamedPaneAction(String s, WindowInterface wi, String paneClass, EcosSystemConnectionMemo memo) {
-        super(s, wi, paneClass);
+        super(s, wi, paneClass, memo);
         this.memo = memo;
     }
 
     public EcosNamedPaneAction(String s, Icon i, WindowInterface wi, String paneClass, EcosSystemConnectionMemo memo) {
-        super(s, i, wi, paneClass);
+        super(s, i, wi, paneClass, memo);
         this.memo = memo;
     }
-
-    EcosSystemConnectionMemo memo;
 
     @Override
     public JmriPanel makePanel() {
@@ -47,5 +54,10 @@ public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class);
+
+    @Override
+    public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
+        return new HashSet<>(Arrays.asList(EcosSystemConnectionMemo.class));
+    }
 
 }

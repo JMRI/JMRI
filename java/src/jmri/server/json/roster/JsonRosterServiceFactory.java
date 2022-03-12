@@ -13,17 +13,17 @@ import org.openide.util.lookup.ServiceProvider;
 public class JsonRosterServiceFactory implements JsonServiceFactory<JsonRosterHttpService, JsonRosterSocketService> {
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{JsonRoster.ROSTER, JsonRoster.ROSTER_ENTRY, JsonRoster.ROSTER_GROUPS, JsonRoster.ROSTER_GROUP};
     }
 
     @Override
-    public JsonRosterSocketService getSocketService(JsonConnection connection) {
+    public JsonRosterSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonRosterSocketService(connection);
     }
 
     @Override
-    public JsonRosterHttpService getHttpService(ObjectMapper mapper) {
+    public JsonRosterHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonRosterHttpService(mapper);
     }
 

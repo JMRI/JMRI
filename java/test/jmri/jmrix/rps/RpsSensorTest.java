@@ -1,17 +1,17 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
+
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the RPS Sensor class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class RpsSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -19,10 +19,10 @@ public class RpsSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public int numListeners() {return 0;}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {}
@@ -105,14 +105,14 @@ public class RpsSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
-        JUnitUtil.setUp();	
+        JUnitUtil.setUp();
         t = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)", "R");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
         t.dispose();
         JUnitUtil.tearDown();

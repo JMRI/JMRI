@@ -7,14 +7,16 @@ import static jmri.Turnout.THROWN;
 import static jmri.Turnout.UNKNOWN;
 import static jmri.Turnout.INCONSISTENT;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -34,16 +36,15 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     @Override
     public void checkClosedMsgSent() throws InterruptedException {
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
         // check results
-        Assert.assertTrue("at least two messages", lnis.outbound.size() >= 2);
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 2).toString(),
                 "B0 14 30 00");  // CLOSED/ON loconet message
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "B0 14 20 00");  // CLOSED/OFF loconet message
+        // clear message stack
+        lnis.clearReceivedMessages();
     }
 
     /**
@@ -52,16 +53,16 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     @Override
     public void checkThrownMsgSent() throws InterruptedException {
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
-        // check for messages
+        // check results
         Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 2).toString(),
                 "B0 14 10 00");  // THROWN/ON loconet message
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "B0 14 00 00");  // THROWN/OFF loconet message
+        // clear message stack
+        lnis.clearReceivedMessages();
     }
 
     @Test
@@ -111,7 +112,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         try {
             t.setCommandedState(CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(lnis.outbound.elementAt(0)
                 .toString().equals("B0 14 30 00"));  // CLOSED loconet message
@@ -137,7 +138,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
             t.setProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY, true);
             t.setCommandedState(THROWN);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(lnis.outbound.elementAt(0)
                 .toString().equals("BD 14 10 00"));  // thrown loconet message
@@ -780,7 +781,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x16, 0x60, 0x00} ));
         Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
     }
-    
+
     @Test
     public void testAdjustStateForInversion() {
         Assert.assertFalse("check default inversion", lnt.getInverted());
@@ -795,9 +796,9 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("check commanded state after forward thrown to layout (2)", THROWN, t.getCommandedState());
         Assert.assertEquals("check num messages sent after forward thrown to layout (2)",2, lnis.outbound.size());
         Assert.assertEquals("check byte 2 of message (2)", 0x10, lnis.outbound.get(1).getElement(2));
-        
+
         lnt.setInverted(true);
-        // when inverted, the commanded state remains unmodified; only the LocoNet 
+        // when inverted, the commanded state remains unmodified; only the LocoNet
         // message sent gets state inverted.
         lnt.setCommandedState(THROWN);
         Assert.assertEquals("check commanded state after forward closed to layout (3)", THROWN, t.getCommandedState());
@@ -808,14 +809,14 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("check commanded state after forward thrown to layout (4)", CLOSED, t.getCommandedState());
         Assert.assertEquals("check num messages sent after forward thrown to layout (4)",4, lnis.outbound.size());
         Assert.assertEquals("check byte 2 of message (2)", 0x10, lnis.outbound.get(3).getElement(2));
-        
+
     }
 
     LocoNetInterfaceScaffold lnis;
     LocoNetSystemConnectionMemo memo;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -836,7 +837,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt=(LnTurnout) t;
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
         t.dispose();
         JUnitUtil.tearDown();

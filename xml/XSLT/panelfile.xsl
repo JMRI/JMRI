@@ -11,7 +11,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2019')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -29,14 +29,14 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='layout-config'>
 
 <html>
 	<head>
 		<title>JMRI panel file</title>
 	</head>
-	
+
 	<body>
 		<h2>JMRI panel file</h2>
 
@@ -47,9 +47,6 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-<p/>Site hosted by: <br/>
-        <a href="http://www.tagadab.com/">
-        <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 	</body>
 </html>
 
@@ -75,7 +72,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <xsl:template match="turnout">
-<tr> 
+<tr>
   <td><xsl:value-of select="@systemName"/></td>
   <td><xsl:value-of select="@userName"/></td>
   <td> <xsl:value-of select="@feedback"/> </td>
@@ -249,7 +246,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:if test="@class = 'jmri.jmrit.blockboss.configurexml.BlockBossLogicXml'" >
         <xsl:call-template name="signalelements"/>
     </xsl:if>
-    
+
     <xsl:if test="@class = 'jmri.configurexml.BlockManagerXml'" >
         <!-- Index through blocks elements -->
         <!-- each one becomes a table -->
@@ -284,7 +281,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
                                 <xsl:when test="( @todir = 8192 )" >Down</xsl:when>
                                 <xsl:otherwise><xsl:value-of select="@todir"/></xsl:otherwise>
                                 </xsl:choose></td>
-                            <td>to 
+                            <td>to
                                 <xsl:element name="a"><xsl:attribute name="href">#Block-<xsl:value-of select="@block"/></xsl:attribute><xsl:value-of select="@block"/></xsl:element>,
                                 </td>
                             <td><xsl:choose>
@@ -431,7 +428,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 		    <xsl:for-each select="conditionalAction">
 		        <xsl:call-template name="conditionalAction"/>
 		    </xsl:for-each>
-        </xsl:if>        
+        </xsl:if>
     </xsl:for-each>
 </xsl:template>
 
@@ -501,7 +498,7 @@ value="<xsl:value-of select="@dataString"/>"
     (none)
   </xsl:when>
   <xsl:when test="( @type = 2 )" >
-    Set Turnout "<xsl:value-of select="@systemName"/>" 
+    Set Turnout "<xsl:value-of select="@systemName"/>"
     to
     <xsl:choose>
         <xsl:when test='@data = 1'>
@@ -533,25 +530,25 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:when test='@data = 64'>Lunar</xsl:when>
         <xsl:when test='@data = 128'>Flashing Lunar</xsl:when>
         <xsl:otherwise>(<xsl:value-of select="@data"/>)</xsl:otherwise>
-    </xsl:choose>    
+    </xsl:choose>
   </xsl:when>
   <xsl:when test="( @type = 4 )" >
     Set Signal "<xsl:value-of select="@systemName"/>" Held
   </xsl:when>
   <xsl:when test="( @type = 5 )" >
-    Clear Signal "<xsl:value-of select="@systemName"/>" Held 
+    Clear Signal "<xsl:value-of select="@systemName"/>" Held
   </xsl:when>
   <xsl:when test="( @type = 6 )" >
-    Set Signal "<xsl:value-of select="@systemName"/>" Dark 
+    Set Signal "<xsl:value-of select="@systemName"/>" Dark
   </xsl:when>
   <xsl:when test="( @type = 7 )" >
-    Set Signal "<xsl:value-of select="@systemName"/>" Lit 
+    Set Signal "<xsl:value-of select="@systemName"/>" Lit
   </xsl:when>
   <xsl:when test="( @type = 8 )" >
-    Trigger Route "<xsl:value-of select="@systemName"/>" 
+    Trigger Route "<xsl:value-of select="@systemName"/>"
   </xsl:when>
   <xsl:when test="( @type = 9 )" >
-    Set Sensor "<xsl:value-of select="@systemName"/>" 
+    Set Sensor "<xsl:value-of select="@systemName"/>"
     to
     <xsl:choose>
         <xsl:when test='@data = 1'>
@@ -590,7 +587,7 @@ value="<xsl:value-of select="@dataString"/>"
     after <xsl:value-of select="@delay"/> second(s)
   </xsl:when>
   <xsl:when test="( @type = 11 )" >
-    Set Light "<xsl:value-of select="@systemName"/>" 
+    Set Light "<xsl:value-of select="@systemName"/>"
     <xsl:choose>
         <xsl:when test='@data = 1'>
             Unknown
@@ -608,7 +605,7 @@ value="<xsl:value-of select="@dataString"/>"
     </xsl:choose>
   </xsl:when>
   <xsl:when test="( @type = 12 )" >
-    Set Memory "<xsl:value-of select="@systemName"/>" 
+    Set Memory "<xsl:value-of select="@systemName"/>"
     to "<xsl:value-of select="@string"/>"
   </xsl:when>
   <xsl:when test="( @type = 13 )" >Enable Logix "<xsl:value-of select="@systemName"/>"</xsl:when>
@@ -728,13 +725,13 @@ Positionable Label <xsl:value-of select="@icon"/><br/>
 </xsl:template>
 
 <xsl:template match="layoutturnout">
-Layout Turnout ident="<xsl:value-of select="@ident"/>", 
+Layout Turnout ident="<xsl:value-of select="@ident"/>",
 turnoutname="<xsl:value-of select="@turnoutname"/>",
 blockname="<xsl:value-of select="@blockname"/>"<br/>
 </xsl:template>
 
 <xsl:template match="tracksegment">
-Track segment ident="<xsl:value-of select="@ident"/>": 
+Track segment ident="<xsl:value-of select="@ident"/>":
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@type1"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@type2"/>)
 <br/>

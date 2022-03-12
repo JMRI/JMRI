@@ -11,11 +11,15 @@ import jmri.implementation.DefaultRoute;
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a Follower.
  *
+ * @see jmri.jmrit.ussctc.FollowerFrame
+ * @see jmri.jmrit.ussctc.FollowerPanel
+ * @see jmri.jmrit.ussctc.FollowerAction
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Follower implements Constants {
 
-    final static String namePrefix = commonNamePrefix + "FOLLOWER" + commonNameSuffix; // NOI18N
+    static String routePrefix = InstanceManager.getDefault(jmri.RouteManager.class).getSystemNamePrefix();
+    final static String namePrefix = routePrefix + ":" + commonNamePrefix + "FOLLOWER" + commonNameSuffix; // NOI18N
 
     /**
      * Nobody can build anonymous object
@@ -26,6 +30,7 @@ public class Follower implements Constants {
      *
      * @param output Output turnout to be driven
      * @param sensor Sensor checking for OS occupancy
+     * @param invert route ISONACTIVE inverted.
      * @param veto   veto Sensor, or ""
      */
     public Follower(String output, String sensor, boolean invert, String veto) {
@@ -93,7 +98,7 @@ public class Follower implements Constants {
         this.output = outputName;
 
         // find existing thrown route to get info
-        String nameT = namePrefix + "T" + nameDivider + output;        
+        String nameT = namePrefix + "T" + nameDivider + output;
 
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         Route r = rm.getBySystemName(nameT);

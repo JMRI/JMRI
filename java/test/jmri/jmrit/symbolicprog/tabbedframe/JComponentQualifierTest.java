@@ -1,16 +1,17 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.util.HashMap;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.DecVariableValue;
 import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Some tests in this file are derived from the test for ArthmeticQualifier.
@@ -128,15 +129,14 @@ public class JComponentQualifierTest {
         return m;
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jp = new JPanel();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

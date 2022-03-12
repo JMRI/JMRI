@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -48,7 +48,7 @@
       pr&eacute;f&eacute;rences.</p>
 
       <p>Ceci est la page d'aide
-      apps.AppConfixPanelErrorPage.shtml</p><!--#include virtual="/Footer" -->
+      apps.AppConfixPanelErrorPage.shtml</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

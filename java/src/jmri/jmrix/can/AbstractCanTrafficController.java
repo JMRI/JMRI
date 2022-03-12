@@ -29,11 +29,17 @@ abstract public class AbstractCanTrafficController
     }
 
     // The methods to implement the CAN Interface
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void addCanListener(CanListener l) {
         this.addListener(l);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void removeCanListener(CanListener l) {
         this.removeListener(l);
@@ -44,11 +50,12 @@ abstract public class AbstractCanTrafficController
      *
      * Overridden to include translation to the correct CAN hardware message
      * format
+     * {@inheritDoc}
      */
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
 //        if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
-        log.debug("forwardToPort message: [" + m + "]");//warn
+        log.debug("forwardToPort message: [{}]", m);//warn
 
         // remember who sent this
         mLastSender = reply;
@@ -66,7 +73,7 @@ abstract public class AbstractCanTrafficController
         } else {
             hm = encodeForHardware((CanMessage) m);
         }
-        log.debug("Encoded for hardware: [" + hm.toString() + "]");
+        log.debug("Encoded for hardware: [{}]", hm.toString());
 
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(hm)];
@@ -88,7 +95,7 @@ abstract public class AbstractCanTrafficController
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
                     //String f = "formatted message: ";
-                    StringBuffer buf = new StringBuffer("formatted message: ");
+                    StringBuilder buf = new StringBuilder("formatted message: ");
                     //for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
                     for (int i = 0; i < msg.length; i++) {
                         buf.append(Integer.toHexString(0xFF & msg[i]));
@@ -103,7 +110,7 @@ abstract public class AbstractCanTrafficController
                         break;
                     } else if (hm.getRetries() >= 0) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Retry message: " + hm.toString() + " attempts remaining: " + hm.getRetries());
+                            log.debug("Retry message: {} attempts remaining: {}", hm.toString(), hm.getRetries());
                         }
                         hm.setRetries(hm.getRetries() - 1);
                         try {
@@ -115,7 +122,7 @@ abstract public class AbstractCanTrafficController
                             log.error("retry wait interrupted");
                         }
                     } else {
-                        log.warn("sendMessage: port not ready for data sending: " + Arrays.toString(msg));
+                        log.warn("sendMessage: port not ready for data sending: {}", Arrays.toString(msg));
                     }
                 }
             } else {
@@ -127,36 +134,37 @@ abstract public class AbstractCanTrafficController
         }
     }
 
-    /*
-     * Default implementations of some of the abstract classes to save having
-     * to implement them in every sub class
+    /**
+     * {@inheritDoc}
+     * Always null
      */
     @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     * Always null
+     */
     @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
 
-    /*
-     * enterProgMode() and enterNormalMode() return any message that
-     * needs to be returned to the command station to change modes.
-     *
-     * If no message is needed, you may return null.
-     *
-     * If the programmerIdle() function returns true, enterNormalMode() is
-     * called after a timeout while in IDLESTATE during programming to
-     * return the system to normal mode.
-     *
+    /**
+     * {@inheritDoc}
+     * Always null
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     * Always null
+     */
     @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
@@ -164,6 +172,7 @@ abstract public class AbstractCanTrafficController
 
     /**
      * Get the correct concrete class for the hardware connection message
+     * @return new blank message
      */
     abstract protected AbstractMRMessage newMessage();
 
@@ -186,7 +195,7 @@ abstract public class AbstractCanTrafficController
 
         // Create messages off the right concrete classes
         // for the CanReply
-        CanReply msg = new CanReply();
+        CanReply msg;
 
         // and for the incoming reply from the hardware
         AbstractMRReply hmsg = newReply();
@@ -206,8 +215,7 @@ abstract public class AbstractCanTrafficController
         replyInDispatch = true;
 
         if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + msg.getNumDataElements()
-                    + " contains " + msg.toString() + " state " + mCurrentState);
+            log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
         }
 
         // actually distribute the reply
@@ -215,7 +223,7 @@ abstract public class AbstractCanTrafficController
 
         if (!msg.isUnsolicited()) {
             if (log.isDebugEnabled()) {
-                log.debug("switch on state " + mCurrentState);
+                log.debug("switch on state {}", mCurrentState);
             }
             // effect on transmit:
             switch (mCurrentState) {
@@ -273,8 +281,7 @@ abstract public class AbstractCanTrafficController
                     replyInDispatch = false;
                     if (allowUnexpectedReply == true) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: "
-                                    + mCurrentState + " was " + msg.toString());
+                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
                         }
                     } else {
                         unexpectedReplyStateError(mCurrentState,msg.toString());

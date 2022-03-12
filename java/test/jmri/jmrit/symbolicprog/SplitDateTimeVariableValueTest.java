@@ -6,14 +6,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the {@link SplitDateTimeVariableValue} class.
@@ -97,27 +98,32 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     @Override
     @Test
     public void testVariableValueCreate() {
-    }// mask is ignored by splitAddre
+    } // mask is ignored by splitAddress tests
 
     @Override
     @Test
     public void testVariableFromCV() {
-    }     // low CV is upper part of address
+    } // low CV is upper part of address
+
+    @Override
+    @Test
+    public void testVariableValueTwinMask() {
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueRead() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableCvWrite() {
-    }    // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
@@ -330,13 +336,13 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

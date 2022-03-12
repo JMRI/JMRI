@@ -39,16 +39,18 @@ public class PaneOpsProgFrame extends PaneProgFrame {
      * get the programming mode panel (none) and to hear if there is read mode
      * (no)
      *
-     * @param decoderFile XML file defining the decoder contents
-     * @param r           RosterEntry for information on this locomotive
+     * @param decoderFile XML file defining the decoder contents.
+     * @param r           RosterEntry for information on this locomotive.
+     * @param name        frame title.
+     * @param file        programmer file.
+     * @param p           Programmer object to be used.
      */
     public PaneOpsProgFrame(DecoderFile decoderFile, RosterEntry r,
             String name, String file, Programmer p) {
         super(decoderFile, r, name, file, p, true);
 
         if (log.isDebugEnabled()) {
-            log.debug("PaneOpsProgFrame \"" + name
-                    + "\" constructed");
+            log.debug("PaneOpsProgFrame \"{}\" constructed", name);
         }
     }
 
@@ -65,10 +67,10 @@ public class PaneOpsProgFrame extends PaneProgFrame {
         if (log.isDebugEnabled()) {
             log.debug("Programmer supports:");
             for (ProgrammingMode m : modes) {
-                log.debug("   {} {}", m.getStandardName(), m.toString());
+                log.debug("  mode: {} {}", m.getStandardName(), m.toString());
             }
         }
-        
+
         // first try specified modes
         for (Element el1 : programming.getChildren("mode")) {
             String name = el1.getText();

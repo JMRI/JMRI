@@ -72,20 +72,6 @@ October 1989 Burlington Northern Railroad Southern Region, Nebraska Division Tim
 	</appearance>
 
 	<appearance>
-      <aspectname>Restricted Proceed</aspectname>
-      <show>flashred</show>
-      <reference>Rule 241</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-1-high/rule-241-b.gif</imagelink>
-	</appearance>
-
-	<appearance>
-      <aspectname>Restricted Proceed</aspectname>
-      <show>flashred</show>
-      <reference>Rule 241</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-1-high/rule-241-c.gif</imagelink>
-	</appearance>
-		
-	<appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Rule 242</reference>

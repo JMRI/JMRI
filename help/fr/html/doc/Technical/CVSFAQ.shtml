@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -46,7 +46,7 @@ Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e &#224; partir
 
 Pour obtenir une copie de la source pour votre propre usage, vous pouvez utiliser "checkout anonyme".
 Pour un client en ligne de commande cvs, cr&#233;ez un nouveau r&#233;pertoire pour le projet,
-allez dans ce r&#233;pertoire, et dites &#224; CVS que vous existez avec 
+allez dans ce r&#233;pertoire, et dites &#224; CVS que vous existez avec
 
 <PRE>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
@@ -138,7 +138,7 @@ de ". DS_Store"  (sans les guillemets). CVS va ignorer tous les . DS_Store dans 
 
 En r&#232;gle g&#233;n&#233;rale, trois types de noms d'&#233;tiquettessont utilis&#233;s:
 <ol>
-<li> "Release-1-5-4 » - la balise d&#233;finissant une version sp&#233;cifique du code publi&#233;.
+<li> "Release-1-5-4" - la balise d&#233;finissant une version sp&#233;cifique du code publi&#233;.
 Elles sont cr&#233;&#233;es lors de la lib&#233;ration de la version, et ne devrait pas &#234;tre chang&#233;es.
 <li> "Release-1-5-4-branch" - c'est la branche-balise d&#233;finissant une "branche patch" pour une version
     sp&#233;cifique. C'est la seule fois que nous font usage de branches CVS, s'il vous pla&#238;t noter que nous n'utilisons pas de branches pour le d&#233;veloppement normal.
@@ -153,14 +153,14 @@ JMRI se compose de deux grandes arborescences de code, et un certain nombre de r
 Le code est divis&#233; en "jmri", le code principal JMRI, et "test", l'ensemble des
  tests est automatis&#233;s. Ils sont s&#233;par&#233;s de sorte qu'il est facile de construire tout
 le logiciel distribu&#233;, sans y inclure le code de test.
-(Si vous regardez directement le d&#233;p&#244;t CVS, vous verrez aussi les r&#233;pertoires "jmrit» et
+(Si vous regardez directement le d&#233;p&#244;t CVS, vous verrez aussi les r&#233;pertoires "jmrit" et
 "jmrix" , qui sont obsol&#232;tes, et conserv&#233;s exclusivement pour des raisons historiques).
 <p>
 De m&#234;me, l'information auxiliaire est gard&#233;s dans "lib", "xml",
 "ressources", "jython", r&#233;pertoires, etc.
 <p>
 Enfin, il y a un tas d'informations qui ne font pas partie de la
-zone de d&#233;veloppement d'applications, y compris le r&#233;pertoire des outils "scripts" 
+zone de d&#233;veloppement d'applications, y compris le r&#233;pertoire des outils "scripts"
  pour la lib&#233;ration des constructions, le site web, et d'autres.
 <p>
 Nous stockons tout ceci s&#233;par&#233;ment dans le CVS de sorte que vous pouvez v&#233;rifier uniquement celle dont vous avez besoin.
@@ -182,7 +182,7 @@ Dans de tels cas, nous utilisons le "cvs watch on " option pour
 verrouiller efficacement le fichier. La version archiv&#233;e du fichier est prot&#233;g&#233;e en &#233;criture ainsi vous ne pouvez pas le modifier sans
 remarquer le probl&#232;me, et les changements ne peuvent pas &#234;tre v&#233;rifi&#233;es de nouveau dans CVS &#224; moins que la montre de fichier soit d&#233;sactiv&#233;e.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -64,7 +63,7 @@
 				<choice xml:lang="it">Usa Vstart-Vmid-Vmax (CV29, bit 4)</choice>
 				<choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax (CV29, bit 4)</choice>
 				<choice xml:lang="de">Anfahr-, Mitten-, Höchstgeschwindigkeit nutzen (CV29, bit 4)</choice>
-				<choice xml:lang="cs">Použít rozjezdové napětí, střední napětí a maximální napětí (CV29, bit 4)</choice>
+				<choice xml:lang="cs">Použít rozjezdovou rychlost, střední rychlost a maximální rychlost (CV29, bit 4)</choice>
 				<choice xml:lang="nl">Gebruik Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
 			</enumChoice>
 			<enumChoice choice="Use Speed Table">

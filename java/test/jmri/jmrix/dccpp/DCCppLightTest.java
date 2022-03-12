@@ -1,15 +1,15 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the {@link jmri.jmrix.dccpp.DCCppLight} class.
  *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 
@@ -34,9 +34,8 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
         Assert.assertEquals("OFF state", jmri.Light.OFF, t.getState());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -49,7 +48,7 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
         t = new DCCppLight(xnis, xlm, "d2L21");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

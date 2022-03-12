@@ -1,0 +1,112 @@
+@startuml
+
+class LayoutTurnout {
+NamedBeanHandle<LayoutBlock> A-D
+NamedBeanHandle<SignalHead> A1-D3
+NamedBeanHandle<SignalMast> A-D
+LayoutTrack A-D
+String linkedTurnoutName
+}
+
+class LayoutBlock {
+    Block block;
+    List<Adjacencies> neighbours
+    NamedBeanHandle<Sensor> occupancyNamedSensor;
+    String occupancySensorName;
+    NamedBeanHandle<Memory> namedMemory
+    String memoryName;
+    List<LayoutEditor>
+    List<JComboBox<String>> neighbourDir;
+    LayoutEditorAuxTools auxTools;
+    ConnectivityUtil connection ;
+}
+
+LayoutBlock --* LayoutBlock.ThroughPaths
+
+class LayoutBlock.ThroughPaths << (L, orchid) >> {
+        Block sourceBlock
+        Block destinationBlock
+        Path sourcePath
+        Path destinationPath
+        HashMap<Turnout, Integer> _turnouts
+}
+
+LayoutBlock --* LayoutBlock.RoutingPacket
+
+class LayoutBlock.RoutingPacket << (L, orchid) >> {
+        int packetType;
+        Block block;
+        int hopCount = -1;
+        int packetMetric = -1;
+        int blockstate = -1;
+        float length = -1;
+        Integer packetRef = -1;
+}
+
+class LayoutBlock.Adjacencies << (L, orchid) >> {
+        Block adjBlock;
+        LayoutBlock adjLayoutBlock;
+        int direction;
+        int packetFlow = RXTX;
+        boolean mutualAdjacency = false;
+}
+
+class LayoutBlock.Routes << (L, orchid) >> {
+        int direction;
+        Block destBlock;
+        Block nextBlock;
+        int hopCount;
+        int routeMetric;
+        float length;
+}
+
+
+class LayoutTrackExpectedState {
+}
+
+class LayoutConnectivity {
+    LayoutBlock block1
+    LayoutBlock block2
+    int direction = Path.NONE;
+    TrackSegment track1
+    LayoutTrack connect2
+    HitPointType typeConnect2
+    LayoutTurnout xover = null;
+    int xoverBoundaryType
+    PositionablePoint anchor;
+}
+
+LayoutBlock *-- LayoutConnectivity
+PositionablePoint *-- LayoutConnectivity
+LayoutTurnout *-- LayoutConnectivity
+TrackSegment *-- LayoutConnectivity
+LayoutBlock *-- LayoutTurnout
+LayoutBlock *-- LayoutBlock.Adjacencies
+LayoutBlock.Adjacencies *-- LayoutBlock
+LayoutTrack *-- LayoutTurnout
+LayoutTrack <|-- LayoutTurnout
+TrackSegment *-- PositionablePoint
+LayoutTrack <|-- PositionablePoint
+LayoutTrack <|-- TrackSegment
+
+jmri.Block *-- LayoutBlock.Adjacencies
+
+jmri.Block *-- LayoutBlock.Routes
+jmri.Block *-- LayoutBlock.ThroughPaths
+jmri.Block *-- LayoutBlock
+jmri.Block *-- LayoutBlock.RoutingPacket
+jmri.Sensor *-- LayoutBlock
+jmri.Sensor *-- PositionablePoint
+jmri.Path *-- LayoutBlock.Routes
+jmri.Path *-- LayoutBlock.ThroughPaths
+jmri.Turnout *-- LayoutBlock.Routes
+jmri.Turnout *-- LayoutBlock.ThroughPaths
+jmri.SignalHead *-- LayoutTurnout
+jmri.SignalHead *-- PositionablePoint
+jmri.SignalMast *-- LayoutTurnout
+jmri.SignalMast *-- PositionablePoint
+   
+jmri.jmrit.beantable.beanedit.BlockEditAction <|-- LayoutBlockEditAction
+@end
+
+

@@ -7,10 +7,12 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -19,16 +21,13 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.prefs.InitializationException;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests the {@link jmri.swing.JmriJTablePersistenceManager}. Some tests use a
@@ -39,24 +38,21 @@ import org.junit.rules.TemporaryFolder;
  */
 public class JmriJTablePersistenceManagerTest {
 
-    @Rule
-    public TemporaryFolder profileFolder = new TemporaryFolder();
-
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager(new NullProfile(profileFolder.newFolder(Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -413,7 +409,7 @@ public class JmriJTablePersistenceManagerTest {
      * Test of savePreferences method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore("test code is incomplete prototype")
+    @Disabled("test code is incomplete prototype")
     public void testSavePreferences() {
         System.out.println("savePreferences");
         Profile profile = null;
@@ -521,49 +517,6 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertFalse("set to clean for test", instance.isDirty());
         instance.setPersistedState(test.getName(), "c1", 0, 0, SortOrder.ASCENDING, false);
         Assert.assertTrue("column changed", instance.isDirty());
-    }
-
-    /**
-     * Test of getDirty method, of class JmriJTablePersistenceManager.
-     */
-    @Test
-    @SuppressWarnings("deprecation")
-    public void testGetDirty() {
-        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        JTable test = testTable("test");
-        Assert.assertFalse("new manager w/o tables is clean", instance.getDirty());
-        instance.persist(test);
-        Assert.assertTrue("table added, not saved", instance.getDirty());
-        instance.setDirty(false);
-        Assert.assertFalse("set to clean for test", instance.getDirty());
-        instance.setPersistedState(test.getName(), "c1", 0, 0, SortOrder.ASCENDING, false);
-        Assert.assertTrue("column changed", instance.getDirty());
-    }
-
-    /**
-     * Test of setTableColumnPreferences method, of class
-     * JmriJTablePersistenceManager.
-     */
-    @Test
-    @SuppressWarnings("deprecation")
-    public void testSetTableColumnPreferences() {
-        JTable table = testTable("test");
-        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        Assert.assertFalse("Not persisting table", instance.isPersisting(table));
-        Assert.assertFalse("Clean manager", instance.isDirty());
-        TableColumn c0 = table.getColumnModel().getColumn(0);
-        TableColumn c1 = table.getColumnModel().getColumn(1);
-        instance.setTableColumnPreferences(table.getName(), c0.getHeaderValue().toString(), 0, c0.getPreferredWidth(), SortOrder.UNSORTED, false);
-        instance.setTableColumnPreferences(table.getName(), c1.getHeaderValue().toString(), 0, c1.getPreferredWidth(), SortOrder.UNSORTED, false);
-        Assert.assertFalse("Persisting table", instance.isPersisting(table));
-        Assert.assertTrue("Dirty manager", instance.isDirty());
-        Assert.assertEquals("Column c1 is default width", c1.getWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
-        c1.setPreferredWidth(100);
-        Assert.assertNotEquals("Column c1 width not persisted width",
-                c1.getPreferredWidth(),
-                instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
-        instance.setTableColumnPreferences(table.getName(), c1.getHeaderValue().toString(), 0, c1.getPreferredWidth(), SortOrder.UNSORTED, false);
-        Assert.assertEquals("Column c1 is 100 width", c1.getPreferredWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
     }
 
     /**

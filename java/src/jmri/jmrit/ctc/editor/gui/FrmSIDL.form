@@ -40,11 +40,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="_mSIDL_RightInternalSensor" min="-2" pref="93" max="-2" attributes="0"/>
-                          <Component id="_mSIDL_NormalInternalSensor" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
-                          <Component id="_mSIDL_LeftInternalSensor" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
+                          <Component id="_mSIDL_LeftInternalSensor" min="-2" max="-2" attributes="0"/>
+                          <Component id="_mSIDL_NormalInternalSensor" min="-2" max="-2" attributes="0"/>
+                          <Component id="_mSIDL_RightInternalSensor" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="63" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -54,7 +54,7 @@
               </Group>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="100" max="32767" attributes="0"/>
               <Component id="_mSaveAndClose" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
           </Group>
@@ -70,15 +70,15 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="_mSIDL_NormalInternalSensor" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mSIDL_NormalInternalSensorPrompt" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mSIDL_NormalInternalSensor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="_mSIDL_RightInternalSensor" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mSIDL_RightInternalSensorPrompt" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mSIDL_RightInternalSensor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="15" max="32767" attributes="0"/>
               <Component id="_mSaveAndClose" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
@@ -106,7 +106,20 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="_mSIDL_LeftInternalSensor">
+    <Component class="javax.swing.JComboBox" name="_mSIDL_LeftInternalSensor">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="_mSIDL_NormalInternalSensorPrompt">
       <Properties>
@@ -116,7 +129,20 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="_mSIDL_NormalInternalSensor">
+    <Component class="javax.swing.JComboBox" name="_mSIDL_NormalInternalSensor">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="_mSIDL_RightInternalSensorPrompt">
       <Properties>
@@ -126,7 +152,20 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="_mSIDL_RightInternalSensor">
+    <Component class="javax.swing.JComboBox" name="_mSIDL_RightInternalSensor">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>

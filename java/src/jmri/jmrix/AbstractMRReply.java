@@ -36,9 +36,8 @@ abstract public class AbstractMRReply extends AbstractMessage {
             log.error("copy ctor of null message");
         } else {
             _nDataChars = m._nDataChars;
-            for (int i = 0; i < _nDataChars; i++) {
-                _dataChars[i] = m._dataChars[i];
-            }
+            if (_nDataChars >= 0)
+                System.arraycopy(m._dataChars, 0, _dataChars, 0, _nDataChars);
         }
     }
 
@@ -62,15 +61,28 @@ abstract public class AbstractMRReply extends AbstractMessage {
         _nDataChars = Math.max(_nDataChars, n + 1);
     }
 
+    /**
+     * Set the OpCode.
+     * Sets Element 0 to character value of integer.
+     * @param i Opcode value.
+     */
     public void setOpCode(int i) {
         _dataChars[0] = (char) i;
     }
 
+    /**
+     * Get the OpCode.
+     * @return value of Element 0.
+     */
     public int getOpCode() {
         return _dataChars[0];
     }
 
-    // accessors to the bulk data
+    /**
+     * Flush the message.
+     * Sets number of data characters to 0.
+     * Does not reset array length or data.
+     */
     public void flush() {
         _nDataChars = 0;
     }
@@ -78,18 +90,33 @@ abstract public class AbstractMRReply extends AbstractMessage {
     // mode accessors
     private boolean _isBinary;
 
+    /**
+     * Get if the Reply has Binary form flag set.
+     * @return true if binary, else false.
+     */
     public boolean isBinary() {
         return _isBinary;
     }
 
+    /**
+     * Set flag for if the Reply is Binary form.
+     * @param b true if binary, else false.
+     */
     public void setBinary(boolean b) {
         _isBinary = b;
     }
 
+    /**
+     * Set flag for Unsolicited to true.
+     */
     public final void setUnsolicited() {
         unsolicited = true;
     }
 
+    /**
+     * Get flag for Unsolicited.
+     * @return true if Unsolicited, else false.
+     */
     public boolean isUnsolicited() {
         return unsolicited;
     }

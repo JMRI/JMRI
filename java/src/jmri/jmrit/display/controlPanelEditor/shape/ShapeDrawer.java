@@ -31,31 +31,21 @@ public class ShapeDrawer {
 
         JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Rectangle")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener((ActionEvent event) -> {
-            newRectangle();
-        });
+        shapeItem.addActionListener((ActionEvent event) -> newRectangle());
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener((ActionEvent event) -> {
-            newRoundRectangle();
-        });
+        shapeItem.addActionListener((ActionEvent event) -> newRoundRectangle());
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Polygon")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener((ActionEvent event) -> {
-            newPolygon();
-        });
+        shapeItem.addActionListener((ActionEvent event) -> newPolygon());
 
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Circle")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener((ActionEvent event) -> {
-            newCircle();
-        });
+        shapeItem.addActionListener((ActionEvent event) -> newCircle());
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
         drawMenu.add(shapeItem);
-        shapeItem.addActionListener((ActionEvent event) -> {
-            newEllipse();
-        });
+        shapeItem.addActionListener((ActionEvent event) -> newEllipse());
 
         return drawMenu;
     }
@@ -176,7 +166,7 @@ public class ShapeDrawer {
      */
     public boolean doMouseReleased(Positionable selection, MouseEvent event, Editor ed) {
         log.debug("Mouse Released _drawFrame= {}", (_drawFrame==null ? "null" : _drawFrame.getTitle()));
-        if (_drawFrame != null && _drawFrame._shape == null && _drawFrame._create == true) {
+        if (_drawFrame != null && _drawFrame._shape == null && _drawFrame._create) {
             if (_drawFrame instanceof DrawPolygon) {
                 ((DrawPolygon)_drawFrame).makeVertex(event, ed);
             } else {
@@ -193,7 +183,12 @@ public class ShapeDrawer {
                 shape.updateSize();
                 _drawFrame.closingEvent(false);       // close opening create prompt frame
                 _drawFrame = shape.makeEditFrame(true); // make finishing create frame;
-                ed.putItem(shape);
+                try {
+                    ed.putItem(shape);
+                } catch (Positionable.DuplicateIdException e) {
+                    // This should never happen
+                    log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                }
                 return true;
             }
         }
@@ -212,7 +207,12 @@ public class ShapeDrawer {
                     shape.updateSize();
                     _drawFrame.closingEvent(false);       // close opening create prompt frame
                     _drawFrame = shape.makeEditFrame(true); // make finishing create frame;
-                    ed.putItem(shape);
+                    try {
+                        ed.putItem(shape);
+                    } catch (Positionable.DuplicateIdException e) {
+                        // This should never happen
+                        log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                    }
                     return true;
                 }
             }

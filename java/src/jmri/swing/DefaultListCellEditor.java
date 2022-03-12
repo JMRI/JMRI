@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class DefaultListCellEditor<E> extends DefaultCellEditor implements ListCellEditor<E> {
 

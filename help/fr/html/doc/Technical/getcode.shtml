@@ -112,7 +112,7 @@ svn update
       source pour les versions 2.12 et ant&eacute;rieures est
       d'utiliser le <a href="getoldcode.shtml">CVS Repository</a> .
       s'il vous pla&icirc;t Voir les instructions pour plus de
-      d&eacute;tails.</p><!--#include virtual="/Footer" -->
+      d&eacute;tails.</p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

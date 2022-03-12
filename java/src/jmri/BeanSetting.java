@@ -1,6 +1,9 @@
 package jmri;
 
 import java.util.Objects;
+
+import javax.annotation.Nonnull;
+
 import jmri.util.NamedBeanExpectedState;
 
 /**
@@ -36,6 +39,7 @@ public class BeanSetting extends NamedBeanExpectedState<NamedBean> {
         return getObject().getState() == getExpectedState();
     }
 
+    @Nonnull
     public NamedBean getBean() {
         return getObject();
     }

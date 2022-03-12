@@ -1,10 +1,10 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of SensorIcon
@@ -21,7 +21,7 @@ public class SensorIconTest extends PositionableIconTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {

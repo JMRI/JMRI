@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.IdTag;
+import jmri.AddressedIdTag;
 import jmri.LocoAddress;
-import jmri.Reporter;
 import jmri.CollectingReporter;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractIdTagReporter;
@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractIdTagReporter for LocoNet layouts.
  * <p>
  * This implementation reports Transponding messages from LocoNet-based "Reporters".
- * 
- * For LocoNet connections, a "Reporter" represents either a Digitrax "transponding zone" or a 
+ *
+ * For LocoNet connections, a "Reporter" represents either a Digitrax "transponding zone" or a
  * Lissy "measurement zone".  The messages from these Reporters are handled by this code.
- * 
+ *
  * The LnReporterManager is responsible for decode of appropriate LocoNet messages
  * and passing only those messages to the Reporter which match its Reporter address.
- * 
+ *
  * <p>
  * Each transponding message creates a new current report. The last report is
  * always available, and is the same as the contents of the last transponding
@@ -55,7 +55,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         log.debug("new Reporter {}", number);
         _number = number;
         // At construction, register for messages
-        entrySet = new HashSet<TranspondingTag>();
+        entrySet = new HashSet<>();
     }
 
 
@@ -84,10 +84,10 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
 
     /**
      * Check if message is a Transponding Location Report message
-     * 
+     *
      * A Transponding Location Report message is sent by transponding hardware
      * when a transponding mobile decoder enters or leaves a transponding zone.
-     * 
+     *
      * @param l LocoNet message to check
      * @return true if message is a Transponding Location Report, else false.
      */
@@ -98,11 +98,11 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
 
     /**
      * Check if message is a Transponding Find Report message
-     * 
+     *
      * A Transponding Location Report message is sent by transponding hardware
      * in response to a Transponding Find Request message when the addressed
      * decoder is within a transponding zone and the decoder is transponding-enabled.
-     * 
+     *
      * @param l LocoNet message to check
      * @return true if message is a Transponding Find Report, else false.
      */
@@ -116,7 +116,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
      * Handle transponding message passed to us by the LnReporting Manager
      *
      * Assumes that the LocoNet message is a valid transponding message.
-     * 
+     *
      * @param l - incoming loconetmessage
      */
     void transpondingReport(LocoNetMessage l) {
@@ -137,7 +137,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         if (enter) {
             idTag.setProperty("entryexit", "enter");
             if (!entrySet.contains(idTag)) {
-                entrySet.add((TranspondingTag) idTag);
+                entrySet.add(idTag);
             }
         } else {
             idTag.setProperty("entryexit", "exits");
@@ -145,16 +145,16 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
                 entrySet.remove(idTag);
             }
         }
-        log.debug("Tag: " + idTag);
+        log.debug("Tag: {}", idTag);
         notify(idTag);
         setState(enter ? loco : -1);
     }
 
     /**
      * extract long or short address from transponding message
-     * 
+     *
      * Assumes that the LocoNet message is a valid transponding message.
-     * 
+     *
      * @param l LocoNet message
      * @return loco address
      */
@@ -163,11 +163,12 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
             return l.getElement(4);
         }
         return l.getElement(3) * 128 + l.getElement(4);
-        
+
     }
 
     /**
      * Handle LISSY message
+     * @param l Message from which to extract LISSY content
      */
     void lissyReport(LocoNetMessage l) {
         int loco = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
@@ -179,11 +180,11 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         // get loco address
         IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(north) {
-           idTag.setProperty("seen","seen northbound");
+           idTag.setProperty("seen", "seen northbound");
         } else {
-           idTag.setProperty("seen","seen southbound");
+           idTag.setProperty("seen", "seen southbound");
         }
-        log.debug("Tag: " + idTag);
+        log.debug("Tag: {}", idTag);
         notify(idTag);
         setState(loco);
     }
@@ -300,13 +301,13 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
       * {@inheritDoc}
       */
      @Override
-     public java.util.Collection getCollection(){
+     public java.util.Collection<Object> getCollection(){
         return entrySet;
      }
 
     // data members
     private int _number;   // LocoNet Reporter number
-    private HashSet<TranspondingTag> entrySet=null;
+    private HashSet<Object> entrySet=null;
 
     private final static Logger log = LoggerFactory.getLogger(LnReporter.class);
 

@@ -2,18 +2,18 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Base class for rolling stock managers car and engine.
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010, 2011
  * @param <T> the type of RollingStock managed by this manager
  */
-public abstract class RollingStockManager<T extends RollingStock> implements PropertyChangeListener {
+public abstract class RollingStockManager<T extends RollingStock> extends PropertyChangeSupport implements PropertyChangeListener {
 
     public static final String NONE = "";
 
@@ -135,23 +135,6 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
     }
 
     /**
-     * Change the ID of a RollingStock.
-     * 
-     * @param rs     the rolling stock to change
-     * @param road   the new road name for the rolling stock
-     * @param number the new number for the rolling stock
-     * @deprecated since 4.15.6 without direct replacement; the ID of a
-     * RollingStock is automatically synchronized with changes to the road and
-     * number of the RollingStock
-     */
-    @Deprecated
-    public void changeId(T rs, String road, String number) {
-        _hashTable.remove(rs.getId());
-        rs._id = RollingStock.createId(road, number);
-        register(rs);
-    }
-
-    /**
      * Remove all RollingStock from roster
      */
     public void deleteAll() {
@@ -193,10 +176,9 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
         List<T> out = new ArrayList<>();
         int i = 0;
         while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
+            arr[i++] = en.nextElement();
         }
-        java.util.Arrays.sort(arr);
+        Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(getById(arr[i]));
         }
@@ -238,7 +220,7 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
             } catch (NumberFormatException e) {
                 // maybe rolling stock number in the format nnnn-N
                 try {
-                    String[] number = rs.getNumber().split("-");
+                    String[] number = rs.getNumber().split(TrainCommon.HYPHEN);
                     rsNumber = Integer.parseInt(number[0]);
                     rs.number = rsNumber;
                 } catch (NumberFormatException e2) {
@@ -290,7 +272,7 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
                         outRsNumber = Integer.parseInt(out.get(j).getNumber());
                     } catch (NumberFormatException e) {
                         try {
-                            String[] number = out.get(j).getNumber().split("-");
+                            String[] number = out.get(j).getNumber().split(TrainCommon.HYPHEN);
                             outRsNumber = Integer.parseInt(number[0]);
                         } catch (NumberFormatException e2) {
                             // force add
@@ -353,7 +335,7 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
      * @return list of RollingStock ordered by RollingStock location
      */
     public List<T> getByLocationList() {
-        return getByList(getList(), BY_LOCATION);
+        return getByList(getByNumberList(), BY_LOCATION);
     }
 
     /**
@@ -516,7 +498,11 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
         }
     }
 
-    private String convertBuildDate(String date) {
+    /*
+     * Converts build date into consistent String. Three build date formats; Two
+     * digits YY becomes 19YY. MM-YY becomes 19YY. MM-YYYY becomes YYYY.
+     */
+    public static String convertBuildDate(String date) {
         String[] built = date.split("-");
         if (built.length == 2) {
             try {
@@ -613,20 +599,6 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
             // fire so listeners that rebuild internal lists get signal of change in id, even without change in size
             firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, _hashTable.size(), _hashTable.size());
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStockManager.class);

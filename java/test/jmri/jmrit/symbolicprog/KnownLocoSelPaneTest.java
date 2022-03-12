@@ -1,13 +1,16 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrit.progsupport.ProgModePane;
+
 import javax.swing.JLabel;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  *
@@ -19,18 +22,29 @@ public class KnownLocoSelPaneTest {
     public void testCTor() {
         JLabel jl = new JLabel("test selector");
         ProgModePane pmp = new ProgModePane(javax.swing.BoxLayout.X_AXIS);
-        KnownLocoSelPane t = new KnownLocoSelPane(jl, false, pmp);
+        KnownLocoSelPane t = new KnownLocoSelPane(jl, false, pmp){
+            protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
+                                        String programmerName) {
+                log.error("Should have not been invoked, even in test");
+            }
+            
+        };
         Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void testBooleanCTor() {
-        KnownLocoSelPane t = new KnownLocoSelPane(false);
+        KnownLocoSelPane t = new KnownLocoSelPane(false){
+            protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
+                                        String programmerName) {
+                log.error("Should have not been invoked, even in test");
+            }
+            
+        };
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -39,12 +53,12 @@ public class KnownLocoSelPaneTest {
         InstanceManager.setDefault(ProgrammerConfigManager.class, new ProgrammerConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.tearDown();
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPaneTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(KnownLocoSelPaneTest.class);
 }

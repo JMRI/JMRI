@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
@@ -9,7 +10,7 @@ import jmri.Turnout;
  * System names are "STnnn", where S is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
@@ -21,15 +22,25 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SprogSystemConnectionMemo getMemo() {
         return (SprogSystemConnectionMemo) memo;
     }
 
     // Sprog-specific methods
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // multi char prefix
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // multi char prefix
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a Turnout address");
+        }
         Turnout t;
         if (getMemo().getSprogMode() == SprogConstants.SprogMode.OPS ) {
             t = new SprogCSTurnout(addr, getMemo());
@@ -44,7 +55,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -52,7 +63,8 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, SprogConstants.MAX_ACC_DECODER_JMRI_ADDR, locale);
     }
 
@@ -71,7 +83,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

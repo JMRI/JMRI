@@ -41,7 +41,7 @@ public class GenericImportAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        log.debug("start to import " + mActionName);
+        log.debug("start to import {}", mActionName);
         mStatus.setText(java.text.MessageFormat.format(
                 SymbolicProgBundle.getMessage("MenuImportAction"),
                 new Object[]{mActionName}));
@@ -55,7 +55,7 @@ public class GenericImportAction extends AbstractAction {
 
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            log.debug("Import from " + mActionName + " \"" + file + "\"");
+            log.debug("Import from {} \"{}\"", mActionName, file);
 
             if (launchImporter(file, mModel)) {
                 mStatus.setText(Bundle.getMessage("StateOK"));

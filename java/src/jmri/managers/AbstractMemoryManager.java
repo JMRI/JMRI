@@ -1,21 +1,19 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.SignalHead;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of a MemoryManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
@@ -42,11 +40,12 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
-    public @Nonnull Memory provideMemory(@Nonnull String sName) {
-        Memory t = getMemory(sName);
-        if (t != null) {
-            return t;
+    public Memory provideMemory(@Nonnull String sName) throws IllegalArgumentException {
+        Memory m = getMemory(sName);
+        if (m != null) {
+            return m;
         }
         if (sName.startsWith(getSystemNamePrefix())) {
             return newMemory(sName, null);
@@ -56,6 +55,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     }
 
     /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public Memory getMemory(@Nonnull String name) {
         Memory t = getByUserName(name);
@@ -68,77 +68,65 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public Memory getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Memory getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
-        Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
-
+    @Nonnull
+    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
+        log.debug("new Memory: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));  // NOI18N
         // return existing if there is one
-        Memory s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName()); // NOI18N
+        Memory m;
+        if (userName != null) {
+            m = getByUserName(userName);
+            if ( m!= null) {
+                if (getBySystemName(systemName) != m) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, m.getSystemName()); // NOI18N
+                }
+                return m;
             }
-            return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        m = getBySystemName(systemName);
+        if (m != null) {
             // handle user name from request
             if (userName != null) {
                 // check if already on set in Object, might be inconsistent
-                if (!userName.equals(s.getUserName())) {
+                if (!userName.equals(m.getUserName())) {
                     // this is a problem
-                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, s.getUserName());
+                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, m.getUserName());
                 } else {
-                    s.setUserName(userName);
+                    m.setUserName(userName);
                 }
             }
-            return s;
+            return m;
         }
 
         // doesn't exist, make a new one
-        s = createNewMemory(systemName, userName);
-
-        // if that failed, blame it on the input arguments
-        if (s == null) {
-            throw new IllegalArgumentException();
-        }
+        m = createNewMemory(systemName, userName);
 
         // save in the maps
-        register(s);
-
+        register(m);
         // Keep track of the last created auto system name
         updateAutoNumber(systemName);
 
-        return s;
+        return m;
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
-    public @Nonnull Memory newMemory(@Nonnull String userName) {
+    public Memory newMemory(@CheckForNull String userName) throws IllegalArgumentException {
         return newMemory(getAutoSystemName(), userName);
     }
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Memory has been invoked.
      *
      * @param systemName Memory system name
      * @param userName   Memory user name
      * @return a new Memory
      */
     @Nonnull
-    abstract protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName);
+    abstract protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
@@ -155,9 +143,10 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return Memory.class;
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Memory provide(String name) throws IllegalArgumentException {
+    public Memory provide(@Nonnull String name) throws IllegalArgumentException {
         return provideMemory(name);
     }
 

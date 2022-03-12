@@ -1,0 +1,1208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) 2020 All rights reserved                                 -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Wouter Kok" version="1" lastUpdated="2020/11/02"/>
+  <!-- Version 1.00 - Initial version                             -->
+  <decoder>
+    <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing.">
+      <model model="T65" numOuts="6" numFns="14" maxInputVolts="24V" maxMotorCurrent="1.1A" maxTotalCurrent="1.4A" lowVersionID="35">
+        <output name="1" label="Front|Light">
+          <label xml:lang="de">Ausgang|A</label>
+          <label xml:lang="cs">Přední|Světlo</label>
+        </output>
+        <output name="2" label="Rear|Light">
+          <label xml:lang="de">Ausgang|B</label>
+          <label xml:lang="cs">Zadní|Světlo</label>
+        </output>
+        <output name="3" label="Output|C">
+          <label xml:lang="de">Ausgang|C</label>
+          <label xml:lang="cs">Výstup|C</label>
+        </output>
+        <output name="4" label="Output|D">
+          <label xml:lang="de">Ausgang|D</label>
+          <label xml:lang="cs">Výstup|D</label>
+        </output>
+        <output name="5" label="Output|E">
+          <label xml:lang="de">Ausgang|E</label>
+          <label xml:lang="cs">Výstup|E</label>
+        </output>
+        <output name="6" label="Output|F">
+          <label xml:lang="de">Ausgang|F</label>
+          <label xml:lang="cs">Výstup|F</label>
+        </output>
+      </model>
+    </family>
+    <programming ops="yes" register="yes" paged="yes" direct="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/kuehn/accelDecel_k.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/kuehn/vStartHighMid_k.xml"/>
+      <variable CV="7" default="35" item="Decoder Version" readOnly="yes">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="nl">Decoder versie: </label>
+        <comment>at least version 35</comment>
+        <tooltip xml:lang="de">mindestens Version 35</tooltip>
+        <tooltip xml:lang="nl">Minimum versie 35</tooltip>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="157">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="cs">ID výrobce: </label>
+        <label xml:lang="nl">Fabrikanten ID: </label>
+        <tooltip xml:lang="de">für Kühn Wert 157</tooltip>
+        <tooltip xml:lang="nl">Voor Kühn Waarde 157</tooltip>
+      </variable>
+      <variable CV="9" default="0" item="Motor PWM Frequency">
+        <enumVal>
+          <enumChoice choice="15.6kHz">
+            <choice>15.6kHz</choice>
+          </enumChoice>
+            <enumChoice choice="120Hz">
+            <choice>120Hz</choice>
+          </enumChoice>
+            <enumChoice choice="32kHz">
+             <choice>32kHz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Motor Control Frequency</label>
+        <label xml:lang="it">Frequenza controllo Motore</label>
+        <label xml:lang="de">Motoransteuerfrequenz</label>
+        <label xml:lang="cs">Frekvence řízení motoru</label>
+        <tooltip>&lt;html&gt;15.6kHz = High frequency motor control for modern DC and coreless motors.&lt;br&gt;120Hz = Low frequency motor control for older DC motors or AC/universal motors.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;15.6kHz = Frequenza alta motore per moderni motori DC e coreless.&lt;br&gt;120Hz = Frequenza bassa motore per vecchi motori DC o motori universali o in AC.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;15.6kHz = für moderne DC- und Glockenankermotoren.&lt;br&gt;120Hz = für ältere DC-Motoren und Wechselstrommotoren.&lt;br&gt;32kHz = für moderne DC- und Glockenankermotoren.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;15,6 kHz = voor moderne DC- en Klokanker-motoren.&lt;br&gt;120Hz = voor oudere DC-motoren en wisselstroommotoren.&lt;br&gt;32kHz = voor moderne DC- en Klokanker-motoren.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;15,6 kHz = Vysoká frekvence pro řízení moderních DC a coreless motorů.&lt;br&gt; 120 Hz = Nízká frekvence pro řízení starších DC motorů a AC/univerzálních motorů.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <!--analogModeFunction CV13 and CV14  -->
+      <xi:include href="http://jmri.org/xml/decoders/kuehn/analogModeFunction_k.xml"/>
+      <!-- CV=19 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- Brack config CV27 -->
+      <variable CV="27" mask="XXXXXXVV" default="0" item="Direction Dependent stop with asymmetrical DCC">
+        <enumVal>
+          <enumChoice choice="Does Not Brake">
+            <choice>No Braking</choice>
+            <choice xml:lang="it">Non si ferma</choice>
+            <choice xml:lang="de">Kein Bremsen</choice>
+            <choice xml:lang="cs">Nezastaví</choice>
+            <choice xml:lang="nl">Remt niet</choice>
+          </enumChoice>
+          <enumChoice choice="Brakes when Right rail is higher voltage">
+            <choice>Brakes when Right rail is higher voltage</choice>
+            <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
+            <choice xml:lang="de">Bremsen, wenn rechte Schienenspannung höher</choice>
+            <choice xml:lang="cs">Zastaví pokud pravá kolejnice má vyšší napětí</choice>
+            <choice xml:lang="nl">Remt, waneer de rechter rils hogerre spaning heeft</choice>
+          </enumChoice>
+          <enumChoice choice="Brakes when Left rail is higher voltage">
+            <choice>Brakes when Left rail is higher voltage</choice>
+            <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
+            <choice xml:lang="de">Bremsen, wenn linke Schienenspannung höher</choice>
+            <choice xml:lang="cs">Zastaví pokud levá kolejnice má vyšší napětí</choice>
+            <choice xml:lang="nl">Remt, waneer de linker rils hogerre spaning heeft</choice>
+          </enumChoice>
+          <enumChoice choice="Brakes in Both Directions">
+            <choice>Brakes in Both Directions</choice>
+            <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
+            <choice xml:lang="de">Bremsen in beiden Richtungen</choice>
+            <choice xml:lang="cs">Zastaví v obou směrech</choice>
+            <choice xml:lang="nl">Remt in beide Richtingen</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Brake configuration (asymmetrical DCC)</label>
+        <label xml:lang="de">Bremskonfiguration (asymmetrischer DCC)</label>
+        <label xml:lang="cs">Konfigurace brždění (asymetrický DCC)</label>
+        <label xml:lang="nl">Remconfiguratie (asymmetrische DCC)</label>
+        <tooltip>&lt;html&gt;Brake configuration with asymmetrical DCC. &lt;br&gt; Lenz-ABC default is higher voltage on right rail.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung&lt;br&gt; Lenz-ABC Grundeinstellung ist wenn rechte Schienenspannung höher.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Konfigurace brždění v závislosti asymetrického napětí DCC.&lt;br&gt; Lenz-ABC default is higher voltage on right rail.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Remconfiguratie met asymmetrische DCC digitale spanning&lt;br&gt;Lenz-ABC basisinstelling is hoger wanneer de rechter rilsspanning hoger is.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="27" mask="XXVVXXXX" default="0" item="Direction Dependent stop with DC polarity">
+        <enumVal>
+          <enumChoice choice="In DC contrary">
+            <choice>Brakes in Reverse DC polarity</choice>
+            <choice xml:lang="de">Bremsen in umgekehrter DC-Polarität</choice>
+            <choice xml:lang="cs">Zastaví na DC v protisměru jízdy</choice>
+            <choice xml:lang="nl">Remmen in omgekeerde DC polariteit</choice>
+          </enumChoice>
+          <enumChoice choice="In DC contrary">
+            <choice>Brakes in Reverse DC polarity even after polarity change</choice>
+            <choice xml:lang="de">Bremsen bei Gleichspg. entgegen Fahrtricht.auch nach Spgs.wechsel</choice>
+            <choice xml:lang="cs">Zastaví na DC v protisměru jízdy i po změně napětí</choice>
+            <choice xml:lang="nl">Remmen in omgekeerde DC polariteit ook tegen de rijrichting na spanningsverandering</choice>
+          </enumChoice>
+          <enumChoice choice="No DC in direction">
+            <choice>No brakes in Forward DC polarity</choice>
+            <choice xml:lang="de">Kein Bremsen bei Gleichspannung in Fahrtrichtung</choice>
+            <choice xml:lang="nl">Remt niet bij DC in de rijrichting</choice>
+          </enumChoice>
+          <enumChoice choice="On DC both directions">
+            <choice>Brakes with DC in both directions</choice>
+            <choice xml:lang="de">Bremsen bei Gleichspannung in beiden Richtungen</choice>
+            <choice xml:lang="cs">Zastaví na DC v obou směrech</choice>
+            <choice xml:lang="nl">Remt bij DC in beide richtingen</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Brake configuration (DC polarity)</label>
+        <label xml:lang="de">Bremskonfiguration (Gleichspannung)</label>
+        <label xml:lang="cs">Konfigurace brždění (Polarita DC)</label>
+        <label xml:lang="nl">Rem configuratie (DC-spaning)</label>
+        <tooltip>&lt;html&gt;Brake on DC polarity detection. &lt;br&gt;
+                  By braking at DC voltage in both directions, even locomotives &lt;br&gt;
+                  in DCC format can safely stop on Märklin® braking distances.&lt;br&gt;
+                  &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bremsen bei Gleichspannung entgegen order in Fahrtrichtung. &lt;br&gt;
+                            Durch das Bremsen bei Gleichspannung in und entgegen der Fahrtrichtung &lt;br&gt;
+                            können auch Loks im DCC-Format auf Märklin®-Bremsstrecken sicher anhalten.&lt;br&gt;
+                            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Konfigurace brždění na stejnosměrný proud ve směru jízdy nebo ve směru jízdy. &lt;br&gt;
+                            Brzdným účinkem stejnosměrného proudu ve směru jízdy a proti směru jízdy &lt;br&gt;
+                            se mohou i lokomotivy ve formátu DCC bezpečně zastavit na brzdných vzdálenostech Märklin®.&lt;br&gt;
+                            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">Remt op DC polariteitsdetectie. &lt;br&gt;
+                            Door te remmen bij gelijkspanning in beide richtingen, zelfs locomotieven &lt;br&gt;
+                            in DCC-formaat kunnen veilig stoppen in een Märklin® remstrekke.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="28" mask="XXXXXXXV" default="0" item="RailCom channel 1 (Broadcast)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom channel 1 (Broadcast)</label>
+        <label xml:lang="it">RailCom canale 1 (Broadcast)</label>
+        <label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
+        <label xml:lang="cs">RailCom kanál 1 (adresa)</label>
+        <label xml:lang="nl">RailCom Kanaal 1 (zenden)</label>
+      </variable>
+      <variable CV="28" mask="XXXXXXVX" default="0" item="RailCom channel 2 (Data)">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom channel 2 (Data)</label>
+        <label xml:lang="it">RailCom canale 2 (Dati)</label>
+        <label xml:lang="de">RailCom Kanal 2 (Daten)</label>
+        <label xml:lang="cs">RailCom kanál 2 (data)</label>
+        <label xml:lang="nl">RailCom Kanaal 2 (daten)</label>
+      </variable>
+      <!-- CV29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/kuehn/cv29RailCom_k.xml"/>
+      <!-- CV33 to CV46 Not standard NMRA function map -->
+      <xi:include href="http://jmri.org/xml/decoders/kuehn/functionmap_ext.xml"/>
+      <!-- Effects -->
+      <variable CV="49" mask="XXXXVVVV" default="0" item="Function F0F effect generated"><!-- output A -->
+        <enumVal>
+          <enumChoice choice="No effect">
+            <choice>No effect</choice>
+            <choice xml:lang="it">Nessun effetto</choice>
+            <choice xml:lang="de">kein Effekt</choice>
+            <choice xml:lang="cs">Bez efektů</choice>
+            <choice xml:lang="nl">Geen effekt</choice>
+          </enumChoice>
+          <enumChoice choice="Pulsing" value="1">
+            <choice>Pulsing</choice>
+            <choice xml:lang="it">Luce Pulsante</choice>
+            <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+            <choice xml:lang="cs">Pulzující</choice>
+            <choice xml:lang="nl">Mars-Licht (Pulserend)</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing" value="2">
+            <choice>Flashing</choice>
+            <choice xml:lang="it">Flash</choice>
+            <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+            <choice xml:lang="cs">Zábleskové</choice>
+            <choice xml:lang="nl">Flitslicht</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase B" value="4">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+            <choice xml:lang="nl">Knipper fase A</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Light with F-Key" value="5">
+            <choice>Dim Light with F-Key</choice>
+            <choice xml:lang="de">Abblenden mit Funktionstaste</choice>
+            <choice xml:lang="cs">Tlumení světla s F-klávesou</choice>
+            <choice xml:lang="nl">Dimmen met functietoets</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed=0" value="6">
+            <choice>Dim if Speed=0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.=0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost = 0</choice>
+            <choice xml:lang="nl">>Dim als snelheid = 0</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed&gt;0" value="7">
+            <choice>Dim if Speed&gt;0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.&gt;0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost &gt; 0</choice>
+            <choice xml:lang="nl">Dim als snelheid > 0</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase B</choice>
+            <choice xml:lang="it">Lampeggiante fase B</choice>
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+            <choice xml:lang="nl">Knipper fase B</choice>
+          </enumChoice>
+          <enumChoice choice="Random Light" value="9">
+            <choice>Random Light</choice>
+            <choice xml:lang="de">Zufallslicht</choice>
+            <choice xml:lang="cs">Náhodné světlo</choice>
+            <choice xml:lang="nl">Willekeurig licht</choice>
+          </enumChoice>
+          <enumChoice choice="Shunt Function" value="12">
+            <choice>Shunt Function</choice>
+            <choice xml:lang="de">Kupplungsfunktion</choice>
+            <choice xml:lang="cs">Spřáhlo</choice>
+            <choice xml:lang="nl">Koppelingsfunctie</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effects Output A (White)</label>
+        <label xml:lang="it">Effetti uscita A (bianco)</label>
+        <label xml:lang="de">Ausgang A (Weiß) Effekt</label>
+        <label xml:lang="cs">Efekty pro výstup A (bílá)</label>
+        <label xml:lang="nl">Uitgang A (wit) Effect</label>
+        <tooltip>&lt;html&gt;All combinations of effects are possible.&lt;br&gt;
+                            In practice they neutralise each other&lt;br&gt;
+                            so better use only one at a time.&lt;br&gt;
+                            If you want to combine set CV directly.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;Possibili tutte le combinazioni di effetti.&lt;br&gt;
+                                          In pratica si neutralizzano a vicenda, perciò è meglio usarli uno alla volta.
+                                          &lt;br&gt;Se si vuole combinarli settare le CV direttamente.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Alle Kombinationen von Effekten sind möglich.&lt;br&gt;
+                                          In der Praxis beeinträchtigen die Effekte sich gegenseitig.&lt;br&gt;
+                                          Es ist besser nur eine zu einem Zeitpunkt zu verwenden.&lt;br&gt;
+                                          Wenn Sie Effekte kombinieren möchten setzen Sie die CV direkt.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;
+                                          V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;
+                                          Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Alle combinaties van effecten zijn mogelijk.&lt;br&gt;
+                                          In de praktijk beïnvloeden de effecten elkaar.&lt;br&gt;
+                                          Het is beter om slechts een tegelijk te gebruiken.&lt;br&gt;
+                                          Als u effecten wilt combineren, stelt u die CV direct in.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="50" mask="XXXXVVVV" default="0" item="Function F0R effect generated"><!-- output B -->
+        <enumVal>
+          <enumChoice choice="No effect">
+            <choice>No effect</choice>
+            <choice xml:lang="it">Nessun effetto</choice>
+            <choice xml:lang="de">kein Effekt</choice>
+            <choice xml:lang="cs">Bez efektů</choice>
+            <choice xml:lang="nl">Geen effekt</choice>
+          </enumChoice>
+          <enumChoice choice="Pulsing" value="1">
+            <choice>Pulsing</choice>
+            <choice xml:lang="it">Luce Pulsante</choice>
+            <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+            <choice xml:lang="cs">Pulzující</choice>
+            <choice xml:lang="nl">Mars-Licht (Pulserend)</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing" value="2">
+            <choice>Flashing</choice>
+            <choice xml:lang="it">Flash</choice>
+            <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+            <choice xml:lang="cs">Zábleskové</choice>
+            <choice xml:lang="nl">Flitslicht</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase B" value="4">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+            <choice xml:lang="nl">Knipper fase A</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Light with F-Key" value="5">
+            <choice>Dim Light with F-Key</choice>
+            <choice xml:lang="de">Abblenden mit Funktionstaste</choice>
+            <choice xml:lang="cs">Tlumení světla s F-klávesou</choice>
+            <choice xml:lang="nl">Dimmen met functietoets</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed=0" value="6">
+            <choice>Dim if Speed=0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.=0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost = 0</choice>
+            <choice xml:lang="nl">>Dim als snelheid = 0</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed&gt;0" value="7">
+            <choice>Dim if Speed&gt;0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.&gt;0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost &gt; 0</choice>
+            <choice xml:lang="nl">Dim als snelheid > 0</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase B</choice>
+            <choice xml:lang="it">Lampeggiante fase B</choice>
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+            <choice xml:lang="nl">Knipper fase B</choice>
+          </enumChoice>
+          <enumChoice choice="Random Light" value="9">
+            <choice>Random Light</choice>
+            <choice xml:lang="de">Zufallslicht</choice>
+            <choice xml:lang="cs">Náhodné světlo</choice>
+            <choice xml:lang="nl">Willekeurig licht</choice>
+          </enumChoice>
+          <enumChoice choice="Shunt Function" value="12">
+            <choice>Shunt Function</choice>
+            <choice xml:lang="de">Kupplungsfunktion</choice>
+            <choice xml:lang="cs">Spřáhlo</choice>
+            <choice xml:lang="nl">Koppelingsfunctie</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effects Output B (yelo)</label>
+        <label xml:lang="it">Effetti uscita B (Giallo)</label>
+        <label xml:lang="de">Ausgang B (Gelb) Effekt</label>
+        <label xml:lang="cs">Efekty pro výstup B (žlutá)</label>
+        <label xml:lang="nl">Uitgang B (geel) Effect</label>
+        <tooltip>&lt;html&gt;All combinations of effects are possible.&lt;br&gt;
+                            In practice they neutralise each other&lt;br&gt;
+                            so better use only one at a time.&lt;br&gt;
+                            If you want to combine set CV directly.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;Possibili tutte le combinazioni di effetti.&lt;br&gt;
+                                          In pratica si neutralizzano a vicenda, perciò è meglio usarli uno alla volta.
+                                          &lt;br&gt;Se si vuole combinarli settare le CV direttamente.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Alle Kombinationen von Effekten sind möglich.&lt;br&gt;
+                                          In der Praxis beeinträchtigen die Effekte sich gegenseitig.&lt;br&gt;
+                                          Es ist besser nur eine zu einem Zeitpunkt zu verwenden.&lt;br&gt;
+                                          Wenn Sie Effekte kombinieren möchten setzen Sie die CV direkt.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;
+                                          V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;
+                                          Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Alle combinaties van effecten zijn mogelijk.&lt;br&gt;
+                                          In de praktijk beïnvloeden de effecten elkaar.&lt;br&gt;
+                                          Het is beter om slechts een tegelijk te gebruiken.&lt;br&gt;
+                                          Als u effecten wilt combineren, stelt u die CV direct in.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="51" mask="XXXXVVVV" default="0" item="Function 1 effect generated"><!-- output C -->
+        <enumVal>
+          <enumChoice choice="No effect">
+            <choice>No effect</choice>
+            <choice xml:lang="it">Nessun effetto</choice>
+            <choice xml:lang="de">kein Effekt</choice>
+            <choice xml:lang="cs">Bez efektů</choice>
+            <choice xml:lang="nl">Geen effekt</choice>
+          </enumChoice>
+          <enumChoice choice="Pulsing" value="1">
+            <choice>Pulsing</choice>
+            <choice xml:lang="it">Luce Pulsante</choice>
+            <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+            <choice xml:lang="cs">Pulzující</choice>
+            <choice xml:lang="nl">Mars-Licht (Pulserend)</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing" value="2">
+            <choice>Flashing</choice>
+            <choice xml:lang="it">Flash</choice>
+            <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+            <choice xml:lang="cs">Zábleskové</choice>
+            <choice xml:lang="nl">Flitslicht</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase B" value="4">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+            <choice xml:lang="nl">Knipper fase A</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Light with F-Key" value="5">
+            <choice>Dim Light with F-Key</choice>
+            <choice xml:lang="de">Abblenden mit Funktionstaste</choice>
+            <choice xml:lang="cs">Tlumení světla s F-klávesou</choice>
+            <choice xml:lang="nl">Dimmen met functietoets</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed=0" value="6">
+            <choice>Dim if Speed=0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.=0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost = 0</choice>
+            <choice xml:lang="nl">>Dim als snelheid = 0</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed&gt;0" value="7">
+            <choice>Dim if Speed&gt;0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.&gt;0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost &gt; 0</choice>
+            <choice xml:lang="nl">Dim als snelheid > 0</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase B</choice>
+            <choice xml:lang="it">Lampeggiante fase B</choice>
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+            <choice xml:lang="nl">Knipper fase B</choice>
+          </enumChoice>
+          <enumChoice choice="Random Light" value="9">
+            <choice>Random Light</choice>
+            <choice xml:lang="de">Zufallslicht</choice>
+            <choice xml:lang="cs">Náhodné světlo</choice>
+            <choice xml:lang="nl">Willekeurig licht</choice>
+          </enumChoice>
+          <enumChoice choice="Shunt Function" value="12">
+            <choice>Shunt Function</choice>
+            <choice xml:lang="de">Kupplungsfunktion</choice>
+            <choice xml:lang="cs">Spřáhlo</choice>
+            <choice xml:lang="nl">Koppelingsfunctie</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effects Output C (Green)</label>
+        <label xml:lang="it">Effetti uscita C (verde)</label>
+        <label xml:lang="de">Ausgang C (Grün) Effekt</label>
+        <label xml:lang="cs">Efekty pro výstup C (zelená)</label>
+        <label xml:lang="nl">Uitgang C (groen) Effect</label>
+        <tooltip>&lt;html&gt;All combinations of effects are possible.&lt;br&gt;
+                            In practice they neutralise each other&lt;br&gt;
+                            so better use only one at a time.&lt;br&gt;
+                            If you want to combine set CV directly.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;Possibili tutte le combinazioni di effetti.&lt;br&gt;
+                                          In pratica si neutralizzano a vicenda, perciò è meglio usarli uno alla volta.
+                                          &lt;br&gt;Se si vuole combinarli settare le CV direttamente.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Alle Kombinationen von Effekten sind möglich.&lt;br&gt;
+                                          In der Praxis beeinträchtigen die Effekte sich gegenseitig.&lt;br&gt;
+                                          Es ist besser nur eine zu einem Zeitpunkt zu verwenden.&lt;br&gt;
+                                          Wenn Sie Effekte kombinieren möchten setzen Sie die CV direkt.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;
+                                          V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;
+                                          Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Alle combinaties van effecten zijn mogelijk.&lt;br&gt;
+                                          In de praktijk beïnvloeden de effecten elkaar.&lt;br&gt;
+                                          Het is beter om slechts een tegelijk te gebruiken.&lt;br&gt;
+                                          Als u effecten wilt combineren, stelt u die CV direct in.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="52" mask="XXXXVVVV" default="0" item="Function 2 effect generated"><!-- output D -->
+        <enumVal>
+          <enumChoice choice="No effect">
+            <choice>No effect</choice>
+            <choice xml:lang="it">Nessun effetto</choice>
+            <choice xml:lang="de">kein Effekt</choice>
+            <choice xml:lang="cs">Bez efektů</choice>
+            <choice xml:lang="nl">Geen effekt</choice>
+          </enumChoice>
+          <enumChoice choice="Pulsing" value="1">
+            <choice>Pulsing</choice>
+            <choice xml:lang="it">Luce Pulsante</choice>
+            <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+            <choice xml:lang="cs">Pulzující</choice>
+            <choice xml:lang="nl">Mars-Licht (Pulserend)</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing" value="2">
+            <choice>Flashing</choice>
+            <choice xml:lang="it">Flash</choice>
+            <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+            <choice xml:lang="cs">Zábleskové</choice>
+            <choice xml:lang="nl">Flitslicht</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase B" value="4">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+            <choice xml:lang="nl">Knipper fase A</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Light with F-Key" value="5">
+            <choice>Dim Light with F-Key</choice>
+            <choice xml:lang="de">Abblenden mit Funktionstaste</choice>
+            <choice xml:lang="cs">Tlumení světla s F-klávesou</choice>
+            <choice xml:lang="nl">Dimmen met functietoets</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed=0" value="6">
+            <choice>Dim if Speed=0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.=0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost = 0</choice>
+            <choice xml:lang="nl">>Dim als snelheid = 0</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed&gt;0" value="7">
+            <choice>Dim if Speed&gt;0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.&gt;0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost &gt; 0</choice>
+            <choice xml:lang="nl">Dim als snelheid > 0</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase B</choice>
+            <choice xml:lang="it">Lampeggiante fase B</choice>
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+            <choice xml:lang="nl">Knipper fase B</choice>
+          </enumChoice>
+          <enumChoice choice="Random Light" value="9">
+            <choice>Random Light</choice>
+            <choice xml:lang="de">Zufallslicht</choice>
+            <choice xml:lang="cs">Náhodné světlo</choice>
+            <choice xml:lang="nl">Willekeurig licht</choice>
+          </enumChoice>
+          <enumChoice choice="Shunt Function" value="12">
+            <choice>Shunt Function</choice>
+            <choice xml:lang="de">Kupplungsfunktion</choice>
+            <choice xml:lang="cs">Spřáhlo</choice>
+            <choice xml:lang="nl">Koppelingsfunctie</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effects Output D (Violet)</label>
+        <label xml:lang="it">Effetti uscita D (viola)</label>
+        <label xml:lang="de">Ausgang D (Violett) Effekt</label>
+        <label xml:lang="cs">Efekty pro výstup D (fialová)</label>
+        <label xml:lang="nl">Uitgang D (paars) Effect</label>
+        <tooltip>&lt;html&gt;All combinations of effects are possible.&lt;br&gt;
+                            In practice they neutralise each other&lt;br&gt;
+                            so better use only one at a time.&lt;br&gt;
+                            If you want to combine set CV directly.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;Possibili tutte le combinazioni di effetti.&lt;br&gt;
+                                          In pratica si neutralizzano a vicenda, perciò è meglio usarli uno alla volta.
+                                          &lt;br&gt;Se si vuole combinarli settare le CV direttamente.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Alle Kombinationen von Effekten sind möglich.&lt;br&gt;
+                                          In der Praxis beeinträchtigen die Effekte sich gegenseitig.&lt;br&gt;
+                                          Es ist besser nur eine zu einem Zeitpunkt zu verwenden.&lt;br&gt;
+                                          Wenn Sie Effekte kombinieren möchten setzen Sie die CV direkt.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;
+                                          V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;
+                                          Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Alle combinaties van effecten zijn mogelijk.&lt;br&gt;
+                                          In de praktijk beïnvloeden de effecten elkaar.&lt;br&gt;
+                                          Het is beter om slechts een tegelijk te gebruiken.&lt;br&gt;
+                                          Als u effecten wilt combineren, stelt u die CV direct in.&lt;br&gt;&lt;/html&gt;</tooltip>
+        </variable>
+      <variable CV="47" mask="XXXXVVVV" default="0" item="Function 3 effect generated"><!-- output E -->
+        <enumVal>
+          <enumChoice choice="No effect">
+            <choice>No effect</choice>
+            <choice xml:lang="it">Nessun effetto</choice>
+            <choice xml:lang="de">kein Effekt</choice>
+            <choice xml:lang="cs">Bez efektů</choice>
+            <choice xml:lang="nl">Geen effekt</choice>
+          </enumChoice>
+          <enumChoice choice="Pulsing" value="1">
+            <choice>Pulsing</choice>
+            <choice xml:lang="it">Luce Pulsante</choice>
+            <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+            <choice xml:lang="cs">Pulzující</choice>
+            <choice xml:lang="nl">Mars-Licht (Pulserend)</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing" value="2">
+            <choice>Flashing</choice>
+            <choice xml:lang="it">Flash</choice>
+            <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+            <choice xml:lang="cs">Zábleskové</choice>
+            <choice xml:lang="nl">Flitslicht</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase B" value="4">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+            <choice xml:lang="nl">Knipper fase A</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Light with F-Key" value="5">
+            <choice>Dim Light with F-Key</choice>
+            <choice xml:lang="de">Abblenden mit Funktionstaste</choice>
+            <choice xml:lang="cs">Tlumení světla s F-klávesou</choice>
+            <choice xml:lang="nl">Dimmen met functietoets</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed=0" value="6">
+            <choice>Dim if Speed=0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.=0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost = 0</choice>
+            <choice xml:lang="nl">>Dim als snelheid = 0</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed&gt;0" value="7">
+            <choice>Dim if Speed&gt;0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.&gt;0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost &gt; 0</choice>
+            <choice xml:lang="nl">Dim als snelheid > 0</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase B</choice>
+            <choice xml:lang="it">Lampeggiante fase B</choice>
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+            <choice xml:lang="nl">Knipper fase B</choice>
+          </enumChoice>
+          <enumChoice choice="Random Light" value="9">
+            <choice>Random Light</choice>
+            <choice xml:lang="de">Zufallslicht</choice>
+            <choice xml:lang="cs">Náhodné světlo</choice>
+            <choice xml:lang="nl">Willekeurig licht</choice>
+          </enumChoice>
+          <enumChoice choice="Shunt Function" value="12">
+            <choice>Shunt Function</choice>
+            <choice xml:lang="de">Kupplungsfunktion</choice>
+            <choice xml:lang="cs">Spřáhlo</choice>
+            <choice xml:lang="nl">Koppelingsfunctie</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effects Output E (Pad)</label>
+        <label xml:lang="it">Effetti uscita E (Pad)</label>
+        <label xml:lang="de">Ausgang E (Lötpad) Effekt</label>
+        <label xml:lang="cs">Efekty pro výstup E (ploška)</label>
+        <label xml:lang="nl">Uitgang E (paars) Effect</label>
+        <tooltip>&lt;html&gt;All combinations of effects are possible.&lt;br&gt;
+                            In practice they neutralise each other&lt;br&gt;
+                            so better use only one at a time.&lt;br&gt;
+                            If you want to combine set CV directly.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;Possibili tutte le combinazioni di effetti.&lt;br&gt;
+                                          In pratica si neutralizzano a vicenda, perciò è meglio usarli uno alla volta.
+                                          &lt;br&gt;Se si vuole combinarli settare le CV direttamente.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Alle Kombinationen von Effekten sind möglich.&lt;br&gt;
+                                          In der Praxis beeinträchtigen die Effekte sich gegenseitig.&lt;br&gt;
+                                          Es ist besser nur eine zu einem Zeitpunkt zu verwenden.&lt;br&gt;
+                                          Wenn Sie Effekte kombinieren möchten setzen Sie die CV direkt.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;
+                                          V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;
+                                          Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Alle combinaties van effecten zijn mogelijk.&lt;br&gt;
+                                          In de praktijk beïnvloeden de effecten elkaar.&lt;br&gt;
+                                          Het is beter om slechts een tegelijk te gebruiken.&lt;br&gt;
+                                          Als u effecten wilt combineren, stelt u die CV direct in.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="48" mask="XXXXVVVV" default="0" item="Function 4 effect generated"><!-- output F -->
+        <enumVal>
+          <enumChoice choice="No effect">
+            <choice>No effect</choice>
+            <choice xml:lang="it">Nessun effetto</choice>
+            <choice xml:lang="de">kein Effekt</choice>
+            <choice xml:lang="cs">Bez efektů</choice>
+            <choice xml:lang="nl">Geen effekt</choice>
+          </enumChoice>
+          <enumChoice choice="Pulsing" value="1">
+            <choice>Pulsing</choice>
+            <choice xml:lang="it">Luce Pulsante</choice>
+            <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+            <choice xml:lang="cs">Pulzující</choice>
+            <choice xml:lang="nl">Mars-Licht (Pulserend)</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing" value="2">
+            <choice>Flashing</choice>
+            <choice xml:lang="it">Flash</choice>
+            <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+            <choice xml:lang="cs">Zábleskové</choice>
+            <choice xml:lang="nl">Flitslicht</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase B" value="4">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+            <choice xml:lang="nl">Knipper fase A</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Light with F-Key" value="5">
+            <choice>Dim Light with F-Key</choice>
+            <choice xml:lang="de">Abblenden mit Funktionstaste</choice>
+            <choice xml:lang="cs">Tlumení světla s F-klávesou</choice>
+            <choice xml:lang="nl">Dimmen met functietoets</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed=0" value="6">
+            <choice>Dim if Speed=0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.=0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost = 0</choice>
+            <choice xml:lang="nl">>Dim als snelheid = 0</choice>
+          </enumChoice>
+          <enumChoice choice="Dim if Speed&gt;0" value="7">
+            <choice>Dim if Speed&gt;0</choice>
+            <choice xml:lang="de">Abblenden wenn Fahr-St.&gt;0</choice>
+            <choice xml:lang="cs">Tlumení světla pokud rychlost &gt; 0</choice>
+            <choice xml:lang="nl">Dim als snelheid > 0</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase B</choice>
+            <choice xml:lang="it">Lampeggiante fase B</choice>
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+            <choice xml:lang="nl">Knipper fase B</choice>
+          </enumChoice>
+          <enumChoice choice="Random Light" value="9">
+            <choice>Random Light</choice>
+            <choice xml:lang="de">Zufallslicht</choice>
+            <choice xml:lang="cs">Náhodné světlo</choice>
+            <choice xml:lang="nl">Willekeurig licht</choice>
+          </enumChoice>
+          <enumChoice choice="Shunt Function" value="12">
+            <choice>Shunt Function</choice>
+            <choice xml:lang="de">Kupplungsfunktion</choice>
+            <choice xml:lang="cs">Spřáhlo</choice>
+            <choice xml:lang="nl">Koppelingsfunctie</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effects Output F (Pad)</label>
+        <label xml:lang="it">Effetti uscita F (Pad)</label>
+        <label xml:lang="de">Ausgang F (Lötpad) Effekt</label>
+        <label xml:lang="cs">Efekty pro výstup F (ploška)</label>
+        <label xml:lang="nl">Uitgang F (paars) Effect</label>
+        <tooltip>&lt;html&gt;All combinations of effects are possible.&lt;br&gt;
+                            In practice they neutralise each other&lt;br&gt;
+                            so better use only one at a time.&lt;br&gt;
+                            If you want to combine set CV directly.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt;Possibili tutte le combinazioni di effetti.&lt;br&gt;
+                                          In pratica si neutralizzano a vicenda, perciò è meglio usarli uno alla volta.
+                                          &lt;br&gt;Se si vuole combinarli settare le CV direttamente.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Alle Kombinationen von Effekten sind möglich.&lt;br&gt;
+                                          In der Praxis beeinträchtigen die Effekte sich gegenseitig.&lt;br&gt;
+                                          Es ist besser nur eine zu einem Zeitpunkt zu verwenden.&lt;br&gt;
+                                          Wenn Sie Effekte kombinieren möchten setzen Sie die CV direkt.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;
+                                          V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;
+                                          Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Alle combinaties van effecten zijn mogelijk.&lt;br&gt;
+                                          In de praktijk beïnvloeden de effecten elkaar.&lt;br&gt;
+                                          Het is beter om slechts een tegelijk te gebruiken.&lt;br&gt;
+                                          Als u effecten wilt combineren, stelt u die CV direct in.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <!-- Load regulation CV53 and 54-->
+      <variable CV="53" default="2" item="EMF Dynamic Config">
+        <decVal min="1" max="63"/>
+        <label>I adjustment</label>
+        <label xml:lang="it">reg.fine param. "I"</label>
+        <label xml:lang="de">I-Parameter</label>
+        <label xml:lang="cs">Složka I</label>
+        <label xml:lang="nl">I-Parameter</label>
+        <comment>Range 1-63</comment>
+        <tooltip>I adjustment, 1-63</tooltip>
+        <tooltip xml:lang="de">I-Parameter, 1-63</tooltip>
+        <tooltip xml:lang="cs">Úprava regulace EMF složky I, 1-63</tooltip>
+        <tooltip xml:lang="nl">I-Parameter, 1-63</tooltip>
+      </variable>
+      <variable CV="54" default="16" item="EMF Static Config">
+        <decVal min="1" max="63"/>
+        <label>P adjustment</label>
+        <label xml:lang="it">Reg.fine param. "P"</label>
+        <label xml:lang="de">P-Parameter</label>
+        <label xml:lang="cs">Složka P</label>
+        <comment>Range 1-63</comment>
+        <tooltip>P adjustment, 1-63</tooltip>
+        <tooltip xml:lang="de">P-Parameter, 1-63</tooltip>
+        <tooltip xml:lang="cs">Úprava regulace EMF složky P, 1-63</tooltip>
+        <tooltip xml:lang="nl">P-Parameter, 1-63</tooltip>
+      </variable>
+      <!-- Light option CV 55-->
+      <variable CV="55" default="0" item="Global lighting option 2">
+        <decVal min="00" max="99"/>
+        <label>Cycle Time Effects / Dimmer</label>
+        <label xml:lang="it">Effetti Ciclici / Riduzione luce</label>
+        <label xml:lang="de">Zykluszeit der Effekte / Dimmwert</label>
+        <label xml:lang="cs">Doba periody efektů/snížení výstupu</label>
+        <label xml:lang="nl">Cyclustijd van de effecten / dimwaarde</label>
+        <tooltip>&lt;html&gt;Controls Cycle Time of Effects and Dimming value (for CV49/52).&lt;br&gt;
+                            Decimal number = Cycle time: 0=0.5s, 9=4.5s&lt;br&gt;
+                            Unit number = Dimming: 0=full on, 9=lowest&lt;br&gt;
+                            e.g. 64 = cycle 3s (decimal value 6), dimmer value= 4 (unit value =4)&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Zykluszeit der Effekte und den Dimmwert für&lt;br&gt;
+                                          die Auslösung mit F-Taste oder Geschwindigkeit festlegen.&lt;br&gt;
+                                          Zehnerstelle = Zykluszeit der Effekte (0x-9x)&lt;br&gt;
+                                          Einerstelle = Dimmwert (x0-x9)&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Hiermee bepaalt u de cyclustijd van effecten en dimwaarde (voor CV49/52).&lt;br&gt;
+                                          Decimaal getal = Cyclustijd: 0=0.5s, 9=4.5s&lt;br&gt;
+                                          Ener getal = Dimmen: 0=vol, 9=laagste&lt;br&gt;
+                                          b.v. 64 = cyclus 3s (decimale waarde 6), dimmerwaarde= 4 (eenheidswaarde =4)&lt;br&gt;&lt;/html&gt;</tooltip>
+        <comment>Cycle Time Effects/Output Reduction</comment>
+      </variable>
+      <!-- User Configuration 1-->
+      <variable CV="56" mask="XXXXXXXV" default="0" item="Motor Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>EMK divider</label>
+        <label xml:lang="de">EMK Teiler</label>
+        <label xml:lang="cs">EMF dělič</label>
+        <label xml:lang="nl">EMK deler</label>
+        <tooltip>EMK divider on or off.</tooltip>
+        <tooltip xml:lang="de">EMK-Teiler ein- oder ausschalten.</tooltip>
+        <tooltip xml:lang="cs">Zapnutí/vypnutí EMF děliče</tooltip>
+        <tooltip xml:lang="nl">EMK-deler in- of uitschakelen.</tooltip>
+        <comment>User-Configuration 1</comment>
+      </variable>
+      <variable CV="56" mask="XXXXXXVX" default="1" item="EMF Enable">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>BEMF Load Compensation</label>
+        <label xml:lang="de">Lastregelung</label>
+        <label xml:lang="cs">BEMF kompenzace zátěže</label>
+        <label xml:lang="nl">Lastregeling</label>
+        <tooltip>BEMF Load Compensation disabled/enabled</tooltip>
+        <tooltip xml:lang="de">Lastregelung ein- oder ausschalten</tooltip>
+        <tooltip xml:lang="cs">Zapnutí/vypnutí kompenzace zátěže</tooltip>
+        <tooltip xml:lang="nl">Lastregeling in- of uitschakelen.</tooltip>
+        <comment>User Configuration 1</comment>
+      </variable>
+      <variable CV="56" mask="XXXXXVXX" default="0" item="SUSI mode">
+        <enumVal>
+        <enumChoice choice="Deactivated (Use ZCLK and ZDAT as AUX E and AUX F instead)" value="0">
+          <choice>Outputs E and F are switching outputs (SUSI inactive)</choice>
+          <choice xml:lang="de">Ausgänge E und F sind Schaltausgänge (SUSI inaktiv)</choice>
+          <choice xml:lang="nl">Uitgangen E en F zijn schakelbare uitgangen (SUSI inactief)</choice>
+        </enumChoice>
+        <enumChoice choice="Activated" value="1">
+          <choice>SUSI interface active (outputs E and F inactive)</choice>
+          <choice xml:lang="de">SUSI-Schnittstelle aktiv (Ausgänge E und F inaktiv)</choice>
+          <choice xml:lang="nl">SUSI-interface activ (uitgangen E en F inactief)</choice>
+        </enumChoice>
+        </enumVal>
+        <label>Output E and F / SUSI</label>
+        <label xml:lang="de">Ausgang E und F / SUSI</label>
+        <label xml:lang="nl">Uitgang E en F / SUSI</label>
+        <tooltip>Output E and F or SUSI active</tooltip>
+        <tooltip xml:lang="de">Ausgang E und F oder SUSI aktiv</tooltip>
+        <tooltip xml:lang="nl">Uitgangen E en F Of SUSI activ</tooltip>
+        <comment>User Configuration 1</comment>
+      </variable>
+      <variable CV="57" mask="XXXXXXXV" item="Shuntkey controls output 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output A on by shunting</label>
+        <label xml:lang="de">Ausgang A an bei Rangiergang ein</label>
+        <label xml:lang="cs">Výstup A zapnut při posunu</label>
+        <label xml:lang="nl">Uitgang A aan bij Rangeergang aan</label>
+      </variable>
+      <variable CV="57" mask="XXXXXXVX" item="Shuntkey controls output 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output B on by shunting</label>
+        <label xml:lang="de">Ausgang B an bei Rangiergang ein</label>
+        <label xml:lang="cs">Výstup B zapnut při posunu</label>
+        <label xml:lang="nl">Uitgang B aan bij Rangeergang aan</label>
+      </variable>
+      <variable CV="57" mask="XXXXXVXX" item="Shuntkey controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output C on by shunting</label>
+        <label xml:lang="de">Ausgang C an bei Rangiergang ein</label>
+        <label xml:lang="cs">Výstup C zapnut při posunu</label>
+        <label xml:lang="nl">Uitgang C aan bij Rangeergang aan</label>
+      </variable>
+      <variable CV="57" mask="XXXXVXXX" item="Shuntkey controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output D on by shunting</label>
+        <label xml:lang="de">Ausgang D an bei Rangiergang ein</label>
+        <label xml:lang="cs">Výstup D zapnut při posunu</label>
+        <label xml:lang="nl">Uitgang D aan bij Rangeergang aan</label>
+      </variable>
+      <variable CV="57" mask="XXXVXXXX" item="Shuntkey controls output 5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output E on by shunting</label>
+        <label xml:lang="de">Ausgang E an bei Rangiergang ein</label>
+        <label xml:lang="cs">Výstup E zapnut při posunu</label>
+        <label xml:lang="nl">Uitgang E aan bij Rangeergang</label>
+      </variable>
+      <variable CV="57" mask="XXVXXXXX" item="Shuntkey controls output 6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output F on by shunting</label>
+        <label xml:lang="de">Ausgang F an bei Rangiergang ein</label>
+        <label xml:lang="cs">Výstup F zapnut při posunu</label>
+        <label xml:lang="nl">Uitgang F aan bij Rangeergang</label>
+      </variable>
+      <variable CV="57" mask="XVXXXXXX" item="Shuntkey controls output 7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>outputs off when F0 is off</label>
+        <label xml:lang="de">Ausgänge aus, wenn F0 aus</label>
+        <label xml:lang="cs">Výstup zapnut pokud je F0 zapnuto</label>
+        <label xml:lang="nl">uitgangen uit wanneer F0 is uitgeschakeld</label>
+      </variable>
+      <variable CV="58" mask="XXXXXXXV" item="F1 controls output 7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Switching off the delay (CV-3.4) with F1</label>
+        <label xml:lang="de">Ausschalten der Verzögerung (CV#3,4) mit F1</label>
+        <label xml:lang="nl">De vertraging uitschakelen (CV-3.4) met F1</label>
+      </variable>
+      <variable CV="58" mask="XXXXXXVX" item="F2 controls output 7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Switching off the delay (CV-3.4) with F2</label>
+        <label xml:lang="de">Ausschalten der Verzögerung (CV#3,4) mit F2</label>
+        <label xml:lang="nl">De vertraging uitschakelen (CV-3.4) met F2</label>
+      </variable>
+      <variable CV="58" mask="XXXXXVXX" item="F3 controls output 7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Switching off the delay (CV-3.4) with F3</label>
+        <label xml:lang="de">Ausschalten der Verzögerung (CV#3,4) mit F3</label>
+        <label xml:lang="nl">De vertraging uitschakelen (CV-3.4) met F3</label>
+      </variable>
+      <variable CV="58" mask="XXXXVXXX" item="F4 controls output 7" default="1">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Switching off the delay (CV-3.4) with F4</label>
+        <label xml:lang="de">Ausschalten der Verzögerung (CV#3,4) mit F4</label>
+        <label xml:lang="nl">De vertraging uitschakelen (CV-3.4) met F4</label>
+      </variable>
+      <variable CV="58" mask="XXXVXXXX" item="F1 controls output 9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Shunting gear with F1</label>
+        <label xml:lang="de">Rangiergang mit F1</label>
+        <label xml:lang="nl">Rangeergang met F1</label>
+      </variable>
+      <variable CV="58" mask="XXVXXXXX" item="F2 controls output 9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Shunting gear with F2</label>
+        <label xml:lang="de">Rangiergang mit F2</label>
+        <label xml:lang="nl">Rangeergang met F2</label>
+      </variable>
+      <variable CV="58" mask="XVXXXXXX" item="F3 controls output 9" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Shunting gear with F3</label>
+        <label xml:lang="de">Rangiergang mit F3</label>
+        <label xml:lang="nl">Rangeergang met F3</label>
+      </variable>
+      <variable CV="58" mask="VXXXXXXX" item="F4 controls output 9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Shunting gear with F4</label>
+        <label xml:lang="de">Rangiergang mit F4</label>
+        <label xml:lang="nl">Rangeergang met F4</label>
+      </variable>
+      <variable CV="59" mask="XXXXXXXV" item="Global lighting option 3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Dimming with F1</label>
+        <label xml:lang="de">Abblenden mit F1</label>
+        <label xml:lang="nl">Dimmen met F1</label>
+        <tooltip>&lt;html&gt;Do you want to dim with F1?&lt;br&gt;
+                            Set the dimming value in the one-digit of CV-55.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Soll mit F1 das Abblenden ausgelöst werden?&lt;br&gt;
+                                          Stellen Sie den Dimmwert in der Einerstelle von CV#55 ein.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Wil u dat F1 het dimmen activeert?
+                                          Stel dan de dimwaarde in, in de ééner stelle van CV-55.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="59" mask="XXXXXXVX" item="Global lighting option 4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Dimming with F2</label>
+        <label xml:lang="de">Abblenden mit F2</label>
+        <label xml:lang="nl">Dimmen met F2</label>
+        <tooltip>&lt;html&gt;Do you want to dim with F2?&lt;br&gt;
+                            Set the dimming value in the one-digit of CV-55.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Soll mit F2 das Abblenden ausgelöst werden?&lt;br&gt;
+                                          Stellen Sie den Dimmwert in der Einerstelle von CV#55 ein.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Wil u dat F2 het dimmen activeert?
+                                          Stel dan de dimwaarde in, in de ééner stelle van CV-55.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="59" mask="XXXXXVXX" item="Global lighting option 5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Dimming with F3</label>
+        <label xml:lang="de">Abblenden mit F3</label>
+        <label xml:lang="nl">Dimmen met F3</label>
+        <tooltip>&lt;html&gt;Do you want to dim with F3?&lt;br&gt;
+                            Set the dimming value in the one-digit of CV-55.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Soll mit F3 das Abblenden ausgelöst werden?&lt;br&gt;
+                                          Stellen Sie den Dimmwert in der Einerstelle von CV#55 ein.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Wil u dat F3 het dimmen activeert?
+                                          Stel dan de dimwaarde in, in de ééner stelle van CV-55.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="59" mask="XXXXVXXX" item="Global lighting option 6" default="0">
+        <label>Dimming with F4</label>
+        <label xml:lang="de">Abblenden mit F4</label>
+        <label xml:lang="nl">Dimmen met F4</label>
+        <tooltip>&lt;html&gt;Do you want to dim with F4?&lt;br&gt;
+                            Set the dimming value in the one-digit of CV-55.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Soll mit F4 das Abblenden ausgelöst werden?&lt;br&gt;
+                                          Stellen Sie den Dimmwert in der Einerstelle von CV#55 ein.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Wil u dat F4 het dimmen activeert?
+                                          Stel dan de dimwaarde in, in de ééner stelle van CV-55.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="60" default="0" item="Output 1 effect generated">
+        <decVal min="0" max="99"/>
+        <label>Dimmvalue Output B / Output A</label>
+        <label xml:lang="de">Dimmwert Ausgang B / Ausgang A</label>
+        <label xml:lang="cs">Hodnota ztlumení výstup B / výstup A</label>
+        <label xml:lang="nl">Dim warde uitgang B / uitgang A</label>
+        <tooltip>&lt;html&gt;Here you can set the brightness reduction (dimming) individually for each output.&lt;br&gt;
+                            Ten-digit = Output B&lt;br&gt;
+                            One-digit = Output A&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Helligkeitsreduktion (Dimmen) individuell für jeden Ausgang festlegen.&lt;br&gt;
+                                          Zehnerstelle = Ausgang B&lt;br&gt;
+                                          Einerstelle = Ausgang A&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Zde se nastavuje snížení jasu pro každý jednotlivý výstup.&lt;br&gt;
+                                          Desítky = výstup B&lt;br&gt;
+                                          Jednotky =výstup A&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Hier können Sie die Helligkeitsreduktion (Dimmen) individuell für jeden Ausgang festlegen.&lt;br&gt;
+                                          Zehnerstelle = uitgang B&lt;br&gt;
+                                          Ééner stelle = uitgang A&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="61" default="0" item="Output 2 effect generated">
+        <decVal min="0" max="99"/>
+        <label>Dimmvalue Output D / Output C</label>
+        <label xml:lang="de">Dimmwert Ausgang D / Ausgang C</label>
+        <label xml:lang="cs">Hodnota ztlumení výstup D / výstup C</label>
+        <label xml:lang="nl">Dim warde uitgang D / uitgang C</label>
+        <tooltip>&lt;html&gt;Here you can set the brightness reduction (dimming) individually for each output.&lt;br&gt;
+                            Ten-digit = Output D&lt;br&gt;
+                            One-digit = Output C&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Helligkeitsreduktion (Dimmen) individuell für jeden Ausgang festlegen.&lt;br&gt;
+                                          Zehnerstelle = Ausgang D&lt;br&gt;
+                                          Einerstelle = Ausgang C&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Zde se nastavuje snížení jasu pro každý jednotlivý výstup.&lt;br&gt;
+                                          Desítky = výstup D&lt;br&gt;
+                                          Jednotky =výstup C&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Hier können Sie die Helligkeitsreduktion (Dimmen) individuell für jeden Ausgang festlegen.&lt;br&gt;
+                                          Zehnerstelle = uitgang D&lt;br&gt;
+                                          Ééner stelle = uitgang C&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="62" default="0" item="Output 3 effect generated">
+      <decVal min="0" max="99"/>
+      <label>Dimmvalue Output F / Output E</label>
+        <label xml:lang="de">Dimmwert Ausgang F / Ausgang E</label>
+        <label xml:lang="cs">Hodnota ztlumení výstup F / výstup E</label>
+        <label xml:lang="nl">Dim warde uitgang F / uitgang E</label>
+        <tooltip>&lt;html&gt;Here you can set the brightness reduction (dimming) individually for each output.&lt;br&gt;
+                            Ten-digit = Output F&lt;br&gt;
+                            One-digit = Output E&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Helligkeitsreduktion (Dimmen) individuell für jeden Ausgang festlegen.&lt;br&gt;
+                                          Zehnerstelle = Ausgang F&lt;br&gt;
+                                          Einerstelle = Ausgang E&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Zde se nastavuje snížení jasu pro každý jednotlivý výstup.&lt;br&gt;
+                                          Desítky = výstup F&lt;br&gt;
+                                          Jednotky =výstup E&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Hier können Sie die Helligkeitsreduktion (Dimmen) individuell für jeden Ausgang festlegen.&lt;br&gt;
+                                          Zehnerstelle = uitgang F&lt;br&gt;
+                                          Ééner stelle = uitgang E&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="63" default="48" item="Uncoupler1">
+        <decVal min="00" max="99"/>
+        <label>Uncoupler</label>
+        <label xml:lang="de">Kupplungsparameter</label>
+        <label xml:lang="cs">Rozpojovač</label>
+        <label xml:lang="nl">Koppelingsparameters</label>
+        <tooltip>&lt;html&gt;With the ten digit (0x... 9x) the tightening time (coupling receives full voltage) is set.&lt;br&gt;
+                            Value 0=0.5 sec.&lt;br&gt;
+                            1=1 sec ... 9=9 Sec.&lt;br&gt;
+                            With the one digit (x0.. x8) the holding rate (voltage reduction) is determined after the tightening time.&lt;br&gt;
+                            0 does not mean a reduction.&lt;br&gt;
+                            7 largest lowering (lowest holding voltage).&lt;br&gt;
+                            8 turns off the clutch completely after the tightening time has elapsed.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Mit der Zehnerstelle (0x...9x) wird die Anzugszeit (Kupplung erhält volle Spannung) eingestellt.&lt;br&gt;
+                                          Wert 0=0,5 Sec.&lt;br&gt;
+                                          1=1 Sec ... 9=9 Sec.&lt;br&gt;
+                                          Mit der Einerstelle (x0..x8) wird die Halterate (Spannungsabsenkung) nach Ablauf der Anzugszeit bestimmt.&lt;br&gt;
+                                          0 bedeutet keine Absenkung.&lt;br&gt;
+                                          7 größte Absenkung (geringste Haltespannung).&lt;br&gt;
+                                          8 schaltet die Kupplung nach Ablauf der Anzugszeit komplett aus.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Met de tien cijfers (0x... 9x) de aantrektijd (koppeling krijgt volledige spanning.&lt;br&gt;
+                                          Waarde 0=0,5 sec.&lt;br&gt;
+                                          1 = 1 sec ... 9=9 Sec.&lt;br&gt;
+                                          Met het ener cijfers (x0.. x8) wordt de aflooptijd (spanningsreductie) bepaald na het einde van de aantrektijd.&lt;br&gt;
+                                          0 betekent geenvermindering.&lt;br&gt;
+                                          7 grootste afzinking (laagste houdspanning).&lt;br&gt;
+                                          8 schakelt de koppeling volledig uit nadat de aflooptijd is verstreken.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <!-- Speed Table -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <!-- User ID -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable CV="112" mask="XXVXXXXX" default="50" item="Advanced Group 1 Option 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Short Term Memory deactivated</label>
+        <label xml:lang="de">Kurzzeitspeicher deaktiviert</label>
+        <label xml:lang="nl">Korte termijn geheugen gedeactiveerd</label>
+        <tooltip>when "on" the decoder's short-term memory is deactivated.</tooltip>
+        <tooltip xml:lang="de">wenn "ein" ist der Kurzzeitspeicher des Decoders deaktiviert.</tooltip>
+        <tooltip xml:lang="nl">wanneer aan is het kortetermijngeheugen van de decoder gedeactiveerd.</tooltip>
+      </variable>
+      <variable CV="113" mask="XXXXVVVV" default="0" item="Global lighting option 1">
+        <enumVal>
+          <enumChoice choice="32ms">
+            <choice>32 ms</choice>
+          </enumChoice>
+          <enumChoice choice="64ms">
+            <choice>64 ms</choice>
+          </enumChoice>
+          <enumChoice choice="128ms">
+            <choice>128 ms</choice>
+          </enumChoice>
+          <enumChoice choice="256ms">
+            <choice>256 ms</choice>
+          </enumChoice>
+          <enumChoice choice="512ms">
+            <choice>512 ms</choice>
+          </enumChoice>
+          <enumChoice choice="1sec">
+            <choice>1 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2sec">
+            <choice>2 sec</choice>
+          </enumChoice>
+          <enumChoice choice="4sec">
+            <choice>4 sec</choice>
+          </enumChoice>
+          <enumChoice choice="8sec">
+            <choice>8 sec</choice>
+          </enumChoice>
+          <enumChoice choice="16sec">
+            <choice>16 sec</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Frequency Random generator</label>
+        <label xml:lang="de">Häufigkeit Zufallsgenerator</label>
+        <label xml:lang="cs">Frekvence náhodného generátoru</label>
+        <label xml:lang="nl">Toevalsgenerator voor frequentie.</label>
+        <tooltip>With this CV, the smallest time interval of random events can be set.</tooltip>
+        <tooltip xml:lang="de">Mit dieser CV kann der kleinste zeitliche Abstand von Zufallsereignissen eingestellt werden.</tooltip>
+        <tooltip xml:lang="cs">V CV lze nastavit nejkratší interval náhodných jevů.</tooltip>
+        <tooltip xml:lang="nl">Met dit CV kan het kleinste tijdsinterval van willekeurige gebeurtenissen worden ingesteld.</tooltip>
+      </variable>
+      <variable CV="115" default="3" item="Asymmetrical DCC Threshold">
+      <decVal min="0" max="9"/>
+        <label>Asymmetrical threshold</label>
+        <label xml:lang="de">Asymmetrie-Erkennungspegel</label>
+        <label xml:lang="cs">Práh asymetrie</label>
+        <label xml:lang="nl">Detectieniveau van asymmetrie</label>
+        <tooltip>&lt;html&gt;Here, the sensitivity of the detection of the&lt;br&gt;
+                            asymmetric digital voltage can be adjusted.&lt;br&gt;
+                            Smaller values increase sensitivity.&lt;br&gt; 
+                            Larger values make detection more stable for&lt;br&gt;
+                            Command stations with inaccurate output levels.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Hier kann die Empfindlichkeit der Erkennung der&lt;br&gt;
+                                          asymmetrischen Digitalspannung eingestellt werden.&lt;br&gt;
+                                          Kleinere Werte erhöhen die Empfindlichkeit.&lt;br&gt;
+                                          Größere Werte machen die Erkennung stabiler bei&lt;br&gt;
+                                          Zentralen mit ungenauem Ausgangspegel.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Hier kan de gevoeligheid van de detectie van de&lt;br&gt;
+                                          asymmetrische digitale spanning worden aangepast.&lt;br&gt;
+                                          Kleinere waarden verhogen de gevoeligheid.&lt;br&gt;
+                                          Grotere waarden maken detectie stabieler bei centrales&lt;br&gt;
+                                          met onnauwkeurige uitgangspegel.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="123" default="5" item="Uncoupler2">
+        <decVal min="0" max="9"/>
+        <label>Move Away Time</label>
+        <label xml:lang="de">Abrückzeit</label>
+        <label xml:lang="cs">Doba odstoupení</label>
+        <label xml:lang="nl">Weg rij tijd</label>
+      </variable>
+      <variable CV="124" default="1" item="Uncoupler3">
+        <decVal min="0" max="255"/>
+        <label>Move Away Speed</label>
+        <label xml:lang="de">Abrückgeschwindigkeit</label>
+        <label xml:lang="cs">Rychlost odstoupení</label>
+        <label xml:lang="nl">Weg rij snelheid</label>
+      </variable>
+      <variable CV="126" default="0" item="Analog Vhigh">
+        <decVal min="0" max="255"/>
+        <label>High Speed in Analog Mode</label>
+        <label xml:lang="de">Höchstgeschwindigkeit im Analogmodus</label>
+        <label xml:lang="cs">Rychlost v analogovém režimu</label>
+        <label xml:lang="nl">Topsnelheid in analoge modus</label>
+      </variable>
+      <variable CV="127" readOnly="yes" default="3" item="Product Number" tooltip="Sub-version Number (read only)">
+        <decVal/>
+        <label>Sub-version</label>
+        <label xml:lang="it">Sub-Vers. Numero prodotto</label>
+        <label xml:lang="de">Decoder Unterversion</label>
+        <label xml:lang="cs">Podverze</label>
+        <label xml:lang="nl">Decoder-subversie</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="de">Reset - Grundeinstellung des Decoders wiederherstellen</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="nl">Resetten - De standaardinstelling van de decoder herstellen</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneABC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneAdvanced.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneRailcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneSUSI.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneShuntUncouple.xml"/>
+</decoder-config>

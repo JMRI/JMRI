@@ -2,9 +2,9 @@ package jmri.jmrix.roco.z21;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import jmri.CommandStation;
-import jmri.InstanceManager;
-import jmri.NamedBean;
+
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
@@ -18,12 +18,12 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
- * @author	Paul Bender Copyright (C) 2013,2019
+ * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
+ * @author Paul Bender Copyright (C) 2013,2019,2020
  */
-public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     private Z21XPressNetTunnel _xnettunnel = null;
     private Z21LocoNetTunnel _loconettunnel = null;
@@ -34,7 +34,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public Z21SystemConnectionMemo(String prefix, String userName) {
         super(prefix, userName);
-        register(); // registers general type
         InstanceManager.store(this, Z21SystemConnectionMemo.class); // also register as specific type
         init();
     }
@@ -53,6 +52,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Traffic Controller for this instance.
+     * @param newtc Z21 traffic controller.
      */
     public void setTrafficController(Z21TrafficController newtc) {
         _tc = newtc;
@@ -65,35 +65,27 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Reporter Manager for this instance.
+     * @param rm reporter manager.
      */
     public void setReporterManager(Z21ReporterManager rm){
-        _rm = rm;
+        store(rm, ReporterManager.class);
     }
 
     public Z21ReporterManager getReporterManager() {
-        if(_rm==null){
-           setReporterManager(new Z21ReporterManager(this));
-        }
-        return _rm;
+        return (Z21ReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class<?> c) -> { return new Z21ReporterManager(this); });
     }
-
-    private Z21ReporterManager _rm = null;
 
     /**
      * SensorManager for this instance.
+     * @param sm sensor manager.
      */
     public void setSensorManager(Z21SensorManager sm){
-        _sm = sm;
+        store(sm,SensorManager.class);
     }
 
     public Z21SensorManager getSensorManager() {
-        if(_sm==null){
-           setSensorManager(new Z21SensorManager(this));
-        }
-        return _sm;
+        return (Z21SensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> { return new Z21SensorManager(this); });
     }
-
-    private Z21SensorManager _sm = null;
 
     public XNetProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
@@ -117,9 +109,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.ReporterManager.class)){
            return true;
         }
-        if (type.equals(jmri.MultiMeter.class)){
-           return true;
-        }
         if (type.equals(jmri.SensorManager.class)){
            return true;
         }
@@ -127,14 +116,14 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             // delegate to the XPressNet tunnel.
             if(_xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type)) {
                return true;
-            } // don't return false here, let the following code run 
+            } // don't return false here, let the following code run
         }
         if (_loconettunnel!=null) {
             // delegate to the LocoNet tunnel.
             if(_loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(type)) {
                return true;
             } // don't return false here, let the following code run
-            
+
         }
         return super.provides(type); // nothing, by default
     }
@@ -142,20 +131,16 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Provide manager by class.
      */
-    @SuppressWarnings("unchecked")  // xpressnet code managed type for cast
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
         }
         if(T.equals(jmri.ReporterManager.class)){
-            return (T) getReporterManager();
-        }
-        if(T.equals(jmri.MultiMeter.class)){
-            return (T) getMultiMeter();
+            return super.get(T);
         }
         if(T.equals(jmri.SensorManager.class)){
-            return (T) getSensorManager();
+            return super.get(T);
         }
         if (_xnettunnel!=null && _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(T) ) {
             // delegate to the XPressNet tunnel.
@@ -172,12 +157,11 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Configure the common managers for z21 connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         log.debug("Called Configure Managers");
 
-        if(z21CommandStation == null){
-           setRocoZ21CommandStation(new RocoZ21CommandStation());
-        }
+        RocoZ21CommandStation z21CommandStation = getRocoZ21CommandStation();
 
         // set the broadcast flags so we get messages we may want to hear
         z21CommandStation.setXPressNetMessagesFlag(true);
@@ -191,10 +175,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                            z21CommandStation.getZ21BroadcastFlags()),null);
 
         // add an LocoNet Tunnel
-        _loconettunnel = new Z21LocoNetTunnel(this);
+        _loconettunnel = (Z21LocoNetTunnel) classObjectMap.computeIfAbsent(Z21LocoNetTunnel.class, (Class<?> c) -> new Z21LocoNetTunnel(this));
 
         // add an XpressNet Tunnel
-        _xnettunnel = new Z21XPressNetTunnel(this);
+        _xnettunnel = (Z21XPressNetTunnel) classObjectMap.computeIfAbsent(Z21XPressNetTunnel.class, (Class<?> c) -> new Z21XPressNetTunnel(this));
 
         // set up the Reporter Manager
         jmri.InstanceManager.setReporterManager(getReporterManager());
@@ -203,15 +187,18 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setSensorManager(getSensorManager());
 
         // but make sure the LocoNet memo is set (for one feedback message).
-        Z21XNetProgrammerManager xpm = (Z21XNetProgrammerManager) _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
-        xpm.setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
+        XNetProgrammerManager xpm = _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
+        if ( xpm instanceof Z21XNetProgrammerManager) {
+            ((Z21XNetProgrammerManager) xpm).setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
+        }
 
-        // setup the MultiMeter
-        getMultiMeter();
+        // setup the PredefinedMeters
+        createPredefinedMeters();
 
         // setup the HeartBeat
         getHeartBeat();
 
+        register();
    }
 
     @Override
@@ -228,53 +215,56 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide access to the Command Station for this particular connection.
      * <p>
      * NOTE: Command Station defaults to NULL
+     * @return command station, may be null.
      */
     public CommandStation getCommandStation() {
-        return commandStation;
+        return get(CommandStation.class);
     }
 
     public void setCommandStation(CommandStation c) {
-        commandStation = c;
+        store(c,CommandStation.class);
     }
-
-    private CommandStation commandStation = null;
 
     /**
      * Provide access to the Roco Z21 Command Station for this particular
      * connection.
      * <p>
      * NOTE: Command Station defaults to NULL
+     * @return Roco Z21 Command Station, may be null.
      */
     public RocoZ21CommandStation getRocoZ21CommandStation() {
-        return z21CommandStation;
+        return (RocoZ21CommandStation) classObjectMap.computeIfAbsent(RocoZ21CommandStation.class, (Class<?> c) -> new RocoZ21CommandStation());
     }
 
     public void setRocoZ21CommandStation(RocoZ21CommandStation c) {
-        z21CommandStation = c;
+        store(c,RocoZ21CommandStation.class);
     }
 
-    private RocoZ21CommandStation z21CommandStation = null;
+    protected Z21PredefinedMeters predefinedMeters;
 
     /**
      * Provide access to the Roco Z21 MultiMeter for this particular
      * connection.
      * <p>
-     * NOTE: MultiMeter defaults to NULL
+     * NOTE: PredefinedMeters defaults to NULL
+     * @return PredefinedMeters, creates new if null.
      */
-    public jmri.MultiMeter getMultiMeter() {
-        if(meter == null){
-           meter = new Z21MultiMeter(this);
-           jmri.InstanceManager.store(meter,jmri.MultiMeter.class);
+    public Z21PredefinedMeters createPredefinedMeters() {
+        if (getDisabled()) {
+            return null;
         }
-        return meter;
+        if (predefinedMeters == null) {
+            InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(this));
+            predefinedMeters = new Z21PredefinedMeters(this);
+        }
+        return predefinedMeters;
     }
-
-    private Z21MultiMeter meter = null;
 
     /**
      * Provide access to the Z21HeartBeat instance for this connection.
      * <p>
      * NOTE: HeartBeat defaults to NULL
+     * @return the HeartBeat, creates new if null.
      */
     public Z21HeartBeat getHeartBeat() {
         if(heartBeat == null){
@@ -282,9 +272,8 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         return heartBeat;
     }
-    
-    private Z21HeartBeat heartBeat = null;
 
+    private Z21HeartBeat heartBeat = null;
 
     void shutdownTunnel(){
         if (_xnettunnel!=null) {
@@ -300,6 +289,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         shutdownTunnel();
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
+        }
         super.dispose();
     }
 

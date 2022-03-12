@@ -12,6 +12,9 @@ public interface NetworkPortAdapter extends PortAdapter {
 
     /**
      * Connects to the end device using a hostname/ip address and port
+     * @param host hostname / ip address.
+     * @param port network port.
+     * @throws java.io.IOException on connection error.
      */
     public void connect(String host, int port) throws java.io.IOException;
 
@@ -24,14 +27,15 @@ public interface NetworkPortAdapter extends PortAdapter {
     /**
      * Query the status of this connection.
      *
-     * @return true if all is OK, at least as far as known
+     * @return true if all is OK, at least as far as known.
      */
     @Override
     public boolean status();
 
     /**
-     * Remember the associated port name
+     * Remember the associated port name.
      *
+     * @param s port name.
      */
     public void setPort(String s);
 

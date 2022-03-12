@@ -1,7 +1,8 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.MemorySpinnerIcon;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.display.*;
+
 import org.jdom2.Element;
 
 /**
@@ -41,9 +42,11 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor p = (Editor) o;
         MemorySpinnerIcon l = new MemorySpinnerIcon(p);
@@ -51,7 +54,11 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         l.setMemory(element.getAttribute("memory").getValue());
 
         loadTextInfo(l, element);
-        p.putItem(l);
+        try {
+            p.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }

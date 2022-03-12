@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -132,7 +132,7 @@
       <p>Pour plus d'informations , voir &eacute;galement le
       <a href="../../../html/tools/index.shtml">Index
       g&eacute;n&eacute;ral des outils</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

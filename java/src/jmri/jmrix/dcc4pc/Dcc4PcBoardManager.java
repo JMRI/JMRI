@@ -51,7 +51,7 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
     @SuppressFBWarnings(value="DLS_DEAD_LOCAL_STORE", justification="See issue #6132")
     public void reply(Dcc4PcReply r) {
         if (log.isDebugEnabled()) {
-            log.debug("Reply details sm: " + r.toHexString());
+            log.debug("Reply details sm: {}", r.toHexString());
         }
         if(r.getBoard() == -1){
             return;
@@ -123,7 +123,7 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug("timeout received to our last message " + m.toString());
+            log.debug("timeout received to our last message {}", m.toString());
         }
         log.debug("Timeout to message {} for board {}", m.toString(), m.getBoard());
     }

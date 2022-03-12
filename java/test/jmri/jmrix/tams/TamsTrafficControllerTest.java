@@ -1,29 +1,28 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * TamsTrafficControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.tams.TamsTrafficController
+ * Test for the jmri.jmrix.tams.TamsTrafficController
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class TamsTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new TamsTrafficController();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

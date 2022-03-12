@@ -113,7 +113,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
                     mFlashGreen.getBean().setCommandedState(mFlashGreenState);
                     break;
                 default:
-                    log.warn("Unexpected new appearance: " + mAppearance);
+                    log.warn("Unexpected new appearance: {}", mAppearance);
                 // go dark by falling through
                 case DARK:
                     mDark.getBean().setCommandedState(mDarkState);

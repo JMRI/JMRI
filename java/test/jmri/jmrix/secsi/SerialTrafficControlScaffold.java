@@ -14,7 +14,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     public SerialTrafficControlScaffold(SecsiSystemConnectionMemo adaptermemo) {
         super(adaptermemo);
         if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
+            log.debug("setting instance: {}", this);
         }
         memo = adaptermemo;
     }
@@ -33,7 +33,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendSerialMessage [" + m + "]");
+            log.debug("sendSerialMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -49,7 +49,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     protected void sendTestMessage(SerialMessage m, SerialListener l) {
         // forward a test message to SecsiListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
         return;

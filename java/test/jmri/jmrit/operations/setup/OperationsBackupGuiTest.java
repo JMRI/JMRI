@@ -5,7 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the Operations Setup Backup GUI class.

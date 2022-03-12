@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -39,7 +39,7 @@
       est utilis&eacute; pour les formater dans le navigateur web.
       Pour un exemple de la fa&ccedil;on dont cela ressemble, s'il
       vous pla&icirc;t voir le panneau &eacute;chantillon <a href=
-      "http://jmri.org/xml/samples/NicksClinic.xml">fichier XML</a>
+      "https://jmri.org/xml/samples/NicksClinic.xml">fichier XML</a>
       sur les principaux Web site JMRI. (Peut prendre quelques
       secondes &agrave; charger)</p>
 
@@ -122,7 +122,7 @@
         </li>
       </ul>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

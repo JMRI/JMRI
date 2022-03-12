@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -104,7 +104,7 @@ les boutons non d&#233;finis (pas de texte) dans PanelPro seront automatiquement
 Cette option activera une <a  href="ThrottleToolBar.shtml">Barre d'Outils qui
 appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs </a>.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

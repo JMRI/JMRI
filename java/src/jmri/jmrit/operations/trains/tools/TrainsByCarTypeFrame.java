@@ -5,18 +5,12 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -25,8 +19,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame to display which trains service certain car types
@@ -119,9 +111,8 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(
-                new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), false));
-        toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), true));
+        toolMenu.add(new PrintTrainsByCarTypesAction(false));
+        toolMenu.add(new PrintTrainsByCarTypesAction(true));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyTrainsByCarType", true); // NOI18N
@@ -201,7 +192,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
             cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrainCarType"), new Object[]{carType}));
             addCheckBoxAction(cb);
             trainList.add(cb);
-            boolean trainAcceptsType = train.acceptsTypeName(carType);
+            boolean trainAcceptsType = train.isTypeNameAccepted(carType);
             cb.setSelected(trainAcceptsType);
             addItemLeft(pTrains, cb, 0, x);
             JLabel description = new JLabel(train.getDescription());
@@ -234,9 +225,9 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
             }
         } else {
             JCheckBox cb = (JCheckBox) ae.getSource();
-            log.debug("Checkbox " + cb.getName() + " text: " + cb.getText());
+            log.debug("Checkbox {} text: {}", cb.getName(), cb.getText());
             if (trainList.contains(cb)) {
-                log.debug("Checkbox train " + cb.getText());
+                log.debug("Checkbox train {}", cb.getText());
             } else {
                 log.error("Error checkbox not found");
             }

@@ -270,6 +270,10 @@
 	<decVal max="128"/>
 	<label>DCC Brake Release Throttle Stop</label>
   </variable>
+  <variable item="Service Mode PWM Duty" CV="217" default="0">
+	<decVal max="255"/>
+	<label>Service Mode PWM Duty</label>
+  </variable>
   <variable item="Rev Level Power Threshold" CV="221" mask="XXXXXXXV" default="0">
 	<enumVal>
 	  <enumChoice>

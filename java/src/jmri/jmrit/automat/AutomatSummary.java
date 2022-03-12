@@ -71,6 +71,10 @@ public class AutomatSummary {
         //notify length changed
         notify("Remove", null, index);
     }
+    
+    public ArrayList<AbstractAutomaton> getAutomats() {
+        return new ArrayList<>(automats);
+    }
 
     public int length() {
         int length;

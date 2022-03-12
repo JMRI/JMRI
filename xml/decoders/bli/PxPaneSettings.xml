@@ -26,6 +26,14 @@
       </label>
       <display item="Smoke Unit"/>
       <display item="Smoke Unit Logic"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Promode"/>
+      <display item="Keep Alive"/>
+      <display item="Go-Pack Time-Out Value"/>
+      <display item="Electric"/>
+      <display item="No Electric in DC"/>
     </column>
     <column>
       <row>
@@ -196,14 +204,24 @@
         <text> </text>
       </label>
       <row>
-        <display item="Motor Load Chuff Power Filter" layout="above" label=""/>
+		<display item="Motor Load Chuff Power Filter" layout="above" label=""/>
         <display item="Motor Load Power Filter" layout="above" label=""/>
-        <label>
+		<label>
           <text> </text>
         </label>
         <display item="Motor Load Chuff Power Filter" layout="above" format="hslider"/>
         <display item="Motor Load Power Filter" layout="above" format="hslider"/>
-        <label>
+		<label>
+          <text> </text>
+        </label>
+	  </row>
+	  <row>
+		<display item="Service Mode PWM Duty" layout="above" label=""/>
+		<label>
+          <text> </text>
+        </label>
+		<display item="Service Mode PWM Duty" layout="above" format="hslider"/>
+		<label>
           <text> </text>
         </label>
       </row>

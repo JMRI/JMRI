@@ -5,7 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.annotation.Nonnull;
 
-import jmri.util.ThreadingUtil;
 
 /**
  * Common utility methods for working with (@link java.util.Timer)

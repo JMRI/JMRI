@@ -15,17 +15,18 @@ import jmri.SignalAppearanceMap;
 import jmri.SignalHead;
 import jmri.implementation.AbstractSignalHead;
 import jmri.implementation.AbstractSignalMast;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public final class SignalDirectionIndicators implements SignalDirectionIndicatorsInterface {
-    static final HashSet<NBHAbstractSignalCommon> _mSignalsUsed = new HashSet<>();
+    static final HashSet<NBHSignal> _mSignalsUsed = new HashSet<>();
     public static void resetSignalsUsed() { _mSignalsUsed.clear(); }
     private NBHSensor _mLeftSensor;
     private NBHSensor _mNormalSensor;
     private NBHSensor _mRightSensor;
     private int _mPresentSignalDirectionLever = CTCConstants.SIGNALSNORMAL;             // Default
-    private final ArrayList<NBHAbstractSignalCommon> _mSignalListLeftRight = new ArrayList<>();
-    private final ArrayList<NBHAbstractSignalCommon> _mSignalListRightLeft = new ArrayList<>();
+    private final ArrayList<NBHSignal> _mSignalListLeftRight = new ArrayList<>();
+    private final ArrayList<NBHSignal> _mSignalListRightLeft = new ArrayList<>();
     private Fleeting _mFleetingObject;
     private final RequestedDirectionObserved _mRequestedDirectionObserver = new RequestedDirectionObserved();
     private final Timer _mTimeLockingTimer;
@@ -40,9 +41,9 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private LinkedList<SignalHeadPropertyChangeListenerMaintainer> _mSignalHeadPropertyChangeListenerLinkedList = new LinkedList<>();
     @SuppressWarnings("LeakingThisInConstructor")   // NOI18N
     private class SignalHeadPropertyChangeListenerMaintainer {
-        private final NBHAbstractSignalCommon _mSignal;
+        private final NBHSignal _mSignal;
         private final PropertyChangeListener _mPropertyChangeListener = (PropertyChangeEvent e) -> { handleSignalChange(e); };
-        public SignalHeadPropertyChangeListenerMaintainer(NBHAbstractSignalCommon signal) {
+        public SignalHeadPropertyChangeListenerMaintainer(NBHSignal signal) {
             _mSignal = signal;
             _mSignal.addPropertyChangeListener(_mPropertyChangeListener);
             _mSignalHeadPropertyChangeListenerLinkedList.add(this); // "leaking this in constructor" is OK here, since this is the last thing we do.  And we are NOT multi-threaded when this happens.
@@ -63,13 +64,14 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
 //  private final CopyOnWriteArrayList<TrafficDirection> _mTimeLockingChangeObservers = new CopyOnWriteArrayList<>();
 
     public SignalDirectionIndicators(   String userIdentifier,
-                                        String leftSensor,
-                                        String normalSensor,
-                                        String rightSensor,
+                                        NBHSensor leftSensor,
+                                        NBHSensor normalSensor,
+                                        NBHSensor rightSensor,
                                         int codingTimeInMilliseconds,
                                         int timeLockingTimeInMilliseconds,
-                                        String signalListLeftRightCSV,
-                                        String signalListRightLeftCSV,
+                                        CodeButtonHandlerData.TRAFFIC_DIRECTION trafficDirection,
+                                        ArrayList<NBHSignal> signalListLeftRight,
+                                        ArrayList<NBHSignal> signalListRightLeft,
                                         Fleeting fleetingObject) {
 
 // We need to give time to the ABS system to set signals.  See CALL to routine "allSignalsRedSetThemAllHeld", comments above that line:
@@ -81,35 +83,33 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         _mCodingTimeTimer = new Timer(codingTimeInMilliseconds, _mCodingTimeTimerActionListener);
         _mCodingTimeTimer.setRepeats(false);
         try {
-            _mLeftSensor = new NBHSensor("SignalDirectionIndicators",  userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsLeftSensor"), leftSensor, true);         // NOI18N
-            _mNormalSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsNormalSensor"), normalSensor, false);   // NOI18N
-            _mRightSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsRightSensor"), rightSensor, true);       // NOI18N
+            _mLeftSensor = leftSensor;
+            _mNormalSensor = normalSensor;
+            _mRightSensor = rightSensor;
 //  Partially plagerized from GUI code:
-            boolean leftInternalSensorPresent = _mLeftSensor.valid();
-            boolean entriesInLeftRightTrafficSignalsCSVList = !signalListLeftRightCSV.isEmpty();
-            boolean rightInternalSensorPresent = _mRightSensor.valid();
-            boolean entriesInRightLeftTrafficSignalsCSVList = !signalListRightLeftCSV.isEmpty();
-            if (!leftInternalSensorPresent && !rightInternalSensorPresent) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsMustHaveOne"), Bundle.getMessage("SignalDirectionIndicatorsError1")); }                        // NOI18N
-            if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError2")); }     // NOI18N
-            if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError3")); }    // NOI18N
-            if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError4")); }      // NOI18N
-            if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError5")); }    // NOI18N
+            boolean leftTrafficDirection = trafficDirection != CodeButtonHandlerData.TRAFFIC_DIRECTION.RIGHT;
+            boolean rightTrafficDirection = trafficDirection != CodeButtonHandlerData.TRAFFIC_DIRECTION.LEFT;
 
-            ArrayList<String> listOfSignals;
-            listOfSignals = ProjectsCommonSubs.getArrayListFromCSV(signalListLeftRightCSV);
-            for (String signalText : listOfSignals) {
-                NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("SignalDirectionIndicators", userIdentifier, "signalListLeftRightCSV" + " " + signalListLeftRightCSV, signalText);   // NOI18N
+            boolean entriesInLeftRightTrafficSignalsList = !signalListLeftRight.isEmpty();
+            boolean entriesInRightLeftTrafficSignalsList = !signalListRightLeft.isEmpty();
+
+            if (leftTrafficDirection && !entriesInRightLeftTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError2")); }     // NOI18N
+            if (rightTrafficDirection && !entriesInLeftRightTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError3")); }    // NOI18N
+            if (!leftTrafficDirection && entriesInRightLeftTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError4")); }      // NOI18N
+            if (!rightTrafficDirection && entriesInLeftRightTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError5")); }    // NOI18N
+
+            for (NBHSignal signal : signalListLeftRight) {
                 new SignalHeadPropertyChangeListenerMaintainer(signal); // Lazy, constructor does EVERYTHING and leaves a bread crumb trail to this object.
                 _mSignalListLeftRight.add(signal);
                 addSignal(userIdentifier, signal);
             }
-            listOfSignals = ProjectsCommonSubs.getArrayListFromCSV(signalListRightLeftCSV);
-            for (String signalText : listOfSignals) {
-                NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("SignalDirectionIndicators", userIdentifier, "signalListRightLeftCSV" + " " + signalListRightLeftCSV, signalText);   // NOI18N
+
+            for (NBHSignal signal : signalListRightLeft) {
                 new SignalHeadPropertyChangeListenerMaintainer(signal); // Lazy, constructor does EVERYTHING and leaves a bread crumb trail to this object.
                 _mSignalListRightLeft.add(signal);
                 addSignal(userIdentifier, signal);
             }
+
             _mFleetingObject = fleetingObject;
             setSignalDirectionIndicatorsToDirection(CTCConstants.SIGNALSNORMAL);
             forceAllSignalsToHeld();
@@ -195,10 +195,10 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     public int getSignalsInTheFieldDirection() {
         boolean LRCanGo = false;
         boolean RLCanGo = false;
-        for (NBHAbstractSignalCommon signal : _mSignalListLeftRight) {
+        for (NBHSignal signal : _mSignalListLeftRight) {
             if (!signal.isDanger()) { LRCanGo = true; break; }
         }
-        for (NBHAbstractSignalCommon signal : _mSignalListRightLeft) {
+        for (NBHSignal signal : _mSignalListRightLeft) {
             if (!signal.isDanger()) { RLCanGo = true; break; }
         }
         if (LRCanGo && RLCanGo) {
@@ -221,8 +221,8 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         _mRequestedDirectionObserver.setRequestedDirection(direction);
     }
 
-    private void addSignal(String userIdentifier, NBHAbstractSignalCommon signal) throws CTCException {
-        if (!_mSignalsUsed.add(signal)) { throw new CTCException("SignalDirectionIndicators", userIdentifier, signal.getDisplayName(), Bundle.getMessage("SignalDirectionIndicatorsDuplicateHomeSignal")); }    // NOI18N
+    private void addSignal(String userIdentifier, NBHSignal signal) throws CTCException {
+        if (!_mSignalsUsed.add(signal)) { throw new CTCException("SignalDirectionIndicators", userIdentifier, signal.getHandleName(), Bundle.getMessage("SignalDirectionIndicatorsDuplicateHomeSignal")); }    // NOI18N
     }
 
     private void setSignalsHeldTo(int direction) {
@@ -321,14 +321,14 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private boolean allSignalsRedSetThemAllHeld(int requestedDirection) {
         if (requestedDirection == CTCConstants.LEFTTRAFFIC) {
             boolean allRed = true;
-            for (NBHAbstractSignalCommon signal : _mSignalListRightLeft) {   // Can't use lambda here!
+            for (NBHSignal signal : _mSignalListRightLeft) {   // Can't use lambda here!
                 if (!signal.isDanger()) { allRed = false; break; }
             }
             if (allRed) { _mSignalListRightLeft.forEach((signalHead) -> signalHead.setHeld(true)); }
             return allRed;
         } else if (requestedDirection == CTCConstants.RIGHTTRAFFIC) {
             boolean allRed = true;
-            for (NBHAbstractSignalCommon signal : _mSignalListLeftRight) {   // Can't use lambda here!
+            for (NBHSignal signal : _mSignalListLeftRight) {   // Can't use lambda here!
                 if (!signal.isDanger()) { allRed = false; break; }
             }
             if (allRed) { _mSignalListLeftRight.forEach((signalHead) -> signalHead.setHeld(true)); }
@@ -346,14 +346,14 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
                 if (changedToUniversalRed(e)) {    // Signal (SignalMast, SignalHead) changed to Red:
                     boolean forceAllSignalsToHeld = false;
                     if (_mPresentSignalDirectionLever == CTCConstants.RIGHTTRAFFIC) {
-                        for (NBHAbstractSignalCommon signal : _mSignalListLeftRight) {
+                        for (NBHSignal signal : _mSignalListLeftRight) {
                             if (e.getSource() == signal.getBean()) {
                                 forceAllSignalsToHeld = true;
                                 break;
                             }
                         }
                     } else if (_mPresentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) {
-                        for (NBHAbstractSignalCommon signal : _mSignalListRightLeft) {
+                        for (NBHSignal signal : _mSignalListRightLeft) {
                             if (e.getSource() == signal.getBean()) {
                                 forceAllSignalsToHeld = true;
                                 break;

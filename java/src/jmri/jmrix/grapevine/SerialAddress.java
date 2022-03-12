@@ -1,6 +1,7 @@
 package jmri.jmrix.grapevine;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -174,6 +175,7 @@ public class SerialAddress {
     /**
      * Parse for secondary letters.
      *
+     * @param type Secondary letter from message
      * @return offset for type letter, or -1 if none
      */
     static int typeOffset(String type) {
@@ -196,13 +198,15 @@ public class SerialAddress {
     /**
      * Public static method to parse a system name and return the Serial Node.
      *
+     * @param systemName system name.
+     * @param tc system connection traffic controller.
      * @return 'NULL' if illegal systemName format or if the node is not found
      */
     public static SerialNode getNodeFromSystemName(String systemName, SerialTrafficController tc) {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format in getNodeFromSystemName: {}", systemName);
             return null;
         }
@@ -228,13 +232,15 @@ public class SerialAddress {
      * Public static method to parse a system name and return the bit number.
      * Notes: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix unused.
      * @return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format in getBitFromSystemName: {} prefix: {}", systemName, prefix, new Exception("traceback"));
             return 0;
         }
@@ -262,13 +268,15 @@ public class SerialAddress {
      * <p>
      * Note: Nodes are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix unused.
      * @return node number. If an error is found, returns -1
      */
     public static int getNodeAddressFromSystemName(String systemName, String prefix) {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format in getNodeAddressFromSystemName: {}", systemName);
             return -1;
         }
@@ -301,7 +309,7 @@ public class SerialAddress {
      * @throws IllegalArgumentException if name is not valid
      * @see Manager#validateSystemNameFormat(java.lang.String, java.util.Locale)
      */
-    static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+    static String validateSystemNameFormat(String name, Manager<?> manager, Locale locale) {
         name = manager.validateSystemNamePrefix(name, locale);
         Pattern pattern;
         switch (manager.typeLetter()) {
@@ -328,8 +336,8 @@ public class SerialAddress {
         Matcher matcher = pattern.matcher(name);
         if (!matcher.matches()) {
             throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
-                    Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameFailedRegex", name, pattern.pattern()),
+                    Bundle.getMessage(locale, "InvalidSystemNameFailedRegex", name, pattern.pattern()));
         }
         int node;
         int bit;
@@ -357,8 +365,8 @@ public class SerialAddress {
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
                 throw new NamedBean.BadSystemNameException(
-                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
-                        Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameFailedRegex", name, pattern.pattern()),
+                        Bundle.getMessage(locale, "InvalidSystemNameFailedRegex", name, pattern.pattern()));
             }
         } else {
             // sort on subtype
@@ -420,7 +428,7 @@ public class SerialAddress {
      * @param prefix     system connection prefix from memo
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
@@ -488,7 +496,7 @@ public class SerialAddress {
                 log.debug("invalid bit number {} in {}", bit, systemName);
                 return NameValidity.INVALID;
             }
-        } else { 
+        } else {
             assert type == 'S'; // see earlier decoding
             // sort on subtype
             String subtype = matcher.group(4);
@@ -531,8 +539,12 @@ public class SerialAddress {
     /**
      * Public static method to validate system name for configuration.
      *
-     * @return 'true' if system name has a valid meaning in current configuration, else
-     * returns 'false'
+     * @param systemName system name to validate.
+     * @param type bean type, S, T or L.
+     * @param tc system connection traffic controller.
+     * @return 'true' if system name has a valid meaning in current configuration,
+     *                else returns 'false'.
+     *
      */
     public static boolean validSystemNameConfig(String systemName, char type, SerialTrafficController tc) {
         String prefix = tc.getSystemConnectionMemo().getSystemPrefix();
@@ -572,9 +584,14 @@ public class SerialAddress {
 
     /**
      * Public static method to convert any format system name for the alternate
-     * format (nnBnn). If the supplied system name does not have a valid format,
-     * or if there is no representation in the alternate naming scheme, an empty
-     * string is returned.
+     * format (nnBnn).
+     * <p>
+     * If the supplied system name does not have a valid format,
+     * or if there is no representation in the alternate naming scheme,
+     * an empty string is returned.
+     * @param systemName system name to convert.
+     * @param prefix system prefix.
+     * @return alternate string.
      */
     public static String convertSystemNameToAlternate(String systemName, String prefix) {
         // ensure that input system name has a valid format
@@ -605,6 +622,9 @@ public class SerialAddress {
      * If the supplied system name does not have a valid format, an empty string
      * is returned. Otherwise a normalized name is returned in the same format
      * as the input name.
+     * @param systemName system name to normalize.
+     * @param prefix system prefix.
+     * @return normalized string.
      */
     public static String normalizeSystemName(String systemName, String prefix) {
         // ensure that input system name has a valid format

@@ -1,6 +1,5 @@
 package jmri.jmrix.can;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRReply;
 

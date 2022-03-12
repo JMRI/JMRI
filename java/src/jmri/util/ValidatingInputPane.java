@@ -188,6 +188,7 @@ final class ValidatingInputPane<T> extends javax.swing.JPanel  {
     
     /**
      * Should be called from tests only
+     * @param text String to check for validation
      */
     void validateText(String text) {
         String msg;

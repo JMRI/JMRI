@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2020-07-15</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Image types</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -35,13 +41,15 @@
     <appearance>
       <aspectname>Stůj</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_h.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_h_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_h_n.gif</imagelink>
+      <imagelink type="hlavní-1R">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_h.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_h.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_h_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_h_n.gif</imagelink>
+      <imagelink type="hlavní-1R">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_h.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -55,6 +63,14 @@
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Pomalu</advancedAspect>
       <ourAspect>Volno</ourAspect>
     </aspectMapping>
   </aspectMappings>

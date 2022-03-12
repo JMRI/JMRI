@@ -25,6 +25,13 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.27.0
+; - Add support for 200 return code to shutdown the host machine
+; - Add support for 210 return code to reboot the host machine
+; -------------------------------------------------------------------------
+; - Version 0.1.26.0
+; - Add support for Open JDK 8 Registry Keys
+; -------------------------------------------------------------------------
 ; - Version 0.1.25.1
 ; - Fix bug introduced by disabling alternate launcher with JDK 11
 ; -------------------------------------------------------------------------
@@ -155,8 +162,8 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "(C) 1997-2019 JMRI Community" ; Copyright string
-!define VER        "0.1.25.1"                     ; Launcher version
+!define COPYRIGHT  "(C) 1997-2022 JMRI Community" ; Copyright string
+!define VER        "0.1.27.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -313,8 +320,17 @@ Section "Main"
     ; -- otherwise we'll think that we've found an installation
     ; -- Gotta love the spaghetti...
     SetErrors
+    IfErrors 0 FoundJavaInstallPoint
+    DetailPrint "Checking 'Java Development Kit'..."
+    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Development Kit" "CurrentVersion"
+    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Development Kit\$R1" "JavaHome"
+    IfErrors 0 DisableAltLauncher
+    ; -- As we've just cleared the error flag, we need to set it again
+    ; -- otherwise we'll think that we've found an installation
+    ; -- Gotta love the spaghetti...
+    SetErrors
     Goto FoundJavaInstallPoint
-    
+
   DisableAltLauncher:
     DetailPrint "Switching off alternate launcher..."
     StrCpy $ALTLAUNCH ${FLAG_NO}
@@ -583,6 +599,20 @@ Section "Main"
   ; -- Check the return code is 100 - if so, re-launch
   StrCmp $7 100 LaunchJMRI
 
+  ; -- Check the return code is 200 - if so, shutdown
+  StrCmp $7 200 Shutdown
+
+  ; -- Check the return code is 210 - if so, reboot
+  StrCmp $7 210 Reboot PreExit
+
+  Shutdown:
+  Exec "shutdown /s"
+  Goto PreExit
+
+  Reboot:
+  Exec "shutdown /r"
+
+  PreExit:
   ; -- Set ErrorLevel to return code
   SetErrorLevel $7
 
@@ -745,7 +775,7 @@ Function ProcessParameters
   ; -- $1 already contains complete option with '--cp:p=' prefix
   StrCpy $P_CLASSPATH $1 "" 7 ; strip first 7 chars
   Return
-  
+
   optsNoAlt:
   StrCpy $ALTLAUNCH ${FLAG_NO}
   Return

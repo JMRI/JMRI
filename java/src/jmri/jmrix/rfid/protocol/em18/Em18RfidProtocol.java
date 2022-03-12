@@ -100,9 +100,9 @@ public class Em18RfidProtocol extends RfidProtocol {
         int checksum = 0;
         for (int i = 0; i < 5; i++) {
             checksum = checksum ^ tag[i];
-            log.debug("read " + tag[i]);
+            log.debug("read {}", tag[i]);
         }
-        log.debug("Checksum: " + getCheckSum(msg) + " converted: " + convertHexString(getCheckSum(msg))[0]);
+        log.debug("Checksum: {} converted: {}", getCheckSum(msg), convertHexString(getCheckSum(msg))[0]);
         return checksum == convertHexString(getCheckSum(msg))[0];
     }
 

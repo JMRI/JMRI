@@ -1,15 +1,14 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SensorIconXmlTest.java
  *
- * Description: tests for the SensorIconXml class
+ * Test for the SensorIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class SensorIconXmlTest {
       Assert.assertNotNull("SensorIconXml constructor",new SensorIconXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

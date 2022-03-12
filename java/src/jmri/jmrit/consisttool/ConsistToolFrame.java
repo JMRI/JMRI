@@ -60,7 +60,10 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
     public ConsistToolFrame() {
         super();
+        init();
+    }
 
+    private void init() {
         consistManager = InstanceManager.getDefault(jmri.ConsistManager.class);
 
         consistFile = new ConsistFile();
@@ -583,9 +586,10 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         }
     }
 
-    /*
+    /**
      * we're registering as a listener for Consist events, so we need to
-     * implement the interface
+     * implement the interface.
+     * {@inheritDoc}
      */
     @Override
     public void consistReply(LocoAddress locoaddress, int status) {
@@ -638,7 +642,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         initializeConsistBox();
     }
 
-    /*
+    /**
      * private method to scan the roster for consists
      */
     private void scanRoster(){
@@ -646,7 +650,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
        for(RosterEntry entry:roster){
             DccLocoAddress address = entry.getDccLocoAddress();
             CvTableModel  cvTable = new CvTableModel(_status, null);  // will hold CV objects
-            entry.readFile();  // read, but don’t yet process
+            entry.readFile();  // read, but don't yet process
 
             entry.loadCvModel(null, cvTable);
             CvValue cv19Value = cvTable.getCvByNumber("19");

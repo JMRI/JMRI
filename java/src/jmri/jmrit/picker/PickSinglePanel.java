@@ -131,7 +131,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
             try {
                 bean = _model.addBean(sysname, uname);
             } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(this.getRootPane(),
                     Bundle.getMessage("PickAddFailed", ex.getMessage()),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
                     JOptionPane.WARNING_MESSAGE);

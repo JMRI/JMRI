@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.util.JUnitUtil;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the YardmasterPanel class
@@ -10,7 +10,7 @@ import org.junit.Before;
  */
 public class YardmasterPanelTest extends jmri.jmrit.operations.CommonConductorYardmasterPanelTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();

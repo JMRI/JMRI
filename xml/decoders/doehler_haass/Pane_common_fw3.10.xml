@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 5 - 2020-05-02 - RK - added initialmapping functions -->
 <!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->
 <!-- version 3 - 2015-03-05 - PB - Spelling.  -->
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
@@ -226,7 +227,7 @@
         <label>
           <text>Blocks an output even if its main function is activated</text>
           <text xml:lang="fr">Bloque certaines sorties, même si la fonction est activée</text>
-          <text xml:lang="de">Schaltet eine Funktion ab, trozt eingeschaltetem Ausgang</text>
+          <text xml:lang="de">Schaltet eine Funktion ab, trotz eingeschaltetem Ausgang</text>
           <text xml:lang="it">Blocca un uscita anche se la funzione è attivata</text>
           <text xml:lang="ca">Bloca una sortida encara ue la funció estigui activa</text>
         </label>
@@ -500,5 +501,86 @@
     <label>
       <text> </text>
     </label>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <!-- BEGIN - Initialmapping grid -->
+        <grid gridy="NEXT" weightx="1" ipadx="10">
+          <griditem gridx="0" gridy="0" gridwidth="1">
+              <label>
+                <text>Initialmapping</text>
+              </label>
+          </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - LV"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - LR"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX1"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX2"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX3"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX4"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX5"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX6"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+        </grid>
+        <!-- END - Initialmapping grid -->
+      </column>
+    </row>
   </column>
 </pane>

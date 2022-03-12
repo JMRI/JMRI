@@ -1,12 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -14,7 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 
 /**
  * Abstract class for the editing frames of CircuitBulder
@@ -23,20 +20,23 @@ import jmri.jmrit.logix.OBlock;
  */
 public abstract class EditFrame extends jmri.util.JmriJFrame {
 
-    protected final OBlock _homeBlock;
+    protected OBlock _homeBlock;
     protected final CircuitBuilder _parent;
     protected boolean _canEdit = true;
     protected boolean _suppressWarnings = false;
 
     static int STRUT_SIZE = 10;
-    static Point _loc = new Point(-1, -1);
-    static Dimension _dim = new Dimension();
 
     public EditFrame(String title, CircuitBuilder parent, OBlock block) {
         super(false, false);
-        _homeBlock = block;
         _parent = parent;
-        setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
+        if (block != null) {
+            setTitle(java.text.MessageFormat.format(title, block.getDisplayName()));
+            _homeBlock = block;
+        } else {
+            setTitle(Bundle.getMessage("newCircuitItem"));
+            _homeBlock = new OBlock(InstanceManager.getDefault(OBlockManager.class).getAutoSystemName(), null);
+        }
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -55,12 +55,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
         setContentPane(contentPane);
 
         pack();
-        if (_loc.x < 0) {
-            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
-        } else {
-            setLocation(_loc);
-            setSize(_dim);
-        }
+        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_parent._editor, null, this);
         setVisible(true);
     }
 
@@ -73,12 +68,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
         panel.setLayout(new FlowLayout());
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closingEvent(false);
-            }
-        });
+        doneButton.addActionListener(a -> closingEvent(false));
         panel.add(doneButton);
         buttonPanel.add(panel);
 
@@ -88,7 +78,32 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
 
         return panel;
     }
-    
+
+    protected void checkCircuitIcons(String editType) {
+        StringBuilder sb = new StringBuilder();
+        String msg = _parent.checkForTrackIcons(_homeBlock, editType);
+        if (msg.length() > 0) {
+            _canEdit = false;
+            sb.append(msg);
+            sb.append("\n");
+        }
+        msg = _parent.checkForPortals(_homeBlock, editType);
+        if (msg.length() > 0) {
+            _canEdit = false;
+            sb.append(msg);
+            sb.append("\n");
+        }
+        msg = _parent.checkForPortalIcons(_homeBlock, editType);
+        if (msg.length() > 0) {
+            _canEdit = false;
+            sb.append(msg);
+        }
+        if (!_canEdit) {
+            JOptionPane.showMessageDialog(this, sb.toString(),
+                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
     protected void clearListSelection() {
     }
 
@@ -106,12 +121,11 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
     protected abstract void closingEvent(boolean close);
 
     protected boolean closingEvent(boolean close, String msg) {
-        if (msg != null) {
+        if (msg != null && msg.length() > 0) {
             if (close) {
                 JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 StringBuilder sb = new StringBuilder(msg);
-                sb.append("\n");
                 sb.append(Bundle.getMessage("exitQuestion"));
                 int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("continue"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -120,16 +134,8 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        storeLocDim(getLocation(_loc), getSize(_dim));
         _parent.closeCircuitBuilder(_homeBlock);
         dispose();
         return true;
     }
-
-    private static void storeLocDim(@Nonnull Point location, @Nonnull Dimension size) {
-        _loc = location;
-        _dim = size;
-    }
-
-//    private final static Logger log = LoggerFactory.getLogger(EditFrame.class);
 }

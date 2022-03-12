@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -46,7 +46,7 @@
       utilisant une largeur de voie diff&eacute;rente. La
       modification de la largeur d'un type de voie modifie les
       largeurs de toutes les voies de ce type dans le sch&eacute;ma
-      de voie.</p><!--#include virtual="/Footer" -->
+      de voie.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

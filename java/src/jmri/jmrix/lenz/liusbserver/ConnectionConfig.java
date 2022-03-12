@@ -1,8 +1,6 @@
 package jmri.jmrix.lenz.liusbserver;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 
 /**
  * Handle configuring an XpressNet layout connection via a LIUSB Server.
@@ -18,6 +16,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /**
      * Ctor for an object being created during load process.
      * Swing init is deferred.
+     * @param p network port adapter.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);

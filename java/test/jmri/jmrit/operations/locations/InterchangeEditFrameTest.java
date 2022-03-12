@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -8,15 +9,15 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class InterchangeEditFrameTest extends OperationsTestCase {
 
@@ -29,7 +30,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one interchange track
@@ -52,7 +53,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one interchange tracks
@@ -80,7 +81,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one interchange tracks
@@ -91,15 +92,15 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
 
         // check track accepts Boxcars
-        Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("2nd interchange track accepts Boxcars", t.isTypeNameAccepted("Boxcar"));
         // test clear car types button
         JemmyUtil.enterClickAndLeave(f.clearButton);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-        Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
+        Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.isTypeNameAccepted("Boxcar"));
 
         JemmyUtil.enterClickAndLeave(f.setButton);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-        Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("2nd interchange track accepts Boxcars again", t.isTypeNameAccepted("Boxcar"));
 
         JUnitUtil.dispose(f);
     }
@@ -109,7 +110,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create two interchange tracks
@@ -147,7 +148,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);

@@ -15,7 +15,7 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      *  Anonymous object only for testing
      */
     TrackCircuitSection() {}
-    
+
     /**
      * Create and configure.
      *
@@ -26,7 +26,7 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      * @param station Station to which this Section belongs
      * @param bell  Bell driver (can be null)
      */
-    public TrackCircuitSection(String inputSensor, String panelOutput, Station station, Bell bell) {
+    public TrackCircuitSection(String inputSensor, String panelOutput, Station<CodeGroupNoBits, CodeGroupOneBit> station, Bell bell) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
@@ -38,7 +38,7 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
 
         // align at start
         indicationComplete(indicationStart());
-        
+
         // attach listeners for future changes
         sm.provideSensor(inputSensor).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {layoutTurnoutChanged(e);});
     }
@@ -46,24 +46,24 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
     /**
      * Create and configure.
      * <p>
-     * Accepts user or system names. 
+     * Accepts user or system names.
      *
      * @param inputSensor  Sensor for input from central CTC machine
      * @param panelOutput  Turnout name for maintainer call on layout
      * @param station      Station to which this Section belongs
      */
-    public TrackCircuitSection(String inputSensor, String panelOutput, Station station) {
+    public TrackCircuitSection(String inputSensor, String panelOutput, Station<CodeGroupNoBits, CodeGroupOneBit> station) {
         this(inputSensor, panelOutput, station, null);
     }
-    
+
     NamedBeanHandle<Sensor> hInputSensor;
     NamedBeanHandle<Turnout> hPanelOutput;
-    
+
     Bell bell;
 
-    Station station;
+    Station<CodeGroupNoBits, CodeGroupOneBit> station;
     @Override
-    public Station getStation() { return station; }
+    public Station<CodeGroupNoBits, CodeGroupOneBit> getStation() { return station; }
     @Override
     public String getName() { return "TC for "+hInputSensor.getBean().getDisplayName(); }
 
@@ -84,12 +84,11 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
     public void indicationComplete(CodeGroupOneBit value) {
         if ( value == CodeGroupOneBit.Single1 && hPanelOutput.getBean().getCommandedState()!=Turnout.THROWN ) {
             hPanelOutput.getBean().setCommandedState(Turnout.THROWN);
-            if (bell != null) bell.ring();
+            if (bell != null) bell.ring();   // ring on arrival
         } else if (value == CodeGroupOneBit.Single0 && hPanelOutput.getBean().getCommandedState()!=Turnout.CLOSED ) {
             hPanelOutput.getBean().setCommandedState(Turnout.CLOSED);
-            if (bell != null) bell.ring();
         }
-    } 
+    }
 
     /**
      * Notification that code has arrived in the field. Sets the turnout on the layout.
@@ -115,7 +114,7 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
             station.requestIndicationStart();
         }
     }
-     
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackCircuitSection.class);
 
 }

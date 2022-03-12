@@ -1,16 +1,18 @@
 package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
+
 import jmri.Conditional;
 
 /*
@@ -79,7 +81,7 @@ public class ConditionalEditBaseTest {
         Assert.assertNotNull("ConditionalEditBase validateLogixReference Return not null", cdlBase.validateLogixReference("Logix 102"));  // NOI18N
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -89,8 +91,10 @@ public class ConditionalEditBaseTest {
         jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

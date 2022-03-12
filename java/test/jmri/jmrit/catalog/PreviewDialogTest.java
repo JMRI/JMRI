@@ -7,15 +7,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import org.junit.*;
-import org.junit.rules.TemporaryFolder;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,29 +27,27 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author pete cressman
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PreviewDialogTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
-    public void testCTor() {
+    public void testCTor(@TempDir File folder) {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("PreviewDialog test frame");
-        // the second paramter is a key for the bundle
-        PreviewDialog t = new PreviewDialog(jf,"catalogs",folder.getRoot(),new String[0]);
-        Assert.assertNotNull("exists",t);
+        // the second parameter is a key for the bundle
+        PreviewDialog t = new PreviewDialog(jf,"catalogs", folder, new String[0]);
+        Assert.assertNotNull("exists", t);
         t.dispose();
         jf.dispose();
     }
+
 
     @Test
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         long time = System.currentTimeMillis();
-        log.debug("Start testPreviewDialog: time = {}ms",time);
+        log.debug("Start testPreviewDialog: time = {}ms", time);
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             InstanceManager.getDefault(DirectorySearcher.class).searchFS();
         });
@@ -101,13 +103,12 @@ public class PreviewDialogTest {
         log.debug("End testPreviewDialog: elapsed time = {}ms",(System.currentTimeMillis()-time));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

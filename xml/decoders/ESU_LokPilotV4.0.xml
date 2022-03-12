@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" allowResetDefaults="no">
     <!-- based on the ESU software LokProgrammer V4.1.5 and the ESU manuals: -->
     <!-- 51981 LokPilot_V40 Betriebsanleitung_Auflage_3 -->
     <!-- 51982 LokPilot_V40 User-manual_Edition_2 -->
@@ -59,6 +59,10 @@
     <version author="Dave Heap" version="13" lastUpdated="20161101"/>
     <!-- ver 14 refactor -->
     <version author="Dave Heap" version="14" lastUpdated="20190507"/>
+    <!-- ver 15 refactor -->
+    <version author="Dave Heap" version="15" lastUpdated="20200726"/>
+    <!-- ver 16 disable Reset to Defaults -->
+    <version author="Dave Heap" version="16" lastUpdated="20200818"/>
     <decoder>
         <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokPilot V4.0" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554495,33554564">

@@ -20,7 +20,8 @@ public class TrainSwitchListText {
     private static String departedExpected = Bundle.getMessage("DepartedExpected");
 
     private static String visitNumber = Bundle.getMessage("VisitNumber");
-    private static String visitNumberDeparted = Bundle.getMessage("VisitNumberDeparted"); // this get's appended to "no scheduled work at"
+    private static String visitNumberDeparted = Bundle.getMessage("VisitNumberDeparted"); // this get's appended to "no
+                                                                                          // scheduled work at"
     private static String visitNumberTerminates = Bundle.getMessage("VisitNumberTerminates");
     private static String visitNumberTerminatesDeparted = Bundle.getMessage("VisitNumberTerminatesDeparted");
     private static String visitNumberDone = Bundle.getMessage("VisitNumberDone");
@@ -32,9 +33,9 @@ public class TrainSwitchListText {
 
     private static String trainDepartsCars = Bundle.getMessage("TrainDepartsCars");
     private static String trainDepartsLoads = Bundle.getMessage("TrainDepartsLoads");
-    
+
     private static String switchListByTrack = Bundle.getMessage("SwitchListByTrack");
-    private static String holdCar = Bundle.getMessage("HoldCar"); 
+    private static String holdCar = Bundle.getMessage("HoldCar");
 
     public static String getStringSwitchListFor() {
         return switchListFor;
@@ -163,7 +164,7 @@ public class TrainSwitchListText {
     public static void setStringTrainDepartsLoads(String s) {
         trainDepartsLoads = s;
     }
-    
+
     public static String getStringSwitchListByTrack() {
         return switchListByTrack;
     }
@@ -171,7 +172,7 @@ public class TrainSwitchListText {
     public static void setStringSwitchListByTrack(String s) {
         switchListByTrack = s;
     }
-    
+
     public static String getStringHoldCar() {
         return holdCar;
     }
@@ -264,6 +265,7 @@ public class TrainSwitchListText {
         return e;
     }
 
+    // must synchronize changes with operation-config.dtd
     public static void load(Element e) {
         Element emts = e.getChild(Xml.SWITCH_LIST_TEXT_STRINGS);
         if (emts == null) {

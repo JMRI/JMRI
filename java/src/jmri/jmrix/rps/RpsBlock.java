@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Create a Block that can control a locomotive within a specific Block based on
  * an RpsSensor. It sets speed based on aspect of a specific signal.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -88,16 +88,6 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-    }
-    
-    /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
 
     /**

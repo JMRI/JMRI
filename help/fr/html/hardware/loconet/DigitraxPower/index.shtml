@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -149,7 +149,7 @@ Les gens sur la liste de diffusion Digitrax ont recommandé que toutes les unit�
 la même polarité. (Les miens sont aussi.) Les décalages visibles ci-dessus montrent pourquoi vous avez besoin de faire cela; si deux unités DS54
 ont été connectée de fa&ccedil;on opposée , elles seraient incapables de créer une référence de masse cohérente..
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

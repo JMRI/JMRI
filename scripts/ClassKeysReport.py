@@ -18,7 +18,7 @@ import glob
 
 import jmri
 import java
-import com.csvreader
+import org.apache.commons.csv
 from javax.swing import JFileChooser, JOptionPane
 from javax.swing.filechooser import FileNameExtensionFilter
 
@@ -135,12 +135,12 @@ if os.path.isdir(selectedItem):
 # csvFile : The output file
 ##
 def writeHeader(csvFile):
-    csvFile.write("Line #")
-    csvFile.write("Search Type")
-    csvFile.write("Key Type")
-    csvFile.write("Key")
-    csvFile.write("Line Text / Class File")
-    csvFile.endRecord()
+    csvFile.print("Line #")
+    csvFile.print("Search Type")
+    csvFile.print("Key Type")
+    csvFile.print("Key")
+    csvFile.print("Line Text / Class File")
+    csvFile.println()
 
 ##
 # Create the CSV detail record
@@ -150,18 +150,18 @@ def writeHeader(csvFile):
 def writeDetails(csvFile):
     for keyRow in keyList:
         if len(keyRow) == 1:
-            csvFile.write("")
-            csvFile.write("")
-            csvFile.write("")
-            csvFile.write("")
-            csvFile.write(keyRow[0])
+            csvFile.print("")
+            csvFile.print("")
+            csvFile.print("")
+            csvFile.print("")
+            csvFile.print(keyRow[0])
         else:
-            csvFile.write('{}'.format(keyRow[0]))
-            csvFile.write(keyRow[1])
-            csvFile.write(keyRow[2])
-            csvFile.write(keyRow[3])
-            csvFile.write(keyRow[4])
-        csvFile.endRecord()
+            csvFile.print('{}'.format(keyRow[0]))
+            csvFile.print(keyRow[1])
+            csvFile.print(keyRow[2])
+            csvFile.print(keyRow[3])
+            csvFile.print(keyRow[4])
+        csvFile.println()
 
 # Provide the option to export the full class key list to an external file.
 saveResp = JOptionPane.showConfirmDialog(None, "Do you want to export the full class key list to a CSV file?", dialogTitle, JOptionPane.YES_NO_OPTION)
@@ -172,7 +172,7 @@ if saveResp == 0:
     ret = fo.showSaveDialog(None)
     if ret == JFileChooser.APPROVE_OPTION:
         keyFile = fo.getSelectedFile().toString()
-        csvFile = com.csvreader.CsvWriter(java.io.BufferedOutputStream(java.io.FileOutputStream(keyFile)),',',java.nio.charset.Charset.defaultCharset())
+        csvFile = org.apache.commons.CSVPrinter(java.io.BufferedWriter(java.io.FileWriter(keyFile)),java.nio.charset.Charset.defaultCharset(),org.apache.commons.csv.CSVFormat.DEFAULT)
         writeHeader(csvFile)
         writeDetails(csvFile)
         csvFile.flush()

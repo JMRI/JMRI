@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
-
+import javax.annotation.Nonnull;
 import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
@@ -35,6 +35,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public DCCppSystemConnectionMemo getMemo() {
         return (DCCppSystemConnectionMemo) memo;
     }
@@ -47,24 +48,24 @@ public class DCCppLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return null;
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
         // Normalize the systemName
         String sName = getSystemNamePrefix() + bitNum;   // removes any leading zeros
         // make the new Light object
-        Light lgt = new DCCppLight(tc, this, sName, userName);
-        return lgt;
+        return new DCCppLight(tc, this, sName, userName);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -72,14 +73,15 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, MAX_TURNOUT_ADDRESS, locale);
     }
 
     /**
      * Get the bit address from the system name.
-     * @param systemName a valid LocoNet-based Turnout System Name
-     * @return the turnout number extracted from the system name
+     * @param systemName a valid Light System Name
+     * @return the light number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
         try {
@@ -94,15 +96,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
-        return (true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

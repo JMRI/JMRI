@@ -78,8 +78,8 @@ public class RosterSpeedProfile {
      * speed value returned unchanged.
      *
      * @param mms MilliMetres per second
-     * @return scale speed in units specified by Warrant Preferences. if warrent
-     *         prefernces are not a speed
+     * @return scale speed in units specified by Warrant Preferences. if warrant
+     *         preferences are not a speed
      */
     public float MMSToScaleSpeed(float mms) {
         int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
@@ -107,20 +107,23 @@ public class RosterSpeedProfile {
      * @param mms MilliMetres per second
      * @return a string with scale speed and units
      */
-    public String convertMMSToScaleSpeedWithUnits(float mms) {
+    static public String convertMMSToScaleSpeedWithUnits(float mms) {
         int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
         float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         String formattedWithUnits;
         switch (interp) {
             case SignalSpeedMap.SPEED_MPH:
-                formattedWithUnits = String.format("%.2f mph", mms * scale * MMS_TO_MPH);
+                String unitsMph = Bundle.getMessage("mph");
+                formattedWithUnits = String.format("%.2f %s", mms * scale * MMS_TO_MPH, unitsMph);
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                formattedWithUnits = String.format("%.2f kph", mms * scale * MMS_TO_KPH);
+                String unitsKph = Bundle.getMessage("kph");
+                formattedWithUnits = String.format("%.2f %s", mms * scale * MMS_TO_KPH, unitsKph);
                 break;
             case SignalSpeedMap.PERCENT_THROTTLE:
             case SignalSpeedMap.PERCENT_NORMAL:
-                formattedWithUnits = String.format("%.2f mms", mms);
+                String unitsMms = Bundle.getMessage("mmps");
+                formattedWithUnits = String.format("%.2f %s", mms, unitsMms);
                 break;
             default:
                 log.warn("ScaleSpeedToMMS: Signal Speed Map has no interp, not modifing.");
@@ -234,6 +237,86 @@ public class RosterSpeedProfile {
         ss.setForwardSpeed(forward);
     }
 
+    /**
+     * Merge raw throttleSetting value with an existing profile SpeedStep if
+     * key for the throttleSetting is within the speedIncrement of the SpeedStep.
+     * @param throttleSetting raw throttle setting value
+     * @param speed track speed
+     * @param speedIncrement throttle's speed step increment.
+     */
+    public void setForwardSpeed(float throttleSetting, float speed, float speedIncrement) {
+        if (throttleSetting> 0.0f) {
+            _hasForwardSpeeds = true;
+        } else {
+            return;
+        }
+        int key;
+        Entry<Integer, SpeedStep> entry = findEquivalentEntry (throttleSetting, speedIncrement);
+        if (entry != null) {    // close keys. i.e. resolve to same throttle step
+            float value = entry.getValue().getForwardSpeed();
+            speed = (speed + value) / 2;
+            key = entry.getKey();
+        } else {    // nothing close. make new entry
+            key = Math.round(throttleSetting * 1000);
+        }
+        if (!speeds.containsKey(key)) {
+            speeds.put(key, new SpeedStep());
+        }
+        SpeedStep ss = speeds.get(key);
+        ss.setForwardSpeed(speed);
+    }
+
+    private Entry<Integer, SpeedStep>  findEquivalentEntry (float throttleSetting, float speedIncrement) {
+        // search through table until end for an entry is found whose key / 1000
+        // is within the speedIncrement of the throttleSetting
+        // Note there may be zero values interspersed in the tree
+        Entry<Integer, SpeedStep> entry = speeds.firstEntry();
+        if (entry == null) {
+            return null;
+        }
+        int key = entry.getKey();
+        while (entry != null) {
+            entry = speeds.higherEntry(key);
+            if (entry != null) {
+                float speed = entry.getKey();
+                if (Math.abs(speed/1000.0f - throttleSetting) <= speedIncrement) {
+                    return entry;
+                }
+                key = entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Merge raw throttleSetting value with an existing profile SpeedStep if
+     * key for the throttleSetting is within the speedIncrement of the SpeedStep.
+     * @param throttleSetting raw throttle setting value
+     * @param speed track speed
+     * @param speedIncrement throttle's speed step increment.
+     */
+    public void setReverseSpeed(float throttleSetting, float speed, float speedIncrement) {
+        if (throttleSetting> 0.0f) {
+            _hasReverseSpeeds = true;
+        } else {
+            return;
+        }
+        int key;
+        Entry<Integer, SpeedStep> entry = findEquivalentEntry (throttleSetting, speedIncrement);
+        if (entry != null) {    // close keys. i.e. resolve to same throttle step
+            float value = entry.getValue().getForwardSpeed();
+            speed = (speed + value) / 2;
+            key = entry.getKey();
+        } else {    // nothing close. make new entry
+            key = Math.round(throttleSetting * 1000);
+        }
+        if (!speeds.containsKey(key)) {
+            speeds.put(key, new SpeedStep());
+        }
+        SpeedStep ss = speeds.get(key);
+        ss.setReverseSpeed(speed);
+    }
+
     public void setReverseSpeed(float speedStep, float reverse) {
         if (reverse > 0.0f) {
             _hasReverseSpeeds = true;
@@ -304,7 +387,8 @@ public class RosterSpeedProfile {
             return higher * iSpeedStep / highStep;
         }
         if (nothingHigher) {
-            return lower * (1.0f + (iSpeedStep - lowStep) / (1000.0f - lowStep));
+//            return lower * (1.0f + (iSpeedStep - lowStep) / (1000.0f - lowStep));
+            return lower + (iSpeedStep - lowStep) * lower / lowStep;
         }
 
         float valperstep = (higher - lower) / (highStep - lowStep);
@@ -437,7 +521,7 @@ public class RosterSpeedProfile {
 
     javax.swing.Timer stopTimer = null;
 
-    long lastTimeTimerStarted = 0l;
+    long lastTimeTimerStarted = 0L;
 
     /**
      * reset everything back to default once the change has finished.
@@ -485,7 +569,33 @@ public class RosterSpeedProfile {
             referenced = blk;
         }
         changeLocoSpeed(t, blockLength, speed);
+    }
 
+    /**
+     * Set speed of a throttle.
+     *
+     * @param t     the throttle to set
+     * @param sec   the section used for length details
+     * @param speed the speed to set
+     * @param usePercentage the percentage of the block to be used for stopping
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
+        justification = "OK to compare floats, as even tiny differences should trigger update")
+    public void changeLocoSpeed(DccThrottle t, Section sec, float speed, float usePercentage) {
+        if (sec == referenced && speed == desiredSpeedStep) {
+            log.debug("Already setting to desired speed step for this Section");
+            return;
+        }
+        float sectionLength = sec.getActualLength() * usePercentage;
+        if (sec == referenced) {
+            distanceRemaining = distanceRemaining - getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float) (System.nanoTime() - lastTimeTimerStarted) / 1000000000));
+            sectionLength = distanceRemaining;
+            //Not entirely reliable at this stage as the loco could still be running and not completed the calculation of the distance, this could result in an over run
+            log.debug("Block passed is the same as we are currently processing");
+        } else {
+            referenced = sec;
+        }
+        changeLocoSpeed(t, sectionLength, speed);
     }
 
     /**
@@ -496,7 +606,7 @@ public class RosterSpeedProfile {
      * @param speed the speed to set
      * @param usePercentage the percentage of the block to be used for stopping
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
         justification = "OK to compare floats, as even tiny differences should trigger update")
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed, float usePercentage) {
         if (blk == referenced && speed == desiredSpeedStep) {
@@ -736,8 +846,7 @@ public class RosterSpeedProfile {
         if (_throttle.getIsForward()) {
             float extraAsDouble = (getOverRunTimeForward() + extraDelay) / 1000;
             if (log.isDebugEnabled()) {
-                log.debug("Over run time to remove (Forward) {}", getOverRunTimeForward());
-                log.debug("{}", extraAsDouble);
+                log.debug("Over run time to remove (Forward) {} {}", getOverRunTimeForward(), extraAsDouble);
             }
             float olddistance = getDistanceTravelled(true, _throttle.getSpeedSetting(), extraAsDouble);
             distance = distance - olddistance;
@@ -746,8 +855,7 @@ public class RosterSpeedProfile {
         } else {
             float extraAsDouble = (getOverRunTimeReverse() + extraDelay) / 1000;
             if (log.isDebugEnabled()) {
-                log.debug("Over run time to remove (Reverse) {}", getOverRunTimeReverse());
-                log.debug("{}", extraAsDouble);
+                log.debug("Over run time to remove (Reverse) {} {}", getOverRunTimeReverse(), extraAsDouble);
             }
             float olddistance = getDistanceTravelled(false, _throttle.getSpeedSetting(), extraAsDouble);
             distance = distance - olddistance;

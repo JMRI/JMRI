@@ -33,7 +33,7 @@ public class OpenLcbMenu extends JMenu {
         }
     }
 
-    Item[] panelItems = new Item[]{
+    final Item[] panelItems = new Item[]{
         new Item("MenuItemTrafficMonitor", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"), // NOI18N
         new Item("MenuItemSendFrame", "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"), // NOI18N
         new Item("MenuItemConfigNodes", "jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"), // NOI18N
@@ -48,8 +48,8 @@ public class OpenLcbMenu extends JMenu {
             this.load = load;
         }
 
-        String name;
-        String load;
+        final String name;
+        final String load;
     }
 
 }

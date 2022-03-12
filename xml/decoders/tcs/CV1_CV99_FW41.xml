@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +15,7 @@
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
-  <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
+  <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
     <decVal/>
     <label>Version ID</label>
     <label xml:lang="it">ID Versione</label>

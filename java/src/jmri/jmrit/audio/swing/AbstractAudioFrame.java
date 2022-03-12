@@ -48,7 +48,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     JTextField userName = new JTextField(15);
 
     /**
-     * Standard constructor
+     * Standard constructor.
      *
      * @param title Title of this AudioFrame
      * @param model AudioTableDataModel holding Audio data
@@ -59,7 +59,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     }
 
     /**
-     * Method to layout the frame.
+     * Layout the frame.
      * <p>
      * This contains common items.
      * <p>
@@ -150,7 +150,6 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             layoutPanel(title, units);
         }
 
-        @SuppressWarnings("UnnecessaryBoxing")
         private void layoutPanel(String title, String units) {
             this.setLayout(new FlowLayout());
             if (title.length() != 0) {
@@ -219,7 +218,6 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         JSpinner spinner = new JSpinner();
 
-        @SuppressWarnings({"UnnecessaryBoxing", "OverridableMethodCallInConstructor"})
         JPanelSliderf(String title, Float min, Float max, int majorTicks, int minorTicks) {
             super();
             int iMin = Math.round(min * INT_PRECISION);

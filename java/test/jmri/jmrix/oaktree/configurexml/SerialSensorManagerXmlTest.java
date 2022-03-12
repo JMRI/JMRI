@@ -1,15 +1,14 @@
 package jmri.jmrix.oaktree.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SerialSensorManagerXmlTest.java
  *
- * Description: tests for the SerialSensorManagerXml class
+ * Test for the SerialSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class SerialSensorManagerXmlTest {
       Assert.assertNotNull("SerialSensorManagerXml constructor",new SerialSensorManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

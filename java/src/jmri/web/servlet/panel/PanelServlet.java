@@ -19,6 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Return xml (for specified Panel) suitable for use by external clients.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author Randall Wood (C) 2016
  */
@@ -44,7 +48,7 @@ public class PanelServlet extends AbstractPanelServlet {
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
             if (editor == null) {
-                log.warn("Requested Panel [" + name + "] does not exist.");
+                log.warn("Requested Panel [{}] does not exist.", name);
                 return "ERROR Requested panel [" + name + "] does not exist.";
             }
 
@@ -76,7 +80,7 @@ public class PanelServlet extends AbstractPanelServlet {
                     try {
                         panel.addContent(positionableElement(sub));
                     } catch (Exception ex) {
-                        log.error("Error storing panel element: {}", ex.getMessage(), ex);
+                        log.error("Error storing panel element", ex);
                     }
                 }
             }
@@ -89,7 +93,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {
-            log.warn("Requested Panel [" + name + "] does not exist.");
+            log.warn("Requested Panel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
     }
@@ -100,7 +104,7 @@ public class PanelServlet extends AbstractPanelServlet {
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
             if (editor == null) {
-                log.warn("Requested Panel [" + name + "] does not exist.");
+                log.warn("Requested Panel [{}] does not exist.", name);
                 return "ERROR Requested panel [" + name + "] does not exist.";
             }
 
@@ -140,7 +144,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
             return this.mapper.writeValueAsString(root);
         } catch (NullPointerException ex) {
-            log.warn("Requested Panel [" + name + "] does not exist.");
+            log.warn("Requested Panel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         } catch (JsonGenerationException e) {
             log.error("Error generating JSON", e);

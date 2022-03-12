@@ -67,7 +67,7 @@
         <decVal min="0" max="144"/>
         <label>D Output (x10) Millisecs</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="9">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="9">
         <decVal/>
         <label>Hardware Type</label>
         <label xml:lang="it">Versione Decoder: </label>

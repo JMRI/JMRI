@@ -1,13 +1,7 @@
 package jmri.jmrix.roco.z21;
 
-import java.util.ArrayList;
-import java.util.List;
-import jmri.AddressedProgrammer;
 import jmri.ProgListener;
-import jmri.ProgrammerException;
-import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -49,7 +43,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
      * Send an ops-mode write request to the Xpressnet.
      */
     @Override
-    synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, ProgListener p) {
         final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         msg.setBroadcastReply(); // reply comes through a loconet message.
@@ -68,7 +62,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
      * {@inheritDoc}
      */
     @Override
-    synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(String CVname, ProgListener p) {
         final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         /* we need to save the programer so we can send messages
@@ -85,7 +79,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
      * {@inheritDoc}
      */
     @Override
-    synchronized public void confirmCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void confirmCV(String CVname, int val, ProgListener p) {
         int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
@@ -106,7 +100,6 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         if (progState == NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
-            return;
         } else if (progState == REQUESTSENT) {
             if (l.isOkMessage()) {
                 // Before we set the programmer state to not programming, 
@@ -129,11 +122,10 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                 // if this was a read, we cached the value earlier.  If its a
                 // write, we're to return the original write value
                 notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
-                return;
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
-                    return;  // just ignore this, since we are retransmitting 
+                    // just ignore this, since we are retransmitting
                     // the message.
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
                     && l.getElement(1) == XNetConstants.PROG_BYTE_NOT_FOUND) {
@@ -141,7 +133,6 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                     progState = NOTPROGRAMMING;
                     stopTimer();
                     notifyProgListenerEnd(progListener, value, jmri.ProgListener.NoLocoDetected);
-                    return;
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = NOTPROGRAMMING;

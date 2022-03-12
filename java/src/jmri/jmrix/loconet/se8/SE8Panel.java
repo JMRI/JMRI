@@ -254,7 +254,7 @@ public class SE8Panel extends AbstractBoardProgPanel {
             case 21:
                 return 0;   // done!
             default:
-                log.error("unexpected state " + state);
+                log.error("unexpected state {}", state);
                 return 0;
         }
     }

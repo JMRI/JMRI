@@ -52,7 +52,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         } else {
             log.error("cannot cast the passed address to DccLocoAddress.");
         }
-        log.debug("new Pr2Throttle for " + activeAddress);
+        log.debug("new Pr2Throttle for {}", activeAddress);
         notifyThrottleKnown(new Pr2Throttle((LocoNetSystemConnectionMemo) adapterMemo, activeAddress), activeAddress);
     }
 

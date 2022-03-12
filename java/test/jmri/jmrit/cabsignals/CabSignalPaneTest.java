@@ -1,8 +1,8 @@
 package jmri.jmrit.cabsignals;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CabSignalPane.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class CabSignalPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new CabSignalPane();
@@ -22,7 +22,7 @@ public class CabSignalPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

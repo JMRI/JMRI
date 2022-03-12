@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Klaus Nahr" version="1" lastUpdated="20210209"/>
+  <!-- Version 1.00 - Initial version                           -->
+  <decoder>
+    <family name="LocoCruiser 1.0" mfg="ANE Model Co, Ltd" lowVersionID="1" highVersionID="1" comment="ANE Model LocoCruiser Version 1" >
+      <model model="LC101" numOuts="5" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="NEM652" comment="For HO Scale Locomotives, with NEM 652 / NMRA 8 Pin Medium Plug">
+        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="4" label="Brown" connection="wire" maxcurrent="100 mA"/>
+        <output name="5" label="Purple" connection="wire" maxcurrent="100 mA"/>
+        <size length="23.5" width="15" height="5" units="mm"/>
+      </model>
+      <model model="LC102" numOuts="5" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="Wires/NEM652" comment="For HO Scale Locomotives, with Wires">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="4" label="Brown" connection="wire" maxcurrent="100 mA"/>
+        <output name="5" label="Purple" connection="wire" maxcurrent="100 mA"/>
+        <size length="23.5" width="15" height="5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Pane Basic -->
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
+        <decVal/>
+        <label>Version Number</label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="45">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+      <variable CV="1" item="Short Address" default="3" tooltip="1-111">
+        <decVal min="1" max="111"/>
+        <label>Primary Address</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <!-- Pane Motor -->
+      <variable CV="9" item="Motor Option 1" default="20" >
+        <decVal min="1" max="23"/>
+        <label>Drive Frequency</label>
+      </variable>
+      <!-- Pane Basic Speed Control -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable CV="2" item="Vstart" default="20" tooltip="0-255">
+        <decVal/>
+        <label>Start Voltage</label>
+      </variable>
+      <variable CV="5" item="Vhigh" default="0" tooltip="0-255">
+        <decVal/>
+        <label>Maximum Speed</label>
+      </variable>
+      <!-- Pane Speed Table -->
+      <!-- ToDo: Defaults, unfortunately there is no known way to set a Default Values for the Speed Table -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+      <!-- Function Output Mapping -->
+      <variable item="FL(f) controls output 1" CV="55" mask="XXXVXXXX" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(f) controls output 2" CV="56" mask="XXXVXXXX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(f) controls output 3" CV="57" mask="XXXVXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(f) controls output 4" CV="58" mask="XXXVXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(f) controls output 5" CV="59" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(r) controls output 1" CV="55" mask="XXXVXXXX" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(r) controls output 2" CV="56" mask="XXXVXXXX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(r) controls output 3" CV="57" mask="XXXVXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(r) controls output 4" CV="58" mask="XXXVXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="FL(r) controls output 5" CV="59" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F1 controls output 1" CV="55" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F1 controls output 2" CV="56" mask="XXXXXXXV" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F1 controls output 3" CV="57" mask="XXXXXXXV" minOut="3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F1 controls output 4" CV="58" mask="XXXXXXXV" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F1 controls output 5" CV="59" mask="XXXXXXXV" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F2 controls output 1" CV="55" mask="XXXXXXVX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F2 controls output 2" CV="56" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F2 controls output 3" CV="57" mask="XXXXXXVX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F2 controls output 4" CV="58" mask="XXXXXXVX" minOut="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F2 controls output 5" CV="59" mask="XXXXXXVX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
+      </variable>
+      <variable item="F3 controls output 1" CV="55" mask="XXXXXVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 2" CV="56" mask="XXXXXVXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 3" CV="57" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 4" CV="58" mask="XXXXXVXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 5" CV="59" mask="XXXXXVXX" minOut="5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL controls output 1" CV="55" mask="VXXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL controls output 2" CV="56" mask="VXXXXXXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL controls output 3" CV="57" mask="VXXXXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL controls output 4" CV="58" mask="VXXXXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL controls output 5" CV="59" mask="VXXXXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <!-- Pane Lights -->
+      <variable CV="60" mask="VVVXXVVV" item="Function F0F effect generated" default="0">
+        <enumVal>
+          <enumChoice choice="Constant" value="0"/>
+          <enumChoice choice="Strobe" value="2"/>
+          <enumChoice choice="Mars" value="4"/>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
+          <enumChoice choice="Firebox" value="36"/>
+          <enumChoice choice="Warning" value="69"/>
+          <enumChoice choice="1/2 sec Flashing" value="128"/>
+        </enumVal>
+        <label>F0F Light Effect</label>
+      </variable>
+      <variable CV="60" mask="XXXVVXXX" item="Function F0F behavior" default="2">
+        <enumVal>
+          <!-- Direction: 0=0, 8=1, 16=2, 24=3-->
+          <enumChoice choice="On when running forward" value="2"/>
+          <enumChoice choice="On when running reverse" value="1"/>
+          <enumChoice choice="On in both directions" value="3"/>
+          <enumChoice choice="Always Off" value="0"/>
+        </enumVal>
+        <label>F0F Direction</label>
+      </variable>
+      <variable CV="61" mask="VVVXXVVV" item="Function F0R effect generated" default="0">
+        <enumVal>
+          <enumChoice choice="Constant" value="0"/>
+          <enumChoice choice="Strobe" value="2"/>
+          <enumChoice choice="Mars" value="4"/>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
+          <enumChoice choice="Firebox" value="36"/>
+          <enumChoice choice="Warning" value="69"/>
+          <enumChoice choice="1/2 sec Flashing" value="128"/>
+        </enumVal>
+        <label>F0R Light Effect</label>
+      </variable>
+      <variable CV="61" mask="XXXVVXXX" item="Function F0R behavior" default="1">
+        <enumVal>
+          <enumChoice choice="On when running forward" value="2"/>
+          <enumChoice choice="On when running reverse" value="1"/>
+          <enumChoice choice="On in both directions" value="3"/>
+          <enumChoice choice="Always Off" value="0"/>
+        </enumVal>
+        <label>F0R Direction</label>
+      </variable>
+      <variable CV="62" mask="VVVXXVVV" item="Function 1 effect generated" default="4">
+        <enumVal>
+          <enumChoice choice="Constant" value="0"/>
+          <enumChoice choice="Strobe" value="2"/>
+          <enumChoice choice="Mars" value="4"/>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
+          <enumChoice choice="Firebox" value="36"/>
+          <enumChoice choice="Warning" value="69"/>
+          <enumChoice choice="1/2 sec Flashing" value="128"/>
+        </enumVal>
+        <label>F1 Light Effect</label>
+      </variable>
+      <variable CV="62" mask="XXXVVXXX" item="Function 1 behavior" default="0">
+        <enumVal>
+          <enumChoice choice="On when running forward" value="2"/>
+          <enumChoice choice="On when running reverse" value="1"/>
+          <enumChoice choice="On in both directions" value="3"/>
+          <enumChoice choice="Always Off" value="0"/>
+        </enumVal>
+        <label>F1 Direction</label>
+      </variable>
+      <variable CV="63" mask="VVVXXVVV" item="Function 2 effect generated" default="32">
+        <enumVal>
+          <enumChoice choice="Constant" value="0"/>
+          <enumChoice choice="Strobe" value="2"/>
+          <enumChoice choice="Mars" value="4"/>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
+          <enumChoice choice="Firebox" value="36"/>
+          <enumChoice choice="Warning" value="69"/>
+          <enumChoice choice="1/2 sec Flashing" value="128"/>
+        </enumVal>
+        <label>F2 Light Effect</label>
+      </variable>
+      <variable CV="63" mask="XXXVVXXX" item="Function 2 behavior" default="0">
+        <enumVal>
+          <enumChoice choice="On when running forward" value="2"/>
+          <enumChoice choice="On when running reverse" value="1"/>
+          <enumChoice choice="On in both directions" value="3"/>
+          <enumChoice choice="Always Off" value="0"/>
+        </enumVal>
+        <label>F2 Direction</label>
+      </variable>
+      <variable CV="64" mask="VVVXXVVV" item="Function 3 effect generated" default="64">
+        <enumVal>
+          <enumChoice choice="Constant" value="0"/>
+          <enumChoice choice="Strobe" value="2"/>
+          <enumChoice choice="Mars" value="4"/>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
+          <enumChoice choice="Firebox" value="36"/>
+          <enumChoice choice="Warning" value="69"/>
+          <enumChoice choice="1/2 sec Flashing" value="128"/>
+        </enumVal>
+        <label>F3 Light Effect</label>
+      </variable>
+      <variable CV="64" mask="XXXVVXXX" item="Function 3 behavior" default="0">
+        <enumVal>
+          <enumChoice choice="On when running forward" value="2"/>
+          <enumChoice choice="On when running reverse" value="1"/>
+          <enumChoice choice="On in both directions" value="3"/>
+          <enumChoice choice="Always Off" value="0"/>
+        </enumVal>
+        <label>F3 Direction</label>
+      </variable>
+      <!-- Pane Analog Controls -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- Pane Consist -->
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" tooltip="Stores consist address. Range 0-111 (direction set in bit 7)">
+        <decVal max="111"/>
+        <label>Advanced Consist Address</label>
+      </variable>
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label>Locomotive Direction In Consist</label>
+      </variable>
+    </variables>
+    <!-- Reset Decoder Configuration -->
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

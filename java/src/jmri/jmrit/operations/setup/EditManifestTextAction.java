@@ -2,6 +2,7 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -15,11 +16,7 @@ import javax.swing.AbstractAction;
 public class EditManifestTextAction extends AbstractAction {
 
     public EditManifestTextAction() {
-        this(Bundle.getMessage("TitleManifestText"));
-    }
-
-    public EditManifestTextAction(String s) {
-        super(s);
+        super(Bundle.getMessage("TitleManifestText"));
     }
 
     EditManifestTextFrame f = null;

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+  <variable item="Value 1" label="Valores" CV="67" default="1"><decVal/></variable>
+  <variable item="Value 2" label="Valores" CV="68" default="3"><decVal/></variable>
+  <variable item="Value 3" label="Valores" CV="69" default="6"><decVal/></variable>
+  <variable item="Value 4" label="Valores" CV="70" default="10"><decVal/></variable>
+  <variable item="Value 5" label="Valores" CV="71" default="15"><decVal/></variable>
+  <variable item="Value 6" label="Valores" CV="72" default="21"><decVal/></variable>
+  <variable item="Value 7" label="Valores" CV="73" default="28"><decVal/></variable>
+  <variable item="Value 8" label="Valores" CV="74" default="36"><decVal/></variable>
+  <variable item="Value 9" label="Valores" CV="75" default="44"><decVal/></variable>
+  <variable item="Value 10" label="Valores" CV="76" default="52"><decVal/></variable>
+  <variable item="Value 11" label="Valores" CV="77" default="60"><decVal/></variable>
+  <variable item="Value 12" label="Valores" CV="78" default="69"><decVal/></variable>
+  <variable item="Value 13" label="Valores" CV="79" default="78"><decVal/></variable>
+  <variable item="Value 14" label="Valores" CV="80" default="87"><decVal/></variable>
+  <variable item="Value 15" label="Valores" CV="81" default="96"><decVal/></variable>
+  <variable item="Value 16" label="Valores" CV="82" default="105"><decVal/></variable>
+  <variable item="Value 17" label="Valores" CV="83" default="114"><decVal/></variable>
+  <variable item="Value 18" label="Valores" CV="84" default="123"><decVal/></variable>
+  <variable item="Value 19" label="Valores" CV="85" default="131"><decVal/></variable>
+  <variable item="Value 20" label="Valores" CV="86" default="140"><decVal/></variable>
+  <variable item="Value 21" label="Valores" CV="87" default="150"><decVal/></variable>
+  <variable item="Value 22" label="Valores" CV="88" default="160"><decVal/></variable>
+  <variable item="Value 23" label="Valores" CV="89" default="170"><decVal/></variable>
+  <variable item="Value 24" label="Valores" CV="90" default="180"><decVal/></variable>
+  <variable item="Value 25" label="Valores" CV="91" default="190"><decVal/></variable>
+  <variable item="Value 26" label="Valores" CV="92" default="200"><decVal/></variable>
+  <variable item="Value 27" label="Valores" CV="93" default="210"><decVal/></variable>
+  <variable item="Value 28" label="Valores" CV="94" default="220"><decVal/></variable>
+
+</variables>

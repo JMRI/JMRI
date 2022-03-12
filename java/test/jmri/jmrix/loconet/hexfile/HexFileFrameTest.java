@@ -1,26 +1,24 @@
 package jmri.jmrix.loconet.hexfile;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+
 import jmri.util.*;
-import org.junit.After;
-import org.junit.Assert;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class HexFileFrameTest {
 
     @Test
+    @SuppressWarnings("deprecation")        // Thread.stop()
     public void testCTor() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LnHexFilePort p = new LnHexFilePort();
-        
+
         HexFileFrame f = new HexFileFrame();
 
         ThreadingUtil.runOnGUI( ()-> {
@@ -32,24 +30,24 @@ public class HexFileFrameTest {
         ThreadingUtil.runOnGUI( ()-> {
             f.dispose();
        });
-            
-        p.getSystemConnectionMemo().dispose();
+
         p.dispose();
         f.sourceThread.stop();
         f.sourceThread.join();
-        f.dispose();   
- }   
+        f.dispose();
+ }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
+        JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
         JUnitUtil.tearDown();
     }
 

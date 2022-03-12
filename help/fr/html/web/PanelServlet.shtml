@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -53,7 +53,7 @@
       navigateur, ce qui permet des clics sur les
       &eacute;l&eacute;ments actifs et mettre &agrave; jour des
       modifications apport&eacute;es par cette application et
-      ailleurs dans JMRI.</p><!--#include virtual="/Footer" -->
+      ailleurs dans JMRI.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -15,12 +15,12 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -44,10 +44,11 @@ public class JsonSignalHeadSocketServiceTest {
         Assert.assertEquals("One listener", 1, s.getNumPropertyChangeListeners());
 
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        connection.setVersion(JSON.V5);
         TestJsonSignalHeadHttpService http = new TestJsonSignalHeadHttpService(connection.getObjectMapper());
         JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
         JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(connection, http);
-        service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.POST, locale, 42);
+        service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         Assert.assertEquals("Two listeners", 2, s.getNumPropertyChangeListeners());
 
         //signalhead defaults to Dark
@@ -76,7 +77,7 @@ public class JsonSignalHeadSocketServiceTest {
         // put a new signal head
         try {
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "something"); // does not matter
-            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.PUT, locale, 42);
+            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Invalid Request", 405, ex.getCode());
@@ -115,9 +116,10 @@ public class JsonSignalHeadSocketServiceTest {
         Assert.assertEquals("No listeners", 0, manager.getPropertyChangeListeners().length);
 
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        connection.setVersion(JSON.V5);
         TestJsonSignalHeadHttpService http = new TestJsonSignalHeadHttpService(connection.getObjectMapper());
         JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(connection, http);
-        service.onList(JsonSignalHead.SIGNAL_HEAD, connection.getObjectMapper().createObjectNode(), locale, 0);
+        service.onList(JsonSignalHead.SIGNAL_HEAD, connection.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         Assert.assertEquals("One listener", 1, manager.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
         Assert.assertNotNull(message);
@@ -170,7 +172,7 @@ public class JsonSignalHeadSocketServiceTest {
         // SignalHead Yellow
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName)
                 .put(JSON.STATE, SignalHead.YELLOW);
-        service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.POST, locale, 42);
+        service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         Assert.assertEquals(SignalHead.YELLOW, s.getState()); //state should be Yellow
         Assert.assertEquals("No listeners", 0, manager.getPropertyChangeListeners().length);
         Assert.assertEquals("Two listeners", 2, s.getNumPropertyChangeListeners());
@@ -179,7 +181,7 @@ public class JsonSignalHeadSocketServiceTest {
         try {
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName)
                     .put(JSON.STATE, SignalHead.FLASHLUNAR);
-            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.POST, locale, 42);
+            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method not allowed", 400, ex.getCode());
@@ -195,15 +197,14 @@ public class JsonSignalHeadSocketServiceTest {
         
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalSignalHeadManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
@@ -217,12 +218,12 @@ public class JsonSignalHeadSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+        public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
             if (throwException > 0) {
                 throwException--;
-                throw new JsonException(499, "Mock Exception", id);
+                throw new JsonException(499, "Mock Exception", request.id);
             }
-            return super.doGet(type, name, data, locale, id);
+            return super.doGet(type, name, data, request);
         }
 
         public void setThrowException(int throwException) {

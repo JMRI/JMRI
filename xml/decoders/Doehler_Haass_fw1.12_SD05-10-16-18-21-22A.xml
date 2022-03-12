@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+<!--  Fixed/added low and high versionIDs (should be 050, not 098 for this firmware
+      Fixed productIDs to match numerical IDs of D&H as present now in CV261, to allow for automated decoder identification.
+      Of note: SD21A-4 & SD21A-5 have been defined seperatly starting from this fw version
+      (it wasn't the case before: SD21A was defined as a unique decoder).
+      IMHO: SD21A is a single same decoder model (as attested by CV261). The different connector declinations with which
+      the decoder can be equipped do not qualify as a distinct decoders according to JMRI standards, unless the Manufacturer
+      provides a different Product ID, which is not the case. This will need to be defined again as a single decoder
+      in the next fw update definition, to maintain consistency, and avoid hundreds of redundant decoder variations for D&H.
+      -->
+<version version="1" author="Wouter Kok" lastUpdated="2020-05-02"/>
+<!-- Creation Decoder template for the Doehler & Haass combo sound decoder with Firmware v1.12-->
+<decoder>
+  <family name="Sound Decoders (2020)" mfg="Doehler und Haass">
+    <model model="SD05A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="8" numFns="16" productID="205" comment="SD05A-0 / SD05A-1 / SD05A-3 from July 2020" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A">
+      <!--lowVersionID="098" highVersionID="098"-->
+      <output name="1" label="Front|Light" maxcurrent="150mA">
+        <label xml:lang="de">LV</label>
+        <label xml:lang="nl">Kop|lampen</label>
+      </output>
+      <output name="2" label="Rear|Light" maxcurrent="150mA">
+        <label xml:lang="de">LR</label>
+        <label xml:lang="nl">Achter|lichten</label>
+      </output>
+      <output name="3" label="AUX|1" maxcurrent="150mA"/>
+      <output name="4" label="AUX|2" maxcurrent="150mA"/>
+      <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+        <label xml:lang="de">AUX 3|(oder SUSI ZCLK)</label>
+        <label xml:lang="nl">AUX 3|(of SUSI ZCLK)</label>
+      </output>
+      <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+        <label xml:lang="de">AUX 4|(oder SUSI ZDAT)</label>
+        <label xml:lang="nl">AUX 4|(of SUSI ZDAT)</label>
+      </output>
+      <output name="7" label="Dimmed Lights / AUX 5">
+        <label xml:lang="de">Abblendlicht|(oder AUX 5)</label>
+        <label xml:lang="nl">Afblendlicht|(of AUX 5)</label>
+      </output>
+      <output name="8" label="Shunting Speed|(or AUX 6)">
+        <label xml:lang="de">Rangiergang|(oder AUX 6)</label>
+        <label xml:lang="nl">Rangeergang|(of AUX6)</label>
+      </output>
+      <size length="20.0" width="7.6" height="3.0" units="mm"/>
+      <protocols>
+        <protocol>dcc</protocol>
+        <protocol>selectrix</protocol>
+        <protocol>motorola</protocol>
+      </protocols>
+    </model>
+    <model model="SD10A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="8" numFns="16" productID="210" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from July 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A">
+    <!--lowVersionID="098" highVersionID="098"-->
+    <output name="1" label="Front|Light" maxcurrent="150mA">
+      <label xml:lang="de">LV</label>
+      <label xml:lang="nl">Kop|lampen</label>
+    </output>
+    <output name="2" label="Rear|Light" maxcurrent="150mA">
+      <label xml:lang="de">LR</label>
+      <label xml:lang="nl">Achter|lichten</label>
+    </output>
+    <output name="3" label="AUX|1" maxcurrent="300mA"/>
+    <output name="4" label="AUX|2" maxcurrent="300mA"/>
+    <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+      <label xml:lang="de">AUX 3|(oder SUSI ZCLK)</label>
+      <label xml:lang="nl">AUX 3|(of SUSI ZCLK)</label>
+    </output>
+    <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+      <label xml:lang="de">AUX 4|(oder SUSI ZDAT)</label>
+      <label xml:lang="nl">AUX 4|(of SUSI ZDAT)</label>
+    </output>
+    <output name="7" label="Dimmed Lights / AUX 5">
+      <label xml:lang="de">Abblendlicht|(oder AUX 5)</label>
+      <label xml:lang="nl">Afblendlicht|(of AUX 5)</label>
+    </output>
+    <output name="8" label="Shunting Speed|(or AUX 6)">
+      <label xml:lang="de">Rangiergang|(oder AUX 6)</label>
+      <label xml:lang="nl">Rangeergang|(of AUX6)</label>
+    </output>
+    <size length="21.4" width="9.1" height="3.4" units="mm"/>
+    <protocols>
+      <protocol>dcc</protocol>
+      <protocol>selectrix</protocol>
+      <protocol>motorola</protocol>
+    </protocols>
+  </model>
+    <model model="SD16A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="10" numFns="16" productID="216" comment="SD16A-0 / SD16A-2 / SD16A-3 / SD16A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A">
+     <output name="1" label="Front|Light" maxcurrent="150mA">
+      <label xml:lang="de">LV</label>
+      <label xml:lang="nl">Kop|lampen</label>
+    </output>
+    <output name="2" label="Rear|Light" maxcurrent="150mA">
+      <label xml:lang="de">LR</label>
+      <label xml:lang="nl">Achter|lichten</label>
+    </output>
+    <output name="3" label="AUX|1" maxcurrent="300mA"/>
+    <output name="4" label="AUX|2" maxcurrent="300mA"/>
+    <output name="5" label="AUX|3" maxcurrent="1.0A"/>
+    <output name="6" label="AUX|4" maxcurrent="1.0A"/>
+    <output name="7" label="AUX|5" maxcurrent="NC - Logic Level"/>
+    <output name="8" label="AUX|6" maxcurrent="NC - Logic Level"/>
+    <output name="9" label="Dimmed|Lights">
+      <label xml:lang="de">Abblend|licht</label>
+      <label xml:lang="nl">Afblend|licht</label>
+    </output>
+    <output name="10" label="Shunting|Speed">
+      <label xml:lang="de">Rangier|gang</label>
+      <label xml:lang="nl">Rangeer|gang</label>
+    </output>
+    <size length="21.5" width="10.5" height="3.0" units="mm"/>
+    <protocols>
+      <protocol>dcc</protocol>
+      <protocol>selectrix</protocol>
+      <protocol>motorola</protocol>
+    </protocols>
+  </model>
+    <model model="SD18A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="8" numFns="16" productID="218" comment="SD18A with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+    <!--lowVersionID="098" highVersionID="098"-->
+    <output name="1" label="Front|Light" maxcurrent="150mA">
+      <label xml:lang="de">LV</label>
+      <label xml:lang="nl">Kop|lampen</label>
+    </output>
+    <output name="2" label="Rear|Light" maxcurrent="150mA">
+      <label xml:lang="de">LR</label>
+      <label xml:lang="nl">Achter|lichten</label>
+      </output>
+    <output name="3" label="AUX|1" maxcurrent="300mA"/>
+    <output name="4" label="AUX|2" maxcurrent="300mA"/>
+    <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+      <label xml:lang="de">AUX 3|(oder SUSI ZCLK)</label>
+      <label xml:lang="nl">AUX 3|(of SUSI ZCLK)</label>
+    </output>
+    <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+      <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
+      <label xml:lang="nl">AUX 4|(of SUSI ZDAT)</label>
+    </output>
+    <output name="7" label="Dimmed Lights / AUX 5">
+      <label xml:lang="de">Abblendlicht|(oder AUX 5)</label>
+      <label xml:lang="nl">Afblendlicht|(of AUX 5)</label>
+    </output>
+    <output name="8" label="Shunting Speed|(or AUX 6)">
+      <label xml:lang="de">Rangiergang|(oder AUX 6)</label>
+      <label xml:lang="nl">Rangeergang|(of AUX6)</label>
+    </output>
+    <size length="25.0" width="9.5" height="2.8" units="mm"/>
+    <protocols>
+      <protocol>dcc</protocol>
+      <protocol>selectrix</protocol>
+      <protocol>motorola</protocol>
+    </protocols>
+  </model>
+    <model model="SD21A-4 (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="10" numFns="16" productID="221" comment="SD21A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+    <output name="1" label="Front|Light" maxcurrent="150mA">
+      <label xml:lang="de">LV</label>
+      <label xml:lang="nl">Kop|lampen</label>
+    </output>
+    <output name="2" label="Rear|Light" maxcurrent="150mA">
+      <label xml:lang="de">LR</label>
+      <label xml:lang="nl">Achter|lichten</label>
+    </output>
+    <output name="3" label="AUX|1" maxcurrent="300mA"/>
+    <output name="4" label="AUX|2" maxcurrent="300mA"/>
+    <output name="5" label="AUX|3" maxcurrent="1.0A"/>
+    <output name="6" label="AUX|4" maxcurrent="1.0A"/>
+    <output name="7" label="AUX|5" maxcurrent="1.0A"/>
+    <output name="8" label="AUX|6" maxcurrent="1.0A"/>
+    <output name="9" label="Dimmed|Lights">
+      <label xml:lang="de">Abblend|licht</label>
+      <label xml:lang="nl">Afblend|licht</label>
+    </output>
+    <output name="10" label="Shunting|Speed">
+      <label xml:lang="de">Rangier|gang</label>
+      <label xml:lang="nl">Rangeer|gang</label>
+    </output>
+    <size length="21.5" width="10.5" height="3.0" units="mm"/>
+    <protocols>
+      <protocol>dcc</protocol>
+      <protocol>selectrix</protocol>
+      <protocol>motorola</protocol>
+    </protocols>
+  </model>
+    <model model="SD21A-5 (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="10" numFns="16" productID="221" comment="SD21A-5 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+    <output name="1" label="Front|Light" maxcurrent="150mA">
+      <label xml:lang="de">LV</label>
+      <label xml:lang="nl">Kop|lampen</label>
+    </output>
+    <output name="2" label="Rear|Light" maxcurrent="150mA">
+      <label xml:lang="de">LR</label>
+      <label xml:lang="nl">Achter|lichten</label>
+    </output>
+    <output name="3" label="AUX|1" maxcurrent="300mA"/>
+    <output name="4" label="AUX|2" maxcurrent="300mA"/>
+    <output name="5" label="AUX|3" maxcurrent="NC - Logic Level"/>
+    <output name="6" label="AUX|4" maxcurrent="NC - Logic Level"/>
+    <output name="7" label="AUX|5" maxcurrent="NC - Logic Level"/>
+    <output name="8" label="AUX|6" maxcurrent="NC - Logic Level"/>
+    <output name="9" label="Dimmed|Lights">
+      <label xml:lang="de">Abblend|licht</label>
+      <label xml:lang="nl">Afblend|licht</label>
+    </output>
+    <output name="10" label="Shunting|Speed">
+      <label xml:lang="de">Rangier|gang</label>
+      <label xml:lang="nl">Rangeer|gang</label>
+    </output>
+    <size length="21.5" width="10.5" height="3.0" units="mm"/>
+    <protocols>
+      <protocol>dcc</protocol>
+      <protocol>selectrix</protocol>
+      <protocol>motorola</protocol>
+    </protocols>
+  </model>
+    <model model="SD22A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="12" numFns="16" productID="222" comment="SD22A-0 / SD22A-2 / SD22A-3 / SD22A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+    <output name="1" label="Front|Light" maxcurrent="150mA">
+      <label xml:lang="de">LV</label>
+      <label xml:lang="nl">Kop|lampen</label>
+    </output>
+    <output name="2" label="Rear|Light" maxcurrent="150mA">
+      <label xml:lang="de">LR</label>
+      <label xml:lang="nl">Achter|lichten</label>
+    </output>
+    <output name="3" label="AUX|1" maxcurrent="300mA"/>
+    <output name="4" label="AUX|2" maxcurrent="300mA"/>
+    <output name="5" label="AUX|3" maxcurrent="1.0A"/>
+    <output name="6" label="AUX|4" maxcurrent="1.0A"/>
+    <output name="7" label="AUX|5" maxcurrent="1.0A"/>
+    <output name="8" label="AUX|6" maxcurrent="1.0A"/>
+    <output name="9" label="Dimmed|Lights">
+      <label xml:lang="de">Abblend|licht</label>
+      <label xml:lang="nl">Afblend|licht</label>
+    </output>
+    <output name="10" label="Shunting|Speed">
+      <label xml:lang="de">Rangier|gang</label>
+      <label xml:lang="nl">Rangeer|gang</label>
+    </output>
+    <size length="21.5" width="10.5" height="3.0" units="mm"/>
+    <protocols>
+      <protocol>dcc</protocol>
+      <protocol>selectrix</protocol>
+      <protocol>motorola</protocol>
+    </protocols>
+  </model>
+  </family>
+  <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+  <variables>
+    <!-- START Common D&H variable files -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+    <!-- Standard variables with defaults for regular decoders  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+    <!-- Standard variables for decoders released after around 2012  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_95.xml"/>
+      <!-- New CV65 from Fw 3.08 and above -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_fw3.08.xml"/>
+    <!-- Standard variables for decoders released after around 2018  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv9_fw3.11.xml"/>
+
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.10.xml"/>
+    <!-- Analog functions  -->
+    <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+    <!-- Railcom feedback  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+    <!-- SECTION 5    - Extra Railcom feedback options as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_144_railcom_fw3.06.xml"/>
+    <!-- Motorola support -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola_fw3.06.xml"/>
+    <!-- Effect for AUX3-6 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv460-467_fw1.12.xml"/>
+    <!-- END Common D&H variable files -->
+
+    <!-- START combo sound variable files -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv311-348_911-948.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv351-359_951-959.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
+    <!-- 2014-10 fw1.03+ -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349_949.xml"/>
+    <!-- 2015-05 fw1.04+ -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv138-143.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv125-133.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377_974-977.xml"/>
+    <!-- 2020-07 fw1.12 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv378-379_fw1.12.xml"/>
+    <!-- 2016-03 fw1.06+ -->
+    <!--  New effects as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06.xml"/>
+    <!--  initialmapping options as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv153_fw3.06.xml"/>
+    <!--  deceleration options as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv154-155_fw3.06.xml"/>
+    <!--               - New effects as of fw1.10 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv156-157_fw3.10.xml"/>
+    <!--               - advanced function options as of fw1.11 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv161-165_2018.xml"/>
+    <!--  New Manufacturer ID and Version as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv260-265_fw3.06.xml"/>
+    <!--  Brake key and Brake time included -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv390_391.xml"/>
+    <!--  Function Swapping included -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv401_412.xml"/>
+    <!-- END combo sound variable files -->
+  </variables>
+  <resets>
+    <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="de">Zurücksetzen aller CV auf die Werkseinstellungen</label>
+        <label xml:lang="nl">Alle cv's terugtellen op fabrieksinstellingen.</label>
+    </factReset>
+  </resets>
+</decoder>
+<!-- Common pane(s)  -->
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_Pane_StartBrakeShunt_fw1.12.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_Pane_function_fw1.12.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_function_swapping.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common_fw3.10.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+<!-- Pane(s) valid for some decoders only  -->
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
+</decoder-config>

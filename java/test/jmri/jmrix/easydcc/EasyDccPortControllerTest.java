@@ -1,8 +1,8 @@
 package jmri.jmrix.easydcc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the EasyDccPortController class.
@@ -14,7 +14,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     private EasyDccSystemConnectionMemo memo;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        memo = new EasyDccSystemConnectionMemo();
@@ -42,8 +42,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
              */
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**
@@ -59,7 +58,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        memo.getTrafficController().terminateThreads();
        JUnitUtil.tearDown();

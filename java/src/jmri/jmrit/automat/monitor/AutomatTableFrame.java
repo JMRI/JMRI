@@ -1,6 +1,5 @@
 package jmri.jmrit.automat.monitor;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,8 +16,6 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
     AutomatTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
-
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle");
 
     public AutomatTableFrame(AutomatTableDataModel model) {
 
@@ -41,7 +38,7 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         pack();
         pane1.setMaximumSize(pane1.getSize());
 
-        setTitle(rb.getString("TitleAutomatTable"));
+        setTitle(Bundle.getMessage("TitleAutomatTable"));
 
         addHelpMenu("package.jmri.jmrit.automat.monitor.AutomatTableFrame", true);
 
@@ -50,9 +47,9 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
     @Override
     public void dispose() {
-	if(dataModel!=null){
-           dataModel.dispose();
-	}
+        if (dataModel != null) {
+            dataModel.dispose();
+        }
         dataModel = null;
         dataTable = null;
         dataScroll = null;

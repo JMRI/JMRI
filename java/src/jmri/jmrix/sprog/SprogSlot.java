@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to allow slots to hold 28 step speed
  * packets
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
- * @author	Andrew Berridge 2010
+ * @author Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Berridge 2010
  */
 public class SprogSlot {
 
@@ -30,6 +30,11 @@ public class SprogSlot {
         payload[0] = 0;
         payload[1] = 0;
         payload[2] = 0;
+        f0to4Packet = false;
+        f5to8Packet = false;
+        f9to12Packet = false;
+        f13to20Packet = false;
+        f21to28Packet = false;
         repeat = -1;
         addr = 0;
         isLong = false;
@@ -48,10 +53,14 @@ public class SprogSlot {
     private int spd;
     private boolean forward;
     private int status;
-    private int slot;
+    private final int slot;
     private boolean opsPkt;
 
-    private boolean f0to4Packet = false;
+    private boolean f0to4Packet;
+    private boolean f5to8Packet;
+    private boolean f9to12Packet;
+    private boolean f13to20Packet;
+    private boolean f21to28Packet;
 
     public boolean isF0to4Packet() {
         return f0to4Packet;
@@ -65,8 +74,13 @@ public class SprogSlot {
         return f9to12Packet;
     }
 
-    private boolean f5to8Packet = false;
-    private boolean f9to12Packet = false;
+    public boolean isF13to20Packet() {
+        return f13to20Packet;
+    }
+
+    public boolean isF21to28Packet() {
+        return f21to28Packet;
+    }
 
     private boolean repeatF0 = false;
     private boolean repeatF1 = false;
@@ -81,6 +95,22 @@ public class SprogSlot {
     private boolean repeatF10 = false;
     private boolean repeatF11 = false;
     private boolean repeatF12 = false;
+    private boolean repeatF13 = false;
+    private boolean repeatF14 = false;
+    private boolean repeatF15 = false;
+    private boolean repeatF16 = false;
+    private boolean repeatF17 = false;
+    private boolean repeatF18 = false;
+    private boolean repeatF19 = false;
+    private boolean repeatF20 = false;
+    private boolean repeatF21 = false;
+    private boolean repeatF22 = false;
+    private boolean repeatF23 = false;
+    private boolean repeatF24 = false;
+    private boolean repeatF25 = false;
+    private boolean repeatF26 = false;
+    private boolean repeatF27 = false;
+    private boolean repeatF28 = false;
 
     /**
      * Set the contents of the slot. Intended for accessory packets.
@@ -116,6 +146,10 @@ public class SprogSlot {
         this.speedPacket = true;
         this.speedMode = mode;
         this.f0to4Packet = false;
+        this.f5to8Packet = false;
+        this.f9to12Packet = false;
+        this.f13to20Packet = false;
+        this.f21to28Packet = false;
         this.forward = forward;
         if (mode == SpeedStepMode.NMRA_DCC_28) {
             this.payload = jmri.NmraPacket.speedStep28Packet(true, addr,
@@ -152,26 +186,10 @@ public class SprogSlot {
             this.repeat = 3; //Then repeat 3 times
         }
 
-        if (!f5Momentary && f5) {
-            this.repeatF5 = true;
-        } else {
-            this.repeatF5 = false;
-        }
-        if (!f6Momentary && f6) {
-            this.repeatF6 = true;
-        } else {
-            this.repeatF6 = false;
-        }
-        if (!f7Momentary && f7) {
-            this.repeatF7 = true;
-        } else {
-            this.repeatF7 = false;
-        }
-        if (!f8Momentary && f8) {
-            this.repeatF8 = true;
-        } else {
-            this.repeatF8 = false;
-        }
+        this.repeatF5 = !f5Momentary && f5;
+        this.repeatF6 = !f6Momentary && f6;
+        this.repeatF7 = !f7Momentary && f7;
+        this.repeatF8 = !f8Momentary && f8;
 
         this.payload = jmri.NmraPacket.function5Through8Packet(address,
                 isLongAddress,
@@ -198,32 +216,100 @@ public class SprogSlot {
             this.repeat = 3; //Then repeat 3 times
         }
 
-        if (!f9Momentary && f9) {
-            this.repeatF9 = true;
-        } else {
-            this.repeatF9 = false;
-        }
-        if (!f10Momentary && f10) {
-            this.repeatF10 = true;
-        } else {
-            this.repeatF10 = false;
-        }
-        if (!f11Momentary && f11) {
-            this.repeatF11 = true;
-        } else {
-            this.repeatF11 = false;
-        }
-        if (!f12Momentary && f12) {
-            this.repeatF12 = true;
-        } else {
-            this.repeatF12 = false;
-        }
+        this.repeatF9 = !f9Momentary && f9;
+        this.repeatF10 = !f10Momentary && f10;
+        this.repeatF11 = !f11Momentary && f11;
+        this.repeatF12 = !f12Momentary && f12;
 
         this.payload = jmri.NmraPacket.function9Through12Packet(address,
                 isLongAddress,
                 f9, f10, f11, f12);
         this.status = SprogConstants.SLOT_IN_USE;
 
+    }
+
+    public void f13to20packet(int address, boolean isLongAddress,
+            boolean f13, boolean f13Momentary,
+            boolean f14, boolean f14Momentary,
+            boolean f15, boolean f15Momentary,
+            boolean f16, boolean f16Momentary,
+            boolean f17, boolean f17Momentary,
+            boolean f18, boolean f18Momentary,
+            boolean f19, boolean f19Momentary,
+            boolean f20, boolean f20Momentary) {
+
+        this.f13to20Packet = true;
+        this.addr = address;
+        this.isLong = isLongAddress;
+
+        //Were we repeating any functions which we are now not?
+        if ((this.repeatF13 && !f13)
+                || (this.repeatF14 && !f14)
+                || (this.repeatF15 && !f15)
+                || (this.repeatF16 && !f16)
+                || (this.repeatF17 && !f17)
+                || (this.repeatF18 && !f18)
+                || (this.repeatF19 && !f19)
+                || (this.repeatF20 && !f20)) {
+            this.repeat = 3; //Then repeat 3 times
+        }
+
+        this.repeatF13 = !f13Momentary && f13;
+        this.repeatF14 = !f14Momentary && f14;
+        this.repeatF15 = !f15Momentary && f15;
+        this.repeatF16 = !f16Momentary && f16;
+        this.repeatF17 = !f17Momentary && f17;
+        this.repeatF18 = !f18Momentary && f18;
+        this.repeatF19 = !f19Momentary && f19;
+        this.repeatF20 = !f20Momentary && f20;
+
+        this.payload = jmri.NmraPacket.function13Through20Packet(address,
+                isLongAddress,
+                f13, f14, f15, f16,
+                f17, f18, f19, f20);
+        this.status = SprogConstants.SLOT_IN_USE;
+    }
+
+    public void f21to28packet(int address, boolean isLongAddress,
+            boolean f21, boolean f21Momentary,
+            boolean f22, boolean f22Momentary,
+            boolean f23, boolean f23Momentary,
+            boolean f24, boolean f24Momentary,
+            boolean f25, boolean f25Momentary,
+            boolean f26, boolean f26Momentary,
+            boolean f27, boolean f27Momentary,
+            boolean f28, boolean f28Momentary) {
+
+        this.f21to28Packet = true;
+        this.addr = address;
+        this.isLong = isLongAddress;
+
+        //Were we repeating any functions which we are now not?
+        if ((this.repeatF21 && !f21)
+                || (this.repeatF22 && !f22)
+                || (this.repeatF23 && !f23)
+                || (this.repeatF24 && !f24)
+                || (this.repeatF25 && !f25)
+                || (this.repeatF26 && !f26)
+                || (this.repeatF27 && !f27)
+                || (this.repeatF28 && !f28)) {
+            this.repeat = 3; //Then repeat 3 times
+        }
+
+        this.repeatF21 = !f21Momentary && f21;
+        this.repeatF22 = !f22Momentary && f22;
+        this.repeatF23 = !f23Momentary && f23;
+        this.repeatF24 = !f24Momentary && f24;
+        this.repeatF25 = !f25Momentary && f25;
+        this.repeatF26 = !f26Momentary && f26;
+        this.repeatF27 = !f27Momentary && f27;
+        this.repeatF28 = !f28Momentary && f28;
+
+        this.payload = jmri.NmraPacket.function21Through28Packet(address,
+                isLongAddress,
+                f21, f22, f23, f24,
+                f25, f26, f27, f28);
+        this.status = SprogConstants.SLOT_IN_USE;
     }
 
     public void f0to4packet(int address, boolean isLongAddress,
@@ -246,31 +332,12 @@ public class SprogSlot {
             this.repeat = 3; //Then repeat 3 times
         }
 
-        if (!f0Momentary && f0) {
-            this.repeatF0 = true;
-        } else {
-            this.repeatF0 = false;
-        }
-        if (!f1Momentary && f1) {
-            this.repeatF1 = true;
-        } else {
-            this.repeatF1 = false;
-        }
-        if (!f2Momentary && f2) {
-            this.repeatF2 = true;
-        } else {
-            this.repeatF2 = false;
-        }
-        if (!f3Momentary && f3) {
-            this.repeatF3 = true;
-        } else {
-            this.repeatF3 = false;
-        }
-        if (!f4Momentary && f4) {
-            this.repeatF4 = true;
-        } else {
-            this.repeatF4 = false;
-        }
+        this.repeatF0 = !f0Momentary && f0;
+        this.repeatF1 = !f1Momentary && f1;
+        this.repeatF2 = !f2Momentary && f2;
+        this.repeatF3 = !f3Momentary && f3;
+        this.repeatF4 = !f4Momentary && f4;
+        
         this.payload = jmri.NmraPacket.function0Through4Packet(address,
                 isLongAddress,
                 f0, f1, f2, f3, f4);
@@ -291,6 +358,18 @@ public class SprogSlot {
         }
         if (this.isF9to12Packet()) {
             if ((this.repeatF9 || this.repeatF10 || this.repeatF11 || this.repeatF12)) {
+                return false;
+            }
+        }
+        if (this.isF13to20Packet()) {
+            if ((this.repeatF13 || this.repeatF14 || this.repeatF15 || this.repeatF16)
+                    || (this.repeatF17 || this.repeatF18 || this.repeatF19 || this.repeatF20)) {
+                return false;
+            }
+        }
+        if (this.isF21to28Packet()) {
+            if ((this.repeatF21 || this.repeatF22 || this.repeatF23 || this.repeatF24)
+                    || (this.repeatF25 || this.repeatF26 || this.repeatF27 || this.repeatF28)) {
                 return false;
             }
         }
@@ -317,6 +396,10 @@ public class SprogSlot {
         spd = 0;
         speedPacket = false;
         f0to4Packet = false;
+        f5to8Packet = false;
+        f9to12Packet = false;
+        f13to20Packet = false;
+        f21to28Packet = false;
         if (payload != null) {
             payload[0] = 0;
             payload[1] = 0;
@@ -347,10 +430,10 @@ public class SprogSlot {
 
     private int doRepeat() {
         if (repeat > 0) {
-            log.debug("Slot " + slot + " repeats");
+            log.debug("Slot {} repeats", slot);
             repeat--;
             if (repeat == 0) {
-                log.debug("Clear slot " + slot + " due to repeats exhausted");
+                log.debug("Clear slot {} due to repeats exhausted", slot);
                 this.clear();
             }
         }

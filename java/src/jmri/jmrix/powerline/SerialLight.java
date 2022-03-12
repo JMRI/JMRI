@@ -99,7 +99,7 @@ abstract public class SerialLight extends AbstractVariableLight {
     @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
-            log.debug("sendOnOff(" + newState + ") Current: " + mState);
+            log.debug("sendOnOff({}) Current: {}", newState, mState);
         }
 
         // figure out command 
@@ -112,12 +112,12 @@ abstract public class SerialLight extends AbstractVariableLight {
             function = X10Sequence.FUNCTION_OFF;
             newDim = 0;
         } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+            log.warn("illegal state requested for Light: {}", getSystemName());
             return;
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("set state " + newState + " house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode);
+            log.debug("set state {} house {} device {}", newState, X10Sequence.houseCodeToText(housecode), devicecode);
         }
 
         // create output sequence of address, then function
@@ -128,7 +128,7 @@ abstract public class SerialLight extends AbstractVariableLight {
         tc.sendX10Sequence(out, null);
 
         if (log.isDebugEnabled()) {
-            log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " funct: " + function);
+            log.debug("sendOnOff({})  house {} device {} funct: {}", newDim, X10Sequence.houseValueToText(housecode), devicecode, function);
         }
     }
 

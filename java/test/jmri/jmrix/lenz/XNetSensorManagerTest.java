@@ -3,17 +3,16 @@ package jmri.jmrix.lenz;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  *
- * @author	Paul Bender Copyright (c) 2003
+ * @author Paul Bender Copyright (c) 2003
  */
 public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -35,8 +34,8 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.newSensor("XS22", "test");
 
         // test get
-        Assert.assertTrue(t == l.getByUserName("test"));
-        Assert.assertTrue(t == l.getBySystemName("XS22"));
+        Assert.assertSame(t, l.getByUserName("test"));
+        Assert.assertSame(t, l.getBySystemName("XS22"));
     }
 
     @Test
@@ -47,8 +46,8 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("exists", s);
 
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -65,7 +64,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         xnis.sendTestMessage(m1);
 
         // see if sensor exists
-        Assert.assertTrue(null != l.getBySystemName("XS22"));
+        Assert.assertNotNull(l.getBySystemName("XS22"));
     }
 
     @Test
@@ -90,8 +89,8 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             log.debug("by user name: {}", t.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != t.getBySystemName("XS21"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
+        Assert.assertNotNull(t.getBySystemName("XS21"));
+        Assert.assertNotNull(t.getByUserName("my name"));
 
     }
 
@@ -107,15 +106,14 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Test
     public void testProvideAddressAndPin() {
-        Assert.assertNotNull("Sensor XS99:3 provided",l.provideSensor("XS99:3"));
+        Assert.assertNotNull("Sensor XS99:3 provided", l.provideSensor("XS99:3"));
     }
 
     // from here down is testing infrastructure
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class);
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -124,10 +122,10 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         l = new XNetSensorManager(xnis.getSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

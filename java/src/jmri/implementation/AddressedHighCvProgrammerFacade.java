@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
@@ -42,7 +43,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         this.valueCV = valueCV;
         this.modulo = Integer.parseInt(modulo);
         _prog = prog;
-        log.debug("Created with " + prog + ", " + this.top + ", " + this.addrCVhigh + ", " + this.addrCVlow + ", " + this.valueCV + ", " + this.modulo);
+        log.debug("Created with {}, {}, {}, {}, {}, {}", prog, this.top, this.addrCVhigh, this.addrCVlow, this.valueCV, this.modulo);
     }
 
     int top;
@@ -55,6 +56,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     // members for handling the programmer interface
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
+    int _startVal; // remember the starting value (hint)
 
     // programming interface
     @Override
@@ -75,12 +77,18 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
 
     @Override
     public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(CV, p, 0);
+    }
+
+    @Override
+    public void readCV(String CV, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         log.debug("start readCV");
         _cv = Integer.parseInt(CV);
+        _startVal = startVal;
         useProgrammer(p);
         if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(CV, this);
+            prog.readCV(CV, this, startVal);
         } else {
             // write index first
             state = ProgState.WRITELOWREAD;
@@ -136,7 +144,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
 
         if (status != OK) {
@@ -183,7 +191,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
             case FINISHREAD:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.readCV(valueCV, this);
+                    prog.readCV(valueCV, this, _startVal);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }
@@ -197,7 +205,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
                 }
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

@@ -28,7 +28,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
     }
 
     /*
-     * send out a node discovery request.
+     * Send out a node discovery request.
      */
     public void startNodeDiscovery() {
        log.info("Starting XBee Node Discovery Process");
@@ -64,17 +64,17 @@ public class XBeeNodeManager implements IDiscoveryListener {
      * @return true if the network discovery process is running
      */
     public boolean isDiscoveryRunning(){
-       if(xbeeNetwork==null) { 
+       if (xbeeNetwork == null) {
           return false;
        }
        return xbeeNetwork.isDiscoveryRunning();
     }
 
     /*
-     * stop the discovery process, if it is running.
+     * Stop the discovery process, if it is running.
      */
     public void stopNodeDiscovery() {
-      if(isDiscoveryRunning()){
+      if (isDiscoveryRunning()) {
          xbeeNetwork.stopDiscoveryProcess();
       }
     }
@@ -94,7 +94,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
      */
     @Override
     public void discoveryError(String error){
-        log.error("Error during node discovery process: {}",error);
+        log.error("Error during node discovery process: {}", error);
     }
 
     /*
@@ -102,16 +102,16 @@ public class XBeeNodeManager implements IDiscoveryListener {
      */
     @Override
     public void discoveryFinished(String error){
-       if(error != null){
+       if (error != null) {
          log.error("Node discovery processed finished with error: {}", error);
        } else {
-         log.info("Node discovery process completed successfully wtih {} devices discovered", xbeeNetwork.getNumberOfDevices());
+         log.info("Node discovery process completed successfully with {} devices discovered", xbeeNetwork.getNumberOfDevices());
          // retrieve the node list from the network.
          List<RemoteXBeeDevice> nodeList = xbeeNetwork.getDevices();
 
-         // add the previously unkonwn nodes to the network.
+         // add the previously unknown nodes to the network.
 
-         for(RemoteXBeeDevice device :nodeList ) {
+         for (RemoteXBeeDevice device :nodeList ) {
              XBeeNode node = (XBeeNode) xtc.getNodeFromXBeeDevice(device);
 
              if (node == null) {
@@ -131,7 +131,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
          // and remove this class from the list of discovery listeners.
 
          // removing the listener here is causing a 
-         // ConcurrentModificaitonException on an ArrayList in the library.
+         // ConcurrentModificationException on an ArrayList in the library.
          // xbeeNetwork.removeDiscoveryListener(this);
        }
     }
@@ -139,5 +139,3 @@ public class XBeeNodeManager implements IDiscoveryListener {
     private static final Logger log = LoggerFactory.getLogger(XBeeNodeManager.class);
 
 }
-
-

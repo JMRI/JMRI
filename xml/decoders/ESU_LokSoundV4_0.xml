@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" allowResetDefaults="no">
     <!-- made from the ESU_LokSound_Select.file -->
     <!-- ver1 new file -->
     <!-- ver2 Added CV16, fixed CV 474.3, fixed light effect type, moved some var to other panes -->
@@ -66,6 +66,10 @@
     <version author="Dave Heap" version="21" lastUpdated="20180102"/>
     <!-- ver22 refactor -->
     <version author="Dave Heap" version="22" lastUpdated="20190507"/>
+    <!-- ver23 refactor -->
+    <version author="Dave Heap" version="23" lastUpdated="20200726"/>
+    <!-- ver24 disable Reset to Defaults -->
+    <version author="Dave Heap" version="24" lastUpdated="20200818"/>
     <decoder>
         <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound V4.0" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554493,33554503,33554538">

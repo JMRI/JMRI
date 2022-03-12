@@ -1,23 +1,24 @@
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OpsPropertyChangeListener;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Pool class Last manually cross-checked on ?????
- *
+ * <p>
  * Still to do: ?????????????? Nees to be updated for Pool class ScheduleItem:
  * XML read/write Schedule: Register, List, XML read/write Track:
  * AcceptsDropTrain, AcceptsDropRoute Track: AcceptsPickupTrain,
  * AcceptsPickupRoute Track: CheckScheduleValid Track: XML read/write Location:
  * Track support <-- I am here Location: XML read/write
- *
+ * 
  * @author Gregory Madsen Copyright (C) 2012, based on OperationsLocationTest
  * class
  */
@@ -27,7 +28,7 @@ public class OperationsPoolTest extends OperationsTestCase {
     Track t1 = null;
     Track t2 = null;
 
-	// test Pool Class (part one)
+    // test Pool Class (part one)
     // test Pool creation in different ways
     // public void testCreateDefault()
     // {
@@ -173,7 +174,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testLengthenTrack1() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 120 feet, which will take 20 feet from Track 2
@@ -188,7 +189,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testLengthenTrack1Maximum() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 180 feet, which will take all available 80 feet
@@ -204,7 +205,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testLengthenTrack1TooLong() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 181 feet, which will fail as there is only 80
@@ -220,7 +221,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testShortenTrack1() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 80 feet, which will give 20 feet to Track 2
@@ -235,7 +236,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testShortenTrack1BelowMinimum() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 20 feet, which will give 80 feet to Track 2
@@ -254,8 +255,8 @@ public class OperationsPoolTest extends OperationsTestCase {
         Location l = locMan.newLocation("TestTrackPoolsLocation");
         Track t1 = l.addTrack("Yard 1", Track.YARD);
         Track t2 = l.addTrack("Yard 2", Track.YARD);
-        Track t3 = l.addTrack("Siding 1", Track.SPUR);
-        Track t4 = l.addTrack("Siding 2", Track.SPUR);
+        Track t3 = l.addTrack("Spur 1", Track.SPUR);
+        Track t4 = l.addTrack("Spur 2", Track.SPUR);
         Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
         Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
         Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
@@ -372,7 +373,7 @@ public class OperationsPoolTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");

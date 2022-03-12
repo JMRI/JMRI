@@ -6,9 +6,17 @@
          xmlns:docbook="http://docbook.org/ns/docbook"
          xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
                  
-    <output name="1" label="White" connection="plug"/>
-    <output name="2" label="Yellow" connection="plug"/>
-    <output name="3" label="Green" connection="wire"/>
-    <output name="4" label="Violet" connection="wire"/>
+    <output name="1" label="White" connection="plug">
+        <label xml:lang="cs">Bílý</label>
+    </output>
+    <output name="2" label="Yellow" connection="plug">
+        <label xml:lang="cs">Žlutý</label>
+    </output>
+    <output name="3" label="Green" connection="wire">
+        <label xml:lang="cs">Zelený</label>
+    </output>
+    <output name="4" label="Violet" connection="wire">
+        <label xml:lang="cs">Fialový</label>
+    </output>
 
 </outputs>

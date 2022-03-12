@@ -78,7 +78,7 @@ public class JoalAudioListener extends AbstractAudioListener {
     public JoalAudioListener(String systemName) {
         super(systemName);
         if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioListener: " + systemName);
+            log.debug("New JoalAudioListener: {}", systemName);
         }
         initialised = init();
     }
@@ -92,7 +92,7 @@ public class JoalAudioListener extends AbstractAudioListener {
     public JoalAudioListener(String systemName, String userName) {
         super(systemName, userName);
         if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioListener: " + userName + " (" + systemName + ")");
+            log.debug("New JoalAudioListener: {} ({})", userName, systemName);
         }
         initialised = init();
     }
@@ -107,7 +107,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         if (initialised) {
             al.alListener3f(AL.AL_POSITION, pos.x, pos.y, pos.z);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating position of JoalAudioListener (" + this.getSystemName() + ")");
+                log.warn("Error updating position of JoalAudioListener ({})", this.getSystemName());
             }
         }
     }
@@ -118,7 +118,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         if (initialised) {
             al.alListener3f(AL.AL_VELOCITY, vel.x, vel.y, vel.z);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating velocity setting of JoalAudioListener (" + this.getSystemName() + ")");
+                log.warn("Error updating velocity setting of JoalAudioListener ({})", this.getSystemName());
             }
         }
     }
@@ -132,7 +132,7 @@ public class JoalAudioListener extends AbstractAudioListener {
                         up.x, up.y, up.z},
                     0);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating orientation of JoalAudioListener (" + this.getSystemName() + ")");
+                log.warn("Error updating orientation of JoalAudioListener ({})", this.getSystemName());
             }
         }
     }
@@ -143,7 +143,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         if (initialised) {
             al.alListenerf(AL.AL_GAIN, gain);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating gain setting of JoalAudioListener (" + this.getSystemName() + ")");
+                log.warn("Error updating gain setting of JoalAudioListener ({})", this.getSystemName());
             }
         }
     }
@@ -154,7 +154,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         if (initialised) {
             al.alListenerf(ALExtConstants.AL_METERS_PER_UNIT, metersPerUnit);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating meters per unit setting of JoalAudioListener (" + this.getSystemName() + ")");
+                log.warn("Error updating meters per unit setting of JoalAudioListener ({})", this.getSystemName());
             }
         }
     }
@@ -171,7 +171,7 @@ public class JoalAudioListener extends AbstractAudioListener {
                         this.getOrientation(UP).x, this.getOrientation(UP).y, this.getOrientation(UP).z},
                     0);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating JoalAudioListener (" + this.getSystemName() + ")");
+                log.warn("Error updating JoalAudioListener ({})", this.getSystemName());
             }
         } else {
             initialised = init();
@@ -182,9 +182,8 @@ public class JoalAudioListener extends AbstractAudioListener {
     protected void cleanup() {
         // no clean-up needed for Listener
         if (log.isDebugEnabled()) {
-            log.debug("Cleanup JoalAudioListener (" + this.getSystemName() + ")");
+            log.debug("Cleanup JoalAudioListener ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class);

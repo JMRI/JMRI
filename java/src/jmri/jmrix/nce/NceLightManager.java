@@ -1,6 +1,7 @@
 package jmri.jmrix.nce;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.NmraPacket;
 import jmri.managers.AbstractLightManager;
@@ -27,22 +28,24 @@ public class NceLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public NceSystemConnectionMemo getMemo() {
         return (NceSystemConnectionMemo) memo;
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format Assumes calling method has checked
+     * Method to create a new Light based on the system name
+     * Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
-        Light lgt = null;
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        Light lgt;
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return (null);
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
         // Normalize the systemName
         String sName = getSystemPrefix() + "L" + bitNum;   // removes any leading zeros
@@ -61,7 +64,7 @@ public class NceLightManager extends AbstractLightManager {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "L"))) {
             // here if an illegal nce light system name 
-            log.error("illegal character in header field of nce light system name: " + systemName);
+            log.error("illegal character in header field of nce light system name: {}", systemName);
             return (0);
         }
         // name must be in the NLnnnnn format (N is user configurable)
@@ -71,14 +74,14 @@ public class NceLightManager extends AbstractLightManager {
                     getSystemPrefix().length() + 1, systemName.length())
                   );
         } catch (NumberFormatException e) {
-            log.debug("illegal character in number field of system name: " + systemName);
+            log.debug("illegal character in number field of system name: {}", systemName);
             return (0);
         }
         if (num < NmraPacket.accIdLowLimit) {
-            log.error("invalid nce light system name: " + systemName);
+            log.error("invalid nce light system name: {}", systemName);
             return (0);
         } else if (num > NmraPacket.accIdHighLimit) {
-            log.warn("bit number out of range in nce light system name: " + systemName);
+            log.warn("bit number out of range in nce light system name: {}", systemName);
             return (0);
         }
         return (num);
@@ -90,7 +93,7 @@ public class NceLightManager extends AbstractLightManager {
      * range box in the add Light window
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -98,7 +101,8 @@ public class NceLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return super.validateNmraAccessorySystemNameFormat(name, locale);
     }
 
@@ -106,7 +110,7 @@ public class NceLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -118,7 +122,7 @@ public class NceLightManager extends AbstractLightManager {
      * Abstract Light class.
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (true);
     }
 

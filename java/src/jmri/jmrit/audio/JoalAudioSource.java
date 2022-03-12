@@ -151,8 +151,7 @@ public class JoalAudioSource extends AbstractAudioSource {
             // Make an int[] of the buffer ids
             bids[0] = ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0];
             if (log.isDebugEnabled()) {
-                log.debug("Queueing Buffer: " + audioBuffer.getSystemName() + " bid: "
-                        + ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0] + " Source: " + this.getSystemName());
+                log.debug("Queueing Buffer: {} bid: {} Source: {}", audioBuffer.getSystemName(), ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0], this.getSystemName());
             }
 
             // Bind this AudioSource to the specified AudioBuffer
@@ -532,13 +531,14 @@ public class JoalAudioSource extends AbstractAudioSource {
     @Override
     protected void cleanup() {
         log.debug("Cleanup JoalAudioSource ({})", this.getSystemName());
-        if (_initialised && isAudioAlive() && (isBound() || isQueued())) {
+        int[] source_type = new int[1];
+        al.alGetSourcei(_source[0], AL.AL_SOURCE_TYPE, source_type, 0);
+        if (_initialised && (isBound() || isQueued() || source_type[0] == AL.AL_UNDETERMINED) || source_type[0] == AL.AL_STREAMING) {
             al.alSourceStop(_source[0]);
             al.alDeleteSources(1, _source, 0);
             this._source = null;
             log.debug("...done cleanup");
         }
-        this.dispose();
     }
 
     @Override

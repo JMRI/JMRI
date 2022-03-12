@@ -1,11 +1,11 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.print.*;
 import java.util.*;
-import javax.swing.*;
+import java.util.List;
+
 import jmri.jmrit.timetable.*;
 
 /**
@@ -41,6 +41,9 @@ public class TimeTableGraphCommon {
      * @param scheduleId The schedule to be used for this graph.
      * @param showTrainTimes When true, include the minutes portion of the
      * train times at each station.
+     * @param height Display height
+     * @param width Display width
+     * @param displayType (not currently used)
      */
     void init(int segmentId, int scheduleId, boolean showTrainTimes, double height, double width, boolean displayType) {
         _segmentId = segmentId;
@@ -78,9 +81,9 @@ public class TimeTableGraphCommon {
     int _startHour;
     int _duration;
 
-    ArrayList<Station> _stations;
-    ArrayList<Train> _trains;
-    ArrayList<Stop> _stops;
+    List<Station> _stations;
+    List<Train> _trains;
+    List<Stop> _stops;
 
     // ------------ global variables ------------
     HashMap<Integer, Double> _stationGrid = new HashMap<>();
@@ -268,7 +271,12 @@ public class TimeTableGraphCommon {
         for (Train train : _trains) {
             _trainName = train.getTrainName();
             _trainThrottle = train.getThrottle();
-            String typeColor = _dataMgr.getTrainType(train.getTypeId()).getTypeColor();
+            String typeColor;
+            if (train.getTypeId() == 0) {
+                typeColor = "#000000";
+            } else {
+                typeColor = _dataMgr.getTrainType(train.getTypeId()).getTypeColor();
+            }
             _trainColor = Color.decode(typeColor);
             _trainLine = new Path2D.Double();
 
@@ -396,7 +404,7 @@ public class TimeTableGraphCommon {
                 y = y + ((_direction.equals("down")) ? 0 : 0);  // NOI18N
                 break;
             default:
-                log.error("drawTrainTime mode {} is unknown");  // NOI18N
+                log.error("drawTrainTime mode {} is unknown",mode);  // NOI18N
                 return;
         }
 
@@ -418,6 +426,7 @@ public class TimeTableGraphCommon {
     /**
      * Move text that overlaps existing text.
      * @param textRect The proposed text rectangle.
+     * @return The resulting rectangle
      */
     Rectangle2D adjustText(Rectangle2D textRect) {
         double xLoc = textRect.getX();
@@ -609,6 +618,7 @@ public class TimeTableGraphCommon {
     /**
      * Finish the train line, draw it, the train name and the throttle line if used.
      * @param stop The current stop.
+     * @param endSegment final segment
      */
     void setEnd(Stop stop, boolean endSegment) {
         double x;

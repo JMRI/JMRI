@@ -1,5 +1,6 @@
 package jmri.jmrix.pi;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
@@ -21,14 +22,30 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public RaspberryPiSystemConnectionMemo getMemo() {
         return (RaspberryPiSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
+    }
+    
+    /**
+     * Validates to Integer Format 0-999 with valid prefix.
+     * eg. PT0 to PT999
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
     }
 
 }

@@ -7,7 +7,7 @@ import javax.swing.JComboBox;
 
 import org.jdom2.JDOMException;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;

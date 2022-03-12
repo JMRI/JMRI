@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -9,13 +14,10 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrackDestinationEditFrameTest extends OperationsTestCase {
 
@@ -36,6 +38,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
         
         JUnitUtil.dispose(t);
+
     }
     
     @Test
@@ -50,12 +53,13 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Track track = loc.addTrack("NI Interchange", Track.INTERCHANGE);
         
         TrackDestinationEditFrame tdef = new TrackDestinationEditFrame();
-        tdef.initComponents(track);       
-        Assert.assertNotNull("exists",tdef);
+        tdef.initComponents(track);
+        JemmyUtil.waitFor(tdef);
         
-        JemmyUtil.enterClickAndLeave(tdef.checkDestinationsButton);       
+        JemmyUtil.enterClickAndLeaveThreadSafe(tdef.checkDestinationsButton);       
         // the save should have opened a dialog window
         JemmyUtil.pressDialogButton(tdef, Bundle.getMessage("WarningCarMayNotMove"), "Cancel");
+        JemmyUtil.waitFor(tdef);
         
         // Confirm default
         Assert.assertFalse("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
@@ -66,6 +70,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         
         JUnitUtil.dispose(tdef);
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrameTest.class);

@@ -26,18 +26,6 @@ public class InterchangeTableModel extends TrackTableModel {
     }
 
     @Override
-    public String getColumnName(int col) {
-        switch (col) {
-            case NAME_COLUMN:
-                return Bundle.getMessage("InterchangeName");
-            default:
-                // fall out
-                break;
-        }
-        return super.getColumnName(col);
-    }
-
-    @Override
     protected void editTrack(int row) {
         log.debug("Edit interchange");
         if (tef != null) {
@@ -46,10 +34,19 @@ public class InterchangeTableModel extends TrackTableModel {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(() -> {
             tef = new InterchangeEditFrame();
-            Track interchange = tracksList.get(row);
-            tef.initComponents(_location, interchange);
-            tef.setTitle(Bundle.getMessage("EditInterchange"));
+            Track interchange = _tracksList.get(row);
+            tef.initComponents(interchange);
         });
+    }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("InterchangeName");
+            default:
+                return super.getColumnName(col);
+        }
     }
 
     // this table listens for changes to a location and its interchanges
@@ -63,7 +60,7 @@ public class InterchangeTableModel extends TrackTableModel {
         if (e.getSource().getClass().equals(Track.class)) {
             Track track = ((Track) e.getSource());
             if (track.isInterchange()) {
-                int row = tracksList.indexOf(track);
+                int row = _tracksList.indexOf(track);
                 if (Control.SHOW_PROPERTY) {
                     log.debug("Update interchange table row: {} track: {}", row, track.getName());
                 }

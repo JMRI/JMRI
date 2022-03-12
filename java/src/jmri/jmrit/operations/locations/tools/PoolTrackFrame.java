@@ -4,15 +4,12 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -21,8 +18,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -49,6 +44,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     // labels
     JLabel name = new JLabel(Bundle.getMessage("Name"));
     JLabel minimum = new JLabel(Bundle.getMessage("Minimum"));
+    JLabel maximum = new JLabel(Bundle.getMessage("Maximum"));
     JLabel length = new JLabel(Bundle.getMessage("Length"));
 
     // text field
@@ -105,6 +101,26 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         JScrollPane p1Pane = new JScrollPane(p1);
         p1Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         p1Pane.setBorder(BorderFactory.createTitledBorder(""));
+        
+        // row 1
+        JPanel pt = new JPanel();
+        pt.setLayout(new BoxLayout(pt, BoxLayout.X_AXIS));
+        pt.setMaximumSize(new Dimension(2000, 250));
+
+        // row 1a
+        JPanel pTrackName = new JPanel();
+        pTrackName.setLayout(new GridBagLayout());
+        pTrackName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Track")));
+        addItem(pTrackName, new JLabel(_track.getName()), 0, 0);
+
+        // row 1b
+        JPanel pLocationName = new JPanel();
+        pLocationName.setLayout(new GridBagLayout());
+        pLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
+        addItem(pLocationName, new JLabel(_track.getLocation().getName()), 0, 0);
+
+        pt.add(pTrackName);
+        pt.add(pLocationName);
 
         JPanel poolName = new JPanel();
         poolName.setLayout(new GridBagLayout());
@@ -130,6 +146,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         savePool.setBorder(BorderFactory.createTitledBorder(""));
         addItem(savePool, saveButton, 0, 0);
 
+        p1.add(pt);
         p1.add(poolName);
         p1.add(selectPool);
         p1.add(minLengthTrack);
@@ -163,7 +180,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Pools", true); // NOI18N
         
-        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight300));
     }
 
     private void updatePoolsComboBox() {
@@ -176,8 +193,9 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         poolStatus.removeAll();
 
         addItemLeft(poolStatus, name, 0, 0);
-        addItem(poolStatus, minimum, 1, 0);
-        addItem(poolStatus, length, 2, 0);
+        addItem(poolStatus, maximum, 1, 0);
+        addItem(poolStatus, minimum, 2, 0);
+        addItem(poolStatus, length, 3, 0);
 
         String poolName = "";
         if (_track.getPool() != null) {
@@ -190,6 +208,9 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
                 Track track = tracks.get(i);
                 JLabel name = new JLabel();
                 name.setText(track.getName());
+                
+                JLabel maximum = new JLabel();
+                maximum.setText(Integer.toString(pool.getMaxLengthTrack(track)));
 
                 JLabel minimum = new JLabel();
                 minimum.setText(Integer.toString(track.getMinimumLength()));
@@ -200,18 +221,19 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
                 totalLength = totalLength + track.getLength();
 
                 addItemLeft(poolStatus, name, 0, i + 1);
-                addItem(poolStatus, minimum, 1, i + 1);
-                addItem(poolStatus, length, 2, i + 1);
+                addItem(poolStatus, maximum, 1, i + 1);
+                addItem(poolStatus, minimum, 2, i + 1);
+                addItem(poolStatus, length, 3, i + 1);
             }
             // Summary
             JLabel total = new JLabel(Bundle.getMessage("Totals"));
             addItem(poolStatus, total, 0, tracks.size() + 1);
             JLabel totalMin = new JLabel();
             totalMin.setText(Integer.toString(totalMinLength));
-            addItem(poolStatus, totalMin, 1, tracks.size() + 1);
+            addItem(poolStatus, totalMin, 2, tracks.size() + 1);
             JLabel totalLen = new JLabel();
             totalLen.setText(Integer.toString(totalLength));
-            addItem(poolStatus, totalLen, 2, tracks.size() + 1);
+            addItem(poolStatus, totalLen, 3, tracks.size() + 1);
         }
         poolStatus.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("PoolTracks"),
                 new Object[]{poolName})));
@@ -225,7 +247,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             Location location = _track.getLocation();
-            location.addPool(trackPoolNameTextField.getText());
+            location.addPool(trackPoolNameTextField.getText().trim());
         }
 
         if (ae.getSource() == saveButton) {

@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.Bundle { // Note: uses specific jmrix labels
 
     @CheckForNull
-    private static final String name = null; // No local resources
+    private static final String name = "jmri.jmrit.sendpacket.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

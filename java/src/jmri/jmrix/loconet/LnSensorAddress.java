@@ -110,7 +110,7 @@ public class LnSensorAddress {
     }
 
     void reportParseError(String s) {
-        log.error("Can't parse sensor address string: " + s);
+        log.error("Can't parse sensor address string: {}", s);
     }
 
     /**
@@ -223,7 +223,7 @@ public class LnSensorAddress {
                 break;
             default:
                 digit = "X";
-                log.error("Unexpected digit value: " + asInt());
+                log.error("Unexpected digit value: {}", asInt());
         }
         switch ((asInt() & 0x0C) / 4) {
             case 0:
@@ -240,7 +240,7 @@ public class LnSensorAddress {
                 break;
             default:
                 letter = "X";
-                log.error("Unexpected letter value: " + asInt());
+                log.error("Unexpected letter value: {}", asInt());
         }
         return prefix + "S" + (asInt() / 16) + letter + digit;
     }

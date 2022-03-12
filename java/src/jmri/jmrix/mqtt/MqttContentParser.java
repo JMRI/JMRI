@@ -14,6 +14,7 @@ public interface MqttContentParser<T extends NamedBean> {
      * Load a bean's state from a received MQTT payload.
      * @param bean The particular item receiving the payload
      * @param payload The entire string received via MQTT
+     * @param topic MQTT topic.
      * @throws IllegalArgumentException if the payload is unparsable.
      */
     public void beanFromPayload(@Nonnull T bean, @Nonnull String payload, @Nonnull String topic);

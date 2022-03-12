@@ -16,17 +16,17 @@ import org.openide.util.lookup.ServiceProvider;
 public class JsonReporterServiceFactory implements JsonServiceFactory<JsonReporterHttpService, JsonReporterSocketService> {
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{REPORTER, REPORTERS};
     }
 
     @Override
-    public JsonReporterSocketService getSocketService(JsonConnection connection) {
+    public JsonReporterSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonReporterSocketService(connection);
     }
 
     @Override
-    public JsonReporterHttpService getHttpService(ObjectMapper mapper) {
+    public JsonReporterHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonReporterHttpService(mapper);
     }
 

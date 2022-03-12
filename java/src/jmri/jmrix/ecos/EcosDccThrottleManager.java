@@ -20,6 +20,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public EcosDccThrottleManager(EcosSystemConnectionMemo memo) {
         super(memo);
@@ -41,7 +42,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
          The ecos throttle in turn will notify the throttle manager of a successful or
          unsuccessful throttle connection. */
         if ( address instanceof DccLocoAddress ) {
-            log.debug("new EcosDccThrottle for " + address);
+            log.debug("new EcosDccThrottle for {}", address);
             new EcosDccThrottle((DccLocoAddress) address, (EcosSystemConnectionMemo) adapterMemo, control);
         }
         else {
@@ -116,10 +117,10 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         /* this is called by the ecosdccthrottle, to inform the manager if it has successfully gained
          control of a loco, when setting up the throttle.*/
         if (result) {
-            log.debug("Ecos Throttle has control over loco " + address);
+            log.debug("Ecos Throttle has control over loco {}", address);
             notifyThrottleKnown(throttle, address);
         } else {
-            log.debug("Ecos Throttle has NO control over loco " + address);
+            log.debug("Ecos Throttle has NO control over loco {}", address);
             failedThrottleRequest(address, "Loco is alredy in use by anoher throttle " + address);
         }
     }

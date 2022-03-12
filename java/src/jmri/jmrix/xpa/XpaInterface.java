@@ -4,13 +4,13 @@ package jmri.jmrix.xpa;
  * Define interface for sending and receiving messages from an XpressNet System
  * using an XPA and a modem.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public interface XpaInterface {
 
-    public void addXpaListener(XpaListener l);
+    void addXpaListener(XpaListener l);
 
-    public void removeXpaListener(XpaListener l);
+    void removeXpaListener(XpaListener l);
 
     /**
      * Test operational status of interface.

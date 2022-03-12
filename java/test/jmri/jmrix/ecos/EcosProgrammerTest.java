@@ -2,14 +2,13 @@ package jmri.jmrix.ecos;
 
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -28,15 +27,12 @@ public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Test
     public void testSetGetMode() {
-        programmer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                programmer.getMode());        
+        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,7 +40,7 @@ public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         programmer = new EcosProgrammer(tc);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

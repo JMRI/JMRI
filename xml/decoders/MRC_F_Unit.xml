@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -67,7 +66,7 @@
         <label xml:lang="de">Vmittel (0-1)</label>
         <comment>Range 0-1</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="32">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
         <label xml:lang="it">Versione Decoder: </label>

@@ -2,14 +2,17 @@ package jmri.jmrit.operations.trains.excel;
 
 import java.io.File;
 import java.text.MessageFormat;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of the file name of an Excel program used to generate
@@ -30,7 +33,7 @@ public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
         pDirectoryName.add(new JLabel(InstanceManager.getDefault(OperationsManager.class).getFile(InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()).getPath()));
     }
 
-    // Save and Test
+    // Add, Test and Save buttons
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {

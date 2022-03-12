@@ -10,7 +10,7 @@ import jmri.Reporter;
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical Reporter on the layout.
  *
- * Description: Abstract class providing the basic logic of the Reporter
+ * Abstract class providing the basic logic of the Reporter
  * interface
  *
  * @author Bob Jacobsen Copyright (C) 2001

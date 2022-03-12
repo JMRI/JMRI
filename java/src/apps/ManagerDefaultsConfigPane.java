@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -83,7 +83,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         }
         boolean[] selected = new boolean[manager.knownManagers.length];
         for (int x = 0; x < connList.size(); x++) { // up to down
-            jmri.jmrix.SystemConnectionMemo memo = connList.get(x);
+            SystemConnectionMemo memo = connList.get(x);
             String connectionName = memo.getUserName();
             log.trace("   Connection name {}", connectionName);
             matrix.add(new JLabel(connectionName));

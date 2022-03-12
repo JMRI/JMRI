@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:99998C1" userName="Run Dispatcher" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:99998C1</systemName>
+      <userName>Run Dispatcher</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="startDispatcherSensor" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="16" systemName=" " data="-1" delay="0" string="program:jython/DispatcherSystem/RunDispatch.py" />
+    </conditional>
+  </conditionals>
+</layout-config>

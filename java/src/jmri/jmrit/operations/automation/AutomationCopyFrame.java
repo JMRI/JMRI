@@ -3,16 +3,15 @@ package jmri.jmrit.operations.automation;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for making a new copy of a automation.
@@ -119,7 +118,7 @@ public class AutomationCopyFrame extends OperationsFrame {
      * @return true if name isn't too long
      */
     private boolean checkName() {
-        if (automationNameTextField.getText().trim().equals("")) {
+        if (automationNameTextField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterAutomationName"), Bundle
                     .getMessage("CanNotCopyAutomation"), JOptionPane.ERROR_MESSAGE);
             return false;

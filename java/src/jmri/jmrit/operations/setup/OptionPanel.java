@@ -1,21 +1,15 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.TrainManager;
+
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Frame for user edit of setup options
@@ -54,6 +48,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     JCheckBox stagingTurnCheckBox = new JCheckBox(Bundle.getMessage("AllowCarsToReturn"));
     JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(Bundle.getMessage("PromptFromStaging"));
     JCheckBox promptToTrackStagingCheckBox = new JCheckBox(Bundle.getMessage("PromptToStaging"));
+    JCheckBox tryNormalStagingCheckBox = new JCheckBox(Bundle.getMessage("TryNormalStaging"));
 
     JCheckBox generateCvsManifestCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvManifest"));
     JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvSwitchList"));
@@ -75,11 +70,12 @@ public class OptionPanel extends OperationsPreferencesPanel {
         localSpurCheckBox.setSelected(Setup.isLocalSpurMovesEnabled());
         localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
         // staging options
-        trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
+        trainIntoStagingCheckBox.setSelected(Setup.isStagingTrainCheckEnabled());
         stagingAvailCheckBox.setSelected(Setup.isStagingTrackImmediatelyAvail());
-        stagingTurnCheckBox.setSelected(Setup.isAllowReturnToStagingEnabled());
-        promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
-        promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
+        stagingTurnCheckBox.setSelected(Setup.isStagingAllowReturnEnabled());
+        promptToTrackStagingCheckBox.setSelected(Setup.isStagingPromptToEnabled());
+        promptFromTrackStagingCheckBox.setSelected(Setup.isStagingPromptFromEnabled());
+        tryNormalStagingCheckBox.setSelected(Setup.isStagingTryNormalBuildEnabled());
         // router
         routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
         routerYardCheckBox.setSelected(Setup.isCarRoutingViaYardsEnabled());
@@ -89,7 +85,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // logging options
         carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
         engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
-        trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());    
+        trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());
         // save manifests
         saveTrainManifestCheckBox.setSelected(Setup.isSaveTrainManifestsEnabled());
 
@@ -143,8 +139,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // Switcher Service
         JPanel pSwitcher = new JPanel();
         pSwitcher.setLayout(new GridBagLayout());
-        pSwitcher.setBorder(BorderFactory
-                .createTitledBorder(Bundle.getMessage("BorderLayoutSwitcherService")));
+        pSwitcher.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitcherService")));
 
         addItemLeft(pSwitcher, localInterchangeCheckBox, 1, 1);
         addItemLeft(pSwitcher, localSpurCheckBox, 1, 2);
@@ -161,6 +156,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItemLeft(pStaging, stagingTurnCheckBox, 1, 6);
         addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1, 7);
         addItemLeft(pStaging, promptToTrackStagingCheckBox, 1, 8);
+        addItemLeft(pStaging, tryNormalStagingCheckBox, 1, 9);
         addItemLeft(pBuild, pStaging, 1, 3);
 
         // Router panel
@@ -180,14 +176,14 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItemLeft(pLogger, engineLoggerCheckBox, 1, 0);
         addItemLeft(pLogger, carLoggerCheckBox, 1, 1);
         addItemLeft(pLogger, trainLoggerCheckBox, 1, 2);
-        
+
         // Custom Manifests and Switch Lists
         JPanel pCustom = new JPanel();
         pCustom.setLayout(new GridBagLayout());
         pCustom.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutCustomManifests")));
         addItemLeft(pCustom, generateCvsManifestCheckBox, 1, 0);
         addItemLeft(pCustom, generateCvsSwitchListCheckBox, 1, 1);
-        
+
         // Options
         JPanel pOption = new JPanel();
         pOption.setLayout(new GridBagLayout());
@@ -225,21 +221,23 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
         // check boxes
         addCheckBoxAction(routerCheckBox);
-        addCheckBoxAction(routerRestrictBox);       
+        addCheckBoxAction(routerRestrictBox);
         setRouterCheckBoxesEnabled();
 
         setBuildOption();
-
-        // disable staging option if normal mode
-        stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
-        numberPassesComboBox.setEnabled(buildAggressive.isSelected());
-
-        initMinimumSize();
+        enableComponents();
     }
 
     private void setBuildOption() {
         buildNormal.setSelected(!Setup.isBuildAggressive());
         buildAggressive.setSelected(Setup.isBuildAggressive());
+    }
+
+    private void enableComponents() {
+        // disable staging option if normal mode
+        stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
+        numberPassesComboBox.setEnabled(buildAggressive.isSelected());
+        tryNormalStagingCheckBox.setEnabled(buildAggressive.isSelected());
     }
 
     @Override
@@ -248,12 +246,16 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // can't change the build option if there are trains built
         if (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilt()) {
             setBuildOption(); // restore the correct setting
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"), Bundle
-                    .getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"),
+                    Bundle.getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
         }
-        // disable staging option if normal mode
-        stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
-        numberPassesComboBox.setEnabled(buildAggressive.isSelected());
+        enableComponents();
+        // Special case where there are train build failures that created work.
+        // Track reserve needs to cleaned up by reseting build failed trains
+        if (buildAggressive.isSelected() != Setup.isBuildAggressive() &&
+                InstanceManager.getDefault(LocationManager.class).hasWork()) {
+            InstanceManager.getDefault(TrainManager.class).resetBuildFailedTrains();
+        }
     }
 
     // Save button
@@ -273,8 +275,8 @@ public class OptionPanel extends OperationsPreferencesPanel {
             setRouterCheckBoxesEnabled();
         }
         if (ae.getSource() == routerRestrictBox && routerRestrictBox.isSelected()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("WarnExtremeTrackDest"), Bundle
-                    .getMessage("WarnExtremeTitle"), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("WarnExtremeTrackDest"),
+                    Bundle.getMessage("WarnExtremeTitle"), JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -307,11 +309,12 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setLocalSpurMovesEnabled(localSpurCheckBox.isSelected());
         Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
         // Staging options
-        Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
+        Setup.setStagingTrainCheckEnabled(trainIntoStagingCheckBox.isSelected());
         Setup.setStagingTrackImmediatelyAvail(stagingAvailCheckBox.isSelected());
-        Setup.setAllowReturnToStagingEnabled(stagingTurnCheckBox.isSelected());
-        Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
-        Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
+        Setup.setStagingAllowReturnEnabled(stagingTurnCheckBox.isSelected());
+        Setup.setStagingPromptFromEnabled(promptFromTrackStagingCheckBox.isSelected());
+        Setup.setStagingPromptToEnabled(promptToTrackStagingCheckBox.isSelected());
+        Setup.setStagingTryNormalBuildEnabled(tryNormalStagingCheckBox.isSelected());
         // Car routing enabled?
         Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
         Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
@@ -338,38 +341,45 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return ( // build option
-                Setup.isBuildAggressive() != buildAggressive.isSelected()
-                || Setup.getNumberPasses() != (int) numberPassesComboBox.getSelectedItem()
+        return !( // build option
+        Setup.isBuildAggressive() == buildAggressive.isSelected() &&
+                Setup.getNumberPasses() == (int) numberPassesComboBox.getSelectedItem()
                 // Local moves?
-                || Setup.isLocalInterchangeMovesEnabled() != localInterchangeCheckBox.isSelected()
-                || Setup.isLocalSpurMovesEnabled() != localSpurCheckBox.isSelected()
-                || Setup.isLocalYardMovesEnabled() != localYardCheckBox.isSelected()
+                &&
+                Setup.isLocalInterchangeMovesEnabled() == localInterchangeCheckBox.isSelected() &&
+                Setup.isLocalSpurMovesEnabled() == localSpurCheckBox.isSelected() &&
+                Setup.isLocalYardMovesEnabled() == localYardCheckBox.isSelected()
                 // Staging options
-                || Setup.isTrainIntoStagingCheckEnabled() != trainIntoStagingCheckBox.isSelected()
-                || Setup.isStagingTrackImmediatelyAvail() != stagingAvailCheckBox.isSelected()
-                || Setup.isAllowReturnToStagingEnabled() != stagingTurnCheckBox.isSelected()
-                || Setup.isPromptFromStagingEnabled() != promptFromTrackStagingCheckBox.isSelected()
-                || Setup.isPromptToStagingEnabled() != promptToTrackStagingCheckBox.isSelected()
+                &&
+                Setup.isStagingTrainCheckEnabled() == trainIntoStagingCheckBox.isSelected() &&
+                Setup.isStagingTrackImmediatelyAvail() == stagingAvailCheckBox.isSelected() &&
+                Setup.isStagingAllowReturnEnabled() == stagingTurnCheckBox.isSelected() &&
+                Setup.isStagingPromptFromEnabled() == promptFromTrackStagingCheckBox.isSelected() &&
+                Setup.isStagingPromptToEnabled() == promptToTrackStagingCheckBox.isSelected() &&
+                Setup.isStagingTryNormalBuildEnabled() == tryNormalStagingCheckBox.isSelected()
                 // Car routing enabled?
-                || Setup.isCarRoutingEnabled() != routerCheckBox.isSelected()
-                || Setup.isCarRoutingViaYardsEnabled() != routerYardCheckBox.isSelected()
-                || Setup.isCarRoutingViaStagingEnabled() != routerStagingCheckBox.isSelected()
-                || Setup.isOnlyActiveTrainsEnabled() != !routerAllTrainsBox.isSelected()
-                || Setup.isCheckCarDestinationEnabled() != routerRestrictBox.isSelected()
+                &&
+                Setup.isCarRoutingEnabled() == routerCheckBox.isSelected() &&
+                Setup.isCarRoutingViaYardsEnabled() == routerYardCheckBox.isSelected() &&
+                Setup.isCarRoutingViaStagingEnabled() == routerStagingCheckBox.isSelected() &&
+                Setup.isOnlyActiveTrainsEnabled() == !routerAllTrainsBox.isSelected() &&
+                Setup.isCheckCarDestinationEnabled() == routerRestrictBox.isSelected()
                 // Options
-                || Setup.isGenerateCsvManifestEnabled() != generateCvsManifestCheckBox.isSelected()
-                || Setup.isGenerateCsvSwitchListEnabled() != generateCvsSwitchListCheckBox.isSelected()
-                || Setup.isValueEnabled() != valueCheckBox.isSelected()
-                || !Setup.getValueLabel().equals(valueTextField.getText())
-                || Setup.isRfidEnabled() != rfidCheckBox.isSelected()
-                || !Setup.getRfidLabel().equals(rfidTextField.getText())
-                || Setup.isSaveTrainManifestsEnabled() != saveTrainManifestCheckBox.isSelected()
+                &&
+                Setup.isGenerateCsvManifestEnabled() == generateCvsManifestCheckBox.isSelected() &&
+                Setup.isGenerateCsvSwitchListEnabled() == generateCvsSwitchListCheckBox.isSelected() &&
+                Setup.isValueEnabled() == valueCheckBox.isSelected() &&
+                Setup.getValueLabel().equals(valueTextField.getText()) &&
+                Setup.isRfidEnabled() == rfidCheckBox.isSelected() &&
+                Setup.getRfidLabel().equals(rfidTextField.getText()) &&
+                Setup.isSaveTrainManifestsEnabled() == saveTrainManifestCheckBox.isSelected()
                 // Logging enabled?
-                || Setup.isEngineLoggerEnabled() != engineLoggerCheckBox.isSelected()
-                || Setup.isCarLoggerEnabled() != carLoggerCheckBox.isSelected()
-                || Setup.isTrainLoggerEnabled() != trainLoggerCheckBox.isSelected()
+                &&
+                Setup.isEngineLoggerEnabled() == engineLoggerCheckBox.isSelected() &&
+                Setup.isCarLoggerEnabled() == carLoggerCheckBox.isSelected() &&
+                Setup.isTrainLoggerEnabled() == trainLoggerCheckBox.isSelected()
                 // VSD
-                || Setup.isVsdPhysicalLocationEnabled() != enableVsdCheckBox.isSelected());
+                &&
+                Setup.isVsdPhysicalLocationEnabled() == enableVsdCheckBox.isSelected());
     }
 }

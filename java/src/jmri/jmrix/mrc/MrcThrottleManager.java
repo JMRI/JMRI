@@ -34,7 +34,7 @@ public class MrcThrottleManager extends AbstractThrottleManager {
         //We do minimal interaction
         if (a instanceof DccLocoAddress ) {
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new MrcThrottle for " + address); //IN18N
+            log.debug("new MrcThrottle for {}", address); // NOI18N
             notifyThrottleKnown(new MrcThrottle((MrcSystemConnectionMemo) adapterMemo, address), address);
         }
         else {

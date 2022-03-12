@@ -1,10 +1,11 @@
 package jmri.jmrix.can.cbus;
 
-import java.util.Properties;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import jmri.InstanceManager;
+
 import jmri.beans.PreferencesBean;
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -28,6 +29,13 @@ public class CbusPreferences extends PreferencesBean {
     private boolean searchForNodesBackupXmlOnStartup = false;
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
+    private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
+    // Default to no programmers available. The p[rogrammer manager will validate
+    // the preferences for the hardware connection in use.
+    private boolean _isGlobalProgrammerAvailable = true;
+    private boolean _isAddressedModePossible = true;
+    private int _progTrackMode = SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE;
+    private int _nodeTableSplit = 100;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -49,8 +57,19 @@ public class CbusPreferences extends PreferencesBean {
             "searchForNodesBackupXmlOnStartup",this.getSearchForNodesBackupXmlOnStartup() );
         this.minimumNumBackupsToKeep = sharedPreferences.getInt(
             "minimumNumBackupsToKeep",this.getMinimumNumBackupsToKeep() );
+        this.bootWriteDelay = sharedPreferences.getInt(
+            "bootWriteDelay",this.getBootWriteDelay() );
         this._saveRestoreEventTable = sharedPreferences.getBoolean(
             "saveRestoreEventTable",this.getSaveRestoreEventTable() );
+
+        this._isGlobalProgrammerAvailable = sharedPreferences.getBoolean(
+            "globalprogrammer", this.isGlobalProgrammerAvailable() );
+        this._isAddressedModePossible = sharedPreferences.getBoolean(
+            "addressedprogrammer", this.isAddressedModePossible() );
+
+        this._progTrackMode = sharedPreferences.getInt("progtrackmode", this.getProgTrackMode() );
+        
+        this._nodeTableSplit = sharedPreferences.getInt("nodetablesplit", this.getNodeTableSplit() );
     }
 
     public void savePreferences() {
@@ -67,7 +86,15 @@ public class CbusPreferences extends PreferencesBean {
         
         sharedPreferences.putBoolean("searchForNodesBackupXmlOnStartup", this.getSearchForNodesBackupXmlOnStartup() );
         sharedPreferences.putInt("minimumNumBackupsToKeep", this.getMinimumNumBackupsToKeep() );
+        sharedPreferences.putInt("bootWriteDelay", this.getBootWriteDelay() );
         sharedPreferences.putBoolean("saveRestoreEventTable", this.getSaveRestoreEventTable() );
+
+        sharedPreferences.putBoolean("globalprogrammer", this.isGlobalProgrammerAvailable() );
+        sharedPreferences.putBoolean("addressedprogrammer", this.isAddressedModePossible() );
+        
+        sharedPreferences.putInt("progtrackmode", this.getProgTrackMode() );
+        
+        sharedPreferences.putInt("nodetablesplit", this.getNodeTableSplit() );
         
         try {
             sharedPreferences.sync();
@@ -236,6 +263,103 @@ public class CbusPreferences extends PreferencesBean {
      */
     public void setMinimumNumBackupsToKeep( int newVal ){
         minimumNumBackupsToKeep = newVal;
+        savePreferences();
+    }
+    
+    /**
+     * Get delay between bootloader data writes
+     * @return delay, in ms, defaults to CbusNode.BOOT_PROG_TIMEOUT_FAST
+     */
+    public int getBootWriteDelay(){
+        return bootWriteDelay;
+    }
+    
+    /**
+     * Set delay between bootloader data writes
+     * @param newVal the delay in ms
+     */
+    public void setBootWriteDelay( int newVal ){
+        bootWriteDelay = newVal;
+        savePreferences();
+    }
+    
+    /**
+     * Get the global programmer state
+     * @return global programmer state
+     */
+    public boolean isGlobalProgrammerAvailable() {
+        return _isGlobalProgrammerAvailable;
+    }
+    
+    /**
+     * Get the addressed programmer state
+     * @return addressed programmer state
+     */
+    public boolean isAddressedModePossible() {
+        return _isAddressedModePossible;
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setGlobalProgrammerAvailable(boolean state) {
+        _isGlobalProgrammerAvailable = state;
+        savePreferences();
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setAddressedModePossible(boolean state) {
+        _isAddressedModePossible = state;
+        savePreferences();
+    }
+    
+    /**
+     * Set the programmer type
+     * @param global true if global (service mode) programmer is available
+     * @param addressed thru if addressed (ops mode) programmer is available
+     */
+    public void setProgrammersAvailable(boolean global, boolean addressed) {
+        setGlobalProgrammerAvailable(global);
+        setAddressedModePossible(addressed);
+    }
+    
+    /**
+     * Get the programming track mode
+     * @return the mode
+     */
+    public int getProgTrackMode() {
+        return _progTrackMode;
+    }
+    
+    /**
+     * Set programming track mode
+     * @param mode to be set
+     */
+    public void setProgTrackMode(int mode) {
+        _progTrackMode = mode;
+        savePreferences();
+    }
+    
+    /**
+     * Get the position of the node table split
+     * 
+     * @return position in pixels
+     */
+    public int getNodeTableSplit() {
+        return _nodeTableSplit;
+    }
+    
+    /**
+     * Set the position of the node table split from the top of thw window
+     * 
+     * @param pixels new position
+     */
+    public void setNodeTableSplit(int pixels) {
+        _nodeTableSplit = pixels;
         savePreferences();
     }
     

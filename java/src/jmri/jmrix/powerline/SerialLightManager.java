@@ -1,6 +1,7 @@
 package jmri.jmrix.powerline;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -30,12 +31,13 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
@@ -45,19 +47,19 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * that a Light with this system name does not already exist
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
-        Light lgt = null;
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // Validate the systemName
         if (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
-            lgt = createNewSpecificLight(systemName, userName);
+            Light lgt = createNewSpecificLight(systemName, userName);
             if (!tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName, 'L')) {
-                log.warn("Light system Name does not refer to configured hardware: "
-                        + systemName);
+                log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
+            return lgt;
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
         }
-        return lgt;
     }
 
     /**
@@ -72,7 +74,8 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
@@ -80,7 +83,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 
@@ -90,7 +93,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * @return 'true' if system name has a valid format, else return 'false'
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName, 'L'));
     }
 
@@ -106,7 +109,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * @return 'true' to indicate this system can support variable lights
      */
     @Override
-    public boolean supportsVariableLights(String systemName) {
+    public boolean supportsVariableLights(@Nonnull String systemName) {
         return true;
     }
 

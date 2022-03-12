@@ -2,10 +2,9 @@ package jmri.configurexml;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for TransitManagerXml class.
@@ -33,22 +32,22 @@ public class TransitManagerXmlTest {
       TransitManagerXml tmx = new TransitManagerXml();
       TransitManager tm = new TransitManager();
       Transit t = tm.createNewTransit("TS1", "user");
-      
+
       Section s = new Section("SS1");
       TransitSection ts = new TransitSection(s,0,0,false);
-      
+
       TransitSectionAction ta = new TransitSectionAction(0,0);
       ts.addAction(ta);
-      
+
       t.addTransitSection(ts);
-      
+
       org.jdom2.Element e;
       Assert.assertNotNull("Element(s) returned", e = tmx.store(tm));
 
       Assert.assertNotNull("Element(s) processed", tmx.load(e, null));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -56,8 +55,10 @@ public class TransitManagerXmlTest {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
    }
 

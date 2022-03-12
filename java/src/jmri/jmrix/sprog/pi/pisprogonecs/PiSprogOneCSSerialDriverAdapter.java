@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog.pi.pisprogonecs;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +13,17 @@ import org.slf4j.LoggerFactory;
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Andrew Crosland Copyright (C) 2016
+ * @author Andrew Crosland Copyright (C) 2016
  */
 public class PiSprogOneCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
     public PiSprogOneCSSerialDriverAdapter() {
         super(SprogMode.OPS, 115200);
+        options.put("NumSlots", // NOI18N
+                new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("NumSlotOptions")), // NOI18N
+                        new String[]{"16", "8", "32", "48", "64"}, true));
+
         options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
                 new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
                 true)); // first element (TrackPowerState) NOI18N
@@ -42,14 +47,25 @@ public class PiSprogOneCSSerialDriverAdapter
     public int[] validBaudNumbers() {
         return new int[]{115200};
     }
-
+    
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * Set up all of the other objects to operate with an Sprog command station
+     * connected to this port.
      */
-    @Deprecated  // will be removed when class converted to multi-system
-    static public PiSprogOneCSSerialDriverAdapter instance() {
-        return null;
+    @Override
+    public void configure() {
+        String slots = getOptionState("NumSlots");
+        try {
+            numSlots = Integer.parseInt(slots);
+        }
+        catch (NumberFormatException e) {
+            log.warn("Could not parse number of slots " + e);
+            numSlots = 16;
+        }
+        
+        super.configure();
     }
-    // private final static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class);
+
+    private final static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class);
 
 }

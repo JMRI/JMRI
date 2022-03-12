@@ -2,15 +2,14 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetTimeSlotListenerTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.XNetTimeSlotListener class
+ * Test for the jmri.jmrix.lenz.XNetTimeSlotListener class
  *
  * @author  Paul Bender Copyright (C) 2010,2016,2017
  */
@@ -57,7 +56,7 @@ public class XNetTimeSlotListenerTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp(){
 
        jmri.util.JUnitUtil.setUp();
@@ -81,7 +80,7 @@ public class XNetTimeSlotListenerTest {
 
     }
   
-    @After
+    @AfterEach
     public void tearDown(){
        p=null;
        tsl=null;

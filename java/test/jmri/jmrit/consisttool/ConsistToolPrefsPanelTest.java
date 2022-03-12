@@ -2,24 +2,24 @@ package jmri.jmrit.consisttool;
 
 import jmri.InstanceManager;
 import jmri.ConsistManager;
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test simple functioning of ConsistToolPrefsPanel 
  *
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2019
  */
-public class ConsistToolPrefsPanelTest {
+public class ConsistToolPrefsPanelTest extends PreferencesPanelTestBase<ConsistToolPrefsPanel> {
 
-    @Test
-    public void testCtor() {
-        ConsistToolPrefsPanel panel = new ConsistToolPrefsPanel();
-        Assert.assertNotNull("exists", panel );
-    }
-
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -29,10 +29,7 @@ public class ConsistToolPrefsPanelTest {
         JUnitUtil.initStartupActionsManager();
         InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
+        prefsPanel = new ConsistToolPrefsPanel();
     }
-    
-    @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-    }
+
 }

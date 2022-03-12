@@ -3,19 +3,18 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainEditFrame;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for making a new copy of a train.
@@ -122,7 +121,7 @@ public class TrainCopyFrame extends OperationsFrame {
      * @return true if name isn't too long
      */
     private boolean checkName() {
-        if (trainNameTextField.getText().trim().equals("")) {
+        if (trainNameTextField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterTrainName"), MessageFormat.format(Bundle
                     .getMessage("CanNotTrain"), new Object[]{Bundle.getMessage("copy")}), JOptionPane.ERROR_MESSAGE);
             return false;

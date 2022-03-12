@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
@@ -8,11 +9,10 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test signal system via a specific layout file
@@ -29,10 +29,10 @@ public class SignalSystemTest {
     @Test
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/jmrit/display/verify/SimplePanel_OBlocks-DB1969.xml"));
+                .load(new java.io.File("java/test/jmri/jmrit/display/valid/SimplePanel_OBlocks-DB1969.xml"));
 
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
@@ -94,6 +94,7 @@ public class SignalSystemTest {
 
         EditorFrameOperator efo = new EditorFrameOperator("DB1969 Control Panel Editor");
         efo.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
 
     }
 
@@ -105,7 +106,7 @@ public class SignalSystemTest {
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
 
         InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/jmrit/display/verify/AA1UPtest.xml"));
+                .load(new java.io.File("java/test/jmri/jmrit/display/valid/AA1UPtest.xml"));
 
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
@@ -160,7 +161,7 @@ public class SignalSystemTest {
 
         EditorFrameOperator efo = new EditorFrameOperator("AA1UPtest Layout");
         efo.closeFrameWithConfirmations();
-
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     void checkAspect(String mastName, String aspect) {
@@ -176,7 +177,7 @@ public class SignalSystemTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -188,9 +189,11 @@ public class SignalSystemTest {
         JUnitUtil.initMemoryManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

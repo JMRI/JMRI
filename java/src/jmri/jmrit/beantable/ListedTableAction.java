@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table Action for dealing with all the tables in a single view with a list
- * option to the left hand side.
+ * Table Action for dealing with all the JMRI NamedBean etc. tables in a single view with a list
+ * option to the left hand side. Enclosing frame is opened from the Tools - Tables menu.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Kevin Dickerson Copyright (C) 2009
@@ -54,17 +54,18 @@ public class ListedTableAction extends AbstractAction {
         this(Bundle.getMessage("TitleListedTable"));
     }
 
-    ListedTableFrame f;
+    ListedTableFrame<?> f;
     int dividerLocation = 0;
 
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
-        /* create the frame outside of swing so that we do not 
+        /* create the frame outside of swing so that we do not
          hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                f = new ListedTableFrame(title) {};
+                f = new ListedTableFrame<>(title);
+                f.initTables();
                 f.initComponents();
                 addToFrame(f);
 
@@ -80,10 +81,10 @@ public class ListedTableAction extends AbstractAction {
                 } catch (InterruptedException ex) {
                     log.error("interrupted while setting ListedTable visible", ex );
                 }
-                
+
             }
         };
-        Thread thr = new Thread(r, "Listed Table Generation");
+        Thread thr = jmri.util.ThreadingUtil.newThread(r, "Listed Table Generation");
         thr.start();
     }
 
@@ -92,7 +93,7 @@ public class ListedTableAction extends AbstractAction {
         actionPerformed();
     }
 
-    public void addToFrame(ListedTableFrame f) {
+    public void addToFrame(ListedTableFrame<?> f) {
     }
 
     String helpTarget() {

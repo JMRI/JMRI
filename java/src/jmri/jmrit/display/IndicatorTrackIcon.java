@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
@@ -15,20 +14,24 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.logix.OBlock;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display the status of a track segment in a block.
  * <p>
- * This responds to the following conditions: 1. KnownState of an occupancy
- * sensor of the block where the track segment appears 2. Allocation of a route
- * by a Warrant where the track segment appears 3. Current position of a train
- * being run under a Warrant where the track segment appears in a block of the
- * route 4. Out of Service for a block that cannot or should not be used 5. An
- * error state of the block where the track segment appears (short/no power
- * etc.)
- * <p>
+ * This responds to the following conditions:
+ * <ol>
+ *   <li>KnownState of an occupancy sensor of the block where the track segment appears
+ *   <li>Allocation of a route by a Warrant where the track segment appears
+ *   <li>Current position of a train being run under a Warrant where the track segment
+ *   appears in a block of the route
+ *   <li>Out of Service for a block that cannot or should not be used
+ *   <li>An error state of the block where the track segment appears (short/no power
+ *   etc.)
+ * </ol>
  * A click on the icon does not change any of the above conditions.
  *
  * @author Pete Cressman Copyright (c) 2010
@@ -67,10 +70,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         pos._namedIcon = null;
         pos._status = _status;
         return super.finishClone(pos);
-    }
-
-    public HashMap<String, NamedIcon> getIconMap() {
-        return cloneMap(_iconMap, this);
     }
 
     /**
@@ -159,9 +158,9 @@ public class IndicatorTrackIcon extends PositionableIcon
             block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Track");
             setStatus(block, block.getState());
             displayState(_status);
-            setToolTip(new ToolTip(block.getDescription(), 0, 0));
+            setToolTip(new ToolTip(block.getDescription(), 0, 0, this));
         } else {
-            setToolTip(new ToolTip(null, 0, 0));
+            setToolTip(new ToolTip(null, 0, 0, this));
         }
     }
 
@@ -208,12 +207,12 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     /**
-     * get track name for known state of occupancy sensor
+     * Get track name for known state of occupancy sensor
      */
     @Override
     public void setStatus(int state) {
         _status = _pathUtil.getStatus(state);
-    }
+     }
 
     /*
      * Place icon by its bean state name
@@ -232,20 +231,24 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     @Override
     public int maxHeight() {
+        if (_iconMap == null) {
+            return 0;
+        }
         int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconHeight(), max);
+        for (NamedIcon namedIcon : _iconMap.values()) {
+            max = Math.max(namedIcon.getIconHeight(), max);
         }
         return max;
     }
 
     @Override
     public int maxWidth() {
+        if (_iconMap == null) {
+            return 0;
+        }
         int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconWidth(), max);
+        for (NamedIcon namedIcon : _iconMap.values()) {
+            max = Math.max(namedIcon.getIconWidth(), max);
         }
         return max;
     }
@@ -281,15 +284,12 @@ public class IndicatorTrackIcon extends PositionableIcon
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
-            // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
-            try {
+            // _pathUtil.setLocoIcon must run on GUI. LocoLabel ctor causes editor to draw a graphic
+            ThreadingUtil.runOnLayoutEventually(() -> {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
-            } catch (Exception e) {
-                log.error("setStatus on indicator track icon failed in thread {} {}: ",
-                    Thread.currentThread().getName(), Thread.currentThread().getId(), e);
-            }
+                repaint();
+            });
         }
-        repaint();
         if ((block.getState() & OBlock.OUT_OF_SERVICE) != 0) {
             setControlling(false);
         } else {
@@ -350,14 +350,9 @@ public class IndicatorTrackIcon extends PositionableIcon
     protected void editItem() {
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("IndicatorTrack")));
-        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
+        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily);
 
-        ActionListener updateAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                updateItem();
-            }
-        };
+        ActionListener updateAction = a -> updateItem();
         // duplicate _iconMap map with unscaled and unrotated icons
         HashMap<String, NamedIcon> map = new HashMap<>();
 

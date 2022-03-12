@@ -12,7 +12,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelector, RosterGroupSelector {
 

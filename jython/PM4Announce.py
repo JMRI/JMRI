@@ -31,6 +31,9 @@ import javax.swing
 
 # decode them and make an announcement
 
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
 class PM4LnListener (jmri.jmrix.loconet.LocoNetListener) :
 
     def init(self) :
@@ -106,8 +109,6 @@ jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get
 #packet.setElement(3, 0x3F)
 #F in lower bits means all AR
 #packet.setElement(4, 0x10+(on << zone))
-#set the intended LocoNet connection by its index; when you have just 1 connection index = 0
-#connectionIndex = 0
 #set the control bit for just the channel
 #jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
 

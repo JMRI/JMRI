@@ -25,7 +25,7 @@
     <xs:complexType name="SignalHeadManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SignalHeadManager implementation.
+          Define the XML structure for storing the contents of a SignalHeadManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.AbstractSignalHeadManagerXml</jmri:usingclass>
@@ -41,7 +41,7 @@
     <xs:complexType name="SignalHeadType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of one SignalHead implementation.
+          Define the XML structure for storing the contents of one SignalHead implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml</jmri:usingclass>
@@ -75,7 +75,7 @@
           <xs:complexType >
             <xs:simpleContent>
               <xs:annotation><xs:documentation>
-              Define the XML stucture for storing the contents a NamedBeanHandle&lt;Turnout&gt;
+              Define the XML structure for storing the contents a NamedBeanHandle&lt;Turnout&gt;
               Handled inside other adapter classes at this point, so no xs:appinfo element here.                
               </xs:documentation></xs:annotation>
               <xs:extension base="xs:string">
@@ -105,7 +105,7 @@
           <xs:complexType> 
             <xs:simpleContent>
               <xs:annotation><xs:documentation>
-              Define the XML stucture for storing the contents a Signal Appearance;
+              Define the XML structure for storing the contents a Signal Appearance;
               for a given state on a single output signal
               </xs:documentation>
               <xs:appinfo>
@@ -132,7 +132,7 @@
     <xs:complexType name="DccSignalHeadType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of one DccSignalHead implementation.
+          Define the XML structure for storing the contents of one DccSignalHead implementation.
           Obsolete/deprecated in 2.7.7, but around for until files are rewritten
         </xs:documentation>
         <xs:appinfo>

@@ -10,7 +10,7 @@ import jmri.managers.DefaultProgrammerManager;
  * systems
  *
  * @see jmri.managers.DefaultProgrammerManager Based on work by Bob Jacobsen
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  *
  */
 public class TamsProgrammerManager extends DefaultProgrammerManager {

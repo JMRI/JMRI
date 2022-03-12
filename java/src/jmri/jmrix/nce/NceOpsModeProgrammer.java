@@ -27,13 +27,13 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
 
     public NceOpsModeProgrammer(NceTrafficController tc, int pAddress, boolean pLongAddr) {
         super(tc);
-        log.debug("NCE ops mode programmer " + pAddress + " " + pLongAddr);
+        log.debug("NCE ops mode programmer {} {}", pAddress, pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
         setMode(ProgrammingMode.OPSBYTEMODE);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Forward a write request to an ops-mode write operation
@@ -42,7 +42,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("write CV=" + CV + " val=" + val);
+            log.debug("write CV={} val={}", CV, val);
         }
         NceMessage msg;
         // USB can't send a NMRA packet, must use new ops mode command
@@ -81,20 +81,20 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         tc.sendNceMessage(msg, this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("read CV=" + CV);
+            log.debug("read CV={}", CV);
         }
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -106,7 +106,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      *  add 200mSec between commands, so NCE command station queue doesn't get overrun
@@ -119,12 +119,12 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         try {
             wait(200);
         } catch (InterruptedException e) {
-            log.debug("unexpected exception " + e);
+            log.debug("unexpected exception", e);
         }
         super.notifyProgListenerEnd(value, status);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Types implemented here.
@@ -137,7 +137,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Can this ops-mode programmer read back values? For now, no, but maybe
@@ -150,7 +150,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         return false;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Ops-mode programming doesn't put the command station in programming mode,
@@ -162,7 +162,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     void cleanup() {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -170,7 +170,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         return mLongAddr;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -178,7 +178,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         return mAddress;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * This shares some code with the XpressNet simulator, but it's
  * not a derived class because it isn't a real connection.
  *
- * @author	Paul Bender, Copyright (C) 2015
+ * @author Paul Bender, Copyright (C) 2015
  */
 public class Z21XNetSimulatorAdapter {
 
@@ -24,7 +24,7 @@ public class Z21XNetSimulatorAdapter {
     private final static int csNormalMode = 0x00;
 
     // package protected array of Z21SimulatorLocoData objects.
-    Z21SimulatorLocoData locoData[];
+    Z21SimulatorLocoData[] locoData;
     int locoCount; // counter for locoData array.
     int locoPosition; // Position for locoData array.
 
@@ -74,16 +74,16 @@ public class Z21XNetSimulatorAdapter {
             case XNetConstants.LOCO_OPER_REQ:
                 log.debug("Locomotive Operations Request received");
                 switch(m.getElement(1)&0xff) {
-                     case XNetConstants.LOCO_SPEED_14:
+                    case XNetConstants.LOCO_SPEED_14:
                         // z21 specific locomotive information reply is expected.
-                        reply=new XNetReply();
+                        reply = new XNetReply();
                         reply.setOpCode(Z21Constants.LAN_X_LOCO_INFO_RESPONSE);
-                        reply.setElement(1,m.getElement(2)); // address msb from
-                                                            // message.
-                        reply.setElement(2,m.getElement(3)); // address lsb from
-                                                            // message.
-                        reply.setElement(3,0x00);  // set speed step mode to 14
-                        reply.setElement(4,m.getElement(4)&0xff);  // set the speed and direction to the sent value.
+                        reply.setElement(1, m.getElement(2)); // address msb from
+                        // message.
+                        reply.setElement(2, m.getElement(3)); // address lsb from
+                        // message.
+                        reply.setElement(3, 0x00);  // set speed step mode to 14
+                        reply.setElement(4, m.getElement(4) & 0xff);  // set the speed and direction to the sent value.
                         reply.setElement(5, 0x00);  // set function group a off
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
@@ -99,26 +99,22 @@ public class Z21XNetSimulatorAdapter {
                         reply.setParity();         // set the parity correctly.
                         // save the address and speed information for
                         // the simulator's RailCom values.
-                        locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
-                        locoCount = (locoCount +1) %19;
-                        if(locoCount<19) // 19 is the limit, set by the protocol.
-                           locoCount++;
-                        locoPosition = (locoPosition +1) %19;
+                        locoData[locoPosition] = new Z21SimulatorLocoData((byte) (m.getElement(2) & 0xff), (byte) (m.getElement(3) & 0xff), (byte) (m.getElement(4) & 0xff));
+                        locoCount = (locoCount + 1) % 19;
+                        if (locoCount < 19) // 19 is the limit, set by the protocol.
+                            locoCount++;
+                        locoPosition = (locoPosition + 1) % 19;
                         break;
-                     case XNetConstants.LOCO_SPEED_27:
-                        log.debug("Unsupported requested received: {}", m.toString());
-                        reply = notSupportedReply();
-                        break;
-                     case XNetConstants.LOCO_SPEED_28:
+                    case XNetConstants.LOCO_SPEED_28:
                         // z21 specific locomotive information reply is expected.
-                        reply=new XNetReply();
+                        reply = new XNetReply();
                         reply.setOpCode(Z21Constants.LAN_X_LOCO_INFO_RESPONSE);
-                        reply.setElement(1,m.getElement(2)); // address msb from
-                                                            // message.
-                        reply.setElement(2,m.getElement(3)); // address lsb from
-                                                            // message.
-                        reply.setElement(3,0x02);  // set speed step mode to 28
-                        reply.setElement(4,m.getElement(4));  // set the speed and direction to the sent value.
+                        reply.setElement(1, m.getElement(2)); // address msb from
+                        // message.
+                        reply.setElement(2, m.getElement(3)); // address lsb from
+                        // message.
+                        reply.setElement(3, 0x02);  // set speed step mode to 28
+                        reply.setElement(4, m.getElement(4));  // set the speed and direction to the sent value.
                         reply.setElement(5, 0x00);  // set function group a off
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
@@ -132,21 +128,21 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(15, 0x00);  // filler
                         reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
-                        locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
-                        if(locoCount<19) // 19 is the limit, set by the protocol.
-                           locoCount++;
-                        locoPosition = (locoPosition +1) %19;
+                        locoData[locoPosition] = new Z21SimulatorLocoData((byte) (m.getElement(2) & 0xff), (byte) (m.getElement(3) & 0xff), (byte) (m.getElement(4) & 0xff));
+                        if (locoCount < 19) // 19 is the limit, set by the protocol.
+                            locoCount++;
+                        locoPosition = (locoPosition + 1) % 19;
                         break;
-                     case XNetConstants.LOCO_SPEED_128:
+                    case XNetConstants.LOCO_SPEED_128:
                         // z21 specific locomotive information reply is expected.
-                        reply=new XNetReply();
+                        reply = new XNetReply();
                         reply.setOpCode(Z21Constants.LAN_X_LOCO_INFO_RESPONSE);
-                        reply.setElement(1,m.getElement(2)); // address msb from
-                                                            // message.
-                        reply.setElement(2,m.getElement(3)); // address lsb from
-                                                            // message.
-                        reply.setElement(3,0x04);  // set speed step mode to 128
-                        reply.setElement(4,m.getElement(4));  // set the speed and direction to the sent value.
+                        reply.setElement(1, m.getElement(2)); // address msb from
+                        // message.
+                        reply.setElement(2, m.getElement(3)); // address lsb from
+                        // message.
+                        reply.setElement(3, 0x04);  // set speed step mode to 128
+                        reply.setElement(4, m.getElement(4));  // set the speed and direction to the sent value.
                         reply.setElement(5, 0x00);  // set function group a off
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
@@ -161,21 +157,21 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         reply.setParity();         // set the parity correctly.
-                        locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
-                        if(locoCount<19) // 19 is the limit, set by the protocol.
-                           locoCount++;
-                        locoPosition = (locoPosition +1) %19;
+                        locoData[locoPosition] = new Z21SimulatorLocoData((byte) (m.getElement(2) & 0xff), (byte) (m.getElement(3) & 0xff), (byte) (m.getElement(4) & 0xff));
+                        if (locoCount < 19) // 19 is the limit, set by the protocol.
+                            locoCount++;
+                        locoPosition = (locoPosition + 1) % 19;
                         break;
-                     case Z21Constants.LAN_X_SET_LOCO_FUNCTION:
+                    case Z21Constants.LAN_X_SET_LOCO_FUNCTION:
                         // z21 specific locomotive information reply is expected.
-                        reply=new XNetReply();
+                        reply = new XNetReply();
                         reply.setOpCode(Z21Constants.LAN_X_LOCO_INFO_RESPONSE);
-                        reply.setElement(1,m.getElement(2)); // address msb from
-                                                            // message.
-                        reply.setElement(2,m.getElement(3)); // address lsb from
-                                                            // message.
-                        reply.setElement(3,0x04);  // set speed step mode to 128
-                        reply.setElement(4,0x00);  // set the speed and direction to the sent value.
+                        reply.setElement(1, m.getElement(2)); // address msb from
+                        // message.
+                        reply.setElement(2, m.getElement(3)); // address lsb from
+                        // message.
+                        reply.setElement(3, 0x04);  // set speed step mode to 128
+                        reply.setElement(4, 0x00);  // set the speed and direction to the sent value.
                         reply.setElement(5, 0x00);  // set function group a off
                         reply.setElement(6, 0x00);  // set function group b off
                         reply.setElement(7, 0x00);  // set F13-F20 off
@@ -190,43 +186,44 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(16, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
-                     case XNetConstants.LOCO_SET_FUNC_GROUP1:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP1:
                         // XpressNet set Function Group 1.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_GROUP2:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP2:
                         // XpressNet set Function Group 2.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_GROUP3:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP3:
                         // XpressNet set Function Group 3.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_GROUP4:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP4:
                         // XpressNet set Function Group 4.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_GROUP5:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP5:
                         // XpressNet set Function Group 5.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_Group1:
+                    case XNetConstants.LOCO_SET_FUNC_Group1:
                         // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_Group2:
+                    case XNetConstants.LOCO_SET_FUNC_Group2:
                         // XpressNet set Function Momentary Group 2.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_Group3:
+                    case XNetConstants.LOCO_SET_FUNC_Group3:
                         // XpressNet set Function Momentary Group 3.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_Group4:
+                    case XNetConstants.LOCO_SET_FUNC_Group4:
                         // XpressNet set Function Momentary Group 4.
                         // We need to find out what a Z21 actually sends in response.
-                     case XNetConstants.LOCO_SET_FUNC_Group5:
+                    case XNetConstants.LOCO_SET_FUNC_Group5:
                         // XpressNet set Function Momentary Group 5.
                         // We need to find out what a Z21 actually sends in response.
-                          reply = okReply();
-                          break;
-                     case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
-                     case XNetConstants.LOCO_REM_MULTI_UNIT_REQ:
-                     case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD:
-                     case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD:
-                     default:
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
+                    case XNetConstants.LOCO_REM_MULTI_UNIT_REQ:
+                    case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD:
+                    case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD:
+                    case XNetConstants.LOCO_SPEED_27:
+                    default:
                         log.debug("Unsupported requested received: {}", m.toString());
                         reply = notSupportedReply();
                         break;

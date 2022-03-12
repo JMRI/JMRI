@@ -67,21 +67,21 @@ public class NceConsistManager extends AbstractConsistManager {
         {
             return consistTable.get(locoAddress);
         }
-        log.debug("Add consist, address " + locoAddress);
+        log.debug("Add consist, address {}", locoAddress);
         NceConsist consist = new NceConsist((DccLocoAddress) locoAddress, memo);
         consistTable.put(locoAddress, consist);
         return consist;
     }
 
     private void addConsist(NceConsist consist) {
-        log.debug("Add consist " + consist.getConsistAddress());
+        log.debug("Add consist {}", consist.getConsistAddress());
         //delConsist(consist.getConsistAddress()); // remove consist if one exists
         consistTable.put(consist.getConsistAddress(), consist);
     }
 
     @Override
     public Consist getConsist(LocoAddress locoAddress) {
-        log.debug("Requesting NCE consist " + locoAddress);
+        log.debug("Requesting NCE consist {}", locoAddress);
         NceConsist consist = (NceConsist) super.getConsist(locoAddress);
         // Checking the CS memory each time a consist is requested creates lots of NCE messages!
         //consist.checkConsist();
@@ -135,7 +135,7 @@ public class NceConsistManager extends AbstractConsistManager {
             }
             while (_consistNum >= NceConsist.CONSIST_MIN) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Reading consist from command station: " + _consistNum);
+                    log.debug("Reading consist from command station: {}", _consistNum);
                 }
                 NceConsist consist = new NceConsist(_consistNum, memo);
                 // wait until consist finishes CS read

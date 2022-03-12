@@ -30,7 +30,7 @@
     <xs:complexType name="OBlockManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of an OBlockManager implementation.
+          Define the XML structure for storing the contents of an OBlockManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.jmrit.logix.configurexml.OBlockManagerXml</jmri:usingclass>
@@ -120,7 +120,7 @@
     <xs:complexType name="OBlockPathType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture of setting elements within oblocks
+          Define the XML structure of setting elements within oblocks
         </xs:documentation>
       </xs:annotation>
       <xs:sequence>
@@ -138,7 +138,7 @@
     <xs:complexType name="OBlockSettingType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture of path elements within oblocks
+          Define the XML structure of path elements within oblocks
         </xs:documentation>
       </xs:annotation>
       <xs:attribute name="set" type="xs:string" />

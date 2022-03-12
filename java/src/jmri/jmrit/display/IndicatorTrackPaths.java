@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +59,7 @@ public class IndicatorTrackPaths {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("addPath \"" + path + "\" #paths= " + _paths.size());
+            log.debug("addPath \"{}\" #paths= {}", path, _paths.size());
         }
     }
 
@@ -78,7 +80,7 @@ public class IndicatorTrackPaths {
         return _showTrain;
     }
 
-    protected String getStatus(OBlock block, int state) {
+    synchronized protected String getStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
         String status;
         removeLocoIcon();
@@ -115,7 +117,18 @@ public class IndicatorTrackPaths {
         }
     }
 
-    protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
+    /**
+     * @param block OBlock occupied by train
+     * @param pt    position of track icon
+     * @param size  size of track icon
+     * @param ed    editor
+     * LocoLabel ctor causes editor to draw a graphic. Must be done on GUI
+     * Called from IndicatorTrackIcon.setStatus and IndicatorTurnoutIcon.setStatus
+     * Each wraps this method with ThreadingUtil.runOnLayoutEventually, so there is
+     * a time lag for when track icon changes and display of the change.
+     */
+    @jmri.InvokeOnLayoutThread
+    synchronized protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
         if (!_showTrain) {
             removeLocoIcon();
             return;
@@ -123,6 +136,11 @@ public class IndicatorTrackPaths {
         String trainName = (String) block.getValue();
         if (trainName == null) {
             removeLocoIcon();
+            return;
+        }
+        if ((block.getState() & (OBlock.OCCUPIED | OBlock.RUNNING)) == 0) {
+            // during delay of runOnLayoutEventually, state has changed
+            // don't paint loco icon 
             return;
         }
         if (_loco != null || pt == null) {
@@ -148,7 +166,12 @@ public class IndicatorTrackPaths {
         pt.x = pt.x + (size.width - _loco.maxWidth()) / 2;
         pt.y = pt.y + (size.height - _loco.maxHeight()) / 2;
         _loco.setLocation(pt);
-        ed.putItem(_loco);
+        try {
+            ed.putItem(_loco);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /*

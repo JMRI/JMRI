@@ -2,11 +2,11 @@ package jmri.server.json.block;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,12 +14,12 @@ import org.junit.Test;
  */
 public class JsonBlockTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -37,7 +37,7 @@ public class JsonBlockTest {
             // that is thrown by newInstance() into an InvocationTargetException
             // we pass an InvocationTargetException that is caused by an
             // UnsupportedOperationException and fail everything else by
-            // rethrowing the unexepected exception to get a stack trace
+            // rethrowing the unexepcted exception to get a stack trace
             if (!ex.getCause().getClass().equals(UnsupportedOperationException.class)) {
                 throw ex;
             }

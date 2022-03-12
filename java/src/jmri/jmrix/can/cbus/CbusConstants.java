@@ -3,9 +3,9 @@ package jmri.jmrix.can.cbus;
 /**
  * CbusConstants.java
  *
- * Description: Constants to represent CBUS protocol
+ * Constants to represent CBUS protocol
  *
- * @author Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008, 2021
  */
 public final class CbusConstants {
 
@@ -16,6 +16,28 @@ public final class CbusConstants {
 
     public static final int DEFAULT_STANDARD_ID = 0x7a;
     public static final int DEFAULT_EXTENDED_ID = 0x7a;
+
+    /**
+     * CBUS Manufacturer definitions
+     * Where the manufacturer already has an NMRA code, this is used
+     */
+    public static final int SPROG_DCC = 44;         // http://www.merg.co.uk
+    public static final int MANU_MERG = 165;        // http://www.merg.co.uk
+    public static final int MANU_ROCRAIL = 70;      // http://www.rocrail.net
+    public static final int MANU_SPECTRUM = 80;     // http://animatedmodeler.com  (Spectrum Engineering)
+
+    /**
+     * SPROG DCC module types
+     */
+    public static final int MTYP_CANPiSPRG3 = 1;
+    public static final int MTYP_CANSPROG3P = 2;
+    public static final int MTYP_CANSPROG = 3;
+    public static final int MTYP_SBOOST = 4;
+    //public static final int Unsupported = 5;
+    public static final int MTYP_CANISB = 6;
+    public static final int MTYP_CANCBUSIO = 7;
+    public static final int MTYP_CANSERVOIO = 8;
+    public static final int MTYP_CANSOLIO = 9;
 
     /**
      * CBUS Opcodes
@@ -61,7 +83,7 @@ public final class CbusConstants {
     public static final int CBUS_DFNON = 0x49;
     public static final int CBUS_DFNOF = 0x4A;
     public static final int CBUS_SSTAT = 0x4C;
-
+    public static final int CBUS_NNRSM = 0x4F;
     public static final int CBUS_RQNN = 0x50;
     public static final int CBUS_NNREL = 0x51;
     public static final int CBUS_NNACK = 0x52;
@@ -76,7 +98,7 @@ public final class CbusConstants {
     public static final int CBUS_RQDDS = 0x5B;
     public static final int CBUS_BOOTM = 0x5C;
     public static final int CBUS_ENUM = 0x5D;
-
+    public static final int CBUS_NNRST = 0x5E;
     public static final int CBUS_EXTC1 = 0x5F;
 
     // Opcodes with 3 data
@@ -122,6 +144,7 @@ public final class CbusConstants {
     // OPcodes with 5 data
     public static final int CBUS_RDCC4 = 0xA0;
     public static final int CBUS_WCVS = 0xA2;
+    public static final int CBUS_VCVS = 0xA4;
 
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;
@@ -183,6 +206,26 @@ public final class CbusConstants {
     public static final int CBUS_EXTC6 = 0xFF;
 
     /**
+     * Extended opcodes, currently only used by the bootloader
+     * <p>
+     * These are all responses from the bootloader
+     */
+    public static final int CBUS_EXT_BOOT_ERROR = 0x00;
+    public static final int CBUS_EXT_BOOT_OK = 0x01;
+    public static final int CBUS_EXT_BOOTC = 0x02;
+
+    /**
+     * Bootloader commands
+     *
+     * These are used in the data payload of bootloader control frames.
+     */
+    public static final int CBUS_BOOT_NOP = 0x00;
+    public static final int CBUS_BOOT_RESET = 0x01;
+    public static final int CBUS_BOOT_INIT = 0x02;
+    public static final int CBUS_BOOT_CHECK = 0x03;
+    public static final int CBUS_BOOT_TEST = 0x04;
+
+    /**
      * Programming modes
      */
     public static final int CBUS_PROG_DIRECT_BYTE = 0;
@@ -220,7 +263,7 @@ public final class CbusConstants {
     public static final int EVENT_OFF = 1;
     public static final int EVENT_EITHER = 2;
     public static final int EVENT_NEITHER = 3;
-    
+
     /**
      * Event directions
      */
@@ -283,6 +326,12 @@ public final class CbusConstants {
     public static final int CBUS_F26 = 0x20;
     public static final int CBUS_F27 = 0x40;
     public static final int CBUS_F28 = 0x80;
+
+    static final int[] CBUS_FUNCTION_BITS = new int[]{ CBUS_F0,
+        CBUS_F1, CBUS_F2, CBUS_F3, CBUS_F4, CBUS_F5, CBUS_F6, CBUS_F7,
+        CBUS_F8, CBUS_F9, CBUS_F10, CBUS_F11, CBUS_F12, CBUS_F13, CBUS_F14,
+        CBUS_F15, CBUS_F16, CBUS_F17, CBUS_F18, CBUS_F19, CBUS_F20, CBUS_F21,
+        CBUS_F22, CBUS_F23, CBUS_F24, CBUS_F25, CBUS_F26, CBUS_F27, CBUS_F28 };
 
     /**
      * Throttle modes

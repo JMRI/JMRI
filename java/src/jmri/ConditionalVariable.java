@@ -95,7 +95,7 @@ public class ConditionalVariable {
                         Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, sn);
                     } catch (IllegalArgumentException e) {
-                        log.error("invalid sensor name= \"" + _name + "\" in state variable");
+                        log.error("invalid sensor name= \"{}\" in state variable", _name);
                     }
                     break;
                 case TURNOUT:
@@ -103,7 +103,7 @@ public class ConditionalVariable {
                         Turnout tn = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, tn);
                     } catch (IllegalArgumentException e) {
-                        log.error("invalid turnout name= \"" + _name + "\" in state variable");
+                        log.error("invalid turnout name= \"{}\" in state variable", _name);
                     }
                     break;
                 case MEMORY:
@@ -111,7 +111,7 @@ public class ConditionalVariable {
                         Memory my = InstanceManager.memoryManagerInstance().provideMemory(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, my);
                     } catch (IllegalArgumentException e) {
-                        log.error("invalid memory name= \"" + _name + "\" in state variable");
+                        log.error("invalid memory name= \"{}\" in state variable", _name);
                     }
                     break;
                 case LIGHT:
@@ -119,13 +119,13 @@ public class ConditionalVariable {
                         Light l = InstanceManager.lightManagerInstance().provideLight(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, l);
                     } catch (IllegalArgumentException e) {
-                        log.error("invalid light name= \"" + _name + "\" in state variable");
+                        log.error("invalid light name= \"{}\" in state variable", _name);
                     }
                     break;
                 case SIGNALHEAD:
                     SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     if (s == null) {
-                        log.error("invalid signalhead name= \"" + _name + "\" in state variable");
+                        log.error("invalid signalhead name= \"{}\" in state variable", _name);
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, s);
@@ -135,13 +135,13 @@ public class ConditionalVariable {
                         SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, sm);
                     } catch (IllegalArgumentException e) {
-                        log.error("invalid signalmast name= \"" + _name + "\" in state variable");
+                        log.error("invalid signalmast name= \"{}\" in state variable", _name);
                     }
                     break;
                 case ENTRYEXIT:
                     NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
                     if (nb == null) {
-                        log.error("invalid entry exit name= \"" + _name + "\" in state variable");
+                        log.error("invalid entry exit name= \"{}\" in state variable", _name);
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, nb);
@@ -149,7 +149,7 @@ public class ConditionalVariable {
                 case CONDITIONAL:
                     Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     if (c == null) {
-                        log.error("invalid conditional; name= \"" + _name + "\" in state variable");
+                        log.error("invalid conditional; name= \"{}\" in state variable", _name);
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, c);
@@ -157,7 +157,7 @@ public class ConditionalVariable {
                 case WARRANT:
                     Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
                     if (w == null) {
-                        log.error("invalid warrant name= \"" + _name + "\" in state variable");
+                        log.error("invalid warrant name= \"{}\" in state variable", _name);
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, w);
@@ -165,7 +165,7 @@ public class ConditionalVariable {
                 case OBLOCK:
                     OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
                     if (b == null) {
-                        log.error("invalid block name= \"" + _name + "\" in state variable");
+                        log.error("invalid block name= \"{}\" in state variable", _name);
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, b);
@@ -745,7 +745,7 @@ public class ConditionalVariable {
         return false;
     }
 
-    private int fixMidnight(int time) {
+    public static int fixMidnight(int time) {
         if (time > 24 * 60) {
             time -= 24 * 60;
         }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>17</minor>
-    <test>4</test>
+    <minor>19</minor>
+    <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -549,14 +549,14 @@
       <userName>blockwest</userName>
       <permissive>no</permissive>
       <occupancysensor>blockwestoccupied</occupancysensor>
-      <path todir="32" fromdir="16" block="IB10">
-        <beansetting setting="2">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
       <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="2">
           <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="IT7" />
         </beansetting>
       </path>
     </block>
@@ -565,14 +565,14 @@
       <userName>blockwestsiding</userName>
       <permissive>no</permissive>
       <occupancysensor>blockwestsidingoccupied</occupancysensor>
-      <path todir="32" fromdir="16" block="IB10">
-        <beansetting setting="4">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
       <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="4">
           <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="4">
+          <turnout systemName="IT7" />
         </beansetting>
       </path>
     </block>
@@ -716,17 +716,68 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Jun 18 07:25:15 CEST 2016" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:25:15 PDT 2016" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Sun Sep 08 21:01:39 CEST 2019</date>
-      <filename>JMRI program</filename>
+      <type>Load OK</type>
+      <date>Thu May 14 13:29:40 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 17:52:13 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+          <filehistory>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 17:52:13 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+          <filehistory>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Aug 10 17:52:13 PDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Sep 08 21:03:18 CEST 2019</date>
-      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+      <date>Thu May 14 13:29:40 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
       <filehistory>
         <operation>
           <type>Load OK</type>
@@ -781,9 +832,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Sep 08 21:03:30 CEST 2019</date>
+      <date>Thu May 14 13:29:40 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T1901Z+R59b5cbdf37 on Sun Sep 08 21:03:30 CEST 2019-->
+  <!--Written by JMRI version 4.19.5ish+jake+20200514T2026Z+R6ede87265b on Thu May 14 13:29:40 PDT 2020-->
 </layout-config>

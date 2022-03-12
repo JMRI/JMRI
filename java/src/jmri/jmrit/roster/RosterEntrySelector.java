@@ -13,7 +13,7 @@ import java.beans.PropertyChangeListener;
  * propertyChangeEvent for the <i>selectedRosterEntries</i> property whenever
  * the selected roster entries change.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public interface RosterEntrySelector {
 

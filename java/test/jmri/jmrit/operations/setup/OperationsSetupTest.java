@@ -1,6 +1,10 @@
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -8,8 +12,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Setup class Last manually cross-checked on 20090131
@@ -67,7 +69,6 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("Operations Setup Constant AAR", Bundle.getMessage("ArrCodes"), Setup.AAR);
 
         Assert.assertEquals("Operations Setup Constant MONOSPACED", Bundle.getMessage("Monospaced"), Setup.MONOSPACED);
-        Assert.assertEquals("Operations Setup Constant LENGTHABV", Bundle.getMessage("LengthSymbol"), Setup.LENGTHABV);
 
         Assert.assertEquals("Operations Setup Constant BUILD_REPORT_MINIMAL", "1", Setup.BUILD_REPORT_MINIMAL);
         Assert.assertEquals("Operations Setup Constant BUILD_REPORT_NORMAL", "3", Setup.BUILD_REPORT_NORMAL);
@@ -82,9 +83,9 @@ public class OperationsSetupTest extends OperationsTestCase {
         Setup s = new Setup();
         s.setMainMenuEnabled(true);
         /* Seems to be failing on test machine */
-//		Assert.assertTrue(s.isMainMenuEnabled());
+//        Assert.assertTrue(s.isMainMenuEnabled());
         s.setMainMenuEnabled(false);
-//		Assert.assertFalse(s.isMainMenuEnabled());
+//        Assert.assertFalse(s.isMainMenuEnabled());
     }
 
     // test scale attributes

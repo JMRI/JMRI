@@ -1,17 +1,6 @@
 package jmri.jmrix.loconet.usb_dcs52;
 
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.ShutDownTask;
-import jmri.ThrottleManager;
-import jmri.implementation.QuietShutDownTask;
-import jmri.jmrix.loconet.LnPowerManager;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.pr3.PR3SystemConnectionMemo;
-import jmri.jmrix.loconet.SlotManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a DCS52 USB interface is active

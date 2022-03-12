@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -19,38 +19,67 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
         <firstname>Pierre</firstname>
         <surname>Billon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2021-03-15</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Fixes for exclude conditions for SUSI sound modules new family</revremark>
+    </revision>
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>wk</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
+    </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder</revremark>
+    </revision>
     <revision>
       <revnumber>2</revnumber>
       <date>2015-11-01</date>
       <authorinitials>PB</authorinitials>
       <revremark>Included similar CVs from SUSI sound modules</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-10-13</date>
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
    </revhistory>
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->    
-  <variable label="Max time to standstill sound" CV="350" tooltip="CV350 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="SUSI sound modules">
-	<decVal min="0" max="255"/>
-	<label xml:lang="fr">Délai max avant son marche arrêt</label>
-	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
-	<label xml:lang="ca">Retard màxim en parada</label>
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Max time to standstill sound" CV="350" tooltip="CV350 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="SUSI sound modules,SUSI sound modules (2020)">
+  <decVal min="0" max="255"/>
+  <label xml:lang="fr">Délai max avant son marche arrêt</label>
+  <label xml:lang="de">Leerlauf Verzögerungszeit</label>
+  <label xml:lang="ca">Retard màxim en parada</label>
    </variable>
-  <variable label="Max time to standstill sound" CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01">
-	<decVal min="0" max="255"/>
-	<label xml:lang="fr">Délai max avant son marche arrêt</label>
-	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
-	<label xml:lang="ca">Retard màxim en parada</label>
+  <variable label="Max time to standstill sound" CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01">
+  <decVal min="0" max="255"/>
+  <label xml:lang="fr">Délai max avant son marche arrêt</label>
+  <label xml:lang="de">Leerlauf Verzögerungszeit</label>
+  <label xml:lang="ca">Retard màxim en parada</label>
    </variable>
-  
-  <!-- END SIMILAR CV --> 
+  <!-- END SIMILAR CV -->
 </variables>

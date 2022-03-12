@@ -1,0 +1,13 @@
+<!-- Local part for openlcb/Sidebar.shtml -->
+
+<dt><a href="index.shtml">OpenLCB</a></dt>
+	      <dd>
+                <ul>
+                    <li><a href="Names.shtml">Naming</a></li>
+                    <li><a href="Connections.shtml">Connections</a></li>
+                    <li><a href="OlcbSignalMast.shtml">Signal Masts</a></li>
+                    <li><a href="Details.shtml">Details</a></li>
+                </ul>
+	       </dd>
+
+<!-- /SidebarHardwareLocalPart.shtml -->

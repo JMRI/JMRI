@@ -9,7 +9,7 @@ import javax.vecmath.Point3d;
  * provided to the actual object via ctor or other initialization. This
  * interface does not describe that.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public interface Calculator {
 

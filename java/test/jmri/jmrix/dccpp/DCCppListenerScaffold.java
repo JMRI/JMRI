@@ -1,10 +1,10 @@
 /**
  * DCCppListenerScaffold.java
  *
- * Description:	test implementation of DCCppListener
+ * test implementation of DCCppListener
  *
- * @author	Bob Jacobsen
- * @author	Mark Underwood
+ * @author Bob Jacobsen
+ * @author Mark Underwood
  */
 package jmri.jmrix.dccpp;
 

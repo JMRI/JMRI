@@ -7,13 +7,15 @@ import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
- * Utility Class supporting parsing and testing of addresses for Z21 RMBus  
+ * Utility Class supporting parsing and testing of addresses for Z21 RMBus
  * <p>
  * One address format are supported:
  * <ul>
- * <li> 
- * ZSxxxx where: 'S' for sensors, 
+ * <li>
+ * ZSxxxx where: 'S' for sensors,
  * </li>
  * </ul>
  *
@@ -31,9 +33,10 @@ public class Z21RMBusAddress {
     static final int MAXSENSORADDRESS = 160; // 20 RM bus modules with 8 contacts each.
 
     /**
-     * Public static method to parse a Z21RMBus system name.
-     * Note: Bits are numbered from 1.
+     * Public static method to parse a Z21RMBus system name.Note: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return the hardware address number, return -1 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -43,7 +46,7 @@ public class Z21RMBusAddress {
             log.error("invalid character in header field of Z21 RM Bus system name: {}", systemName);
             return (-1);
         }
-        int num = 0;
+        int num;
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
             num = Integer.parseInt(curAddress);
@@ -68,7 +71,7 @@ public class Z21RMBusAddress {
      * @see jmri.Manager#validateSystemNameFormat(java.lang.String,
      * java.util.Locale)
      */
-    public static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+    public static String validateSystemNameFormat(String name, Manager<?> manager, Locale locale) {
         try {
             return manager.validateIntegerSystemNameFormat(name, 1, 160, locale);
         } catch (NumberFormatException ex) {
@@ -82,12 +85,15 @@ public class Z21RMBusAddress {
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
+     * @param systemName system name.
+     * @param type bean type, S for Sensor, T for Turnout.
+     * @param prefix system prefix.
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
@@ -102,6 +108,8 @@ public class Z21RMBusAddress {
     /**
      * Public static method to check the user name for a valid system name.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {
@@ -112,14 +120,14 @@ public class Z21RMBusAddress {
         }
         // check for a sensor
         if (systemName.charAt(prefix.length() + 1) == 'S') {
-            jmri.Sensor s = null;
+            jmri.Sensor s;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
                 return s.getUserName();
             } else {
                 return ("");
             }
-        } 
+        }
         // not any known sensor
         return ("");
     }

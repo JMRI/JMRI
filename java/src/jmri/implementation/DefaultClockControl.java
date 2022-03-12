@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.util.Date;
+import javax.annotation.CheckForNull;
 import jmri.ClockControl;
 import jmri.InstanceManager;
 
@@ -26,7 +27,9 @@ public class DefaultClockControl implements ClockControl {
      * Operational instance variables (not saved between runs)
      */
     /**
-     * Get Status of the Fast Clock
+     * Get Status of the Fast Clock.
+     * Potentially unused?
+     * {@inheritDoc}
      */
     @Override
     public int getStatus() {
@@ -34,18 +37,24 @@ public class DefaultClockControl implements ClockControl {
     }
 
     /**
-     * Get name of hardware clock Note: If there is no hardware clock, this
-     * method returns null.
+     * Get name of hardware clock.
+     * <p>
+     * If there is no hardware clock, this method returns null.
+     * {@inheritDoc}
      */
     @Override
+    @CheckForNull
     public String getHardwareClockName() {
         return null;
     }
 
     /**
      * Returns true if hardware clock accuracy can be corrected using the
-     * computer clock. Hardware implementations should override this and return
+     * computer clock. 
+     * <p>
+     * Hardware implementations should override this and return
      * true if they can correct their hardware clock.
+     * {@inheritDoc}
      */
     @Override
     public boolean canCorrectHardwareClock() {
@@ -54,7 +63,10 @@ public class DefaultClockControl implements ClockControl {
 
     /**
      * Returns true if hardware clock can be set to 12 or 24 hour display from
-     * JMRI software. Note: Default implementation is to return false.
+     * JMRI software.
+     * <p>
+     * Default implementation is to return false.
+     * {@inheritDoc}
      */
     @Override
     public boolean canSet12Or24HourClock() {
@@ -62,9 +74,11 @@ public class DefaultClockControl implements ClockControl {
     }
 
     /**
-     * Returns true if hardware clock requires an integer rate Note: Default
-     * implementation returns false. If an integer rate is required by the
+     * Default implementation returns false.
+     * <p>
+     * If an integer rate is required by the
      * hardware, this method should be overridden.
+     * {@inheritDoc}
      */
     @Override
     public boolean requiresIntegerRate() {
@@ -72,60 +86,62 @@ public class DefaultClockControl implements ClockControl {
     }
 
     /**
-     * Get and set the rate of the fast clock Note: The rate is an integer that
-     * multiplies the wall clock For example, a rate of 4 specifies that the
-     * fast clock runs 4 times faster than the wall clock. For the default
-     * implementation, setRate is ignored, and getRate returns the rate of the
-     * internal clock;
+     * For the default implementation, setRate is ignored.
+     * {@inheritDoc}
      */
     @Override
     public void setRate(double newRate) {
-        return;
     }
 
+    /**
+     * Default implementation returns the rate of the internal clock.
+     * {@inheritDoc}
+     */
     @Override
     public double getRate() {
         return InstanceManager.getDefault(jmri.Timebase.class).getRate();
     }
 
     /**
-     * Set and get the fast clock time For the default implementation,set time
-     * is ignored and getTime returns the time of the internal clock;
+     * For the default implementation, set time is ignored.
+     * {@inheritDoc}
      */
     @Override
     public void setTime(Date now) {
-        return;
     }
 
+    /**
+     * Default implementation returns InstanceM default jmri.Timebase getTime().
+     * ie. the time of the internal clock.
+     * {@inheritDoc}
+     */
     @Override
     public Date getTime() {
         return InstanceManager.getDefault(jmri.Timebase.class).getTime();
     }
 
     /**
-     * Start and stop hardware fast clock Many hardware fast clocks continue to
-     * run indefinitely. This is provided for the case where the hardware clock
-     * can be stopped and started.
+     * Default implementation is to call SetTime to now.
+     * {@inheritDoc}
      */
     @Override
     public void startHardwareClock(Date now) {
         setTime(now);
-        return;
-    }
-
-    @Override
-    public void stopHardwareClock() {
-        return;
     }
 
     /**
-     * Initialize the hardware fast clock Note: When the hardware clock control
-     * receives this, it should initialize those clock settings that are
-     * available on the hardware clock. Default implementation is to ignore this
-     * request.
+     * Default implementation is to ignore.
+     * {@inheritDoc}
+     */
+    @Override
+    public void stopHardwareClock() {
+    }
+
+    /**
+     * Default implementation is to ignore this request.
+     * {@inheritDoc}
      */
     @Override
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
-        return;
     }
 }

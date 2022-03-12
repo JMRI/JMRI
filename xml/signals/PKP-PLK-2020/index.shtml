@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author$) 2009 -->
+
+  <title>JMRI: Instruction E1 - Polish railroads standard PKP PLK</title>
+  <meta name="keywords" content="JMRI: Instruction E1 - Polish railroads standard PKP PLK">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+      <h1>JMRI: Instruction E1 - Polish railroads standard PKP PLK</h1>
+
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p>Signal Mast definitions:</p>
+
+      <ul>
+        <li>
+          <a href="appearance-sbl2.xml">Samoczynna blokada linowa 2-stawna</a>
+        </li>
+
+        <li>
+          <a href="appearance-sbl3.xml">Samoczynna blokada linowa 3-stawna</a>
+        </li>
+
+        <li>
+          <a href="appearance-sbl4.xml">Samoczynna blokada linowa 4-stawna</a>
+        </li>
+
+        <li>
+          <a href="appearance-shunting.xml">Sygnalizacja świetlna dla jazdy manewrowej.</a>
+        </li>
+
+        <li>
+          <a href="appearance-spa4.xml">Sygnalizacja półautomatyczna 4-komorowa</a>
+        </li>
+
+        <li>
+          <a href="appearance-spa5.xml">Sygnalizacja półautomatyczna 5-komorowa</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

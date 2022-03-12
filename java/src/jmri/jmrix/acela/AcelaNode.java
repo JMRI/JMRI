@@ -235,6 +235,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set starting output address for range.
      * Used to help linear address search.
+     * @param startingAddress starting output address for range.
      */
     public void setStartingOutputAddress(int startingAddress) {
         startingOutputAddress = startingAddress;
@@ -243,6 +244,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get starting output address for range.
      * Used to help linear address search.
+     * @return starting output address.
      */
     public int getStartingOutputAddress() {
         return startingOutputAddress;
@@ -251,6 +253,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set ending output address for range.
      * Used to help linear address search.
+     * @param endingAddress end output address for range.
      */
     public void setEndingOutputAddress(int endingAddress) {
         endingOutputAddress = endingAddress;
@@ -259,6 +262,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get ending output address for range.
      * Used to help linear address search.
+     * @return end output address for range.
      */
     public int getEndingOutputAddress() {
         return endingOutputAddress;
@@ -267,6 +271,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set starting sensor address for range.
      * Used to help linear address search.
+     * @param startingAddress start sensor address for range.
      */
     public void setStartingSensorAddress(int startingAddress) {
         startingSensorAddress = startingAddress;
@@ -275,6 +280,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get starting sensor addresses for range.
      * Used to help linear address search.
+     * @return starting sensor address for range.
      */
     public int getStartingSensorAddress() {
         return startingSensorAddress;
@@ -283,6 +289,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set ending sensor addresses for range.
      * Used to help linear address search.
+     * @param endingAddress end sensor address.
      */
     public void setEndingSensorAddress(int endingAddress) {
         endingSensorAddress = endingAddress;
@@ -291,6 +298,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get ending sensor addresses for range.
      * Used to help linear address search.
+     * @return end of range sensor address.
      */
     public int getEndingSensorAddress() {
         return endingSensorAddress;
@@ -359,6 +367,8 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * Get Output configuration values.
+     * @param circuitnum wired output index number.
+     * @return  configuration value.
      */
     public int getOutputWired(int circuitnum) {
         return outputWired[circuitnum];
@@ -371,6 +381,8 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * Set Output configuration values.
+     * @param circuitnum output index number.
+     * @param type output type.
      */
     public void setOutputWired(int circuitnum, int type) {
         outputWired[circuitnum] = type;
@@ -459,6 +471,8 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * Public method to set and return Sensor configuration values.
+     * @param circuitnum sensor type array index number.
+     * @return sensor index value.
      */
     public int getSensorType(int circuitnum) {
         return sensorType[circuitnum];
@@ -506,6 +520,7 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * Public method to return node type.
+     * @return node type number.
      */
     public int getNodeType() {
         return (nodeType);
@@ -517,6 +532,7 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * Public method to set node type.
+     * @param stringtype string form of node type.
      */
     public void setNodeTypeString(String stringtype) {
         int type = moduleTypes.lastIndexOf(stringtype) / 2;
@@ -567,6 +583,7 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * Public method to return number of bits per card.
+     * @return number of output bits per card.
      */
     public int getNumOutputBitsPerCard() {
         return (outputbitsPerCard);
@@ -594,7 +611,8 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Get the transmission delay on thsi node.
+     * Get the transmission delay on this node.
+     * @return delay in 10s of microseconds.
      */
     public int getTransmissionDelay() {
         return (transmissionDelay);
@@ -750,7 +768,7 @@ public class AcelaNode extends AbstractNode {
                         if (outputType[c] == AcelaNode.ONOFF) {
                             // outputArray[c] tells us to to turn the output on
                             // or off.
-                            // outputWired[c] tells us whether the relay is 
+                            // outputWired[c] tells us whether the relay is
                             // wired backwards.
                             // command 0x01 is activate
                             // command 0x02 is deactivate
@@ -800,7 +818,7 @@ public class AcelaNode extends AbstractNode {
                             // outputLength[c] tells us how long in tenths of
                             // a second to pulse the output.
                             // output will actually return to off state after
-                            // the pulse duratiom -- but we will never know.
+                            // the pulse duration -- but we will never know.
                             // Program will need to fake this out.
                             // command 0x02 is deactivate
                             // command 0x03 is to pulse on
@@ -1037,7 +1055,7 @@ public class AcelaNode extends AbstractNode {
         log.debug("Sensor Parsing has firstByteNum: {}", firstByteNum);
         log.debug("Sensor Parsing has firstBitAt: {}", firstBitAt);
 
-        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
+        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement
         int rawvalue = l.getElement(firstByteNum);
         log.debug("Sensor Parsing has first rawvalue: {}", Integer.toHexString(rawvalue));
 
@@ -1054,10 +1072,10 @@ public class AcelaNode extends AbstractNode {
 
                 int relvalue = rawvalue;
 
-                //  Need a temporary counter within the byte so we can shift 
+                //  Need a temporary counter within the byte so we can shift
                 int tempi = i;
 
-                //  If necessary, shift by four before we start  
+                //  If necessary, shift by four before we start
                 if (usingByteNum == 0) {
                     if (firstBitAt == 4) {
                         for (int j = 0; j < firstBitAt; j++) {
@@ -1067,11 +1085,11 @@ public class AcelaNode extends AbstractNode {
                     }
                 }
 
-                //  If necessary, get next byte  
+                //  If necessary, get next byte
                 if (firstBitAt == 4) {
                     if (i >= 12) {  // Will only get here if there are 16 sensors
                         usingByteNum = 2;
-                        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
+                        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
                         log.debug("Sensor Parsing (1stat4) has third rawvalue: {}", Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
@@ -1079,7 +1097,7 @@ public class AcelaNode extends AbstractNode {
                     } else {
                         if (i >= 4) {
                             usingByteNum = 1;
-                            //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
+                            //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement
                             rawvalue = l.getElement(usingByteNum + firstByteNum);
                             log.debug("Sensor Parsing (1stat4) has second rawvalue: {}", Integer.toHexString(rawvalue));
                             relvalue = rawvalue;
@@ -1089,7 +1107,7 @@ public class AcelaNode extends AbstractNode {
                 } else {
                     if (i >= 8) {  // Will only get here if there are 16 sensors
                         usingByteNum = 1;
-                        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
+                        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
                         log.debug("Sensor Parsing has second rawvalue: {}", Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
@@ -1138,7 +1156,7 @@ public class AcelaNode extends AbstractNode {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in markChanges: " + e);
+            log.error("exception in markChanges", e);
         }
     }
 

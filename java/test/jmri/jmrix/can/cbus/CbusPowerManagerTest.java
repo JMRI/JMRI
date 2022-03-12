@@ -6,15 +6,15 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (c) 2019
+ * @author Andrew Crosland Copyright (c) 2021
  */
 public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
 
@@ -111,15 +111,45 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         r.setRtr(false);
         pwr.reply(r);
         Assert.assertEquals("on", PowerManager.ON, p.getPower());
+        Assert.assertEquals(0, controller.outbound.size());
         
     }
     
-    CanSystemConnectionMemo memo;
-    CbusPowerManager pwr;
-    TrafficControllerScaffold controller;
+    @Test
+    public void checkArstBehaviour () throws jmri.JmriException {
+        
+        // Test effect of ARST on power state
+        CanReply r = new CanReply( new int[]{CbusConstants.CBUS_TOF},0x12);
+        pwr.reply(r);
+        Assert.assertEquals("set off before ARST", PowerManager.OFF, p.getPower());
+        
+        r = new CanReply( new int[]{CbusConstants.CBUS_ARST},0x12);
+        pwr.reply(r);
+        Assert.assertEquals("on after ARST", PowerManager.ON, p.getPower());
+        
+        // Change from default behaviour
+        memo.setPowerOnArst(false);
+        
+        r = new CanReply( new int[]{CbusConstants.CBUS_TOF},0x12);
+        pwr.reply(r);
+        Assert.assertEquals("set off before ARST", PowerManager.OFF, p.getPower());
+        
+        r = new CanReply( new int[]{CbusConstants.CBUS_ARST},0x12);
+        pwr.reply(r);
+        Assert.assertEquals("still off after ARST", PowerManager.OFF, p.getPower());
+        
+    }
     
-    // The minimal setup for log4J
-    @Before
+    @Test
+    public void checkName() {
+        Assert.assertNotNull(pwr.getUserName());
+    }
+    
+    private CanSystemConnectionMemo memo;
+    private CbusPowerManager pwr;
+    private TrafficControllerScaffold controller;
+    
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -130,7 +160,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         try {
@@ -138,10 +168,11 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         } catch (jmri.JmriException ex) {}
         
         memo.dispose();
+        controller.terminateThreads();
         pwr = null;
         memo = null;
         controller = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        
         JUnitUtil.tearDown();
 
         

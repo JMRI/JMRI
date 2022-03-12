@@ -180,6 +180,7 @@ $(document).ready(function () {
             window.localStorage.setItem("jmri.operations.trains.showAll", $(this).is(":checked"));
         });
     }
+    // note: the functions and parameter names must match exactly those in jquery.jmri.js
     jmri = $.JMRI({
         open: function () {
             if (view === "conductor") {

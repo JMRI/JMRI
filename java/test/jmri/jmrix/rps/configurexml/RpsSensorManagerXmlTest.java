@@ -1,15 +1,14 @@
 package jmri.jmrix.rps.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * RpsSensorManagerXmlTest.java
  *
- * Description: tests for the RpsSensorManagerXml class
+ * Test for the RpsSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class RpsSensorManagerXmlTest {
       Assert.assertNotNull("RpsSensorManagerXml constructor",new RpsSensorManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

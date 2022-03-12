@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2020-07-15</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Image types</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -35,13 +41,15 @@
     <appearance>
       <aspectname>Posun zakázán</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn_n.gif</imagelink>
+      <imagelink type="seřaďovací">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Posun dovolen</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn_n.gif</imagelink>
+      <imagelink type="seřaďovací">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn.gif</imagelink>
     </appearance>
 
   </appearances>

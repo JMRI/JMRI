@@ -1,6 +1,7 @@
 package jmri.jmrix.acela;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
     }
@@ -35,21 +37,20 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * <p>
      * Assumes calling method has checked that a Turnout with this
      * system name does not already exist.
-     *
-     * @return null if the system name is not in a valid format
+     * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Turnout trn = null;
         // check if the output bit is available
-        int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
+        int nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
         if (nAddress == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Node Address from System Name " + systemName);
         }
         int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Bit Number from System Name " + systemName);
         }
 
         // Validate the systemName
@@ -73,7 +74,8 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * {@value AcelaAddress#MAXOUTPUTADDRESS}.
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINOUTPUTADDRESS,
                 AcelaAddress.MAXOUTPUTADDRESS,
@@ -84,32 +86,34 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     /**
      * Public method to validate system name for configuration.
      *
+     * @param systemName system name to validate
      * @return 'true' if system name has a valid meaning in the current
      * configuration, else return 'false'
      */
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameConfig(systemName, 'T', getMemo()));
     }
 
     /**
-     * Public method to convert system name to its alternate format
+     * Public method to convert system name to its alternate format.
      * <p>
-     * Returns a normalized system name if system name is valid and has a valid
-     * alternate representation, else return "".
+     * @param systemName system name to convert
+     * @return a normalized system name if system name is valid and has a valid
+     * alternate representation, else return ""
      */
     public String convertSystemNameToAlternate(String systemName) {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

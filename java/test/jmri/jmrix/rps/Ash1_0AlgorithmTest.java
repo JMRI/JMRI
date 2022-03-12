@@ -1,7 +1,9 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the rps.Ash1_0Algorithm class.
@@ -11,7 +13,7 @@ import org.junit.*;
  *
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class Ash1_0AlgorithmTest {
 
@@ -88,7 +90,7 @@ public class Ash1_0AlgorithmTest {
     }
 
     @Test
-    @Ignore("Does not produce expected result")
+    @Disabled("Does not produce expected result")
     public void testCalc4_not3() {
         Reading r = new Reading("21", new double[]{7. / vs, 13. / vs, 13. / vs, 3. / vs});
 
@@ -111,12 +113,12 @@ public class Ash1_0AlgorithmTest {
         Assert.assertEquals("z close", 12.0, m.z, 0.001);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

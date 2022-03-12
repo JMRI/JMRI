@@ -5,10 +5,8 @@ import jmri.util.JUnitUtil;
 
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,13 +14,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the SerialLightManager class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008
  */
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -41,6 +39,11 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     public String getSystemName(int n) {
         return "GL" + n;
     }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "1106";
+    }
 
     @Test
     public void testAsAbstractFactory() {
@@ -48,16 +51,16 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
         Light o = l.newLight("GL1105", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received light value " + o);
+            log.debug("received light value {}", o);
         }
         Assert.assertTrue(null != (SerialLight) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("GL1105"));
+            log.debug("by system name: {}", l.getBySystemName("GL1105"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("GL1105"));
@@ -96,8 +99,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     }
 
 
-    // The minimal setup for log4J
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

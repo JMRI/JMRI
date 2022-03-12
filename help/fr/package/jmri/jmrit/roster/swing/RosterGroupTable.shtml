@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -35,7 +35,7 @@
       la coche va supprimer cette Fiche du groupe Liste. Ceci est
       la page d'aide
       help/fr/package/jmri/jmrit/roster/swing/RosterGroupTable.shtml
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

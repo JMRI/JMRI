@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "null returned is documented in each method to mean no valid result")
+        justification = "null returned is documented in each method to mean no valid result")
 public class NmraPacket {
 
     static final public int accIdLowLimit = 1;
@@ -1203,6 +1203,123 @@ public class NmraPacket {
                 | (f23 ? 0x04 : 0)
                 | (f22 ? 0x02 : 0)
                 | (f21 ? 0x01 : 0);
+
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
+    }
+
+    // The following function packet definitions are based on "http://normen.railcommunity.de/RCN-212.pdf".
+
+    public static byte[] function29Through36Packet(int address, boolean longAddr,
+            boolean f29, boolean f30, boolean f31, boolean f32,
+            boolean f33, boolean f34, boolean f35, boolean f36) {
+        log.debug("f29 through f36 packet {}", address);
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        int arg1 = 0xD8;
+        int arg2 = (f36 ? 0x80 : 0)
+                | (f35 ? 0x40 : 0)
+                | (f34 ? 0x20 : 0)
+                | (f33 ? 0x10 : 0)
+                | (f32 ? 0x08 : 0)
+                | (f31 ? 0x04 : 0)
+                | (f30 ? 0x02 : 0)
+                | (f29 ? 0x01 : 0);
+
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
+    }
+
+    public static byte[] function37Through44Packet(int address, boolean longAddr,
+            boolean f37, boolean f38, boolean f39, boolean f40,
+            boolean f41, boolean f42, boolean f43, boolean f44) {
+        log.debug("f37 through f44 packet {}", address);
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        int arg1 = 0xD9;
+        int arg2 = (f44 ? 0x80 : 0)
+                | (f43 ? 0x40 : 0)
+                | (f42 ? 0x20 : 0)
+                | (f41 ? 0x10 : 0)
+                | (f40 ? 0x08 : 0)
+                | (f39 ? 0x04 : 0)
+                | (f38 ? 0x02 : 0)
+                | (f37 ? 0x01 : 0);
+
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
+    }
+
+    public static byte[] function45Through52Packet(int address, boolean longAddr,
+            boolean f45, boolean f46, boolean f47, boolean f48,
+            boolean f49, boolean f50, boolean f51, boolean f52) {
+        log.debug("f45 through f52 packet {}", address);
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        int arg1 = 0xDA;
+        int arg2 = (f52 ? 0x80 : 0)
+                | (f51 ? 0x40 : 0)
+                | (f50 ? 0x20 : 0)
+                | (f49 ? 0x10 : 0)
+                | (f48 ? 0x08 : 0)
+                | (f47 ? 0x04 : 0)
+                | (f46 ? 0x02 : 0)
+                | (f45 ? 0x01 : 0);
+
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
+    }
+
+    public static byte[] function53Through60Packet(int address, boolean longAddr,
+            boolean f53, boolean f54, boolean f55, boolean f56,
+            boolean f57, boolean f58, boolean f59, boolean f60) {
+        log.debug("f53 through f60 packet {}", address);
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        int arg1 = 0xDB;
+        int arg2 = (f60 ? 0x80 : 0)
+                | (f59 ? 0x40 : 0)
+                | (f58 ? 0x20 : 0)
+                | (f57 ? 0x10 : 0)
+                | (f56 ? 0x08 : 0)
+                | (f55 ? 0x04 : 0)
+                | (f54 ? 0x02 : 0)
+                | (f53 ? 0x01 : 0);
+
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
+    }
+
+    public static byte[] function61Through68Packet(int address, boolean longAddr,
+            boolean f61, boolean f62, boolean f63, boolean f64,
+            boolean f65, boolean f66, boolean f67, boolean f68) {
+        log.debug("f61 through f68 packet {}", address);
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        int arg1 = 0xDC;
+        int arg2 = (f68 ? 0x80 : 0)
+                | (f67 ? 0x40 : 0)
+                | (f66 ? 0x20 : 0)
+                | (f65 ? 0x10 : 0)
+                | (f64 ? 0x08 : 0)
+                | (f63 ? 0x04 : 0)
+                | (f62 ? 0x02 : 0)
+                | (f61 ? 0x01 : 0);
 
         return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
     }

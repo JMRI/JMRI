@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 23</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 23</h1>
+
+<h2>Using LogixNG in other parts of JMRI or by third party software</h2>
+
+<b>System names of LogixNG actions and expressions are usually not exposed to the user. This information is mainly
+intended to JMRI developers that want to use LogixNG as a backbone for other features, like SSM. And for developers
+that uses JMRI as a library and want to use LogixNG as a backbone for their features.</b>
+<p>
+Like everything else in JMRI, items in LogixNG have a system name and optional a user name. All system names in LogixNG
+can be automatically generated and that's recommended for new or unexperienced users. It's recommended to give LogixNGs
+and ConditionalNGs a user name, but for expressions and actions, that is usually not needed.
+<p>
+The section below describes the syntax for system names in LogixNG. It's highly recommended for new and unexperienced
+users to skip this section and only use automatically generated system names and to give LogixNGs and ConditionalNGs a
+user name.
+<p>
+Each system name in JMRI starts with the system prefix, which for the internal connection usually is "I", but may be
+something different, following by the type letter "Q" for LogixNG. Together it's "IQ", which also has the meaning
+"Intelligence quotient", and setting up complex rules in LogixNG can be training for your brain...
+<p>
+Within LogixNG, there are several types of system names, for digital actions, digital expressions, string actions, and
+so on. If each of these had their own type letter, like turnouts and sensors have, JMRI would had run out of available
+type letters. Instead, LogixNG has sub type letters for each of these.
+<p>
+<hr>
+<p>
+System names may have these forms. Here, "123" is an arbitrary number. Note that only numbers, not arbitrary
+characters, is allowed in the latter part of the system name.
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>IQ123</td><td>LogixNG</td></tr>
+<tr><td>IQC123</td><td>ConditionalNG</td></tr>
+<tr><td>IQAA123</td><td>Analog Action</td></tr>
+<tr><td>IQAE123</td><td>Analog Expression</td></tr>
+<tr><td>IQDA123</td><td>Digital Action</td></tr>
+<tr><td>IQDBA123</td><td>Digital Boolean Action</td></tr>
+<tr><td>IQDE123</td><td>Digital Expression</td></tr>
+<tr><td>IQSA123</td><td>String Action</td></tr>
+<tr><td>IQSE123</td><td>String Expression</td></tr>
+<tr><td>IQM123</td><td>LogixNG Module</td></tr>
+</table>
+<p>
+If the user wants to have an arbitrary string in the latter part of the system name, the dollar sign must be added.
+Here, "characters" is some arbitrary characters. The reason for why the dollar sign is needed is that LogixNG must be
+able to resolv which characters is the system name, for example IQ, and which part of the string is the sub system
+prefix, for example DA.
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>IQ$characters</td><td>LogixNG</td></tr>
+<tr><td>IQC$characters</td><td>ConditionalNG</td></tr>
+<tr><td>IQAA$characters</td><td>Analog Action</td></tr>
+<tr><td>IQAE$characters</td><td>Analog Expression</td></tr>
+<tr><td>IQDA$characters</td><td>Digital Action</td></tr>
+<tr><td>IQDBA$characters</td><td>Digital Boolean Action</td></tr>
+<tr><td>IQDE$characters</td><td>Digital Expression</td></tr>
+<tr><td>IQSA$characters</td><td>String Action</td></tr>
+<tr><td>IQSE$characters</td><td>String Expression</td></tr>
+<tr><td>IQM$characters</td><td>LogixNG Module</td></tr>
+</table>
+<p>
+JMRI can auto create system names for the user. In that case, the text :AUTO: is added. Note that only numbers, not
+arbitrary characters, is allowed in the latter part of the system name. The user should never create a system name with
+:AUTO: .
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>IQ:AUTO:123</td><td>LogixNG</td></tr>
+<tr><td>IQC:AUTO:123</td><td>ConditionalNG</td></tr>
+<tr><td>IQAA:AUTO:123</td><td>Analog Action</td></tr>
+<tr><td>IQAE:AUTO:123</td><td>Analog Expression</td></tr>
+<tr><td>IQDA:AUTO:123</td><td>Digital Action</td></tr>
+<tr><td>IQDBA:AUTO:123</td><td>Digital Boolean Action</td></tr>
+<tr><td>IQDE:AUTO:123</td><td>Digital Expression</td></tr>
+<tr><td>IQSA:AUTO:123</td><td>String Action</td></tr>
+<tr><td>IQSE:AUTO:123</td><td>String Expression</td></tr>
+<tr><td>IQM:AUTO:123</td><td>LogixNG Module</td></tr>
+</table>
+<p>
+JMRI may create system names for internal use for JMRI itself. In that case, the text :JMRI: is added. Here,
+"characters" is some arbitrary characters. The user should never create a system name with :JMRI: .
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>IQ:JMRI:characters</td><td>LogixNG</td></tr>
+<tr><td>IQC:JMRI:characters</td><td>ConditionalNG</td></tr>
+<tr><td>IQAA:JMRI:characters</td><td>Analog Action</td></tr>
+<tr><td>IQAE:JMRI:characters</td><td>Analog Expression</td></tr>
+<tr><td>IQDA:JMRI:characters</td><td>Digital Action</td></tr>
+<tr><td>IQDBA:JMRI:characters</td><td>Digital Boolean Action</td></tr>
+<tr><td>IQDE:JMRI:characters</td><td>Digital Expression</td></tr>
+<tr><td>IQSA:JMRI:characters</td><td>String Action</td></tr>
+<tr><td>IQSE:JMRI:characters</td><td>String Expression</td></tr>
+<tr><td>IQM:JMRI:characters</td><td>LogixNG Module</td></tr>
+</table>
+<p>
+JMRI may be used as a library for external applications. These applications may create system names for internal use
+for themselves. In that case, the text :JMRI-LIB: is added. Here, "characters" is some arbitrary characters. The user
+should never create a system name with :JMRI-LIB: .
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>IQ:JMRI-LIB:characters</td><td>LogixNG</td></tr>
+<tr><td>IQC:JMRI-LIB:characters</td><td>ConditionalNG</td></tr>
+<tr><td>IQAA:JMRI-LIB:characters</td><td>Analog Action</td></tr>
+<tr><td>IQAE:JMRI-LIB:characters</td><td>Analog Expression</td></tr>
+<tr><td>IQDA:JMRI-LIB:characters</td><td>Digital Action</td></tr>
+<tr><td>IQDBA:JMRI-LIB:characters</td><td>Digital Boolean Action</td></tr>
+<tr><td>IQDE:JMRI-LIB:characters</td><td>Digital Expression</td></tr>
+<tr><td>IQSA:JMRI-LIB:characters</td><td>String Action</td></tr>
+<tr><td>IQSE:JMRI-LIB:characters</td><td>String Expression</td></tr>
+<tr><td>IQM:JMRI-LIB:characters</td><td>LogixNG Module</td></tr>
+</table>
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>

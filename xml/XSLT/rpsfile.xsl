@@ -4,7 +4,7 @@
 
 <!-- Used by default when the RPS file is displayed in a web browser-->
 
-<!-- This file is part of JMRI.  Copyright 2007-2018.                            -->
+<!-- This file is part of JMRI.  Copyright 2007-2022.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
@@ -28,7 +28,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2019')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -36,14 +36,14 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='rpsfile'>
 
 <html>
 	<head>
 		<title>JMRI RPS File</title>
 	</head>
-	
+
 	<body>
 		<h2>JMRI RPS File</h2>
 
@@ -54,9 +54,6 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-<p/>Site hosted by: <br/>
-		<a href="http://www.tagadab.com/">
-		<img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 	</body>
 </html>
 
@@ -91,7 +88,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 		<xsl:for-each select="/decoderIndex-config/decoderIndex/familyList/family">
 		  <xsl:if test="( @mfg = $mfgname )" >
 			<xsl:for-each select="model">
-			
+
 			  <!-- display model as row in table -->
 			  <tr>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@model"/></td>

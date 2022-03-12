@@ -1,13 +1,13 @@
 package jmri.jmrix.dcc4pc.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for Dcc4PcComponentFactory class.
@@ -38,7 +38,7 @@ public class Dcc4PcComponentFactoryTest {
       Assert.assertNull("Disabled Component Factory getMenu method",zcf.getMenu());
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -46,7 +46,7 @@ public class Dcc4PcComponentFactoryTest {
         memo = new Dcc4PcSystemConnectionMemo();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         memo=null;
         JUnitUtil.tearDown();

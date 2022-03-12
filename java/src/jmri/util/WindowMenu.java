@@ -14,12 +14,12 @@ import jmri.util.swing.WindowInterface;
 /**
  * Creates a menu showing all open windows and allows to bring one in front
  *
- * @author	Giorgio Terdina Copyright 2008
+ * @author Giorgio Terdina Copyright 2008
  */
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {
 
-    private Frame parentFrame;	// Keep note of the window containing the menu
-    private List<JmriJFrame> framesList;	// Keep the list of windows, in order to find out which window was selected
+    private Frame parentFrame; // Keep note of the window containing the menu
+    private List<JmriJFrame> framesList; // Keep the list of windows, in order to find out which window was selected
 
     public WindowMenu(WindowInterface wi) {
         super(Bundle.getMessage("MenuWindow"));
@@ -63,7 +63,7 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
                         if (selectedItem == getItem(i)) {
                             i -= firstItem;
                             // Retrieve the corresponding window
-                            if (i < framesList.size()) {	// "i" should always be < framesList.size(), but it's better to make sure
+                            if (i < framesList.size()) { // "i" should always be < framesList.size(), but it's better to make sure
                                 framesList.get(i).setVisible(true);
                                 framesList.get(i).setExtendedState(Frame.NORMAL);
                                 return;

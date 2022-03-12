@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2018.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- This file contains definitions for LogixNG AnalogExpressions.          -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-analogio-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-constant-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-memory-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/formula-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/time-since-midnight-4.23.1.xsd"/>
+
+    <xs:complexType name="LogixNG_AnalogExpressionManagerType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of a AnalogExpressionManager implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogExpressionManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        
+        <!-- Permit any of these tags in any order in any number -->
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+
+            <xs:element name="AnalogExpressionAnalogIO"  type="LogixNG_AnalogExpression_AnalogIOType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogExpressionConstant"  type="LogixNG_AnalogExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogExpressionMemory"    type="LogixNG_AnalogExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogFormula"             type="LogixNG_AnalogExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="TimeSinceMidnight"         type="LogixNG_AnalogExpression_TimeSinceMidnightType" minOccurs="0" maxOccurs="unbounded" />
+
+            <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

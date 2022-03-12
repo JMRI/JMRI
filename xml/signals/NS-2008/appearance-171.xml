@@ -49,6 +49,12 @@
         <authorinitials>ST</authorinitials>
         <revremark>Added specific appearances</revremark>
     </revision>
+    <revision>
+        <revnumber>1.3</revnumber>
+        <date>2019-12-304</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
 
   <aspecttable>NS</aspecttable>
@@ -140,8 +146,7 @@
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
-      <ourAspect>Limited Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>171</ourAspect>
     </aspectMapping>
 
     <aspectMapping>

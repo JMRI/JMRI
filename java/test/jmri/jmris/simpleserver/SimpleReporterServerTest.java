@@ -1,10 +1,12 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 /**
@@ -21,12 +23,12 @@ public class SimpleReporterServerTest {
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
@@ -36,12 +38,12 @@ public class SimpleReporterServerTest {
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleReporterServer a = new SimpleReporterServer(jcs);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
@@ -51,32 +53,22 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod=null;
-        try {
-          sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch(java.lang.NoSuchMethodException nsm) {
-          Assert.fail("Could not find method sendMessage in SimpleReporterServer class. " );
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
-           sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",sb.toString());
-        } catch (java.lang.IllegalAccessException iae) {
-           Assert.fail("Could not access method sendMessage in SimpleReporterServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite){
-          Throwable cause = ite.getCause();
-          Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-       }
+        Throwable thrown = catchThrowable( () -> {
+            java.lang.reflect.Method sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+            // override the default permissions.
+            assertThat(sendMessageMethod).isNotNull();
+            sendMessageMethod.setAccessible(true);
+            sendMessageMethod.invoke(a,"Hello World");
+        });
+        assertThat(thrown).withFailMessage("Exception sending Status").isNull();
+        assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     @Test
@@ -86,32 +78,22 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleReporterServer a = new SimpleReporterServer(jcs);
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod=null;
-        try {
-          sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch(java.lang.NoSuchMethodException nsm) {
-          Assert.fail("Could not find method sendMessage in SimpleReporterServer class. " );
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
-           sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",jcs.getOutput());
-        } catch (java.lang.IllegalAccessException iae) {
-           Assert.fail("Could not access method sendMessage in SimpleReporterServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite){
-          Throwable cause = ite.getCause();
-          Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-       }
+        Throwable thrown = catchThrowable( () -> {
+            java.lang.reflect.Method sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+            // override the default permissions.
+            assertThat(sendMessageMethod).isNotNull();
+            sendMessageMethod.setAccessible(true);
+            sendMessageMethod.invoke(a, "Hello World");
+        });
+        assertThat(thrown).withFailMessage("Exception sending Status").isNull();
+        assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
 
@@ -122,18 +104,15 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
-        try {
-            a.sendErrorStatus("IT1");
-            Assert.assertEquals("sendErrorStatus check","REPORTER ERROR\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending Error Status");
-        }
+        Throwable thrown = catchThrowable( () -> a.sendErrorStatus("IT1"));
+        assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER ERROR\n");
     }
 
     @Test
@@ -143,19 +122,18 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
-        try {
+        Throwable thrown = catchThrowable( () -> {
             a.initReporter("IR1");
-            a.sendReport("IR1","Hello World");
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending Error Status");
-        }
+            a.sendReport("IR1", "Hello World");
+        });
+        assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -165,19 +143,18 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
-        try {
+        Throwable thrown = catchThrowable( () -> {
             a.initReporter("IR1");
-            a.sendReport("IR1",new jmri.implementation.DefaultIdTag("ID1234","Hello World"));
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending Error Status");
-        }
+            a.sendReport("IR1", new jmri.implementation.DefaultIdTag("ID1234", "Hello World"));
+        });
+        assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -187,20 +164,19 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
-        try {
-            a.initReporter("IR1");
-            a.sendReport("IR1",null);
-            // null report, sends back the reporter name only.
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending Error Status");
-        }
+        Throwable thrown = catchThrowable( () -> {
+             a.initReporter("IR1");
+             a.sendReport("IR1", null);
+        });
+        // null report, sends back the reporter name only.
+        assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1\n");
     }
 
     @Test
@@ -210,18 +186,16 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
-        try {
-            a.parseStatus("REPORTER IR1 Hello World\n\r");
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
-        } catch(jmri.JmriException | java.io.IOException ioe){
-            Assert.fail("Exception sending Error Status");
-        }
+        Throwable thrown = catchThrowable( () ->
+            a.parseStatus("REPORTER IR1 Hello World\n\r"));
+        assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -231,31 +205,28 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
-        try {
-            a.parseStatus("REPORTER IR1\n\r");
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1\n",sb.toString());
-        } catch(jmri.JmriException | java.io.IOException ioe){
-            Assert.fail("Exception sending Error Status");
-        }
+        Throwable thrown = catchThrowable( () -> 
+            a.parseStatus("REPORTER IR1\n\r"));
+        assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1\n");
     }
 
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initReporterManager();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

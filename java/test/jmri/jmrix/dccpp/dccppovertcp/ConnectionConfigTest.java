@@ -1,10 +1,8 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for ConnectionConfig class.
@@ -13,7 +11,7 @@ import org.junit.Test;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @Before
+   @BeforeEach
    @Override
    public void setUp() {
         JUnitUtil.setUp();
@@ -21,10 +19,10 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
         JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class, memo);
-        cc = new ConnectionConfig();
+        cc = new ConnectionConfig(new DCCppTcpDriverAdapter()); // adapter assumed in test
    }
 
-   @After
+   @AfterEach
    @Override
    public void tearDown(){
         cc = null;

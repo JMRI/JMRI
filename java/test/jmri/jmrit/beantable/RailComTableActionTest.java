@@ -2,10 +2,9 @@ package jmri.jmrit.beantable;
 
 import jmri.IdTag;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -34,9 +33,8 @@ public class RailComTableActionTest extends AbstractTableActionBase<IdTag> {
         return Bundle.getMessage("TitleAddIdTag");
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -45,7 +43,7 @@ public class RailComTableActionTest extends AbstractTableActionBase<IdTag> {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

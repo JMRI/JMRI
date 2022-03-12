@@ -94,7 +94,9 @@ public class OBlockManagerXml // extends XmlFile
 
                 List<Path> paths = block.getPaths();
                 for (Path op : paths) {
-                    elem.addContent(storePath((OPath) op));
+                    if ( op instanceof OPath ) {
+                        elem.addContent(storePath((OPath) op));
+                    }
                 }
                 List<Portal> portals = block.getPortals();
                 for (Portal po : portals) {
@@ -128,7 +130,7 @@ public class OBlockManagerXml // extends XmlFile
         if (signal != null) {
             Element fromElem = new Element("fromSignal");
             fromElem.setAttribute("signalName", signal.getSystemName());
-            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalOffset());
+            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalOffset()); // actually a Distance/Offset
             elem.addContent(fromElem);
         }
         block = portal.getToBlock();
@@ -240,11 +242,6 @@ public class OBlockManagerXml // extends XmlFile
         for (Element bl : blockList) {
             loadBlock(bl);
         }
-        // Build data structure for blocks to know with whom they share turnouts.
-        // check whether any turnouts are shared between two blocks;
-        for (OBlock oblock : _manager.getNamedBeanSet()) {
-            WarrantTableAction.checkSharedTurnouts(oblock);
-        }
         return true;
     }
 
@@ -255,21 +252,17 @@ public class OBlockManagerXml // extends XmlFile
 
     private void loadBlock(Element elem) {
         if (elem.getAttribute("systemName") == null) {
-            log.error("unexpected null for block systemName elem= ", elem);
+            log.error("unexpected null for block systemName elem = {}", elem);
             return;
         }
-        String sysName = elem.getAttribute("systemName").getValue();
+        String systemName = elem.getAttribute("systemName").getValue();
         String userName = null;
         if (elem.getAttribute("userName") != null) {
             userName = elem.getAttribute("userName").getValue();
         }
-        log.debug("Load block sysName= {}, userName= {}", sysName, userName);
+        log.debug("Load block sysName= {}, userName= {}", systemName, userName);
         // Portal may have already created a skeleton of this block
-        OBlock block = getBlock(sysName);
-        if (block == null) {
-            log.error("Null block!? sysName= {}, userName= {}", sysName, userName);
-            return;
-        }
+        OBlock block = getBlock(systemName); // never null (for a valid systemName)
         block.setUserName(userName);
         String c = elem.getChildText("comment");
         if (c != null) {
@@ -281,7 +274,7 @@ public class OBlockManagerXml // extends XmlFile
             block.setMetricUnits(false);
         }
         if (elem.getAttribute("length") != null) {
-            block.setLength(Float.valueOf(elem.getAttribute("length").getValue()).floatValue());
+            block.setLength(Float.parseFloat(elem.getAttribute("length").getValue()));
         }
         if (elem.getAttribute("curve") != null) {
             block.setCurvature(Integer.parseInt((elem.getAttribute("curve")).getValue()));
@@ -311,7 +304,7 @@ public class OBlockManagerXml // extends XmlFile
                     block.setReporter(rep);
                 }
             } catch (Exception ex) {
-                log.error("No Reporter named \"{}\" found. threw exception: {}", name,  ex);
+                log.error("No Reporter named \"{}\" found. threw exception", name,  ex);
             }
             if (reporter.getAttribute("reportCurrent") != null) {
                 block.setReportingCurrent(reporter.getAttribute("reportCurrent").getValue().equals("true"));
@@ -344,7 +337,7 @@ public class OBlockManagerXml // extends XmlFile
         for (Element pa : paths) {
             if (!block.addPath(loadPath(pa, block))) {
                 log.error("load: block \"{}\" failed to add path \"{}\" in block \"{}\"",
-                        sysName, pa.getName(), block.getSystemName());
+                        systemName, pa.getName(), block.getSystemName());
             }
         }
     }   // loadBlock
@@ -434,7 +427,7 @@ public class OBlockManagerXml // extends XmlFile
             String name = eSignal.getAttribute("signalName").getValue();
             float length = 0.0f;
             try {
-                Attribute attr = eSignal.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay"); // actually a Distance/Offset
                 if (attr != null) {
                     length = attr.getFloatValue();
                 }
@@ -448,7 +441,7 @@ public class OBlockManagerXml // extends XmlFile
             String name = eSignal.getAttribute("signalName").getValue();
             float length = 0.0f;
             try {
-                Attribute attr = eSignal.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay"); // actually a Distance/Offset
                 if (attr != null) {
                     length = attr.getFloatValue();
                 }

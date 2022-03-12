@@ -1,18 +1,19 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import jmri.SignalHead;
 
 /**
- * Implementation of a ReporterManager that can serves as a proxy for multiple
+ * Implementation of a ReporterManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
+public class ProxyReporterManager extends AbstractProvidingProxyManager<Reporter> implements ReporterManager {
 
     public ProxyReporterManager() {
         super();
@@ -34,48 +35,31 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      * @return Null if nothing by that name exists
      */
     @Override
-    public Reporter getReporter(String name) {
+    @CheckForNull
+    public Reporter getReporter(@Nonnull String name) {
         return super.getNamedBean(name);
     }
 
     @Override
-    protected Reporter makeBean(int i, String systemName, String userName) {
-        return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
+    @Nonnull
+    protected Reporter makeBean(Manager<Reporter> manager, String systemName, String userName) throws IllegalArgumentException {
+        return ((ReporterManager) manager).newReporter(systemName, userName);
     }
 
     @Override
-    public Reporter provideReporter(String sName) throws IllegalArgumentException {
+    @Nonnull
+    public Reporter provideReporter(@Nonnull String sName) throws IllegalArgumentException {
         return super.provideNamedBean(sName);
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
+    @Nonnull
     public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
-    /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Reporter object or null if none exists
-     */
     @Override
-    public Reporter getBySystemName(String sName) {
-        return super.getBeanBySystemName(sName);
-    }
-
-    /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Reporter object or null if none exists
-     */
-    @Override
-    public Reporter getByUserName(String userName) {
-        return super.getBeanByUserName(userName);
-    }
-
-    @Override
-    public Reporter getByDisplayName(String key) {
+    @CheckForNull
+    public Reporter getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Reporter retv = this.getByUserName(key);
@@ -87,7 +71,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Get an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Reporter object representing a given physical Reporter and
      * therefore only one with a specific system or user name.
@@ -100,8 +84,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      * provided
      * <li>If a null reference is given for the system name, a system name will
      * _somehow_ be inferred from the user name. How this is done is system
-     * specific. Note: a future extension of this interface will add an
-     * exception to signal that this was not possible.
+     * specific.
      * <li>If both names are provided, the system name defines the hardware
      * access of the desired Reporter, and the user address is associated with
      * it.
@@ -115,42 +98,31 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      * @return requested Reporter object (never null)
      */
     @Override
-    public Reporter newReporter(String systemName, String userName) {
+    @Nonnull
+    public Reporter newReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return newNamedBean(systemName, userName);
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((ReporterManager) getMgr(i)).allowMultipleAdditions(systemName);
-        }
-        return ((ReporterManager) getMgr(0)).allowMultipleAdditions(systemName);
-    }
-
-    @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
-        for (int i = 0; i < nMgrs(); i++) {
-            if (prefix.equals(
-                    ((ReporterManager) getMgr(i)).getSystemPrefix())) {
-                //System.out.println((TurnoutManager)getMgr(i))
-                return ((ReporterManager) getMgr(i)).getNextValidAddress(curAddress, prefix);
-            }
-        }
-        return null;
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+        return ((ReporterManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter"); // NOI18N
     }
 
     /**
@@ -160,4 +132,5 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     public Class<Reporter> getNamedBeanClass() {
         return Reporter.class;
     }
+
 }

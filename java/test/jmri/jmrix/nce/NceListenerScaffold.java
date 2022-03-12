@@ -1,7 +1,7 @@
 /**
  * Stands in for the NceTrafficController class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.nce;
 

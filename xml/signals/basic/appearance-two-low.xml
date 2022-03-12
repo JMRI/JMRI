@@ -4,6 +4,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year>
     <year>2010</year>
+    <year>2020</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -33,6 +34,12 @@
       <date>2016-05-05</date>
       <authorinitials>MST</authorinitials>
       <revremark>Add Held and Dark specific appearances</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.4</revnumber>
+      <date>2020-08-21</date>
+      <authorinitials>GPM</authorinitials>
+      <revremark>Fixed mappings to allow Diverging Approach or Diverging Clear on a diverging route when the next signal is displaying Diverging Clear or Diverging Approach.</revremark>
     </revision>
   </revhistory>
   <aspecttable>basic</aspecttable>
@@ -106,6 +113,7 @@
     <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
@@ -115,6 +123,7 @@
     <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
   </aspectMappings>
   <!-- End of Aspect Mapping -->

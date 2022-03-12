@@ -1,10 +1,8 @@
 package jmri.jmrit.sample.configurexml;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import jmri.InstanceManager;
 import jmri.jmrit.sample.SampleFunctionalClass;
 import org.jdom2.Element;
 

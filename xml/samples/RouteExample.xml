@@ -28,5 +28,5 @@
       <routeOutputTurnout systemName="IT1" state="THROWN" />
     </route>
   </routes>
-  <!--Written by JMRI version 4.3.3ish-201601220348-jake-R08885b2 on Thu Jan 21 19:49:47 PST 2016 $Id$-->
+  <!--Written by JMRI version 4.3.3ish-201601220348-jake-R08885b2 on Thu Jan 21 19:49:47 PST 2016 -->
 </layout-config>

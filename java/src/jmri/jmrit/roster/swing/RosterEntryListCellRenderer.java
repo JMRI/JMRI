@@ -21,9 +21,8 @@ public class RosterEntryListCellRenderer extends JLabel implements ListCellRende
         setOpaque(true);
     }
 
-    // FIXME: JList needs typed
     @Override
-    public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value,
+    public Component getListCellRendererComponent(JList<?> list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             if (value instanceof RosterEntry) {

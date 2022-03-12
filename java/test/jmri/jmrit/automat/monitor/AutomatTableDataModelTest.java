@@ -1,17 +1,15 @@
 package jmri.jmrit.automat.monitor;
 
-import java.util.ResourceBundle;
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AutomatTableDataModelTest {
 
@@ -28,17 +26,17 @@ public class AutomatTableDataModelTest {
         
         Assert.assertEquals(t.getColumnClass(AutomatTableDataModel.KILLCOL), String.class);
         Assert.assertEquals(t.isCellEditable(0, AutomatTableDataModel.KILLCOL), true);
-        Assert.assertEquals(t.getValueAt(0, AutomatTableDataModel.KILLCOL), 
-                ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle").getString("ButtonKill"));
+//        Must have an automation to read kill text DAB 8/4/2021
+//        Assert.assertEquals(t.getValueAt(0, AutomatTableDataModel.KILLCOL), 
+//                ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle").getString("ButtonKill"));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

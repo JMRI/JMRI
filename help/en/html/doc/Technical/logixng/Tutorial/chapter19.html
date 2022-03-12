@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 19</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 19</h1>
+
+<p style="color: red;">These examples are not implemented yet and doesn't exist in the source tree.</p>
+
+<h2>Some examples</h2>
+
+This chapter has some examples on what you can do with LogixNG. It's intended to give some ideas on what you can do.
+
+<p>
+<hr>
+<p>
+
+<h3>Save the panels when JMRI quits</h3>
+
+The actions <i>OnQuit</i> and <i>StorePanels</i> can be used to save the panel when JMRI quits. It may be useful if you
+are afraid of forgetting to save your work after you have made changes, or if you want to save the memories when JMRI
+quits.
+<p>
+It's highly recommended to keep a backup of the panels since this might go wrong if you are unlucky.
+<p>
+<pre>
+OnQuit
+? DenyQuit -
+! DoQuit - StorePanels
+</pre>
+
+<p>
+<hr>
+<p>
+
+<h3>Don't allow JMRI to quit if the bridge at the door is not open</h3>
+
+Lets assume you have a lift out bridge on your model railroad in front of the door where you exit the model railroad
+room. And that this lift out bridge has a sensor that tells JMRI whenether it's open or closed. And lets assume that
+you don't want to be able to quit JMRI unless this bridge is open (removed) to ensure you can leave the room.
+<p>
+The action <i>OnQuit</i> allows you to implement this. <i>OnQuit</i> has a child expression <i>DenyQuit</i> and if this
+expression returns True, <i>OnQuit</i> will block JMRI from quitting. We can also use this action to turn off power to
+the layout when JMRI quits.
+<p>
+<pre>
+OnQuit
+? DenyQuit - ExpressionSensor: Is IS2 active?
+! DoQuit - Power: Set power off
+</pre>
+
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -84,12 +84,12 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @Override
     public String toString() {
         String s = "";
-	if(xbm != null) {
-           byte packet[] = xbm.getPacketData();
-           for (int i = 0; i < packet.length; i++) {
-               s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
-           }
-	}
+        if (xbm != null) {
+            byte packet[] = xbm.getPacketData();
+            for (int i = 0; i < packet.length; i++) {
+                s = jmri.util.StringUtil.appendTwoHexFromInt(packet[i], s);
+            }
+        }
         return s;
     }
 
@@ -124,11 +124,11 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
     // a few canned messages
     public static XBeeMessage getHardwareVersionRequest() {
-        return new XBeeMessage(new ATCommandPacket(0,"HV",""));
+        return new XBeeMessage(new ATCommandPacket(0, "HV", ""));
     }
 
     public static XBeeMessage getFirmwareVersionRequest() {
-        return new XBeeMessage(new ATCommandPacket(0,"VR",""));
+        return new XBeeMessage(new ATCommandPacket(0, "VR", ""));
     }
 
     /*
@@ -173,9 +173,9 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getForceSampleMessage(Object address) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
-            return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,0,"IS",""));
+            return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID, XBee64BitAddress.COORDINATOR_ADDRESS, (XBee16BitAddress) address, 0, "IS", ""));
         } else {
-            return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,(XBee64BitAddress) address,XBee16BitAddress.UNKNOWN_ADDRESS,0, "IS",""));
+            return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID, (XBee64BitAddress) address, XBee16BitAddress.UNKNOWN_ADDRESS, 0, "IS", ""));
         }
     }
 

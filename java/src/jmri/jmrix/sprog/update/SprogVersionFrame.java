@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Display the firmware version of the attached SPROG hardware.
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVersionListener {
 
@@ -44,6 +44,16 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
                 Bundle.getMessage("SprogVersionTitle"), JOptionPane.INFORMATION_MESSAGE);
         setVisible(false);
         dispose();
+    }
+
+    /**
+     * Removes SprogVersionListener.
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        _memo.getSprogVersionQuery().removeSprogVersionListener(this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogVersionFrame.class);

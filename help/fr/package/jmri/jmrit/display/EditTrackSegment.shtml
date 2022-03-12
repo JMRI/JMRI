@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -109,7 +109,7 @@
       &ecirc;tre entr&eacute;e ou modifi&eacute;e. Les cantons sont
       discut&eacute;s plus en d&eacute;tail dans la page d'aide de
       Cr&eacute;er/Modifier Cantons. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

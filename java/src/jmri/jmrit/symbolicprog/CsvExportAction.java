@@ -4,15 +4,18 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to export the CV values to a Comma Separated Valiable (CSV) data file.
+ * Action to export the CV values to a Comma Separated Variable (CSV) data file.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
@@ -44,29 +47,35 @@ public class CsvExportAction extends AbstractAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (log.isDebugEnabled()) {
-                log.debug("start to export to CSV file " + file);
+                log.debug("start to export to CSV file {}", file);
             }
 
-            try {
-
-                PrintStream str = new PrintStream(new FileOutputStream(file));
-
-                str.println("CV, value");
+            try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+                str.printRecord("CV, value");
                 for (int i = 0; i < mModel.getRowCount(); i++) {
                     CvValue cv = mModel.getCvByRow(i);
-                    String num = cv.number();
-                    int value = cv.getValue();
-                    str.println(num + "," + value);
+                    if (isWritable(cv)) {
+                        String num = cv.number();
+                        int value = cv.getValue();
+                        str.printRecord(num, value);
+                    }
                 }
-
                 str.flush();
-                str.close();
-
             } catch (IOException ex) {
-                log.error("Error writing file: " + ex);
+                log.error("Error writing file", ex);
             }
         }
     }
+
+    /**
+     * Decide whether a given CV should be written out.
+     * @param cv CV to be checked
+     * @return true if CV should be included in output file.
+     */
+    protected boolean isWritable(CvValue cv) {
+        return true;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(CsvExportAction.class);
 }

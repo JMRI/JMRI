@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>19</minor>
+    <test>6</test>
+    <modifier />
+  </jmriversion>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory>
+      <systemName>IM:AUTO:0001</systemName>
+      <userName>SidingA</userName>
+    </memory>
+  </memories>
+</layout-config>

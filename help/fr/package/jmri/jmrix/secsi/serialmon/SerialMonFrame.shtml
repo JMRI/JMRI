@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -34,7 +34,7 @@
       vari&Atilde;&copy;s et les options voir la <a href=
       "../../AbstractMonFrame.shtml">page Fen&Atilde;&ordf;tre
       Moniteur de Communication</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

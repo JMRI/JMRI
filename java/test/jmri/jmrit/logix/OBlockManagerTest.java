@@ -3,10 +3,11 @@ package jmri.jmrit.logix;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the OBlockManager class.
@@ -23,7 +24,7 @@ public class OBlockManagerTest {
         // original create with systemname
         OBlock b1 = l.provide("OB101");
         Assert.assertNotNull(b1);
-        Assert.assertEquals("system name", "OB101", b1.getSystemName());
+        assertThat(b1.getSystemName()).withFailMessage("system name").isEqualTo("OB101");
     }
 
     @Test
@@ -44,7 +45,7 @@ public class OBlockManagerTest {
         } catch (IllegalArgumentException ex) {
             correct = true;
         }
-        Assert.assertTrue("Exception thrown properly", correct);     
+        assertThat(correct).withFailMessage("Exception thrown properly").isTrue();
     }
     
     @Test
@@ -62,19 +63,18 @@ public class OBlockManagerTest {
         OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
         OBlock bNorth = _OBlockMgr.createNewOBlock("OB3", "North");
         OBlock bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
-        Assert.assertEquals("OBlock", bWest, _OBlockMgr.getOBlock("West"));
-        Assert.assertEquals("OBlock", bEast, _OBlockMgr.getOBlock("OB2"));
-        Assert.assertEquals("OBlock", bNorth, _OBlockMgr.getOBlock("North"));
-        Assert.assertEquals("OBlock", bSouth, _OBlockMgr.getOBlock("OB4"));
+        assertThat(_OBlockMgr.getOBlock("West")).withFailMessage("OBlock").isEqualTo(bWest);
+        assertThat(_OBlockMgr.getOBlock("OB2")).withFailMessage("OBlock").isEqualTo(bEast);
+        assertThat(_OBlockMgr.getOBlock("North")).withFailMessage("OBlock").isEqualTo(bNorth);
+        assertThat(_OBlockMgr.getOBlock("OB4")).withFailMessage("OBlock").isEqualTo(bSouth);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();        l = new OBlockManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

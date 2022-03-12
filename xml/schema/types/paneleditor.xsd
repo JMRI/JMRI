@@ -22,7 +22,7 @@
     <xs:complexType name="PanelEditorType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a Panel Editor or Control Panel Editor panel.
+          Define the XML structure for storing the contents of a Panel Editor or Control Panel Editor panel.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.jmrit.display.panel.editor.configurexml.PanelEditorXml</jmri:usingclass>

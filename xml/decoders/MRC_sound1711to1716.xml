@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -133,7 +132,7 @@
         <label xml:lang="it">Velocità bassissima</label>
         <tooltip>&lt;html&gt;Ultra slow speed enable for speed step1 and 2&lt;br&gt;Not documented for this decoder, but could be supported&lt;/html&gt;</tooltip>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="0">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="0">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

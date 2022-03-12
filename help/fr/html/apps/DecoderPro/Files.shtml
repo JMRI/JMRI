@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -116,7 +116,7 @@ o&#249; sont-ils localis&#233;s?
 Plus d'information au sujet des Fichiers de Configuration JMRI <a href="../../setup/Files.shtml">Fichiers de Configuration 
 JMRI</a>
 
-		<!--#include virtual="/Footer" -->
+		<!--#include virtual="/Footer.shtml" -->
 		</div>
 	</div>
 </body>

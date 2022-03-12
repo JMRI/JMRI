@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;

@@ -5,7 +5,7 @@ import java.util.EventListener;
 /**
  * Provide an interface for listening to ZeroConfServices.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public interface ZeroConfServiceListener extends EventListener {
 

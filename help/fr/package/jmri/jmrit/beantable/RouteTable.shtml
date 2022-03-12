@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -162,7 +162,7 @@
       aiguillages devant &ecirc;tre verrouill&eacute;s S'il vous
       pla&icirc;t voir la <a href=
       "TurnoutTable.shtml#Turnout%20lock%20feature">Page Table
-      Aiguillage</a>.</p><!--#include virtual="/Footer" -->
+      Aiguillage</a>.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

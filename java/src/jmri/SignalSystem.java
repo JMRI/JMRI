@@ -3,7 +3,7 @@ package jmri;
 import java.util.Enumeration;
 
 /**
- * A SignalSystem defines a signaling system by representing the properties of
+ * A SignalSystem defines a signalling system by representing the properties of
  * various signal aspects it contains.
  * <p>
  * At present, the signal aspects are enumerated by Strings, not by specific
@@ -82,9 +82,12 @@ public interface SignalSystem extends NamedBean {
     
     /**
      * Provide a multi-line summary of the signal system content,
-     * typically for printing. Not intended for further parsing, 
+     * typically for printing.
+     * <p>
+     * Not intended for further parsing, 
      * i.e. for persistance, as format likely to differ from type 
      * to type, and to change often.
+     * @return summary string.
      */
     public String summary();
 

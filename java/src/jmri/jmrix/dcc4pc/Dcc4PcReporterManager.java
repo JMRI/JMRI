@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 
 /**
@@ -18,19 +19,29 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Dcc4PcSystemConnectionMemo getMemo() {
         return (Dcc4PcSystemConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Reporter r = new Dcc4PcReporter(systemName, userName);
         register(r);
         return r;
     }
+    
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: Custom validation for Dcc4PcReporterManager could be improved.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
+    }
+
 }

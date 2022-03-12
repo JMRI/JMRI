@@ -1,8 +1,13 @@
 package jmri.managers.configurexml;
 
+import java.awt.GraphicsEnvironment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+
+import javax.annotation.Nonnull;
+import javax.swing.JOptionPane;
 
 import jmri.Conditional;
 import jmri.ConditionalAction;
@@ -110,10 +115,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 // save action information
                 List<ConditionalAction> actionList = c.getCopyOfActions();
-                /*               	if (numCond>1190) {
-                 partTime = System.currentTimeMillis() - partTime;
-                 System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
-                 }*/
                 for (ConditionalAction action : actionList) {
                     Element aElem = new Element("conditionalAction");  // NOI18N
                     aElem.setAttribute("option", Integer.toString(action.getOption()));  // NOI18N
@@ -153,11 +154,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         conditionals.setAttribute("class", this.getClass().getName());  // NOI18N
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");  // NOI18N
-    }
-
     /**
      * Create a ConditionalManager object of the correct class, then register
      * and fill it.
@@ -167,7 +163,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return true if successful
      */
     @Override
-    public boolean load(Element sharedConditionals, Element perNodeConditionals) {
+    public boolean load(@Nonnull Element sharedConditionals, Element perNodeConditionals) {
         // create the master object
         replaceConditionalManager();
         // load individual logixs
@@ -187,11 +183,21 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         log.debug("Found {} conditionals", conditionalList.size());  // NOI18N
         ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
 
+        String systemNamePrefix = cm.getSystemNamePrefix();
+        int namesChanged = 0;
+
         for (Element condElem : conditionalList) {
             String sysName = getSystemName(condElem);
             if (sysName == null) {
                 log.warn("unexpected null in systemName {}", condElem);  // NOI18N
                 break;
+            }
+
+            if (!sysName.startsWith(systemNamePrefix)) {
+                String old = sysName;
+                sysName = systemNamePrefix + ":" + sysName;
+                log.warn("Converting Conditional system name from {} to {}", old, sysName);
+                namesChanged++;
             }
 
             // omitted username is treated as empty, not null
@@ -279,17 +285,15 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     variable.setOpern(operator);
                 }
                 if (cvar.getAttribute("negated") != null) {  // NOI18N
-                    if ("yes".equals(cvar
-                            .getAttribute("negated").getValue())) {  // NOI18N
-                        variable.setNegation(true);
-                    } else {
-                        variable.setNegation(false);
-                    }
+                    // NOI18N
+                    variable.setNegation("yes".equals(cvar.getAttribute("negated").getValue()));
                 }
                 variable.setType(Conditional.Type.getOperatorFromIntValue(
                         Integer.parseInt(cvar.getAttribute("type").getValue())));  // NOI18N
-                variable.setName(cvar
-                        .getAttribute("systemName").getValue());  // NOI18N
+
+                String tempName = cvar.getAttribute("systemName").getValue();  // NOI18N
+                variable.setName(tempName.equals("RTXINITIALIZER") ? systemNamePrefix + ":" + tempName : tempName);  // NOI18N
+
                 if (cvar.getAttribute("dataString") != null) {  // NOI18N
                     variable.setDataString(cvar
                             .getAttribute("dataString").getValue());  // NOI18N
@@ -323,7 +327,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             //    log.warn("No actions found for conditional {}", sysName);
             //}
             List<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
-            org.jdom2.Attribute attr = null;
+            org.jdom2.Attribute attr;
             for (Element cact : conditionalActionList) {
                 ConditionalAction action = new DefaultConditionalAction();
                 attr = cact.getAttribute("option");  // NOI18N
@@ -395,6 +399,19 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 triggerOnChange = true;
             }
             c.setTriggerOnChange(triggerOnChange);
+        }
+
+        if (namesChanged > 0) {
+            // TODO: replace the System property check with an in-application mechanism
+            // for notifying users of multiple changes that can be silenced as part of
+            // normal operations
+            if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage(namesChanged > 1 ? "ConditionalManager.SystemNamesChanged.Message" : "ConditionalManager.SystemNameChanged.Message", namesChanged),
+                        Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, cm.getBeanTypeHandled(namesChanged > 1)),
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            log.warn("System names for {} Conditionals changed; this may have operational impacts.", namesChanged);
         }
     }
 

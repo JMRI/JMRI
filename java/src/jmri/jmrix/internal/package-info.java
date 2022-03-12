@@ -31,4 +31,6 @@
  * @see jmri.managers
  * @see jmri.implementation
  */
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrix.internal;

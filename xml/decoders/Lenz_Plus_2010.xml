@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -197,7 +196,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       </variables>
     	
       <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_148.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_149.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33">

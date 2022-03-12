@@ -3,12 +3,14 @@ package jmri.jmrix.roco.z21;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21SensorManager class for RMBus sensors.
  *
- * @author	Paul Bender Copyright (c) 2018,2019
+ * @author Paul Bender Copyright (c) 2018,2019
  */
 public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -48,7 +50,7 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
-    @Ignore("tests creation in response to feedback; not currently implemented")
+    @Disabled("tests creation in response to feedback; not currently implemented")
     public void testZ21RMBusMessages() {
         // send messages for feedbak encoder 22
         // notify the Z21 that somebody else changed it...
@@ -89,7 +91,7 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -101,7 +103,7 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         l = new Z21SensorManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         memo.getTrafficController().terminateThreads();

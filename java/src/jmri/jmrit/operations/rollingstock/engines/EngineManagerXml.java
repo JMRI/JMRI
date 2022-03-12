@@ -1,6 +1,13 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.File;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -8,11 +15,6 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.setup.Setup;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores engines using xml files. Also loads and stores engine
@@ -23,18 +25,6 @@ import org.slf4j.LoggerFactory;
 public class EngineManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public EngineManagerXml() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized EngineManagerXml instance() {
-        return InstanceManager.getDefault(EngineManagerXml.class);
     }
 
     @Override
@@ -59,6 +49,7 @@ public class EngineManagerXml extends OperationsXml implements InstanceManagerAu
         InstanceManager.getDefault(EngineModels.class).store(root);
         InstanceManager.getDefault(EngineTypes.class).store(root);
         InstanceManager.getDefault(EngineLengths.class).store(root);
+        InstanceManager.getDefault(ConsistManager.class).store(root);
         InstanceManager.getDefault(EngineManager.class).store(root);
 
         writeXML(file, doc);
@@ -88,6 +79,7 @@ public class EngineManagerXml extends OperationsXml implements InstanceManagerAu
         InstanceManager.getDefault(EngineModels.class).load(root);
         InstanceManager.getDefault(EngineTypes.class).load(root);
         InstanceManager.getDefault(EngineLengths.class).load(root);
+        InstanceManager.getDefault(ConsistManager.class).load(root);
         InstanceManager.getDefault(EngineManager.class).load(root);
 
         log.debug("Engines have been loaded!");

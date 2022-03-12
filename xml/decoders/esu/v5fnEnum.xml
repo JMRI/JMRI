@@ -33,6 +33,7 @@
     <enumChoice choice="F26"/>
     <enumChoice choice="F27"/>
     <enumChoice choice="F28"/>
+    <enumChoice choice="F29"/>
     <enumChoice choice="F30"/>
     <enumChoice choice="F31"/>
 </enumVal>

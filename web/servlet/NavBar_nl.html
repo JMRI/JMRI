@@ -17,7 +17,8 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
             <ul class="nav navbar-nav">
                 <!-- <li class="context-home"><a href="/">Home</a></li> -->
                 <li class="dropdown context-panel">
-                    <a href="/panel" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + space -->Panelen <b class="caret"></b></a>
+                    <a href="/panel" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + space -->Panelen <b
+                            class="caret"></b></a>
                     <ul id="navbar-panels" class="dropdown-menu">
                         <li id="navbar-panel-thumbnails"><a href="/panel"><!-- I18N -->Toon Panelen</a></li>
                         <li class="divider"></li>
@@ -36,7 +37,7 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                 <li class="dropdown context-operations">
                     <a href="/operations" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + 1 space -->Operations <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/operations/trains"><!-- I18N -->Treinen</a></a></li>
+                        <li><a href="/operations/trains"><!-- I18N -->Treinen</a></li>
                         <li id="navbar-operations-train-divider" class="divider context-operations-only"></li>
                         <li id="navbar-operations-train" class="dropdown-header context-operations-only"></li>
                         <li id="navbar-operations-manifest" class="context-operations-only"><a href="#"><!-- I18N -->Vrachtbrief</a></li>
@@ -44,22 +45,24 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                     </ul>
                 </li>
                 <li class="dropdown context-tables">
-                    <a href="/tables" class="dropdown-toggle" data-toggle="dropdown">Tables <b class="caret"></b></a>
+                    <a href="/tables" class="dropdown-toggle" data-toggle="dropdown">Tabellen <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/tables/turnout">Turnouts</a></li>
-                        <li><a href="/tables/sensor">Sensors</a></li>
-                        <li><a href="/tables/route">Routes</a></li>
+                        <li><a href="/tables/turnout">Wissels</a></li>
+                        <li><a href="/tables/sensor">Terugmelders</a></li>
+                        <li><a href="/tables/route">Wisselstraten</a></li>
                         <li><a href="/tables/reporter">Reporters</a></li>                       
-                        <li><a href="/tables/memory">Memories</a></li>
-                        <li><a href="/tables/block">Blocks</a></li>
-                        <li><a href="/tables/layoutBlock">Layout Blocks</a></li>
-                        <li><a href="/tables/light">Lights</a></li>
-                        <li><a href="/tables/signalMast">Signal Masts</a></li>
-                        <li><a href="/tables/signalHead">Signal Heads</a></li>
-                        <li><a href="/tables/location">Locations</a></li>
-                        <li><a href="/tables/car">Cars</a></li>
-                        <li><a href="/tables/engine">Engines</a></li>
-                        <li><a href="/tables/idTag">ID Tags</a></li>
+                        <li><a href="/tables/memory">Geheugens</a></li>
+                        <li><a href="/tables/block">Blokken</a></li>
+                        <li><a href="/tables/layoutBlock">Bezetmeldblokken</a></li>
+                        <li><a href="/tables/light">Lampen</a></li>
+                        <li><a href="/tables/signalMast">Seinmasten</a></li>
+                        <li><a href="/tables/signalHead">Seinschilden</a></li>
+                        <li><a href="/tables/location">Locaties</a></li>
+                        <li><a href="/tables/car">Wagens</a></li>
+                        <li><a href="/tables/engine">Locs</a></li>
+                        <li><a href="/tables/idTag">ID-tagss</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/tables/type">Alle typen</a></li>                        
                     </ul>
                 </li>               
             </ul>
@@ -86,12 +89,13 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                 <li class="dropdown">
                     <a href="" class="dropdown-toggle navbar-right" data-toggle="dropdown"><!-- I18N + 1 space -->Help <b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        <li><a href="/help/en/html/web/index.shtml">Help op het web</a></li>
                         <li><a href="/help/en/index.shtml"><!-- I18N -->Introductie</a></li>
                         <li><a href="/help/en/webtoc.shtml"><!-- I18N -->Inhoudsopgave</a></li>
                         <li><a href="/help/en/webindex.shtml"><!-- I18N -->Register</a></li>
-                        <li><a href="/tables/networkService">Network Services</a></li>
-                        <li><a href="/tables/configProfile">Config Profiles</a></li>
-                        <li><a href="/tables/systemConnection">System Connections</a></li>
+                        <li><a href="/tables/networkService">Netwerkdiensten</a></li>
+                        <li><a href="/tables/configProfile">Configuratieprofielen</a></li>
+                        <li><a href="/tables/systemConnection">Systeemverbindingen</a></li>
                     </ul>
                 </li>
 

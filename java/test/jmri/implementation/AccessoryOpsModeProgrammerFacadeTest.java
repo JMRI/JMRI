@@ -3,20 +3,23 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Test the AccessoryOpsModeProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2014
- * @author	Dave Heap 2017
+ * @author Bob Jacobsen Copyright 2014
+ * @author Dave Heap 2017
  *
  */
 // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
@@ -86,7 +89,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }
@@ -143,8 +146,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         replied = false;
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -152,7 +154,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         mockCS.lastPacket = null;
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

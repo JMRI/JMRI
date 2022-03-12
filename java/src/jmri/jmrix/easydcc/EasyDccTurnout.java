@@ -23,10 +23,13 @@ public class EasyDccTurnout extends AbstractTurnout {
     protected String _prefix = "E"; // default to "E"
 
     /**
-     * Create a turnout. EasyDCC turnouts use the NMRA number (0-511) as their
-     * numerical identification.
+     * Create a turnout.
+     * <p>
+     * EasyDCC turnouts use the NMRA number (0-511) as their numerical identification.
      *
+     * @param prefix system connection prefix
      * @param number the NMRA turnout number from 0 to 511
+     * @param memo system connection
      */
     public EasyDccTurnout(String prefix, int number, EasyDccSystemConnectionMemo memo) {
         super(prefix + "T" + number);
@@ -46,15 +49,17 @@ public class EasyDccTurnout extends AbstractTurnout {
         return true;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
             } else {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
@@ -67,20 +72,15 @@ public class EasyDccTurnout extends AbstractTurnout {
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to {}",
-                    (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + _prefix + "T" +  _number);
-        }
+        log.debug("Send command to {} Pushbutton {}T{}",
+                (_pushButtonLockout ? "Lock" : "Unlock"), _prefix,  _number);
     }
 
     protected void sendMessage(boolean closed) {
         // get the packet
         byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
         if (log.isDebugEnabled()) {
-            log.debug("packet: "
-                    + Integer.toHexString(0xFF & bl[0])
-                    + " " + Integer.toHexString(0xFF & bl[1])
-                    + " " + Integer.toHexString(0xFF & bl[2]));
+            log.debug("packet: {} {} {}", Integer.toHexString(0xFF & bl[0]), Integer.toHexString(0xFF & bl[1]), Integer.toHexString(0xFF & bl[2]));
         }
 
         EasyDccMessage m = new EasyDccMessage(13);

@@ -2,15 +2,11 @@ package jmri.server.json.throttle;
 
 import java.io.DataOutputStream;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.server.json.JsonMockConnection;
-import jmri.util.JUnitAppender;
 
 /**
  *
@@ -18,13 +14,6 @@ import jmri.util.JUnitAppender;
  * @author Randall Wood Copyright (C) 2019
  */
 public class JsonThrottleManagerTest {
-
-    @Test
-    public void testGetDefault() {
-        Assert.assertEquals("Default instance", InstanceManager.getDefault(JsonThrottleManager.class),
-                JsonThrottleManager.getDefault());
-        JUnitAppender.assertWarnMessage("getDefault is deprecated, please remove references to it");
-    }
 
     /**
      * Testing
@@ -42,12 +31,12 @@ public class JsonThrottleManagerTest {
         Assert.assertEquals(service, manager.getServers(throttle).get(0));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -3,8 +3,6 @@ package jmri.jmrix.sprog.sprognano.configurexml;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.sprog.sprognano.ConnectionConfig;
 import jmri.jmrix.sprog.sprognano.SprogNanoSerialDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the

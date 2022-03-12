@@ -4,7 +4,6 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
     <choice xml:lang="cs">Přidat hodnotu k základní míře zrychlení (zvyšuje zpoždění zrychlení)</choice>
-    <choice xml:lang="cs">Přidat hodnotu k základní míře zrychlení (zvyšuje zpoždění zrychlení)</choice>
 	<choice xml:lang="da">Tilføj værdi til basis accelerationshastigheden (øger accelerationsforsinkelsen)></choice>
     <choice xml:lang="de">Addiere Wert zur Basis-Beschleunigung</choice>
     <choice xml:lang="fr">Ajouter la valeur au taux d'accélération de base (accroît le retard d'accélération)</choice>

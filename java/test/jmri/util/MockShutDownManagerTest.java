@@ -3,13 +3,11 @@ package jmri.util;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
+import jmri.implementation.AbstractShutDownTask;
 
 /**
  *
@@ -27,17 +25,19 @@ public class MockShutDownManagerTest {
     @Test
     public void testRegister() {
         MockShutDownManager dsdm = new MockShutDownManager();
-        Assert.assertEquals(0, dsdm.tasks().size());
-        ShutDownTask task = new QuietShutDownTask("task") {
+        Assert.assertEquals(0, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
+        ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
-            public boolean execute() {
-                return true;
+            public void run() {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.tasks().size());
+        Assert.assertEquals(1, dsdm.getCallables().size());
+        Assert.assertEquals(1, dsdm.getRunnables().size());
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.tasks().size());
+        Assert.assertEquals(1, dsdm.getCallables().size());
+        Assert.assertEquals(1, dsdm.getRunnables().size());
         try {
             dsdm.register(null);
             Assert.fail("Expected NullPointerException not thrown");
@@ -49,18 +49,20 @@ public class MockShutDownManagerTest {
     @Test
     public void testDeregister() {
         MockShutDownManager dsdm = new MockShutDownManager();
-        Assert.assertEquals(0, dsdm.tasks().size());
-        ShutDownTask task = new QuietShutDownTask("task") {
+        Assert.assertEquals(0, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
+        ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
-            public boolean execute() {
-                return true;
+            public void run() {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.tasks().size());
-        Assert.assertTrue(dsdm.tasks().contains(task));
+        Assert.assertEquals(1, dsdm.getCallables().size());
+        Assert.assertEquals(1, dsdm.getRunnables().size());
+        Assert.assertTrue(dsdm.getRunnables().contains(task));
         dsdm.deregister(task);
-        Assert.assertEquals(0, dsdm.tasks().size());
+        Assert.assertEquals(0, dsdm.getCallables().size());
+        Assert.assertEquals(0, dsdm.getRunnables().size());
     }
 
     /**
@@ -85,13 +87,12 @@ public class MockShutDownManagerTest {
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

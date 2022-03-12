@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: OperationsPro, an application for creating train manifests for operating
+  sessions</title>
+  <meta name="keywords" content="operations, Operations, OperationsPro">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: OperationsPro™</h1>
+
+      <p>JMRI OperationsPro™ is a primary tool within <a href="../PanelPro">PanelPro</a> that
+      allows you to generate train Manifests and switch lists that describe the detail work a crew
+      will perform during an operations session. JMRI provides extensive documentation on using
+      JMRI to support operating sessions. There are also numerous blogs and videos on the internet
+      about model train operating sessions.</p>
+
+      <ul>
+        <li>
+          <a href="../../../package/jmri/jmrit/operations/Operations.shtml">General information</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/operations/Operations.shtml#QuickStartHelp">Quick
+          Start Guide</a>
+        </li>
+
+        <li>
+          <a href="https://www.jmri.org/manual/howtooperations/">"How To's"</a>(step-by-step
+          instructions for common tasks)
+        </li>
+
+        <li>
+          <a href=
+          "../../../package/jmri/jmrit/operations/Operations.shtml#TroubleShooting">Troubleshooting</a>
+        </li>
+
+        <li>
+          <a href=
+          "../../../package/jmri/jmrit/operations/Operations.shtml#PrintingManifests">Printing
+          manifests</a>
+        </li>
+
+        <li>
+          <a href="../../web/Operations.shtml">Viewing from mobile devices</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/operations/Operations.shtml">Detailed
+          information</a> (see the Table of Contents for this page)
+        </li>
+      </ul>
+
+      <p>OperationsPro functions can be accessed from the main PanelPro menu by clicking on
+      <strong>Tools ⇒ OperationsPro</strong>.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

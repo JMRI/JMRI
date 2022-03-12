@@ -6,10 +6,13 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Load VSDecoder Profiles from XML.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -71,10 +74,7 @@ public class LoadVSDFileAction extends AbstractAction {
             log.debug("Using path: {}", start_dir);
 
             fileChooser = new JFileChooser(start_dir);
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"));
-            filt.addExtension("vsd");
-            filt.addExtension("zip");
-            fileChooser.setFileFilter(filt);
+            fileChooser.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
             fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
             fileChooser.setCurrentDirectory(new File(start_dir));
         }
@@ -99,7 +99,7 @@ public class LoadVSDFileAction extends AbstractAction {
         // Check whether the file exists
         File file = new File(fp);
         if (!file.exists()) {
-            log.error("Cannot locate VSD File");
+            log.error("Cannot locate VSD File {}", fp);
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(null, "Cannot locate VSD File",
                         Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
@@ -127,10 +127,10 @@ public class LoadVSDFileAction extends AbstractAction {
             return vsdfile.isInitialized();
 
         } catch (java.util.zip.ZipException ze) {
-            log.error("ZipException opening file " + fp, ze);
+            log.error("ZipException opening file {}", fp, ze);
             return false;
         } catch (java.io.IOException ze) {
-            log.error("IOException opening file " + fp, ze);
+            log.error("IOException opening file {}", fp, ze);
             return false;
         }
 

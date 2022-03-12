@@ -1,21 +1,14 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_128;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_128A;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_14;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_28A;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_28TRI;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_MASK;
-
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Michael Richardson Copyright (C) 2021
  */
 public class LnConstantsTest {
 
@@ -52,6 +45,7 @@ public class LnConstantsTest {
         Assert.assertEquals("check 0xd0", 0xd0, LnConstants.OPC_MULTI_SENSE);
         Assert.assertEquals("check 0xd7", 0xd7, LnConstants.OPC_PANEL_RESPONSE);
         Assert.assertEquals("check 0xdf", 0xdf, LnConstants.OPC_PANEL_QUERY);
+        Assert.assertEquals("check 0xe0", 0xe0, LnConstants.OPC_MULTI_SENSE_LONG);
         Assert.assertEquals("check 0xe4", 0xe4, LnConstants.OPC_LISSY_UPDATE);
         Assert.assertEquals("check 0xe5", 0xe5, LnConstants.OPC_PEER_XFER);
         Assert.assertEquals("check 0xe6", 0xe6, LnConstants.OPC_ALM_READ);
@@ -89,6 +83,7 @@ public class LnConstantsTest {
         Assert.assertEquals("check OPC_NAME(0xd0)", "OPC_MULTI_SENSE", LnConstants.OPC_NAME(0xd0));
         Assert.assertEquals("check OPC_NAME(0xd7)", "OPC_PANEL_RESPONSE", LnConstants.OPC_NAME(0xd7));
         Assert.assertEquals("check OPC_NAME(0xdf)", "OPC_PANEL_QUERY", LnConstants.OPC_NAME(0xdf));
+        Assert.assertEquals("check OPC_NAME(0xe0)", "OPC_MULTI_SENSE_LONG", LnConstants.OPC_NAME(0xe0));
         Assert.assertEquals("check OPC_NAME(0xe4)", "OPC_LISSY_UPDATE", LnConstants.OPC_NAME(0xe4));
         Assert.assertEquals("check OPC_NAME(0xe5)", "OPC_PEER_XFER", LnConstants.OPC_NAME(0xe5));
         Assert.assertEquals("check OPC_NAME(0xe6)", "OPC_ALM_READ", LnConstants.OPC_NAME(0xe6));
@@ -136,12 +131,12 @@ public class LnConstantsTest {
         Assert.assertEquals("check consist stat (0x10)", "Common", LnConstants.LOCO_STAT(0x10));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

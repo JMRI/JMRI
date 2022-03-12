@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,16 +23,22 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Added Stop and Proceed and Stop and Proceed Medium to possible appearances.  Changed the permissive specific appearance to Stop and Proceed.</revremark>
+    </revision>
    </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
   <name>Color Position Light High Signal</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
   <description>Appearances for B&amp;O color position light mast signals.</description>
-  
+
   <appearances>
-  
+
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
@@ -41,7 +47,7 @@
       <reference>Page 128</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-281.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Approach Limited</aspectname>
       <show>yellow</show>
@@ -51,7 +57,7 @@
       <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-282.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Limited Clear</aspectname>
       <show>dark</show>
@@ -61,7 +67,7 @@
       <comment>Signal is identical to Medium Clear except for the addition of a triangle flag on signal mast</comment>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
@@ -70,7 +76,7 @@
       <reference>Page 129</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-282A.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Medium Clear</aspectname>
       <show>dark</show>
@@ -79,7 +85,7 @@
       <reference>Page 130</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283A.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Medium Approach Medium</aspectname>
       <show>dark</show>
@@ -88,7 +94,7 @@
       <reference>Page 131</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283B.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Medium Approach Slow</aspectname>
       <show>dark</show>
@@ -97,7 +103,7 @@
       <reference>Page 131</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283C.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Approach Slow</aspectname>
       <show>red</show>
@@ -106,7 +112,7 @@
       <reference>Page 132</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-284.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Approach</aspectname>
       <show>green</show>
@@ -115,7 +121,7 @@
       <reference>Page 133</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-285.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Medium Approach</aspectname>
       <show>dark</show>
@@ -124,7 +130,7 @@
       <reference>Page 134</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-286.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Slow Approach Slow</aspectname>
       <show>dark</show>
@@ -133,7 +139,7 @@
       <reference>Page 135</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-287.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Slow Approach</aspectname>
       <show>dark</show>
@@ -142,7 +148,7 @@
       <reference>Page 136</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-288.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>dark</show>
@@ -151,8 +157,26 @@
       <reference>Page 137</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-290.gif</imagelink>
     </appearance>
-	
+
     <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 140</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-291.gif</imagelink>
+    </appearance>
+
+	<appearance>
+      <aspectname>Stop and Proceed Medium</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 140</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-291-medium.gif</imagelink>
+    </appearance>
+
+	<appearance>
       <aspectname>Stop</aspectname>
       <show>dark</show>
       <show>red</show>
@@ -160,39 +184,39 @@
       <reference>Page 140</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-292.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
-	  <aspectname>unlit</aspectname>
+	  <aspectname>Unlit</aspectname>
 	  <show>dark</show>
 	  <show>dark</show>
 	  <show>dark</show>
 	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/unlit.gif</imagelink>
 	</appearance>
-	
+
   </appearances>
-  
+
   <specificappearances>
-  
+
     <danger>
       <aspect>Stop</aspect>
     </danger>
-	
+
     <permissive>
-      <aspect>Restricting</aspect>
+      <aspect>Stop and Proceed</aspect>
     </permissive>
-	
+
     <held>
       <aspect>Stop</aspect>
     </held>
-	
+
 	<dark>
-	  <aspect>unlit</aspect>
+	  <aspect>Unlit</aspect>
 	</dark>
-	
+
   </specificappearances>
-  
+
   <aspectMappings>
-  
+
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -201,7 +225,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -210,7 +234,7 @@
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -219,7 +243,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
@@ -228,7 +252,7 @@
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
@@ -236,7 +260,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
@@ -244,7 +268,7 @@
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
@@ -253,7 +277,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -262,7 +286,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -271,7 +295,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
@@ -279,7 +303,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Slow Approach Slow</advancedAspect>
       <ourAspect>Approach Slow</ourAspect>
@@ -287,7 +311,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Approach Slow</ourAspect>
@@ -295,7 +319,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -303,7 +327,7 @@
       <ourAspect>Slow Approach</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -311,7 +335,7 @@
       <ourAspect>Slow Approach</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -319,7 +343,7 @@
       <ourAspect>Slow Approach</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -327,7 +351,7 @@
       <ourAspect>Slow Approach</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
   </aspectMappings>
-  
+
 </appearancetable>

@@ -1,14 +1,13 @@
 package jmri.jmrix.oaktree;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialLightManagerTest {
 
@@ -28,8 +27,7 @@ public class SerialLightManagerTest {
         Assert.assertNotNull("Oaktree Light Manager creation with memo", lm);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
@@ -38,7 +36,7 @@ public class SerialLightManagerTest {
         t.registerNode(new SerialNode(0, SerialNode.IO48, memo));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

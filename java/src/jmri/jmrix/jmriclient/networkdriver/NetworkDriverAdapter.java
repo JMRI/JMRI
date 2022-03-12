@@ -44,12 +44,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
     // private control members
     private boolean opened = false;
 
-    @Deprecated
-    static public NetworkDriverAdapter instance() {
-        log.error("Deprecated method instance Called", new Exception());
-        return null;
-    }
-
     private boolean mDNSConfigure = false;
 
     /*
@@ -59,8 +53,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
      */
     @Override
     public void setMdnsConfigure(boolean autoconfig) {
-        log.debug("Setting LIUSB Ethernet adapter autoconfiguration to: "
-                + autoconfig);
+        log.debug("Setting LIUSB Ethernet adapter autoconfiguration to: {}", autoconfig);
         mDNSConfigure = autoconfig;
     }
 
@@ -85,7 +78,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
             setHostName(""); // reset the hostname to none.
         }
         String serviceType = rb.getString("defaultMDNSServiceType");
-        log.debug("Listening for service: " + serviceType);
+        log.debug("Listening for service: {}", serviceType);
 
         if (mdnsClient == null) {
             mdnsClient = new ZeroConfClient();

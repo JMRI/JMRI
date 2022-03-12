@@ -2,32 +2,22 @@ package jmri.jmrit;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
-import org.jdom2.Document;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Make sure an XML file is readable, and validates OK against its schema and DTD.
  * <p>
- * Can also be run from the command line with e.g. ./runtest.csh
- * jmri/jmrit/XmlFileValidateAction foo.xml in which case if there's a filename
- * argument, it checks that directly, otherwise it pops a file selection dialog.
- * (The dialog form has to be manually canceled when done)
+ * Can also be run from the command line as apps.jmrit.XmlFileValidationAction
+ * (e.g. ./runtest.csh apps/jmrit/XmlFileValidateAction foo.xml) in which case
+ * if there's a filename argument, it checks that directly, otherwise it pops a
+ * file selection dialog. (The dialog form has to be manually canceled when
+ * done)
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2007
  * @see jmri.jmrit.XmlFile
@@ -111,27 +101,6 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
-    }
-
-    // Main entry point fires the action
-    static public void main(String[] args) {
-        // if a 1st argument provided, act
-        if (args.length == 0) {
-            new XmlFileValidateAction("", (Component) null).actionPerformed(null);
-        } else {
-            jmri.util.Log4JUtil.initLogging("default.lcf");
-            new XmlFileValidateAction("", (Component) null) {
-                @Override
-                protected void showFailResults(Component who, String fileName, String text) {
-                    log.error("{}: {}", Bundle.getMessage("ValidationErrorInFile", fileName), text);
-                }
-
-                @Override
-                protected void showOkResults(Component who, String text) {
-                    // silent if OK
-                }
-            }.processFile(new File(args[0]));
-        }
     }
 
     // initialize logging

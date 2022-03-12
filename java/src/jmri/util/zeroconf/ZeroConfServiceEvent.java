@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class ZeroConfServiceEvent extends EventObject {
 

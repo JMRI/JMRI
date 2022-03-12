@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * provide access to a new or existing single-pane window, or a more complex multi-pane
  * window as seen in the DecoderPro interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class JmriNamedPaneAction extends JmriAbstractAction {
 
@@ -68,7 +68,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
      * or menu item selected, this runs the panel through the initial part of
      * its life cycle and installs in the given window interface.
      * <p>
-     * It different or additional initialization is needed, inherit from this class and
+     * If different or additional initialization is needed, inherit from this class and
      * override this method to do it.
      */
     @Override

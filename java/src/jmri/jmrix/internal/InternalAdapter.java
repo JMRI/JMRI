@@ -3,7 +3,6 @@ package jmri.jmrix.internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 
 /**
  * Provides a dummy Adapter to allow the system connection memo and multiple

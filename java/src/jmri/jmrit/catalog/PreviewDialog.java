@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -279,8 +280,15 @@ public class PreviewDialog extends JDialog {
         c.gridx = 0;
         _cnt = 0;       // number of images displayed in this panel
         int cnt = 0;    // total number of images in directory
-        if (_currentDir.listFiles() != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
-            File[] files = _currentDir.listFiles(); // all files, filtered below
+        File[] files = _currentDir.listFiles(); // all files, filtered below
+
+        if (files != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
+
+            // sort list of files alphabetically
+            ArrayList<File> aList = new ArrayList<>(java.util.Arrays.asList(files));
+            java.util.Collections.sort(aList);
+            files = aList.toArray(files);
+
             int nCols = 1;
             int nRows = 1;
             int nAvail = 1;
@@ -288,7 +296,7 @@ public class PreviewDialog extends JDialog {
             long memoryAvailable = availableMemory();
             long memoryUsed = 0;        // estimate
             for (int i = 0; i < files.length; i++) {
-                String ext = jmri.util.FileChooserFilter.getFileExtension(files[i]);
+                String ext = FilenameUtils.getExtension(files[i].getName());
                 for (int k = 0; k < _filter.length; k++) {
                     if (ext != null && ext.equalsIgnoreCase(_filter[k])) {
                         // files[i] filtered to be an image file
@@ -396,22 +404,7 @@ public class PreviewDialog extends JDialog {
     static int CHUNK = 500000;
 
     private long availableMemory() {
-        long total = 0;
-        ArrayList<byte[]> memoryTest = new ArrayList<byte[]>();
-        try {
-            while (true) {
-                memoryTest.add(new byte[CHUNK]);
-                total += CHUNK;
-            }
-        } catch (OutOfMemoryError me) {
-            for (int i = 0; i < memoryTest.size(); i++) {
-                memoryTest.remove(i);
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("availableMemory= {}", total);
-            }
-        }
-        return total;
+        return Runtime.getRuntime().freeMemory()/2;
     }
 
     @Override

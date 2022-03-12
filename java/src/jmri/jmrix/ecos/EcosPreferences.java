@@ -1,8 +1,6 @@
 package jmri.jmrix.ecos;
 
 import jmri.InstanceManager;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.ecos.swing.preferences.PreferencesPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,23 +14,13 @@ import org.slf4j.LoggerFactory;
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
 
     public EcosPreferences(EcosSystemConnectionMemo memo) {
-        if (log.isDebugEnabled()) {
-            log.debug("creating a new EcosPreferences object");
-        }
+        log.debug("creating a new EcosPreferences object");
 
-        ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
-            @Override
-            public boolean execute() {
-                if (getChangeMade()) {
-                    InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
-                }
-                return true;
-            }
-        };
+        ecosPreferencesShutDownTask = () -> InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
         InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
 
         adaptermemo = memo;
-        InstanceManager.store(new PreferencesPane(this),jmri.swing.PreferencesPanel.class);
+        InstanceManager.store(new PreferencesPane(this), jmri.swing.PreferencesPanel.class);
     }
 
     private final EcosSystemConnectionMemo adaptermemo;
@@ -48,7 +36,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         firePropertyChange("loaded", null, null);
     }
 
-    ShutDownTask ecosPreferencesShutDownTask = null;
+    Runnable ecosPreferencesShutDownTask = null;
 
     public static final int ASK = 0x00; // ie always ask the question
     public static final int NO = 0x01; //ie never do the operation
@@ -133,10 +121,11 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Determine system description from GUI string for how to solve
-     * conflicts between rosters in JMRI and ECoS and store in _locomaster.
+     * Determine system description from GUI string for how to solve conflicts
+     * between rosters in JMRI and ECoS and store in _locomaster.
      * <p>
-     * Keep identical to {@link jmri.jmrix.ecos.swing.preferences.PreferencesPane}#initializeMasterControlCombo(javax.swing.JComboBox)
+     * Keep identical to
+     * {@link jmri.jmrix.ecos.swing.preferences.PreferencesPane}#initializeMasterControlCombo(javax.swing.JComboBox)
      *
      * @param master setting for conflict syncing
      */
@@ -156,10 +145,11 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Determine GUI string from system description for how to solve
-     * conflicts between rosters in JMRI and ECoS.
+     * Determine GUI string from system description for how to solve conflicts
+     * between rosters in JMRI and ECoS.
      * <p>
-     * Keep identical to {@link jmri.jmrix.ecos.swing.preferences.PreferencesPane}#initializeMasterControlCombo(javax.swing.JComboBox)
+     * Keep identical to
+     * {@link jmri.jmrix.ecos.swing.preferences.PreferencesPane}#initializeMasterControlCombo(javax.swing.JComboBox)
      *
      * @return GUI string
      */
@@ -366,7 +356,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
          prefix has been set, therefore we can just return ""*/
         try {
             return _rosterAttribute.substring(11);
-        } catch (java.lang.StringIndexOutOfBoundsException e) {
+        } catch (java.lang.StringIndexOutOfBoundsException ignore) {
         }
         return null;
     }

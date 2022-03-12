@@ -1,5 +1,6 @@
 package jmri.jmrix.pi;
 
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 
 /**
@@ -21,18 +22,17 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public RaspberryPiSystemConnectionMemo getMemo() {
         return (RaspberryPiSystemConnectionMemo) memo;
     }
 
-    // to free resources when no longer used
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return new RaspberryPiSensor(systemName, userName);
     }
 
@@ -48,6 +48,17 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
     @Override
     public boolean isPullResistanceConfigurable(){
        return true;
+    }
+    
+    /**
+     * Validates to Integer Format 0-999 with valid prefix.
+     * eg. PS0 to PS999
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
     }
 
 }

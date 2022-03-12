@@ -1,38 +1,38 @@
 package jmri.jmrix.grapevine;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the GrapevineSystemConnectionMemo class.
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class GrapevineSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class GrapevineSystemConnectionMemoTest extends SystemConnectionMemoTestBase<GrapevineSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
-    }
-     
-    @Override
-    @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       GrapevineSystemConnectionMemo memo = new GrapevineSystemConnectionMemo();
-       memo.setTrafficController(new SerialTrafficControlScaffold(memo));
-       memo.configureManagers();
-       scm = memo;
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
-    @After
-    public void tearDown(){
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        scm = new GrapevineSystemConnectionMemo();
+        scm.setTrafficController(new SerialTrafficControlScaffold(scm));
+        scm.configureManagers();
+    }
+
+    @Override
+    @AfterEach
+    public void tearDown() {
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
     }
 

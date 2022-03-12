@@ -2,7 +2,6 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Arrays;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**

@@ -46,7 +46,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         try {
             memo.getNceTrafficController().removeNceListener(this);
         } catch (java.lang.NullPointerException e) {
-            log.error("Error on dispose " + e.toString());
+            log.error("Error on dispose {}", e.toString());
         }
         // and unwind swing
         super.dispose();

@@ -4,10 +4,8 @@ import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test the AbstractIdentify class. Since that's an abstract base class, we
@@ -218,12 +216,12 @@ public class AbstractIdentifyTest {
     public static int ivalue = -1;
     public static boolean retval = false;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -8,13 +13,10 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LocationsByCarTypeFrameTest extends OperationsTestCase {
     
@@ -57,6 +59,7 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
         JUnitUtil.dispose(lctf);
+
     }
     
     @Test
@@ -76,32 +79,33 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         Assert.assertTrue("accepts", loc.acceptsTypeName("Boxcar"));
         Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
-        // Flat is the 1st car type in the selection box
-        
+        // Boxcar is the 1st car type in the selection box
         JemmyUtil.enterClickAndLeave(lctf.clearButton);
         JemmyUtil.enterClickAndLeave(lctf.saveButton); 
-        Assert.assertTrue("accepts", loc.acceptsTypeName("Boxcar"));
-        Assert.assertFalse("accepts", loc.acceptsTypeName("Flat"));
+        Assert.assertFalse("accepts", loc.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
         JemmyUtil.enterClickAndLeave(lctf.setButton);
         JemmyUtil.enterClickAndLeave(lctf.saveButton);
-        Assert.assertTrue("accepts", loc.acceptsTypeName("Boxcar"));
-        Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
+        Assert.assertTrue("accepts 2", loc.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("accepts 2", loc.acceptsTypeName("Flat"));
         
+        lctf.typeComboBox.setSelectedItem("Flat");
         JemmyUtil.enterClickAndLeave(lctf.clearButton);
         JemmyUtil.enterClickAndLeave(lctf.saveButton); 
         JemmyUtil.enterClickAndLeave(lctf.copyCheckBox);
         lctf.typeComboBox.setSelectedItem("Boxcar");
-
-        JemmyUtil.enterClickAndLeave(lctf.saveButton); 
         
+        JemmyUtil.enterClickAndLeaveThreadSafe(lctf.saveButton); 
         // the save should have opened a dialog window
         JemmyUtil.pressDialogButton(lctf, Bundle.getMessage("CopyCarTypeTitle"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(lctf);
         
-        Assert.assertFalse("accepts", loc.acceptsTypeName("Boxcar"));
-        Assert.assertFalse("accepts", loc.acceptsTypeName("Flat"));
+        Assert.assertFalse("accepts 3", loc.acceptsTypeName("Boxcar"));
+        Assert.assertFalse("accepts 3", loc.acceptsTypeName("Flat"));
         
         JUnitUtil.dispose(lctf);
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrameTest.class);

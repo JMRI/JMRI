@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * A TransitSection is referenced via a list in its parent Transit, and is
  * stored on disk when its parent Transit is stored.
  * <p>
- * Provides for delayed initializatio of Section when loading panel files, so
+ * Provides for delayed initialization of Section when loading panel files, so
  * that this is not dependent on order of items in the panel file.
  *
  * @author Dave Duchamp Copyright (C) 2008
@@ -135,13 +135,13 @@ public class TransitSection {
         } else {
             mSection = InstanceManager.getDefault(jmri.SectionManager.class).getSection(tSectionName);
             if (mSection == null) {
-                log.error("Missing Section - " + tSectionName + " - when initializing a TransitSection");
+                log.error("Missing Section - {} - when initializing a TransitSection", tSectionName);
             }
         }
         needsInitialization = false;
     }
 
-    boolean temporary = false;
+    private boolean temporary = false;
 
     public void setTemporary(boolean boo) {
         temporary = boo;
@@ -170,7 +170,7 @@ public class TransitSection {
         }
         String s = mSection.getSystemName();
         String u = mSection.getUserName();
-        if ((u != null) && (!u.equals(""))) {
+        if ((u != null) && (!u.isEmpty())) {
             return (s + "( " + u + " )");
         }
         return s;

@@ -1,0 +1,2426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>21</minor>
+    <test>1</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS1:LEVER</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1:SWNI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1:SWRI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:CALLON</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:CB</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:LDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:LDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:LOCKTOGGLE</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:NGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:NGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:RDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:RDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2:UNLOCKEDINDICATOR</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3:LEVER</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3:SWNI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3:SWRI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:CALLON</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:CB</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:LDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:LDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:LOCKTOGGLE</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:NGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:NGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:RDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:RDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4:UNLOCKEDINDICATOR</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5:LEVER</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5:SWNI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5:SWRI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:CALLON</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:CB</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:LDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:LDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:LOCKTOGGLE</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:NGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:NGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:RDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:RDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6:UNLOCKEDINDICATOR</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7:LEVER</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7:SWNI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7:SWRI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:CALLON</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:CB</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:LDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:LDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:LOCKTOGGLE</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:NGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:NGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:RDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:RDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8:UNLOCKEDINDICATOR</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9:LEVER</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9:SWNI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9:SWRI</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:CALLON</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:CB</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:LDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:LDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:LOCKTOGGLE</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:NGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:NGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:RDGK</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:RDGL</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10:UNLOCKEDINDICATOR</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS101</systemName>
+      <userName>S-Beta-Left</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS102</systemName>
+      <userName>S-Beta-Main</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS103</systemName>
+      <userName>S-Beta-Right</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS104</systemName>
+      <userName>S-Beta-Side</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS105</systemName>
+      <userName>S-Beta-Yard</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS106</systemName>
+      <userName>S-Left-Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS107</systemName>
+      <userName>S-Right-Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS108</systemName>
+      <userName>S-Beta-Spur</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS999</systemName>
+      <userName>Reset</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS:DEBUGCTC</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS:FLEETING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS:PRECONDITIONING_ENABLED</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS:RELOADCTC</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT101</systemName>
+      <userName>T-Beta-Left</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT102</systemName>
+      <userName>T-Beta-Right</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT103</systemName>
+      <userName>T-Beta-Yard</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT104</systemName>
+      <userName>T-Beta-Spur</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT105</systemName>
+      <userName>T-Branch</userName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="6:04 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0001)</systemName>
+      <userName>VM-Left-EB</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0002)</systemName>
+      <userName>VM-Right-EB</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0003)</systemName>
+      <userName>VM-Beta-Yard-EB</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0004)</systemName>
+      <userName>VM-Beta-Spur-EB</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0005)</systemName>
+      <userName>SM-Beta-Spur</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0012)</systemName>
+      <userName>SM-Beta-Yard-C</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0006)</systemName>
+      <userName>SM-Beta-Right-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0007)</systemName>
+      <userName>SM-Beta-Right-C</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0010)</systemName>
+      <userName>SM-Beta-Left-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0011)</systemName>
+      <userName>SM-Beta-Yard-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0008)</systemName>
+      <userName>SM-Beta-Right-A</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0009)</systemName>
+      <userName>SM-Beta-Left-A</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0001">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>B-Left-Approach</userName>
+    </block>
+    <block systemName="IB:AUTO:0002">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>B-Beta-Left</userName>
+    </block>
+    <block systemName="IB:AUTO:0003">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>B-Beta-Main</userName>
+    </block>
+    <block systemName="IB:AUTO:0004">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>B-Beta-Right</userName>
+    </block>
+    <block systemName="IB:AUTO:0005">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>B-Right-Approach</userName>
+    </block>
+    <block systemName="IB:AUTO:0006">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>B-Beta-Side</userName>
+    </block>
+    <block systemName="IB:AUTO:0007">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>B-Beta-Yard</userName>
+    </block>
+    <block systemName="IB:AUTO:0008">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>B-Beta-Spur</userName>
+    </block>
+    <block systemName="IB:AUTO:0009">
+      <systemName>IB:AUTO:0009</systemName>
+      <userName>B-Branch</userName>
+    </block>
+    <block systemName="IB:AUTO:0001" length="0.0" curve="0">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>B-Left-Approach</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Left-Approach</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0002" />
+    </block>
+    <block systemName="IB:AUTO:0002" length="0.0" curve="0">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>B-Beta-Left</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Left</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0001" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0003">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0006">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Yard" />
+        </beansetting>
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+      <path todir="96" fromdir="144" block="IB:AUTO:0007">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Yard" />
+        </beansetting>
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0003" length="0.0" curve="0">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>B-Beta-Main</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Main</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0002">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0004">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Right" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Spur" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0008">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Spur" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0004" length="0.0" curve="0">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>B-Beta-Right</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Right</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Right" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0005" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0006">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Right" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0005" length="0.0" curve="0">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>B-Right-Approach</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Right-Approach</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0004" />
+      <path todir="80" fromdir="160" block="IB:AUTO:0009">
+        <beansetting setting="4">
+          <turnout systemName="T-Branch" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0006" length="0.0" curve="0">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>B-Beta-Side</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Side</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0002">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Yard" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0004">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Right" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0007" length="0.0" curve="0">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>B-Beta-Yard</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Yard</occupancysensor>
+      <path todir="144" fromdir="96" block="IB:AUTO:0002">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Yard" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0008" length="0.0" curve="0">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>B-Beta-Spur</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Spur</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Spur" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0009" length="0.0" curve="0">
+      <systemName>IB:AUTO:0009</systemName>
+      <userName>B-Branch</userName>
+      <permissive>no</permissive>
+      <path todir="160" fromdir="80" block="IB:AUTO:0005">
+        <beansetting setting="4">
+          <turnout systemName="T-Branch" />
+        </beansetting>
+      </path>
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes">
+    <layoutblock systemName="ILB1" occupancysensor="S-Left-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>B-Left-Approach</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" occupancysensor="S-Beta-Left" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>B-Beta-Left</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" occupancysensor="S-Beta-Main" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>B-Beta-Main</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" occupancysensor="S-Beta-Right" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>B-Beta-Right</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" occupancysensor="S-Right-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>B-Right-Approach</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" occupancysensor="S-Beta-Side" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB6</systemName>
+      <userName>B-Beta-Side</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" occupancysensor="S-Beta-Yard" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>B-Beta-Yard</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB8" occupancysensor="S-Beta-Spur" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB8</systemName>
+      <userName>B-Beta-Spur</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB9" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB9</systemName>
+      <userName>B-Branch</userName>
+    </layoutblock>
+  </layoutblocks>
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+    <route userName="Turnouts">
+      <systemName>IO:AUTO:0001</systemName>
+      <userName>Turnouts</userName>
+      <routeOutputTurnout systemName="T-Beta-Left" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Beta-Right" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Beta-Yard" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Beta-Spur" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Branch" state="CLOSED" />
+      <routeSensor systemName="IS999" mode="onActive" />
+    </route>
+    <route userName="Sensors">
+      <systemName>IO:AUTO:0002</systemName>
+      <userName>Sensors</userName>
+      <routeOutputSensor systemName="S-Beta-Left" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Main" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Right" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Side" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Yard" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Left-Approach" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Right-Approach" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Spur" state="INACTIVE" />
+      <routeSensor systemName="IS999" mode="onActive" />
+    </route>
+  </routes>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic source="SM-Beta-Spur">
+      <sourceSignalMast>SM-Beta-Spur</sourceSignalMast>
+      <destinationMast destination="SM-Beta-Right-B">
+        <destinationSignalMast>SM-Beta-Right-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="SM-Beta-Left-B">
+        <destinationSignalMast>SM-Beta-Left-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SM-Beta-Yard-C">
+      <sourceSignalMast>SM-Beta-Yard-C</sourceSignalMast>
+      <destinationMast destination="VM-Left-EB">
+        <destinationSignalMast>VM-Left-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SM-Beta-Right-B">
+      <sourceSignalMast>SM-Beta-Right-B</sourceSignalMast>
+      <destinationMast destination="VM-Right-EB">
+        <destinationSignalMast>VM-Right-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SM-Beta-Right-C">
+      <sourceSignalMast>SM-Beta-Right-C</sourceSignalMast>
+      <destinationMast destination="VM-Right-EB">
+        <destinationSignalMast>VM-Right-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SM-Beta-Left-B">
+      <sourceSignalMast>SM-Beta-Left-B</sourceSignalMast>
+      <destinationMast destination="VM-Left-EB">
+        <destinationSignalMast>VM-Left-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SM-Beta-Yard-B">
+      <sourceSignalMast>SM-Beta-Yard-B</sourceSignalMast>
+      <destinationMast destination="VM-Left-EB">
+        <destinationSignalMast>VM-Left-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SM-Beta-Right-A">
+      <sourceSignalMast>SM-Beta-Right-A</sourceSignalMast>
+      <destinationMast destination="SM-Beta-Left-B">
+        <destinationSignalMast>SM-Beta-Left-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="SM-Beta-Yard-B">
+        <destinationSignalMast>SM-Beta-Yard-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SM-Beta-Left-A">
+      <sourceSignalMast>SM-Beta-Left-A</sourceSignalMast>
+      <destinationMast destination="VM-Beta-Yard-EB">
+        <destinationSignalMast>VM-Beta-Yard-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="VM-Beta-Spur-EB">
+        <destinationSignalMast>VM-Beta-Spur-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="SM-Beta-Right-B">
+        <destinationSignalMast>SM-Beta-Right-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="SM-Beta-Right-C">
+        <destinationSignalMast>SM-Beta-Right-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix userName="Init" enabled="yes">
+      <systemName>IX:RTXINITIALIZER</systemName>
+      <userName>Init</userName>
+      <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C Init" antecedent="R1" logicType="3" triggerOnChange="yes">
+      <systemName>IX:RTXINITIALIZER1T</systemName>
+      <userName>Route 1C Init</userName>
+      <conditionalStateVariable operator="4" negated="no" type="0" systemName="IX:RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="Reset" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="10" systemName="Reset" data="4" delay="1" string="1" />
+    </conditional>
+  </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Sep 14 14:25:03 CDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <ctcdata class="jmri.jmrit.ctc.configurexml.CtcManagerXml">
+    <ctcProperties>
+      <CodeButtonInternalSensorPattern>IS#:CB</CodeButtonInternalSensorPattern>
+      <SIDI_CodingTimeInMilliseconds>2000</SIDI_CodingTimeInMilliseconds>
+      <SIDI_LeftInternalSensorPattern>IS#:LDGK</SIDI_LeftInternalSensorPattern>
+      <SIDI_NormalInternalSensorPattern>IS#:NGK</SIDI_NormalInternalSensorPattern>
+      <SIDI_RightInternalSensorPattern>IS#:RDGK</SIDI_RightInternalSensorPattern>
+      <SIDI_TimeLockingTimeInMilliseconds>3000</SIDI_TimeLockingTimeInMilliseconds>
+      <SIDL_LeftInternalSensorPattern>IS#:LDGL</SIDL_LeftInternalSensorPattern>
+      <SIDL_NormalInternalSensorPattern>IS#:NGL</SIDL_NormalInternalSensorPattern>
+      <SIDL_RightInternalSensorPattern>IS#:RDGL</SIDL_RightInternalSensorPattern>
+      <SWDI_CodingTimeInMilliseconds>2000</SWDI_CodingTimeInMilliseconds>
+      <SWDI_NormalInternalSensorPattern>IS#:SWNI</SWDI_NormalInternalSensorPattern>
+      <SWDI_ReversedInternalSensorPattern>IS#:SWRI</SWDI_ReversedInternalSensorPattern>
+      <SWDL_InternalSensorPattern>IS#:LEVER</SWDL_InternalSensorPattern>
+      <CO_CallOnToggleInternalSensorPattern>IS#:CALLON</CO_CallOnToggleInternalSensorPattern>
+      <TUL_DispatcherInternalSensorLockTogglePattern>IS#:LOCKTOGGLE</TUL_DispatcherInternalSensorLockTogglePattern>
+      <TUL_DispatcherInternalSensorUnlockedIndicatorPattern>IS#:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicatorPattern>
+      <CodeButtonDelayTime>0</CodeButtonDelayTime>
+    </ctcProperties>
+    <ctcOtherData>
+      <CtcVersion>v2.0</CtcVersion>
+      <FleetingToggleInternalSensor>IS:FLEETING</FleetingToggleInternalSensor>
+      <DefaultFleetingEnabled>false</DefaultFleetingEnabled>
+      <TUL_EnabledAtStartup>true</TUL_EnabledAtStartup>
+      <SignalSystemType>1</SignalSystemType>
+      <TUL_SecondsToLockTurnouts>0</TUL_SecondsToLockTurnouts>
+      <NextUniqueNumber>5</NextUniqueNumber>
+      <CTCDebugSystemReloadInternalSensor>IS:RELOADCTC</CTCDebugSystemReloadInternalSensor>
+      <CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor>IS:DEBUGCTC</CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor>
+      <GUIDesign_NumberOfEmptyColumnsAtEnd>1</GUIDesign_NumberOfEmptyColumnsAtEnd>
+      <GUIDesign_CTCPanelType>0</GUIDesign_CTCPanelType>
+      <GUIDesign_BuilderPlate>true</GUIDesign_BuilderPlate>
+      <GUIDesign_SignalsOnPanel>0</GUIDesign_SignalsOnPanel>
+      <GUIDesign_FleetingToggleSwitch>true</GUIDesign_FleetingToggleSwitch>
+      <GUIDesign_AnalogClockEtc>true</GUIDesign_AnalogClockEtc>
+      <GUIDesign_ReloadCTCSystemButton>true</GUIDesign_ReloadCTCSystemButton>
+      <GUIDesign_CTCDebugOnToggle>true</GUIDesign_CTCDebugOnToggle>
+      <GUIDesign_CreateTrackPieces>false</GUIDesign_CreateTrackPieces>
+      <GUIDesign_VerticalSize>0</GUIDesign_VerticalSize>
+      <GUIDesign_OSSectionUnknownInconsistentRedBlink>false</GUIDesign_OSSectionUnknownInconsistentRedBlink>
+      <GUIDesign_TurnoutsOnPanel>true</GUIDesign_TurnoutsOnPanel>
+    </ctcOtherData>
+    <ctcCodeButtonData>
+      <UniqueID>0</UniqueID>
+      <SwitchNumber>1</SwitchNumber>
+      <SignalEtcNumber>2</SignalEtcNumber>
+      <GUIColumnNumber>2</GUIColumnNumber>
+      <CodeButtonInternalSensor>IS2:CB</CodeButtonInternalSensor>
+      <OSSectionOccupiedExternalSensor>S-Beta-Left</OSSectionOccupiedExternalSensor>
+      <OSSectionOccupiedExternalSensor2 />
+      <OSSectionSwitchSlavedToUniqueID>-1</OSSectionSwitchSlavedToUniqueID>
+      <GUIGeneratedAtLeastOnceAlready>false</GUIGeneratedAtLeastOnceAlready>
+      <CodeButtonDelayTime>0</CodeButtonDelayTime>
+      <SIDI_Enabled>true</SIDI_Enabled>
+      <SIDI_LeftInternalSensor>IS2:LDGK</SIDI_LeftInternalSensor>
+      <SIDI_NormalInternalSensor>IS2:NGK</SIDI_NormalInternalSensor>
+      <SIDI_RightInternalSensor>IS2:RDGK</SIDI_RightInternalSensor>
+      <SIDI_CodingTimeInMilliseconds>2000</SIDI_CodingTimeInMilliseconds>
+      <SIDI_TimeLockingTimeInMilliseconds>3000</SIDI_TimeLockingTimeInMilliseconds>
+      <SIDI_TrafficDirection>BOTH</SIDI_TrafficDirection>
+      <SIDI_LeftRightTrafficSignals>
+        <signal>SM-Beta-Left-A</signal>
+      </SIDI_LeftRightTrafficSignals>
+      <SIDI_RightLeftTrafficSignals>
+        <signal>SM-Beta-Left-B</signal>
+      </SIDI_RightLeftTrafficSignals>
+      <SIDL_Enabled>true</SIDL_Enabled>
+      <SIDL_LeftInternalSensor>IS2:LDGL</SIDL_LeftInternalSensor>
+      <SIDL_NormalInternalSensor>IS2:NGL</SIDL_NormalInternalSensor>
+      <SIDL_RightInternalSensor>IS2:RDGL</SIDL_RightInternalSensor>
+      <SWDI_Enabled>true</SWDI_Enabled>
+      <SWDI_NormalInternalSensor>IS1:SWNI</SWDI_NormalInternalSensor>
+      <SWDI_ReversedInternalSensor>IS1:SWRI</SWDI_ReversedInternalSensor>
+      <SWDI_ExternalTurnout>T-Beta-Left</SWDI_ExternalTurnout>
+      <SWDI_CodingTimeInMilliseconds>2000</SWDI_CodingTimeInMilliseconds>
+      <SWDI_FeedbackDifferent>false</SWDI_FeedbackDifferent>
+      <SWDI_GUITurnoutType>0</SWDI_GUITurnoutType>
+      <SWDI_GUITurnoutLeftHand>false</SWDI_GUITurnoutLeftHand>
+      <SWDI_GUICrossoverLeftHand>false</SWDI_GUICrossoverLeftHand>
+      <SWDL_Enabled>true</SWDL_Enabled>
+      <SWDL_InternalSensor>IS1:LEVER</SWDL_InternalSensor>
+      <CO_Enabled>false</CO_Enabled>
+      <CO_CallOnToggleInternalSensor>IS2:CALLON</CO_CallOnToggleInternalSensor>
+      <CO_GroupingsList />
+      <TRL_Enabled>false</TRL_Enabled>
+      <TRL_LeftRules />
+      <TRL_RightRules />
+      <TUL_Enabled>false</TUL_Enabled>
+      <TUL_DispatcherInternalSensorLockToggle>IS2:LOCKTOGGLE</TUL_DispatcherInternalSensorLockToggle>
+      <TUL_ExternalTurnout />
+      <TUL_ExternalTurnoutFeedbackDifferent>false</TUL_ExternalTurnoutFeedbackDifferent>
+      <TUL_DispatcherInternalSensorUnlockedIndicator>IS2:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
+      <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
+      <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
+      <TUL_GUI_IconsEnabled>false</TUL_GUI_IconsEnabled>
+      <TUL_LockImplementation>0</TUL_LockImplementation>
+      <TUL_AdditionalExternalTurnouts />
+      <IL_Enabled>false</IL_Enabled>
+      <IL_Signals />
+    </ctcCodeButtonData>
+    <ctcCodeButtonData>
+      <UniqueID>1</UniqueID>
+      <SwitchNumber>3</SwitchNumber>
+      <SignalEtcNumber>4</SignalEtcNumber>
+      <GUIColumnNumber>3</GUIColumnNumber>
+      <CodeButtonInternalSensor>IS4:CB</CodeButtonInternalSensor>
+      <OSSectionOccupiedExternalSensor>S-Beta-Left</OSSectionOccupiedExternalSensor>
+      <OSSectionOccupiedExternalSensor2 />
+      <OSSectionSwitchSlavedToUniqueID>-1</OSSectionSwitchSlavedToUniqueID>
+      <GUIGeneratedAtLeastOnceAlready>false</GUIGeneratedAtLeastOnceAlready>
+      <CodeButtonDelayTime>0</CodeButtonDelayTime>
+      <SIDI_Enabled>true</SIDI_Enabled>
+      <SIDI_LeftInternalSensor>IS4:LDGK</SIDI_LeftInternalSensor>
+      <SIDI_NormalInternalSensor>IS4:NGK</SIDI_NormalInternalSensor>
+      <SIDI_RightInternalSensor>IS4:RDGK</SIDI_RightInternalSensor>
+      <SIDI_CodingTimeInMilliseconds>2000</SIDI_CodingTimeInMilliseconds>
+      <SIDI_TimeLockingTimeInMilliseconds>3000</SIDI_TimeLockingTimeInMilliseconds>
+      <SIDI_TrafficDirection>LEFT</SIDI_TrafficDirection>
+      <SIDI_LeftRightTrafficSignals />
+      <SIDI_RightLeftTrafficSignals>
+        <signal>SM-Beta-Yard-B</signal>
+        <signal>SM-Beta-Yard-C</signal>
+      </SIDI_RightLeftTrafficSignals>
+      <SIDL_Enabled>true</SIDL_Enabled>
+      <SIDL_LeftInternalSensor>IS4:LDGL</SIDL_LeftInternalSensor>
+      <SIDL_NormalInternalSensor>IS4:NGL</SIDL_NormalInternalSensor>
+      <SIDL_RightInternalSensor>IS4:RDGL</SIDL_RightInternalSensor>
+      <SWDI_Enabled>true</SWDI_Enabled>
+      <SWDI_NormalInternalSensor>IS3:SWNI</SWDI_NormalInternalSensor>
+      <SWDI_ReversedInternalSensor>IS3:SWRI</SWDI_ReversedInternalSensor>
+      <SWDI_ExternalTurnout>T-Beta-Yard</SWDI_ExternalTurnout>
+      <SWDI_CodingTimeInMilliseconds>2000</SWDI_CodingTimeInMilliseconds>
+      <SWDI_FeedbackDifferent>false</SWDI_FeedbackDifferent>
+      <SWDI_GUITurnoutType>0</SWDI_GUITurnoutType>
+      <SWDI_GUITurnoutLeftHand>true</SWDI_GUITurnoutLeftHand>
+      <SWDI_GUICrossoverLeftHand>false</SWDI_GUICrossoverLeftHand>
+      <SWDL_Enabled>true</SWDL_Enabled>
+      <SWDL_InternalSensor>IS3:LEVER</SWDL_InternalSensor>
+      <CO_Enabled>false</CO_Enabled>
+      <CO_CallOnToggleInternalSensor>IS4:CALLON</CO_CallOnToggleInternalSensor>
+      <CO_GroupingsList />
+      <TRL_Enabled>false</TRL_Enabled>
+      <TRL_LeftRules />
+      <TRL_RightRules />
+      <TUL_Enabled>true</TUL_Enabled>
+      <TUL_DispatcherInternalSensorLockToggle>IS4:LOCKTOGGLE</TUL_DispatcherInternalSensorLockToggle>
+      <TUL_ExternalTurnout>T-Beta-Yard</TUL_ExternalTurnout>
+      <TUL_ExternalTurnoutFeedbackDifferent>false</TUL_ExternalTurnoutFeedbackDifferent>
+      <TUL_DispatcherInternalSensorUnlockedIndicator>IS4:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
+      <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
+      <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
+      <TUL_GUI_IconsEnabled>false</TUL_GUI_IconsEnabled>
+      <TUL_LockImplementation>0</TUL_LockImplementation>
+      <TUL_AdditionalExternalTurnouts>
+        <TUL_AdditionalExternalTurnoutEntry>
+          <TUL_AdditionalExternalTurnout>T-Beta-Left</TUL_AdditionalExternalTurnout>
+          <TUL_AdditionalExternalTurnoutFeedbackDifferent>false</TUL_AdditionalExternalTurnoutFeedbackDifferent>
+        </TUL_AdditionalExternalTurnoutEntry>
+      </TUL_AdditionalExternalTurnouts>
+      <IL_Enabled>false</IL_Enabled>
+      <IL_Signals />
+    </ctcCodeButtonData>
+    <ctcCodeButtonData>
+      <UniqueID>2</UniqueID>
+      <SwitchNumber>5</SwitchNumber>
+      <SignalEtcNumber>6</SignalEtcNumber>
+      <GUIColumnNumber>5</GUIColumnNumber>
+      <CodeButtonInternalSensor>IS6:CB</CodeButtonInternalSensor>
+      <OSSectionOccupiedExternalSensor>S-Beta-Main</OSSectionOccupiedExternalSensor>
+      <OSSectionOccupiedExternalSensor2 />
+      <OSSectionSwitchSlavedToUniqueID>-1</OSSectionSwitchSlavedToUniqueID>
+      <GUIGeneratedAtLeastOnceAlready>false</GUIGeneratedAtLeastOnceAlready>
+      <CodeButtonDelayTime>0</CodeButtonDelayTime>
+      <SIDI_Enabled>true</SIDI_Enabled>
+      <SIDI_LeftInternalSensor>IS6:LDGK</SIDI_LeftInternalSensor>
+      <SIDI_NormalInternalSensor>IS6:NGK</SIDI_NormalInternalSensor>
+      <SIDI_RightInternalSensor>IS6:RDGK</SIDI_RightInternalSensor>
+      <SIDI_CodingTimeInMilliseconds>2000</SIDI_CodingTimeInMilliseconds>
+      <SIDI_TimeLockingTimeInMilliseconds>3000</SIDI_TimeLockingTimeInMilliseconds>
+      <SIDI_TrafficDirection>LEFT</SIDI_TrafficDirection>
+      <SIDI_LeftRightTrafficSignals />
+      <SIDI_RightLeftTrafficSignals>
+        <signal>SM-Beta-Spur</signal>
+      </SIDI_RightLeftTrafficSignals>
+      <SIDL_Enabled>true</SIDL_Enabled>
+      <SIDL_LeftInternalSensor>IS6:LDGL</SIDL_LeftInternalSensor>
+      <SIDL_NormalInternalSensor>IS6:NGL</SIDL_NormalInternalSensor>
+      <SIDL_RightInternalSensor>IS6:RDGL</SIDL_RightInternalSensor>
+      <SWDI_Enabled>true</SWDI_Enabled>
+      <SWDI_NormalInternalSensor>IS5:SWNI</SWDI_NormalInternalSensor>
+      <SWDI_ReversedInternalSensor>IS5:SWRI</SWDI_ReversedInternalSensor>
+      <SWDI_ExternalTurnout>T-Beta-Spur</SWDI_ExternalTurnout>
+      <SWDI_CodingTimeInMilliseconds>2000</SWDI_CodingTimeInMilliseconds>
+      <SWDI_FeedbackDifferent>false</SWDI_FeedbackDifferent>
+      <SWDI_GUITurnoutType>0</SWDI_GUITurnoutType>
+      <SWDI_GUITurnoutLeftHand>true</SWDI_GUITurnoutLeftHand>
+      <SWDI_GUICrossoverLeftHand>false</SWDI_GUICrossoverLeftHand>
+      <SWDL_Enabled>true</SWDL_Enabled>
+      <SWDL_InternalSensor>IS5:LEVER</SWDL_InternalSensor>
+      <CO_Enabled>false</CO_Enabled>
+      <CO_CallOnToggleInternalSensor>IS6:CALLON</CO_CallOnToggleInternalSensor>
+      <CO_GroupingsList />
+      <TRL_Enabled>false</TRL_Enabled>
+      <TRL_LeftRules />
+      <TRL_RightRules />
+      <TUL_Enabled>true</TUL_Enabled>
+      <TUL_DispatcherInternalSensorLockToggle>IS6:LOCKTOGGLE</TUL_DispatcherInternalSensorLockToggle>
+      <TUL_ExternalTurnout>T-Beta-Spur</TUL_ExternalTurnout>
+      <TUL_ExternalTurnoutFeedbackDifferent>false</TUL_ExternalTurnoutFeedbackDifferent>
+      <TUL_DispatcherInternalSensorUnlockedIndicator>IS6:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
+      <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
+      <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
+      <TUL_GUI_IconsEnabled>false</TUL_GUI_IconsEnabled>
+      <TUL_LockImplementation>0</TUL_LockImplementation>
+      <TUL_AdditionalExternalTurnouts />
+      <IL_Enabled>false</IL_Enabled>
+      <IL_Signals />
+    </ctcCodeButtonData>
+    <ctcCodeButtonData>
+      <UniqueID>3</UniqueID>
+      <SwitchNumber>7</SwitchNumber>
+      <SignalEtcNumber>8</SignalEtcNumber>
+      <GUIColumnNumber>7</GUIColumnNumber>
+      <CodeButtonInternalSensor>IS8:CB</CodeButtonInternalSensor>
+      <OSSectionOccupiedExternalSensor>S-Beta-Right</OSSectionOccupiedExternalSensor>
+      <OSSectionOccupiedExternalSensor2 />
+      <OSSectionSwitchSlavedToUniqueID>-1</OSSectionSwitchSlavedToUniqueID>
+      <GUIGeneratedAtLeastOnceAlready>false</GUIGeneratedAtLeastOnceAlready>
+      <CodeButtonDelayTime>100</CodeButtonDelayTime>
+      <SIDI_Enabled>true</SIDI_Enabled>
+      <SIDI_LeftInternalSensor>IS8:LDGK</SIDI_LeftInternalSensor>
+      <SIDI_NormalInternalSensor>IS8:NGK</SIDI_NormalInternalSensor>
+      <SIDI_RightInternalSensor>IS8:RDGK</SIDI_RightInternalSensor>
+      <SIDI_CodingTimeInMilliseconds>2000</SIDI_CodingTimeInMilliseconds>
+      <SIDI_TimeLockingTimeInMilliseconds>3000</SIDI_TimeLockingTimeInMilliseconds>
+      <SIDI_TrafficDirection>BOTH</SIDI_TrafficDirection>
+      <SIDI_LeftRightTrafficSignals>
+        <signal>SM-Beta-Right-B</signal>
+        <signal>SM-Beta-Right-C</signal>
+      </SIDI_LeftRightTrafficSignals>
+      <SIDI_RightLeftTrafficSignals>
+        <signal>SM-Beta-Right-A</signal>
+      </SIDI_RightLeftTrafficSignals>
+      <SIDL_Enabled>true</SIDL_Enabled>
+      <SIDL_LeftInternalSensor>IS8:LDGL</SIDL_LeftInternalSensor>
+      <SIDL_NormalInternalSensor>IS8:NGL</SIDL_NormalInternalSensor>
+      <SIDL_RightInternalSensor>IS8:RDGL</SIDL_RightInternalSensor>
+      <SWDI_Enabled>true</SWDI_Enabled>
+      <SWDI_NormalInternalSensor>IS7:SWNI</SWDI_NormalInternalSensor>
+      <SWDI_ReversedInternalSensor>IS7:SWRI</SWDI_ReversedInternalSensor>
+      <SWDI_ExternalTurnout>T-Beta-Right</SWDI_ExternalTurnout>
+      <SWDI_CodingTimeInMilliseconds>2000</SWDI_CodingTimeInMilliseconds>
+      <SWDI_FeedbackDifferent>false</SWDI_FeedbackDifferent>
+      <SWDI_GUITurnoutType>0</SWDI_GUITurnoutType>
+      <SWDI_GUITurnoutLeftHand>true</SWDI_GUITurnoutLeftHand>
+      <SWDI_GUICrossoverLeftHand>false</SWDI_GUICrossoverLeftHand>
+      <SWDL_Enabled>true</SWDL_Enabled>
+      <SWDL_InternalSensor>IS7:LEVER</SWDL_InternalSensor>
+      <CO_Enabled>false</CO_Enabled>
+      <CO_CallOnToggleInternalSensor>IS8:CALLON</CO_CallOnToggleInternalSensor>
+      <CO_GroupingsList />
+      <TRL_Enabled>false</TRL_Enabled>
+      <TRL_LeftRules />
+      <TRL_RightRules />
+      <TUL_Enabled>false</TUL_Enabled>
+      <TUL_DispatcherInternalSensorLockToggle>IS8:LOCKTOGGLE</TUL_DispatcherInternalSensorLockToggle>
+      <TUL_ExternalTurnout />
+      <TUL_ExternalTurnoutFeedbackDifferent>false</TUL_ExternalTurnoutFeedbackDifferent>
+      <TUL_DispatcherInternalSensorUnlockedIndicator>IS8:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
+      <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
+      <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
+      <TUL_GUI_IconsEnabled>false</TUL_GUI_IconsEnabled>
+      <TUL_LockImplementation>0</TUL_LockImplementation>
+      <TUL_AdditionalExternalTurnouts />
+      <IL_Enabled>false</IL_Enabled>
+      <IL_Signals />
+    </ctcCodeButtonData>
+    <ctcCodeButtonData>
+      <UniqueID>4</UniqueID>
+      <SwitchNumber>9</SwitchNumber>
+      <SignalEtcNumber>10</SignalEtcNumber>
+      <GUIColumnNumber>9</GUIColumnNumber>
+      <CodeButtonInternalSensor>IS10:CB</CodeButtonInternalSensor>
+      <OSSectionOccupiedExternalSensor>S-Right-Approach</OSSectionOccupiedExternalSensor>
+      <OSSectionOccupiedExternalSensor2 />
+      <OSSectionSwitchSlavedToUniqueID>-1</OSSectionSwitchSlavedToUniqueID>
+      <GUIGeneratedAtLeastOnceAlready>false</GUIGeneratedAtLeastOnceAlready>
+      <CodeButtonDelayTime>0</CodeButtonDelayTime>
+      <SIDI_Enabled>false</SIDI_Enabled>
+      <SIDI_LeftInternalSensor>IS10:LDGK</SIDI_LeftInternalSensor>
+      <SIDI_NormalInternalSensor>IS10:NGK</SIDI_NormalInternalSensor>
+      <SIDI_RightInternalSensor>IS10:RDGK</SIDI_RightInternalSensor>
+      <SIDI_CodingTimeInMilliseconds>2000</SIDI_CodingTimeInMilliseconds>
+      <SIDI_TimeLockingTimeInMilliseconds>3000</SIDI_TimeLockingTimeInMilliseconds>
+      <SIDI_TrafficDirection>BOTH</SIDI_TrafficDirection>
+      <SIDI_LeftRightTrafficSignals />
+      <SIDI_RightLeftTrafficSignals />
+      <SIDL_Enabled>false</SIDL_Enabled>
+      <SIDL_LeftInternalSensor>IS10:LDGL</SIDL_LeftInternalSensor>
+      <SIDL_NormalInternalSensor>IS10:NGL</SIDL_NormalInternalSensor>
+      <SIDL_RightInternalSensor>IS10:RDGL</SIDL_RightInternalSensor>
+      <SWDI_Enabled>true</SWDI_Enabled>
+      <SWDI_NormalInternalSensor>IS9:SWNI</SWDI_NormalInternalSensor>
+      <SWDI_ReversedInternalSensor>IS9:SWRI</SWDI_ReversedInternalSensor>
+      <SWDI_ExternalTurnout>T-Branch</SWDI_ExternalTurnout>
+      <SWDI_CodingTimeInMilliseconds>2000</SWDI_CodingTimeInMilliseconds>
+      <SWDI_FeedbackDifferent>false</SWDI_FeedbackDifferent>
+      <SWDI_GUITurnoutType>0</SWDI_GUITurnoutType>
+      <SWDI_GUITurnoutLeftHand>true</SWDI_GUITurnoutLeftHand>
+      <SWDI_GUICrossoverLeftHand>false</SWDI_GUICrossoverLeftHand>
+      <SWDL_Enabled>true</SWDL_Enabled>
+      <SWDL_InternalSensor>IS9:LEVER</SWDL_InternalSensor>
+      <CO_Enabled>false</CO_Enabled>
+      <CO_CallOnToggleInternalSensor>IS10:CALLON</CO_CallOnToggleInternalSensor>
+      <CO_GroupingsList />
+      <TRL_Enabled>false</TRL_Enabled>
+      <TRL_LeftRules />
+      <TRL_RightRules />
+      <TUL_Enabled>false</TUL_Enabled>
+      <TUL_DispatcherInternalSensorLockToggle>IS10:LOCKTOGGLE</TUL_DispatcherInternalSensorLockToggle>
+      <TUL_ExternalTurnout />
+      <TUL_ExternalTurnoutFeedbackDifferent>false</TUL_ExternalTurnoutFeedbackDifferent>
+      <TUL_DispatcherInternalSensorUnlockedIndicator>IS10:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
+      <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
+      <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
+      <TUL_GUI_IconsEnabled>false</TUL_GUI_IconsEnabled>
+      <TUL_LockImplementation>0</TUL_LockImplementation>
+      <TUL_AdditionalExternalTurnouts />
+      <IL_Enabled>false</IL_Enabled>
+      <IL_Signals />
+    </ctcCodeButtonData>
+  </ctcdata>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Misc Test Scenarios" x="20" y="30" windowheight="259" windowwidth="911" panelheight="230" panelwidth="837" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Misc Test Scenarios" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <signalmasticon signalmast="VM-Left-EB" x="30" y="80" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="VM-Right-EB" x="770" y="110" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="VM-Beta-Yard-EB" x="399" y="164" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="VM-Beta-Spur-EB" x="460" y="70" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Spur" x="370" y="50" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Right-A" x="510" y="80" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Right-B" x="440" y="110" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Right-C" x="440" y="140" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Left-A" x="136" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Left-B" x="225" y="76" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Yard-C" x="260" y="140" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SM-Beta-Yard-B" x="255" y="106" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <sensoricon sensor="Reset" x="27" y="26" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Left" x="190" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Main" x="320" y="110" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Right" x="520" y="110" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Side" x="320" y="140" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Spur" x="420" y="50" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Yard" x="320" y="170" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Left-Approach" x="80" y="110" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Right-Approach" x="620" y="110" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <layoutturnout ident="TO1" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="180.0" ya="100.0" xb="220.0" yb="100.0" xc="210.0" yc="110.0" xd="180.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="T-Beta-Left" blockname="B-Beta-Left" connectaname="T1" connectbname="T2" connectcname="T4">
+      <signalAMast>SM-Beta-Left-A</signalAMast>
+      <signalBMast>SM-Beta-Left-B</signalBMast>
+    </layoutturnout>
+    <layoutturnout ident="TO3" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="4" xcen="230.0" ycen="130.0" xa="220.0" ya="120.0" xb="240.0" yb="140.0" xc="250.0" yc="130.0" xd="220.0" yd="120.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="T-Beta-Yard" blockname="B-Beta-Left" connectaname="T4" connectbname="T6" connectcname="T5">
+      <signalBMast>SM-Beta-Yard-C</signalBMast>
+      <signalCMast>SM-Beta-Yard-B</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO4" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="510.0" ycen="100.0" xa="540.0" ya="100.0" xb="480.0" yb="100.0" xc="480.0" yc="130.0" xd="540.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="T-Beta-Right" blockname="B-Beta-Right" connectaname="T3" connectbname="T9" connectcname="T5">
+      <signalAMast>SM-Beta-Right-A</signalAMast>
+      <signalBMast>SM-Beta-Right-B</signalBMast>
+      <signalCMast>SM-Beta-Right-C</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO2" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="340.0" ycen="100.0" xa="320.0" ya="100.0" xb="360.0" yb="100.0" xc="370.0" yc="70.0" xd="320.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="T-Beta-Spur" blockname="B-Beta-Main" connectaname="T2" connectbname="T9" connectcname="T11">
+      <signalCMast>SM-Beta-Spur</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO5" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="640.0" ycen="100.0" xa="620.0" ya="100.0" xb="660.0" yb="100.0" xc="670.0" yc="70.0" xd="620.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="T-Branch" blockname="B-Right-Approach" connectaname="T3" connectbname="T8" connectcname="T13" />
+    <tracksegment ident="T1" blockname="B-Left-Approach" connect1name="EB1" type1="POS_POINT" connect2name="TO1" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="B-Beta-Main" connect1name="TO1" type1="TURNOUT_B" connect2name="TO2" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="B-Right-Approach" connect1name="TO4" type1="TURNOUT_A" connect2name="TO5" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="B-Beta-Left" connect1name="TO1" type1="TURNOUT_C" connect2name="TO3" type2="TURNOUT_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="B-Beta-Side" connect1name="TO3" type1="TURNOUT_C" connect2name="TO4" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="B-Beta-Yard" connect1name="TO3" type1="TURNOUT_B" connect2name="A1" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="B-Beta-Yard" connect1name="A1" type1="POS_POINT" connect2name="EB3" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="B-Beta-Main" connect1name="TO2" type1="TURNOUT_B" connect2name="TO4" type2="TURNOUT_B" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T11" blockname="B-Beta-Spur" connect1name="TO2" type1="TURNOUT_C" connect2name="EB4" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="B-Right-Approach" connect1name="TO5" type1="TURNOUT_B" connect2name="EB2" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T13" blockname="B-Branch" connect1name="TO5" type1="TURNOUT_C" connect2name="EB5" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="40.0" y="100.0" connect1name="T1" westboundsignalmast="VM-Left-EB" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="780.0" y="100.0" connect1name="T8" eastboundsignalmast="VM-Right-EB" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="END_BUMPER" x="420.0" y="160.0" connect1name="T7" eastboundsignalmast="VM-Beta-Yard-EB" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="ANCHOR" x="260.0" y="160.0" connect1name="T6" connect2name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="END_BUMPER" x="460.0" y="70.0" connect1name="T11" eastboundsignalmast="VM-Beta-Spur-EB" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB5" type="END_BUMPER" x="710.0" y="30.0" connect1name="T13" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel " x="712" y="0" height="759" width="694" editable="yes" positionable="no" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+    <positionablelabel x="55" y="323" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Icon</tooltip>
+      <icon url="program:resources/icons/USS/plate/base-plates/misc/USS-plate.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <fastclock x="486" y="144" scale="1.0" color="black" class="jmri.jmrit.display.configurexml.AnalogClock2DisplayXml" />
+    <sensoricon sensor="ISCLOCKRUNNING" x="432" y="232" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISCLOCKRUNNING</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/switch-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="422" y="203" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Clock On" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS:FLEETING" x="226" y="682" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS:FLEETING</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/switch-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="215" y="664" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Fleeting ON" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS:RELOADCTC" x="291" y="682" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS:RELOADCTC</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/code.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/code-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="277" y="664" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Reload CTC" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS:DEBUGCTC" x="358" y="682" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS:DEBUGCTC</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/switch-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="339" y="664" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="CTC Debug On" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-left-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="12" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-blank-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="77" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-sw-sig-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <sensoricon sensor="IS2:CB" x="98" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS2:CB</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/code.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/code-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Left" x="98" y="78" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>S-Beta-Left</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS1:SWNI" x="81" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS1:SWNI</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS1:SWRI" x="115" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS1:SWRI</tooltip>
+      <active url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/amber-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <turnouticon turnout="T-Beta-Left" x="86" y="80" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USS/track/turnout/right/east/os-r-e-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USS/track/turnout/right/east/os-r-e-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USS/track/turnout/right/east/os-r-e-inconsistent.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="IS1:LEVER" x="85" y="379" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS1:LEVER</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="106" y="356" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="1" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS2:LDGK" x="81" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS2:LDGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS2:NGK" x="99" y="440" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS2:NGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS2:RDGK" x="115" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS2:RDGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <signalmasticon signalmast="SM-Beta-Left-A" x="87" y="120" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Left-A</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="SM-Beta-Left-B" x="97" y="70" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Left-B</tooltip>
+    </signalmasticon>
+    <multisensoricon x="86" y="492" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <tooltip>IS2:LDGL,IS2:NGL,IS2:RDGL</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0" sensor="IS2:LDGL">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/lever-vertical-wide.gif" degrees="0" scale="1.0" sensor="IS2:NGL">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0" sensor="IS2:RDGL">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-inactive-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <positionablelabel x="106" y="470" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="2" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="142" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-sw-sig-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <sensoricon sensor="IS4:CB" x="163" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS4:CB</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/code.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/code-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Left" x="163" y="78" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>S-Beta-Left</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS3:SWNI" x="146" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS3:SWNI</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS3:SWRI" x="180" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS3:SWRI</tooltip>
+      <active url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/amber-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <turnouticon turnout="T-Beta-Yard" x="151" y="80" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USS/track/turnout/left/west/os-l-w-inconsistent.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="IS3:LEVER" x="150" y="379" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS3:LEVER</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="171" y="356" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="3" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS4:LDGK" x="146" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS4:LDGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS4:NGK" x="164" y="440" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS4:NGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="180" y="454" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/Panels/knockout.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <signalmasticon signalmast="SM-Beta-Yard-B" x="162" y="70" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Yard-B</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="SM-Beta-Yard-C" x="173" y="70" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Yard-C</tooltip>
+    </signalmasticon>
+    <multisensoricon x="150" y="492" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <tooltip>IS4:LDGL,IS4:NGL,</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0" sensor="IS4:LDGL">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/lever-vertical-wide.gif" degrees="0" scale="1.0" sensor="IS4:NGL">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-inactive-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <positionablelabel x="171" y="470" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="4" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS4:LOCKTOGGLE" x="163" y="541" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS4:LOCKTOGGLE</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/switch-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="190" y="536" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Local" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="190" y="560" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Locked" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS4:UNLOCKEDINDICATOR" x="164" y="200" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS4:UNLOCKEDINDICATOR</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="151" y="230" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Unlocked" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="207" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-blank-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="272" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-sw-sig-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <sensoricon sensor="IS6:CB" x="293" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS6:CB</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/code.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/code-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Main" x="293" y="78" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>S-Beta-Main</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS5:SWNI" x="276" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS5:SWNI</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS5:SWRI" x="310" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS5:SWRI</tooltip>
+      <active url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/amber-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <turnouticon turnout="T-Beta-Spur" x="281" y="80" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USS/track/turnout/left/west/os-l-w-inconsistent.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="IS5:LEVER" x="280" y="379" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS5:LEVER</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="301" y="356" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="5" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS6:LDGK" x="276" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS6:LDGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS6:NGK" x="294" y="440" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS6:NGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="310" y="454" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/Panels/knockout.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <signalmasticon signalmast="SM-Beta-Spur" x="292" y="70" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Spur</tooltip>
+    </signalmasticon>
+    <multisensoricon x="280" y="492" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <tooltip>IS6:LDGL,IS6:NGL,</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0" sensor="IS6:LDGL">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/lever-vertical-wide.gif" degrees="0" scale="1.0" sensor="IS6:NGL">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-inactive-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <positionablelabel x="301" y="470" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="6" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS6:LOCKTOGGLE" x="293" y="541" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS6:LOCKTOGGLE</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/switch-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="320" y="536" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Local" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="320" y="560" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Locked" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS6:UNLOCKEDINDICATOR" x="294" y="200" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS6:UNLOCKEDINDICATOR</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="281" y="230" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Unlocked" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="337" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-blank-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="402" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-sw-sig-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <sensoricon sensor="S-Beta-Right" x="423" y="78" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>S-Beta-Right</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS7:SWNI" x="406" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS7:SWNI</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS7:SWRI" x="440" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS7:SWRI</tooltip>
+      <active url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/amber-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <turnouticon turnout="T-Beta-Right" x="411" y="80" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USS/track/turnout/left/west/os-l-w-inconsistent.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="IS7:LEVER" x="410" y="379" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS7:LEVER</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="431" y="356" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="7" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS8:LDGK" x="406" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS8:LDGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS8:NGK" x="424" y="440" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS8:NGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS8:RDGK" x="440" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS8:RDGK</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <signalmasticon signalmast="SM-Beta-Right-B" x="412" y="120" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Right-B</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="SM-Beta-Right-C" x="401" y="120" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Right-C</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="SM-Beta-Right-A" x="422" y="70" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SM-Beta-Right-A</tooltip>
+    </signalmasticon>
+    <multisensoricon x="410" y="492" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <tooltip>IS8:LDGL,IS8:NGL,IS8:RDGL</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0" sensor="IS8:LDGL">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/lever-vertical-wide.gif" degrees="0" scale="1.0" sensor="IS8:NGL">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0" sensor="IS8:RDGL">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-inactive-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <positionablelabel x="431" y="470" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="8" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="467" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-blank-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="532" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-switch-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <sensoricon sensor="IS10:CB" x="553" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS10:CB</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/code.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/code-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Right-Approach" x="553" y="78" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>S-Right-Approach</tooltip>
+      <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS9:SWNI" x="536" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS9:SWNI</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS9:SWRI" x="570" y="340" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS9:SWRI</tooltip>
+      <active url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/amber-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <turnouticon turnout="T-Branch" x="541" y="80" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USS/track/turnout/left/west/os-l-w-inconsistent.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="IS9:LEVER" x="540" y="379" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS9:LEVER</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/lever-unknown-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="561" y="356" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="9" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="597" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-blank-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="662" y="0" level="1" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/background/Panel-right-7.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="397" y="640" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Auto Code" size="13" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+  </paneleditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Mon Sep 14 17:58:17 CDT 2020</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Sep 14 17:58:28 CDT 2020</date>
+      <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/CTC_Test_Misc_Scenarios.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Mon Sep 14 16:32:21 CDT 2020</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Mon Sep 14 16:32:34 CDT 2020</date>
+          <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/CTC_Test_Misc_Scenarios.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Mon Sep 14 16:01:59 CDT 2020</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Mon Sep 14 16:02:09 CDT 2020</date>
+              <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/CTC_Test_Misc_Scenarios.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Mon Sep 14 15:59:11 CDT 2020</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Mon Sep 14 15:59:23 CDT 2020</date>
+                  <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/CTC_Test_Misc_Scenarios.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Mon Sep 14 14:51:10 CDT 2020</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Mon Sep 14 14:51:22 CDT 2020</date>
+                      <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/CTC_Test_Misc_Scenarios.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Mon Sep 14 14:25:03 CDT 2020</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Mon Sep 14 14:50:45 CDT 2020</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Mon Sep 14 15:41:23 CDT 2020</date>
+                      <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/ctc/GUIObjects.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Mon Sep 14 15:46:20 CDT 2020</date>
+                      <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/ctc/GUIObjects.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Mon Sep 14 15:56:20 CDT 2020</date>
+                      <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/ctc/GUIObjects.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Mon Sep 14 15:58:46 CDT 2020</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Mon Sep 14 16:01:46 CDT 2020</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Mon Sep 14 16:08:39 CDT 2020</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Mon Sep 14 17:25:50 CDT 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Sep 14 18:01:29 CDT 2020</date>
+      <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/ctc/GUIObjects.xml</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Mon Sep 14 18:04:42 CDT 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.21.1ish+das+20200914T2258Z+Rfe8f7275d7 on Mon Sep 14 18:04:42 CDT 2020-->
+</layout-config>

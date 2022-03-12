@@ -1,34 +1,31 @@
 package apps.startup;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class StartupActionsPreferencesPanelTest {
+public class StartupActionsPreferencesPanelTest extends PreferencesPanelTestBase<StartupActionsPreferencesPanel> {
 
-    @Test
-    public void testCTor() {
-        StartupActionsPreferencesPanel t = new StartupActionsPreferencesPanel();
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
+    @Override
+    @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initStartupActionsManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initStartupActionsManager();
+        prefsPanel = new StartupActionsPreferencesPanel();
     }
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Override
+    @Test
+    public void isPersistant(){
+        assertThat(prefsPanel.isPersistant()).isTrue();
     }
-
     // private final static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelTest.class);
 
 }

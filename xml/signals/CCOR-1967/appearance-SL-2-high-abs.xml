@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
+        <email>cpunclejoe@gmail.com</email>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-12-29</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2020-06-04</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Clear and Diverging Clear to Approach aspectMapping</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2021-05-15</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Diverging Clear to Diverging Approach aspectMapping</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>CCOR-1967</aspecttable>
+  <name>Double head absolute signal</name>
+  <reference>http://gn-npjointarchive.org/GN_Misc/ccor_1967.pdf</reference>
+  <description>Appearances for a two-head absolute block signal</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 53</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240E.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <reference>Page 54</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240F.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach Alt</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 54</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240F-alt.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Diverging</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 54, RULE 240G Fig.1</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240G.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 54, RULE 240M Fig.1</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240M.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Advance Approach</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>Page 54, RULE 240K Fig.1</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240K.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 54, RULE 240L Fig.1</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240L.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 53, RULE 240D Fig.2</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240D.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting Lunar</aspectname>
+      <show>lunar</show>
+      <show>red</show>
+      <reference>Page 55, RULE 240N Fig.8</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240N-lunar.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting Lunar Div</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Page 55, RULE240N Fig.2</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240N-lunarDiv.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Flashing Stop and Proceed</aspectname>
+      <show>flashred</show>
+      <show>red</show>
+      <reference>Page 53, RULE 240C Fig.7</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240C-normal.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Flashing Stop and Proceed Div</aspectname>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>Page 53, RULE240C Fig.2</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240C-div.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 53, RULE 240A, Fig.2</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240A.gif</imagelink>
+    </appearance>
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+	<aspect>Flashing Stop and Proceed</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-high-abs/rule-240A-held.gif</imagelink>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach Alt</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear Alt</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Advance Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Advance Approach</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Advance Approach Alt</ourAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Diverging Advance Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting Lunar</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting Lunar Div</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Flashing Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Flashing Stop and Proceed Div</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Flashing Stop and Proceed Div</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+</appearancetable>

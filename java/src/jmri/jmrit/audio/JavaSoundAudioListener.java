@@ -40,7 +40,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     public JavaSoundAudioListener(String systemName) {
         super(systemName);
         if (log.isDebugEnabled()) {
-            log.debug("New JavaSoundAudioListener: " + systemName);
+            log.debug("New JavaSoundAudioListener: {}", systemName);
         }
     }
 
@@ -53,7 +53,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     public JavaSoundAudioListener(String systemName, String userName) {
         super(systemName, userName);
         if (log.isDebugEnabled()) {
-            log.debug("New JavaSoundAudioListener: " + userName + " (" + systemName + ")");
+            log.debug("New JavaSoundAudioListener: {} ({})", userName, systemName);
         }
     }
 
@@ -80,7 +80,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
                 ((JavaSoundAudioSource) audio).calculateGain();
                 ((JavaSoundAudioSource) audio).calculatePan();
                 if (log.isDebugEnabled()) {
-                    log.debug("Recalculating gain & pan for JavaSoundAudioSource " + audio.getSystemName());
+                    log.debug("Recalculating gain & pan for JavaSoundAudioSource {}", audio.getSystemName());
                 }
             }
         }
@@ -90,9 +90,8 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     protected void cleanup() {
         // no clean-up needed for Listener
         if (log.isDebugEnabled()) {
-            log.debug("Cleanup JavaSoundAudioListener (" + this.getSystemName() + ")");
+            log.debug("Cleanup JavaSoundAudioListener ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioListener.class);

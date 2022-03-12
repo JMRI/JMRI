@@ -7,10 +7,8 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the LnTurnoutManagerXml class
@@ -59,10 +57,8 @@ public class LnTurnoutManagerXmlTest {
     LocoNetSystemConnectionMemo memo;
     LnTurnoutManager lmtm;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();
         // prepare an interface
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -74,7 +70,7 @@ public class LnTurnoutManagerXmlTest {
         jmri.InstanceManager.setTurnoutManager(lmtm);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         lnis = null;

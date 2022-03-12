@@ -1,19 +1,21 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class LocationEditFrameTest extends OperationsTestCase {
 
@@ -54,10 +56,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("changed location name", "Newer Test Location", newLoc.getName());
 
         // test delete button
-        JemmyUtil.enterClickAndLeave(f.deleteLocationButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteLocationButton);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // location now deleted
         Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
 

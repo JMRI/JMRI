@@ -2,12 +2,12 @@
 
     <constraint id="testrules:TestClassName">
         <requiresConcept refId="junit4:TestClass" />
-        <description>All JUnit test classes must have a name that includes "Test", "Base", or "Demo".</description>
+        <description>All JUnit test classes must have a name that includes "IT", "Test", "Base", or "Demo".</description>
         <cypher><![CDATA[
             MATCH
                 (t:Junit4:Test:Class)
             WHERE NOT
-                t.name =~ ".*(Test|Base|Demo).*"
+                t.name =~ ".*(IT|Test|Base|Demo).*"
             RETURN
                 t AS InvalidTestClass
         ]]></cypher>

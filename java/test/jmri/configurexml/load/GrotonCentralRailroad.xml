@@ -1,0 +1,2008 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>19</minor>
+    <test>2</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+      <userName>Reset Main</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>Close Yard</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS12</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS20</systemName>
+      <userName>HB20</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS21</systemName>
+      <userName>HB21</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS22</systemName>
+      <userName>HB22</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS23</systemName>
+      <userName>HB23</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS30</systemName>
+      <userName>DV30</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS31</systemName>
+      <userName>DV31</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS32</systemName>
+      <userName>DV32</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS33</systemName>
+      <userName>DV33</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS40</systemName>
+      <userName>PA40</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS41</systemName>
+      <userName>PA41</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS42</systemName>
+      <userName>PA42</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS43</systemName>
+      <userName>PA43</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS44</systemName>
+      <userName>PA44</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS45</systemName>
+      <userName>PA45</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS46</systemName>
+      <userName>PA46</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS47</systemName>
+      <userName>PA47</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS48</systemName>
+      <userName>PA48</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS49</systemName>
+      <userName>PA49</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS50</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS51</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS52</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS53</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS54</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS55</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS56</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS57</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS58</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS59</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS60</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS61</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS62</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS63</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS64</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS65</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS66</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS67</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS68</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS69</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS70</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS71</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS72</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS73</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS74</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS75</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS76</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS77</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS78</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS79</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS80</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS81</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS85</systemName>
+      <userName>WH85</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS86</systemName>
+      <userName>WH86</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS87</systemName>
+      <userName>WH87</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS88</systemName>
+      <userName>WH88</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS89</systemName>
+      <userName>WH89</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS105</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS231</systemName>
+      <userName>FM Rev Loop</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS254</systemName>
+      <userName>Throw Yard</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS255</systemName>
+      <userName>Throw Main</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISDV</systemName>
+      <userName>DanVille</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISDVS</systemName>
+      <userName>DanVille Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISFRMT</systemName>
+      <userName>Fremont</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISFRMTS</systemName>
+      <userName>Fremont Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISFRN</systemName>
+      <userName>Farmingtron</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISFRNS</systemName>
+      <userName>Farmington Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISHB</systemName>
+      <userName>Hillsboro</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISHSS</systemName>
+      <userName>Hillsboro Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISNILES</systemName>
+      <userName>Niles Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISNILS</systemName>
+      <userName>Niles</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISPA</systemName>
+      <userName>Port Arthur</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISPAS</systemName>
+      <userName>Port Arthur Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS1</systemName>
+      <userName>Reset Main Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS2</systemName>
+      <userName>Reset Yard Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS12</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS20</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS21</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS22</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS23</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS30</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS31</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS32</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS33</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS40</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS41</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS42</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS43</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS44</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS45</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS46</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS47</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS48</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS50</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS51</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS52</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS53</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS54</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS55</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS56</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS57</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS58</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS59</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS60</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS61</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS62</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS63</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS64</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS65</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS66</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS67</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS68</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS69</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS70</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS71</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS72</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS73</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS74</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS75</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS76</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS77</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS78</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS79</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS80</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS81</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS85</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS86</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS87</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS88</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS89</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS254</systemName>
+      <userName>Throw Yard Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISS255</systemName>
+      <userName>Throw Main Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSLV</systemName>
+      <userName>Silverton</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSLVS</systemName>
+      <userName>Silverton Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISWC</systemName>
+      <userName>Walnut</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISWCS</systemName>
+      <userName>Walnut Status</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT10</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT11</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT12</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT20</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT21</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT22</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT23</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT29</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT30</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT31</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT32</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT33</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT40</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT41</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT42</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT43</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT44</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT45</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT46</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT47</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT48</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT49</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT50</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT51</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT52</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT53</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT54</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT55</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT56</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT57</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT58</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT59</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT60</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT61</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT62</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT63</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT64</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT65</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT66</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT67</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT68</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT69</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT70</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT71</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT72</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT73</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT74</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT75</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT76</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT77</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT78</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT79</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT80</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT81</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT85</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT86</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT87</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT88</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT89</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT101</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT103</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT105</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT107</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT109</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT111</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT113</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT115</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT117</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT119</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT121</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT123</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT125</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT127</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT129</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT131</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT133</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT135</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT137</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT139</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT141</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT143</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT145</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT147</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT149</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT151</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT153</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT155</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT157</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT159</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT161</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT163</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT165</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT167</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT169</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT171</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT173</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT175</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT177</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT179</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT181</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT183</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT185</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT187</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT189</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT191</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT193</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT195</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT197</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT199</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT201</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT203</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT205</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT207</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT209</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT211</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT213</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT215</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT217</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT219</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT221</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT223</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT225</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT227</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT229</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT231</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT233</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT235</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT237</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT301</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT303</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT305</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT307</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT309</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT311</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT313</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT315</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT317</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT319</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT321</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT323</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT325</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT327</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT329</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT331</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT333</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT335</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT337</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT339</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT341</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT343</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT401</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT403</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT405</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT407</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT415</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT417</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT419</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT421</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT423</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT425</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT427</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT431</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1000</systemName>
+      <userName>Lock Main</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1001</systemName>
+      <userName>Lock Bksfld</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1002</systemName>
+      <userName>Lock Port Arthur</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1003</systemName>
+      <userName>Lock Danville</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1004</systemName>
+      <userName>Lock Hillsboro</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1005</systemName>
+      <userName>Lock Farmington</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1006</systemName>
+      <userName>Lock Walnut Creek</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1007</systemName>
+      <userName>Lock Fremont</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1008</systemName>
+      <userName>Lock Silverton</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1009</systemName>
+      <userName>Lock Freemont Loop</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1010</systemName>
+      <userName>Lock Niles</userName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="7:46 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+    <route userName="Bakersfield 60">
+      <systemName>IOBF60</systemName>
+      <userName>Bakersfield 60</userName>
+      <routeOutputTurnout systemName="IT301" state="THROWN" />
+      <routeSensor systemName="IS60" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS60" />
+    </route>
+    <route userName="Bakersfield 61">
+      <systemName>IOBF61</systemName>
+      <userName>Bakersfield 61</userName>
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="THROWN" />
+      <routeOutputTurnout systemName="IT309" state="THROWN" />
+      <routeSensor systemName="IS61" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS61" />
+    </route>
+    <route userName="Bakersfield 62">
+      <systemName>IOBF62</systemName>
+      <userName>Bakersfield 62</userName>
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="THROWN" />
+      <routeOutputTurnout systemName="IT309" state="CLOSED" />
+      <routeSensor systemName="IS62" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS62" />
+    </route>
+    <route userName="Bakersfield 63">
+      <systemName>IOBF63</systemName>
+      <userName>Bakersfield 63</userName>
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="CLOSED" />
+      <routeOutputTurnout systemName="IT305" state="THROWN" />
+      <routeOutputTurnout systemName="IT307" state="THROWN" />
+      <routeSensor systemName="IS63" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS63" />
+    </route>
+    <route userName="Bakersfield 64">
+      <systemName>IOBF64</systemName>
+      <userName>Bakersfield 64</userName>
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="CLOSED" />
+      <routeOutputTurnout systemName="IT305" state="THROWN" />
+      <routeOutputTurnout systemName="IT307" state="CLOSED" />
+      <routeSensor systemName="IS64" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS64" />
+    </route>
+    <route userName="Bakersfield 65">
+      <systemName>IOBF65</systemName>
+      <userName>Bakersfield 65</userName>
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="CLOSED" />
+      <routeOutputTurnout systemName="IT305" state="CLOSED" />
+      <routeOutputTurnout systemName="IT329" state="CLOSED" />
+      <routeOutputTurnout systemName="IT331" state="CLOSED" />
+      <routeOutputTurnout systemName="IT335" state="CLOSED" />
+      <routeOutputTurnout systemName="IT337" state="CLOSED" />
+      <routeOutputTurnout systemName="IT339" state="CLOSED" />
+      <routeSensor systemName="IS65" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS65" />
+    </route>
+    <route userName="Bakersfield 66">
+      <systemName>IOBF66</systemName>
+      <userName>Bakersfield 66</userName>
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="CLOSED" />
+      <routeOutputTurnout systemName="IT331" state="CLOSED" />
+      <routeOutputTurnout systemName="IT333" state="CLOSED" />
+      <routeOutputTurnout systemName="IT335" state="THROWN" />
+      <routeOutputTurnout systemName="IT337" state="CLOSED" />
+      <routeOutputTurnout systemName="IT339" state="CLOSED" />
+      <routeSensor systemName="IS66" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS66" />
+    </route>
+    <route userName="Bakersfield 67">
+      <systemName>IOBF67</systemName>
+      <userName>Bakersfield 67</userName>
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="CLOSED" />
+      <routeOutputTurnout systemName="IT333" state="THROWN" />
+      <routeOutputTurnout systemName="IT335" state="THROWN" />
+      <routeOutputTurnout systemName="IT337" state="CLOSED" />
+      <routeOutputTurnout systemName="IT339" state="CLOSED" />
+      <routeSensor systemName="IS67" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS67" />
+    </route>
+    <route userName="Bakersfield 68">
+      <systemName>IOBF68</systemName>
+      <userName>Bakersfield 68</userName>
+      <routeOutputTurnout systemName="IT331" state="THROWN" />
+      <routeOutputTurnout systemName="IT333" state="CLOSED" />
+      <routeOutputTurnout systemName="IT335" state="CLOSED" />
+      <routeSensor systemName="IS68" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS68" />
+    </route>
+    <route userName="Bakersfield 69">
+      <systemName>IOBF69</systemName>
+      <userName>Bakersfield 69</userName>
+      <routeOutputTurnout systemName="IT331" state="THROWN" />
+      <routeOutputTurnout systemName="IT333" state="CLOSED" />
+      <routeOutputTurnout systemName="IT335" state="THROWN" />
+      <routeSensor systemName="IS69" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS69" />
+    </route>
+    <route userName="Bakersfield 70">
+      <systemName>IOBF70</systemName>
+      <userName>Bakersfield 70</userName>
+      <routeOutputTurnout systemName="IT311" state="CLOSED" />
+      <routeOutputTurnout systemName="IT321" state="CLOSED" />
+      <routeOutputTurnout systemName="IT323" state="CLOSED" />
+      <routeOutputTurnout systemName="IT325" state="CLOSED" />
+      <routeOutputTurnout systemName="IT327" state="CLOSED" />
+      <routeOutputTurnout systemName="IT329" state="THROWN" />
+      <routeSensor systemName="IS70" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS70" />
+    </route>
+    <route userName="Bakersfield 71">
+      <systemName>IOBF71</systemName>
+      <userName>Bakersfield 71</userName>
+      <routeOutputTurnout systemName="IT321" state="THROWN" />
+      <routeOutputTurnout systemName="IT323" state="CLOSED" />
+      <routeOutputTurnout systemName="IT325" state="CLOSED" />
+      <routeOutputTurnout systemName="IT327" state="CLOSED" />
+      <routeOutputTurnout systemName="IT329" state="THROWN" />
+      <routeSensor systemName="IS71" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS71" />
+    </route>
+    <route userName="Bakersfield 72">
+      <systemName>IOBF72</systemName>
+      <userName>Bakersfield 72</userName>
+      <routeOutputTurnout systemName="IT323" state="THROWN" />
+      <routeOutputTurnout systemName="IT325" state="CLOSED" />
+      <routeOutputTurnout systemName="IT327" state="CLOSED" />
+      <routeOutputTurnout systemName="IT329" state="THROWN" />
+      <routeSensor systemName="IS72" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS72" />
+    </route>
+    <route userName="Bakersfield 73">
+      <systemName>IOBF73</systemName>
+      <userName>Bakersfield 73</userName>
+      <routeOutputTurnout systemName="IT325" state="THROWN" />
+      <routeOutputTurnout systemName="IT327" state="CLOSED" />
+      <routeOutputTurnout systemName="IT329" state="THROWN" />
+      <routeSensor systemName="IS73" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS73" />
+    </route>
+    <route userName="Bakersfield 74">
+      <systemName>IOBF74</systemName>
+      <userName>Bakersfield 74</userName>
+      <routeOutputTurnout systemName="IT327" state="THROWN" />
+      <routeOutputTurnout systemName="IT329" state="THROWN" />
+      <routeSensor systemName="IS74" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS74" />
+    </route>
+    <route userName="Bakersfield 75">
+      <systemName>IOBF75</systemName>
+      <userName>Bakersfield 75</userName>
+      <routeOutputTurnout systemName="IT329" state="CLOSED" />
+      <routeOutputTurnout systemName="IT331" state="CLOSED" />
+      <routeOutputTurnout systemName="IT335" state="CLOSED" />
+      <routeSensor systemName="IS75" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS75" />
+    </route>
+    <route userName="Bakersfield 76">
+      <systemName>IOBF76</systemName>
+      <userName>Bakersfield 76</userName>
+      <routeOutputTurnout systemName="IT337" state="THROWN" />
+      <routeOutputTurnout systemName="IT339" state="CLOSED" />
+      <routeOutputTurnout systemName="IT341" state="THROWN" />
+      <routeOutputTurnout systemName="IT343" state="CLOSED" />
+      <routeSensor systemName="IS76" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS76" />
+    </route>
+    <route userName="Bakersfield 77">
+      <systemName>IOBF77</systemName>
+      <userName>Bakersfield 77</userName>
+      <routeOutputTurnout systemName="IT337" state="THROWN" />
+      <routeOutputTurnout systemName="IT339" state="CLOSED" />
+      <routeOutputTurnout systemName="IT341" state="CLOSED" />
+      <routeOutputTurnout systemName="IT343" state="CLOSED" />
+      <routeSensor systemName="IS77" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS77" />
+    </route>
+    <route userName="Bakersfield 78">
+      <systemName>IOBF78</systemName>
+      <userName>Bakersfield 78</userName>
+      <routeOutputTurnout systemName="IT337" state="THROWN" />
+      <routeOutputTurnout systemName="IT339" state="THROWN" />
+      <routeOutputTurnout systemName="IT341" state="CLOSED" />
+      <routeSensor systemName="IS78" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS78" />
+    </route>
+    <route userName="Bakersfield 79">
+      <systemName>IOBF79</systemName>
+      <userName>Bakersfield 79</userName>
+      <routeOutputTurnout systemName="IT337" state="THROWN" />
+      <routeSensor systemName="IS79" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS79" />
+    </route>
+    <route userName="Bakersfield 80">
+      <systemName>IOBF80</systemName>
+      <userName>Bakersfield 80</userName>
+      <routeOutputTurnout systemName="IT311" state="THROWN" />
+      <routeOutputTurnout systemName="IT313" state="CLOSED" />
+      <routeSensor systemName="IS80" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS80" />
+    </route>
+    <route userName="Bakersfield 81">
+      <systemName>IOBF81</systemName>
+      <userName>Bakersfield 81</userName>
+      <routeOutputTurnout systemName="IT311" state="THROWN" />
+      <routeOutputTurnout systemName="IT313" state="THROWN" />
+      <routeSensor systemName="IS81" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS81" />
+    </route>
+    <route userName="Close Yard Switches">
+      <systemName>IOCLOSE YARD</systemName>
+      <userName>Close Yard Switches</userName>
+      <routeOutputTurnout systemName="IT103" state="CLOSED" />
+      <routeOutputTurnout systemName="IT117" state="CLOSED" />
+      <routeOutputTurnout systemName="IT121" state="CLOSED" />
+      <routeOutputTurnout systemName="IT123" state="CLOSED" />
+      <routeOutputTurnout systemName="IT125" state="CLOSED" />
+      <routeOutputTurnout systemName="IT131" state="CLOSED" />
+      <routeOutputTurnout systemName="IT133" state="CLOSED" />
+      <routeOutputTurnout systemName="IT139" state="CLOSED" />
+      <routeOutputTurnout systemName="IT141" state="CLOSED" />
+      <routeOutputTurnout systemName="IT143" state="CLOSED" />
+      <routeOutputTurnout systemName="IT145" state="CLOSED" />
+      <routeOutputTurnout systemName="IT167" state="CLOSED" />
+      <routeOutputTurnout systemName="IT169" state="CLOSED" />
+      <routeOutputTurnout systemName="IT171" state="CLOSED" />
+      <routeOutputTurnout systemName="IT173" state="CLOSED" />
+      <routeOutputTurnout systemName="IT179" state="CLOSED" />
+      <routeOutputTurnout systemName="IT181" state="CLOSED" />
+      <routeOutputTurnout systemName="IT183" state="CLOSED" />
+      <routeOutputTurnout systemName="IT185" state="CLOSED" />
+      <routeOutputTurnout systemName="IT187" state="CLOSED" />
+      <routeOutputTurnout systemName="IT189" state="CLOSED" />
+      <routeOutputTurnout systemName="IT201" state="CLOSED" />
+      <routeOutputTurnout systemName="IT203" state="CLOSED" />
+      <routeOutputTurnout systemName="IT209" state="CLOSED" />
+      <routeOutputTurnout systemName="IT211" state="CLOSED" />
+      <routeOutputTurnout systemName="IT213" state="CLOSED" />
+      <routeOutputTurnout systemName="IT217" state="CLOSED" />
+      <routeOutputTurnout systemName="IT219" state="CLOSED" />
+      <routeOutputTurnout systemName="IT227" state="CLOSED" />
+      <routeOutputTurnout systemName="IT235" state="CLOSED" />
+      <routeOutputTurnout systemName="IT237" state="CLOSED" />
+      <routeOutputTurnout systemName="IT301" state="CLOSED" />
+      <routeOutputTurnout systemName="IT303" state="CLOSED" />
+      <routeOutputTurnout systemName="IT305" state="CLOSED" />
+      <routeOutputTurnout systemName="IT307" state="CLOSED" />
+      <routeOutputTurnout systemName="IT309" state="CLOSED" />
+      <routeOutputTurnout systemName="IT311" state="CLOSED" />
+      <routeOutputTurnout systemName="IT313" state="CLOSED" />
+      <routeOutputTurnout systemName="IT315" state="CLOSED" />
+      <routeOutputTurnout systemName="IT317" state="CLOSED" />
+      <routeOutputTurnout systemName="IT319" state="CLOSED" />
+      <routeOutputTurnout systemName="IT321" state="CLOSED" />
+      <routeOutputTurnout systemName="IT323" state="CLOSED" />
+      <routeOutputTurnout systemName="IT325" state="CLOSED" />
+      <routeOutputTurnout systemName="IT327" state="CLOSED" />
+      <routeOutputTurnout systemName="IT329" state="CLOSED" />
+      <routeOutputTurnout systemName="IT331" state="CLOSED" />
+      <routeOutputTurnout systemName="IT333" state="CLOSED" />
+      <routeOutputTurnout systemName="IT335" state="CLOSED" />
+      <routeOutputTurnout systemName="IT337" state="CLOSED" />
+      <routeOutputTurnout systemName="IT339" state="CLOSED" />
+      <routeOutputTurnout systemName="IT341" state="CLOSED" />
+      <routeOutputTurnout systemName="IT343" state="CLOSED" />
+      <routeOutputTurnout systemName="IT401" state="CLOSED" />
+      <routeOutputTurnout systemName="IT403" state="CLOSED" />
+      <routeOutputTurnout systemName="IT405" state="CLOSED" />
+      <routeOutputTurnout systemName="IT407" state="CLOSED" />
+      <routeOutputTurnout systemName="IT415" state="CLOSED" />
+      <routeOutputTurnout systemName="IT417" state="CLOSED" />
+      <routeOutputTurnout systemName="IT419" state="CLOSED" />
+      <routeOutputTurnout systemName="IT421" state="CLOSED" />
+      <routeOutputTurnout systemName="IT425" state="CLOSED" />
+      <routeOutputTurnout systemName="IT427" state="CLOSED" />
+      <routeSensor systemName="IS2" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS2" />
+    </route>
+    <route userName="Reset Danville" controlLockTurnout="IT1003" controlLockTurnoutState="CLOSED">
+      <systemName>IODV</systemName>
+      <userName>Reset Danville</userName>
+      <routeOutputTurnout systemName="IT137" state="CLOSED" />
+      <routeOutputTurnout systemName="IT147" state="CLOSED" />
+      <routeOutputTurnout systemName="IT149" state="CLOSED" />
+      <routeOutputTurnout systemName="IT151" state="CLOSED" />
+      <routeSensor systemName="ISDV" mode="onActive" />
+      <turnoutsAlignedSensor name="ISDVS" />
+    </route>
+    <route userName="Danville 30">
+      <systemName>IODV30</systemName>
+      <userName>Danville 30</userName>
+      <routeOutputTurnout systemName="IT139" state="CLOSED" />
+      <routeOutputTurnout systemName="IT141" state="THROWN" />
+      <routeSensor systemName="IS30" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS30" />
+    </route>
+    <route userName="Danville 31">
+      <systemName>IODV31</systemName>
+      <userName>Danville 31</userName>
+      <routeOutputTurnout systemName="IT139" state="CLOSED" />
+      <routeOutputTurnout systemName="IT141" state="CLOSED" />
+      <routeSensor systemName="IS31" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS31" />
+    </route>
+    <route userName="Danville 32">
+      <systemName>IODV32</systemName>
+      <userName>Danville 32</userName>
+      <routeOutputTurnout systemName="IT139" state="THROWN" />
+      <routeOutputTurnout systemName="IT141" state="CLOSED" />
+      <routeOutputTurnout systemName="IT143" state="CLOSED" />
+      <routeSensor systemName="IS32" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS32" />
+    </route>
+    <route userName="Danville 33">
+      <systemName>IODV33</systemName>
+      <userName>Danville 33</userName>
+      <routeOutputTurnout systemName="IT139" state="THROWN" />
+      <routeOutputTurnout systemName="IT141" state="CLOSED" />
+      <routeOutputTurnout systemName="IT143" state="THROWN" />
+      <routeSensor systemName="IS33" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS33" />
+    </route>
+    <route userName="Farmington Standard Steel">
+      <systemName>IOFM10</systemName>
+      <userName>Farmington Standard Steel</userName>
+      <routeOutputTurnout systemName="IT187" state="THROWN" />
+      <routeOutputTurnout systemName="IT189" state="THROWN" />
+      <routeSensor systemName="IS10" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS10" />
+    </route>
+    <route userName="Farmington Chalker Beach">
+      <systemName>IOFM11</systemName>
+      <userName>Farmington Chalker Beach</userName>
+      <routeOutputTurnout systemName="IT183" state="CLOSED" />
+      <routeOutputTurnout systemName="IT187" state="THROWN" />
+      <routeOutputTurnout systemName="IT189" state="CLOSED" />
+      <routeSensor systemName="IS11" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS11" />
+    </route>
+    <route userName="Farmington Wood's Hole">
+      <systemName>IOFM12</systemName>
+      <userName>Farmington Wood's Hole</userName>
+      <routeOutputTurnout systemName="IT179" state="CLOSED" />
+      <routeOutputTurnout systemName="IT181" state="CLOSED" />
+      <routeOutputTurnout systemName="IT187" state="CLOSED" />
+      <routeOutputTurnout systemName="IT189" state="CLOSED" />
+      <routeSensor systemName="IS12" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS12" />
+    </route>
+    <route userName="Reset Freemont" controlLockTurnout="IT1007" controlLockTurnoutState="CLOSED">
+      <systemName>IOFRMT</systemName>
+      <userName>Reset Freemont</userName>
+      <routeOutputTurnout systemName="IT225" state="CLOSED" />
+      <routeOutputTurnout systemName="IT227" state="CLOSED" />
+      <routeOutputTurnout systemName="IT229" state="CLOSED" />
+      <routeSensor systemName="ISFRMT" mode="onActive" />
+      <turnoutsAlignedSensor name="ISFRMTS" />
+    </route>
+    <route userName="Reset Farmington">
+      <systemName>IOFRN</systemName>
+      <userName>Reset Farmington</userName>
+      <routeOutputTurnout systemName="IT101" state="CLOSED" />
+      <routeOutputTurnout systemName="IT105" state="CLOSED" />
+      <routeOutputTurnout systemName="IT107" state="CLOSED" />
+      <routeOutputTurnout systemName="IT109" state="CLOSED" />
+      <routeSensor systemName="ISFRN" mode="onActive" />
+      <turnoutsAlignedSensor name="ISFRNS" />
+    </route>
+    <route userName="Reset Hillsboro" controlLockTurnout="IT1004" controlLockTurnoutState="CLOSED">
+      <systemName>IOHB</systemName>
+      <userName>Reset Hillsboro</userName>
+      <routeOutputTurnout systemName="IT111" state="CLOSED" />
+      <routeOutputTurnout systemName="IT113" state="CLOSED" />
+      <routeOutputTurnout systemName="IT115" state="CLOSED" />
+      <routeOutputTurnout systemName="IT119" state="CLOSED" />
+      <routeOutputTurnout systemName="IT127" state="CLOSED" />
+      <routeOutputTurnout systemName="IT129" state="CLOSED" />
+      <routeOutputTurnout systemName="IT135" state="CLOSED" />
+      <routeOutputTurnout systemName="IT431" state="CLOSED" />
+      <routeSensor systemName="ISHB" mode="onActive" />
+      <turnoutsAlignedSensor name="ISHSS" />
+    </route>
+    <route userName="Hillsboro 20">
+      <systemName>IOHB20</systemName>
+      <userName>Hillsboro 20</userName>
+      <routeOutputTurnout systemName="IT121" state="THROWN" />
+      <routeSensor systemName="IS20" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS20" />
+    </route>
+    <route userName="Hillsboro 21">
+      <systemName>IOHB21</systemName>
+      <userName>Hillsboro 21</userName>
+      <routeOutputTurnout systemName="IT121" state="CLOSED" />
+      <routeOutputTurnout systemName="IT123" state="THROWN" />
+      <routeOutputTurnout systemName="IT125" state="THROWN" />
+      <routeSensor systemName="IS21" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS21" />
+    </route>
+    <route userName="Hillsboro 22">
+      <systemName>IOHB22</systemName>
+      <userName>Hillsboro 22</userName>
+      <routeOutputTurnout systemName="IT121" state="CLOSED" />
+      <routeOutputTurnout systemName="IT123" state="THROWN" />
+      <routeOutputTurnout systemName="IT125" state="CLOSED" />
+      <routeSensor systemName="IS22" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS22" />
+    </route>
+    <route userName="Hillsboro 23">
+      <systemName>IOHB23</systemName>
+      <userName>Hillsboro 23</userName>
+      <routeOutputTurnout systemName="IT121" state="CLOSED" />
+      <routeOutputTurnout systemName="IT123" state="CLOSED" />
+      <routeOutputTurnout systemName="IT127" state="CLOSED" />
+      <routeSensor systemName="IS23" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS23" />
+    </route>
+    <route userName="Lock Bakersfield" controlLockTurnout="IT1001" controlLockTurnoutState="CLOSED">
+      <systemName>IOLK_BKSFLD</systemName>
+      <userName>Lock Bakersfield</userName>
+      <routeOutputTurnout systemName="IT191" state="CLOSED" />
+      <routeOutputTurnout systemName="IT193" state="CLOSED" />
+    </route>
+    <route userName="Lock Freemont Loop" controlLockTurnout="IT1009" controlLockTurnoutState="CLOSED">
+      <systemName>IOLK_FREEMONT</systemName>
+      <userName>Lock Freemont Loop</userName>
+      <routeOutputTurnout systemName="IT231" state="CLOSED" />
+      <routeOutputTurnout systemName="IT233" state="CLOSED" />
+    </route>
+    <route userName="Lock Farmington" controlLockTurnout="IT1005" controlLockTurnoutState="CLOSED">
+      <systemName>IOLK_FRN</systemName>
+      <userName>Lock Farmington</userName>
+      <routeOutputTurnout systemName="IT101" state="CLOSED" />
+      <routeOutputTurnout systemName="IT107" state="CLOSED" />
+      <routeOutputTurnout systemName="IT109" state="CLOSED" />
+      <routeSensor systemName="ISFRN" mode="onActive" />
+    </route>
+    <route userName="Lock all main turnouts" controlTurnout="IT1000" controlTurnoutState="CLOSED">
+      <systemName>IOLK_MAIN</systemName>
+      <userName>Lock all main turnouts</userName>
+      <routeOutputTurnout systemName="IT1001" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1002" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1003" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1004" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1005" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1006" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1007" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1008" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1009" state="CLOSED" />
+      <routeOutputTurnout systemName="IT1010" state="CLOSED" />
+    </route>
+    <route userName="Fremont 231">
+      <systemName>IOLOOP 231</systemName>
+      <userName>Fremont 231</userName>
+      <routeOutputTurnout systemName="IT231" state="CLOSED" />
+      <routeOutputTurnout systemName="IT233" state="CLOSED" />
+      <routeSensor systemName="IS231" mode="onActive" />
+    </route>
+    <route userName="Fremont 232">
+      <systemName>IOLOOP 232</systemName>
+      <userName>Fremont 232</userName>
+      <routeOutputTurnout systemName="IT231" state="THROWN" />
+      <routeOutputTurnout systemName="IT233" state="THROWN" />
+      <routeSensor systemName="IS231" mode="onInactive" />
+    </route>
+    <route userName="Reset Niles" controlLockTurnout="IT1010" controlLockTurnoutState="CLOSED">
+      <systemName>IONILE</systemName>
+      <userName>Reset Niles</userName>
+      <routeOutputTurnout systemName="IT175" state="THROWN" />
+      <routeOutputTurnout systemName="IT177" state="THROWN" />
+      <routeSensor systemName="ISNILS" mode="onActive" />
+      <turnoutsAlignedSensor name="ISNILES" />
+    </route>
+    <route userName="Reset Port Arthur" controlLockTurnout="IT1002" controlLockTurnoutState="CLOSED">
+      <systemName>IOPA</systemName>
+      <userName>Reset Port Arthur</userName>
+      <routeOutputTurnout systemName="IT153" state="CLOSED" />
+      <routeOutputTurnout systemName="IT155" state="CLOSED" />
+      <routeOutputTurnout systemName="IT157" state="CLOSED" />
+      <routeOutputTurnout systemName="IT159" state="CLOSED" />
+      <routeOutputTurnout systemName="IT161" state="CLOSED" />
+      <routeOutputTurnout systemName="IT163" state="CLOSED" />
+      <routeOutputTurnout systemName="IT165" state="CLOSED" />
+      <routeOutputTurnout systemName="IT423" state="CLOSED" />
+      <routeSensor systemName="ISPA" mode="onActive" />
+      <turnoutsAlignedSensor name="ISPAS" />
+    </route>
+    <route userName="Port Arthur 40">
+      <systemName>IOPA40</systemName>
+      <userName>Port Arthur 40</userName>
+      <routeOutputTurnout systemName="IT167" state="THROWN" />
+      <routeOutputTurnout systemName="IT169" state="THROWN" />
+      <routeSensor systemName="IS40" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS40" />
+    </route>
+    <route userName="Port Arthur 41">
+      <systemName>IOPA41</systemName>
+      <userName>Port Arthur 41</userName>
+      <routeOutputTurnout systemName="IT167" state="THROWN" />
+      <routeOutputTurnout systemName="IT169" state="CLOSED" />
+      <routeSensor systemName="IS41" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS41" />
+    </route>
+    <route userName="Port Arthur 42">
+      <systemName>IOPA42</systemName>
+      <userName>Port Arthur 42</userName>
+      <routeOutputTurnout systemName="IT167" state="CLOSED" />
+      <routeOutputTurnout systemName="IT171" state="CLOSED" />
+      <routeOutputTurnout systemName="IT173" state="THROWN" />
+      <routeSensor systemName="IS42" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS42" />
+    </route>
+    <route userName="Port Arthur 43">
+      <systemName>IOPA43</systemName>
+      <userName>Port Arthur 43</userName>
+      <routeOutputTurnout systemName="IT167" state="CLOSED" />
+      <routeOutputTurnout systemName="IT171" state="CLOSED" />
+      <routeOutputTurnout systemName="IT173" state="CLOSED" />
+      <routeSensor systemName="IS43" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS43" />
+    </route>
+    <route userName="Port Arthur 44">
+      <systemName>IOPA44</systemName>
+      <userName>Port Arthur 44</userName>
+      <routeOutputTurnout systemName="IT167" state="CLOSED" />
+      <routeOutputTurnout systemName="IT171" state="THROWN" />
+      <routeSensor systemName="IS44" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS44" />
+    </route>
+    <route userName="Port Arthur 45">
+      <systemName>IOPA45</systemName>
+      <userName>Port Arthur 45</userName>
+      <routeOutputTurnout systemName="IT415" state="THROWN" />
+      <routeOutputTurnout systemName="IT417" state="CLOSED" />
+      <routeOutputTurnout systemName="IT421" state="THROWN" />
+      <routeSensor systemName="IS45" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS45" />
+    </route>
+    <route userName="Port Arthur 46">
+      <systemName>IOPA46</systemName>
+      <userName>Port Arthur 46</userName>
+      <routeOutputTurnout systemName="IT415" state="THROWN" />
+      <routeOutputTurnout systemName="IT417" state="CLOSED" />
+      <routeOutputTurnout systemName="IT421" state="CLOSED" />
+      <routeSensor systemName="IS46" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS46" />
+    </route>
+    <route userName="Port Arthur 47">
+      <systemName>IOPA47</systemName>
+      <userName>Port Arthur 47</userName>
+      <routeOutputTurnout systemName="IT415" state="THROWN" />
+      <routeOutputTurnout systemName="IT417" state="THROWN" />
+      <routeOutputTurnout systemName="IT419" state="THROWN" />
+      <routeSensor systemName="IS47" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS47" />
+    </route>
+    <route userName="Port Arthur 48">
+      <systemName>IOPA48</systemName>
+      <userName>Port Arthur 48</userName>
+      <routeOutputTurnout systemName="IT415" state="THROWN" />
+      <routeOutputTurnout systemName="IT417" state="THROWN" />
+      <routeOutputTurnout systemName="IT419" state="CLOSED" />
+      <routeOutputTurnout systemName="IT425" state="THROWN" />
+      <routeSensor systemName="IS48" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS48" />
+    </route>
+    <route userName="Reset Main Switches">
+      <systemName>IORESET</systemName>
+      <userName>Reset Main Switches</userName>
+      <routeOutputTurnout systemName="IT101" state="CLOSED" />
+      <routeOutputTurnout systemName="IT105" state="CLOSED" />
+      <routeOutputTurnout systemName="IT107" state="CLOSED" />
+      <routeOutputTurnout systemName="IT109" state="CLOSED" />
+      <routeOutputTurnout systemName="IT111" state="CLOSED" />
+      <routeOutputTurnout systemName="IT113" state="CLOSED" />
+      <routeOutputTurnout systemName="IT115" state="CLOSED" />
+      <routeOutputTurnout systemName="IT119" state="CLOSED" />
+      <routeOutputTurnout systemName="IT127" state="CLOSED" />
+      <routeOutputTurnout systemName="IT129" state="CLOSED" />
+      <routeOutputTurnout systemName="IT135" state="CLOSED" />
+      <routeOutputTurnout systemName="IT137" state="CLOSED" />
+      <routeOutputTurnout systemName="IT147" state="CLOSED" />
+      <routeOutputTurnout systemName="IT149" state="CLOSED" />
+      <routeOutputTurnout systemName="IT151" state="CLOSED" />
+      <routeOutputTurnout systemName="IT153" state="CLOSED" />
+      <routeOutputTurnout systemName="IT155" state="CLOSED" />
+      <routeOutputTurnout systemName="IT157" state="CLOSED" />
+      <routeOutputTurnout systemName="IT159" state="CLOSED" />
+      <routeOutputTurnout systemName="IT161" state="CLOSED" />
+      <routeOutputTurnout systemName="IT163" state="CLOSED" />
+      <routeOutputTurnout systemName="IT165" state="CLOSED" />
+      <routeOutputTurnout systemName="IT175" state="CLOSED" />
+      <routeOutputTurnout systemName="IT177" state="CLOSED" />
+      <routeOutputTurnout systemName="IT191" state="CLOSED" />
+      <routeOutputTurnout systemName="IT193" state="CLOSED" />
+      <routeOutputTurnout systemName="IT195" state="CLOSED" />
+      <routeOutputTurnout systemName="IT197" state="CLOSED" />
+      <routeOutputTurnout systemName="IT199" state="CLOSED" />
+      <routeOutputTurnout systemName="IT205" state="CLOSED" />
+      <routeOutputTurnout systemName="IT207" state="CLOSED" />
+      <routeOutputTurnout systemName="IT215" state="CLOSED" />
+      <routeOutputTurnout systemName="IT221" state="CLOSED" />
+      <routeOutputTurnout systemName="IT223" state="CLOSED" />
+      <routeOutputTurnout systemName="IT225" state="CLOSED" />
+      <routeOutputTurnout systemName="IT227" state="CLOSED" />
+      <routeOutputTurnout systemName="IT229" state="CLOSED" />
+      <routeOutputTurnout systemName="IT231" state="CLOSED" />
+      <routeOutputTurnout systemName="IT233" state="CLOSED" />
+      <routeOutputTurnout systemName="IT423" state="CLOSED" />
+      <routeOutputTurnout systemName="IT431" state="CLOSED" />
+      <routeOutputSensor systemName="ISDV" state="INACTIVE" />
+      <routeOutputSensor systemName="ISFRMT" state="INACTIVE" />
+      <routeOutputSensor systemName="ISFRN" state="INACTIVE" />
+      <routeOutputSensor systemName="ISHB" state="INACTIVE" />
+      <routeOutputSensor systemName="ISPA" state="INACTIVE" />
+      <routeOutputSensor systemName="ISSLV" state="INACTIVE" />
+      <routeOutputSensor systemName="ISWC" state="INACTIVE" />
+      <routeSensor systemName="IS1" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS1" />
+    </route>
+    <route userName="Reset Silverton" controlLockTurnout="IT1008" controlLockTurnoutState="CLOSED">
+      <systemName>IOSLV</systemName>
+      <userName>Reset Silverton</userName>
+      <routeOutputTurnout systemName="IT205" state="CLOSED" />
+      <routeOutputTurnout systemName="IT207" state="CLOSED" />
+      <routeOutputTurnout systemName="IT215" state="CLOSED" />
+      <routeOutputTurnout systemName="IT221" state="CLOSED" />
+      <routeOutputTurnout systemName="IT223" state="CLOSED" />
+      <routeSensor systemName="ISSLV" mode="onActive" />
+      <turnoutsAlignedSensor name="ISSLVS" />
+    </route>
+    <route userName="Silverton 50">
+      <systemName>IOST50</systemName>
+      <userName>Silverton 50</userName>
+      <routeOutputTurnout systemName="IT209" state="THROWN" />
+      <routeOutputTurnout systemName="IT211" state="CLOSED" />
+      <routeOutputTurnout systemName="IT213" state="CLOSED" />
+      <routeOutputTurnout systemName="IT215" state="THROWN" />
+      <routeSensor systemName="IS50" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS50" />
+    </route>
+    <route userName="Silverton 51">
+      <systemName>IOST51</systemName>
+      <userName>Silverton 51</userName>
+      <routeOutputTurnout systemName="IT209" state="CLOSED" />
+      <routeOutputTurnout systemName="IT211" state="CLOSED" />
+      <routeOutputTurnout systemName="IT213" state="CLOSED" />
+      <routeOutputTurnout systemName="IT215" state="THROWN" />
+      <routeSensor systemName="IS51" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS51" />
+    </route>
+    <route userName="Silverton 52">
+      <systemName>IOST52</systemName>
+      <userName>Silverton 52</userName>
+      <routeOutputTurnout systemName="IT211" state="THROWN" />
+      <routeOutputTurnout systemName="IT213" state="CLOSED" />
+      <routeOutputTurnout systemName="IT215" state="THROWN" />
+      <routeSensor systemName="IS52" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS52" />
+    </route>
+    <route userName="Silverton 53">
+      <systemName>IOST53</systemName>
+      <userName>Silverton 53</userName>
+      <routeOutputTurnout systemName="IT213" state="THROWN" />
+      <routeOutputTurnout systemName="IT215" state="THROWN" />
+      <routeSensor systemName="IS53" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS53" />
+    </route>
+    <route userName="Silverton 54">
+      <systemName>IOST54</systemName>
+      <userName>Silverton 54</userName>
+      <routeOutputTurnout systemName="IT217" state="CLOSED" />
+      <routeOutputTurnout systemName="IT219" state="CLOSED" />
+      <routeOutputTurnout systemName="IT221" state="THROWN" />
+      <routeSensor systemName="IS54" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS54" />
+    </route>
+    <route userName="Silverton 55">
+      <systemName>IOST55</systemName>
+      <userName>Silverton 55</userName>
+      <routeOutputTurnout systemName="IT217" state="THROWN" />
+      <routeOutputTurnout systemName="IT219" state="CLOSED" />
+      <routeOutputTurnout systemName="IT221" state="THROWN" />
+      <routeSensor systemName="IS55" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS55" />
+    </route>
+    <route userName="Silverton 56">
+      <systemName>IOST56</systemName>
+      <userName>Silverton 56</userName>
+      <routeOutputTurnout systemName="IT219" state="THROWN" />
+      <routeOutputTurnout systemName="IT221" state="THROWN" />
+      <routeSensor systemName="IS56" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS56" />
+    </route>
+    <route userName="New River 57">
+      <systemName>IOST57</systemName>
+      <userName>New River 57</userName>
+      <routeOutputTurnout systemName="IT201" state="THROWN" />
+      <routeOutputTurnout systemName="IT203" state="CLOSED" />
+      <routeOutputTurnout systemName="IT205" state="THROWN" />
+      <routeSensor systemName="IS57" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS57" />
+    </route>
+    <route userName="New River 58">
+      <systemName>IOST58</systemName>
+      <userName>New River 58</userName>
+      <routeOutputTurnout systemName="IT201" state="CLOSED" />
+      <routeOutputTurnout systemName="IT203" state="CLOSED" />
+      <routeOutputTurnout systemName="IT205" state="THROWN" />
+      <routeSensor systemName="IS58" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS58" />
+    </route>
+    <route userName="New River 59">
+      <systemName>IOST59</systemName>
+      <userName>New River 59</userName>
+      <routeOutputTurnout systemName="IT203" state="THROWN" />
+      <routeOutputTurnout systemName="IT205" state="THROWN" />
+      <routeSensor systemName="IS59" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS59" />
+    </route>
+    <route userName="Throw Main Switches">
+      <systemName>IOTHROW MAIN</systemName>
+      <userName>Throw Main Switches</userName>
+      <routeOutputTurnout systemName="IT101" state="THROWN" />
+      <routeOutputTurnout systemName="IT105" state="THROWN" />
+      <routeOutputTurnout systemName="IT107" state="THROWN" />
+      <routeOutputTurnout systemName="IT109" state="THROWN" />
+      <routeOutputTurnout systemName="IT111" state="THROWN" />
+      <routeOutputTurnout systemName="IT113" state="THROWN" />
+      <routeOutputTurnout systemName="IT115" state="THROWN" />
+      <routeOutputTurnout systemName="IT119" state="THROWN" />
+      <routeOutputTurnout systemName="IT127" state="THROWN" />
+      <routeOutputTurnout systemName="IT129" state="THROWN" />
+      <routeOutputTurnout systemName="IT135" state="THROWN" />
+      <routeOutputTurnout systemName="IT137" state="THROWN" />
+      <routeOutputTurnout systemName="IT147" state="THROWN" />
+      <routeOutputTurnout systemName="IT149" state="THROWN" />
+      <routeOutputTurnout systemName="IT151" state="THROWN" />
+      <routeOutputTurnout systemName="IT153" state="THROWN" />
+      <routeOutputTurnout systemName="IT155" state="THROWN" />
+      <routeOutputTurnout systemName="IT157" state="THROWN" />
+      <routeOutputTurnout systemName="IT159" state="THROWN" />
+      <routeOutputTurnout systemName="IT161" state="THROWN" />
+      <routeOutputTurnout systemName="IT163" state="THROWN" />
+      <routeOutputTurnout systemName="IT165" state="THROWN" />
+      <routeOutputTurnout systemName="IT175" state="THROWN" />
+      <routeOutputTurnout systemName="IT177" state="THROWN" />
+      <routeOutputTurnout systemName="IT191" state="THROWN" />
+      <routeOutputTurnout systemName="IT193" state="THROWN" />
+      <routeOutputTurnout systemName="IT195" state="THROWN" />
+      <routeOutputTurnout systemName="IT197" state="THROWN" />
+      <routeOutputTurnout systemName="IT199" state="THROWN" />
+      <routeOutputTurnout systemName="IT205" state="THROWN" />
+      <routeOutputTurnout systemName="IT207" state="THROWN" />
+      <routeOutputTurnout systemName="IT215" state="THROWN" />
+      <routeOutputTurnout systemName="IT221" state="THROWN" />
+      <routeOutputTurnout systemName="IT223" state="THROWN" />
+      <routeOutputTurnout systemName="IT225" state="THROWN" />
+      <routeOutputTurnout systemName="IT229" state="THROWN" />
+      <routeOutputTurnout systemName="IT231" state="THROWN" />
+      <routeOutputTurnout systemName="IT233" state="THROWN" />
+      <routeOutputTurnout systemName="IT423" state="THROWN" />
+      <routeOutputTurnout systemName="IT431" state="THROWN" />
+      <routeSensor systemName="IS255" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS255" />
+    </route>
+    <route userName="Throw Yard Switches">
+      <systemName>IOTHROW YARD</systemName>
+      <userName>Throw Yard Switches</userName>
+      <routeOutputTurnout systemName="IT103" state="THROWN" />
+      <routeOutputTurnout systemName="IT117" state="THROWN" />
+      <routeOutputTurnout systemName="IT121" state="THROWN" />
+      <routeOutputTurnout systemName="IT123" state="THROWN" />
+      <routeOutputTurnout systemName="IT125" state="THROWN" />
+      <routeOutputTurnout systemName="IT131" state="THROWN" />
+      <routeOutputTurnout systemName="IT133" state="THROWN" />
+      <routeOutputTurnout systemName="IT139" state="THROWN" />
+      <routeOutputTurnout systemName="IT141" state="THROWN" />
+      <routeOutputTurnout systemName="IT143" state="THROWN" />
+      <routeOutputTurnout systemName="IT145" state="THROWN" />
+      <routeOutputTurnout systemName="IT167" state="THROWN" />
+      <routeOutputTurnout systemName="IT169" state="THROWN" />
+      <routeOutputTurnout systemName="IT171" state="THROWN" />
+      <routeOutputTurnout systemName="IT173" state="THROWN" />
+      <routeOutputTurnout systemName="IT179" state="THROWN" />
+      <routeOutputTurnout systemName="IT181" state="THROWN" />
+      <routeOutputTurnout systemName="IT183" state="THROWN" />
+      <routeOutputTurnout systemName="IT185" state="THROWN" />
+      <routeOutputTurnout systemName="IT187" state="THROWN" />
+      <routeOutputTurnout systemName="IT189" state="THROWN" />
+      <routeOutputTurnout systemName="IT201" state="THROWN" />
+      <routeOutputTurnout systemName="IT203" state="THROWN" />
+      <routeOutputTurnout systemName="IT209" state="THROWN" />
+      <routeOutputTurnout systemName="IT211" state="THROWN" />
+      <routeOutputTurnout systemName="IT213" state="THROWN" />
+      <routeOutputTurnout systemName="IT217" state="THROWN" />
+      <routeOutputTurnout systemName="IT219" state="THROWN" />
+      <routeOutputTurnout systemName="IT227" state="THROWN" />
+      <routeOutputTurnout systemName="IT235" state="THROWN" />
+      <routeOutputTurnout systemName="IT237" state="THROWN" />
+      <routeOutputTurnout systemName="IT301" state="THROWN" />
+      <routeOutputTurnout systemName="IT303" state="THROWN" />
+      <routeOutputTurnout systemName="IT305" state="THROWN" />
+      <routeOutputTurnout systemName="IT307" state="THROWN" />
+      <routeOutputTurnout systemName="IT309" state="THROWN" />
+      <routeOutputTurnout systemName="IT311" state="THROWN" />
+      <routeOutputTurnout systemName="IT313" state="THROWN" />
+      <routeOutputTurnout systemName="IT315" state="THROWN" />
+      <routeOutputTurnout systemName="IT317" state="THROWN" />
+      <routeOutputTurnout systemName="IT319" state="THROWN" />
+      <routeOutputTurnout systemName="IT321" state="THROWN" />
+      <routeOutputTurnout systemName="IT323" state="THROWN" />
+      <routeOutputTurnout systemName="IT325" state="THROWN" />
+      <routeOutputTurnout systemName="IT327" state="THROWN" />
+      <routeOutputTurnout systemName="IT329" state="THROWN" />
+      <routeOutputTurnout systemName="IT331" state="THROWN" />
+      <routeOutputTurnout systemName="IT333" state="THROWN" />
+      <routeOutputTurnout systemName="IT335" state="THROWN" />
+      <routeOutputTurnout systemName="IT337" state="THROWN" />
+      <routeOutputTurnout systemName="IT339" state="THROWN" />
+      <routeOutputTurnout systemName="IT341" state="THROWN" />
+      <routeOutputTurnout systemName="IT343" state="THROWN" />
+      <routeOutputTurnout systemName="IT401" state="THROWN" />
+      <routeOutputTurnout systemName="IT403" state="THROWN" />
+      <routeOutputTurnout systemName="IT405" state="THROWN" />
+      <routeOutputTurnout systemName="IT407" state="THROWN" />
+      <routeOutputTurnout systemName="IT415" state="THROWN" />
+      <routeOutputTurnout systemName="IT417" state="THROWN" />
+      <routeOutputTurnout systemName="IT419" state="THROWN" />
+      <routeOutputTurnout systemName="IT421" state="THROWN" />
+      <routeOutputTurnout systemName="IT425" state="THROWN" />
+      <routeOutputTurnout systemName="IT427" state="THROWN" />
+      <routeSensor systemName="IS254" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS254" />
+    </route>
+    <route userName="Unlock all main turnouts" controlTurnout="IT1000" controlTurnoutState="THROWN">
+      <systemName>IOUNLK_MAIN</systemName>
+      <userName>Unlock all main turnouts</userName>
+      <routeOutputTurnout systemName="IT1001" state="THROWN" />
+      <routeOutputTurnout systemName="IT1002" state="THROWN" />
+      <routeOutputTurnout systemName="IT1003" state="THROWN" />
+      <routeOutputTurnout systemName="IT1004" state="THROWN" />
+      <routeOutputTurnout systemName="IT1005" state="THROWN" />
+      <routeOutputTurnout systemName="IT1006" state="THROWN" />
+      <routeOutputTurnout systemName="IT1007" state="THROWN" />
+      <routeOutputTurnout systemName="IT1008" state="THROWN" />
+      <routeOutputTurnout systemName="IT1009" state="THROWN" />
+      <routeOutputTurnout systemName="IT1010" state="THROWN" />
+    </route>
+    <route userName="Reset Walnut Creek" controlLockTurnout="IT1006" controlLockTurnoutState="CLOSED">
+      <systemName>IOWC</systemName>
+      <userName>Reset Walnut Creek</userName>
+      <routeOutputTurnout systemName="IT195" state="CLOSED" />
+      <routeOutputTurnout systemName="IT197" state="CLOSED" />
+      <routeOutputTurnout systemName="IT199" state="CLOSED" />
+      <routeSensor systemName="ISWC" mode="onActive" />
+      <turnoutsAlignedSensor name="ISWCS" />
+    </route>
+    <route userName="Woods Hole 85">
+      <systemName>IOWH85</systemName>
+      <userName>Woods Hole 85</userName>
+      <routeOutputTurnout systemName="IT401" state="CLOSED" />
+      <routeOutputTurnout systemName="IT403" state="CLOSED" />
+      <routeSensor systemName="IS85" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS85" />
+    </route>
+    <route userName="Woods Hole 86">
+      <systemName>IOWH86</systemName>
+      <userName>Woods Hole 86</userName>
+      <routeOutputTurnout systemName="IT401" state="CLOSED" />
+      <routeOutputTurnout systemName="IT403" state="THROWN" />
+      <routeSensor systemName="IS86" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS86" />
+    </route>
+    <route userName="Woods Hole 87">
+      <systemName>IOWH87</systemName>
+      <userName>Woods Hole 87</userName>
+      <routeOutputTurnout systemName="IT401" state="THROWN" />
+      <routeOutputTurnout systemName="IT405" state="THROWN" />
+      <routeSensor systemName="IS87" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS87" />
+    </route>
+    <route userName="Woods Hole 88">
+      <systemName>IOWH88</systemName>
+      <userName>Woods Hole 88</userName>
+      <routeOutputTurnout systemName="IT401" state="THROWN" />
+      <routeOutputTurnout systemName="IT405" state="CLOSED" />
+      <routeOutputTurnout systemName="IT407" state="CLOSED" />
+      <routeSensor systemName="IS88" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS88" />
+    </route>
+    <route userName="Woods Hole 89">
+      <systemName>IOWH89</systemName>
+      <userName>Woods Hole 89</userName>
+      <routeOutputTurnout systemName="IT401" state="THROWN" />
+      <routeOutputTurnout systemName="IT405" state="CLOSED" />
+      <routeOutputTurnout systemName="IT407" state="THROWN" />
+      <routeSensor systemName="IS89" mode="onActive" />
+      <turnoutsAlignedSensor name="ISS89" />
+    </route>
+  </routes>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix userName="Turnout 105 lock" enabled="yes">
+      <systemName>IXFARMINTON</systemName>
+      <userName>Turnout 105 lock</userName>
+      <logixConditional systemName="IXFARMINTONC1" order="0" />
+      <logixConditional systemName="IXFARMINTONC2" order="1" />
+      <logixConditional systemName="IXFARMINTONC3" order="2" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IXFARMINTONC1" userName="Lock 105" antecedent="" logicType="1" triggerOnChange="yes">
+      <systemName>IXFARMINTONC1</systemName>
+      <userName>Lock 105</userName>
+      <conditionalStateVariable operator="4" negated="no" type="4" systemName="IT1005" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="yes" type="1" systemName="IS105" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="18" systemName="IT105" data="1" delay="0" string="0" />
+      <conditionalAction option="1" type="1" systemName=" " data="0" delay="0" string="0" />
+    </conditional>
+    <conditional systemName="IXFARMINTONC2" userName="Unlock NT105" antecedent="" logicType="1" triggerOnChange="yes">
+      <systemName>IXFARMINTONC2</systemName>
+      <userName>Unlock NT105</userName>
+      <conditionalStateVariable operator="4" negated="no" type="3" systemName="IT1005" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="18" systemName="IT105" data="0" delay="0" string="0" />
+      <conditionalAction option="1" type="1" systemName=" " data="0" delay="0" string="0" />
+    </conditional>
+    <conditional systemName="IXFARMINTONC3" userName="Unlock NT105 override" antecedent="" logicType="1" triggerOnChange="yes">
+      <systemName>IXFARMINTONC3</systemName>
+      <userName>Unlock NT105 override</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS105" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="18" systemName="IT105" data="0" delay="0" string="0" />
+      <conditionalAction option="1" type="1" systemName=" " data="0" delay="0" string="0" />
+    </conditional>
+  </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Feb 13 08:43:46 PST 2008" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Jan 10 11:28:50 PST 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/GrotonCentralRailroad.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Store</type>
+          <date>Sat Dec 07 10:20:09 EST 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Jan 10 11:28:50 PST 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/GrotonCentralRailroad.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Store</type>
+          <date>Sat Dec 07 10:20:09 EST 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri Jan 10 11:28:50 PST 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.19.2ish+jake+20200110T1923Z+R52a3c2af5a on Fri Jan 10 11:28:50 PST 2020-->
+</layout-config>

@@ -1,37 +1,48 @@
 package jmri.jmrit.operations.trains.excel;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class TrainCustomCommon {
 
+    protected final String xmlElement;
+    protected String directoryName;
     private String mcAppName = "MC4JMRI.xls"; // NOI18N
     private final String mcAppArg = ""; // NOI18N
     private String csvNamesFileName = "CSVFilesFile.txt"; // NOI18N
     private int fileCount = 0;
     private long waitTimeSeconds = 0;
     private Process process;
-    private boolean alive = false;
+    private boolean alive = false; // when true files to be processed
+
+    protected TrainCustomCommon(String dirName, String xmlElement) {
+        directoryName = dirName;
+        this.xmlElement = xmlElement;
+    }
 
     public String getFileName() {
         return mcAppName;
     }
 
     public void setFileName(String name) {
-        mcAppName = name;
-        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
+        if (!getFileName().equals(name)) {
+            mcAppName = name;
+            InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
+        }
     }
 
     public String getCommonFileName() {
@@ -42,25 +53,26 @@ public abstract class TrainCustomCommon {
         csvNamesFileName = name;
     }
 
-    abstract public String getDirectoryName();
+    public String getDirectoryName() {
+        return directoryName;
+    }
 
-    abstract public void setDirectoryName(String name);
-
-//    public int getFileCount() {
-//        return fileCount;
-//    }
+    public void setDirectoryName(String name) {
+        directoryName = name;
+    }
 
     /**
      * Adds one CSV file path to the collection of files to be processed.
      *
      * @param csvFile The File to add.
+     * @return true if successful
      *
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
-    public synchronized void addCVSFile(File csvFile) {
+    public synchronized boolean addCsvFile(File csvFile) {
         // Ignore null files...
         if (csvFile == null || !excelFileExists()) {
-            return;
+            return false;
         }
 
         // once the process starts, we can't add files to the common file
@@ -84,10 +96,12 @@ public abstract class TrainCustomCommon {
 
         try {
             FileUtil.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
-
+            log.debug("Queuing file {} to list", csvFile.getAbsolutePath());
         } catch (IOException e) {
             log.error("Unable to write to {}", csvNamesFile, e);
+            return false;
         }
+        return true;
     }
 
     /**
@@ -192,6 +206,9 @@ public abstract class TrainCustomCommon {
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
     public boolean waitForProcessToComplete() throws InterruptedException {
+        if (process == null) {
+            return true; // process hasn't been initialized
+        }
         boolean status = false;
         synchronized (process) {
             File file = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()),
@@ -199,7 +216,7 @@ public abstract class TrainCustomCommon {
             if (!file.exists()) {
                 log.debug("Common file not found! Normal when processing multiple files");
             }
-            log.debug("Waiting {} seconds for Excel program to complete", waitTimeSeconds);
+            log.debug("Waiting up to {} seconds for Excel program to complete", waitTimeSeconds);
             status = process.waitFor(waitTimeSeconds, TimeUnit.SECONDS);
             // printing can take a long time, wait to complete
             if (status && file.exists()) {
@@ -221,7 +238,7 @@ public abstract class TrainCustomCommon {
             }
             log.debug("Excel program complete!");
         }
-        alive = false;
+        alive = false; // done!
         return status;
     }
 
@@ -236,7 +253,8 @@ public abstract class TrainCustomCommon {
         return file.exists();
     }
 
-    public void load(Element mc) {
+    public void load(Element options) {
+        Element mc = options.getChild(xmlElement);
         if (mc != null) {
             Attribute a;
             Element directory = mc.getChild(Xml.DIRECTORY);
@@ -254,7 +272,8 @@ public abstract class TrainCustomCommon {
         }
     }
 
-    public void store(Element mc) {
+    public void store(Element options) {
+        Element mc = new Element(xmlElement);
         Element file = new Element(Xml.RUN_FILE);
         file.setAttribute(Xml.NAME, getFileName());
         Element directory = new Element(Xml.DIRECTORY);
@@ -264,6 +283,7 @@ public abstract class TrainCustomCommon {
         mc.addContent(directory);
         mc.addContent(file);
         mc.addContent(common);
+        options.addContent(mc);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);

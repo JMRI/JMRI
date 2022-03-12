@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -53,7 +53,7 @@
       fonctionne la carte PM4, cet outil ne peut pas changer
       l'adresse de base de l'unit&eacute;;.
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

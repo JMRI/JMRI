@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.setup;
 
-import apps.Apps;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,28 +9,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.UIManager;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
 import jmri.util.swing.UnexpectedExceptionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RestoreDialog extends JDialog {
 
@@ -154,6 +145,9 @@ public class RestoreDialog extends JDialog {
 
         // Start out with Default backups
         defaultBackupsRadioButton.doClick();
+//        pack();
+//        setLocationRelativeTo(null);
+//        setVisible(true);
     }
 
     // Event handlers
@@ -228,7 +222,11 @@ public class RestoreDialog extends JDialog {
                     Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
             dispose();
 
-            Apps.handleRestart();
+            try {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
+            } catch (Exception er) {
+                log.error("Continuing after error in handleRestart", er);
+            }
         } // These may need to be enhanced to show the backup store being used,
           // auto or default.
         catch (IOException ex) {
@@ -237,7 +235,7 @@ public class RestoreDialog extends JDialog {
             new ExceptionDisplayFrame(context, this).setVisible(true);
 
         } catch (Exception ex) {
-            log.error("Doing restore from " + setName, ex);
+            log.error("Doing restore from {}", setName, ex);
 
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restoring") + " " + setName);

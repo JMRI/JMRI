@@ -1,24 +1,24 @@
 package jmri.util.swing.sdi;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
 import jmri.util.swing.JmriNamedPaneAction;
 import jmri.util.swing.SamplePane;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * Swing jfcUnit tests for the SDI GUI
+ * Swing tests for the SDI GUI
  *
- * @author	Bob Jacobsen Copyright 2010, 2015
+ * @author Bob Jacobsen Copyright 2010, 2015
  */
 public class SdiJfcUnitTest {
 
@@ -62,7 +62,7 @@ public class SdiJfcUnitTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
@@ -73,7 +73,7 @@ public class SdiJfcUnitTest {
         jmri.util.swing.SamplePane.index = 0;
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

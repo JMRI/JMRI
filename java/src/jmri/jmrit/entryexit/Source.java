@@ -68,14 +68,18 @@ public class Source implements PropertyChangeListener {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
+     * Add property change listener.
      * @since 4.17.4
+     * @param listener the pcl to add.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
     }
     
     /**
+     * Remove property change listener.
      * @since 4.17.4
+     * @param listener the pcl to remove.
      */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
@@ -122,6 +126,7 @@ public class Source implements PropertyChangeListener {
     /**
      * @since 4.17.4
      * Making the source object available for scripting in Jython.
+     * @return the point details.
      */
     public PointDetails getPoint() {
         return pd;
@@ -145,6 +150,8 @@ public class Source implements PropertyChangeListener {
     /**
      * @since 4.17.4
      * Add Property Change Listener.
+     * @param dest the points details to add.
+     * @param id the points details id.
      */
     public void addDestination(PointDetails dest, String id) {
         if (pointToDest.containsKey(dest)) {
@@ -159,7 +166,8 @@ public class Source implements PropertyChangeListener {
 
     /**
      * @since 4.17.4
-     * Remov Property Change Listener.
+     * Remove Property Change Listener.
+     * @param dest the point details location to remove.
      */
     public void removeDestination(PointDetails dest) {
         pointToDest.get(dest).dispose();

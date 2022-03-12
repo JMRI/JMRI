@@ -4,7 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -38,7 +38,7 @@ public class ExportRoutesTest extends OperationsTestCase {
                 exportRoutes.writeOperationsRoutesFile();
             }
         });
-        export.setName("Export Trains"); // NOI18N
+        export.setName("Export Routes"); // NOI18N
         export.start();
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -49,6 +49,8 @@ public class ExportRoutesTest extends OperationsTestCase {
 
         java.io.File file = new java.io.File(ExportRoutes.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportTrainsTest.class);

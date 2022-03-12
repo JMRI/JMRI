@@ -13,7 +13,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Tams messages Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author	Jan Boen
+ * @author Jan Boen
  */
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
@@ -86,8 +86,10 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         TamsMessage m;
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
         if (checkBoxBinCmd.isSelected()) {//Binary TamsMessage to be sent
-            m = createPacket(packetTextField.getText());
+            m = createPacket(input);
             if (m == null) {
                 JOptionPane.showMessageDialog(PacketGenPanel.this,
                         "Enter hexadecimal numbers only", "Tams Binary Command",
@@ -117,9 +119,9 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
                 m = TamsMessage.getXEvtTrn();
             }*/
         } else {//ASCII TamsMessage to be sent
-            m = new TamsMessage(packetTextField.getText().length());
-            for (int i = 0; i < packetTextField.getText().length(); i++) {
-                m.setElement(i, packetTextField.getText().charAt(i));
+            m = new TamsMessage(input.length());
+            for (int i = 0; i < input.length(); i++) {
+                m.setElement(i, input.charAt(i));
             }
             //Set replyType to unknown just in case
             m.setReplyType('M');

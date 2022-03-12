@@ -37,6 +37,6 @@
     <memoryicon memory="IMIB164" x="130" y="40" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
     <memoryicon memory="IMIB165" x="341" y="40" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
   </paneleditor>
-  <!--Written by JMRI version 1.7.3 on Mon May 15 16:43:55 PDT 2006 $Id$-->
+  <!--Written by JMRI version 1.7.3 on Mon May 15 16:43:55 PDT 2006 -->
 </layout-config>
 

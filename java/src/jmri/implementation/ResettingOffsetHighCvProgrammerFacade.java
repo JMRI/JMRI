@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
@@ -61,6 +62,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     // members for handling the programmer interface
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
+    int _startVal; // remember the starting value (hint)
 
     @Override
     public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -80,12 +82,18 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
 
     @Override
     public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(CV, p, 0);
+    }
+
+    @Override
+    public void readCV(String CV, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         log.debug("start readCV");
         _cv = Integer.parseInt(CV);
+        _startVal = startVal;
         useProgrammer(p);
         if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(CV, this);
+            prog.readCV(CV, this, startVal);
         } else {
             // write index first
             state = ProgState.FINISHREAD;
@@ -100,7 +108,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -119,7 +127,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
 
         if (status != OK ) {
@@ -142,7 +150,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
             case FINISHREAD:
                 try {
                     state = ProgState.RESET;
-                    prog.readCV(""+(_cv % modulo), this);
+                    prog.readCV(""+(_cv % modulo), this, _startVal);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }
@@ -172,7 +180,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
                 temp.programmingOpReply(value, status);
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

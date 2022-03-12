@@ -1,0 +1,25 @@
+<p>CTC Package Info</p>
+<p>The CTC system provides the ability to create and run prototypical CTC dispatching.</p>
+<p>The data is stored in the standard PanelPro xml files.</p>
+<p><a href="CTC_Data_Classes.png"><img src="CTC_Data_Classes.png" alt="CTC Data Classes"></a></p>
+<p>The data classes have references to JMRI beans.  There are 3 CTC NBH classes (NBHSensor, NBHSignal, NBHTurnout) which act as wrappers to the
+NamedBeanHandles for the JMRI NamedBeans.  The NBH classes encapsulate the NamedBeanHandles to make program access easier by handling
+exceptions, implementing try/catch, etc.</p>
+<p>NBH Rules:</p>
+<ul>
+<li>A NBH is created once for each JMRI object using its NameBeanHandle.</li>
+<li>The name and resulting NBH are stored in a HashMap in CtcManager.</li>
+<li>Program references will use the stored NBH.</li>
+<li>Names as Strings are not stored except by the XML store process.</li>
+<li>Dummy NBH references are created for empty bean references.
+<ul>
+<li>These are not included in the NBH maps.</li>
+<li>These provide entries that always return an empty string for <strong>getHandleName()</strong> and prevent null pointer exceptions.</li>
+<li>When a new NBH is selected/created, the dummy NBH reference will be replaced.</li>
+</ul>
+</li>
+<li>Each time a NBH is obtained, a check will be made for bean renames at the JMRI level.  If so, a new entry will be added using the same target NBH.</li>
+<li>Reference changes made by the Editor will not be reflected in the run-time.  A run-time restart will be required to pick up the changes.</li>
+<li><strong>OtherData</strong> and <strong>CodeButtonHandlerDataRoutines</strong> create first level default NBH objects, including 7 dummy objects.</li>
+<li>Other NBH entries are created as needed.</li>
+</ul>

@@ -35,10 +35,20 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         signalMastLogic.addContent(new Element("logicDelay").addContent(Long.toString(smlm.getSignalLogicDelay())));
         List<SignalMastLogic> smll = smlm.getSignalMastLogicList();
         for (SignalMastLogic sml : smll) {
+        
+            List<SignalMast> destinations = sml.getDestinationList();
+            
+            // write in consistent order
+            java.util.Comparator<SignalMast> comparator = new jmri.util.NamedBeanComparator<>();
+            java.util.Collections.sort(destinations, comparator);
+
+            if (destinations.isEmpty()) {
+                log.warn("Empty SML for source mast {} skipped", sml.getSourceMast().getDisplayName());
+                continue;
+            }
             Element source = new Element("signalmastlogic");
             source.setAttribute("source", sml.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
             source.addContent(new Element("sourceSignalMast").addContent(sml.getSourceMast().getDisplayName()));
-            List<SignalMast> destinations = sml.getDestinationList();
             for (SignalMast dest : destinations) {
                 if (sml.getStoreState(dest) != SignalMastLogic.STORENONE) {
                     Element elem = new Element("destinationMast");
@@ -86,6 +96,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
                     if (sml.getStoreState(dest) == SignalMastLogic.STOREALL) {
                         List<Block> blocks = sml.getBlocks(dest);
+
+                        // write in consistent order
+                        java.util.Comparator<Block> blockComp = new jmri.util.NamedBeanComparator<>();
+                        java.util.Collections.sort(blocks, blockComp);
+
                         if (blocks.size() > 0) {
                             Element blockElement = new Element("blocks");
                             for (Block bl : blocks) {
@@ -102,7 +117,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                             elem.addContent(blockElement);
                         }
+
                         List<NamedBeanHandle<Turnout>> turnouts = sml.getNamedTurnouts(dest);
+
+                        // write in consistent order
+                        java.util.Comparator<NamedBeanHandle<Turnout>> turnoutComp = new jmri.util.NamedBeanHandleComparator<>();
+                        java.util.Collections.sort(turnouts, turnoutComp);
+
                         if (turnouts.size() > 0) {
                             Element turnoutElement = new Element("turnouts");
                             for (NamedBeanHandle<Turnout> t : turnouts) {
@@ -117,7 +138,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                             elem.addContent(turnoutElement);
                         }
+
                         List<NamedBeanHandle<Sensor>> sensors = sml.getNamedSensors(dest);
+                        
+                        // write in consistent order
+                        java.util.Comparator<NamedBeanHandle<Sensor>> sensorsComp = new jmri.util.NamedBeanHandleComparator<>();
+                        java.util.Collections.sort(sensors, sensorsComp);
+
                         if (sensors.size() > 0) {
                             Element sensorElement = new Element("sensors");
                             for (NamedBeanHandle<Sensor> s : sensors) {
@@ -132,7 +159,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                             elem.addContent(sensorElement);
                         }
+
                         List<SignalMast> masts = sml.getSignalMasts(dest);
+
+                        // write in consistent order
+                        java.util.Comparator<SignalMast> mastComp = new jmri.util.NamedBeanComparator<>();
+                        java.util.Collections.sort(masts, mastComp);
+
                         if (masts.size() > 0) {
                             Element mastElement = new Element("masts");
                             for (SignalMast sm : masts) {
@@ -250,7 +283,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (turnoutElem != null) {
                             List<Element> turnoutList = turnoutElem.getChildren("turnout");
                             if (turnoutList.size() > 0) {
-                                Hashtable<NamedBeanHandle<Turnout>, Integer> list = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
+                                Hashtable<NamedBeanHandle<Turnout>, Integer> list = new Hashtable<>();
                                 for (Element t : turnoutList) {
                                     String turnout = t.getChild("turnoutName").getText();
                                     String state = t.getChild("turnoutState").getText();
@@ -272,7 +305,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (sensorElem != null) {
                             List<Element> sensorList = sensorElem.getChildren("sensor");
                             if (sensorList.size() > 0) {
-                                Hashtable<NamedBeanHandle<Sensor>, Integer> list = new Hashtable<NamedBeanHandle<Sensor>, Integer>();
+                                Hashtable<NamedBeanHandle<Sensor>, Integer> list = new Hashtable<>();
                                 for (Element sl : sensorList) {
                                     String sensorName = sl.getChild("sensorName").getText();
                                     String state = sl.getChild("sensorState").getText();
@@ -295,7 +328,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (blockElem != null) {
                             List<Element> blockList = blockElem.getChildren("block");
                             if (blockList.size() > 0) {
-                                Hashtable<Block, Integer> list = new Hashtable<Block, Integer>();
+                                Hashtable<Block, Integer> list = new Hashtable<>();
                                 for (Element b : blockList) {
                                     String block = b.getChild("blockName").getText();
                                     String state = b.getChild("blockState").getText();
@@ -319,7 +352,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (mastElem != null) {
                             List<Element> mastList = mastElem.getChildren("mast");
                             if (mastList.size() > 0) {
-                                Hashtable<SignalMast, String> list = new Hashtable<SignalMast, String>();
+                                Hashtable<SignalMast, String> list = new Hashtable<>();
                                 for (Element m : mastList) {
                                     String mast = m.getChild("mastName").getText();
                                     String state = m.getChild("mastState").getText();

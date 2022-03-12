@@ -28,9 +28,7 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -48,7 +46,7 @@ public class JmriScriptEngineManagerTest {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         assertNull(result);
         assertNull(manager.getBySystemName("IT1"));
-        ScriptEngine engine = jsem.getEngine(JmriScriptEngineManager.PYTHON);
+        ScriptEngine engine = jsem.getEngine(JmriScriptEngineManager.JYTHON);
         result = jsem.eval("turnouts.provideTurnout(\"1\")", engine);
         assertNotNull(result);
         assertNotNull(manager.getBySystemName("IT1"));
@@ -122,7 +120,7 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetEnginePython() {
-        assertNotNull(jsem.getEngine(JmriScriptEngineManager.PYTHON));
+        assertNotNull(jsem.getEngine(JmriScriptEngineManager.JYTHON));
     }
 
     @Test
@@ -148,7 +146,7 @@ public class JmriScriptEngineManagerTest {
         assertNotNull(engine);
         assertEquals(engine, jsem.getEngineByName("jython"));
     }
-    
+
     @Test
     public void testGetEngineInvalidName() {
         assertNull(jsem.getEngine("invalid"));
@@ -192,7 +190,7 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetFactoryPython() {
-        assertNotNull(jsem.getFactory(JmriScriptEngineManager.PYTHON));
+        assertNotNull(jsem.getFactory(JmriScriptEngineManager.JYTHON));
     }
 
     @Test
@@ -277,7 +275,7 @@ public class JmriScriptEngineManagerTest {
         factories.keySet().forEach(name -> assertNotNull("factory " + name + " has engine", engines.get(name)));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -290,9 +288,11 @@ public class JmriScriptEngineManagerTest {
         jsem = new JmriScriptEngineManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jsem = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

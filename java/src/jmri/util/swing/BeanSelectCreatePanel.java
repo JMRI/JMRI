@@ -83,7 +83,7 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
         } else { // not a proxy, just one
             prefixBox.setManagers(manager);
         }
-        
+
         bean.add(existingCombo);
         bean.add(prefixBox);
         bean.add(hardwareAddress);
@@ -126,16 +126,6 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
     }
 
     /**
-     * Does nothing.
-     * 
-     * @deprecated since 4.17.2 without direct replacement
-     */
-    @Deprecated
-    public void refresh() {
-        // do nothing
-    }
-
-    /**
      * Get the display name of the bean that has either been selected in the
      * drop down list or was asked to be created.
      *
@@ -152,6 +142,15 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
                 return "";
             }
         }
+    }
+
+    /**
+     * Is a bean either selected or has the user entered a new name in the combo box?
+     * If either is false, the caller should not try to create a new bean.
+     * @return true if a bean is selected or a name is entered
+     */
+    public boolean hasBeanOrBeanName() {
+        return existingItem.isSelected() || !hardwareAddress.getText().trim().isEmpty();
     }
 
     /**

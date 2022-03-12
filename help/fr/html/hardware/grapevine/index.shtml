@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -77,7 +77,7 @@ La d&#233;nomination et les connecteurs entr&#233;e/sortie sont d&#233;crits dan
     <li><a href="http://protrak.cc/wpt/support/the-manual/">Manuel Protrak</a></li>
 </ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

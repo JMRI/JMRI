@@ -5,15 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager.SubProtocol;
+import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.util.NamedBeanComparator;
+
+import jmri.util.startup.StartupActionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -25,25 +29,51 @@ import jmri.util.NamedBeanComparator;
  * passed on to the relevant ConfigurationManager to handle.
  *
  * @author Kevin Dickerson Copyright (C) 2012
+ * @author Andrew Crosland Copyright (C) 2021
  */
-public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
     // This user name will be overwritten by the adapter and saved to the connection config.
-    public static String DEFAULT_USERNAME = "CAN";
+    public static final String DEFAULT_USERNAME = "CAN";
+
+    private boolean protocolOptionsChanged = false;
 
     public CanSystemConnectionMemo() {
         super("M", DEFAULT_USERNAME);
+    }
+    
+    // Allow for default systemPrefix other than "M"
+    public CanSystemConnectionMemo(String prefix) {
+        super(prefix, DEFAULT_USERNAME);
+    }
+
+    protected final void storeCanMemotoInstance() {
         register(); // registers general type
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
+    protected String _protocol = ConfigurationManager.MERGCBUS;
+    protected SubProtocol _subProtocol = SubProtocol.CBUS;
+    protected ProgModeSwitch _progModeSwitch = ProgModeSwitch.NONE;
+    protected boolean _supportsCVHints = false; // Support for CV read hint values
+    private boolean _multipleThrottles = true;  // Support for multiple throttles 
+    private boolean _powerOnArst = true;        // Turn power on if ARST opcode received
+    
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     protected TrafficController tm;
 
+    /**
+     * Set Connection Traffic Controller
+     * @param tm System Connection Traffic Controller
+     */
     public void setTrafficController(TrafficController tm) {
         this.tm = tm;
     }
-
+    
+    /**
+     * Get Connection Traffic Controller
+     * @return System Connection Traffic Controller
+     */
     public TrafficController getTrafficController() {
         return tm;
     }
@@ -64,12 +94,12 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            jmri.GlobalProgrammerManager mgr = ((jmri.GlobalProgrammerManager) get(jmri.GlobalProgrammerManager.class));
+            jmri.GlobalProgrammerManager mgr = get(jmri.GlobalProgrammerManager.class);
             if (mgr == null) return false;
             return mgr.isGlobalProgrammerAvailable();
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            jmri.AddressedProgrammerManager mgr =((jmri.AddressedProgrammerManager) get(jmri.AddressedProgrammerManager.class));
+            jmri.AddressedProgrammerManager mgr = get(jmri.AddressedProgrammerManager.class);
             if (mgr == null) return false;
             return mgr.isAddressedModePossible();
         }
@@ -78,12 +108,15 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         boolean result = manager.provides(type);
         if(result) {
-           return result;
+           return true;
         } else {
            return super.provides(type);
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
@@ -93,9 +126,16 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return super.get(T);
     }
 
+    public String getProtocol() {
+        return _protocol;
+    }
+    
     public void setProtocol(String protocol) {
+        StartupActionFactory old = getActionFactory();
         if (null != protocol) {
+            _protocol = protocol;
             switch (protocol) {
+                case ConfigurationManager.SPROGCBUS:
                 case ConfigurationManager.MERGCBUS:
                     manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
                     break;
@@ -112,20 +152,90 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         }
-        // make sure appropriate actions in preferences
-        addToActionList();
+        firePropertyChange("actionFactory", old, getActionFactory());
     }
 
+    public SubProtocol getSubProtocol() {
+        return _subProtocol;
+    }
+    
+    public void setSubProtocol(SubProtocol sp) {
+        if (null != sp) {
+            _subProtocol = sp;
+        }
+    }
+
+    /**
+     * Get the stare of the programming mode switch which indicates what combination
+     * o service and/or ops mode programming is supported by the connection.
+     * 
+     * @return the supported modes
+     */
+    public ProgModeSwitch getProgModeSwitch() {
+        return _progModeSwitch;
+    }
+    
+    public void setProgModeSwitch(ProgModeSwitch pms) {
+        if (null != pms) {
+            _progModeSwitch = pms;
+        }
+    }
+    
+    /**
+     * Some connections support only a single throttle, e.g., a service mode programmer
+     * that allows for test running of a single loco.
+     * 
+     * @return true if mutltiple throttles are available
+     */
+    public boolean hasMultipleThrottles() {
+        return _multipleThrottles;
+    }
+    
+    public void setMultipleThrottles(boolean b) {
+        _multipleThrottles = b;
+    }
+    
+    /**
+     * Get the CV hint support flag
+     * 
+     * @return true if CV hints are supported
+     */
+    public boolean supportsCVHints() {
+        return _supportsCVHints;
+    }
+    
+    public void setSupportsCVHints(boolean b) {
+        _supportsCVHints = b;
+    }
+    
+    /**
+     * Get the behaviour on ARST opcode
+     * 
+     * @return true if track power is on after ARST
+     */
+    public boolean powerOnArst() {
+        return _powerOnArst;
+    }
+    
+    public void setPowerOnArst(boolean b) {
+        _powerOnArst = b;
+    }
+    
     /**
      * Configure the common managers for Can connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         if (manager != null) {
             manager.configureManagers();
         }
+        storeCanMemotoInstance();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         if (manager == null) {
@@ -134,6 +244,9 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return manager.getActionModelResourceBundle();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
         return new NamedBeanComparator<>();
@@ -182,17 +295,35 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public synchronized void setProtocolOption(String protocol, String option, String value) {
         log.debug("Setting protocol option {} {} := {}", protocol, option, value);
         if (value == null) return;
-        Map<String, String> m = protocolOptions.get(protocol);
-        if (m == null) {
-            m = new HashMap<>();
-            protocolOptions.put(protocol, m);
-        }
+        Map<String, String> m = protocolOptions.computeIfAbsent(protocol, k -> new HashMap<>());
         String oldValue = m.get(option);
         if (value.equals(oldValue)) return;
         m.put(option, value);
-        // @todo When the connection options are changed, we need to mark the profile as dirty.
+        protocolOptionsChanged = true;
     }
 
+    @Override
+    public boolean isDirty() {
+        return super.isDirty() || protocolOptionsChanged;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return super.isRestartRequired() || protocolOptionsChanged;
+    }
+    
+    /**
+     * Custom interval of 100ms.
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDefaultOutputInterval(){
+        return 100;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void dispose() {
         if (manager != null) {

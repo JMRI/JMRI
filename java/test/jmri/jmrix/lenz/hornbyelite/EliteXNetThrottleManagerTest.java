@@ -2,31 +2,32 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * EliteXNetThrottleManagerTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class
+ * Test for the jmri.jmrix.lenz.EliteXNetThrottleManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleManagerTest {
 
-    // The minimal setup for log4J
+    private XNetInterfaceScaffold tc;
+
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+        tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         tm = new EliteXNetThrottleManager(new EliteXNetSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
         JUnitUtil.tearDown();
     }
 

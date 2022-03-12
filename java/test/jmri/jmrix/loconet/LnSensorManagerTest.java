@@ -3,17 +3,16 @@ package jmri.jmrix.loconet;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -74,16 +73,16 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         Sensor o = t.newSensor("LS21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received sensor value " + o);
+            log.debug("received sensor value {}", o);
         }
         Assert.assertTrue(null != (LnSensor) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("LS21"));
+            log.debug("by system name: {}", t.getBySystemName("LS21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("LS21"));
@@ -106,9 +105,26 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
                 "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '3:5' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '37' instead.");
     }
 
-    // The minimal setup for log4J
+    @Test
+    public void testSetGetRestingTime() {
+        Assert.assertEquals("check default resting time", 1250, ((LnSensorManager)l).getRestingTime());
+
+        ((LnSensorManager)l).setRestingTime(600);
+        Assert.assertEquals("check 1st set of resting time", 600, ((LnSensorManager)l).getRestingTime());
+        
+        ((LnSensorManager)l).setRestingTime(500);
+        Assert.assertEquals("check 2nd set of resting time", 500, ((LnSensorManager)l).getRestingTime());
+        
+        ((LnSensorManager)l).setRestingTime(499);
+        Assert.assertEquals("check 1st range check on set of resting time", 500, ((LnSensorManager)l).getRestingTime());
+        
+        ((LnSensorManager)l).setRestingTime(200001);
+        Assert.assertEquals("check 2nd range check on set of resting time", 200000, ((LnSensorManager)l).getRestingTime());
+        
+    }
+
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -121,8 +137,8 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         l = new LnSensorManager(memo);
         jmri.InstanceManager.setSensorManager(l);
     }
-
-    @After
+    
+    @AfterEach
     public void tearDown() {
         l.dispose();
         lnis = null;

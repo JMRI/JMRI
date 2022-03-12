@@ -1,7 +1,6 @@
 package jmri.util;
 
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.ExpectedState;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -59,6 +58,7 @@ public class NamedBeanExpectedValue<T extends NamedBean, S extends Object> exten
         this.propertyChangeSupport.firePropertyChange(EXPECTED_STATE, old, state);
     }
 
+    @Nonnull
     @Override
     public T getObject() {
         return this.handle.getBean();
@@ -69,6 +69,7 @@ public class NamedBeanExpectedValue<T extends NamedBean, S extends Object> exten
      *
      * @return the name
      */
+    @Nonnull
     public String getName() {
         return this.handle.getName();
     }

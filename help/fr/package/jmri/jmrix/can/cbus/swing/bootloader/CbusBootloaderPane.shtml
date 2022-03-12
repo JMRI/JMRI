@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: CBUS® Bootloader Tool</title>
+  <meta name="author" content="Andrew Crosland">
+  <meta name="keywords" content="JMRI CBUS Bootloader"><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI : Outil bootloader CBUS®</h1>
+
+      <p>L'outil bootloader vous permet de mettre à jour le firmware dans un nœud CBUS
+      connecté.</p>
+
+      <p>Pour mettre à jour le firmware, vous aurez besoin d'un fichier de programmation du
+      firmware (.hex ) enregistré sur votre ordinateur</p>
+
+      <p>Démarrez l'outil de mise à jour du firmware à partir du menu de la génération 5 de
+      SPROG.<br>
+      <br></p>
+      . <img src="images/FirmwareMenu.png" alt="Entrée du menu CBUS pour le client bootloader">.
+      <p>Entrez le numéro de nœud (la valeur par défaut est 65534) et cliquez sur Lire les
+      paramètres du nœud. .<br>
+      <br></p>
+      <img src="images/UpdateNN.png" alt="Sélectionnez le numéro de nœud à mettre à jour">.
+      <p>Naviguez jusqu'à l'endroit où vous avez enregistré le fichier .hex et cliquez sur
+      Ouvrir.<br>
+      <br></p>
+
+      <p>Dans ce cas, il est possible d'ouvrir le fichier. <img src="images/BrowseToHexFile.png"
+      alt="Naviguer vers le nouveau fichier hex du firmware">.</p>
+
+      <p>Sélectionnez l'option de mémoire EEPROM pour préserver le contenu de l'EEPROM (variables
+      de nœud).<br>
+      <br></p>
+
+      <p>. <img src="images/SelectEEPROM.png" alt="Sélectionnez préserver l'EEPROM">.</p>
+
+      <p>Cliquez sur le bouton Démarrer la programmation.<br>
+      <br></p>
+
+      <p>Cliquez sur le bouton Démarrer la programmation. <img src="images/StartProgramming.png"
+      alt="Démarrer la programmation">.</p>
+
+      <p>Le nouveau firmware sera écrit sur le nœud. Attendez que la programmation soit terminée,
+      ce qui peut prendre un peu de temps, indiqué par le message "Bootloading complete..." dans la
+      console.<br>
+      <br></p>
+      La programmation est terminée. <img src="images/Wait.png" alt=
+      "Attendre la fin de la programmation">.
+      <p>CBUS est une marque déposée du Dr Michael Bolton</p>
+      .
+      <p>Traduction 2021-03-23</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+</body>
+</html>

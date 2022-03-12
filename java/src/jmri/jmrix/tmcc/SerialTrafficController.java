@@ -1,6 +1,5 @@
 package jmri.jmrix.tmcc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -86,19 +85,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      */
     public void setSystemConnectionMemo(TmccSystemConnectionMemo m) {
         mMemo = m;
-    }
-
-    /**
-     * Static function returning the SerialTrafficController instance to use.
-     *
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for TMCCTrafficController");
-        return null;
     }
 
     /**
@@ -255,7 +241,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 }
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt(); // retain if needed later
-                                log.error("char send wait interrupted");
+                                log.warn("char send wait interrupted");
                             }
                         }
                         break;

@@ -56,7 +56,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      *                                  be parsed.
      */
     @Nonnull
-    public IdTag provideIdTag(@Nonnull String name);
+    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via tag ID, then by user name, and finally system name if needed.
@@ -76,6 +76,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @param systemName system name being requested
      * @return requested IdTag object or null if none exists
      */
+    @Override
     @CheckReturnValue
     @CheckForNull
     public IdTag getBySystemName(@Nonnull String systemName);
@@ -87,6 +88,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @param userName user name being requested
      * @return requested IdTag object or null if none exists
      */
+    @Override
     @CheckReturnValue
     @CheckForNull
     public IdTag getByUserName(@Nonnull String userName);
@@ -132,13 +134,13 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      *                                  parsed.
      */
     @Nonnull
-    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName);
+    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Get a list of all IdTags seen by a specified Reporter within a specific
      * time threshold from the most recently seen.
      *
-     * @param reporter  Reporter to return list for (can be null)
+     * @param reporter  Reporter to return list for
      * @param threshold Time threshold (in ms)
      * @return List of matching IdTags
      */

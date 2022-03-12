@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -97,7 +96,7 @@
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <label xml:lang="de">Aufenthaltsdauer bei Pendelbetrieb in Sekunden</label>
     <comment xml:lang="de">Wertebereich 0-255</comment>
-    <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce ve vteřinách</label>
+    <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce ve sekundách</label>
     <comment xml:lang="cs">Meze 0-255</comment>
     <label xml:lang="ca">Temps de parada del Push-Pull (0-255 segons)</label>
     <comment xml:lang="ca">Rang de 0-255</comment>

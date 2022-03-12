@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  * of time, so any outgoing message should restart
  * the timer.
  *
- * @author	Paul Bender Copyright (C) 2019 
+ * @author Paul Bender Copyright (C) 2019 
  */
 public class XNetHeartBeat implements XNetListener {
 
@@ -18,8 +18,8 @@ public class XNetHeartBeat implements XNetListener {
     private static final int keepAliveTimeoutValue = 30000; // Interval
     // to send a message
     // Must be < 60s.
-    private XNetTrafficController tc;
-    private XNetSystemConnectionMemo memo;
+    private final XNetTrafficController tc;
+    private final XNetSystemConnectionMemo memo;
 
     public XNetHeartBeat(XNetSystemConnectionMemo memo) {
         this.memo = memo;
@@ -33,20 +33,17 @@ public class XNetHeartBeat implements XNetListener {
      */
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
-            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    // If the timer times out, and we are not currently 
-                    // programming, send a request for status
-                    jmri.jmrix.lenz.XNetProgrammer p = null;
-                    if(memo.provides(jmri.GlobalProgrammerManager.class)){
-                        p = (jmri.jmrix.lenz.XNetProgrammer) (memo.getProgrammerManager().getGlobalProgrammer());
-                    }
-                    if (p == null || !(p.programmerBusy())) {
-                       tc.sendXNetMessage(
-                        jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
-                        null);
-                    }
+            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, e -> {
+                // If the timer times out, and we are not currently
+                // programming, send a request for status
+                XNetProgrammer p = null;
+                if(memo.provides(jmri.GlobalProgrammerManager.class)){
+                    p = (XNetProgrammer) (memo.getProgrammerManager().getGlobalProgrammer());
+                }
+                if (p == null || !(p.programmerBusy())) {
+                   tc.sendXNetMessage(
+                    XNetMessage.getCSStatusRequestMessage(),
+                    null);
                 }
             });
         }

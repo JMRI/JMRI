@@ -25,6 +25,7 @@ public abstract class AbstractProgrammerFacade implements Programmer {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public String decodeErrorCode(int code) {
         return prog.decodeErrorCode(code);

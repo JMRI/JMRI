@@ -6,17 +6,17 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * Abstract action to create and register a swing object for XpressNet systems.
  *
- * @author Paul Bender Copyright (C) 2016 
+ * @author Paul Bender Copyright (C) 2016
  */
-abstract public class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction {
+public abstract class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction<XNetSystemConnectionMemo> {
 
-    protected XNetSystemConnectionMemo _memo = null;
+    protected XNetSystemConnectionMemo _memo;
 
     public AbstractXPressNetAction(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super(s);
@@ -28,18 +28,18 @@ abstract public class AbstractXPressNetAction extends AbstractAction implements 
     }
 
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
+     * Get the {@link SystemConnectionMemo} this action is bound to.
      *
      * @return the SystemConnectionMemo or null if not bound
      */
     @CheckForNull
     @Override
-    public SystemConnectionMemo getSystemConnectionMemo(){
+    public XNetSystemConnectionMemo getSystemConnectionMemo(){
        return _memo;
     }
 
     /**
-     * Set the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
+     * Set the {@link SystemConnectionMemo} this action is bound to.
      * <p>
      * Implementing classes may throw an IllegalArgumentException if the
      * implementing class requires a specific subclass of SystemConnectionMemo.
@@ -48,18 +48,15 @@ abstract public class AbstractXPressNetAction extends AbstractAction implements 
      * @throws IllegalArgumentException if the SystemConnectionMemo is invalid
      */
     @Override
-    public void setSystemConnectionMemo(@Nonnull SystemConnectionMemo memo) throws IllegalArgumentException{
+    public void setSystemConnectionMemo(@Nonnull XNetSystemConnectionMemo memo) {
          if(memo == null) {
             throw new IllegalArgumentException("Attempt to set null system connection");
          }
-         if(!(memo instanceof XNetSystemConnectionMemo)){
-            throw new IllegalArgumentException("Attempt to set null system connection"); 
-         }
-         _memo = (XNetSystemConnectionMemo) memo;
+         _memo = memo;
     }
 
     /**
-     * Get a list of {@link jmri.jmrix.SystemConnectionMemo} subclasses that the
+     * Get a list of {@link SystemConnectionMemo} subclasses that the
      * implementing class accepts.
      * <p>
      * If the implementing class is a subclass of a class that does accept

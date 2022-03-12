@@ -56,7 +56,9 @@ public abstract class LnTrafficController implements LocoNetInterface {
         return memo;
     }
 
-    // Abstract methods for the LocoNetInterface
+    /**
+     * {@inheritDoc}
+     */
     @Override
     abstract public boolean status();
 

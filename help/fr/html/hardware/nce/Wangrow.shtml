@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -93,7 +93,7 @@
 
         <li>Red&eacute;marrez le programme. Vous devriez &ecirc;tre
         op&eacute;rationnel.</li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

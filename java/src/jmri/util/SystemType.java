@@ -127,7 +127,7 @@ public class SystemType {
         } else {
             // No match
             type = 0;
-            log.error("Could not determine system type from os.name=/" + osName + "/");
+            log.error("Could not determine system type from os.name=/{}/", osName);
         }
     }
 

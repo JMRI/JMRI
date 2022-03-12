@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrix.pricom.pockettester.StatusFrame
  *
- * @author	Bob Jacobsen Copyright (C) 2002,2004, 2005
+ * @author Bob Jacobsen Copyright (C) 2002,2004, 2005
  */
 public abstract class StatusAction extends AbstractAction {
 
@@ -28,7 +28,7 @@ public abstract class StatusAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("starting StatusFrame caught exception: " + ex.toString());
+            log.error("starting StatusFrame caught exception: {}", ex.toString());
         }
         connect(f);
         f.setVisible(true);

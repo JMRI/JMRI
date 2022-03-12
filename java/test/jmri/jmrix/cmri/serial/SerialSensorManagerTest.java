@@ -3,16 +3,15 @@ package jmri.jmrix.cmri.serial;
 import jmri.Manager.NameValidity;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2003
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -86,9 +85,8 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
                 SerialNode.MAXSENSORS + 1);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -110,13 +108,13 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

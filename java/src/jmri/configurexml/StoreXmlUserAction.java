@@ -1,7 +1,6 @@
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.ConfigureManager;
@@ -22,10 +21,8 @@ import org.slf4j.LoggerFactory;
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-
     public StoreXmlUserAction() {
-        this(rb.getString("MenuItemStore"));
+        this(Bundle.getMessage("MenuItemStore"));  // NOI18N
     }
 
     public StoreXmlUserAction(String s) {
@@ -36,8 +33,8 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave")); // is in jmri.NBBundle
-        userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
+        userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave"));  // NOI18N
+        userFileChooser.setDialogTitle(Bundle.getMessage("StoreTitle"));  // NOI18N
         java.io.File file = getFileCustom(userFileChooser);
 
         if (file == null) {
@@ -47,18 +44,20 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         // make a backup file
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {
-            log.error("Failed to make backup due to unable to get default configure manager");
+            log.error("Failed to make backup due to unable to get default configure manager");  // NOI18N
         } else {
             cm.makeBackup(file);
             // and finally store
             boolean results = cm.storeUser(file);
-            log.debug(results ? "store was successful" : "store failed");
+            log.debug(results ? "store was successful" : "store failed");  // NOI18N
             if (!results) {
                 JOptionPane.showMessageDialog(null,
-                        rb.getString("StoreHasErrors") + "\n"
-                        + rb.getString("StoreIncomplete") + "\n"
-                        + rb.getString("ConsoleWindowHasInfo"),
-                        rb.getString("StoreError"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("StoreHasErrors") + "\n"  // NOI18N
+                        + Bundle.getMessage("StoreIncomplete") + "\n"  // NOI18N
+                        + Bundle.getMessage("ConsoleWindowHasInfo"),  // NOI18N
+                        Bundle.getMessage("StoreError"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+            } else {
+                InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).setChanged(false);
             }
         }
     }

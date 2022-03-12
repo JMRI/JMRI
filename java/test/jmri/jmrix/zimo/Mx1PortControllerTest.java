@@ -1,8 +1,8 @@
 package jmri.jmrix.zimo;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the Mx1PortController class.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        Mx1TrafficController tc = new Mx1TrafficController(){
@@ -51,8 +51,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
              */
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**
@@ -68,7 +67,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

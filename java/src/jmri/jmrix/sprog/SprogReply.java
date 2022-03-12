@@ -1,15 +1,14 @@
 package jmri.jmrix.sprog;
 
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.sprog.SprogConstants.SprogState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to a SprogMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Berridge - refactored, cleaned up, Feb 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Berridge - refactored, cleaned up, Feb 2010
  */
 public class SprogReply extends AbstractMRReply {
 

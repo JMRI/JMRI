@@ -16,17 +16,17 @@ public class JsonTestServiceFactory implements JsonServiceFactory<JsonTestHttpSe
     public static final String TEST = "test";
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{TEST};
     }
 
     @Override
-    public JsonTestSocketService getSocketService(JsonConnection connection) {
+    public JsonTestSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonTestSocketService(connection);
     }
 
     @Override
-    public JsonTestHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTestHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonTestHttpService(mapper);
     }
 

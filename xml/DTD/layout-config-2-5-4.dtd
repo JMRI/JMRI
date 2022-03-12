@@ -1,6 +1,5 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id$ -->
 
 <!-- This DTD is part of version 2.5.4 development.  Do not modify it       -->
 <!-- after version 2.5.4 is released.  For more information,                -->

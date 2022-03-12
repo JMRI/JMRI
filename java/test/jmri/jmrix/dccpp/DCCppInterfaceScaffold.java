@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 /**
  * DCCppInterfaceScaffold.java
  *
- * Description:	Test scaffold implementation of DCCppInterface
+ * Test scaffold implementation of DCCppInterface
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Mark Underwood Copyright (C) 2015
   *
  * Use an object of this type as a DCCppTrafficController in tests
  */
@@ -34,7 +34,7 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
     @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener replyTo) {
         if (log.isDebugEnabled()) {
-            log.debug("sendDCCppMessage [" + m + "]");
+            log.debug("sendDCCppMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -43,7 +43,7 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
     @Override
     public void sendHighPriorityDCCppMessage(DCCppMessage m, DCCppListener replyTo) {
         if (log.isDebugEnabled()) {
-            log.debug("sendDCCppMessage [" + m + "]");
+            log.debug("sendDCCppMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -56,7 +56,7 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
     public void sendTestMessage(DCCppReply m) {
         // forward a test message to DCCppListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyReply(m, null);
         return;

@@ -1,32 +1,31 @@
 package apps;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class ManagerDefaultsConfigPaneTest {
+public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase<ManagerDefaultsConfigPane> {
 
-    @Test
-    public void testCTor() {
-        ManagerDefaultsConfigPane t = new ManagerDefaultsConfigPane();
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
         JUnitUtil.initConfigureManager();
+        prefsPanel = new ManagerDefaultsConfigPane();
     }
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Override
+    @Test
+    public void isPersistant() {
+        assertThat(prefsPanel.isPersistant()).isTrue();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class);

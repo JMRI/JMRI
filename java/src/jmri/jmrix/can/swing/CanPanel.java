@@ -25,6 +25,10 @@ abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanP
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
     }
+    
+    public CanSystemConnectionMemo getMemo() {
+        return this.memo;
+    }
 
     /**
      * {@inheritDoc}
@@ -51,5 +55,4 @@ abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanP
         }
         return initial;
     }
-
 }

@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -11,8 +11,8 @@ import javax.swing.AbstractAction;
  */
 public class ImportCarRosterAction extends AbstractAction {
 
-    public ImportCarRosterAction(String actionName, Component frame) {
-        super(actionName);
+    public ImportCarRosterAction() {
+        super(Bundle.getMessage("MenuItemImport"));
     }
 
     @Override

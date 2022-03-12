@@ -5,7 +5,7 @@ import jmri.jmrix.dccpp.serial.ConnectionConfig;
 import jmri.jmrix.dccpp.serial.DCCppAdapter;
 
 /**
- * Handle XML persistance of layout connections by persistening the DCC++ serial adapter
+ * Handle XML persistence of layout connections by persistening the DCC++ serial adapter
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the DCCppAdapter.
  * <p>

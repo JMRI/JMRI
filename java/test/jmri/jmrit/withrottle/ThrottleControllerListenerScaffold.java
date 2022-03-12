@@ -5,7 +5,6 @@ package jmri.jmrit.withrottle;
  * 
  * @author Paul Bender Copyright (C) 2018
  */
-import java.util.EventListener;
 import jmri.DccLocoAddress;
 
 public class ThrottleControllerListenerScaffold implements ThrottleControllerListener {

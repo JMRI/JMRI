@@ -112,7 +112,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         SignalHead existingBean =
                 InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getBeanBySystemName(sys);
+                        .getBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
             log.error("systemName is already registered: {}", sys);
@@ -151,11 +151,6 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             log.warn("Failed to provide Turnout \"{}\" in loadTurnout", name);
             return null;
         }
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
     }
 
     private int getIntFromColour(String colour) {

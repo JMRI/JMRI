@@ -1,0 +1,26 @@
+<!-- Fichier d'inclusion de pages d'aide de documentation de r&#233;pertoire conditionnel Logix -->
+
+<p>
+La documentation de Logix est divis&#233;e en huit pages d'aide diff&#233;rentes.  Bien que celles-ci soient r&#233;f&#233;renc&#233;es via des liens à divers endroits,
+toutes ne sont pas faciles à trouver (peut-être trois liens plus bas).  Elles sont en outre list&#233;es ici pour plus de commodit&#233;.
+</p>
+
+<ul>
+<li><a href="../../../../html/tools/Logix.shtml">Description et explication de la Logix principale</a></li>.
+
+<li><a href="../../../../html/tools/Logix.shtml#notes">FAQ</a></li>
+
+<li><a href="../beantable/LogixTable.shtml">Description du contenu et de l'utilisation du Tableau Logix </a></li>
+
+<li><a href="../beantable/LogixAddEdit.shtml">Description de l'action d'ajout et de modification du Tableau Logix</a></li>
+
+<li><a href="StateVariableActionList.shtml">D&#233;nombrement des variables d'&#233;tat et des actions conditionnelles de Logix</a></li>.
+
+<li><a href="ConditionalListEditor.shtml">Instructions pour l'&#233;diteur de listes de ConditionalListEditor Logix</a></li>.
+
+<li><a href="ConditionalTreeEditor.shtml">Instructions pour l'&#233;diteur d'arbre des Conditions de Logix</a></li>.
+
+<li><a href="ConditionalCopy.shtml">Instructions de copie des Conditions Logix</a></li>.
+
+</ul>
+

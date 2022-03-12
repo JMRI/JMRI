@@ -2,10 +2,9 @@ package jmri.jmrix.anyma;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AnymaDMX_SystemConnectionMemo class.
@@ -13,7 +12,7 @@ import org.junit.Test;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_SystemConnectionMemoTest extends SystemConnectionMemoTestBase {
+public class AnymaDMX_SystemConnectionMemoTest extends SystemConnectionMemoTestBase<AnymaDMX_SystemConnectionMemo> {
 
     @Test
     public void testDefaultCtor() {
@@ -27,16 +26,18 @@ public class AnymaDMX_SystemConnectionMemoTest extends SystemConnectionMemoTestB
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        //AnymaDMX_TrafficController tc = new AnymaDMX_TrafficController();
         scm = new AnymaDMX_SystemConnectionMemo();
+        scm.configureManagers();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
+        scm.dispose();
+        scm = null;
         JUnitUtil.tearDown();
     }
 }

@@ -68,8 +68,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
                 Bundle.getMessage("AddEntryToGroupDialog"), Bundle.getMessage("AddEntryToGroupTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonDone"), Bundle.getMessage("ButtonOK"), selections, rosterEntry}, null);
-        log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":"
-                + selections.getSelectedItem() + ", " + rosterEntry.getSelectedIndex() + ":" + rosterEntry.getSelectedItem());
+        log.debug("Dialog value {} selected {}:{}, {}:{}", retval, selections.getSelectedIndex(), selections.getSelectedItem(), rosterEntry.getSelectedIndex(), rosterEntry.getSelectedItem());
         if (retval != 1) {
             return;
         }

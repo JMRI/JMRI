@@ -27,17 +27,17 @@ import org.openide.util.lookup.ServiceProvider;
 public class JsonOperationsServiceFactory implements JsonServiceFactory<JsonOperationsHttpService, JsonOperationsSocketService> {
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{CAR, CARS, CAR_TYPE, ENGINE, ENGINES, KERNEL, LOCATION, LOCATIONS, ROLLING_STOCK, TRACK, TRAIN, TRAINS};
     }
 
     @Override
-    public JsonOperationsSocketService getSocketService(JsonConnection connection) {
+    public JsonOperationsSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonOperationsSocketService(connection);
     }
 
     @Override
-    public JsonOperationsHttpService getHttpService(ObjectMapper mapper) {
+    public JsonOperationsHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonOperationsHttpService(mapper);
     }
 

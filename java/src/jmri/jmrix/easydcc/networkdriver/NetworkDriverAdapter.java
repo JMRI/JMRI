@@ -1,11 +1,8 @@
 package jmri.jmrix.easydcc.networkdriver;
 
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.Vector;
 import jmri.jmrix.easydcc.EasyDccNetworkPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

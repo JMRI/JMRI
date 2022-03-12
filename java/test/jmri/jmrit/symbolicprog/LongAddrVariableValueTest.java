@@ -3,23 +3,23 @@ package jmri.jmrit.symbolicprog;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Test LongAddrVariableValue class.
  *
- * @todo need a check of the MIXED state model for long address
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * TODO need a check of the MIXED state model for long address
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -46,7 +46,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((LongAddrVariableValue) var).setValue(Integer.valueOf(val).intValue());
+        ((LongAddrVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override
@@ -88,13 +88,18 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     @Test
+    public void testVariableValueTwinMask() {
+    } // mask is ignored
+
+    @Override
+    @Test
     public void testVariableFromCV() {
     }     // low CV is upper part of address
 
     @Override
     @Test
     public void testVariableValueRead() {
-    }	// due to multi-cv nature of LongAddr
+    } // due to multi-cv nature of LongAddr
 
     @Override
     @Test
@@ -123,15 +128,15 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         v.put("18", cv18);
         // create a variable pointed at CV 17&18, check name
         LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, null, null, cv18);
-        Assert.assertTrue(var.label() == "label");
+        Assert.assertSame("label", var.label());
         // pretend you've edited the value, check its in same object
         ((JTextField) var.getCommonRep()).setText("4797");
-        Assert.assertTrue(((JTextField) var.getCommonRep()).getText().equals("4797"));
+        Assert.assertEquals("4797", ((JTextField) var.getCommonRep()).getText());
         // manually notify
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
         // see if the CV was updated
-        Assert.assertTrue(cv17.getValue() == 210);
-        Assert.assertTrue(cv18.getValue() == 189);
+        Assert.assertEquals(210, cv17.getValue());
+        Assert.assertEquals(189, cv18.getValue());
     }
 
     // can we change both CVs and see the result in the Variable?
@@ -151,10 +156,10 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
         // change the CV, expect to see a change in the variable value
         cv17.setValue(210);
-        Assert.assertTrue(cv17.getValue() == 210);
+        Assert.assertEquals(210, cv17.getValue());
         cv18.setValue(189);
-        Assert.assertTrue(((JTextField) var.getCommonRep()).getText().equals("4797"));
-        Assert.assertTrue(cv18.getValue() == 189);
+        Assert.assertEquals("4797", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals(189, cv18.getValue());
     }
 
     List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
@@ -229,19 +234,19 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
         Assert.assertEquals("CV 17 value ", 210, cv17.getValue());
         Assert.assertEquals("CV 18 value ", 189, cv18.getValue());
-        Assert.assertTrue(((JTextField) var.getCommonRep()).getText().equals("4797"));
+        Assert.assertEquals("4797", ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("Var state", AbstractValue.STORED, var.getState());
-        Assert.assertTrue(p.lastWrite() == 189);
+        Assert.assertEquals(189, p.lastWrite());
         // how do you check separation of the two writes?  State model?
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
     
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

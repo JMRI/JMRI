@@ -31,18 +31,18 @@
                         <label>
                             <text> </text>
                         </label>
-                        <display item="SwitchPilot Function Output 1 Option 1" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 1 Option 2" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 1 Option 3" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 1 Choices 1" label=""/>
-                        <display item="SwitchPilot Function Output 1 Option 4" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 1 Choices 2" label=""/>
-                        <display item="SwitchPilot Function Output 1 Option 5" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 1 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 1 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 1 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 1 Choices 1" label=""/>
+                        <display item="SwitchPilot FnOut 1 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 1 Choices 2" label=""/>
+                        <display item="SwitchPilot FnOut 1 Option 5" format="onradiobutton"/>
                         <row>
                             <label>
                                 <text>(</text>
                             </label>
-                            <display item="SwitchPilot Function Output 1 effect generated">
+                            <display item="SwitchPilot FnOut 1 Mode">
                                 <label>Mode CV Value is</label>
                                 <label xml:lang="de">Eigenschaften CV Wert ist</label>
                             </display>
@@ -54,8 +54,8 @@
                             <text> </text>
                         </label>
                         <row>
-                            <display item="SwitchPilot Function Output 1 Slider 3" layout="above" label=""/>
-                            <display item="SwitchPilot Function Output 1 Slider 3" format="hslider" layout="above"/>
+                            <display item="SwitchPilot FnOut 1 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot FnOut 1 Slider 3" format="hslider" layout="above"/>
                         </row>
                         <label>
                             <text> </text>
@@ -71,18 +71,18 @@
                         <label>
                             <text> </text>
                         </label>
-                        <display item="SwitchPilot Function Output 2 Option 1" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 2 Option 2" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 2 Option 3" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 2 Choices 1" label=""/>
-                        <display item="SwitchPilot Function Output 2 Option 4" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 2 Choices 2" label=""/>
-                        <display item="SwitchPilot Function Output 2 Option 5" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 2 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 2 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 2 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 2 Choices 1" label=""/>
+                        <display item="SwitchPilot FnOut 2 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 2 Choices 2" label=""/>
+                        <display item="SwitchPilot FnOut 2 Option 5" format="onradiobutton"/>
                         <row>
                             <label>
                                 <text>(</text>
                             </label>
-                            <display item="SwitchPilot Function Output 2 effect generated">
+                            <display item="SwitchPilot FnOut 2 Mode">
                                 <label>Mode CV Value is</label>
                                 <label xml:lang="de">Eigenschaften CV Wert ist</label>
                             </display>
@@ -94,8 +94,8 @@
                             <text> </text>
                         </label>
                         <row>
-                            <display item="SwitchPilot Function Output 2 Slider 3" layout="above" label=""/>
-                            <display item="SwitchPilot Function Output 2 Slider 3" format="hslider" layout="above"/>
+                            <display item="SwitchPilot FnOut 2 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot FnOut 2 Slider 3" format="hslider" layout="above"/>
                         </row>
                         <label>
                             <text> </text>
@@ -111,18 +111,18 @@
                         <label>
                             <text> </text>
                         </label>
-                        <display item="SwitchPilot Function Output 3 Option 1" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 3 Option 2" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 3 Option 3" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 3 Choices 1" label=""/>
-                        <display item="SwitchPilot Function Output 3 Option 4" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 3 Choices 2" label=""/>
-                        <display item="SwitchPilot Function Output 3 Option 5" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 3 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 3 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 3 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 3 Choices 1" label=""/>
+                        <display item="SwitchPilot FnOut 3 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 3 Choices 2" label=""/>
+                        <display item="SwitchPilot FnOut 3 Option 5" format="onradiobutton"/>
                         <row>
                             <label>
                                 <text>(</text>
                             </label>
-                            <display item="SwitchPilot Function Output 3 effect generated">
+                            <display item="SwitchPilot FnOut 3 Mode">
                                 <label>Mode CV Value is</label>
                                 <label xml:lang="de">Eigenschaften CV Wert ist</label>
                             </display>
@@ -134,8 +134,8 @@
                             <text> </text>
                         </label>
                         <row>
-                            <display item="SwitchPilot Function Output 3 Slider 3" layout="above" label=""/>
-                            <display item="SwitchPilot Function Output 3 Slider 3" format="hslider" layout="above"/>
+                            <display item="SwitchPilot FnOut 3 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot FnOut 3 Slider 3" format="hslider" layout="above"/>
                         </row>
                         <label>
                             <text> </text>
@@ -151,18 +151,18 @@
                         <label>
                             <text> </text>
                         </label>
-                        <display item="SwitchPilot Function Output 4 Option 1" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 4 Option 2" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 4 Option 3" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 4 Choices 1" label=""/>
-                        <display item="SwitchPilot Function Output 4 Option 4" format="onradiobutton"/>
-                        <display item="SwitchPilot Function Output 4 Choices 2" label=""/>
-                        <display item="SwitchPilot Function Output 4 Option 5" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 4 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 4 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 4 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 4 Choices 1" label=""/>
+                        <display item="SwitchPilot FnOut 4 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot FnOut 4 Choices 2" label=""/>
+                        <display item="SwitchPilot FnOut 4 Option 5" format="onradiobutton"/>
                         <row>
                             <label>
                                 <text>(</text>
                             </label>
-                            <display item="SwitchPilot Function Output 4 effect generated">
+                            <display item="SwitchPilot FnOut 4 Mode">
                                 <label>Mode CV Value is</label>
                                 <label xml:lang="de">Eigenschaften CV Wert ist</label>
                             </display>
@@ -174,8 +174,8 @@
                             <text> </text>
                         </label>
                         <row>
-                            <display item="SwitchPilot Function Output 4 Slider 3" layout="above" label=""/>
-                            <display item="SwitchPilot Function Output 4 Slider 3" format="hslider" layout="above"/>
+                            <display item="SwitchPilot FnOut 4 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot FnOut 4 Slider 3" format="hslider" layout="above"/>
                         </row>
                         <label>
                             <text> </text>

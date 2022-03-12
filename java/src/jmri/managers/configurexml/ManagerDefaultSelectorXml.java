@@ -6,8 +6,6 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.ProfileManager;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of ManagerDefaultSelector
@@ -71,16 +69,6 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
             cm.registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
         });
         return true;
-    }
-
-    /**
-     * Doesn't need to do anything, shouldn't get invoked
-     *
-     * @param element Top level Element to unpack.
-     * @param o       PanelEditor as an Object
-     */
-    @Override
-    public void load(Element element, Object o) {
     }
 
     //private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelectorXml.class);

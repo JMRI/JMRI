@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -281,7 +281,7 @@ obtenir avec l'habituel m&#233;canisme  option1/option2/option3. Les outils disp
 
 </div><!-- closes #list-->
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

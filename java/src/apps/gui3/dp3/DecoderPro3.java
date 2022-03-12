@@ -1,7 +1,6 @@
 package apps.gui3.dp3;
 
 import java.io.File;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -124,7 +123,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
                 try {
                     InstanceManager.getDefault(DecoderIndexFile.class);
                 } catch (Exception ex) {
-                    log.error("Error in trying to initialize decoder index file " + ex.toString());
+                    log.error("Error in trying to initialize decoder index file {}", ex.toString());
                 }
             }
         };

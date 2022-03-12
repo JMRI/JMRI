@@ -23,6 +23,12 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version of the signal set.</revremark>
     </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Add missing 'Not Lit' aspect definition</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>WM 1980</aspecttable>
@@ -51,6 +57,12 @@
       <show>red</show>
       <reference>Page 66</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG_Permissive/Rule-W291.gif</imagelink>
+    </appearance>
+
+    <appearance>
+        <aspectname>Not Lit</aspectname>
+        <show>dark</show>
+        <imagelink>../../../resources/icons/smallschematics/aspects/WM-1980/WM_RYG_Permissive/unlit.gif</imagelink>
     </appearance>
 
   </appearances>

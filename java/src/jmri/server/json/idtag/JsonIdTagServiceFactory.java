@@ -17,17 +17,17 @@ public class JsonIdTagServiceFactory implements JsonServiceFactory<JsonIdTagHttp
 
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{IDTAG};
     }
 
     @Override
-    public JsonIdTagSocketService getSocketService(JsonConnection connection) {
+    public JsonIdTagSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonIdTagSocketService(connection);
     }
 
     @Override
-    public JsonIdTagHttpService getHttpService(ObjectMapper mapper) {
+    public JsonIdTagHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonIdTagHttpService(mapper);
     }
 

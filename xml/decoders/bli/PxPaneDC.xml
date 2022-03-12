@@ -47,6 +47,42 @@
         </label>
         <display item="Analog Brake Release Voltage" layout="above" format="hslider"/>
       </row>
+      <row>
+        <display item="DC Alpha Filter" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Alpha Filter" layout="above" format="hslider"/>
+      </row>
+      <row>
+        <display item="DC Sounds Startup Volume" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Sounds Startup Volume" layout="above" format="hslider"/>
+      </row>
+      <row>
+        <display item="DC Sounds Maximum Volume" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Sounds Maximum Volume" layout="above" format="hslider"/>
+      </row>
+      <row>
+        <display item="DC Smoke Unit On Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Smoke Unit On Voltage" layout="above" format="hslider"/>
+      </row>
     </column>
     <column>
       <row>

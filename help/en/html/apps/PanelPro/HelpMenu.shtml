@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Help Menu</title><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Help Menu</h1>
+
+      <p>The JMRI "Help" menu contains the following items:</p>
+
+      <dl style="margin-left: 2em">
+        <dt>Window Help...</dt>
+
+        <dd>Open the window specific help page in the browser.</dd>
+
+        <dt>General Help...</dt>
+
+        <dd>Open the general help page in the browser.</dd>
+
+        <dt>License...</dt>
+
+        <dd>Display the license for JMRI.</dd>
+
+        <dt>Locations...</dt>
+
+        <dd>
+          <p>Display the JMRI file location information.</p>
+          <a href="images/help_locations.png"><img src="images/help_locations.png" alt=
+          "Help Locations" width="1101" height="322"></a>
+          <p>Click on a button to open the operating system file manager at the selected
+          location.</p>
+        </dd>
+
+        <dt>Check for Updates</dt>
+
+        <dd>
+          <p>Show the current test, production and installed versions.</p>
+          <a href="images/help_check_for_updates.png"><img src="images/help_check_for_updates.png"
+          alt="Help Check for Updates" width="302" height="131"></a>
+        </dd>
+
+        <dt>Context...</dt>
+
+        <dd>
+          <p>Display the run time information about JMRI. This can be useful for problem
+          determination.</p>
+          <a href="images/help_context.png"><img src="images/help_context.png" alt="Help Context"
+          width="656" height="296"></a>
+          <p>The <strong>Copy to clipboard</strong> button can used to copy and paste the content
+          in another program, such as email.</p>
+        </dd>
+
+        <dt>System Console...</dt>
+
+        <dd>
+          Display the current contents of the session log file. See <a href=
+          "../../../package/apps/SystemConsole.shtml">System Console</a> for details.
+        </dd>
+
+        <dt>Report Issue...</dt>
+
+        <dd>
+          <p>Create an issue on GitHub.</p>
+          <a href="images/help_report_issue.png"><img src="images/help_report_issue.png" alt=
+          "Help Report Issue" width="400" height="423"></a>
+        </dd>
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

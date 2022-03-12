@@ -25,10 +25,10 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
     protected synchronized void sendOffMessage() {
         // The Elite appears to react to the on and off messages
         // in the same manner, and does not handle feedback properly
-        // Set the known state to the command state and the internalState
-        // to idlestate.
+        // Set the known state to the command state and send the next
+        // queued message.
         newKnownState(getCommandedState());
-        internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
+        sendQueuedMessage();
     }
 
 }

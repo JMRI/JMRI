@@ -11,7 +11,7 @@ import java.util.Enumeration;
 
 import javax.swing.JFrame;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -47,6 +47,9 @@ public class ReportContext {
     public String getReport(boolean reportNetworkInfo) {
 
         addString("JMRI Version: " + jmri.Version.name() + "   ");
+
+        addEarlyInitializationPreferences();
+
         addString("JMRI configuration file name: "
                 + System.getProperty("org.jmri.apps.Apps.configFilename") + "   (from org.jmri.apps.Apps.configFilename system property)");
         if (!jmri.util.JmriJFrame.getFrameList().isEmpty() && jmri.util.JmriJFrame.getFrameList().get(0) != null) {
@@ -60,11 +63,9 @@ public class ReportContext {
         ConnectionConfigManager cm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
         if (cm != null) {
             ConnectionConfig[] connList = cm.getConnections();
-            if (connList != null) {
-                for (int x = 0; x < connList.length; x++) {
-                    ConnectionConfig conn = connList[x];
-                    addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
-                }
+            for (int x = 0; x < connList.length; x++) {
+                ConnectionConfig conn = connList[x];
+                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
             }
         } else {
             addString("No connections present");
@@ -101,7 +102,11 @@ public class ReportContext {
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
-        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getNullableDefault(jmri.AudioManager.class).getActiveAudioFactory();
+        jmri.AudioManager am = jmri.InstanceManager.getNullableDefault(jmri.AudioManager.class);
+        jmri.jmrit.audio.AudioFactory af = null;
+        if ( am !=null ) {
+            af = am.getActiveAudioFactory();
+        }
         String audio = af != null ? af.toString() : "[not initialised]";
         addString("Audio factory type: " + audio + "   ");
 
@@ -164,6 +169,15 @@ public class ReportContext {
 
     void addProperty(String prop) {
         addString(prop + ": " + System.getProperty(prop) + "   ");
+    }
+
+    void addEarlyInitializationPreferences() {
+        jmri.util.EarlyInitializationPreferences eip =
+                jmri.util.EarlyInitializationPreferences.getInstance();
+
+        for (String pref : eip.getStartupPreferences()) {
+            addString(pref + "   ");
+        }
     }
 
     /**

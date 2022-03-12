@@ -1,16 +1,13 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
-import javax.swing.BoxLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import jmri.jmrix.can.cbus.node.CbusNodeConstants;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+
+import javax.swing.*;
+
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.node.CbusNodeCanListener;
+import jmri.jmrix.can.cbus.simulator.*;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
@@ -28,106 +25,115 @@ public class NdPane extends JPanel {
     
     private JComboBox<String> _selectNd;
     private CbusDummyNode _node;
-    private JButton _resetNd;
+    private JButton _flimButton;
     private JLabel _sessionText;
-    private ArrayList<String> tooltips;
+    private DirectionPane directionPane;
+    private final CanSystemConnectionMemo _memo;
     
-    public NdPane(CbusDummyNode nd ) {
+    public NdPane(CbusDummyNode nd, CanSystemConnectionMemo sysmemo ) {
         super();
         _node = nd;
+        _memo = sysmemo;
         init();
-    }
-    
-    public NdPane() {
-        super();
     }
         
     private void init() {
 
         _sessionText = new JLabel();
-        
-        _selectNd = new JComboBox<String>();
+
+        _selectNd = new JComboBox<>();
         _selectNd.setEditable(false);
-        
+
         ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectNd.setRenderer(renderer);
-        
-        _node.setPane(this);
-        
-        tooltips = new ArrayList<String>();
-        String getSelected="";
-        
-        for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
-            int intoption = CbusDummyNode.ndTypes.get(i);
-            String option = CbusNodeConstants.getModuleType(165,intoption);
-            _selectNd.addItem(option);
-            tooltips.add(CbusNodeConstants.getModuleTypeExtra(165,intoption));
-            if ( intoption == _node.getParameter(3) ){ // module type
-                getSelected = option;
-            }
-        }
-        
-        _selectNd.setSelectedItem(getSelected);
-        _selectNd.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String chosen = (String)_selectNd.getSelectedItem();
-                
-                for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
-                    int intoption = CbusDummyNode.ndTypes.get(i);
-                    String option = CbusNodeConstants.getModuleType(165,intoption);
-                    if (option.equals(chosen)) {
-                        log.debug("chosen {} {}",i,chosen);
-                        _node.setDummyType(165,intoption);
-                    }
-                }
-                updateNode();
+
+        ArrayList<String> tooltips = new ArrayList<>();
+
+        _selectNd.addItem("None");
+        tooltips.add("Select a module to start the Simulation.");
+
+        CbusSimulatedModuleProvider.getInstancesCollection().forEach(module -> {
+            log.debug("found SPI {}", module.getModuleType());
+            _selectNd.addItem(module.getModuleType());
+            tooltips.add(module.getToolTipText());
+            if ( module.matchesManuAndModuleId(_node) ) {
+                _selectNd.setSelectedItem(module.getModuleType());
             }
         });
 
         renderer.setTooltips(tooltips);
-        
-        _resetNd = new JButton("FLiM");
-        
-        DirectionPane dp = new DirectionPane(_node);
-        
+        _selectNd.addActionListener(this::moduleSelectorChanged);
+
+        _flimButton = new JButton("FLiM"); // NOI18N
+        _flimButton.addActionListener ((ActionEvent e) -> {
+            _node.flimButton();
+        });
+
         JPanel topPane = new JPanel();
-        
         topPane.add(_selectNd);
-        
         topPane.add(_sessionText);
-        topPane.add(_resetNd);
-        
+        topPane.add(_flimButton);
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEtchedBorder());
-        
+
         add(topPane);
-        add(dp);
+
+        directionPane = new DirectionPane(null);
+        add( directionPane );
+
+        updateNodeGui();
+    }
+
+    private void moduleSelectorChanged(ActionEvent e) {
+
+        String chosen = (String)_selectNd.getSelectedItem();
+        log.debug("Selected module {} {}",chosen,e);
         
-        _resetNd.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _node.flimButton();
+        CbusSimulator sim = jmri.InstanceManager.getNullableDefault(CbusSimulator.class);
+
+        if (_node != null) {
+            // todo - use memo, not instancemanager
+            if ( sim != null ) {
+                sim.removeNode(_node);
+            } else {
+                log.warn("No Simulator Running to deregister Node {}",_node);
             }
-        });
-        
-        updateNode();
-    }
-    
-    private void updateNode(){
-        if ( _node.getParameter(3)>0 ) { // module type set
-            _resetNd.setEnabled(true); 
-        } else {
-            _resetNd.setEnabled(false); 
+            _node.dispose();
+            _node = null;
         }
-       _sessionText.setText("<html> <h2> " + _node.getNodeNumber() + " </h2> </html>");
+
+        CbusSimulatedModuleProvider providerNode = CbusSimulatedModuleProvider.getProviderByName(chosen);
+        if ( providerNode != null ) {
+            _node = providerNode.getNewDummyNode( _memo, 0);
+
+            // todo - use memo, not instancemanager
+            if ( sim != null ) {
+                sim.addNode(_node);
+            } else {
+                log.warn("No Simulator Running to register Node {}",_node);
+            }
+        }
+        updateNodeGui();
+    }
+
+    public void updateNodeGui(){
+        _flimButton.setEnabled( _node != null );
+        if ( _node != null ) {
+            _node.setPane(this); // todo - move to property lkistener for node number changes
+            
+            CbusNodeCanListener ncl = _node.getCanListener();
+            if ( ncl instanceof CbusSimCanListener ) {
+                directionPane.setSimCanListener( (CbusSimCanListener) ncl);
+            }
+           _sessionText.setText("<html> <h2> " + _node.getNodeNumber() + " </h2> </html>");
+        } else {
+            directionPane.setSimCanListener(null);
+            _sessionText.setText("<html> <h2>   </h2> </html>");
+        }
+        
     }
     
-    public void setNodeNum(int num){
-        _node.setNodeNumber(num);
-        updateNode();
-    }
-    
-    private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    private final static Logger log = LoggerFactory.getLogger(NdPane.class);
     
 }

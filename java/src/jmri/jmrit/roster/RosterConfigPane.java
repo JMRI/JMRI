@@ -92,9 +92,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
                 }
                 filename.setText(fc.getSelectedFile().getParent() + File.separator);
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    ((JFrame) getTopLevelAncestor()).pack();
-                }
+                packTopFrame();
             }
         });
         p.add(b);
@@ -104,9 +102,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
             public void actionPerformed(ActionEvent e) {
                 filename.setText("");
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    ((JFrame) getTopLevelAncestor()).pack();
-                }
+                packTopFrame();
             }
         });
         p.add(b);
@@ -118,6 +114,13 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
         owner.setText(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
         p2.add(owner);
         add(p2);
+    }
+    
+    private void packTopFrame(){
+        java.awt.Container co = getTopLevelAncestor();
+        if ( co instanceof JFrame ) {
+            ((JFrame) co).pack();
+        }
     }
 
     public String getDefaultOwner() {

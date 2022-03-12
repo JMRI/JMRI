@@ -23,13 +23,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
       <h1>Le Tableau (Liens) Automate</h1>Ceci est la page d'aide
       help/jmri/jmrit/automat/monitor/AutomatTable 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

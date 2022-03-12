@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Damian</firstname><surname>Dąbrowa</surname></personname>
+        <email>damian@damiansplace.net</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2021-03-03</date>
+        <authorinitials>DD</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>   
+  </revhistory>
+
+  <aspecttable>PKP-PLK-2020</aspecttable>
+  <name>Sygnalizacja półautomatyczna 5-komorowa</name>
+  <description>Sygnalizacja świetlna dla sygnalizacji półsamoczynnej 5-komorowej</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Sygnał S1</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>red</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S1.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S1.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S1.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S1a</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>red</show>
+      <show>dark</show>
+      <show>flashred</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S1a.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S1a.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S1a.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S1z</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>red</show>
+      <show>dark</show>
+      <show>flashlunar</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S1z.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S1z.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S1z.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S2</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S2.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S2.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S2.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S3</aspectname>
+      <show>flashgreen</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S3.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S3.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S3.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S4</aspectname>
+      <show>dark</show>
+      <show>flashyellow</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S4.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S4.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S4.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S5</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S5.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S5.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S5.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S10</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S10.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S10.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S10.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S11</aspectname>
+      <show>flashgreen</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S11.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S11.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S11.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S12</aspectname>
+      <show>dark</show>
+      <show>flashyellow</show>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S12.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S12.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S12.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sygnał S13</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/PKP-PLK/spa5-S13.png</imagelink>
+      <imagelink type="default">../../../resources/icons/mediumschematics/aspects/PKP-PLK/spa5-S13.png</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/PKP-PLK/spa5-S13.png</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>

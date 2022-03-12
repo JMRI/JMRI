@@ -12,7 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @javax.annotation.concurrent.Immutable
 
-/**
+/*
  * Provides standard access for resource bundles in a package.
  *
  * Convention is to provide a subclass of this name in each package, working off
@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull
-    private final static String name = "jmri.jmrix.loconet.locomon.Llnmon"; // NOI18N
+    private final static String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

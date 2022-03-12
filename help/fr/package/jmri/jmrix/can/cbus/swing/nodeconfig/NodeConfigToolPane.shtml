@@ -1,0 +1,644 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta name="keywords" content="JMRI help CBUS NODE Manager CONFIG TOOL configuration variable">
+  <title>JMRI : CBUS® ; Node Manager</title><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI : Gestionnaire de Nœuds CBUS</h1>
+
+      <ul class="snav">
+        <li><a href="#table">Tableau des Nœuds</a>
+        </li>
+
+        <li><a href="#nodeinfo">Information sur les Nœuds</a>
+        </li>
+
+        <li><a href="#variables">Variables du Nœuds</a>
+        </li>
+
+        <li><a href="#events">événements du Nœud</a>
+        </li>
+
+        <li><a href="#setup">Configuration du Nœud</a>
+        </li>
+
+        <li><a href="#nodenumber">Nombre de Nœuds</a>
+        </li>
+
+        <li><a href="#fcuimport">Restauration depuis FCU</a>
+        </li>
+      </ul>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-752x541.png"
+      width="676" height="487" alt="Capture d'écran CBUS Node Manager" align="right">
+      <p>Le gestionnaire de Nœuds comprend une table des Nœuds, ainsi que des capacités de
+      configuration des Nœuds.</p>
+
+      <p>.</p>
+
+      <p>A part être un outil de configuration, cette table est utilisée par JMRI pour localiser
+      les centrales DC / DCC, en activant des fonctionnalités pour les Centrales qui les prennent
+      en charge.</p>
+
+      <p>Vous pouvez ouvrir plusieurs fenêtres de gestionnaire, celles-ci utiliseront toutes la
+      même base de données de Nœuds.</p>
+
+      <h2><a name="table" id="table">Tableau des Nœuds</a>
+      </h2>
+
+      <div>
+        <p>La moitié supérieure de l'écran affiche un Tableau de Nœuds, tandis que la moitié
+        inférieure affiche des détails sur le Nœud sélectionné.</p>
+
+        <p>Les Nœuds seront ajoutés au Tableau lorsqu'une opération OPC d'administration de Nœud
+        est détectée pour le numéro de Nœud.</p>
+
+        <p>Les Nœuds ( et les Centrales ) seront également ajoutés à la suite d'une recherche de
+        Nœud ou une recherche de Centrale.</p>
+
+        <p>Il y a une ligne dans le Tableau pour chaque numéro de Nœud.</p>
+
+        <p>Le gestionnaire interrogera tout Nœud ajouté au Tableau pour connaître ses
+        propriétés.</p>
+
+        <p>.</p>
+
+        <p>Si elle est activée, cette requête déclenchera la récupération en arriÉre-plan de la
+        configuration complÉte du Nœud.</p>
+
+        <p>Lorsqu'un Nœud est sélectionné dans le Tableau, toute récupération en arriÉre-plan sera
+        prioritairement dirigée vers ce Nœud.</p>
+
+        <p>Colonnes :</p>
+
+        <ul>
+          <li>Numéro de Nœud</li>
+
+          <li>Type de Nœud, par exemple CANPAN, tel que déclaré par le Nœud</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Nom de l'utilisateur - modifiable</li>
+
+          <li>Numéro de Centrale - Disponible uniquement si le Nœud est une Centrale</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Identification du CAN - Voir l'onglet de configuration du Nœud pour modifier</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>événements - Nombre d'événements actuellement stockés sur le Nœud</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Progression de la Récupération - Pourcentage de la configuration totale du Nœud
+          téléchargée sur JMRI</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Total Bytes - Total des octets de données du Nœud</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Mode Apprentissage - Vérifié si le Nœud est actuellement en mode apprentissage</li>
+
+          <li style="list-style: none">.</li>
+        </ul>
+
+        <p>La récupération préalable permet une édition rapide du Nœud et peut être la base de
+        toute intégration future de la sauvegarde du Nœud.</p>
+
+        <p>Les octets de données du Nœud sont calculés comme la somme de :</p>
+
+        <ul>
+          <li>Nombre de paramÉtres de Nœud</li>
+
+          <li>Nombre de Variables de Nœud ( NVs )</li>
+
+          <li>Nombre d'événements x 5 ( récupération de l'index initial des événements )</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Nombre d'événements x Nombre de variables d'événement par événement</li>
+
+          <li style="list-style: none">.</li>
+        </ul>
+
+        <p>Vous pouvez cliquer dans la cellule Nom du Nœud pour modifier le nom du Nœud.</p>
+
+        <p>Vous pouvez supprimer un Nœud du Tableau via l'onglet Configuration du Nœud.</p>
+
+        <h4>Menu Fichier</h4>
+
+        <p>Importer les noms de Nœuds depuis le fichier FCU ( les noms de Nœuds ne sont pas
+        actuellement maintenus entre les sessions )</p>
+
+        <p>Restaurer un Nœud à partir d'un fichier FCU - voir <a href="#fcuimport">Restaurer à
+        partir d'un FCU</a></p>
+
+        <h4>Menu des options</h4>
+        <img src=
+        "../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-options-372x216.png"
+        width="372" height="216" alt="Options du gestionnaire de Nœuds CBUS" align="right">
+        <ul>
+          <li>Recherche de Nœuds et de Centrales.
+            <p>Vous pouvez sélectionner Options &gt; Rechercher des Nœuds et des Centrales. par
+            lequel le gestionnaire demandera à chaque Nœud sur le réseau CBUS de faire un
+            rapport.<br>
+            à Chaque Nœud qui se signale est envoyé un message pour le sortir de tout mode
+            d'apprentissage d'événement existant.<br>
+            Un message identifiant les Nœuds en mode configuration, c'est-à-dire demandant un
+            numéro de Nœud. sera également envoyé au réseau.</p>
+
+            <p>.</p>
+          </li>
+
+          <li>Envoyer une OPC de réinitialisation du systÉme</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Récupération en arriÉre-plan
+            <p>La recherche en arriÉre-plan tente d'utiliser les périodes de faible trafic sur le
+            réseau CBUS pour rafraîchir les détails des Nœuds.<br>
+            Si l'option Rapide est sélectionnée, le systÉme vérifiera toutes les 20 ms s'il y a du
+            trafic sur le réseau CBUS.<br>
+            Si aucun trafic n'est observé, et qu'il n'y a pas de récupération de données en cours,
+            une demande de données au Nœud sera effectuée.<br>
+            Si l'option slow est sélectionnée, cela est réduit à toutes les 50ms.</p>
+          </li>
+
+          <li>Détecter les demandes de numéros de Nœuds</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Ajouter des Centrales au Tableau lorsqu'ils sont trouvés</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Ajouter des Nœuds au Tableau lorsqu'ils sont trouvés</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Recherche de Centrales au démarrage de JMRI</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Recherche de Nœuds au démarrage de JMRI</li>
+        </ul>
+
+        <p>Les options sont enregistrées entre les sessions sur une base par profil.</p>
+      </div>
+
+      <h3><a name="nodeinfo" id="nodeinfo">Informations sur les Nœuds</a>
+      </h3>
+      .
+      <div>
+        <p>Informations supplémentaires sur le Nœud, y compris, si elles sont disponibles</p>
+        .
+        <ul>
+          <li>Fabricant</li>
+
+          <li>Texte sur le type de Nœud</li>
+
+          <li>Version du firmware</li>
+
+          <li>Total Variables du Nœuds</li>
+
+          <li>Total des paramÉtres</li>
+
+          <li>Variables par événement</li>
+
+          <li>Maximum d'événements de Nœud</li>
+
+          <li>Type de Bus</li>
+
+          <li>Lien de Support du Nœuds</li>
+        </ul>
+      </div>
+
+      <h3><a name="variables" id="variables">Variables du Nœud</a>
+      </h3>
+      .
+      <div>
+        <p>C'est un outil générique pour la modification des variables de Nœuds et des événements
+        de Nœuds.</p>
+
+        <p><strong>D'autres outils peuvent être plus appropriés pour la configuration complÉte des
+        Nœuds.</strong>
+        </p>
+        .
+        <p>JMRI n'enregistre pas les modifications de la configuration du Nœud, tout cela est
+        enregistré sur le Nœud.</p>
+
+        <p>.</p>
+
+        <p>Il est judicieux de faire des sauvegardes réguliÉres de vos configurations de Nœuds en
+        utilisant un logiciel approprié.</p>
+
+        <p>Ne modifiez pas aveuglément les Variables du Nœud pour <em>voir ce qui se passe !</em>
+        Utilisez en association avec la la documentation des modules individuels.</p>
+
+        <p>Ces derniers sont affichés sous la forme d'un Tableau.</p>
+
+        <p>Les colonnes du Tableau comprennent le numéro du NV, ainsi que la valeur du NV sous
+        forme décimale, hexagonale et binaire.</p>
+
+        <p>Cliquez sur modifier pour éditer les Variables de Nœud, l'écran d'édition s'ouvrira dans
+        une nouvelle fenêtre.</p>
+
+        <h4>Modification des variables de Nœud</h4>
+
+        <p>Les colonnes de gauche sont les valeurs actuelles, les colonnes de droite montrent les
+        valeurs proposées.</p>
+
+        <p>Si les valeurs ont été modifiées, la ligne est surlignée en jaune.</p>
+
+        <p>.</p>
+
+        <p>Pour écrire les nouvelles VN, le bouton de sauvegarde est activé lorsqu'une variable a
+        été modifiée.</p>
+
+        <p>Cliquez sur ce bouton pour une confirmation avant l'écriture, aprÉs quoi la fenêtre se
+        fermera.</p>
+      </div>
+
+      <h3><a name="events" id="events">Événements du Nœud</a>
+      </h3>
+      <a>.</a>
+      <div>
+        <img src=
+        "../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-generic-edit-ev-488x525.png"
+        width="488" height="525" alt="CBUS Node Event Generic Config" align="right">
+        <p>Vous pouvez créer de nouveaux événements de Nœud en faisant glisser un événement du
+        Tableau des événements CBUS vers la fenêtre du gestionnaire de Nœuds.</p>
+
+        <p>Si l'événement est nouveau pour le Nœud, il s'ouvrira dans une nouvelle fenêtre
+        d'événement.</p>
+
+        <p>Si l'événement est déjà sur le Nœud, il s'ouvrira dans une fenêtre d'édition d'événement
+        .</p>
+
+        <p>Cliquez sur le bouton d'édition dans la liste des événements, ou sur le bouton de nouvel
+        événement. pour faire apparaître la fenêtre d'édition de l'événement.</p>
+
+        <p>La combinaison de l'événement et du Nœud est placée en haut de la liste</p>
+
+        <p>.</p>
+
+        <p>Les noms des Nœuds et des événements sont recherchés dans le Tableau des événements CBUS
+        lorsque les spinners sont modifiés</p>
+
+        <p>.</p>
+
+        <p>Les boutons d'action seront activés ou désactivés en fonction de la façon dont le numéro
+        de l'événement a changé.</p>
+
+        <p>.</p>
+
+        <p>Ne modifiez pas aveuglément les variables d'événement pour <em>voir ce qui se passe
+        !</em> Utilisez en relation avec la documentation des Nœuds individuels.</p>
+
+        <p>Toutes les valeurs existantes sont indiquées à gauche du Tableau, les valeurs proposées
+        à droite.</p>
+
+        <p>Les valeurs nulles ne sont pas affichées pour les colonnes binaires afin d'aider à
+        identifier les valeurs peuplées.</p>
+
+        <p>Il est possible d'utiliser les tourniquets</p>
+
+        <p>Utiliser les roues ou saisir une valeur dans la cellule pour modifier la valeur.</p>
+
+        <p>Toutes les variables modifiées verront leurs lignes surlignées en jaune.</p>
+
+        <p>.</p>
+
+        <p>Le nombre de variables par événement dépendra des paramÉtres d'événement et du firmware
+        spécifiques au Nœud.</p>
+
+        <p>Cliquez sur modifier ou sur un nouvel événement pour enregistrer celui-ci dans le
+        Nœud.</p>
+
+        <p>Lorsque vous apprenez,</p>
+
+        <p>Copier un événement copiera également les variables de l'événement dans un nouvel
+        événement prêt à être modifié.</p>
+
+        <p>Lorsque vous supprimez un événement du Nœud, il vous sera demandé de le confirmer.</p>
+
+        <p>La fenêtre d'édition de l'événement restera ouverte aprÉs les opérations d'apprentissage
+        ou d'édition de l'événement.</p>
+
+        <p>.</p>
+
+        <p>à l'heure actuelle, seul l'onglet générique est disponible. Des modèles pourront être
+        disponibles en temps voulu.</p>
+
+        <p>.</p>
+      </div>
+
+      <h3><a name="setup" id="setup">Configuration du Nœud</a>
+      </h3>
+      .
+      <div>
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-setup-752x541.png"
+        width="676" height="487" alt="CBUS Node Setup" align="right">
+        <p>L'onglet de configuration des Nœuds contient certaines fonctionnalités de configuration
+        des Nœuds moins utilisées.</p>
+
+        <p>Le nom utilisateur JMRI du Nœud est utilisé pour faire référence au Nœud dans la console
+        CBUS et dans d'autres applications CBUS.</p>
+
+        <p>L'auto-énumération CAN envoie une demande d'énumération au Nœud, qui devrait alors se
+        trier lui-même avec un bon identifiant CAN.</p>
+
+        <p>Le CAN peut également être défini manuellement en cliquant sur le bouton "force
+        set".<br>
+        Un dialogue contextuel demandera le nouvel ID CAN, min 1, max 99.</p>
+
+        <p>.</p>
+
+        <p>Bouton Effacer tous les événements du Nœud</p>
+
+        <p>Bouton Supprimer du tableau</p>
+
+        <p>.</p>
+      </div>
+
+      <h3><a name="nodenumber" id="nodenumber">Numéros de Nœud</a>
+      </h3>
+      .
+      <div>
+        <p>Numéro de Nœud : Chaque module individuel dans l'opération FLiM a un numéro de Nœud.</p>
+
+        <p>.</p>
+
+        <p>Un numéro de Nœud est demandé en maintenant enfoncé le bouton FLiM sur un Nœud.</p>
+
+        <p>JMRI peut détecter les modules qui demandent un numéro de Nœud.</p>
+
+        <p>Ceci est activé par défaut, bien qu'il puisse être désactivé dans le menu des options du
+        gestionnaire de Nœuds.</p>
+
+        <p>Lorsqu'on détecte une demande de numéro de Nœud, une fenêtre popup d'allocation
+        s'affiche.</p>
+        <img src=
+        "../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-qnn_278x151.png"
+        width="278" height="151" alt="Merg CBUS Node Configuration Request Node Number">
+        <p>à l'aide de la roulette numérique ou du clavier, saisissez le numéro de Nœud numérique
+        que vous souhaitez pour le Nœud.</p>
+
+        <p>Il est suggéré d'allouer des numéros de Nœud supérieurs à 256, le nombre maximum non
+        réservé étant de 65 533</p>
+        .
+        <p>Si un OpCode réservé est utilisé, l'arriÉre-plan deviendra jaune avec des
+        explications.</p>
+
+        <p>.</p>
+
+        <p>Si un numéro de Nœud existant en cours d'utilisation est sélectionné, l'arriÉre-plan
+        deviendra rouge.</p>
+      </div>
+
+      <h3><a name="fcuimport" id="fcuimport">Fichier xml du MERG FCU - Restaurer un Nœud / Importer
+      un événement CBUS et des noms de Nœuds</a>
+      </h3>
+      .
+      <div>
+        <img src=
+        "../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus_node_restore_from_fcu_661x619.png"
+        width="661" height="619" alt="CBUS Node Setup" align="right">
+        <ul>
+          <li>Restaurer les NV de Nœuds et les événements</li>
+
+          <li>Importer les noms de Nœuds vers le gestionnaire de Nœuds principal</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>Importer les noms d'événements vers le <a href=
+          "../eventtable/EventTablePane.shtml">Tableau d'événements CBUS de JMRI</a></li>
+
+          <li style="list-style: none">.</li>
+        </ul>
+
+        <p>Ouvrir la fenêtre de restauration via le menu Fichier du gestionnaire de Nœuds &gt;
+        Restaurer le Nœud à partir de FCU xml</p>
+        .
+        <p>Sélectionnez un fichier FCU xml à partir du bouton en haut de l'écran.</p>
+
+        <p>Les Nœuds du fichier apparaîtront dans le tableau supérieur.</p>
+
+        <p>Il y a des onglets pour visualiser les informations sur le Nœud sélectionné, les
+        variables de Nœud et les événements de Nœud au centre de la fenêtre.</p>
+
+        <p>Si le tableau des événements JMRI CBUS est en cours d'exécution, le bouton d'importation
+        des noms d'événements sera activé.<br>
+        Un nom d'événement sera ajouté à une entrée de tableau d'événements existante si elle n'a
+        pas de nom d'événement.</p>
+        <br>
+        Les noms de Nœuds sont importés dans le Tableau principal des Nœuds, en mettant à jour le
+        nom du Nœud s'il n'est pas défini.<br>
+        Si un numéro de Nœud n'est pas présent dans la Tableau, une nouvelle ligne sera créée
+        permettant au nom de Nœud d'être utilisé au sein d'autres applications CBUS de la JMRI.
+        <p>Les options de restauration sont vers le bas de l'écran.</p>
+
+        <p>Les Nœuds du Tableau principal des Nœuds sont répertoriés vers le bas à gauche de
+        l'écran de restauration.</p>
+
+        <p>.</p>
+
+        <p>Les deux transferts de NV et d'événements peuvent être sélectionnés de maniÉre
+        indépendante.</p>
+
+        <p>Il y a également une option pour effacer tous les événements existants sur le Nœud.</p>
+
+        <p>Quand un Nœud FCU correspondant et un Nœud du Tableau de Nœuds ont tous deux été
+        sélectionnés, le bouton Mettre à jour le Nœud devient actif.</p>
+
+        <p>Le Nœud donneur et le Nœud cible nécessitent la même quantité de NV ou de variables
+        d'événement.</p>
+
+        <p>Une fois que vous avez cliqué, il y a une popup de confirmation. qui confirme les
+        options qui sont définies.</p>
+        <img src=
+        "../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-teach-from-fcu-file-confirm-278x215.png"
+        width="278" height="215" alt="CBUS Confirm write restore">
+        <p>Cliquez sur OK, l'icône occupée apparaîtra et le processus d'écriture commencera.</p>
+
+        <p>Toutes les valeurs inchangées ne seront PAS écrites sur le Nœud.</p>
+
+        <p>Comme pour les autres opérations, le Nœud en cours d'apprentissage sera mis à jour en
+        temps réel via le Tableau principal des Nœuds.</p>
+
+        <p>à la fin de l'apprentissage, l'icône occupée disparaîtra et une popup d'échec
+        d'apprentissage s'affichera si un quelconque problÉme est détecté.</p>
+      </div>
+
+      <h3><a name="opc" id="opc">Codes d'Opérations envoyées</a>
+      </h3>
+
+      <div>
+        <ul>
+          <li>EVULN - Envoyé lors de la suppression d'un événement, également envoyé lors de la
+          modification d'un événement.</li>
+
+          <li>EVLRN - Envoyé pour apprendre une variable d'événement.</li>
+
+          <li>NERD - Envoyé lors de la demande d'événements de Nœuds.</li>
+
+          <li>NNLRN - Envoyé pour demander au Nœud d'entrer en mode apprentissage, avant la
+          suppression d'un événement ou l'apprentissage d'un événement.</li>
+
+          <li>NVSET - Envoyé lors de la modification des NV.</li>
+
+          <li>NVRD - Envoyé lorsque la fenêtre NV est sélectionnée dans la boucle d'obtention de
+          variable de Nœud.</li>
+
+          <li>QNN - Envoyé lors du rafraîchissement de la liste des Nœuds.</li>
+
+          <li>REVAL - Envoyé lorsque la fenêtre d'événement de Nœud est sélectionnée, pour demander
+          chaque valeur d'événement.</li>
+
+          <li>RQEVN - Envoyé lorsque le Nœud est sélectionné avant de construire la liste des
+          événements.</li>
+
+          <li>RQMN - Demande de nom de module - Envoyé pour demander le nom du module en mode de
+          configuration.</li>
+
+          <li>RQNP - Envoyé lors du rafraîchissement de la liste des Nœuds pour identifier tout
+          Nœud déjà en mode configuration. également envoyé en réponse à un Nœud demandant un
+          numéro de Nœud.</li>
+
+          <li>RQNPN - Envoyé lorsque le Nœud est sélectionné pour recevoir le total des paramÉtres
+          du Nœud, également envoyé pour obtenir chaque paramÉtre du Nœud.</li>
+
+          <li>SNN - Envoyé pour allouer un numéro de Nœud suite au choix de l'utilisateur.</li>
+        </ul>
+
+        <h4>Codes d'opération reçus</h4>
+
+        <ul>
+          <li>CANID - Detecte pour définir le Nœud sur un ID CAN spécifique.</li>
+
+          <li>CMDERR - Surveillant constant avec des fonctionnalités supplémentaires.
+            <ul>
+              <li>Lorsqu'on attend la réponse de l'événement de désapprentissage</li>
+
+              <li style="list-style: none">.</li>
+
+              <li>Lorsqu'on attend une réponse à l'événement de paramétrage</li>
+
+              <li style="list-style: none">.</li>
+
+              <li>En attente d'une réponse à l'événement setting NV</li>
+            </ul>
+          </li>
+
+          <li>ENRSP - Surveillant en attente de la liste des événements de Nœuds.</li>
+
+          <li>ENUM - Surveillant pour réinitialiser automatiquement l'ID CAN.</li>
+
+          <li>EVLRN - Surveillant pour l'événement d'apprentissage en mode apprentissage.</li>
+
+          <li>EVLRNI - Surveillant pour modifier l'événement en mode apprentissage par index ( Le
+          Nœud doit avoir un index valide ).</li>
+
+          <li>EVULN - Surveillant pour supprimer l'événement en mode apprentissage.</li>
+
+          <li>NEVAL - écoute en attente d'une variable d'événement.</li>
+
+          <li>NNNACK - Surveillant en attente d'une réponse SNN.</li>
+
+          <li>NNCLR - Surveillant pour effacer tous les événements de Nœuds</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>NNLRN - Surveillant pour lorsque le Nœud entre en mode apprentissage</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>NNREL - Surveillant constant pour la libération du numéro de Nœud.<br>
+          Le Nœud sera supprimé de la table du gestionnaire de Nœuds car on ne peut se fier à
+          aucune donnée antérieure.</li>
+
+          <li>NNULN - Surveillant pour lorsque le Nœud quitte le mode apprentissage</li>
+
+          <li style="list-style: none">.</li>
+
+          <li>NVANS - Surveillant lors de l'attente des NV du Nœud.</li>
+
+          <li>NVSET - Surveillant pour le NV unique du Nœud défini.</li>
+
+          <li>NUMEV - Surveillant en attente du nombre d'événements de Nœuds.</li>
+
+          <li>PARAMS - Surveillant pour le mode de configuration lors du rafraîchissement de la
+          liste des Nœuds, Surveillant lorsqu'un RQNP a été envoyé.</li>
+
+          <li>PARAN - Surveillant lors de l'attente des paramÉtres du Nœud ( qui n'est pas en mode
+          setup ).</li>
+
+          <li>PNN - Mise à jour depuis le Nœud - Peut créer une nouvelle ligne de la table du
+          gestionnaire de Nœuds.</li>
+
+          <li>RQNN - Surveillant constant pour les demandes de numéro de Nœud.</li>
+
+          <li>STAT - Mise à jour depuis le poste de commandement - Peut créer une nouvelle ligne de
+          table Node Manager.</li>
+
+          <li>WRACK -
+            <ul>
+              <li>Liste de surveillance en attente de la réponse à l'événement de
+              désapprentissage</li>
+
+              <li style="list-style: none">.</li>
+
+              <li>Liste de surveillance en attente d'une réponse à l'événement de paramétrage</li>
+
+              <li style="list-style: none">.</li>
+
+              <li>Liste en attente d'une réponse à l'événement de paramétrage NV</li>
+
+              <li style="list-style: none">.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>Tous les Nœuds sont désignés à la fois par le fabricant et le type de Nœud.</p>
+      </div>
+
+      <h4>Variation du guide du développeur CBUS 6b</h4>
+
+      <div>
+        <p>Il ne peut pas être garanti qu'un autre programme de la suite JMRI n'enverra aucun OPC
+        opérationnel normal à un module qui se trouve en mode apprentissage.</p>
+      </div>
+
+      <h3>Aide JMRI</h3>
+
+      <p>Vous pouvez afficher cette page d'aide au sein de JMRI en sélectionnant Aide &gt; Aide de
+      la fenêtre dans la barre supérieure de la fenêtre du gestionnaire des Nœuds CBUS.</p>
+
+      <p>Les méthodes d'apprentissage des Nœuds sont accessibles via un script Jython, et
+      comprennent des commandes uniques qui s'occupent de toutes les boucles.</p>
+
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale du support
+      CBUS de JMRI</a>.</p>
+
+      <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
+      .
+      <p>Traduction 2021-03-19</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+</body>
+</html>

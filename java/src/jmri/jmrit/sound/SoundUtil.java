@@ -26,8 +26,9 @@ import org.slf4j.LoggerFactory;
 public class SoundUtil {
 
     /**
-     * Play a sound from a buffer
+     * Play a sound from a buffer.
      *
+     * @param wavData the .wav byte array.
      */
     public static void playSoundBuffer(byte[] wavData) {
 
@@ -44,7 +45,7 @@ public class SoundUtil {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.warn("line not supported: " + info);
+            log.warn("line not supported: {}", info);
             return;
         }
         // Obtain and open the line.
@@ -53,11 +54,11 @@ public class SoundUtil {
             line.open(format);
         } catch (LineUnavailableException ex) {
             // Handle the error.
-            log.error("error opening line: " + ex);
+            log.error("error opening line", ex);
             return;
         }
         line.start();
-        // write(byte[] b, int off, int len) 
+        // write(byte[] b, int off, int len)
         line.write(wavData, 0, wavData.length);
 
     }
@@ -70,10 +71,10 @@ public class SoundUtil {
 
         File sourceFile = new File(filename);
 
-        // Get the type of the source file. We need this information 
-        // later to write the audio data to a file of the same type. 
+        // Get the type of the source file. We need this information
+        // later to write the audio data to a file of the same type.
         AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(sourceFile);
-        //AudioFileFormat.Type targetFileType = fileFormat.getType(); 
+        //AudioFileFormat.Type targetFileType = fileFormat.getType();
         AudioFormat audioFormat = fileFormat.getFormat();
 
         // get desired output format
@@ -84,18 +85,18 @@ public class SoundUtil {
         AudioInputStream stream = AudioSystem.getAudioInputStream(sourceFile);
         AudioInputStream inputAIS = AudioSystem.getAudioInputStream(format, stream);
 
-        // Read the audio data into a memory buffer. 
+        // Read the audio data into a memory buffer.
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int nBufferSize = BUFFER_LENGTH * audioFormat.getFrameSize();
         byte[] abBuffer = new byte[nBufferSize];
         while (true) {
             if (log.isDebugEnabled()) {
-                log.debug("trying to read (bytes): " + abBuffer.length);
+                log.debug("trying to read (bytes): {}", abBuffer.length);
             }
             int nBytesRead = inputAIS.read(abBuffer);
 
             if (log.isDebugEnabled()) {
-                log.debug("read (bytes): " + nBytesRead);
+                log.debug("read (bytes): {}", nBytesRead);
             }
             if (nBytesRead == -1) {
                 break;

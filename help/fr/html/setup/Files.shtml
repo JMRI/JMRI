@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar" -->
 	<div id="mainContent">
@@ -84,7 +84,7 @@ Dans votre dossier JMRI Preferences, vous trouverez un certain nombre de types d
 	</dd>
 </dl>
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

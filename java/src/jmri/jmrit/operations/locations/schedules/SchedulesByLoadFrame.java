@@ -14,7 +14,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
@@ -23,12 +22,17 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Frame to display spurs with schedules and their loads
  *
- * @author Dan Boudreau Copyright (C) 2012, 2015
+ * @author Dan Boudreau Copyright (C) 2012, 2015, 2021
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+    // managers'
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+    CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
+    CarTypes carTypes = InstanceManager.getDefault(CarTypes.class);
+
     // combo box
-    JComboBox<String> typesComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
+    JComboBox<String> typesComboBox = carTypes.getComboBox();
     JComboBox<String> loadsComboBox = new JComboBox<>();
 
     // panels
@@ -37,9 +41,6 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     // checkbox
     JCheckBox allLoadsCheckBox = new JCheckBox(Bundle.getMessage("allLoads"));
     JCheckBox allTypesCheckBox = new JCheckBox(Bundle.getMessage("allTypes"));
-
-    // managers'
-    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public SchedulesByLoadFrame() {
         super(Bundle.getMessage("MenuItemShowSchedulesByLoad"));
@@ -84,14 +85,14 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
         // property changes
         locationManager.addPropertyChangeListener(this);
-        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
-        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
+        carTypes.addPropertyChangeListener(this);
+        carLoads.addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new PrintCarLoadsAction(true, this));
-        toolMenu.add(new PrintCarLoadsAction(false, this));
+        toolMenu.add(new PrintCarLoadsAction(true));
+        toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
@@ -123,10 +124,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
     private void updateLoadComboBox() {
         if (allTypesCheckBox.isSelected()) {
-            InstanceManager.getDefault(CarLoads.class).updateComboBox(loadsComboBox);
+            carLoads.updateComboBox(loadsComboBox);
         } else if (typesComboBox.getSelectedItem() != null) {
             String type = (String) typesComboBox.getSelectedItem();
-            InstanceManager.getDefault(CarLoads.class).updateComboBox(type, loadsComboBox);
+            carLoads.updateComboBox(type, loadsComboBox);
         }
     }
 
@@ -141,13 +142,16 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("shipLoad")), 3, x);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
 
+        // determine if load is default empty or load
+        boolean defaultLoad = carLoads.getDefaultLoadName().equals(load) || carLoads.getDefaultEmptyName().equals(load);
+
         for (Location location : locationManager.getLocationsByNameList()) {
             // only spurs have schedules
             if (!location.hasSpurs())
                 continue;
             addItemLeft(locationsPanel, new JLabel(location.getName()), 0, x++);
             // now look for a spur with a schedule
-            for (Track spur : location.getTrackByNameList(Track.SPUR)) {
+            for (Track spur : location.getTracksByNameList(Track.SPUR)) {
                 Schedule sch = spur.getSchedule();
                 if (sch == null) {
                     continue;
@@ -157,21 +161,28 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                 spur.addPropertyChangeListener(this);
                 sch.removePropertyChangeListener(this);
                 sch.addPropertyChangeListener(this);
+                
                 // determine if schedule is requesting car type and load
                 for (ScheduleItem si : sch.getItemsBySequenceList()) {
+                    // skip if car type doesn't carry load name
+                    if (allTypesCheckBox.isSelected() &&
+                            !allLoadsCheckBox.isSelected() &&
+                            !carLoads.containsName(si.getTypeName(), load)) {
+                        continue;
+                    }
                     if ((allTypesCheckBox.isSelected() || si.getTypeName().equals(type)) &&
                             (allLoadsCheckBox.isSelected() ||
                                     si.getReceiveLoadName().equals(load) ||
                                     si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
                                     si.getShipLoadName().equals(load) ||
-                                    si.getShipLoadName().equals(ScheduleItem.NONE))) {
+                                    (si.getShipLoadName().equals(ScheduleItem.NONE) && defaultLoad))) {
                         // is the schedule item valid?
                         String status = spur.checkScheduleValid();
                         if (!status.equals(Track.SCHEDULE_OKAY)) {
                             addItemLeft(locationsPanel, new JLabel("  " + status), 0, x);
                         }
-                        addItemLeft(locationsPanel,
-                                new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1, x);
+                        addItemLeft(locationsPanel, new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1,
+                                x);
                         // create string Receive(type, delivery, road, load)
                         String s = si.getTypeName() +
                                 ", " +
@@ -182,12 +193,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                                 si.getReceiveLoadName();
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 2, x);
                         // create string Ship(load, pickup)
-                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") +
-                                " (" +
-                                si.getShipLoadName() +
-                                ", " +
-                                si.getPickupTrainScheduleName() +
-                                ")"), 3, x++);
+                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage(
+                                "Ship") + " (" + si.getShipLoadName() + ", " + si.getPickupTrainScheduleName() + ")"),
+                                3, x++);
                         // now the destination and track
                         if (si.getDestination() != null) {
                             addItemLeft(locationsPanel,
@@ -197,10 +205,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         // report if spur can't service the selected load
                         if (!allLoadsCheckBox.isSelected() &&
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
-                                !spur.acceptsLoad(load, type)) {
+                                !spur.isLoadNameAndCarTypeAccepted(load, type)) {
                             addItemLeft(locationsPanel,
                                     new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"),
-                                            new Object[]{spur.getName(), type, load})),
+                                            new Object[] { spur.getName(), type, load })),
                                     2, x++);
                         }
                     }
@@ -215,8 +223,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
+        carTypes.removePropertyChangeListener(this);
+        carLoads.removePropertyChangeListener(this);
         for (Track spur : locationManager.getTracks(Track.SPUR)) {
             Schedule sch = spur.getSchedule();
             if (sch == null) {
@@ -233,11 +241,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
 
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
-            InstanceManager.getDefault(CarTypes.class).updateComboBox(typesComboBox);
+            carTypes.updateComboBox(typesComboBox);
         }
         if (e.getSource().getClass().equals(CarLoads.class)) {
-            InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typesComboBox.getSelectedItem(),
-                    loadsComboBox);
+            carLoads.updateComboBox((String) typesComboBox.getSelectedItem(), loadsComboBox);
         }
         if (e.getSource().getClass().equals(Schedule.class) ||
                 e.getSource().getClass().equals(LocationManager.class) ||
@@ -246,6 +253,6 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrame.class);
 
 }

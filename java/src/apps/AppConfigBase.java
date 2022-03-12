@@ -89,7 +89,7 @@ public class AppConfigBase extends JmriPanel {
                 String instanceNames = new String(nameB);
                 instanceNames = instanceNames.substring(0, instanceNames.lastIndexOf("|"));
                 instanceNames = instanceNames.replaceAll("[|]", ", ");
-                log.error("Duplicate ports found on: " + instanceNames + " for port: " + e.getKey());
+                log.error("Duplicate ports found on: {} for port: {}", instanceNames, e.getKey());
             }
         }
         return ret;

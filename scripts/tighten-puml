@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# For a .puml file (plantuml output from e.g. ant javadoc-uml), remove
+# some dependency links
+
+#  external:  to .org., com., purejavacomm
+#
+# transitive uplinks:  from a.b.c to a, a.b.c.d to a.b or a, etc
+#
+# drop pattern links:  configurexml 
+#
+
+if ! tmpdir=`mktemp -d -t JMRI.XXXXXX`
+then
+  echo "Cannot create temporary directory"
+  exit 1
+fi
+
+# filter file sequentially
+grep -v ' --> org' $@  | grep -v ' --> com' | grep -v purejavacomm > ${tmpdir}/t1.puml
+
+grep -v '    jmri\..* --> jmri$' ${tmpdir}/t1.puml > ${tmpdir}/t2.puml
+
+grep -v 'jmri\.\([a-zA-Z]*\)\..*\..* --> jmri.\1$'                          ${tmpdir}/t2.puml > ${tmpdir}/t3.puml
+grep -v 'jmri\.\([a-zA-Z]*\.[a-zA-Z]*\)\..*\..* --> jmri.\1$'               ${tmpdir}/t3.puml > ${tmpdir}/t4.puml
+grep -v 'jmri\.\([a-zA-Z]*\.[a-zA-Z]*\.[a-zA-Z]*\)\..*\..* --> jmri.\1$'    ${tmpdir}/t4.puml > ${tmpdir}/t5.puml
+grep -v 'jmri\.\([a-zA-Z]*\.[a-zA-Z]*\.[a-zA-Z]*\.[a-zA-Z]*\)\..*\..* --> jmri.\1$' ${tmpdir}/t5.puml > ${tmpdir}/t6.puml
+
+grep -v 'jmri\.[a-zA-Z]*\..*\.configurexml -->' ${tmpdir}/t6.puml > ${tmpdir}/t7.puml
+
+grep -v 'jmri\.jmrix\..*\.configurexml --> jmri\.jmrix\.configurexml' ${tmpdir}/t7.puml > ${tmpdir}/t8.puml
+
+
+cp  ${tmpdir}/t8.puml $@
+ 

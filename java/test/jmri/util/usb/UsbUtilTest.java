@@ -1,13 +1,13 @@
 package jmri.util.usb;
 
 import java.io.UnsupportedEncodingException;
+
 import javax.usb.*;
 
 import jmri.util.JUnitAppender;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -64,13 +64,12 @@ public class UsbUtilTest {
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

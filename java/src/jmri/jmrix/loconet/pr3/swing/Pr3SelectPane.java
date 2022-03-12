@@ -116,19 +116,6 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         }
     }
 
-    /**
-     * Nested class to create one of these using old-style defaults
-     */
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        public Default() {
-            super(Bundle.getMessage("MenuItemPr3ModeSelect"),
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    Pr3SelectPane.class.getName(),
-                    jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
-        }
-    }
-
     private final static Logger log = LoggerFactory.getLogger(Pr3SelectPane.class);
 
 }

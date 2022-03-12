@@ -36,7 +36,7 @@ public class SignallingFrame extends JmriJFrame {
 
         getContentPane().add(sigPanel); // panels are created in SignallingPanel()
 
-        addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);  // NOI18N
+        addHelpMenu("package.jmri.jmrit.signalling.AddEditSignalingLogic", true);  // NOI18N
 
         // pack for display
         pack();

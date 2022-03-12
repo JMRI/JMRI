@@ -99,7 +99,9 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        _memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        _memo.getTrafficController().sendSerialMessage(createPacket(input), this);
     }
 
     SerialMessage createPacket(String s) {

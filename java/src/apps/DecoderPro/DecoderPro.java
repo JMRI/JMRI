@@ -14,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.swing.RosterFrameAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction;
-import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,6 +139,9 @@ public class DecoderPro extends Apps {
 
     // Main entry point
     public static void main(String args[]) {
+
+        // Set up system properties that needs to be loaded early
+        jmri.util.EarlyInitializationPreferences.getInstance().loadAndSetPreferences();
 
         // show splash screen early
         splash(true);

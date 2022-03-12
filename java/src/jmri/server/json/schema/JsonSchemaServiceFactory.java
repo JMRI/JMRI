@@ -15,17 +15,17 @@ import org.openide.util.lookup.ServiceProvider;
 public class JsonSchemaServiceFactory implements JsonServiceFactory<JsonSchemaHttpService, JsonSchemaSocketService> {
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{JSON.JSON, JSON.SCHEMA, JSON.TYPE};
     }
 
     @Override
-    public JsonSchemaSocketService getSocketService(JsonConnection connection) {
+    public JsonSchemaSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonSchemaSocketService(connection);
     }
 
     @Override
-    public JsonSchemaHttpService getHttpService(ObjectMapper mapper) {
+    public JsonSchemaHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonSchemaHttpService(mapper);
     }
 

@@ -14,7 +14,6 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.profile.ProfileManager;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * </p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2019
  */
 public class RosterTestUtil {
 
@@ -44,6 +43,7 @@ public class RosterTestUtil {
         Roster r = new Roster(rosterDir.getAbsolutePath() + File.separator + rosterFileName);
         r.setRosterLocation(rosterDir.getAbsolutePath());
         r.setRosterIndexFileName(rosterFileName);
+
         RosterEntry e1 = new RosterEntry("SP123");
         e1.setId("SP123");
         e1.setDccAddress("123");
@@ -57,6 +57,7 @@ public class RosterTestUtil {
         loadDecoderFromLoco(e1, varTable);
         e1.writeFile(cvTable, varTable);
         r.addEntry(e1);
+
         RosterEntry e2 = new RosterEntry("ATSF123");
         e2.setId("ATSF123");
         e2.setDccAddress("456");
@@ -72,6 +73,7 @@ public class RosterTestUtil {
         loadDecoderFromLoco(e2, varTable);
         e2.writeFile(cvTable, varTable);
         r.addEntry(e2);
+
         RosterEntry e3 = new RosterEntry("UP123");
         e3.setId("UP123");
         e3.setRoadNumber("123");
@@ -83,6 +85,7 @@ public class RosterTestUtil {
         loadDecoderFromLoco(e2, varTable);
         e3.writeFile(cvTable, varTable);
         r.addEntry(e3);
+
         InstanceManager.getDefault(RosterConfigManager.class).setRoster(ProfileManager.getDefault().getActiveProfile(), r);
         return r;
     }

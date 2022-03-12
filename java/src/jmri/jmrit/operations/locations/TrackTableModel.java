@@ -3,19 +3,24 @@ package jmri.jmrit.operations.locations;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableColumnModelEvent;
+import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
@@ -27,17 +32,13 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
  */
-public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
-
-    public static final int SORTBYNAME = 1;
-    public static final int SORTBYID = 2;
+public abstract class TrackTableModel extends AbstractTableModel implements PropertyChangeListener, TableColumnModelListener {
 
     protected Location _location;
-    protected List<Track> tracksList = new ArrayList<>();
-    protected int _sort = SORTBYNAME;
-    protected String _trackType = "";
-    protected boolean _showPoolColumn = false;
+    protected List<Track> _tracksList = new ArrayList<>();
+    protected String _trackType;
     protected JTable _table;
+    protected boolean _dirty = false;
 
     // Defines the columns
     protected static final int ID_COLUMN = 0;
@@ -56,41 +57,18 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     protected static final int SHIP_COLUMN = 13;
     protected static final int RESTRICTION_COLUMN = 14;
     protected static final int DESTINATION_COLUMN = 15;
-    protected static final int POOL_COLUMN = 16;
-    protected static final int PLANPICKUP_COLUMN = 17;
-    protected static final int ALT_TRACK_COLUMN = 18;
-    protected static final int ORDER_COLUMN = 19;
-    protected static final int EDIT_COLUMN = 20;
+    protected static final int ROUTED_COLUMN = 16;
+    protected static final int POOL_COLUMN = 17;
+    protected static final int PLANPICKUP_COLUMN = 18;
+    protected static final int ALT_TRACK_COLUMN = 19;
+    protected static final int ORDER_COLUMN = 20;
+    protected static final int REPORTER_COLUMN = 21;
+    protected static final int EDIT_COLUMN = 22;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
     public TrackTableModel() {
         super();
-    }
-
-    public void setSort(int sort) {
-        _sort = sort;
-        updateList();
-        fireTableDataChanged();
-    }
-
-    private void updateList() {
-        if (_location == null) {
-            return;
-        }
-        // first, remove listeners from the individual objects
-        removePropertyChangeTracks();
-
-        tracksList = _location.getTrackByNameList(_trackType);
-        // and add them back in
-        for (Track track : tracksList) {
-            track.addPropertyChangeListener(this);
-        }
-        if (_location.hasPools() && !_showPoolColumn) {
-            _showPoolColumn = true;
-            fireTableStructureChanged();
-            initTable();
-        }
     }
 
     protected void initTable(JTable table, Location location, String trackType) {
@@ -100,12 +78,23 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (_location != null) {
             _location.addPropertyChangeListener(this);
         }
-        Setup.addPropertyChangeListener(this);
-        initTable();
-        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        Setup.getDefault().addPropertyChangeListener(this);
         updateList();
+        initTable();
+    }
+
+    private void updateList() {
+        if (_location == null) {
+            return;
+        }
+        // first, remove listeners from the individual objects
+        removePropertyChangeTracks();
+
+        _tracksList = _location.getTracksByNameList(_trackType);
+        // and add them back in
+        for (Track track : _tracksList) {
+            track.addPropertyChangeListener(this);
+        }
     }
 
     private void initTable() {
@@ -136,38 +125,76 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         tcm.getColumn(SHIP_COLUMN).setPreferredWidth(50);
         tcm.getColumn(ROAD_COLUMN).setPreferredWidth(50);
         tcm.getColumn(DESTINATION_COLUMN).setPreferredWidth(50);
+        tcm.getColumn(ROUTED_COLUMN).setPreferredWidth(50);
         tcm.getColumn(POOL_COLUMN).setPreferredWidth(70);
         tcm.getColumn(PLANPICKUP_COLUMN).setPreferredWidth(70);
         tcm.getColumn(ALT_TRACK_COLUMN).setPreferredWidth(120);
         tcm.getColumn(ORDER_COLUMN)
                 .setPreferredWidth(Math.max(50, new JLabel(getColumnName(ORDER_COLUMN)).getPreferredSize().width + 10));
+        tcm.getColumn(REPORTER_COLUMN).setPreferredWidth(70);
         tcm.getColumn(EDIT_COLUMN).setPreferredWidth(80);
+
         tcm.getColumn(EDIT_COLUMN).setCellRenderer(new ButtonRenderer());
         tcm.getColumn(EDIT_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
 
+        OperationsPanel.loadTableDetails(_table, "Location");
         setColumnsVisible();
+        addTableColumnListeners();
     }
 
-    // only show "Schedule", "Load", "Ship", "Road", "Destination", "Planned", "Pool" "Alternate" "Order" if they are needed
-    protected void setColumnsVisible() {
+    // only show "Schedule", "Load", "Ship", "Road", "Destination", "Planned",
+    // "Pool" "Alternate" "Order" "Reporter" "Moves" if they are needed
+    private void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SCHEDULE_COLUMN), _location.hasSchedules());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SCHEDULE_COLUMN), _location.hasSchedules() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN), _location.hasServiceRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROUTED_COLUMN), _trackType.equals(Track.INTERCHANGE));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ORDER_COLUMN), _location.hasOrderRestrictions());
-
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN),
+                Setup.isRfidEnabled() && _location.hasReporters());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), Setup.isShowTrackMovesEnabled());
+    }
+
+    /*
+     * Persisting using JmriJTablePersistenceManager doesn't quite work since the
+     * same table name is used for each track type; spur, yard, interchange, and
+     * staging. Plus multiple edit locations can be open at the same time, again
+     * using the same table name. The goal is to have a single change affect every
+     * table for all edit locations. Therefore any changes to column width or
+     * position is saved when the edit location window is closed.
+     */
+    private void addTableColumnListeners() {
+        Enumeration<TableColumn> e = _table.getColumnModel().getColumns();
+        while (e.hasMoreElements()) {
+            TableColumn column = e.nextElement();
+            column.addPropertyChangeListener(this);
+        }
+        _table.getColumnModel().addColumnModelListener(this);
+    }
+
+    /**
+     * Table is dirty when a column is moved or width is changed.
+     * 
+     * @param dirty set true if dirty
+     */
+    private void setDirty(boolean dirty) {
+        _dirty = dirty;
+    }
+
+    private boolean isDirty() {
+        return _dirty;
     }
 
     @Override
     public int getRowCount() {
-        return tracksList.size();
+        return _tracksList.size();
     }
 
     @Override
@@ -210,6 +237,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Bundle.getMessage("Road");
             case DESTINATION_COLUMN:
                 return Bundle.getMessage("Dest");
+            case ROUTED_COLUMN:
+                return Bundle.getMessage("Routed");
             case POOL_COLUMN:
                 return Bundle.getMessage("Pool");
             case PLANPICKUP_COLUMN:
@@ -218,8 +247,11 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Bundle.getMessage("AlternateTrack");
             case ORDER_COLUMN:
                 return Bundle.getMessage("ServiceOrder");
+            case REPORTER_COLUMN:
+                return Bundle.getMessage("Reporters");
             case EDIT_COLUMN:
-                return Bundle.getMessage("ButtonEdit"); // titles above all columns
+                return Bundle.getMessage("ButtonEdit"); // titles above all
+                                                        // columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -229,47 +261,32 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case NAME_COLUMN:
+            case SCHEDULE_COLUMN:
+            case RESTRICTION_COLUMN:
+            case LOAD_COLUMN:
+            case SHIP_COLUMN:
+            case ROAD_COLUMN:
+            case DESTINATION_COLUMN:
+            case POOL_COLUMN:
+            case PLANPICKUP_COLUMN:
+            case ALT_TRACK_COLUMN:
+            case ORDER_COLUMN:
+            case REPORTER_COLUMN:
                 return String.class;
             case LENGTH_COLUMN:
-                return String.class;
             case USED_LENGTH_COLUMN:
-                return String.class;
             case RESERVED_COLUMN:
-                return String.class;
             case MOVES_COLUMN:
-                return String.class;
             case LOCOS_COLUMN:
-                return String.class;
             case CARS_COLUMN:
-                return String.class;
             case PICKUPS_COLUMN:
-                return String.class;
             case SETOUT_COLUMN:
-                return String.class;
-            case SCHEDULE_COLUMN:
-                return String.class;
-            case RESTRICTION_COLUMN:
-                return String.class;
-            case LOAD_COLUMN:
-                return String.class;
-            case SHIP_COLUMN:
-                return String.class;
-            case ROAD_COLUMN:
-                return String.class;
-            case DESTINATION_COLUMN:
-                return String.class;
-            case POOL_COLUMN:
-                return String.class;
-            case PLANPICKUP_COLUMN:
-                return String.class;
-            case ALT_TRACK_COLUMN:
-                return String.class;
-            case ORDER_COLUMN:
-                return String.class;
+                return Integer.class;
             case EDIT_COLUMN:
                 return JButton.class;
+            case ROUTED_COLUMN:
+                return Boolean.class;
             default:
                 return null;
         }
@@ -278,6 +295,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+            case ROUTED_COLUMN:
             case EDIT_COLUMN:
             case MOVES_COLUMN:
                 return true;
@@ -291,7 +309,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Track track = tracksList.get(row);
+        Track track = _tracksList.get(row);
         if (track == null) {
             return "ERROR track unknown " + row; // NOI18N
         }
@@ -301,47 +319,46 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             case NAME_COLUMN:
                 return track.getName();
             case LENGTH_COLUMN:
-                return Integer.toString(track.getLength());
+                return track.getLength();
             case USED_LENGTH_COLUMN:
-                return Integer.toString(track.getUsedLength());
+                return track.getUsedLength();
             case RESERVED_COLUMN:
-                return Integer.toString(track.getReserved());
+                return track.getReserved();
             case MOVES_COLUMN:
                 return track.getMoves();
             case LOCOS_COLUMN:
-                return Integer.toString(track.getNumberEngines());
+                return track.getNumberEngines();
             case CARS_COLUMN:
-                return Integer.toString(track.getNumberCars());
+                return track.getNumberCars();
             case PICKUPS_COLUMN:
-                return Integer.toString(track.getPickupRS());
+                return track.getPickupRS();
             case SETOUT_COLUMN:
-                return Integer.toString(track.getDropRS());
+                return track.getDropRS();
             case SCHEDULE_COLUMN:
                 return track.getScheduleName();
             case RESTRICTION_COLUMN:
                 return getRestrictions(track);
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
-                        track
-                                .getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H"
-                                : "");
+                        track.getLoadOption().equals(Track.INCLUDE_LOADS)) +
+                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
-                        track.getShipLoadOption().equals(Track.ALL_LOADS), track.getShipLoadOption().equals(
-                                Track.INCLUDE_LOADS));
+                        track.getShipLoadOption().equals(Track.ALL_LOADS),
+                        track.getShipLoadOption().equals(Track.INCLUDE_LOADS));
             case ROAD_COLUMN:
                 return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS),
-                        track
-                                .getRoadOption().equals(Track.INCLUDE_ROADS));
+                        track.getRoadOption().equals(Track.INCLUDE_ROADS));
             case DESTINATION_COLUMN: {
                 int size = track.getDestinationListSize();
                 if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
                     size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
                 }
-                return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS), track
-                        .getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
+                return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS),
+                        track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
             }
+            case ROUTED_COLUMN:
+                return track.isOnlyCarsWithFinalDestinationEnabled();
             case POOL_COLUMN:
                 return track.getPoolName();
             case PLANPICKUP_COLUMN:
@@ -359,6 +376,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return "";
             case ORDER_COLUMN:
                 return track.getServiceOrder();
+            case REPORTER_COLUMN:
+                return track.getReporterName();
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
             default:
@@ -400,6 +419,9 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
+            case ROUTED_COLUMN:
+                setRouted(row, value);
+                break;
             case EDIT_COLUMN:
                 editTrack(row);
                 break;
@@ -413,35 +435,51 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     TrackEditFrame tef = null;
 
-    protected void editTrack(int row) {
-        log.debug("Edit tracks");
+    abstract protected void editTrack(int row);
+    
+    private void setRouted(int row, Object value) {
+        Track track = _tracksList.get(row);
+        track.setOnlyCarsWithFinalDestinationEnabled(((Boolean) value).booleanValue());
+    }
+
+    private void setMoves(int row, Object value) {
+        Track track = _tracksList.get(row);
+        track.setMoves((int) value);
+    }
+
+    private void removePropertyChangeTracks() {
+        for (Track track : _tracksList) {
+            track.removePropertyChangeListener(this);
+        }
+    }
+
+    public void dispose() {
+        if (_table != null) {
+            _table.getRowSorter().setSortKeys(null);
+            if (isDirty()) {
+                OperationsPanel.cacheState(_table);
+                OperationsPanel.saveTableState();
+                setDirty(false);
+            }
+        }
+        removePropertyChangeTracks();
+        if (_location != null) {
+            _location.removePropertyChangeListener(this);
+        }
         if (tef != null) {
             tef.dispose();
         }
-        // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(() -> {
-            tef = new TrackEditFrame();
-            Track track = tracksList.get(row);
-            tef.initComponents(_location, track);
-            tef.setTitle(Bundle.getMessage("EditTrack"));
-        });
-    }
-
-    protected void setMoves(int row, Object value) {
-        Track track = tracksList.get(row);
-        try {
-            track.setMoves((Integer.parseInt((String) value)));
-        } catch (NumberFormatException e) {
-            log.error("Moves ({}) for track ({}) not a number", value, track.getName());
-        }
+        Setup.getDefault().removePropertyChangeListener(this);
+        _tracksList.clear();
+        fireTableDataChanged();
     }
 
     // this table listens for changes to a location and it's tracks
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
@@ -460,28 +498,42 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                         e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.PLANNEDPICKUPS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
-                        e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY))) {
+                        e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.TRACK_REPORTER_PROPERTY))) {
             setColumnsVisible();
         }
-    }
-
-    protected void removePropertyChangeTracks() {
-        for (Track t : tracksList) {
-            t.removePropertyChangeListener(this);
+        if (e.getSource() instanceof TableColumn && e.getPropertyName().equals("preferredWidth")) {
+            log.debug("Column width change");
+            setDirty(true);
         }
     }
 
-    public void dispose() {
-        removePropertyChangeTracks();
-        if (_location != null) {
-            _location.removePropertyChangeListener(this);
+    @Override
+    public void columnAdded(TableColumnModelEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void columnRemoved(TableColumnModelEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void columnMoved(TableColumnModelEvent e) {
+        if (e.getFromIndex() != e.getToIndex()) {
+            log.debug("Table Column Moved");
+            setDirty(true);
         }
-        if (tef != null) {
-            tef.dispose();
-        }
-        Setup.removePropertyChangeListener(this);
-        tracksList.clear();
-        fireTableDataChanged();
+    }
+
+    @Override
+    public void columnMarginChanged(ChangeEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void columnSelectionChanged(ListSelectionEvent e) {
+        // do nothing
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackTableModel.class);

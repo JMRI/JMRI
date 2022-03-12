@@ -9,8 +9,6 @@ import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.JmriConfigureXmlException;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractSignalHeadManager;
 import org.jdom2.Element;
@@ -97,11 +95,6 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         // load individual turnouts
         loadSignalHeads(shared, perNode);
         return true;
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
     }
 
     /**

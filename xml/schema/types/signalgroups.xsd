@@ -33,7 +33,7 @@
     <xs:complexType name="SignalGroupManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SignalGroupManager implementation.
+          Define the XML structure for storing the contents of a SignalGroupManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalGroupManagerXml</jmri:usingclass>
@@ -48,7 +48,7 @@
     <xs:complexType name="SignalGroupType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of one SignalGroup implementation.
+          Define the XML structure for storing the contents of one SignalGroup implementation.
           Generally dealt with by the manager implemenation
         </xs:documentation>
         <xs:appinfo>

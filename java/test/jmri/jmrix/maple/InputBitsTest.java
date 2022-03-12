@@ -2,15 +2,14 @@ package jmri.jmrix.maple;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the InputBits class.
  *
- * @author	Dave Duchamp 2009
+ * @author Dave Duchamp 2009
  */
 public class InputBitsTest {
 
@@ -172,14 +171,14 @@ public class InputBitsTest {
 
     private InputBits ibit;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
         ibit = new InputBits(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         ibit = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

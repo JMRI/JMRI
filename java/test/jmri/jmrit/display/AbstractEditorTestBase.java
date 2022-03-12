@@ -4,7 +4,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.UIManager;
 import jmri.util.JUnitUtil;
 import jmri.util.SystemType;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -30,7 +32,7 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     }
 
     @Test
-    @Ignore("The test sometimes has trouble finding the file menu")
+    @Disabled("The test sometimes has trouble finding the file menu")
     public void checkFileDeleteMenuItem() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -65,7 +67,7 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     }
 
     @Test
-    @Ignore("This test seems to be reliable on Linux, but fails on Windows (appveyor)")
+    @Disabled("This test seems to be reliable on Linux, but fails on Windows (appveyor)")
     public void testSetSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         java.awt.Dimension d0 = e.getSize();
@@ -81,7 +83,7 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     }
 
     @Test
-    public void testChangeView() {
+    public void testChangeView() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a new Positionable Label on the existing editor (e);
         PositionableLabel to = new PositionableLabel("one", e);
@@ -103,10 +105,10 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     /**
      * Subclasses must instantiate {@link #e} in the setUp method.
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

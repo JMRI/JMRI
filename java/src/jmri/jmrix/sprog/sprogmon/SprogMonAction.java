@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SprogMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogMonAction extends AbstractAction {
 
@@ -27,7 +27,7 @@ public class SprogMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SprogMonAction starting SprogMonFrame: Exception: " + ex.toString());
+            log.warn("SprogMonAction starting SprogMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

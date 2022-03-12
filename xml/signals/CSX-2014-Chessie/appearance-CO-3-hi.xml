@@ -22,6 +22,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial Version</revremark>
     </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Corrected typo and removed ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>CSX-2014-Chessie</aspecttable>
   <name>Single head permissive color light high signal</name>
@@ -110,7 +116,7 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
-      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
@@ -123,7 +129,7 @@
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Restricted Proceed</advancedAspect>

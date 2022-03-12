@@ -1,17 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>9</minor>
-    <test>1</test>
-    <modifier>ish</modifier>
+    <minor>99</minor>
+    <test>3</test>
+    <modifier />
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
       <systemName>IS1</systemName>
       <userName>TC 1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>TC 2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>TC 3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+      <userName>TC 4</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+      <userName>TC 5</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+      <userName>TC 6</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS11</systemName>
@@ -38,10 +58,6 @@
       <userName>CTC 4 Code</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
-      <userName>TC 2</userName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>IS21</systemName>
       <userName>CTC 5 N</userName>
     </sensor>
@@ -66,23 +82,10 @@
       <userName>CTC 6 Code</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS3</systemName>
-      <userName>TC 3</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS4</systemName>
-      <userName>TC 4</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS5</systemName>
-      <userName>TC 5</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS6</systemName>
-      <userName>TC 6</userName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISNOBELL</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -96,6 +99,26 @@
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT1</systemName>
       <userName>TC 1</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+      <userName>TC 2</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT3</systemName>
+      <userName>TC 3</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+      <userName>TC 4</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+      <userName>TC 5</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
+      <userName>TC 6</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT11</systemName>
@@ -126,10 +149,6 @@
       <userName>CTC 3 Layout</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT2</systemName>
-      <userName>TC 2</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT21</systemName>
       <userName>CTC 5 N</userName>
     </turnout>
@@ -158,22 +177,6 @@
       <userName>CTC 5 Layout</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT3</systemName>
-      <userName>TC 3</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT4</systemName>
-      <userName>TC 4</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT5</systemName>
-      <userName>TC 5</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT6</systemName>
-      <userName>TC 6</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>ITBELL</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
@@ -184,7 +187,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="9:51 AM">
+    <memory value="4:38 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -234,18 +237,15 @@
       <userName>6 siding</userName>
     </signalhead>
   </signalheads>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
-    <signalelement signal="4 upper" mode="2" watchedturnout="CTC 3 Layout" watchedsignal1="6 main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>TC 3</sensorname>
-      <sensorname>TC 2</sensorname>
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicProviderXml">
+    <signalelement signal="6 upper" mode="2" watchedturnout="CTC 5 Layout" watchedsignal1="4 main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC 5</sensorname>
+      <sensorname>TC 4</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="4 lower" mode="3" watchedturnout="CTC 3 Layout" watchedsignal1="6 siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>TC 4</sensorname>
-      <sensorname>TC 2</sensorname>
+    <signalelement signal="6 lower" mode="3" watchedturnout="CTC 5 Layout" watchedsignal1="4 siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC 5</sensorname>
+      <sensorname>TC 3</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="4 main" mode="2" watchedturnout="CTC 3 Layout" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
@@ -258,52 +258,51 @@
       <sensorname>TC 2</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="6 siding" mode="3" watchedturnout="CTC 5 Layout" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>TC 5</sensorname>
-      <sensorname>TC 6</sensorname>
-      <comment />
-    </signalelement>
     <signalelement signal="6 main" mode="2" watchedturnout="CTC 5 Layout" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC 5</sensorname>
       <sensorname>TC 6</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="6 upper" mode="2" watchedturnout="CTC 5 Layout" watchedsignal1="4 main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>TC 5</sensorname>
-      <sensorname>TC 4</sensorname>
+    <signalelement signal="4 upper" mode="2" watchedturnout="CTC 3 Layout" watchedsignal1="6 main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC 3</sensorname>
+      <sensorname>TC 2</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="6 lower" mode="3" watchedturnout="CTC 5 Layout" watchedsignal1="4 siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="6 siding" mode="3" watchedturnout="CTC 5 Layout" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC 5</sensorname>
-      <sensorname>TC 3</sensorname>
+      <sensorname>TC 6</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="4 lower" mode="3" watchedturnout="CTC 3 Layout" watchedsignal1="6 siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC 4</sensorname>
+      <sensorname>TC 2</sensorname>
       <comment />
     </signalelement>
   </signalelements>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
     <logix userName="System Logix" enabled="yes">
-      <systemName>SYS</systemName>
+      <systemName>IX:SYS</systemName>
       <userName>System Logix</userName>
-      <logixConditional systemName="SYS_SGC_CTC 3" order="0" />
-      <logixConditional systemName="SYS_SGC_CTC 4" order="1" />
-      <logixConditional systemName="SYS_SGC_CTC 5" order="2" />
-      <logixConditional systemName="SYS_SGC_CTC 6" order="3" />
+      <logixConditional systemName="IX:SYS_SGC_CTC 3" order="0" />
+      <logixConditional systemName="IX:SYS_SGC_CTC 4" order="1" />
+      <logixConditional systemName="IX:SYS_SGC_CTC 5" order="2" />
+      <logixConditional systemName="IX:SYS_SGC_CTC 6" order="3" />
     </logix>
   </logixs>
   <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
-    <conditional systemName="SYS_SGC_CTC 3" userName="Sensor Group CTC 3" antecedent="" logicType="2" triggerOnChange="yes">
-      <systemName>SYS_SGC_CTC 3</systemName>
+    <conditional systemName="IX:SYS_SGC_CTC 3" userName="Sensor Group CTC 3" antecedent="" logicType="2" triggerOnChange="yes">
+      <systemName>IX:SYS_SGC_CTC 3</systemName>
       <userName>Sensor Group CTC 3</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS11" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS12" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS11" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS12" data="4" delay="0" string="" />
     </conditional>
-    <conditional systemName="SYS_SGC_CTC 4" userName="Sensor Group CTC 4" antecedent="" logicType="2" triggerOnChange="yes">
-      <systemName>SYS_SGC_CTC 4</systemName>
+    <conditional systemName="IX:SYS_SGC_CTC 4" userName="Sensor Group CTC 4" antecedent="" logicType="2" triggerOnChange="yes">
+      <systemName>IX:SYS_SGC_CTC 4</systemName>
       <userName>Sensor Group CTC 4</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS13" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS14" dataString="" num1="0" num2="0" triggersCalc="yes" />
@@ -312,16 +311,16 @@
       <conditionalAction option="1" type="9" systemName="IS14" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS15" data="4" delay="0" string="" />
     </conditional>
-    <conditional systemName="SYS_SGC_CTC 5" userName="Sensor Group CTC 5" antecedent="" logicType="2" triggerOnChange="yes">
-      <systemName>SYS_SGC_CTC 5</systemName>
+    <conditional systemName="IX:SYS_SGC_CTC 5" userName="Sensor Group CTC 5" antecedent="" logicType="2" triggerOnChange="yes">
+      <systemName>IX:SYS_SGC_CTC 5</systemName>
       <userName>Sensor Group CTC 5</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS21" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS22" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS21" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS22" data="4" delay="0" string="" />
     </conditional>
-    <conditional systemName="SYS_SGC_CTC 6" userName="Sensor Group CTC 6" antecedent="" logicType="2" triggerOnChange="yes">
-      <systemName>SYS_SGC_CTC 6</systemName>
+    <conditional systemName="IX:SYS_SGC_CTC 6" userName="Sensor Group CTC 6" antecedent="" logicType="2" triggerOnChange="yes">
+      <systemName>IX:SYS_SGC_CTC 6</systemName>
       <userName>Sensor Group CTC 6</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS23" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS24" dataString="" num1="0" num2="0" triggersCalc="yes" />
@@ -331,9 +330,8 @@
       <conditionalAction option="1" type="9" systemName="IS25" data="4" delay="0" string="" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jul 14 19:05:59 PDT 2017" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
-  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel " x="198" y="23" height="788" width="393" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both">
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jul 14 22:05:59 EDT 2017" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel " x="198" y="23" height="788" width="393" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both">
     <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
       <icon url="program:resources/icons/USS/background/uss-15.gif" degrees="0" scale="1.0">
@@ -1275,7 +1273,7 @@
         <closed url="program:resources/icons/transparentSquare.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
         </closed>
-        <thrown url="program:resources/icons/throttles/BellOn.png" degrees="0" scale="0.25">
+        <thrown url="program:resources/icons/functionicons/transparent_background/BellOn.png" degrees="0" scale="0.25">
           <rotation>0</rotation>
         </thrown>
         <unknown url="program:resources/icons/transparentSquare.gif" degrees="0" scale="1.0">
@@ -1304,5 +1302,22 @@
       <iconmaps />
     </sensoricon>
   </paneleditor>
-  <!--Written by JMRI version 4.9.1ish+jake+20170715T1646Z+R95309b2310 on Sat Jul 15 09:51:50 PDT 2017-->
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Mar 09 15:56:47 EST 2022</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Mar 09 16:37:24 EST 2022</date>
+      <filename>/C:/Program%20Files%20(x86)/JMRI/xml/samples/TwoColumnMachine.xml</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Mar 09 16:38:05 EST 2022</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.99.3+R41d54e97f6 on Wed Mar 09 16:38:05 EST 2022-->
 </layout-config>

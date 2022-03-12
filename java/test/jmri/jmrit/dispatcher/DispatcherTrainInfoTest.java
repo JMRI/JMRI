@@ -2,15 +2,13 @@ package jmri.jmrit.dispatcher;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Swing tests for dispatcher train info.
  *
- * @author	Dave Duchamp
+ * @author Dave Duchamp
  */
 public class DispatcherTrainInfoTest {
 
@@ -78,12 +76,12 @@ public class DispatcherTrainInfoTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane -->  
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>20-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="460" default="0" item="Effect for AUX3">
+    <enumVal>
+    <enumChoice choice="No effect">
+      <choice>Kein Effect</choice>
+      <choice xml:lang="de">Kein Effekt</choice>
+      <choice xml:lang="nl">Geen effect</choice>
+    </enumChoice>
+    <enumChoice choice="Dim">
+      <choice>Dim</choice>
+      <choice xml:lang="de">Dimmen</choice>
+      <choice xml:lang="nl">Dimmen</choice>
+    </enumChoice>
+    <enumChoice choice="Fade in">
+      <choice>Fade in</choice>
+      <choice xml:lang="de">Einblenden</choice>
+      <choice xml:lang="nl">In blenden-</choice>
+    </enumChoice>
+    <enumChoice choice="Fade out">
+      <choice>Fade out</choice>
+      <choice xml:lang="de">Ausblenden</choice>
+      <choice xml:lang="nl">Uit blenden</choice>
+    </enumChoice>
+    <enumChoice choice="Marsligh-">
+      <choice>Marsligh-</choice>
+      <choice xml:lang="de">Marsligh</choice>
+      <choice xml:lang="nl">Marsligh</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Gyralight</choice>
+      <choice xml:lang="de">Gyralight</choice>
+      <choice xml:lang="nl">Gyralight</choice>
+    </enumChoice>
+    <enumChoice choice="strobe">
+      <choice>strobe</choice>
+      <choice xml:lang="de">Blitz</choice>
+      <choice xml:lang="nl">Flitz</choice>
+    </enumChoice>
+    <enumChoice choice="double strobe">
+      <choice>double strobe</choice>
+      <choice xml:lang="de">Doppel Blitz</choice>
+      <choice xml:lang="nl">Dubbele flitz</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Dynamic smoke generator,</choice>
+      <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
+      <choice xml:lang="nl">dynamische rookgenerator</choice>
+    </enumChoice>
+    <enumChoice choice="Firebox (red)">
+      <choice>Firebox (red)</choice>
+      <choice xml:lang="de">Feuerbüchse (rot)</choice>
+      <choice xml:lang="nl">Vuurkist (rood)</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Firebox (orange)</choice>
+      <choice xml:lang="de">Feuerbüchse (orange)</choice>
+      <choice xml:lang="nl">Vuurkist (oranje)</choice>
+    </enumChoice>
+    </enumVal>
+    <label>Effect for AUX3</label>
+    <label xml:lang="de">Effekt für AUX3</label>
+    <label xml:lang="nl">Effect voor AUX3</label>
+  </variable>
+  <variable CV="461" default="255" comment="Range 0-255" item="Parameter for AUX3">
+    <decVal max="255"/>
+    <label>Parameter for AUX3</label>
+    <label xml:lang="de">Parameter für AUX3</label>
+    <label xml:lang="nl">Parameter voor AUX3</label>
+  </variable>
+  <variable CV="462" default="0" item="Effect for AUX4">
+    <enumVal>
+    <enumChoice choice="No effect">
+      <choice>Kein Effect</choice>
+      <choice xml:lang="de">Kein Effekt</choice>
+      <choice xml:lang="nl">Geen effect</choice>
+    </enumChoice>
+    <enumChoice choice="Dim">
+      <choice>Dim</choice>
+      <choice xml:lang="de">Dimmen</choice>
+      <choice xml:lang="nl">Dimmen</choice>
+    </enumChoice>
+    <enumChoice choice="Fade in">
+      <choice>Fade in</choice>
+      <choice xml:lang="de">Einblenden</choice>
+      <choice xml:lang="nl">In blenden-</choice>
+    </enumChoice>
+    <enumChoice choice="Fade out">
+      <choice>Fade out</choice>
+      <choice xml:lang="de">Ausblenden</choice>
+      <choice xml:lang="nl">Uit blenden</choice>
+    </enumChoice>
+    <enumChoice choice="Marsligh-">
+      <choice>Marsligh-</choice>
+      <choice xml:lang="de">Marsligh</choice>
+      <choice xml:lang="nl">Marsligh</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Gyralight</choice>
+      <choice xml:lang="de">Gyralight</choice>
+      <choice xml:lang="nl">Gyralight</choice>
+    </enumChoice>
+    <enumChoice choice="strobe">
+      <choice>strobe</choice>
+      <choice xml:lang="de">Blitz</choice>
+      <choice xml:lang="nl">Flitz</choice>
+    </enumChoice>
+    <enumChoice choice="double strobe">
+      <choice>double strobe</choice>
+      <choice xml:lang="de">Doppel Blitz</choice>
+      <choice xml:lang="nl">Dubbele flitz</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Dynamic smoke generator,</choice>
+      <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
+      <choice xml:lang="nl">dynamische rookgenerator</choice>
+    </enumChoice>
+    <enumChoice choice="Firebox (red)">
+      <choice>Firebox (red)</choice>
+      <choice xml:lang="de">Feuerbüchse (rot)</choice>
+      <choice xml:lang="nl">Vuurkist (rood)</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Firebox (orange)</choice>
+      <choice xml:lang="de">Feuerbüchse (orange)</choice>
+      <choice xml:lang="nl">Vuurkist (oranje)</choice>
+    </enumChoice>
+    </enumVal>
+    <label>Effect for AUX4</label>
+    <label xml:lang="de">Effekt für AUX4</label>
+    <label xml:lang="nl">Effect voor AUX4</label>
+  </variable>
+  <variable CV="463" default="255" comment="Range 0-255" item="Parameter for AUX4">
+    <decVal max="255"/>
+    <label>Parameter for AUX4</label>
+    <label xml:lang="de">Parameter für AUX4</label>
+    <label xml:lang="nl">Parameter voor AUX4</label>
+  </variable>
+  <variable CV="464" default="0" item="Effect for AUX5">
+    <enumVal>
+    <enumChoice choice="No effect">
+      <choice>Kein Effect</choice>
+      <choice xml:lang="de">Kein Effekt</choice>
+      <choice xml:lang="nl">Geen effect</choice>
+    </enumChoice>
+    <enumChoice choice="Dim">
+      <choice>Dim</choice>
+      <choice xml:lang="de">Dimmen</choice>
+      <choice xml:lang="nl">Dimmen</choice>
+    </enumChoice>
+    <enumChoice choice="Fade in">
+      <choice>Fade in</choice>
+      <choice xml:lang="de">Einblenden</choice>
+      <choice xml:lang="nl">In blenden-</choice>
+    </enumChoice>
+    <enumChoice choice="Fade out">
+      <choice>Fade out</choice>
+      <choice xml:lang="de">Ausblenden</choice>
+      <choice xml:lang="nl">Uit blenden</choice>
+    </enumChoice>
+    <enumChoice choice="Marsligh-">
+      <choice>Marsligh-</choice>
+      <choice xml:lang="de">Marsligh</choice>
+      <choice xml:lang="nl">Marsligh</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Gyralight</choice>
+      <choice xml:lang="de">Gyralight</choice>
+      <choice xml:lang="nl">Gyralight</choice>
+    </enumChoice>
+    <enumChoice choice="strobe">
+      <choice>strobe</choice>
+      <choice xml:lang="de">Blitz</choice>
+      <choice xml:lang="nl">Flitz</choice>
+    </enumChoice>
+    <enumChoice choice="double strobe">
+      <choice>double strobe</choice>
+      <choice xml:lang="de">Doppel Blitz</choice>
+      <choice xml:lang="nl">Dubbele flitz</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Dynamic smoke generator,</choice>
+      <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
+      <choice xml:lang="nl">dynamische rookgenerator</choice>
+    </enumChoice>
+    <enumChoice choice="Firebox (red)">
+      <choice>Firebox (red)</choice>
+      <choice xml:lang="de">Feuerbüchse (rot)</choice>
+      <choice xml:lang="nl">Vuurkist (rood)</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Firebox (orange)</choice>
+      <choice xml:lang="de">Feuerbüchse (orange)</choice>
+      <choice xml:lang="nl">Vuurkist (oranje)</choice>
+    </enumChoice>
+    </enumVal>
+    <label>Effect for AUX5</label>
+    <label xml:lang="de">Effekt für AUX5</label>
+    <label xml:lang="nl">Effect voor AUX5</label>
+  </variable>
+  <variable CV="465" default="255" comment="Range 0-255" item="Parameter for AUX5">
+    <decVal max="255"/>
+    <label>Parameter for AUX5</label>
+    <label xml:lang="de">Parameter für AUX5</label>
+    <label xml:lang="nl">Parameter voor AUX5</label>
+  </variable>
+  <variable CV="466" default="0" item="Effect for AUX6">
+    <enumVal>
+    <enumChoice choice="No effect">
+      <choice>Kein Effect</choice>
+      <choice xml:lang="de">Kein Effekt</choice>
+      <choice xml:lang="nl">Geen effect</choice>
+    </enumChoice>
+    <enumChoice choice="Dim">
+      <choice>Dim</choice>
+      <choice xml:lang="de">Dimmen</choice>
+      <choice xml:lang="nl">Dimmen</choice>
+    </enumChoice>
+    <enumChoice choice="Fade in">
+      <choice>Fade in</choice>
+      <choice xml:lang="de">Einblenden</choice>
+      <choice xml:lang="nl">In blenden-</choice>
+    </enumChoice>
+    <enumChoice choice="Fade out">
+      <choice>Fade out</choice>
+      <choice xml:lang="de">Ausblenden</choice>
+      <choice xml:lang="nl">Uit blenden</choice>
+    </enumChoice>
+    <enumChoice choice="Marsligh-">
+      <choice>Marsligh-</choice>
+      <choice xml:lang="de">Marsligh</choice>
+      <choice xml:lang="nl">Marsligh</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Gyralight</choice>
+      <choice xml:lang="de">Gyralight</choice>
+      <choice xml:lang="nl">Gyralight</choice>
+    </enumChoice>
+    <enumChoice choice="strobe">
+      <choice>strobe</choice>
+      <choice xml:lang="de">Blitz</choice>
+      <choice xml:lang="nl">Flitz</choice>
+    </enumChoice>
+    <enumChoice choice="double strobe">
+      <choice>double strobe</choice>
+      <choice xml:lang="de">Doppel Blitz</choice>
+      <choice xml:lang="nl">Dubbele flitz</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Dynamic smoke generator,</choice>
+      <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
+      <choice xml:lang="nl">dynamische rookgenerator</choice>
+    </enumChoice>
+    <enumChoice choice="Firebox (red)">
+      <choice>Firebox (red)</choice>
+      <choice xml:lang="de">Feuerbüchse (rot)</choice>
+      <choice xml:lang="nl">Vuurkist (rood)</choice>
+    </enumChoice>
+    <enumChoice choice="-">
+      <choice>Firebox (orange)</choice>
+      <choice xml:lang="de">Feuerbüchse (orange)</choice>
+      <choice xml:lang="nl">Vuurkist (oranje)</choice>
+    </enumChoice>
+    </enumVal>
+    <label>Effect for AUX6</label>
+    <label xml:lang="de">Effekt für AUX6</label>
+    <label xml:lang="nl">Effect voor AUX6</label>
+  </variable>
+  <variable CV="467" default="255" comment="Range 0-255" item="Parameter for AUX6">
+    <decVal max="255"/>
+    <label>Parameter for AUX6</label>
+    <label xml:lang="de">Parameter für AUX6</label>
+    <label xml:lang="nl">Parameter voor AUX6</label>
+  </variable>
+</variables>

@@ -1,17 +1,16 @@
 package jmri.jmrix.lenz.li101;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * LI101AdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.li101.LI101Adapter class
+ * Test for the jmri.jmrix.lenz.li101.LI101Adapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LI101AdapterTest {
 
@@ -21,13 +20,12 @@ public class LI101AdapterTest {
         Assert.assertNotNull(a);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

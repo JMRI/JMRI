@@ -88,7 +88,6 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     @Override
-    @SuppressWarnings("UnnecessaryBoxing")
     public void layoutFrame() {
         super.layoutFrame();
         JPanel p;
@@ -335,7 +334,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     public void updateBufferList() {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
         assignedBuffer.removeAllItems();
-        assignedBuffer.addItem("Select buffer from list");
+        assignedBuffer.addItem(Bundle.getMessage("SelectBufferFromList"));
         am.getNamedBeanSet(Audio.BUFFER).stream().forEach((s) -> {
             Audio a = am.getAudio(s.getSystemName());
             if (a != null) {

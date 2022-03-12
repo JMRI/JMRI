@@ -1,15 +1,14 @@
 package jmri.jmrix.nce;
 
 import jmri.Sensor;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the NceAIU class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceAIUTest {
 
@@ -28,12 +27,12 @@ public class NceAIUTest {
         Assert.assertEquals("check s3", Sensor.ACTIVE, s3.getKnownState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

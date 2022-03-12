@@ -3,11 +3,10 @@ package jmri.jmrix.pi;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.NamedBean;
-import jmri.SensorManager;
-import jmri.TurnoutManager;
+
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -22,13 +21,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author   Paul Bender Copyright (C) 2015
  */
-public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class RaspberryPiSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public RaspberryPiSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name); // NOI18N
 
-        register(); // registers general type
-        InstanceManager.store(this, RaspberryPiSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, RaspberryPiSystemConnectionMemo.class);
         log.debug("Created RaspberryPiSystemConnectionMemo");
     }
 
@@ -41,84 +39,46 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
      * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager(){
-        return sensorManager;
+        return get(SensorManager.class);
 
     }
     public void setSensorManager(SensorManager s){
          InstanceManager.setSensorManager(s);
-         sensorManager = s;
+         store(s,SensorManager.class);
     }
-
-    private SensorManager sensorManager = null;
 
     /*
      * Provides access to the TurnoutManager for this particular connection.
      * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager(){
-        return turnoutManager;
+        return get(TurnoutManager.class);
     }
 
     public void setTurnoutManager(TurnoutManager t){
          InstanceManager.setTurnoutManager(t);
-         turnoutManager = t;
+         store(t,TurnoutManager.class);
     }
-
-    private TurnoutManager turnoutManager = null;
 
     /*
      * Provides access to the LightManager for this particular connection.
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager(){
-        return lightManager;
+        return get(LightManager.class);
 
     }
     public void setLightManager(LightManager l){
-         lightManager = l;
+         InstanceManager.setLightManager(l);
+         store(l,LightManager.class);
     }
-
-    private LightManager lightManager = null;
 
     public void configureManagers(){
        setTurnoutManager(new RaspberryPiTurnoutManager(this));
        setSensorManager(new RaspberryPiSensorManager(this));
+       register();
     }
     
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else if (type.equals(jmri.LightManager.class)) {
-            return false;  // implement LightManager later.
-        } else {
-            return false; // nothing, by default
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-         if (getDisabled()) {
-             return null;
-         }
-         if (T.equals(jmri.SensorManager.class)) {
-             return (T) getSensorManager();
-         }
-         if (T.equals(jmri.TurnoutManager.class)) {
-             return (T) getTurnoutManager();
-         }
-         if (T.equals(jmri.LightManager.class)) {
-             return (T) getLightManager();
-         }
-         return null; // nothing, by default
-     }
-
     @Override
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.pi.RaspberryPiActionListBundle");

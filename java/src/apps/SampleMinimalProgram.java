@@ -2,12 +2,14 @@ package apps;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.implementation.JmriConfigurationManager;
-import jmri.util.Log4JUtil;
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import apps.util.Log4JUtil;
 
 /**
  * A simple example of a "Faceless" (no gui) application
@@ -72,7 +74,7 @@ public class SampleMinimalProgram {
                 org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.ERROR);
             }
         } catch (java.lang.NoSuchMethodError e) {
-            log.error("Exception starting logging: " + e);
+            log.error("Exception starting logging", e);
         }
         // install default exception handler
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
@@ -95,10 +97,8 @@ public class SampleMinimalProgram {
         // and here we're up and running!
     }
 
-    @SuppressWarnings("deprecation") // _Simple_Miniman_Program doesn't need multi-connection support
     protected void codeConfig(String[] args) {
-        jmri.jmrix.SerialPortAdapter adapter = jmri.jmrix.lenz.li100.LI100Adapter.instance();
-        //jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.nce.serialdriver.SerialDriverAdapter.instance();
+        jmri.jmrix.SerialPortAdapter adapter = new jmri.jmrix.lenz.li100.LI100Adapter();
 
         String portName = "/dev/cu.Bluetooth-PDA-Sync";
         String baudRate = "9600";
@@ -113,7 +113,10 @@ public class SampleMinimalProgram {
         adapter.openPort(portName, "JMRI app");
         adapter.configure();
 
-        ConfigureManager cm = new JmriConfigurationManager();
+        // install a Preferences Action Factory.
+        InstanceManager.store(new AppsPreferencesActionFactory(), JmriPreferencesActionFactory.class);
+
+        ConfigureManager cm = new AppsConfigurationManager();
 
         // not setting preference file location!
         InstanceManager.setDefault(ConfigureManager.class, cm);

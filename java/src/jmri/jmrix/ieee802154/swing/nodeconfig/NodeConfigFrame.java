@@ -120,7 +120,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     
     /*
-     * Initilaize the notes panel.
+     * Initialize the notes panel.
      */
     protected JPanel initNotesPanel(){
         // Set up the notes panel
@@ -152,7 +152,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /*
-     * Initilaize the Button panel.
+     * Initialize the Button panel.
      */
     protected JPanel initButtonPanel(){
         // Set up buttons
@@ -460,7 +460,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         return true;
     }
 
-    // Initilize the drop down box for the address lists.
+    // Initialize the drop down box for the address lists.
     protected void initAddressBoxes() {
         IEEE802154Node current = null;
         nodeAddrField.removeAllItems();

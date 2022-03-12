@@ -15,9 +15,7 @@ public class AutomatTableAction extends AbstractAction {
     }
 
     public AutomatTableAction() {
-        this(
-                java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
-                .getString("MenuItemMonitor"));
+        this(Bundle.getMessage("TitleAutomatTable"));
     }
 
     AutomatTableDataModel m;

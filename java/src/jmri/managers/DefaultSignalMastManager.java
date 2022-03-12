@@ -4,20 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.SignalMast;
-import jmri.SignalMastManager;
-import jmri.implementation.SignalHeadSignalMast;
-import jmri.implementation.SignalMastRepeater;
+
+import jmri.*;
+import jmri.implementation.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalMastManager.
@@ -25,49 +19,60 @@ import org.slf4j.LoggerFactory;
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
  *
- * @author Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009, 2020
  */
 public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         implements SignalMastManager {
 
     public DefaultSignalMastManager(InternalSystemConnectionMemo memo) {
         super(memo);
-        InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        repeaterList = new ArrayList<>();
+        addListeners();
     }
 
+    final void addListeners(){
+        InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
+    }
+
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALMASTS;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'F';
     }
 
+    /**
+     * {@inheritDoc}
+     * Searches by UserName then SystemName.
+     */
     @Override
-    public SignalMast getSignalMast(String name) {
+    @CheckForNull
+    public SignalMast getSignalMast(@Nonnull String name) {
         if (Objects.isNull(name) || name.length() == 0) {
             return null;
         }
         SignalMast t = getByUserName(name);
-        if (t != null) {
-            return t;
-        }
-
-        return getBySystemName(name);
+        return ( t != null ? t : getBySystemName(name));
     }
 
+    /** {@inheritDoc} */
     @Override
-    public SignalMast provideSignalMast(String prefix, // nominally IF$shsm
-            String signalSystem,
-            String mastName,
-            String[] heads) {
+    @Nonnull
+    public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
+                                        @Nonnull String signalSystem,
+                                        @Nonnull String mastName,
+                                        @Nonnull String[] heads) throws JmriException {
         StringBuilder name = new StringBuilder(prefix);
         name.append(":");
         name.append(signalSystem);
         name.append(":");
+        name.append(mastName);
         for (String s : heads) {
             name.append("(");
             name.append(StringUtil.parenQuote(s));
@@ -76,16 +81,32 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return provideSignalMast(new String(name));
     }
 
+    /** {@inheritDoc} */
     @Override
-    public SignalMast provideSignalMast(String name) {
+    @Nonnull
+    public SignalMast provideSignalMast(@Nonnull String name) throws IllegalArgumentException {
         SignalMast m = getSignalMast(name);
         if (m == null) {
-            m = new SignalHeadSignalMast(name);
+            // this should be replaced by a Service based approach,
+            // perhaps along the lines of SignalMastAddPane, but
+            // for now we manually check types
+            if (name.startsWith("IF$shsm")) {
+                m = new SignalHeadSignalMast(name);
+            } else if (name.startsWith("IF$dsm")) {
+                m = new DccSignalMast(name);
+            } else if (name.startsWith("IF$vsm")) {
+                m = new VirtualSignalMast(name);
+            } else {
+                // didn't recognize name, so trying to make it virtual
+                log.warn("building stand-in VirtualSignalMast for {}", name);
+                m = new VirtualSignalMast(name);
+            }
             register(m);
         }
         return m;
     }
 
+    /** {@inheritDoc} */
     @Nonnull
     @Override
     public SignalMast provideCustomSignalMast(@Nonnull String systemName, Class<? extends
@@ -110,17 +131,22 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return m;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public SignalMast getBySystemName(String key) {
+    @CheckForNull
+    public SignalMast getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public SignalMast getByUserName(String key) {
+    @CheckForNull
+    public SignalMast getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
-    @Override
+   @Override
+   @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalMasts" : "BeanNameSignalMast");
     }
@@ -133,7 +159,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return SignalMast.class;
     }
 
-    ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();
+    private final ArrayList<SignalMastRepeater> repeaterList;
 
     /**
      * Creates or retrieves a signal mast repeater.
@@ -194,10 +220,20 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         }
     }
 
+    /** {@inheritDoc} */
+    @Nonnull
     @Override
     public SignalMast provide(String name) throws IllegalArgumentException {
         return provideSignalMast(name);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class);
+    /** {@inheritDoc} */
+    @Override
+    public void dispose(){
+        InstanceManager.getDefault(SignalHeadManager.class).removeVetoableChangeListener(this);
+        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        super.dispose();
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalMastManager.class);
 }

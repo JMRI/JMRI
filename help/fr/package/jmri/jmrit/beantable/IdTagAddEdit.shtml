@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -48,7 +48,7 @@
       <p>L'&eacute;tiquette ID indiqu&eacute;e dans le tableau est
       d&eacute;termin&eacute;e &agrave; partir du nom
       syst&egrave;me.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

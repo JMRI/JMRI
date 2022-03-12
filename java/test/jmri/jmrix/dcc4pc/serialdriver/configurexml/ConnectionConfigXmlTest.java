@@ -1,21 +1,22 @@
 package jmri.jmrix.dcc4pc.serialdriver.configurexml;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import jmri.util.*;
+
+import org.junit.jupiter.api.*;
+import org.jdom2.Element;
+
 import jmri.jmrix.dcc4pc.serialdriver.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
  *
- * Description: tests for the ConnectionConfigXml class
+ * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,7 +24,15 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         cc = new ConnectionConfig();
     }
 
-    @After
+    @Test
+    @Override
+    public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+        super.loadTest();
+        JUnitAppender.assertErrorMessageStartsWith("Serial port (none selected) not found");
+        JUnitAppender.assertErrorMessageStartsWith("Serial port (none selected) not found");
+    }
+
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

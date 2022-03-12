@@ -10,7 +10,7 @@ import jmri.ThrottleListener;
  * The "ID" is used to identify this transmitter in RPS. The "rosterName" is the
  * name (ID) of the roster entry this was originally created from.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Transmitter implements ThrottleListener {
 
@@ -105,16 +105,6 @@ public class Transmitter implements ThrottleListener {
 
     @Override
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-    }
-    
-    /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
 
     /**

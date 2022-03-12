@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -41,7 +41,7 @@
 
       <p>Le soutien JMRI pour xAP a commenc&eacute; avec un simple
       <a href=
-      "http://jmri.org/jython/jython/xAPadapter.py">script</a>
+      "https://jmri.org/jython/jython/xAPadapter.py">script</a>
       disponible dans JMRI 2.9.5 et versions ult&eacute;rieures.
       Finalement, un ensemble complet d'outils de JMRI xAP sera
       disponibles directement au sein de l'ensemble des outils
@@ -74,7 +74,7 @@ remplit le nom d'utilisateur JMRI, par exemple:
 d'utilisateur JMRI pour tout ce que vous souhaitez via le tableau
 habituel, si d&eacute;sir&eacute;.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

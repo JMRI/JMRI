@@ -1,28 +1,29 @@
 package jmri.jmrit.sendpacket;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SendPacketFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SendPacketFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SendPacketFrame();
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

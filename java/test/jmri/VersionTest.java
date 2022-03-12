@@ -3,7 +3,7 @@ package jmri;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -16,10 +16,12 @@ public class VersionTest {
      */
     @Test
     public void announceVersions() {
-        log.info("Tests running on JMRI {} with Java {} from {}", 
+        log.info("Tests running on JMRI {} with Java {} from {}, {} MB memory of {} MB", 
             Version.name(),
             System.getProperty("java.version", "<unknown>"),
-            java.util.Locale.getDefault()
+            java.util.Locale.getDefault(),
+            Runtime.getRuntime().totalMemory()/1048576,
+            Runtime.getRuntime().maxMemory()/1048576
         );
     }
     
@@ -52,12 +54,12 @@ public class VersionTest {
         assertTrue(Version.compareCanonicalVersions("213.1.1", "213.1.10") < 0);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

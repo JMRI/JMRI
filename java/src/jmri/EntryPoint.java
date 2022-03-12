@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represent an EntryPoint to a Section of track. Specifies a Block within the
- * Section, and a Path of that Block.
+ * Represent an EntryPoint to a Section of track.
+ * Specifies a Block within the Section, and a Path of that Block.
  * <p>
  * An EntryPoint can be "forward" or "reverse" type, depending on if a train
  * entering the Section at this entry point will be travelling in the forward
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EntryPoint {
 
-    public EntryPoint(jmri.Block b, jmri.Block pb, String fbDir) {
+    public EntryPoint(Block b, Block pb, String fbDir) {
         mBlock = b;
         mFromBlock = pb;
         mFromBlockDirection = fbDir;    // direction from Path that triggered entry point
@@ -55,13 +55,13 @@ public class EntryPoint {
     private String fromBlockName = "";
 
     private void initialize() {
-        mBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(blockName);
+        mBlock = InstanceManager.getDefault(BlockManager.class).getBySystemName(blockName);
         if (mBlock == null) {
-            log.error("Missing block - " + blockName + " - when initializing entry point");
+            log.error("Missing block - {} - when initializing entry point", blockName);
         }
-        mFromBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(fromBlockName);
+        mFromBlock = InstanceManager.getDefault(BlockManager.class).getBySystemName(fromBlockName);
         if (mFromBlock == null) {
-            log.error("Missing block - " + fromBlockName + " - when initializing entry point");
+            log.error("Missing block - {} - when initializing entry point", fromBlockName);
         }
         needsInitialize = false;
     }
@@ -82,13 +82,9 @@ public class EntryPoint {
         if (needsInitialize) {
             initialize();
         }
-        String s = mFromBlock.getSystemName();
-        String u = mFromBlock.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            s = s + "( " + u + " )";
-        }
-        if ((mFromBlockDirection != null) && (!mFromBlockDirection.equals(""))) {
-            s = s + "( " + mFromBlockDirection + " )";
+        String s = mFromBlock.getDisplayName();
+        if ((mFromBlockDirection != null) && (!mFromBlockDirection.isEmpty())) {
+            s = s + " ( " + mFromBlockDirection + " )";
         }
         return s;
     }

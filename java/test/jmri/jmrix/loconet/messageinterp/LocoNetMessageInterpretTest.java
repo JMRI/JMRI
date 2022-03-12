@@ -1,10 +1,9 @@
 package jmri.jmrix.loconet.messageinterp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
@@ -16,6 +15,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 /**
  *
  * @author B. Milhaupt Copyright (C) 2018
+ * @author Michael Richardson Copyright (C) 2021
  */
 public class LocoNetMessageInterpretTest {
 
@@ -389,7 +389,130 @@ public class LocoNetMessageInterpretTest {
                         "BXP88 Board ID 17 section 1 or "+
                         "the BXPA1 Board ID 129 section).\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
+    }
 
+    @Test
+    public void testMultiSenseStandardRailCom() {
+        LocoNetMessage l;
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x4E, 0x00, 0x00, 0x03, 0x62});
+        Assert.assertEquals("MSS App Dyn index 7 value 0",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 7 (QoS) with a value of 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x4E, 0x0E, 0x00, 0x03, 0x6C});
+        Assert.assertEquals("MSS App Dyn index 7 value 14",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 7 (QoS) with a value of 14.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x40, 0x6A, 0x4F, 0x7F, 0x35});
+        Assert.assertEquals("MSS App Dyn index 0 value 106",
+                "Transponder address 10239 reporting RailCom App:Dyn Index 0 (Speed) with a value of 106.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x40, 0x04, 0x00, 0x03, 0x68});
+        Assert.assertEquals("MSS App Dyn index 0 value 4",
+                "Transponder address 3 (short) reporting RailCom App:Dyn Index 0 (Speed) with a value of 4.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x5F, 0x7F, 0x4F, 0x7F, 0x3F});
+        Assert.assertEquals("MSS App Dyn index 15 value 255 - Unknown index and max value",
+                "Transponder address 10239 reporting RailCom App:Dyn Index 15 (Unknown) with a value of 255.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+    }
+
+    @Test
+    public void testMultiSenseLong() {
+        LocoNetMessage l;
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        LnReporterManager lnrm = new LnReporterManager(lnis.getSystemConnectionMemo());
+
+        jmri.InstanceManager.setReporterManager(lnrm);
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x5B});
+        Assert.assertEquals("MSL minimum values",
+                "Transponder address 1 (short) facing East absent at LR1 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x10, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address",
+                "Transponder address 10239 facing West absent at LR2176 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x1F, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address and reporter, absent",
+                "Transponder address 10239 facing West absent at LR4096 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x00, 0x00, 0x01, 0x00, 0x00, 0x5B});
+        Assert.assertEquals("MSL minimum values but present",
+                "Transponder address 1 (short) facing East present at LR1 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x25, 0x7D, 0x0A, 0x40, 0x00, 0x24});
+        Assert.assertEquals("MSL short address 10 West Present",
+                "Transponder address 10 (short) (or long address 16010) facing West present at LR38 ().\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        ((LnReporter) lnrm.provideReporter("LR9")).setUserName("DepotBlock");
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x08, 0x1D, 0x5B, 0x00, 0x00, 0x78});
+        Assert.assertEquals("MSL long address 3803 west present with Friendly Name",
+                "Transponder address 3803 facing East present at LR9 (DepotBlock).\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x30, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address and reporter, present",
+                "Transponder address 10239 facing West present at LR2176 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x3F, 0x7F, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address and reporter, present",
+                "Transponder address 10239 facing West present at LR4096 ().\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x11, 0x20, 0x0D, 0x1D, 0x5B, 0x40, 0x00, 0x3D});
+        Assert.assertEquals("MSL unhandled length as not 0x09",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x0B, 0x7D, 0x03, 0x0E, 0x0E, 0x23});
+        Assert.assertEquals("MSL App Dyn index 7 value 14",
+                "Transponder address 3 (short) (or long address 16003) facing East present at LR12 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 7 (QoS) with a value of 14.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x1F, 0x4F, 0x7F, 0x40, 0x6A, 0x53});
+        Assert.assertEquals("MSL App Dyn index 0 value 106",
+                "Transponder address 10239 facing West present at LR32 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 0 (Speed) with a value of 106.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x40, 0x1F, 0x4F, 0x7F, 0x5F, 0x7F, 0x59});
+        Assert.assertEquals("MSL App Dyn index 15 value 255 - Unknown index and max value",
+                "Transponder address 10239 facing West present at LR32 ().\n" +
+                        "\tReporting RailCom App:Dyn Index 15 (Unknown) with a value of 255.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x6F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
+        Assert.assertEquals("MSL with unknown 0x60 type",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x00, 0x00, 0x00, 0x01, 0x3F, 0x00, 0x5B});
+        Assert.assertEquals("MSL absent with unexpected values in byte 6 (bits 5-0)",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x00, 0x00, 0x00, 0x01, 0x7F, 0x00, 0x5B});
+        Assert.assertEquals("MSL present with unexpected values in byte 6 (bits 5-0)",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x00, 0x00, 0x01, 0x40, 0x7f, 0x5B});
+        Assert.assertEquals("MSL present with unexpected values in byte 7",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Test
@@ -1550,6 +1673,9 @@ public class LocoNetMessageInterpretTest {
                 case 0x16:
                     s = "Digitrax DB220 host";
                     break;
+                case 0x1A:
+                    s = "Digitrax DCS210plus host";
+                    break;
                 case 0x1B:
                     s = "Digitrax DCS210 host";
                     break;
@@ -1574,14 +1700,26 @@ public class LocoNetMessageInterpretTest {
                 case 0x34:
                     s = "Digitrax DCS52 host";
                     break;
+                case 0x3E:
+                    s = "Digitrax DT602(x) host";
+                    break;
+                case 0x51:
+                    s = "Digitrax BXPA1 host";
+                    break;
                 case 0x58:
                     s = "Digitrax BXP88 host";
                     break;
                 case 0x5C:
                     s = "Digitrax UR92 host";
                     break;
+                case 0x5D:
+                    s = "Digitrax UR93 host";
+                    break;
                 case 0x63:
                     s = "Digitrax LNWI host";
+                    break;
+                case 0x74:
+                    s = "Digitrax DS74 host";
                     break;
                 default:
                     s = "Digitrax (unknown host device type "+i+")";
@@ -5027,14 +5165,14 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6F} );
         Assert.assertEquals(" Slot test 10",
                 "Report of current Extended Command Station OpSw values:\n" +
-"	OpSw65=Thrown, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Thrown, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
-"	OpSw73=Thrown, OpSw74=Thrown, OpSw75=Thrown, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
-"	OpSw81=Thrown, OpSw82=Thrown, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Thrown, OpSw87=Thrown, OpSw88=Thrown,\n" +
-"	OpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
-"	OpSw97=Thrown, OpSw98=Thrown, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Thrown, OpSw102=Thrown, OpSw103=Thrown, OpSw104=Thrown,\n" +
-"	OpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
-"	OpSw113=Thrown, OpSw114=Thrown, OpSw115=Thrown, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Thrown, OpSw120=Thrown,\n" +
-"	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n",
+"\tOpSw65=Thrown, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Thrown, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
+"\tOpSw73=Thrown, OpSw74=Thrown, OpSw75=Thrown, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
+"\tOpSw81=Thrown, OpSw82=Thrown, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Thrown, OpSw87=Thrown, OpSw88=Thrown,\n" +
+"\tOpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
+"\tOpSw97=Thrown, OpSw98=Thrown, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Thrown, OpSw102=Thrown, OpSw103=Thrown, OpSw104=Thrown,\n" +
+"\tOpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
+"\tOpSw113=Thrown, OpSw114=Thrown, OpSw115=Thrown, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Thrown, OpSw120=Thrown,\n" +
+"\tOpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBF, 0x21, 0x31, 0x50} );
@@ -6653,14 +6791,14 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7E, 0x11, 0x04, 0x22, 0x00, 0x47, 0x33, 0x00, 0x44, 0x00, 0x6C, 0x03});
         Assert.assertEquals("read 1", "Report of current Extended Command Station OpSw values:\n" +
-"	OpSw65=Closed, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Closed, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
-"	OpSw73=Thrown, OpSw74=Thrown, OpSw75=Closed, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
-"	OpSw81=Thrown, OpSw82=Closed, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Closed, OpSw87=Thrown, OpSw88=Thrown,\n" +
-"	OpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
-"	OpSw97=Closed, OpSw98=Closed, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Closed, OpSw102=Closed, OpSw103=Thrown, OpSw104=Thrown,\n" +
-"	OpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
-"	OpSw113=Thrown, OpSw114=Thrown, OpSw115=Closed, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Closed, OpSw120=Thrown,\n" +
-"	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+"\tOpSw65=Closed, OpSw66=Thrown, OpSw67=Thrown, OpSw68=Thrown, OpSw69=Closed, OpSw70=Thrown, OpSw71=Thrown, OpSw72=Thrown,\n" +
+"\tOpSw73=Thrown, OpSw74=Thrown, OpSw75=Closed, OpSw76=Thrown, OpSw77=Thrown, OpSw78=Thrown, OpSw79=Thrown, OpSw80=Thrown,\n" +
+"\tOpSw81=Thrown, OpSw82=Closed, OpSw83=Thrown, OpSw84=Thrown, OpSw85=Thrown, OpSw86=Closed, OpSw87=Thrown, OpSw88=Thrown,\n" +
+"\tOpSw89=Thrown, OpSw90=Thrown, OpSw91=Thrown, OpSw92=Thrown, OpSw93=Thrown, OpSw94=Thrown, OpSw95=Thrown, OpSw96=Thrown,\n" +
+"\tOpSw97=Closed, OpSw98=Closed, OpSw99=Thrown, OpSw100=Thrown, OpSw101=Closed, OpSw102=Closed, OpSw103=Thrown, OpSw104=Thrown,\n" +
+"\tOpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
+"\tOpSw113=Thrown, OpSw114=Thrown, OpSw115=Closed, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Closed, OpSw120=Thrown,\n" +
+"\tOpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Test
@@ -6669,14 +6807,12 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("check LocoReset", "Loco Reset mechanism triggered.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
-    @Before
-    @Test
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
-    @Test
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

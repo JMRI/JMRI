@@ -1,9 +1,10 @@
 package jmri.jmrix.nce;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.Turnout;
 
 /**
  * Polls NCE Command Station for turnout discrepancies
@@ -149,7 +150,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             }
 
             if (activeBlock[currentBlock]) {
-                log.trace("found turnouts block " + currentBlock);
+                log.trace("found turnouts block {}", currentBlock);
 
                 // Read NCE CS memory
                 int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
@@ -225,7 +226,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                                     // MSB isn't used and the bit map is skewed
                                     // by one bit, ie accy num 2 is in bit 0,
                                     // should have been in bit 1.
-                                    if (NceConnectionStatus.isNceEpromMarch2007()) {
+                                    if (tc.isNceEpromMarch2007() && !tc.isSimulatorRunning()) {
                                         // bit 3 is shared by two accessories!!!!
                                         if (i == 3) {
                                             monitorActionCommanded(NTnum - 3,
@@ -269,7 +270,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                                     // MSB isn't used and the bit map is skewed
                                     // by one bit, ie accy num 2 is in bit 0,
                                     // should have been in bit 1.
-                                    if (NceConnectionStatus.isNceEpromMarch2007()) {
+                                    if (tc.isNceEpromMarch2007() && !tc.isSimulatorRunning()) {
                                         if (!sentWarnMessage) {
                                             log.warn(
                                                     "The installed NCE Command Station EPROM has problems when using turnout MONITORING feedback");
@@ -326,7 +327,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                 rControlTurnout.getFeedbackMode());
 
         // Show the byte read from NCE CS
-        log.trace("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+        log.trace("memory byte: {}", Integer.toHexString(recMemByte & 0xFF));
 
         // test for closed or thrown, normally 0 = closed, 1 = thrown
         int nceAccState = (recMemByte >> bit) & 0x01;
@@ -407,7 +408,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
             } else {
 
-                log.debug("turnout discrepancy, NT" + NTnum + " KnownState is now CLOSED");
+                log.debug("turnout discrepancy, NT{} KnownState is now CLOSED", NTnum);
                 // change JMRI's knowledge of the turnout state to match observed
                 rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
             }

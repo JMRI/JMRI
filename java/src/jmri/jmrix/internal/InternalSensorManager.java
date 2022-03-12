@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
@@ -21,17 +22,18 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
     /** {@inheritDoc} */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     /**
-     * Create an internal (dummy) sensor object
+     * {@inheritDoc}
      *
-     * @return new null
+     * @return a new (dummy) Internal sensor
      */
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor sen = new AbstractSensor(systemName, userName) {
 
             @Override
@@ -40,7 +42,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
             }
 
             @Override
-            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
@@ -73,50 +75,23 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
-        Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
-        if (s == null) {
-            return curAddress;
-        }
-
-        // This bit deals with handling the curAddress, and how to get the next
-        // address.
-        int iName = 0;
-        try {
-            iName = Integer.parseInt(curAddress);
-        } catch (NumberFormatException ex) {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showErrorMessage("Error",
-                    "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
-            return null;
-        }
-        // Check to determine if the systemName is in use, return null if it is,
-        // otherwise return the next valid address.
-        s = getBySystemName(prefix + typeLetter() + iName);
-        if (s != null) {
-            for (int x = 1; x < 10; x++) {
-                iName = iName + 1;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
+    }
+    
+    /**
+     * No validation for Internal Sensors.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
+        return prefix + typeLetter() + curAddress;
     }
 
     private static final Logger log = LoggerFactory.getLogger(InternalSensorManager.class);

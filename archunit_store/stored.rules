@@ -1,8 +1,10 @@
 #
-#Thu Sep 26 00:52:41 PDT 2019
-classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrit..',\ 'apps..']=972dd7cb-f44a-4f8e-9452-7789d2a846e8
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..']=69ae4e96-2c0d-4eb0-ad3f-133916937532
-classes\ that\ reside\ in\ a\ package\ 'jmri.jmrix..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrix..',\ 'apps..']=82324736-8ad6-4afb-9d2d-da95965d9307
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmris'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=e0fe7761-0daa-4cc4-9efc-7e3806ef69bd
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=77c222f8-f9a4-4ef4-b4d0-9d9d48d2e9e0
-classes\ that\ reside\ in\ a\ package\ 'apps..'\ should\ only\ be\ accessed\ by\ any\ package\ ['apps..']=bfca0fcb-1b60-4356-8e62-24df836af29c
+#Sat Oct 03 16:37:00 PDT 2020
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrit..',\ 'apps..']=788ffcd8-d213-479d-a8a6-d7854e18adef
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..']=1399b807-0aa3-487f-8c8a-1ff1268293fd
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrix..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrix..',\ 'apps..']=c240fd69-85bb-485e-af60-5c59a4b51978
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmris'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=0593c15b-2922-4e2d-8f6d-cc41a895be82
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..',\ 'edu.umd..']=369a58b8-e2b0-4077-a3de-68b398fb3610
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=84324b13-47c7-4ccb-9494-e59787afc534
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri..'\ and\ are\ not\ annotated\ with\ @Deprecated\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'org.apache.log4j'=708e61a4-8bb0-49a6-8881-fd7cbc8446dc
+classes\ that\ reside\ in\ a\ package\ 'apps..'\ should\ only\ be\ accessed\ by\ any\ package\ ['apps..']=f32654a4-1dcc-4e71-aab2-75039c24bbf4

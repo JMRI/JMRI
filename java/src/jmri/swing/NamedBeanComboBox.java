@@ -31,9 +31,9 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.NamedBean.DisplayOptions;
+import jmri.beans.SwingPropertyChangeListener;
 import jmri.util.NamedBeanComparator;
 import jmri.util.NamedBeanUserNameComparator;
-import jmri.util.ThreadingPropertyChangeListener;
 
 /**
  * A {@link javax.swing.JComboBox} for {@link jmri.NamedBean}s.
@@ -85,7 +85,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private boolean validatingInput = true;
     private final transient Set<B> excludedItems = new HashSet<>();
     private final transient PropertyChangeListener managerListener =
-            ThreadingPropertyChangeListener.guiListener(evt -> sort());
+            new SwingPropertyChangeListener(evt -> sort());
     private String userInput = null;
     private static final Logger log = LoggerFactory.getLogger(NamedBeanComboBox.class);
 
@@ -121,13 +121,14 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * @param displayOrder the sorting scheme for NamedBeans
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
+        // uses NamedBeanComboBox.this... to prevent overridden methods from being
+        // called in constructor
         super();
         this.manager = manager;
         super.setToolTipText(
                 Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
-        NamedBeanComboBox.this.setEditable(false); // prevent overriding method
-                                                   // call in constructor
+        NamedBeanComboBox.this.setEditable(false);
         NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer(getRenderer());
         setRenderer(namedBeanRenderer);
         setKeySelectionManager(namedBeanRenderer);
@@ -136,7 +137,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         this.manager.addPropertyChangeListener("beans", managerListener);
         this.manager.addPropertyChangeListener("DisplayListName", managerListener);
         sort();
-        setSelectedItem(selection);
+        NamedBeanComboBox.this.setSelectedItem(selection);
     }
 
     public Manager<B> getManager() {
@@ -202,7 +203,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * To get the current selection <em>without</em> potentially creating a
      * NamedBean call {@link #getItemAt(int)} with {@link #getSelectedIndex()}
      * as the index instead (as in {@code getItemAt(getSelectedIndex())}).
-     * 
+     *
      * @return the selected item as the supported type of NamedBean, creating a
      *         new NamedBean as needed if {@link #isEditable()} and
      *         {@link #isProviding()} are true, or null if there is no
@@ -346,7 +347,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         set.removeAll(excludedItems);
         Vector<B> vector = new Vector<>(set);
         if (allowNull) {
-            vector.insertElementAt(null, 0);
+            vector.add(0, null);
         }
         setModel(new DefaultComboBoxModel<>(vector));
         // retain selection
@@ -463,12 +464,14 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                     // selection won't change if bean is not in model
                                     setSelectedItem(bean);
                                     if (!bean.equals(getItemAt(getSelectedIndex()))) {
-                                        jtc.setText(text);
-                                        if (validatingInput) {
-                                            return new Validation(Validation.Type.DANGER,
-                                                    getBeanInUseMessage(manager.getBeanTypeHandled(),
-                                                            bean.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
-                                                    preferences);
+                                        if (getSelectedIndex() != -1) {
+                                            jtc.setText(text);
+                                            if (validatingInput) {
+                                                return new Validation(Validation.Type.DANGER,
+                                                        getBeanInUseMessage(manager.getBeanTypeHandled(),
+                                                                bean.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
+                                                        preferences);
+                                            }
                                         }
                                     }
                                 } else {
@@ -570,7 +573,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
          * {@inheritDoc}
          */
         @Override
-        @SuppressWarnings("unchecked") // unchecked cast due to API constraints
+        @SuppressWarnings({"unchecked", "rawtypes"}) // unchecked cast due to API constraints
         public int selectionForKey(char key, ComboBoxModel model) {
             long time = System.currentTimeMillis();
 
@@ -625,7 +628,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         /**
          * Find the index of the item in the model that starts with the prefix.
          */
-        @SuppressWarnings("unchecked") // unchecked cast due to API constraints
+        @SuppressWarnings({"unchecked", "rawtypes"}) // unchecked cast due to API constraints
         private int getNextMatch(String prefix, int start, int end, ComboBoxModel model) {
             for (int i = start; i < end; i++) {
                 B item = (B) model.getElementAt(i);

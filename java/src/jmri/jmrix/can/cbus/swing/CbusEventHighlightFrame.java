@@ -4,15 +4,15 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.WindowConstants;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
+import jmri.jmrix.AbstractMessage;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusEventHighlighter;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.util.JmriJFrame;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Frame to control an instance of CBUS highlighter to highlight events.
@@ -33,15 +33,16 @@ public class CbusEventHighlightFrame extends JmriJFrame {
     // member to hold reference to my HIGHLIGHTERS
     protected CbusEventHighlighter[] _highlight = new CbusEventHighlighter[HIGHLIGHTERS];
     protected boolean[] _highlightActive = new boolean[HIGHLIGHTERS];
-    private CbusConsolePane _console = null;
-    private ConfigToolPane _evCap = null;
+    private CbusConsolePane _console;
+    private ConfigToolPane _evCap;
 
     /**
      * Create a new instance of CbusFilterFrame.
+     * @param console main Console Window, can be null
+     * @param evCap main Event Capture Window, can be null
      */
     public CbusEventHighlightFrame(CbusConsolePane console, ConfigToolPane evCap) {
         super();
-        log.debug("CbusEventhighlightFrame(CbusEventFilter) ctor called");
         for (int i = 0; i < HIGHLIGHTERS; i++) {
             _highlight[i] = new CbusEventHighlighter();
             _highlightActive[i] = false;
@@ -49,24 +50,24 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         _console = console;
         _evCap = evCap;
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        log.debug("CbusEventFilterFrame(CbusEventFilter) ctor done");
     }
 
     protected CbusEventHighlightFrame() {
         super();
     }
 
-    protected String title() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle() {
         if ( _console != null) {
             return _console.getTitle() + " " + Bundle.getMessage("EventHighlightTitle");
-        } else 
-        if ( _evCap != null) {
+        }
+        else if ( _evCap != null) {
             return _evCap.getTitle() + " " + Bundle.getMessage("EventHighlightTitle");
         }
         return(Bundle.getMessage("EventHighlightTitle"));
-    }
-
-    protected void init() {
     }
 
     /**
@@ -82,7 +83,7 @@ public class CbusEventHighlightFrame extends JmriJFrame {
      */
     @Override
     public void initComponents() {
-        setTitle(title());
+        setTitle(getTitle());
         // Panels will be added downwards
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -99,10 +100,18 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         pack();
     }
 
+    /**
+     * Enable Highlighter.
+     * @param index highlighter index.
+     * @param nn node number.
+     * @param nnEn node number enabled.
+     * @param ev event number.
+     * @param evEn event number enabled.
+     * @param ty event type.
+     * @param dr event direction.
+     */
     public void enable(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty, int dr) {
-        if ( _console != null) { 
-            _console.highlightOn(index, nn, nnEn, ev, evEn, ty, dr);
-        }
+        
         _highlight[index].setNn(nn);
         _highlight[index].setNnEnable(nnEn);
         _highlight[index].setEv(ev);
@@ -110,18 +119,75 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         _highlight[index].setType(ty);
         _highlight[index].setDir(dr);
         _highlightActive[index] = true;
-    }
-
-    public void disable(int index) {
-        _highlightActive[index] = false;
         if ( _console != null) { 
-            _console.highlightOff(index);
+            updateConsole(index);
+        }
+    }
+    
+    private void updateConsole(int index) {
+    
+        // log.debug("Cbus Console highlight applied");
+        StringBuilder sb = new StringBuilder(80);
+        if ( _highlight[index].getNnEnable() ) {
+            sb.append(Bundle.getMessage("CbusNode")).append(_highlight[index].getNn()).append(" ");
+        }
+        if (_highlight[index].getEvEnable()) {
+            sb.append(Bundle.getMessage("CbusEvent")).append(_highlight[index].getEv()).append(" ");
+        }
+        
+        appendType(sb,index);
+        appendDirection(sb,index);
+        
+        sb.append("\n");
+        _console.nextLine(sb.toString(), sb.toString(), index);
+    }
+    
+    private void appendType( StringBuilder sb, int index ){
+        switch (_highlight[index].getType()) {
+            case CbusConstants.EVENT_ON:
+                sb.append(Bundle.getMessage("CbusEventOn"));
+                break;
+            case CbusConstants.EVENT_OFF:
+                sb.append(Bundle.getMessage("CbusEventOff"));
+                break;
+            default:
+                sb.append(Bundle.getMessage("CbusEventOnOrOff"));
+                break;
+        }
+    }
+    
+    private void appendDirection( StringBuilder sb, int index ){
+        switch (_highlight[index].getDir()) {
+            case CbusConstants.EVENT_DIR_IN:
+                sb.append(Bundle.getMessage("InEventsTooltip"));
+                break;
+            case CbusConstants.EVENT_DIR_OUT:
+                sb.append(Bundle.getMessage("OutEventsTooltip"));
+                break;        
+            default:
+                sb.append(Bundle.getMessage("InOrOutEventsToolTip"));
+                break;
         }
     }
 
-    public int highlight(CanMessage m) {
-        int i;
-        for (i = 0; i < HIGHLIGHTERS; i++) {
+    /**
+     * Disable a Highlighter by Index Number.
+     * @param index Highlighter Index number
+     */
+    public void disable(int index) {
+        _highlightActive[index] = false;
+        if ( _console != null) { 
+            _console.nextLine( Bundle.getMessage("HighlightDisabled") + " \n", Bundle.getMessage("HighlightDisabled") + " \n",  index);
+        }
+    }
+
+    /**
+     * Get whether to Highlight a particular CAN Frame.
+     * @param m CanMessage or CanReply
+     * @return -1 to NOT Highlight, else Highlighter Number.
+     */
+    public int highlight(AbstractMessage m) {
+        for (int i = 0; i < HIGHLIGHTERS; i++) {
             if (_highlightActive[i] && _highlight[i].highlight(m)) {
                 return i;
             }
@@ -129,19 +195,14 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         return -1;
     }
 
-    public int highlight(CanReply r) {
-        int i;
-        for (i = 0; i < HIGHLIGHTERS; i++) {
-            if (_highlightActive[i] && _highlight[i].highlight(r)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
+    /**
+     * Get Colour for a particular highlighter.
+     * @param i Highlight index
+     * @return Highlight Colour
+     */
     public Color getColor(int i) {
         return highlightColors[i];
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventHighlightFrame.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusEventHighlightFrame.class);
 }

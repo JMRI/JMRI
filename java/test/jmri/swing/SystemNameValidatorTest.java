@@ -1,15 +1,15 @@
 package jmri.swing;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.Assert.*;
 
 import com.alexandriasoftware.swing.JInputValidatorPreferences;
 import com.alexandriasoftware.swing.Validation;
+
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
+
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
@@ -20,13 +20,13 @@ import jmri.util.JUnitUtil;
  */
 public class SystemNameValidatorTest {
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

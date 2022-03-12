@@ -11,7 +11,7 @@ import jmri.PowerManager;
 /**
  * Create a menu for selecting the Power Manager to use
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {
@@ -37,7 +37,7 @@ abstract public class PowerManagerMenu extends JMenu {
         ButtonGroup group = new ButtonGroup();
 
         // label this menu
-        setText("Connection");
+        setText(Bundle.getMessage("MenuConnection")) ;
 
         // now add an item for each available manager
         List<PowerManager> managers = InstanceManager.getList(PowerManager.class);

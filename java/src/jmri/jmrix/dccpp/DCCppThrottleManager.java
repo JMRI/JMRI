@@ -2,9 +2,12 @@ package jmri.jmrix.dccpp;
 
 import java.util.EnumSet;
 import java.util.HashMap;
+
+import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
-import jmri.ThrottleManager;
+import jmri.ThrottleListener;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,18 +25,23 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);
 
-    protected DCCppTrafficController tc = null;
-
+    protected DCCppTrafficController tc;
+    
     /**
      * Constructor.
+     * @param memo the memo for the connection this tm will use
      */
     public DCCppThrottleManager(DCCppSystemConnectionMemo memo) {
         super(memo);
-        // connect to the TrafficManager
+        DCCppMessage msg;
+        // connect to the TrafficController manager
         tc = memo.getDCCppTrafficController();
 
         // Register to listen for throttle messages
         tc.addDCCppListener(DCCppInterface.THROTTLE, this);
+        //Request number of available slots
+        msg = DCCppMessage.makeCSMaxNumSlotsMsg();
+        tc.sendDCCppMessage(msg, this);
     }
 
     /**
@@ -44,24 +52,22 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         DCCppThrottle throttle;
-        if (log.isDebugEnabled()) {
-            log.debug("Requesting Throttle: " + address);
-        }
+        log.debug("Requesting Throttle: {}", address);
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {
             if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
-            // TODO: Eventually add something more robust here.
-            log.error("No Register available for Throttle. Address = {}", address);
-            return;
-        }
+                failedThrottleRequest(address, "No Register available for Throttle. Address="+ address);
+                log.error("No Register available for Throttle. Address = {}", address);
+                return;
+            }
             throttle = new DCCppThrottle((DCCppSystemConnectionMemo) adapterMemo, address, tc);
             throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
         }
     }
 
-    /*
+    /**
      * DCC++ based systems DO NOT use the Dispatch Function
      * (do they?)
      */
@@ -70,7 +76,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         return false;
     }
 
-    /*
+    /**
      * DCC++ based systems can have multiple throttles for the same 
      * device
      * <p>
@@ -91,12 +97,12 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     /**
-     * Address 127 and below is a short address
+     * Address between 1 and 127 is a short address
      *
      */
     @Override
     public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
+        return (address >= 1 && !isLongAddress(address));
     }
 
     /**
@@ -127,52 +133,72 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     // Handle incoming messages for throttles.
     @Override
     public void message(DCCppReply r) {
- // Guts of how a throttle handles replies...
- //
- // What should this be??
- // For now, drop the message.
- /*
-        // We want to check to see if a throttle has taken over an address
-        if (r.getElement(0) == DCCppConstants.LOCO_INFO_RESPONSE) {
-            if (r.getElement(1) == DCCppConstants.LOCO_NOT_AVAILABLE) {
-                // This is a take over message.  If we know about this throttle,
-                // send the message on.
-                LocoAddress address = new jmri.DccLocoAddress(r.getThrottleMsgAddr(),
-                        isLongAddress(r.getThrottleMsgAddr()));
-                if (throttles.containsKey(address)) {
-                    throttles.get(address).message(r);
-                }
-            }
+        // handle maxNumSlots and set value in commandstation
+        if (r.getElement(0) == DCCppConstants.MAXNUMSLOTS_REPLY) {
+            log.debug("MaxNumSlots reply received: {}", r);
+            tc.getCommandStation().setCommandStationMaxNumSlots(r);
+        // handle loco state reply by finding the proper throttle and asking it to update itself
+        } else if (r.getElement(0) == DCCppConstants.LOCO_STATE_REPLY){
+            log.debug("LocoState reply received: {}", r);
+            int cab = r.getCabInt();
+            DccLocoAddress locoAddress = new DccLocoAddress(cab, !canBeShortAddress(cab));            
+            if (throttles.containsKey(locoAddress)) {
+                DCCppThrottle throttle = throttles.get(locoAddress);
+                if (log.isDebugEnabled()) log.debug("Passing locoState to throttle {}", throttle.getLocoAddress());
+                throttle.handleLocoState(r);
+            }                
+            
+        } else {
+            log.trace("ignoring reply: {}", r);
         }
- */
-
     }
 
-    // listen for the messages to the LI100/LI101
+    // listen for the messages to the command station
     @Override
     public void message(DCCppMessage l) {
     }
 
-    // Handle a timeout notification
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg, msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     @Override
-    public void releaseThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
+    public void releaseThrottle(DccThrottle t, ThrottleListener l) {
+        super.releaseThrottle(t, l);
     }
 
     @Override
-    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
+    public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
+            //ask command station to forget this cab
+            DCCppMessage msg = DCCppMessage.makeForgetCabMessage(t.getLocoAddress().getNumber());
+            tc.sendDCCppMessage(msg, this);            
+            //release the "register" for this cab
+            tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());            
             if (t instanceof DCCppThrottle) {
                 DCCppThrottle lnt = (DCCppThrottle) t;
+                throttles.remove(lnt.getLocoAddress()); // remove from throttles map.
                 lnt.throttleDispose();
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        tc.removeDCCppListener(DCCppInterface.THROTTLE, this);
+        //stopThrottleRequestTimer(); no timer used in this tm
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class);

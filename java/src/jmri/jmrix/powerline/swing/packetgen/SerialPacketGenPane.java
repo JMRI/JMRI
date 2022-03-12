@@ -1,7 +1,6 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.Dimension;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
@@ -114,7 +113,9 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        tc.sendSerialMessage(createPacket(packetTextField.getText()), this);
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        tc.sendSerialMessage(createPacket(input), this);
     }
 
     SerialMessage createPacket(String s) {

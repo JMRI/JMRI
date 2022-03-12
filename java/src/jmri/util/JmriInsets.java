@@ -29,13 +29,13 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriInsets {
 
-    private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin|icewm"; //NOI18N
+    private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin|icewm"; // NOI18N
 
-    private static final String GNOME_CONFIG = "%gconf.xml"; //NOI18N
-    private static final String GNOME_PANEL = "_panel_screen"; //NOI18N
-    private static final String GNOME_ROOT = System.getProperty("user.home") + "/.gconf/apps/panel/toplevels/"; //NOI18N
+    private static final String GNOME_CONFIG = "%gconf.xml"; // NOI18N
+    private static final String GNOME_PANEL = "_panel_screen"; // NOI18N
+    private static final String GNOME_ROOT = System.getProperty("user.home") + "/.gconf/apps/panel/toplevels/"; // NOI18N
 
-    private static final String KDE_CONFIG = System.getProperty("user.home") + "/.kde/share/config/kickerrc"; //NOI18N
+    private static final String KDE_CONFIG = System.getProperty("user.home") + "/.kde/share/config/kickerrc"; // NOI18N
 
     //private static final String XFCE_CONFIG = System.getProperty("user.home") + "/.config/xfce4/mcs_settings/panel.xml";
     private static final String OS_NAME = SystemType.getOSName();
@@ -78,19 +78,19 @@ public class JmriInsets {
      */
     private static int getLinuxWindowManager() {
         if (!SystemType.isWindows()
-                && !OS_NAME.toLowerCase().startsWith("mac")) { //NOI18N
+                && !OS_NAME.toLowerCase().startsWith("mac")) { // NOI18N
             try {
-                Process p = Runtime.getRuntime().exec("ps ax"); //NOI18N
+                Process p = Runtime.getRuntime().exec("ps ax"); // NOI18N
                 BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
                 try {
-                    java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|")); //NOI18N
+                    java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|")); // NOI18N
 
                     String line = r.readLine();
                     while (line != null) {
                         for (int i = 0; i < desktopList.size(); i++) {
                             String s = desktopList.get(i);
-                            if (line.contains(s) && !line.contains("grep")) //NOI18N
+                            if (line.contains(s) && !line.contains("grep")) // NOI18N
                             {
                                 return desktopList.indexOf(s);
                             }
@@ -128,9 +128,9 @@ public class JmriInsets {
         int[] i = {0, 0, 0, 0, 0};         // Left, Right, Top, Bottom, Null
 
         /* Needs to be fixed. Doesn't know the difference between CustomSize and Size */
-        int iniCustomSize = getKdeINI("General", "CustomSize"); //NOI18N
-        int iniSize = getKdeINI("General", "Size"); //NOI18N
-        int iniPosition = getKdeINI("General", "Position"); //NOI18N
+        int iniCustomSize = getKdeINI("General", "CustomSize"); // NOI18N
+        int iniSize = getKdeINI("General", "Size"); // NOI18N
+        int iniPosition = getKdeINI("General", "Position"); // NOI18N
         int position = iniPosition == -1 ? 3 : iniPosition;
         int size = (iniCustomSize == -1 || iniSize != 4) ? iniSize : iniCustomSize;
         size = size < 24 ? sizes[size] : size;
@@ -156,13 +156,13 @@ public class JmriInsets {
                     int val = getGnomeXML(new File(GNOME_ROOT + "/" + folder + "/" + GNOME_CONFIG));
                     if (val == -1) {
                         // Skip
-                    } else if (folder.startsWith("top" + GNOME_PANEL)) { //NOI18N
+                    } else if (folder.startsWith("top" + GNOME_PANEL)) { // NOI18N
                         n = Math.max(val, n);
-                    } else if (folder.startsWith("bottom" + GNOME_PANEL)) { //NOI18N
+                    } else if (folder.startsWith("bottom" + GNOME_PANEL)) { // NOI18N
                         s = Math.max(val, s);
-                    } else if (folder.startsWith("right" + GNOME_PANEL)) { //NOI18N
+                    } else if (folder.startsWith("right" + GNOME_PANEL)) { // NOI18N
                         e = Math.max(val, e);
-                    } else if (folder.startsWith("left" + GNOME_PANEL)) { //NOI18N
+                    } else if (folder.startsWith("left" + GNOME_PANEL)) { // NOI18N
                         w = Math.max(val, w);
                     }
                 }
@@ -242,7 +242,7 @@ public class JmriInsets {
             try (FileReader reader = new FileReader(xmlFile); BufferedReader buffer = new BufferedReader(reader)) {
                 temp = buffer.readLine();
                 while (temp != null) {
-                    if (temp.contains("<entry name=\"size\"")) { //NOI18N
+                    if (temp.contains("<entry name=\"size\"")) { // NOI18N
                         found = true;
                         break;
                     }

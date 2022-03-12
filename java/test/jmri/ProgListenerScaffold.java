@@ -16,7 +16,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @see jmri.Programmer
- * @author	Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013
  */
 public class ProgListenerScaffold implements ProgListener {
 

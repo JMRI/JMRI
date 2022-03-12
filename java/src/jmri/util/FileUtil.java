@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
@@ -575,18 +574,6 @@ public final class FileUtil {
     }
 
     /**
-     * Used to set the profile path, but now does nothing.
-     *
-     * @see #getProfilePath()
-     * @param path The path to the profile directory
-     * @deprecated since 4.17.3 without replacement
-     */
-    @Deprecated
-    static public void setProfilePath(@CheckForNull String path) {
-        // nothing to do
-    }
-
-    /**
      * Get the preferences directory. This directory is set based on the OS and
      * is not normally settable by the user.
      * <ul>
@@ -850,6 +837,8 @@ public final class FileUtil {
      * {@link java.net.URL} for that file. Search order is defined by
      * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
+     * <p>
+     * TODO: add @CheckForNull annotation / fix Possible null pointers.
      *
      * @param path The relative path of the file or resource.
      * @return The URL or null.
@@ -1147,7 +1136,7 @@ public final class FileUtil {
      * PropertyChangeEvents for properties that are Profile-specific use a
      * Property to enclose both the Profile and the value of the property.
      */
-    public static class Property implements Map.Entry {
+    public static class Property implements Map.Entry<Profile, String> {
 
         private final Profile key;
         private final String value;
@@ -1169,7 +1158,7 @@ public final class FileUtil {
         }
 
         @Override
-        public Object setValue(Object value) {
+        public String setValue(String value) {
             throw new UnsupportedOperationException("Immutable by design");
         }
 

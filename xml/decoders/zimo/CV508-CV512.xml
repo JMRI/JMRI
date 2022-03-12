@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- Ronald Kuhn, 21th Apr 2019 -->
+<!-- update, Nigel Cliffe, 13 Feb 2021 - added brightness level to each dimming group  -->
 <!-- from version 37 firmware -->
 <!-- CV's 508-512 control dimming options in swiss mapping -->
 <!-- see Zimo German manual for small decoders, -->
@@ -14,107 +15,307 @@
 
       <variable CV="508" item="Swiss Dimming 1" mask="XXXXXVVV">
        <enumVal>
-        <enumChoice choice="no choice">
-         <choice>no choice</choice>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
       </variable>
+	  <variable CV="508" item="Swiss Dimming 1 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
       <variable CV="509" item="Swiss Dimming 2" mask="XXXXXVVV">
        <enumVal>
-        <enumChoice choice="no choice">
-         <choice>no choice</choice>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
       </variable>
+	  <variable CV="509" item="Swiss Dimming 2 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
       <variable CV="510" item="Swiss Dimming 3" mask="XXXXXVVV">
        <enumVal>
-        <enumChoice choice="no choice">
-         <choice>no choice</choice>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
       </variable>
+	  <variable CV="510" item="Swiss Dimming 3 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
       <variable CV="511" item="Swiss Dimming 4" mask="XXXXXVVV">
        <enumVal>
-        <enumChoice choice="no choice">
-         <choice>no choice</choice>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
       </variable>
+	  <variable CV="511" item="Swiss Dimming 4 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
       <variable CV="512" item="Swiss Dimming 5" mask="XXXXXVVV">
        <enumVal>
-        <enumChoice choice="no choice">
-         <choice>no choice</choice>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
       </variable>
+	  <variable CV="512" item="Swiss Dimming 5 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
 </variables>

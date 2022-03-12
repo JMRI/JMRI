@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2021 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock publishes the Article number for each (new) device.
+The Uhlenbrock Track-Control Signal Indicator has an Article number 6923, which was registered with Uhlenbrock.
+Older LNCV devices may not have their own address, or even no article. They can be programmed using
+Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
+programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20210205"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+  <!-- all Track-Control items, and all LNCV definitions, require their own files as the article number is part of the CV name -->
+  <!-- compare to the similar 6922 Turnout Control. -->    <decoder>
+        <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="Signal Module" productID="6923" formFactor="Stationary" comment="Control Panel Signal Indicator">
+              <versionCV />
+              <size length="40" width="25" height="12" units="mm" />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6923.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Module address" >
+              <decVal min="0" max="4095"/>
+              <label xml:lang="it">Indirizzo Modulo: </label>
+              <label xml:lang="fr">Adresse Module: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Module-adres: </label>
+              <label>Module Address: </label>
+              <tooltip>Enter as decimal value (1-4095)</tooltip>
+            </variable>
+            <variable CV="6923.1" item="Decoder Version" readOnly="yes">
+              <decVal/>
+              <label xml:lang="it">Versione: </label>
+              <label xml:lang="fr">Version: </label>
+              <label xml:lang="de">Softwareversion: </label>
+              <label xml:lang="nl">Firmware-versie: </label>
+              <label>Firmware Version: </label>
+            </variable>
+
+            <variable CV="6923.3" item="Configuration" default="64">
+              <decVal/>
+              <label xml:lang="de">Gesamtwert LNCV3: </label>
+              <label xml:lang="nl">Gecombineerde waarde LNCV3: </label>
+              <label>Combined LNCV3 Value: </label>
+              <tooltip>Intended for verification only, set options below.</tooltip>
+            </variable>
+            <variable CV="6923.3" mask="XXXXXXXV" item="Brightness" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Helligkeitverstellung</label>
+              <label xml:lang="nl">Helderheid instelbaar</label>
+              <label>Brightness Adjustable</label>
+            </variable>
+            <variable CV="6923.3" mask="XXXXXXVX" item="Lock Keys" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Tastensperre</label>
+              <label xml:lang="nl">Toetsvergrendeling</label>
+              <label>Key Lock</label>
+            </variable>
+            <variable CV="6923.3" mask="XXXXXVXX" item="CD Direct" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">LocoNet CD Direkt</label>
+              <label xml:lang="nl">LocoNet CD Direct</label>
+              <label>LocoNet CD Direct</label>
+              <tooltip>On: Apply LocoNet CD direct, Off: via Flag</tooltip>
+              <tooltip xml:lang="de">Ein: LocoNet CD Direkt benutzen, Aus: über Flag</tooltip>
+              <tooltip xml:lang="nl">Aan: LocoNet CD Direct toepassen, Uit: via Vlag ?</tooltip>
+            </variable>
+            <variable CV="6923.3" mask="XVXXXXXX" item="Reboot" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Reboot bei LN-Fehler</label>
+              <label xml:lang="nl">Herstart na LN-fout</label>
+              <label>Reboot after LN-Error</label>
+              <tooltip>On: Reboot after LN-Error at Start-up</tooltip>
+              <tooltip xml:lang="de">Ein: Reboot bei LN-Fehler in StartUP</tooltip>
+              <tooltip xml:lang="nl">Aan: Herstart na een LN-fout tijdens opstarten</tooltip>
+            </variable>
+            <variable CV="6923.3" mask="VXXXXXXX" item="Direct Mode" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Direktmodus</label>
+              <label xml:lang="fr">Mode Directe</label>
+              <label xml:lang="nl">Directe Modus</label>
+              <label>Direct Mode</label>
+              <tooltip>On: Use the JMRI LNCV tool to send/receive Direct Mode commands</tooltip>
+              <tooltip xml:lang="de">Ein: Nutze das JMRI LNCV Programmierwerkzeug um Direct Mode Befehle zu senden</tooltip>
+              <tooltip xml:lang="nl">Aan: Gebruik het JMRI LNCV programmeergereedschap om Direct Mode commando's te sturen</tooltip>
+            </variable>
+            <variable CV="6923.4" item="Starting Phase Wait" default="0">
+              <decVal min="0" max="255"/>
+              <label>Starting phase wait: </label>
+              <label xml:lang="de">Startupzeit: </label>
+              <label xml:lang="nl">Opstartpauze: </label>
+              <tooltip>Waiting period in 0.5 s steps</tooltip>
+              <tooltip xml:lang="de">Startupzeit in 0,5 Sek. Schritten</tooltip>
+              <tooltip xml:lang="nl">Pauze voor het starten in stappen van 0,5 s</tooltip>
+            </variable>
+            <variable CV="6923.5" item="Programming Wait" default="0">
+              <decVal min="0" max="255"/>
+              <label>Program button delay: </label>
+              <label xml:lang="de">Wartezeit Programmiertaste: </label>
+              <label xml:lang="nl">Wachttijd Programmeerknop: </label>
+              <tooltip>Delay after pressing Program button in 0.5 s steps</tooltip>
+              <tooltip xml:lang="de">Wartezeit auf Programmiertaste in 0,5 Sek. Schritten</tooltip>
+              <tooltip xml:lang="nl">Pauze na het indrukken van de Programmeerknop in stappen van 0,5 s</tooltip>
+            </variable>
+            <variable CV="6923.7" item="Go Stop Key" default="0">
+              <decVal max="1997"/>
+              <label xml:lang="de">Fahrt/Halt-Taste: </label>
+              <label xml:lang="nl">Rijden/Stop Toets: </label>
+              <label>Go/Stop Key Address: </label>
+              <tooltip>Turnout Address for Go/Stop Key (green=FaGT, red=HaGT)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse Fahrt/Halt-Taste (grün=FaGT, rot=HaGT)</tooltip>
+              <tooltip xml:lang="nl">Wisseladres Rijden/Stop-toets (groen=FaGT, rood=HaGT)</tooltip>
+            </variable>
+            <variable CV="6923.8" item="Shunting Key" default="0">
+              <decVal max="1997"/>
+              <label xml:lang="de">Fahrt/Halt-Taste: </label>
+              <label xml:lang="nl">Rijden/Stop Toets: </label>
+              <label>Shunting Key Address: </label>
+              <tooltip>Turnout Address for Shunting/Yard (green=FaGT, red=HaGT)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse Rangierfahrt/Fahrstraßen (grün=SGT, rot=FHT)</tooltip>
+              <tooltip xml:lang="nl">Wisseladres Rangeren/Wisselstraten (groen=SGT, rood=FHT)</tooltip>
+            </variable>
+            <!-- CV 21-28 Path Indication -->
+            <variable CV="6923.21" item="Turnout Address Indic EL" default="0">
+              <decVal max="1997"/>
+              <label xml:lang="de">Adresse Fahrwegausl. ext. li.: </label>
+              <label xml:lang="nl">Wisseladres Aanduiding ext. li.: </label>
+              <label>Turnout Address Indic. external left: </label>
+            </variable>
+            <variable CV="6923.22" item="Sensor Address Occu EL" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Rückmeldeadresse ext. li.: </label>
+              <label xml:lang="nl">Bezetmelder ext. li.: </label>
+              <label>Sensor Address Occup. EL: </label>
+            </variable>
+            <variable CV="6923.23" item="Turnout Address Indic ER" default="0">
+              <decVal max="1997"/>
+              <label xml:lang="de">Adresse Fahrwegausl. ext. re.: </label>
+              <label xml:lang="nl">Wisseladres Aanduiding ext. re.: </label>
+              <label>Turnout Address Indic. external right: </label>
+            </variable>
+            <variable CV="6923.24" item="Sensor Address Occu ER" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Rückmeldeadresse ext. re.: </label>
+              <label xml:lang="nl">Bezetmelder ext. re.: </label>
+              <label>Sensor Address Occup. ER: </label>
+            </variable>
+            <variable CV="6923.25" item="Turnout Address Indic IL" default="0">
+              <decVal max="1997"/>
+              <label xml:lang="de">Adresse Fahrwegausl. int. li.: </label>
+              <label xml:lang="nl">Wisseladres Aanduiding int. li.: </label>
+              <label>Turnout Address Indic. internal left: </label>
+            </variable>
+            <variable CV="6923.26" item="Sensor Address Occu IL" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Rückmeldeadresse int. li.: </label>
+              <label xml:lang="nl">Bezetmelder int. li.: </label>
+              <label>Sensor Address Occup. IL: </label>
+            </variable>
+            <variable CV="6923.27" item="Turnout Address Indic IR" default="0">
+              <decVal max="1997"/>
+              <label xml:lang="de">Adresse Fahrwegausl. int. re.: </label>
+              <label xml:lang="nl">Wisseladres Aanduiding int. re.: </label>
+              <label>Turnout Address Indic. internal right: </label>
+            </variable>
+            <variable CV="6923.28" item="Sensor Address Occu IR" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Rückmeldeadresse int. re.: </label>
+              <label xml:lang="nl">Bezetmelder int. re.: </label>
+              <label>Sensor Address Occup. IR: </label>
+            </variable>
+
+            <!-- CV 31-38 Signal Indication  Configuration -->
+            <variable CV="6923.31" item="Main Signal Address" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Adresse Hauptsignal: </label>
+              <label xml:lang="nl">Adres Hoofdsein: </label>
+              <label>Main Signal Address: </label>
+            </variable>
+            <variable CV="6923.32" item="Distant Signal Address" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Adresse Vorsignal: </label>
+              <label xml:lang="nl">Adres Voorsein: </label>
+              <label>Distant Signal Address: </label>
+            </variable>
+            <variable CV="6923.33" item="Dwarf Signal Address" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Adresse Rangiersignal: </label>
+              <label xml:lang="nl">Adres Dwergsein: </label>
+              <label>Dwarf Signal Address: </label>
+            </variable>
+            <variable CV="6923.34" item="Lissy Receiver Address" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Adresse Lissy Empfänger: </label>
+              <label xml:lang="nl">Adres Lissy ontvanger: </label>
+              <label>Lissy Receiver Address: </label>
+            </variable>
+            <!-- CV38 bits 0-3 Signal configuration -->
+            <variable CV="6922.38" mask="XXXXXXXV" item="Signal Position" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
+              <label xml:lang="de">Anzeige auf Modul</label>
+              <label xml:lang="nl">Positie op module</label>
+              <label>Signal Symbol Position</label>
+            </variable>
+            <variable CV="6922.38" mask="XXXXXXVX" item="Only Main" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Nur Haupt-/Sperrsignal</label>
+              <label xml:lang="nl">Alleen Hoofd-/Blokkeersein</label>
+              <label>Only Main-/Interlock</label>
+            </variable>
+            <variable CV="6922.38" mask="XXXXXVXX" item="Dynamic Distant" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Dyn. Vorsignalzuordnung</label>
+              <label xml:lang="nl">dyn. Vorseintoewijzing</label>
+              <label>Dynamic Distant Indication</label>
+            </variable>
+            <variable CV="6922.38" mask="XXXXVXXX" item="Three Aspect Distant" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Vorsignal mit 3 Begriffen</label>
+              <label xml:lang="nl">Voorsein met 3 standen</label>
+              <label>3 Aspect Distant Signal</label>
+            </variable>
+
+            <!-- CV 39-40 Target-/Group Button Settings -->
+            <variable CV="6923.39" item="Group Button" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Adresse Ziel-/Gruppentaste: </label>
+              <label xml:lang="nl">Adres Doel-/Groepsknop: </label>
+              <label>Group Button Address: </label>
+              <tooltip>Pushbutton sends address xxxx, enter xxxx0 for Green, xxxx1 for Red</tooltip>
+              <tooltip xml:lang="de">Taster sendet Adresse xxxx, xxxx0 für Grün, xxxx1 für Rot</tooltip>
+              <tooltip xml:lang="nl">Drukknop verstuurt adres xxxx plus 0 voor Groen, xxxx1 voor rood</tooltip>
+            </variable>
+            <variable CV="6923.40" item="Lock Key Address" default="0">
+              <decVal max="4095"/>
+              <label xml:lang="de">Adresse Tastensperre: </label>
+              <label xml:lang="nl">Adres Toetsvergrendeling: </label>
+              <label>Key Lock Address: </label>
+              <tooltip>Turnout Closed (red): module button(s) locked</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse sperrt den Taster Rot sperrt Taster, Grün aktiviert Taster</tooltip>
+              <tooltip xml:lang="nl">Wissel rood: Toetsen vergrendeld</tooltip>
+            </variable>
+
+            <!-- CV 41-80 TODO Route Configuration (present items on 2nd tab) -->
+
+            <variable CV="6923.119" item="Reset" default="0">
+              <decVal/>
+              <label xml:lang="de">Nach Werkseinstellung (Wert > 0 schreiben): </label>
+              <label xml:lang="nl">Reset alles (schrijf waarde > 0): </label>
+              <label>Reset (write value > 0): </label>
+            </variable>
+          </variables>
+
+        <resets>
+          <factReset label="Reset All LNCVs" CV="6923.119" default="8">
+            <label xml:lang="de">Zurück nach Werkseinstellung</label>
+            <label xml:lang="nl">Zet terug naar fabrieksinstellingen</label>
+          </factReset>
+        </resets>
+
+    </decoder>
+
+    <pane>
+        <name>LNCV Configuration</name>
+        <name xml:lang="de">LNCV Konfiguration</name>
+        <name xml:lang="nl">LNCV instellingen</name>
+        <row>
+            <column>
+                <label>
+                  <text>Before writing, open a Programming</text>
+                  <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+                  <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                </label>
+                <label>
+                  <text>session using the LocoNet LNCV Tool.</text>
+                  <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                  <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                </label>
+                <label>
+                  <text> </text>
+                </label>
+
+                <display item="Main Signal Address"/>
+                <display item="Distant Signal Address"/>
+                <display item="Dwarf Signal Address"/>
+                <display item="Lissy Receiver Address"/>
+
+                <label>
+                  <text> </text>
+                </label>
+                <display item="Signal Position"/>
+                <display item="Only Main" format="checkbox"/>
+                <display item="Dynamic Distant" format="checkbox"/>
+                <display item="Three Aspect Distant" format="checkbox"/>
+
+                <label>
+                  <text>Time Settings</text>
+                  <text xml:lang="nl">Tijdinstellingen</text>
+                  <text xml:lang="de">Zeiteinstellungen</text>
+                  <text xml:lang="fr">Configuration Temporelle</text>
+                </label>
+                <separator/>
+                <row>
+                  <display item="Starting Phase Wait"/>
+                  <display item="Starting Phase Wait" label="" format="hslider"/>
+                </row>
+                <row>
+                  <display item="Programming Wait"/>
+                  <display item="Programming Wait" label="" format="hslider"/>
+                </row>
+            </column>
+
+            <column>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Feedback Address"/>
+              <display item="Go Stop Key"/>
+              <display item="Shunting Key"/>
+              <display item="Lock Key Address"/>
+              <display item="Group Button"/>
+
+              <separator/>
+              <label>
+                <text>Routes are configured on the Routes tab</text>
+                <text xml:lang="de">Siehe Reiter Fahrstraßen für weitere konfiguration</text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text>Route Indication</text>
+                <text xml:lang="nl">Rijpadaanduiding</text>
+                <text xml:lang="de">Fahrwegausleuchtung</text>
+              </label>
+              <display item="Turnout Address Indic EL"/>
+              <display item="Sensor Address Occu EL"/>
+              <display item="Turnout Address Indic ER"/>
+              <display item="Sensor Address Occu ER"/>
+              <display item="Turnout Address Indic IL"/>
+              <display item="Sensor Address Occu IL"/>
+              <display item="Turnout Address Indic IR"/>
+              <display item="Sensor Address Occu IR"/>
+            </column>
+
+            <column>
+              <label>
+                <text>Special Configuration</text>
+                <text xml:lang="nl">Speciale instellingen</text>
+                <text xml:lang="de">Zus. Konfiguration</text>
+                <text xml:lang="fr">Configuration Spéciale</text>
+              </label>
+              <separator/>
+              <display item="Configuration"/>
+              <display item="Brightness" format="checkbox"/>
+              <display item="Lock Keys" format="checkbox"/>
+              <display item="CD Direct" format="checkbox"/>
+              <display item="Reboot" format="checkbox"/>
+              <display item="Direct Mode" format="checkbox"/>
+
+              <separator/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Reset"/>
+            </column>
+        </row>
+    </pane>
+
+  <pane>
+    <name>Routes</name>
+    <name xml:lang="de">Fahrstraßen</name>
+    <name xml:lang="nl">Rijpaden</name>
+    <row>
+      <column>
+        <label>
+          <text>Routes 1-10: Not yet available. Request this option in JMRI-Users</text>
+          <text xml:lang="de">Fahrstraßen 1-10: Leider noch nicht fertig. Fragen Sie nach im JMRI-Users Group</text>
+        </label>
+      <!-- Routes CV41-80 go on this separate sheet -->
+      </column>
+    </row>
+  </pane>
+
+</decoder-config>

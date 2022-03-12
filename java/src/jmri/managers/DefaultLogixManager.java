@@ -1,11 +1,10 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
-import jmri.SignalHead;
 import jmri.implementation.DefaultLogix;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -106,7 +105,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     @Override
     public void activateAllLogixs() {
         // Guarantee Initializer executes first.
-        Logix x = getBySystemName(LRouteTableAction.LOGIX_INITIALIZER);
+        Logix x = getBySystemName(LRouteTableAction.getLogixInitializer());
         if (x != null) {
             x.activateLogix();
             x.setGuiNames();
@@ -118,13 +117,13 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             // get the next Logix
             x = iter.next();
 
-            if (x.getSystemName().equals(LRouteTableAction.LOGIX_INITIALIZER)) {
+            if (x.getSystemName().equals(LRouteTableAction.getLogixInitializer())) {
                 continue;
             }
 
             if (loadDisabled) {
                 // user has requested that Logixs be loaded disabled
-                log.warn("load disabled set - will not activate logic for: " + x.getDisplayName());
+                log.warn("load disabled set - will not activate logic for: {}", x.getDisplayName());
                 x.setEnabled(false);
             }
             if (x.getEnabled()) {
@@ -151,16 +150,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return getBySystemName(name);
     }
 
-    @Override
-    public Logix getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public Logix getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * Support for loading Logixs in a disabled state to debug loops
      */
@@ -171,17 +160,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         loadDisabled = s;
     }
 
-    /**
-     * 
-     * @return the default instance of the DefaultLogixManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public DefaultLogixManager instance() {
-        return InstanceManager.getDefault(DefaultLogixManager.class);
-    }
-
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");
     }

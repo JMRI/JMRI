@@ -192,6 +192,6 @@
     <signalheadicon signalhead="LH303" x="851" y="65" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="LH311" x="848" y="184" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
   </paneleditor>
-  <!--Written by JMRI version 1.7.3 on Mon May 15 12:47:17 PDT 2006 $Id$-->
+  <!--Written by JMRI version 1.7.3 on Mon May 15 12:47:17 PDT 2006 -->
 </layout-config>
 

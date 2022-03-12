@@ -1,13 +1,13 @@
 package jmri.jmrix.dcc4pc.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for Dcc4PcMenu class.
@@ -25,7 +25,7 @@ public class Dcc4PcMenuTest {
       Assert.assertNotNull("Dcc4PcMenu constructor",new Dcc4PcMenu(memo));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -33,7 +33,7 @@ public class Dcc4PcMenuTest {
         memo = new Dcc4PcSystemConnectionMemo();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         memo=null;
         JUnitUtil.tearDown();

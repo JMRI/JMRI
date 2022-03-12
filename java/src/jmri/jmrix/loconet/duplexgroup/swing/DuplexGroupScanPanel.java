@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -274,6 +273,8 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         return true;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     private void handleChannelSignalReport(int extendedVal, int channelNum, int signalValue) {
         int index = -1;
         int fullSignal;
@@ -285,7 +286,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
         if (index != -1) {
             if (index == 16) {
-                log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
+                log.error("{}\n", Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
 
             }
             dci[index].numSamples++;
@@ -302,7 +303,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             graphicArea.repaint();
 
         } else {
-            log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
+            log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
         }
     }
 

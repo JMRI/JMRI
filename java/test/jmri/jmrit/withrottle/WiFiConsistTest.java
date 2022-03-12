@@ -3,18 +3,18 @@ package jmri.jmrit.withrottle;
 import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of WiFiConsist
  *
- * @author	Paul Bender Copyright (C) 2016,2017
+ * @author Paul Bender Copyright (C) 2016,2017
  */
 public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -26,7 +26,7 @@ public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

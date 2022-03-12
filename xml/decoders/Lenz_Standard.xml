@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -81,7 +80,7 @@
         <label xml:lang="cs">Střední napětí</label>
         <comment xml:lang="cs">Meze 0-255</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="81">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="81">
         <decVal/>
         <label>Decoder Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -578,7 +577,7 @@
         <tooltip xml:lang="de">Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))</tooltip>
         <label xml:lang="cs">Frekvence blikání pro výstupy C a D</label>
         <comment xml:lang="cs">Meze 0-255</comment>
-        <tooltip xml:lang="cs">Rychlost blikání: výchozí hodnota = 1 vteřina, f = 1 / (0,03 * (1 + hodnota)), (255 = 0,13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</tooltip>
+        <tooltip xml:lang="cs">Rychlost blikání: výchozí hodnota = 1 sekunda, f = 1 / (0,03 × (1 + hodnota)), (255 = 0,13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</tooltip>
       </variable>
       <variable item="Toggle effect (outputs C/D) with F1" CV="64" mask="XXXXXXXV" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

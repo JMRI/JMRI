@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 20013 All rights reserved -->
-<!-- $Id$             -->
+<!--             -->
 <!--  for SW release 7 or higher, this version includes comments on new CVs      -->
 <!--  (many unavailable yet), for SW release 5 & 6 you can use Mistral_Gold_V6   -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -68,7 +68,7 @@
         <label xml:lang="it">Volts intermedi (0-255)</label>
         <label xml:lang="de">Vmittel (0-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="007">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="007">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

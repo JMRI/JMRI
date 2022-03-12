@@ -3,15 +3,14 @@ package jmri.implementation;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the DccSignalMast implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  * updated to JUnit4 2016
  */
 public class DccSignalMastTest {
@@ -22,6 +21,7 @@ public class DccSignalMastTest {
 
         Assert.assertEquals("system name", "IF$dsm:AAR-1946:PL-1-high-abs(1)", s.getSystemName());
         Assert.assertEquals("Send count", 0, sentPacketCount);
+        Assert.assertFalse("Use address offset", s.useAddressOffSet());
     }
 
     @Test
@@ -42,8 +42,7 @@ public class DccSignalMastTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -73,7 +72,7 @@ public class DccSignalMastTest {
     byte[] lastSentPacket;
     int sentPacketCount;
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

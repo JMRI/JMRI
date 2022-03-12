@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -176,7 +176,7 @@
       soin de convertir les interfaces PR2/PR3 en
       programmateur/chargeur avec une centrale de commande de
       faible puissance pour faire rouler une locomotive .</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

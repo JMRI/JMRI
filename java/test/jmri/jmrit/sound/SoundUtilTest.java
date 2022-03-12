@@ -1,28 +1,27 @@
 package jmri.jmrit.sound;
 
 import jmri.util.FileUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SoundUtil class.
  * <p>
  * Note: This makes noise!
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  * @author Randall Wood (C) 2016
  */
 public class SoundUtilTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 

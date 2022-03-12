@@ -2,7 +2,8 @@ package jmri.util;
 
 import jmri.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.JUnitUtil itself.  
@@ -10,7 +11,7 @@ import org.junit.*;
  * but this is so commonly used that it seems wise to 
  * confirm some behaviors.
  *
- * @author	Bob Jacobsen Copyright 2019
+ * @author Bob Jacobsen Copyright 2019
  */
 public class JUnitUtilTest {
 
@@ -45,13 +46,13 @@ public class JUnitUtilTest {
         Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();     
     }

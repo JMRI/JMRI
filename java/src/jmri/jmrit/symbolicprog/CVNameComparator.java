@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog;
 
-import java.util.Comparator;
 import jmri.util.AlphanumComparator;
 
 /*

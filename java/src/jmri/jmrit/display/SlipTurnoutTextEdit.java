@@ -169,12 +169,7 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
     }
 
     private void addButtonAction(JButton b) {
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                buttonActionPerformed(e);
-            }
-        });
+        b.addActionListener(this::buttonActionPerformed);
     }
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {

@@ -3,6 +3,8 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
+
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
@@ -16,7 +18,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of moveSelectionDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class MoveSelectionDialogTest {
 
@@ -37,6 +39,7 @@ public class MoveSelectionDialogTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
+            layoutEditor.setVisible(true);
             moveSelectionDialog = new MoveSelectionDialog(layoutEditor);
             layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
         }
@@ -48,10 +51,13 @@ public class MoveSelectionDialogTest {
     @After
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.dispose(layoutEditor);
+            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+            efo.closeFrameWithConfirmations();
             layoutEditor = null;
             moveSelectionDialog = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -119,7 +119,7 @@
         nombre entier positif N pour s'assurer que les
         fen&ecirc;tres JMRI seront ouvertes avec N pixels
         disponibles sur les c&ocirc;t&eacute;s</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -1,22 +1,25 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Station classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
+@SuppressWarnings("unchecked")
 public class StationTest {
 
     @Test
     public void testConstruction() {
         Station s = new Station("test", codeline, button);
         s.add(new TurnoutSection());
-        
-        Assert.assertEquals("test", s.getName());        
-        Assert.assertEquals("Station "+s.getName(), s.toString());        
+
+        Assert.assertEquals("test", s.getName());
+        Assert.assertEquals("Station test\n        sentValues: (null)\n  indicationValues: (null)", s.toString());
     }
 
     @Test
@@ -31,17 +34,17 @@ public class StationTest {
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             @Override
             public void indicationComplete(CodeGroupTwoBits value) {}
-            
+
             @Override
             public Station getStation() { return null; }
             @Override
             public String getName() { return ""; }
         });
-        
+
         countCodeSend = 0;
-        
+
         s.codeSendRequest();
-        
+
         Assert.assertEquals("count of operations", 1, countCodeSend);
     }
 
@@ -52,7 +55,7 @@ public class StationTest {
             @Override
             public CodeGroupTwoBits  codeSendStart() { countCodeSend++; return CodeGroupTwoBits.Double10; }
             @Override
-            public void codeValueDelivered(CodeGroupTwoBits value) { 
+            public void codeValueDelivered(CodeGroupTwoBits value) {
                 Assert.assertEquals("deliver 10", CodeGroupTwoBits.Double10, value);
                 countCodeSend = 0;
             }
@@ -60,7 +63,7 @@ public class StationTest {
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             @Override
             public void indicationComplete(CodeGroupTwoBits value) {}
-            
+
             @Override
             public Station getStation() { return null; }
             @Override
@@ -70,7 +73,7 @@ public class StationTest {
             @Override
             public CodeGroupTwoBits codeSendStart() { countCodeSend2++; return CodeGroupTwoBits.Double01; }
             @Override
-            public void codeValueDelivered(CodeGroupTwoBits value) { 
+            public void codeValueDelivered(CodeGroupTwoBits value) {
                 Assert.assertEquals("deliver 01", CodeGroupTwoBits.Double01, value);
                 countCodeSend2 = 0;
             }
@@ -78,35 +81,34 @@ public class StationTest {
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             @Override
             public void indicationComplete(CodeGroupTwoBits value) {}
-            
+
             @Override
             public Station getStation() { return null; }
             @Override
             public String getName() { return ""; }
         });
-        
+
         countCodeSend = 0;
         countCodeSend2 = 0;
-        
+
         s.codeSendRequest();
-        
+
         Assert.assertEquals("count of operations 1", 1, countCodeSend);
         Assert.assertEquals("count of operations 2", 1, countCodeSend2);
 
         s.codeValueDelivered();
-        
+
         Assert.assertEquals("delivered OK 1", 0, countCodeSend);
         Assert.assertEquals("delivered OK 2", 0, countCodeSend2);
     }
 
     int countCodeSend;
     int countCodeSend2;
-    
+
     CodeLine codeline;
     CodeButton button;
-        
-    // The minimal setup for log4J
-    @Before
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -114,12 +116,12 @@ public class StationTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        
+
         codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         button = new CodeButton("IS21", "IS22");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

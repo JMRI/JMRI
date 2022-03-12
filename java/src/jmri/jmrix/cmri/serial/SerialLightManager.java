@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri.serial;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
@@ -27,67 +28,61 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CMRISystemConnectionMemo getMemo() {
         return (CMRISystemConnectionMemo) memo;
     }
 
     /**
-     * Method to create a new Light based on the system name.
+     * Create a new Light based on the system name and optional user name.
      * <p>
      * Assumes calling method has checked that a Light with this system
      * name does not already exist.
      *
-     * @return null if the
+     * @throws IllegalArgumentException if the
      * system name is not in a valid format or if the system name does not
-     * correspond to a configured C/MRI digital output bit
+     * correspond to a configured C/MRI digital output bit.
+     * @return New Light.
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Light lgt = null;
         // check if the output bit is available
         int nAddress;
         nAddress = getMemo().getNodeAddressFromSystemName(systemName);
         if (nAddress == -1) {
-            return null;
+            throw new IllegalArgumentException("Invalid Node Address from System Name: " + systemName);
         }
         int bitNum = getMemo().getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return null;
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
         String conflict;
         conflict = getMemo().isOutputBitFree(nAddress, bitNum);
-        if (!conflict.equals("")) {
-            log.error("Assignment conflict with " + conflict + ".  Light not created.");
-            notifyLightCreationError(conflict, bitNum);
-            return null;
+        if (!conflict.isEmpty()) {
+            log.error("Assignment conflict with {}.  Light not created.", conflict);
+            throw new IllegalArgumentException(Bundle.getMessage("ErrorAssignDialog", bitNum, conflict));
         }
         // Validate the systemName
         if (getMemo().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName,getMemo());
             if (!getMemo().validSystemNameConfig(systemName, 'L',getMemo().getTrafficController())) {
-                log.warn("Light system Name does not refer to configured hardware: "
-                        + systemName);
+                log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
         }
         return lgt;
-    }
-
-    /**
-     * Public method to notify user of Light creation error.
-     */
-    public void notifyLightCreationError(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
-                Bundle.getMessage("ErrorAssignLine2L"), Bundle.getMessage("ErrorAssignTitle"),
-                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
     
@@ -95,7 +90,7 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 
@@ -106,7 +101,7 @@ public class SerialLightManager extends AbstractLightManager {
      * else return 'false'
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return getMemo().validSystemNameConfig(systemName, 'L',getMemo().getTrafficController());
     }
 
@@ -117,7 +112,8 @@ public class SerialLightManager extends AbstractLightManager {
      * alternate representation, else returns ""
      */
     @Override
-    public String convertSystemNameToAlternate(String systemName) {
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return getMemo().convertSystemNameToAlternate(systemName);
     }
 

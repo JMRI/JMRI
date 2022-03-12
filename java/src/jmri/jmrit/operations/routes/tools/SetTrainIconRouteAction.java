@@ -15,15 +15,11 @@ import jmri.jmrit.operations.routes.Route;
  */
 public class SetTrainIconRouteAction extends AbstractAction {
 
-    public SetTrainIconRouteAction(String s) {
-        super(s);
-    }
+    Route _route;
 
-    Route route;
-
-    public SetTrainIconRouteAction(String s, Route route) {
-        super(s);
-        this.route = route;
+    public SetTrainIconRouteAction(Route route) {
+        super(Bundle.getMessage("MenuSetTrainIconRoute"));
+        _route = route;
         setEnabled(route != null);
     }
 
@@ -32,7 +28,7 @@ public class SetTrainIconRouteAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
-            f = new SetTrainIconRouteFrame(route);
+            f = new SetTrainIconRouteFrame(_route);
         }
         f.setExtendedState(Frame.NORMAL);
         f.setVisible(true); // this also brings the frame into focus

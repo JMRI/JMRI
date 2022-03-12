@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -112,7 +112,7 @@ internes pour plus de d&#233;tails.
 Les applications JMRI elles-mêmes utilisent un m&#233;chanisme "profile" plus puissant 
 qui a h&#233;rit&#233; des classes apps.Apps et apps.AppsBase
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

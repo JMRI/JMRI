@@ -3,6 +3,8 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
+
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -18,7 +20,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of enterReporterDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class EnterReporterDialogTest {
 
@@ -41,6 +43,7 @@ public class EnterReporterDialogTest {
             layoutEditor = new LayoutEditor();
             enterReporterDialog = new EnterReporterDialog(layoutEditor);
             layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
+            layoutEditor.setVisible(true);
         }
     }
 
@@ -50,10 +53,13 @@ public class EnterReporterDialogTest {
     @After
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.dispose(layoutEditor);
+            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+            efo.closeFrameWithConfirmations();
             layoutEditor = null;
             enterReporterDialog = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

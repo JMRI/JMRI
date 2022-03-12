@@ -15,6 +15,7 @@ public class Z21XNetThrottleManager extends jmri.jmrix.roco.RocoXNetThrottleMana
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public Z21XNetThrottleManager(XNetSystemConnectionMemo memo) {
         super(memo);

@@ -49,7 +49,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -213,7 +212,7 @@ public final class XMLUtil extends Object {
         DOMImplementation impl = getDOMImplementation();
 
         if ((doctypePublicID != null) && (doctypeSystemID == null)) {
-            throw new IllegalArgumentException("System ID cannot be null if public ID specified. "); //NOI18N
+            throw new IllegalArgumentException("System ID cannot be null if public ID specified. "); // NOI18N
         }
 
         DocumentType dtd = null;
@@ -247,7 +246,7 @@ public final class XMLUtil extends Object {
         } catch (ParserConfigurationException ex) {
             throw new DOMException(
                     DOMException.NOT_SUPPORTED_ERR, "Cannot create parser satisfying configuration parameters"
-            ); //NOI18N
+            ); // NOI18N
         } catch (RuntimeException e) {
             // E.g. #36578, IllegalArgumentException. Try to recover gracefully.
             throw (DOMException) new DOMException(DOMException.NOT_SUPPORTED_ERR, e.toString()).initCause(e);
@@ -380,7 +379,7 @@ public final class XMLUtil extends Object {
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException ex) {
-            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); //NOI18N
+            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); // NOI18N
         }
 
         if (errorHandler != null) {
@@ -453,21 +452,6 @@ public final class XMLUtil extends Object {
             throw new NullPointerException("You must set an encoding; use \"UTF-8\" unless you have a good reason not to!"); // NOI18N
         }
         Document doc2 = normalize(doc);
-        ClassLoader orig = Thread.currentThread().getContextClassLoader();
-        Thread.currentThread().setContextClassLoader(AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() { // #195921
-            @Override
-            public ClassLoader run() {
-                return new ClassLoader(ClassLoader.getSystemClassLoader().getParent()) {
-                    @Override
-                    public InputStream getResourceAsStream(String name) {
-                        if (name.startsWith("META-INF/services/")) {
-                            return new ByteArrayInputStream(new byte[0]); // JAXP #6723276
-                        }
-                        return super.getResourceAsStream(name);
-                    }
-                };
-            }
-        }));
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer(
@@ -496,7 +480,7 @@ public final class XMLUtil extends Object {
             if (cdataQNames.size() > 0) {
                 StringBuilder cdataSections = new StringBuilder();
                 for (String s : cdataQNames) {
-                    cdataSections.append(s).append(' '); //NOI18N
+                    cdataSections.append(s).append(' '); // NOI18N
                 }
                 t.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, cdataSections.toString());
             }
@@ -506,8 +490,6 @@ public final class XMLUtil extends Object {
             t.transform(source, result);
         } catch (javax.xml.transform.TransformerException | RuntimeException e) { // catch anything that happens
             throw new IOException(e);
-        } finally {
-            Thread.currentThread().setContextClassLoader(orig);
         }
     }
 
@@ -517,7 +499,7 @@ public final class XMLUtil extends Object {
             if (parent != null) {
                 String uri = parent.getNamespaceURI();
                 if (uri != null) {
-                    cdataQNames.add("{" + uri + "}" + parent.getNodeName()); //NOI18N
+                    cdataQNames.add("{" + uri + "}" + parent.getNodeName()); // NOI18N
                 } else {
                     cdataQNames.add(parent.getNodeName());
                 }
@@ -875,7 +857,7 @@ public final class XMLUtil extends Object {
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            throw new IOException("Cannot create parser satisfying configuration parameters: " + e, e); //NOI18N
+            throw new IOException("Cannot create parser satisfying configuration parameters: " + e, e); // NOI18N
         }
 
         DocumentType doctype = null;

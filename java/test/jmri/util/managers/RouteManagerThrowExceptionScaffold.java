@@ -1,5 +1,6 @@
 package jmri.util.managers;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -20,31 +21,33 @@ public class RouteManagerThrowExceptionScaffold extends DefaultRouteManager {
     
     /** {@inheritDoc} */
     @Override
-    public Route provideRoute(String systemName, String userName) {
+    @Nonnull
+    public Route provideRoute(@Nonnull String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Route getRoute(String name) {
+    public Route getRoute(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Route getBySystemName(String name) {
+    public Route getBySystemName(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Route getByUserName(String key) {
+    public Route getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Route newRoute(String userName) {
+    @Nonnull
+    public Route newRoute(@Nonnull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

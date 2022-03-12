@@ -138,7 +138,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
     /**
      * Send Info on turnouts to devices, not specific to any one turnout.
      * <p>
-     * Format: PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey
+     * Format: PTT]\[turnoutText}|{turnoutKey]\[stateText}|{stateKey]\[stateText}|{stateKey...
      */
     public void sendTitles() {
         if (listeners == null) {
@@ -150,6 +150,8 @@ public class TurnoutController extends AbstractController implements PropertyCha
         labels.append("]\\[").append(Bundle.getMessage("MenuItemTurnoutTable")).append("}|{Turnout");
         labels.append("]\\[").append(manager.getClosedText()).append("}|{2");
         labels.append("]\\[").append(manager.getThrownText()).append("}|{4");
+        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{1");
+        labels.append("]\\[").append(Bundle.getMessage("StateInconsistent")).append("}|{8");
 
         String message = labels.toString();
 
@@ -228,7 +230,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
             if (t != null) {
                 t.addPropertyChangeListener(this);
                 if (log.isDebugEnabled()) {
-                    log.debug("Add listener to Turnout: " + t.getSystemName());
+                    log.debug("Add listener to Turnout: {}", t.getSystemName());
                 }
             }
 
@@ -247,7 +249,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
             if (t != null) {
                 t.removePropertyChangeListener(this);
                 if (log.isDebugEnabled()) {
-                    log.debug("Remove listener from Turnout: " + t.getSystemName());
+                    log.debug("Remove listener from Turnout: {}", t.getSystemName());
                 }
             }
 

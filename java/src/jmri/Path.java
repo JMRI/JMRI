@@ -40,7 +40,7 @@ import jmri.util.MathUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
-public class Path {
+public class Path implements Comparable<Path> {
 
     /**
      * Create an object with default directions of NONE, and no setting element.
@@ -385,9 +385,58 @@ public class Path {
             result.append(separator).append(MessageFormat.format("{0} with state {1}", beanSetting.getBean().getDisplayName(), beanSetting.getBean().describeState(beanSetting.getSetting()))); // NOI18N
             separator = ", "; // NOI18N
         }
-        return MessageFormat.format("Path: \"{0}\" ({1}): {2}", getBlock().getDisplayName(), decodeDirection(getToBlockDirection()), result); // NOI18N
+        if (getBlock() != null)
+            return MessageFormat.format("Path: \"{0}\" ({1}): {2}", getBlock().getDisplayName(), decodeDirection(getToBlockDirection()), result); // NOI18N
+        else
+            return MessageFormat.format("Path: <no block>: {0}", result); // NOI18N
     }
 
+    public int compareTo(Path obj) {
+        if (obj == this) {
+            return 0;
+        }
+        if (obj == null) {
+            throw new NullPointerException("null argument to compareTo");
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            throw new IllegalArgumentException("argument of improper type");
+        } else {
+
+            int retval;
+            
+            if (obj.getBlock() != null && getBlock() != null) {
+                retval = getBlock().compareTo(obj.getBlock());
+                if (retval != 0) return retval;
+            }
+            
+            if ( (int)this._length - (int)obj._length != 0.) return (int)this._length - (int)obj._length;
+
+            if (this._toBlockDirection != obj._toBlockDirection) 
+                return this._toBlockDirection - obj._toBlockDirection;
+
+            if (this._fromBlockDirection != obj._fromBlockDirection) 
+                return this._fromBlockDirection - obj._fromBlockDirection;
+
+            
+            if (this._beans.size() != obj._beans.size()) {
+                return this._beans.size() - obj._beans.size();
+            }
+            
+            for (int i = 0; i < obj._beans.size(); i++) {
+                BeanSetting bs1 = this._beans.get(i);
+                BeanSetting bs2 = obj._beans.get(i);
+                retval = bs1.getBean().compareTo(bs2.getBean());
+                if (retval != 0) return retval;
+                
+                if ( bs1.getSetting() != bs2.getSetting() ) {
+                    return bs1.getSetting() - bs2.getSetting();
+                }
+            }
+        }
+        return this.hashCode()- obj.hashCode();  // this is truly an act of desparation
+    }
+    
     // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change
     @Override
     public int hashCode() {
@@ -417,6 +466,8 @@ public class Path {
      * @return the octagonal direction from p1 to p2
      */
     public static int computeDirection(Point2D p1, Point2D p2) {
+        log.trace("Path.computeDirection({}, {})", p1, p2);
+        
         double angleDEG = MathUtil.computeAngleDEG(p2, p1);
         angleDEG = MathUtil.wrap360(angleDEG);  // don't want to deal with negative numbers here...
 
@@ -427,8 +478,11 @@ public class Path {
         int octant = (int) Math.round(angleDEG / 45.0);
 
         // use the octant index to lookup its direction
-        int dirs[] = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
+        final int dirs[] = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
             NORTH, NORTH_WEST, WEST, SOUTH_WEST, SOUTH};
+            
+        if (log.isTraceEnabled()) log.trace("   returns {} ({})", dirs[octant], decodeDirection(dirs[octant]));
+        
         return dirs[octant];
     }   // computeOctagonalDirection
 
@@ -462,4 +516,5 @@ public class Path {
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Path.class);
 }

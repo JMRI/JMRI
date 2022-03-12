@@ -2,17 +2,18 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * TurnoutIconTest.java
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class TurnoutIconTest extends PositionableIconTest {
 
@@ -126,7 +127,7 @@ public class TurnoutIconTest extends PositionableIconTest {
         to.propertyChange(e);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();

@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/operations-trains.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-trains.dtd">
 <operations-config>
-  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 $Id$-->
+  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 -->
   <options>
     <trainOptions buildMessages="true" buildReport="true" printPreview="true" openFile="false" runFile="false" trainAction="Reset" />
     <rowColorOptions rowColorManual="true" rowColorBuidFailed="" rowColorBuilt="" rowColorTrainEnRoute="" rowColorTerminated="" />

@@ -14,24 +14,18 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = JsonServiceFactory.class)
 public class JsonTimeServiceFactory implements JsonServiceFactory<JsonTimeHttpService, JsonTimeSocketService> {
 
-    /**
-     * @deprecated since 4.15.6; use {@link JSON#TIME} instead
-     */
-    @Deprecated
-    public final static String TIME = JSON.TIME;
-
     @Override
-    public String[] getTypes() {
-        return new String[]{TIME};
+    public String[] getTypes(String version) {
+        return new String[]{JSON.TIME};
     }
 
     @Override
-    public JsonTimeSocketService getSocketService(JsonConnection connection) {
+    public JsonTimeSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonTimeSocketService(connection);
     }
 
     @Override
-    public JsonTimeHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTimeHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonTimeHttpService(mapper);
     }
 

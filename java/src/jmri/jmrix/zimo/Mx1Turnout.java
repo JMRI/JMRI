@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * New Zimo Binary implementation of the Turnout interface
  *
- * @author	Kevin Dickerson Copyright (C) 2014
+ * @author Kevin Dickerson Copyright (C) 2014
  */
 public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*/ {
 
@@ -36,15 +36,18 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * {@inheritDoc}
+     * Sends a formatted DCC packet
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s); //IN18N
+                log.error("Cannot command both CLOSED and THROWN {}", newState); // NOI18N
             } else {
                 // send a CLOSED command
                 forwardToCommandStation(jmri.Turnout.THROWN);

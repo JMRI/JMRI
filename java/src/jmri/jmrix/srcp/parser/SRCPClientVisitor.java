@@ -14,13 +14,13 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
 
     @Override
     public Object visit(ASTinfo node, Object data) {
-        log.debug("Info Response " + node.jjtGetValue());
+        log.debug("Info Response {}", node.jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
         SRCPBusConnectionMemo busMemo = ((SRCPSystemConnectionMemo) data).getMemo(bus);
 
         SimpleNode group = (SimpleNode) node.jjtGetChild(1);
 
-        log.debug("Info Response Group: " + group.jjtGetValue());
+        log.debug("Info Response Group: {}", group.jjtGetValue());
 
         if (group instanceof ASTfb) {
             if (busMemo.provides(jmri.SensorManager.class)) {
@@ -43,8 +43,8 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
         } else if (group instanceof ASTsm) {
             if (busMemo.provides(jmri.GlobalProgrammerManager.class)) {
                 jmri.jmrix.srcp.SRCPProgrammer programmer = (jmri.jmrix.srcp.SRCPProgrammer) (busMemo.getProgrammerManager().getGlobalProgrammer());
-                if( programmer != null) {
-                   programmer.reply(node);
+                if (programmer != null) {
+                    programmer.reply(node);
                 }
             }
         } else if (group instanceof ASTpower) {
@@ -54,22 +54,22 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
                 ((jmri.jmrix.srcp.SRCPPowerManager) busMemo.getPowerManager()).reply(node);
             }
         } else if (group instanceof ASTtime) {
-          log.debug("INFO Response for TIME group with bus " + bus);
+            log.debug("INFO Response for TIME group with bus {}", bus);
         } else if (group instanceof ASTsession) {
-	  log.debug("INFO Response for SESSION group with bus " + bus);
+            log.debug("INFO Response for SESSION group with bus {}", bus);
         } else if (group instanceof ASTserver) {
-	  log.debug("INFO Response for SERVER group with bus " + bus);
+            log.debug("INFO Response for SERVER group with bus {}", bus);
         } else if (group instanceof ASTdescription) {
-	  log.debug("INFO Response for DESCRIPTION group with bus " + bus);
+            log.debug("INFO Response for DESCRIPTION group with bus {}", bus);
         } else if (group instanceof ASTlock) {
-	  log.debug("INFO Response for LOCK group with bus " + bus);
+            log.debug("INFO Response for LOCK group with bus {}", bus);
         }
         return data;
     }
 
     @Override
     public Object visit(ASTok node, Object data) {
-        log.debug("Ok Response " + node.jjtGetValue());
+        log.debug("Ok Response {}", node.jjtGetValue());
         SRCPSystemConnectionMemo memo = (SRCPSystemConnectionMemo) data;
         if (((String) ((SimpleNode) node).jjtGetValue()).contains("GO")) {
             memo.setMode(jmri.jmrix.srcp.SRCPTrafficController.RUNMODE);

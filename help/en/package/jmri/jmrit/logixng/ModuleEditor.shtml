@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LogixNG Module Editor</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng module tree editor">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+
+    <div id="mainContent">
+      <h1>JMRI: LogixNG Module Editor</h1>
+
+      <p>The Module editor works almost the same as the ConditionalNG editor.</p>
+
+      <p><a href="../../../../html/tools/logixng/reference/chapter1.shtml">Chapter 1</a> of the
+      LogixNG Reference gives an introduction to the ConditionalNG editor.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

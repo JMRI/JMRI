@@ -1,8 +1,8 @@
 package jmri.jmrix.loconet.locogen;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenPanel class

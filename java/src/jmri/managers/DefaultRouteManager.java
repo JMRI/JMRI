@@ -1,9 +1,9 @@
 package jmri.managers;
 
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.Route;
-import jmri.RouteManager;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
+import jmri.*;
 import jmri.implementation.DefaultRoute;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -16,13 +16,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public class DefaultRouteManager extends AbstractManager<Route>
-        implements RouteManager {
+public class DefaultRouteManager extends AbstractManager<Route> implements RouteManager {
 
     public DefaultRouteManager(InternalSystemConnectionMemo memo) {
         super(memo);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        addListeners();
+    }
+    
+    final void addListeners(){
+        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
     }
 
     @Override
@@ -32,22 +35,22 @@ public class DefaultRouteManager extends AbstractManager<Route>
 
     @Override
     public char typeLetter() {
-        return 'R';
+        return 'O';
     }
 
     /**
      * {@inheritDoc}
-     *
-     * Keep autostring in line with {@link #newRoute(String)},
-     * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
-    public Route provideRoute(String systemName, String userName) {
+    @Nonnull
+    public Route provideRoute(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
         log.debug("provideRoute({})", systemName);
         Route r;
-        r = getByUserName(systemName);
-        if (r != null) {
-            return r;
+        if (userName!=null){
+            r = getByUserName(userName);
+            if (r != null) {
+                return r;
+            }
         }
         r = getBySystemName(systemName);
         if (r != null) {
@@ -66,32 +69,13 @@ public class DefaultRouteManager extends AbstractManager<Route>
 
     /**
      * {@inheritDoc}
-     *
-     * Permit Route names without a "R" type letter. Marked as deprecated because this
-     * is temporary; it should be entirely removed once a migration is complete.
-     * @deprecated formally in 4.17.7
-     */
-    @Deprecated // 4.17.7
-    @Override
-    @javax.annotation.Nonnull
-    public String validateSystemNameFormat(@javax.annotation.Nonnull String name, @javax.annotation.Nonnull java.util.Locale locale) 
-                        throws jmri.NamedBean.BadSystemNameException {
-        try {
-            validateSystemNamePrefix(name, locale);
-        } catch (jmri.NamedBean.BadSystemNameException e) {
-            jmri.util.Log4JUtil.warnOnce(log, "Invalid Route Name: {} must start with IR", name, new Exception("traceback"));
-        }
-        return name;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Keep autostring in line with {@link #provideRoute(String, String)},
-     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     * <p>
+     * Calls {@link #provideRoute(String, String)} with the result of
+     * {@link #getAutoSystemName()} as the system name.
      */
     @Override
-    public Route newRoute(String userName) {
+    @Nonnull
+    public Route newRoute(@Nonnull String userName) throws IllegalArgumentException {
         return provideRoute(getAutoSystemName(), userName);
     }
 
@@ -100,44 +84,24 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * invoking this.
      */
     @Override
-    public void deleteRoute(Route r) {
+    public void deleteRoute(@Nonnull Route r) {
         deregister(r);
     }
 
     /**
-     * Method to get an existing Route. First looks up assuming that name is a
-     * User Name. If this fails looks up assuming that name is a System Name. If
-     * both fail, returns null.
+     * Method to get an existing Route.
+     * First looks up assuming that name is a User Name.
+     * If this fails looks up assuming that name is a System Name.
+     * @return If both fail, returns null.
      */
     @Override
-    public Route getRoute(String name) {
+    @CheckForNull
+    public Route getRoute(@Nonnull String name) {
         Route r = getByUserName(name);
-        if (r != null) {
-            return r;
-        }
-        return getBySystemName(name);
+        return (r != null ? r : getBySystemName(name) );
     }
 
-    @Override
-    public Route getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public Route getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
-    /**
-     * 
-     * @return the default instance of DefaultRouteManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static DefaultRouteManager instance() {
-        return InstanceManager.getDefault(DefaultRouteManager.class);
-    }
-
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
@@ -151,9 +115,22 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return Route.class;
     }
 
+    /**
+     * Provide Route by System Name.
+     * @param name System Name f Route.
+     * @return new or existing Route with corresponding System Name.
+     */
     @Override
-    public Route provide(String name) {
+    @Nonnull
+    public Route provide(@Nonnull String name) throws IllegalArgumentException {
         return provideRoute(name, null);
+    }
+    
+    @Override
+    public void dispose(){
+        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
+        super.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);

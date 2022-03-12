@@ -27,7 +27,7 @@ public class SimpleClockAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception E) {
-            log.error("Exception in Simple Clock: " + e);
+            log.error("Exception in Simple Clock: {}", e);
         }
         f.setVisible(true);
     }

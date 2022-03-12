@@ -1,7 +1,8 @@
 package jmri.jmrix.openlcb;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -34,11 +35,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
 
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
         l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
@@ -81,17 +84,22 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         memo.getTrafficController().addCanListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        String addr = systemName.substring(getSystemNamePrefix().length());
         // first, check validity
         try {
-            validateAddressFormat(addr);
-        } catch (IllegalArgumentException e) {
-            log.error(e.toString());
+            validateSystemNameFormat(systemName,Locale.getDefault());
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            log.error(e.getMessage());
             throw e;
         }
-
         // OK, make
         OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
@@ -126,50 +134,37 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void finishLoad() {
         log.debug("Sensor manager : finish load");
         synchronized (pendingSensors) {
-            pendingSensors.forEach((s) -> {
-                s.finishLoad();
-            });
+            pendingSensors.forEach(OlcbSensor::finishLoad);
             pendingSensors.clear();
             isLoading = false;
         }
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        String tmpPrefix = prefix + typeLetter();
+        String tmpSName  = tmpPrefix + curAddress;
         try {
-            validateAddressFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix);
+        }
+        catch ( jmri.NamedBean.BadSystemNameException ex ){
+            throw new JmriException(ex.getMessage());
         }
         // don't check for integer; should check for validity here
         return prefix + typeLetter() + curAddress;
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         // always return this (the current) name without change
+        /*String tmpSName = */ createSystemName(curAddress,prefix);
         return curAddress;
-    }
-
-    void validateAddressFormat(String address) throws IllegalArgumentException {
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
-        if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Olcb sensor address");
-        }
-        switch (v.length) {
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
-        }
     }
     
     /**
@@ -199,9 +194,22 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public void updateAll() {
+        // no current mechanisim to request status updates from all layout sensors
+    }
+    
+    /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        name = super.validateSystemNameFormat(name,locale);
+        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
+        return name;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
 
 }
 

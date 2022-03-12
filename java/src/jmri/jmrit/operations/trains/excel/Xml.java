@@ -9,6 +9,10 @@ package jmri.jmrit.operations.trains.excel;
  */
 public class Xml {
 
+    private Xml(){
+       // class of constants
+    }
+
     // Common to operation xml files
     static final String NAME = "name"; // NOI18N
 

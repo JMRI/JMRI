@@ -50,11 +50,7 @@ public class PR4Adapter extends LocoBufferAdapter {
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
-        log.info("PR4 adapter"
-                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.info("PR4 adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
     }
 
     /**
@@ -62,7 +58,7 @@ public class PR4Adapter extends LocoBufferAdapter {
      * port. This overrides the version in loconet.locobuffer, but it has to
      * duplicate much of the functionality there, so the code is basically
      * copied.
-     * 
+     *
      * Note that the PR4 does not support "LocoNet Data Signal termination" when
      * in LocoNet interface mode (i.e. MS100 mode).
      */
@@ -167,11 +163,15 @@ public class PR4Adapter extends LocoBufferAdapter {
      *      name(s) of modes without command stations
      */
     public String[] commandStationOptions() {
-        String[] retval = new String[commandStationNames.length + 1];
+        String[] retval = new String[commandStationNames.length + 2];
         retval[0] = LnCommandStationType.COMMAND_STATION_PR4_ALONE.getName();
         for (int i = 0; i < commandStationNames.length; i++) {
             retval[i + 1] = commandStationNames[i];
         }
+        // Add "Standalone LocoNet" option
+        // Note: PR4 does not provide "LocoNet Data Termination" and _requires_
+        // some external source of that feature.
+        retval[retval.length - 1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName() + " (using external LocoNet Data Termination!)"; // NOI18N
         return retval;
     }
 

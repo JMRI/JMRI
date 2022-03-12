@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -142,7 +142,7 @@ GitHub.</p>
 <p>Vous pouvez voir  <a href="https://github.com/JMRI/JMRI">le r&#233;pertoire JMRI actuel sur GitHub</a>. Pour apprendre comment faire des 
 changements et se connecter &#224; GitHub, SVP Lire <a href="../getgitcode.shtml">Utilisation de Git</a>.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
 </div>
 </body>

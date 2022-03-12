@@ -61,7 +61,7 @@ public class NullProfile extends Profile {
      * @throws java.io.IOException If path is not readable.
      * @throws IllegalArgumentException If a profile already exists at or within path
      */
-    public NullProfile(String name, String id, @Nonnull File path) throws IOException, IllegalArgumentException {
+    public NullProfile(String name, String id, @Nonnull File path) throws IOException {
         this(path, (null != id) ? id : ProfileManager.createUniqueId());
         this.setNameInConstructor(name);
     }
@@ -107,6 +107,6 @@ public class NullProfile extends Profile {
      */
     @Override
     public String getUniqueId() {
-        return this.getId(); // NOI18N
+        return this.getId();
     }
 }

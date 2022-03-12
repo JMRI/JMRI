@@ -208,7 +208,7 @@ public abstract class PositionableShapeXml extends AbstractXmlAdapter {
                 return new Color(red, green, blue, alpha);
             }
         } catch (DataConversionException e) {
-            log.warn("failed to convert color attribute for {} - {}", name, e);
+            log.warn("failed to convert color attribute for {}", name, e);
         }
         return null;
     }
@@ -217,11 +217,10 @@ public abstract class PositionableShapeXml extends AbstractXmlAdapter {
         try {
             Attribute attr = element.getAttribute(name);
             if (attr != null) {
-                int num = attr.getIntValue();
-                return num;
+                return attr.getIntValue();
             }
         } catch (DataConversionException e) {
-            log.error("failed to convert integer attribute for {} - {}", name, e);
+            log.error("failed to convert integer attribute for {}", name, e);
         }
         return 0;
     }
@@ -230,11 +229,10 @@ public abstract class PositionableShapeXml extends AbstractXmlAdapter {
         try {
             Attribute attr = element.getAttribute(name);
             if (attr != null) {
-                float num = attr.getFloatValue();
-                return num;
+                return attr.getFloatValue();
             }
         } catch (DataConversionException e) {
-            log.error("failed to convert integer attribute for {} - {}", name, e);
+            log.error("failed to convert integer attribute for {}", name, e);
         }
         return 0;
     }

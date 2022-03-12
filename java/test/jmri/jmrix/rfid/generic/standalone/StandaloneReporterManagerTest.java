@@ -1,14 +1,15 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Note: Standalone only allows _one_ NamedBean, named e.g. RR1, which means
  * certain tests are defaulted away.
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -19,11 +20,11 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
 
     StandaloneTrafficController tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        StandaloneSystemConnectionMemo memo = new StandaloneSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
         tc = new StandaloneTrafficController(memo);
         memo.setSystemPrefix("R");
         memo.setRfidTrafficController(tc);
@@ -33,16 +34,26 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
             }
 
             @Override
-            public void reply(jmri.jmrix.rfid.RfidReply m) {
+            public synchronized void reply(jmri.jmrix.rfid.RfidReply m) {
             }
 
         };
     }
 
-    @After
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
+
+    @AfterEach
     public void tearDown() {
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

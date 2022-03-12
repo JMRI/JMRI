@@ -36,6 +36,9 @@
             <jmri:class>jmri.jmrit.beantable.signalmast.AddSignalMastPanel</jmri:class>
         </xs:appinfo>
         <xs:documentation>
+        This schema describes the appearance information for a single JMRI signal mast
+        definition.
+        
         We allow unlimited extension at the end of the appearancetable element
         for the purposes of automatically-created documentation, 
         but only the aspecttable, name and appearances elements are used by the
@@ -80,7 +83,8 @@
 
         <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="description" minOccurs="0" maxOccurs="unbounded" />
-                <xs:element name="appearances" minOccurs="1" maxOccurs="1">
+        
+        <xs:element name="appearances" minOccurs="1" maxOccurs="1">
           <xs:complexType>
             <xs:sequence>
               
@@ -94,10 +98,11 @@
                   </xs:documentation></xs:annotation>
                   <xs:sequence>
                     
-                    <xs:element name="aspectname" minOccurs="1" maxOccurs="1" >
+                    <xs:element name="aspectname" type="xs:string" maxOccurs="1" >
                       <xs:annotation><xs:documentation>
                       This must match the "name" element of exactly one
                       "aspect" element in the "aspects.xml" file.
+                      It must be unique within the appearances element.
                       </xs:documentation></xs:annotation>
                     </xs:element>
                     <xs:element name="show" type="signalColorType" minOccurs="0" maxOccurs="unbounded" />
@@ -106,9 +111,9 @@
                     <xs:element name="delay" minOccurs="0" maxOccurs="1" />
                     <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
                       <xs:annotation><xs:documentation>
-                      *** Indicates a image location and type ***
-                      *** Type should be a member of the list in **
-                      *** the imagetype elements in the aspects.xml file **
+                        Indicates a image location and type.
+                        Type should be a member of the list in
+                        the imagetype elements in the aspects.xml file.
                       </xs:documentation></xs:annotation>
                         <xs:complexType>
                           <xs:simpleContent>
@@ -129,6 +134,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        
       <xs:element name="specificappearances" minOccurs="0" maxOccurs="1">
         <xs:annotation><xs:documentation>
         These are the appearences that the jmri code will specifically look for,
@@ -140,12 +146,16 @@
             <xs:element name="danger" minOccurs="0" maxOccurs="1">
               <xs:complexType>
                 <xs:sequence>
-                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="aspect" type="xs:string" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                    Must match the aspectname of an appearance defined in this file.
+                  </xs:documentation></xs:annotation>
+                </xs:element>
                 <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
                   <xs:annotation><xs:documentation>
-                  *** Indicates a image location and type ***
-                  *** Type should be a member of the list in **
-                  *** the imagetype elements in the aspects.xml file **
+                    Indicates a image location and type.
+                    Type should be a member of the list in
+                    the imagetype elements in the aspects.xml file.
                   </xs:documentation></xs:annotation>
                     <xs:complexType>
                       <xs:simpleContent>
@@ -161,12 +171,16 @@
             <xs:element name="permissive" minOccurs="0" maxOccurs="1">
               <xs:complexType>
                 <xs:sequence>
-                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="aspect" type="xs:string" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                    Must match the aspectname of an appearance defined in this file.
+                  </xs:documentation></xs:annotation>
+                </xs:element>
                 <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
                   <xs:annotation><xs:documentation>
-                  *** Indicates a image location and type ***
-                  *** Type should be a member of the list in **
-                  *** the imagetype elements in the aspects.xml file **
+                    Indicates a image location and type.
+                    Type should be a member of the list in
+                    the imagetype elements in the aspects.xml file.
                   </xs:documentation></xs:annotation>
                     <xs:complexType>
                       <xs:simpleContent>
@@ -182,12 +196,16 @@
             <xs:element name="held" minOccurs="0" maxOccurs="1">
               <xs:complexType>
                 <xs:sequence>
-                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="aspect" type="xs:string" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                    Must match the aspectname of an appearance defined in this file.
+                  </xs:documentation></xs:annotation>
+                </xs:element>
                 <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
                   <xs:annotation><xs:documentation>
-                  *** Indicates a image location and type ***
-                  *** Type should be a member of the list in **
-                  *** the imagetype elements in the aspects.xml file **
+                    Indicates a image location and type.
+                    Type should be a member of the list in
+                    the imagetype elements in the aspects.xml file.
                   </xs:documentation></xs:annotation>
                     <xs:complexType>
                       <xs:simpleContent>
@@ -203,12 +221,16 @@
             <xs:element name="dark" minOccurs="0" maxOccurs="1">
               <xs:complexType>
                 <xs:sequence>
-                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="aspect" type="xs:string" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                    Must match the aspectname of an appearance defined in this file.
+                  </xs:documentation></xs:annotation>
+                </xs:element>
                 <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
                   <xs:annotation><xs:documentation>
-                  *** Indicates a image location and type ***
-                  *** Type should be a member of the list in **
-                  *** the imagetype elements in the aspects.xml file **
+                    Indicates a image location and type.
+                    Type should be a member of the list in
+                    the imagetype elements in the aspects.xml file.
                   </xs:documentation></xs:annotation>
                     <xs:complexType>
                       <xs:simpleContent>
@@ -237,8 +259,12 @@
               <xs:element name="aspectMapping" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="advancedAspect" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="ourAspect" minOccurs="1" maxOccurs="unbounded" />
+                    <xs:element name="advancedAspect" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="ourAspect" type="xs:string" minOccurs="1" maxOccurs="unbounded" >
+                      <xs:annotation><xs:documentation>
+                        Must match the aspectname of an appearance defined in this file.
+                      </xs:documentation></xs:annotation>
+                    </xs:element>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -247,6 +273,25 @@
         </xs:element>      
       </xs:sequence>
     </xs:complexType>
+
+    <xs:key name="appearanceAspectName">
+        <xs:annotation><xs:documentation>The appearanceAspectName check constrains each appearance aspectname value to be unique. </xs:documentation></xs:annotation>
+        <xs:selector xpath="./appearances/appearance/aspectname"/>
+        <xs:field xpath="."/>
+    </xs:key>
+
+    <xs:keyref name="specificAppearancesAspectExists" refer="appearanceAspectName">
+      <xs:annotation><xs:documentation>The specificAppearancesAspectExists check constrains each specificappearances aspect element to refer to an existing appearance aspectname. </xs:documentation></xs:annotation>
+      <xs:selector xpath="./specificappearances/*/aspect"/>
+      <xs:field xpath="."/>
+    </xs:keyref>
+
+    <xs:keyref name="aspecMappingOurAspectExists" refer="appearanceAspectName">
+      <xs:annotation><xs:documentation>The aspecMappingOurAspectExists check constrains each ourAspect element to refer to an existing appearance aspectname.</xs:documentation></xs:annotation>
+      <xs:selector xpath="./aspectMappings/aspectMapping/ourAspect"/>
+      <xs:field xpath="."/>
+    </xs:keyref>
+
   </xs:element>
   
 </xs:schema>

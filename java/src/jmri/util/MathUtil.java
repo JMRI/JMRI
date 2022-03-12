@@ -1,43 +1,22 @@
 package jmri.util;
 
+import java.awt.*;
+import java.awt.geom.*;
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
- *
- * useful math methods
+ * Useful math methods.
  *
  * @author geowar Copyright 2017
  */
 public final class MathUtil {
-
-    /**
-     * @param a the first float
-     * @param b the second float
-     * @return true if a is equal to b
-     */
-    public static boolean equals(float a, float b) {
-        return (Float.floatToIntBits(a) == Float.floatToIntBits(b));
-    }
-
-    /**
-     * @param a the first double
-     * @param b the second double
-     * @return true if a is equal to b
-     */
-    public static boolean equals(double a, double b) {
-        return (Double.doubleToLongBits(a) == Double.doubleToLongBits(b));
-    }
 
     public static final Point2D zeroPoint2D = zeroPoint2D();
     public static final Point2D infinityPoint2D = infinityPoint2D();
@@ -62,7 +41,20 @@ public final class MathUtil {
     }
 
     /**
-     * Convert Point to Point2D
+     * @param a the first number
+     * @param b the second number
+     * @return the greatest common divisor of a and b
+     */
+    public static int gcd(int a, int b) {
+        int result = b;
+        if (a != 0) {
+            result = gcd(b % a, a);
+        }
+        return result;
+    }
+
+    /**
+     * Convert Point to Point2D.
      *
      * @param p the Point
      * @return the Point2D
@@ -73,7 +65,7 @@ public final class MathUtil {
     }
 
     /**
-     * Convert Point2D to Point
+     * Convert Point2D to Point.
      *
      * @param p the Point
      * @return the Point2D
@@ -81,6 +73,45 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point point2DToPoint(@Nonnull Point2D p) {
         return new Point((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * @param a the first float
+     * @param b the second float
+     * @return true if a is equal to b
+     */
+    public static boolean equals(float a, float b) {
+        return (Float.floatToIntBits(a) == Float.floatToIntBits(b));
+    }
+
+    /**
+     * @param a the first double
+     * @param b the second double
+     * @return true if a is equal to b
+     */
+    public static boolean equals(double a, double b) {
+        return (Double.doubleToLongBits(a) == Double.doubleToLongBits(b));
+    }
+
+    /**
+     * @param a the first Rectangle2D
+     * @param b the second Rectangle2D
+     * @return true if a is equal to b
+     */
+    public static boolean equals(Rectangle2D a, Rectangle2D b) {
+        return (equals(a.getMinX(), b.getMinX())
+                && equals(a.getMinY(), b.getMinY())
+                && equals(a.getWidth(), b.getWidth())
+                && equals(a.getHeight(), b.getHeight()));
+    }
+
+    /**
+     * @param a the first Point2D
+     * @param b the second Point2D
+     * @return true if a is equal to b
+     */
+    public static boolean equals(Point2D a, Point2D b) {
+        return (equals(a.getX(), b.getX()) && equals(a.getY(), b.getY()));
     }
 
     /**
@@ -92,7 +123,7 @@ public final class MathUtil {
     }
 
     /**
-     * return the minimum coordinates of two points
+     * Get the minimum coordinates of two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -104,7 +135,7 @@ public final class MathUtil {
     }
 
     /**
-     * return the maximum coordinates of two points
+     * Get the maximum coordinates of two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -116,12 +147,12 @@ public final class MathUtil {
     }
 
     /**
-     * return the coordinates of a point pinned between two other points
+     * Get the coordinates of a point pinned between two other points.
      *
      * @param pA the first point
      * @param pB the second point
      * @param pC the third point
-     * @return the coordinated of pA pined between pB and pC
+     * @return the coordinates of pA pined between pB and pC
      */
     @CheckReturnValue
     public static Point2D pin(@Nonnull Point2D pA, @Nonnull Point2D pB, @Nonnull Point2D pC) {
@@ -129,7 +160,19 @@ public final class MathUtil {
     }
 
     /**
-     * add two points
+     * Get the coordinates of a point pinned in a rectangle
+     *
+     * @param pA the point
+     * @param pR the rectangle
+     * @return the coordinates of point pA pined in rectangle pR
+     */
+    @CheckReturnValue
+    public static Point2D pin(@Nonnull Point2D pA, @Nonnull Rectangle2D pR) {
+        return min(max(pA, getOrigin(pR)), offset(getOrigin(pR), pR.getWidth(), pR.getHeight()));
+    }
+
+    /**
+     * Add two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -141,7 +184,7 @@ public final class MathUtil {
     }
 
     /**
-     * subtract two points
+     * Subtract two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -153,7 +196,7 @@ public final class MathUtil {
     }
 
     /**
-     * multiply a point times a scalar
+     * Multiply a point times a scalar.
      *
      * @param p the point
      * @param s the scalar
@@ -165,7 +208,7 @@ public final class MathUtil {
     }
 
     /**
-     * multiply a point times two scalar
+     * Multiply a point times two scalar.
      *
      * @param p the point
      * @param x the X scalar
@@ -178,7 +221,7 @@ public final class MathUtil {
     }
 
     /**
-     * multiply a scalar times a point
+     * Multiply a scalar times a point.
      *
      * @param s the scalar
      * @param p the point
@@ -190,7 +233,7 @@ public final class MathUtil {
     }
 
     /**
-     * multiply a point times a point
+     * Multiply a point times a point.
      *
      * @param p1 the first point
      * @param p2 the second point
@@ -202,7 +245,7 @@ public final class MathUtil {
     }
 
     /**
-     * divide a point by a scalar
+     * Divide a point by a scalar.
      *
      * @param p the point
      * @param s the scalar
@@ -214,7 +257,7 @@ public final class MathUtil {
     }
 
     /**
-     * divide a point by two scalars
+     * Divide a point by two scalars.
      *
      * @param p the point
      * @param x the X scalar
@@ -227,7 +270,7 @@ public final class MathUtil {
     }
 
     /**
-     * offset a point by two scalars
+     * Offset a point by two scalars.
      *
      * @param p the point
      * @param x the x scalar
@@ -240,7 +283,7 @@ public final class MathUtil {
     }
 
     /**
-     * rotate x and y coordinates (by radians)
+     * Rotate x and y coordinates (by radians).
      *
      * @param x the x coordinate
      * @param y the y coordinate
@@ -254,7 +297,7 @@ public final class MathUtil {
     }
 
     /**
-     * rotate x and y coordinates (by degrees)
+     * Rotate x and y coordinates (by degrees).
      *
      * @param x the x coordinate
      * @param y the y coordinate
@@ -267,7 +310,7 @@ public final class MathUtil {
     }
 
     /**
-     * rotate a point (by radians)
+     * Rotate a point (by radians).
      *
      * @param p the point
      * @param a the angle (in radians)
@@ -279,7 +322,7 @@ public final class MathUtil {
     }
 
     /**
-     * rotate a point (by degrees)
+     * Rotate a point (by degrees).
      *
      * @param p the point
      * @param a the angle (in radians)
@@ -291,7 +334,7 @@ public final class MathUtil {
     }
 
     /**
-     * rotate a point around another point (by radians)
+     * Rotate a point around another point (by radians).
      *
      * @param p    the point being rotated
      * @param c    the point its being rotated around
@@ -305,7 +348,7 @@ public final class MathUtil {
     }
 
     /**
-     * rotate a point around another point (by degrees)
+     * Rotate a point around another point (by degrees).
      *
      * @param p    the point being rotated
      * @param c    the point its being rotated around
@@ -327,7 +370,7 @@ public final class MathUtil {
     }
 
     /**
-     * create a vector given a direction and a magnitude
+     * Create a vector given a direction and a magnitude.
      *
      * @param dirDEG    the direction (in degrees)
      * @param magnitude the magnitude
@@ -340,7 +383,7 @@ public final class MathUtil {
     }
 
     /**
-     * create a vector given a direction and a magnitude
+     * Create a vector given a direction and a magnitude.
      *
      * @param dirRAD    the direction (in radians)
      * @param magnitude the magnitude
@@ -353,7 +396,7 @@ public final class MathUtil {
     }
 
     /**
-     * dot product of two points (vectors)
+     * Dot product of two points (vectors).
      *
      * @param pA the first point
      * @param pB the second point
@@ -366,7 +409,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the length squared of a point (vector)
+     * Calculate the length squared of a point (vector).
      *
      * @param p the point (vector)
      * @return the length squared of the point (vector)
@@ -377,7 +420,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the length of a point (vector)
+     * Calculate the length of a point (vector).
      *
      * @param p the point (vector)
      * @return the length of the point (vector)
@@ -388,7 +431,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the distance between two points
+     * Calculate the distance between two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -400,7 +443,7 @@ public final class MathUtil {
     }
 
     /**
-     * normalize a point (vector) to a length
+     * Normalize a point (vector) to a length.
      *
      * @param p      the point (vector)
      * @param length the length to normalize to
@@ -412,7 +455,7 @@ public final class MathUtil {
     }
 
     /**
-     * normalize a point (vector)
+     * Normalize a point (vector).
      *
      * @param p the point (vector)
      * @return the normalized point (vector)
@@ -428,7 +471,7 @@ public final class MathUtil {
     }
 
     /**
-     * compute the angle (direction in radians) for a vector
+     * Compute the angle (direction in radians) for a vector.
      *
      * @param p the vector (point relative to zeroPoint2D)
      * @return the angle in radians
@@ -439,7 +482,7 @@ public final class MathUtil {
     }
 
     /**
-     * compute the angle (direction in degrees) for a vector
+     * Compute the angle (direction in degrees) for a vector.
      *
      * @param p the vector (point relative to zeroPoint2D)
      * @return the angle in degrees
@@ -450,7 +493,7 @@ public final class MathUtil {
     }
 
     /**
-     * compute the angle (direction in radians) from point 1 to point 2
+     * Compute the angle (direction in radians) from point 1 to point 2.
      * <p>
      * Note: Goes CCW from south to east to north to west, etc. For JMRI
      * subtract from PI/2 to get east, south, west, north
@@ -465,7 +508,7 @@ public final class MathUtil {
     }
 
     /**
-     * compute the angle (direction in degrees) from point 1 to point 2
+     * Compute the angle (direction in degrees) from point 1 to point 2.
      * <p>
      * Note: Goes CCW from south to east to north to west, etc. For JMRI
      * subtract from 90.0 to get east, south, west, north
@@ -480,7 +523,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the linear interpolation between two integers
+     * Calculate the linear interpolation between two integers.
      *
      * @param a the first number
      * @param b the second number
@@ -492,7 +535,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the linear interpolation between two doubles
+     * Calculate the linear interpolation between two doubles.
      *
      * @param a the first number
      * @param b the second number
@@ -505,7 +548,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the linear interpolation between two Doubles
+     * Calculate the linear interpolation between two Doubles.
      *
      * @param a the first number
      * @param b the second number
@@ -518,7 +561,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the linear interpolation between two points
+     * Calculate the linear interpolation between two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -533,7 +576,7 @@ public final class MathUtil {
     }
 
     /**
-     * round value to granular increment
+     * Round value to granular increment.
      *
      * @param v the value to granulize
      * @param g the granularity
@@ -545,10 +588,10 @@ public final class MathUtil {
     }
 
     /**
-     * round point to horzontal and vertical granular increments
+     * Round point to horizontal and vertical granular increments.
      *
      * @param p  the point to granulize
-     * @param gH the horzontal granularity
+     * @param gH the horizontal granularity
      * @param gV the vertical granularity
      * @return the point granulized to the granularity
      */
@@ -558,7 +601,7 @@ public final class MathUtil {
     }
 
     /**
-     * round point to granulur increment
+     * Round point to granular increment.
      *
      * @param p the point to granulize
      * @param g the granularity
@@ -570,7 +613,23 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the midpoint between two points
+     * Round Rectangle2D to granular increment.
+     *
+     * @param r the rectangle to granulize
+     * @param g the granularity
+     * @return the rectangle granulized to the granularity
+     */
+    @CheckReturnValue
+    public static Rectangle2D granulize(@Nonnull Rectangle2D r, double g) {
+        return new Rectangle2D.Double(
+                granulize(r.getMinX(), g),
+                granulize(r.getMinY(), g),
+                granulize(r.getWidth(), g),
+                granulize(r.getHeight(), g));
+    }
+
+    /**
+     * Calculate the midpoint between two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -582,7 +641,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the point 1/3 of the way between two points
+     * Calculate the point 1/3 of the way between two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -594,7 +653,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the point 2/3 of the way between two points
+     * Calculate the point 2/3 of the way between two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -606,7 +665,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the point 1/4 of the way between two points
+     * Calculate the point 1/4 of the way between two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -618,7 +677,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the point 3/4 of the way between two points
+     * Calculate the point 3/4 of the way between two points.
      *
      * @param pA the first point
      * @param pB the second point
@@ -630,7 +689,7 @@ public final class MathUtil {
     }
 
     /**
-     * Wrap an int between two values (for example +/- 180 or 0-360 degrees)
+     * Wrap an int between two values (for example +/- 180 or 0-360 degrees).
      *
      * @param inValue the value
      * @param inMin   the lowest value
@@ -645,7 +704,7 @@ public final class MathUtil {
     }
 
     /**
-     * Wrap a double between two values (for example +/- 180 or 0-360 degrees)
+     * Wrap a double between two values (for example +/- 180 or 0-360 degrees).
      *
      * @param inValue the value
      * @param inMin   the lowest value
@@ -661,7 +720,7 @@ public final class MathUtil {
     }
 
     /**
-     * wrap a value between +/-180
+     * Wrap a value between +/-180.
      *
      * @param inValue the value
      * @return the value wrapped between -180 and +180
@@ -672,7 +731,7 @@ public final class MathUtil {
     }
 
     /**
-     * wrap a value between +/-360
+     * Wrap a value between +/-360.
      *
      * @param inValue the value
      * @return the value wrapped between -360 and +360
@@ -683,7 +742,7 @@ public final class MathUtil {
     }
 
     /**
-     * wrap a value between 0 and 360
+     * Wrap a value between 0 and 360.
      *
      * @param inValue the value
      * @return the value wrapped between -360 and +360
@@ -694,7 +753,7 @@ public final class MathUtil {
     }
 
     /**
-     * wrap an angle between 0 and 360
+     * Wrap an angle between 0 and 360.
      *
      * @param a the angle
      * @return the angle wrapped between 0 and 360
@@ -705,7 +764,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the relative difference (+/-180) between two angles
+     * Calculate the relative difference (+/-180) between two angles.
      *
      * @param a the first angle
      * @param b the second angle
@@ -717,7 +776,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the absolute difference (0-180) between two angles
+     * Calculate the absolute difference (0-180) between two angles.
      *
      * @param a the first angle
      * @param b the second angle
@@ -729,7 +788,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the relative difference (+/-PI) between two angles
+     * Calculate the relative difference (+/-PI) between two angles.
      *
      * @param a the first angle
      * @param b the second angle
@@ -742,7 +801,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the absolute difference (0-PI) between two angles
+     * Calculate the absolute difference (0-PI) between two angles.
      *
      * @param a the first angle
      * @param b the second angle
@@ -754,7 +813,7 @@ public final class MathUtil {
     }
 
     /**
-     * pin a value between min and max
+     * Pin a value between min and max.
      *
      * @param inValue the value
      * @param inMin   the min
@@ -766,7 +825,7 @@ public final class MathUtil {
     }
 
     /**
-     * pin a value between min and max
+     * Pin a value between min and max.
      *
      * @param inValue the value
      * @param inMin   the min
@@ -804,7 +863,19 @@ public final class MathUtil {
     }
 
     /**
-     * Convert Rectangle to Rectangle2D
+     * rectangle2DToString return a string to represent a rectangle
+     *
+     * @param r the rectangle2D
+     * @return the string
+     */
+    @Nonnull
+    public static String rectangle2DToString(@Nonnull Rectangle2D r) {
+        return String.format("{%.2f, %.2f, %.2f, %.2f}",
+                r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * Convert Rectangle to Rectangle2D.
      *
      * @param r the Rectangle
      * @return the Rectangle2D
@@ -815,7 +886,7 @@ public final class MathUtil {
     }
 
     /**
-     * Convert Rectangle2D to Rectangle
+     * Convert Rectangle2D to Rectangle.
      *
      * @param r the Rectangle
      * @return the Rectangle2D
@@ -826,29 +897,76 @@ public final class MathUtil {
     }
 
     /**
-     * returns the origin (top left) of the rectangle
+     * Get the origin (top left) of the rectangle.
      *
      * @param r the rectangle
      * @return the origin of the rectangle
      */
     @CheckReturnValue
-    public static Point2D origin(@Nonnull Rectangle2D r) {
+    public static Point2D getOrigin(@Nonnull Rectangle2D r) {
         return new Point2D.Double(r.getX(), r.getY());
     }
 
     /**
-     * returns the size of the rectangle
+     * Set the origin (top left) of the rectangle.
+     *
+     * @param r      the rectangle
+     * @param origin the origin
+     * @return a new rectangle with the new origin
+     */
+    @CheckReturnValue
+    public static Rectangle2D setOrigin(@Nonnull Rectangle2D r, @Nonnull Point2D origin) {
+        return new Rectangle2D.Double(origin.getX(), origin.getY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * dimensionToString return a string to represent a Dimension
+     *
+     * @param d the Dimension
+     * @return the string
+     */
+    @Nonnull
+    public static String dimensionToString(@Nonnull Dimension d) {
+        return String.format("{%.2f, %.2f}", d.getWidth(), d.getHeight());
+    }
+
+    /**
+     * Get the size of a rectangle.
      *
      * @param r the rectangle
      * @return the size of the rectangle
      */
     @CheckReturnValue
-    public static Point2D size(@Nonnull Rectangle2D r) {
-        return new Point2D.Double(r.getWidth(), r.getHeight());
+    public static Dimension getSize(@Nonnull Rectangle2D r) {
+        return new Dimension((int) r.getWidth(), (int) r.getHeight());
     }
 
     /**
-     * calculate the center of the rectangle
+     * Set the size of a rectangle
+     *
+     * @param r the rectangle
+     * @param d the new size (as dimension)
+     * @return a new rectangle with the new size
+     */
+    @CheckReturnValue
+    public static Rectangle2D setSize(@Nonnull Rectangle2D r, @Nonnull Dimension d) {
+        return new Rectangle2D.Double(r.getMinX(), r.getMinY(), d.getWidth(), d.getHeight());
+    }
+
+    /**
+     * Set the size of a rectangle
+     *
+     * @param r the rectangle
+     * @param s the new size (as Point2D)
+     * @return a new rectangle with the new size
+     */
+    @CheckReturnValue
+    public static Rectangle2D setSize(@Nonnull Rectangle2D r, @Nonnull Point2D s) {
+        return new Rectangle2D.Double(r.getMinX(), r.getMinY(), s.getX(), s.getY());
+    }
+
+    /**
+     * Calculate the center of the rectangle.
      *
      * @param r the rectangle
      * @return the center of the rectangle
@@ -859,7 +977,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the midpoint of the rectangle
+     * Calculate the midpoint of the rectangle.
      *
      * @param r the rectangle
      * @return the midpoint of the rectangle
@@ -870,10 +988,10 @@ public final class MathUtil {
     }
 
     /**
-     * offset a rectangle
+     * Offset a rectangle by distinct x,y values.
      *
      * @param r the rectangle
-     * @param x the horzontial offset
+     * @param x the horizontal offset
      * @param y the vertical offset
      * @return the offset rectangle
      */
@@ -883,7 +1001,7 @@ public final class MathUtil {
     }
 
     /**
-     * offset a rectangle
+     * Offset a rectangle by a single value.
      *
      * @param r the rectangle
      * @param o the offset
@@ -895,7 +1013,7 @@ public final class MathUtil {
     }
 
     /**
-     * inset a rectangle
+     * Inset a rectangle by a single value.
      *
      * @param r the rectangle
      * @param i the inset (positive make it smaller, negative, bigger)
@@ -903,11 +1021,11 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Rectangle2D inset(@Nonnull Rectangle2D r, double i) {
-        return new Rectangle2D.Double(r.getX() + i, r.getY() + i, r.getWidth() - (2 * i), r.getHeight() - (2 * i));
+        return inset(r, i, i);
     }
 
     /**
-     * inset a rectangle
+     * Inset a rectangle by distinct x,y values.
      *
      * @param r the rectangle
      * @param h the horzontial inset (positive make it smaller, negative,
@@ -921,7 +1039,7 @@ public final class MathUtil {
     }
 
     /**
-     * scale a rectangle
+     * Scale a rectangle.
      *
      * @param r the rectangle
      * @param s the scale
@@ -934,7 +1052,7 @@ public final class MathUtil {
     }
 
     /**
-     * center rectangle on point
+     * Center rectangle on point.
      *
      * @param r the rectangle
      * @param p the point
@@ -948,7 +1066,7 @@ public final class MathUtil {
     }
 
     /**
-     * center rectangle on rectangle
+     * Center rectangle on rectangle.
      *
      * @param r1 the first rectangle
      * @param r2 the second rectangle
@@ -960,7 +1078,7 @@ public final class MathUtil {
     }
 
     /**
-     * return rectangle at point
+     * Get rectangle at point.
      *
      * @param p      the point
      * @param width  the width
@@ -1026,7 +1144,7 @@ public final class MathUtil {
     }
 
     /**
-     * Draw a cubic Bezier curve
+     * Draw a cubic Bezier curve.
      *
      * @param g2 the Graphics2D context to draw to
      * @param p0 origin control point
@@ -1118,7 +1236,7 @@ public final class MathUtil {
     }
 
     /*
-     * plot a Bezier curve
+     * Plot a Bezier curve.
      *
      * @param g2 the Graphics2D context to draw to
      * @param p  the control points
@@ -1147,7 +1265,7 @@ public final class MathUtil {
     }
 
     /**
-     * get the path for a Bezier curve
+     * Get the path for a Bezier curve.
      *
      * @param p            control points
      * @param displacement right/left to draw a line parallel to the Bezier
@@ -1166,7 +1284,7 @@ public final class MathUtil {
     }
 
     /**
-     * get the path for a Bezier curve
+     * Get the path for a Bezier curve.
      *
      * @param p control points
      * @return the length of the Bezier curve
@@ -1178,8 +1296,8 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve
      *
-     * @param g2 the Graphics2D context to draw to
-     * @param p  the control points
+     * @param g2           the Graphics2D context to draw to
+     * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1191,10 +1309,10 @@ public final class MathUtil {
     }
 
     /**
-     * Fill a Bezier curve
+     * Fill a Bezier curve.
      *
-     * @param g2 the Graphics2D context to draw to
-     * @param p  the control points
+     * @param g2           the Graphics2D context to draw to
+     * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1206,7 +1324,7 @@ public final class MathUtil {
     }
 
     /**
-     * Draw a Bezier curve
+     * Draw a Bezier curve.
      *
      * @param g2 the Graphics2D context to draw to
      * @param p  the control points
@@ -1217,7 +1335,7 @@ public final class MathUtil {
     }
 
     /**
-     * Fill a Bezier curve
+     * Fill a Bezier curve.
      *
      * @param g2 the Graphics2D context to draw to
      * @param p  the control points
@@ -1228,13 +1346,24 @@ public final class MathUtil {
     }
 
     /**
-     * Find intersection of two lines
+     * computer the bounds of a Bezier curve.
+     *
+     * @param p the control points
+     * @return the bounds of the Bezier curve
+     */
+    public static Rectangle2D getBezierBounds(@Nonnull Point2D p[]) {
+        return getBezierPath(p).getBounds2D();
+    }
+
+    /**
+     * Find intersection of two lines.
      *
      * @param p1 the first point on the first line
      * @param p2 the second point on the first line
      * @param p3 the first point on the second line
      * @param p4 the second point on the second line
-     * @return the intersection point of the two lines or null if one doesn't exist
+     * @return the intersection point of the two lines or null if one doesn't
+     *         exist
      */
     @CheckReturnValue
     public static Point2D intersect(
@@ -1244,22 +1373,144 @@ public final class MathUtil {
             @Nonnull Point2D p4) {
         Point2D result = null;  // assume failure (pessimist!)
 
-        // pull these out for convenience
-        double x1 = p1.getX(), y1 = p1.getY();
-        double x2 = p2.getX(), y2 = p2.getY();
-        double x3 = p3.getX(), y3 = p3.getY();
-        double x4 = p4.getX(), y4 = p4.getY();
+        Point2D delta31 = MathUtil.subtract(p3, p1);    //p
+        Point2D delta21 = MathUtil.subtract(p2, p1);    //q
+        Point2D delta43 = MathUtil.subtract(p4, p3);    //r
 
-        //
-        // equation from <https://en.wikipedia.org/wiki/Line–line_intersection>
-        //
-        double d = ((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4));
-        // if d is zero the lines don't have one intersection point
-        if (d > 0.0) {
-            double t = ((x1 - x3) * (y3 - y4)) - ((y1 - y3) * (x3 - x4)) / d;
-            result = new Point2D.Double(x1 + (t * (x2 - x1)), y1 + (t * (y2 - y1)));
+        double det = delta21.getX() * delta43.getY() - delta21.getY() * delta43.getX();
+        if (!MathUtil.equals(det, 0.0)) {
+            double t = (delta21.getY() * delta31.getX() - delta21.getX() * delta31.getY()) / det;
+            result = lerp(p1, p2, t);
         }
         return result;
+    }
+
+    /**
+     * get (signed) distance p3 is from line segment defined by p1 and p2
+     *
+     * @param p1 the first point on the line segment
+     * @param p2 the second point on the line segment
+     * @param p3 the point whose distance from the line segment you wish to
+     *           calculate
+     * @return the distance (note: plus/minus determines the (left/right) side
+     *         of the line)
+     */
+    public static double distance(
+            @Nonnull Point2D p1,
+            @Nonnull Point2D p2,
+            @Nonnull Point2D p3) {
+        double p1X = p1.getX(), p1Y = p1.getY();
+        double p2X = p2.getX(), p2Y = p2.getY();
+        double p3X = p3.getX(), p3Y = p3.getY();
+
+        double a = p1Y - p2Y;
+        double b = p2X - p1X;
+        double c = (p1X * p2Y) - (p2X * p1Y);
+
+        return (a * p3X + b * p3Y + c) / Math.sqrt(a * a + b * b);
+    }
+
+    /*==========*\
+    |* polygons *|
+    \*==========*/
+
+    /**
+     * return average point in points
+     *
+     * @param points to average
+     * @return the average point
+     */
+    public static Point2D midPoint(List<Point2D> points) {
+        Point2D result = zeroPoint2D();
+        for (Point2D point : points) {
+            result = add(result, point);
+        }
+        result = divide(result, points.size());
+        return result;
+    }
+
+    /**
+     * @param pointT the point
+     * @param points the polygon
+     * @return true if pointT is in the polygon made up of the points
+     */
+    public static boolean isPointInPolygon(Point2D pointT, List<Point2D> points) {
+        boolean result = false;
+
+        Double pointT_x = pointT.getX(), pointT_y = pointT.getY();
+
+        int n = points.size();
+        for (int i = 0, j = n - 1; i < n; j = i++) {
+            Point2D pointI = points.get(i), pointJ = points.get(j);
+            Double pointI_x = pointI.getX(), pointI_y = pointI.getY();
+            Double pointJ_x = pointJ.getX(), pointJ_y = pointJ.getY();
+
+            if ((pointI_y > pointT_y) != (pointJ_y > pointT_y)
+                    && (pointT_x < (pointJ_x - pointI_x) * (pointT_y - pointI_y) / (pointJ_y - pointI_y) + pointI_x)) {
+                result = !result;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * compute convex hull (outline of polygon)
+     *
+     * @param points of the polygon
+     * @return points of the convex hull
+     */
+    public static List<Point2D> convexHull(List<Point2D> points) {
+        if (points.isEmpty()) {
+            return points;
+        }
+
+        points.sort((p1, p2) -> (int) Math.signum(p1.getX() - p2.getX()));
+
+        List<Point2D> results = new ArrayList<>();
+
+        // lower hull
+        for (Point2D pt : points) {
+            while (results.size() > 1) {
+                int n = results.size();
+                if (isCounterClockWise(results.get(n - 2), results.get(n - 1), pt)) {
+                    break;
+                } else {
+                    results.remove(n - 1);
+                }
+            }
+            results.add(pt);
+        }
+
+        // upper hull
+        int t = results.size(); //terminate while loop when results are this size
+        for (int i = points.size() - 1; i >= 0; i--) {
+            Point2D pt = points.get(i);
+
+            while (results.size() > t) {
+                int n = results.size();
+                if (isCounterClockWise(results.get(n - 2), results.get(n - 1), pt)) {
+                    break;
+                } else {
+                    results.remove(n - 1);
+                }
+            }
+            results.add(pt);
+        }
+
+        results.remove(results.size() - 1);
+        return results;
+    }
+
+    /**
+     * isCounterClockWise
+     *
+     * @param a the first point
+     * @param b the second point
+     * @param c the third point
+     * @return true if the three points make a counter-clockwise turn
+     */
+    public static boolean isCounterClockWise(Point2D a, Point2D b, Point2D c) {
+        return ((b.getX() - a.getX()) * (c.getY() - a.getY())) > ((b.getY() - a.getY()) * (c.getX() - a.getX()));
     }
 
     // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);

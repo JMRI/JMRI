@@ -15,12 +15,12 @@ import org.junit.runner.RunWith;
  * To override those in ant, run:<br>
  * JAVA_OPTIONS='-Dcucumber.options="..."' ant target
  *
- * @author	Paul Bender Copyright 2017
+ * @author Paul Bender Copyright 2017
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"junit:cucumber-results.xml", "progress", "json:cucumber-results.json"},
         features = "java/acceptancetest/features/apps",
-        tags = {"not @webtest", "not @Ignore", "not @ignore"},
+        tags = {"not @webtest", "not @Disabled", "not @Ignore", "not @ignore"},
         glue = {"apps"})
 public class RunCucumberIT {
 

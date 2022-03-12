@@ -1,10 +1,9 @@
 package jmri.jmrix.serialsensor;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SerialSensorAdapter class.
@@ -19,14 +18,14 @@ public class SerialSensorAdapterTest {
       Assert.assertNotNull("SerialSensorAdapter constructor",new SerialSensorAdapter());
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.tearDown();
    }

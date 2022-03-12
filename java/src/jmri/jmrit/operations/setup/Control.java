@@ -1,11 +1,12 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Controls for operations developers. Debug Property changes and instance
@@ -37,26 +38,17 @@ public class Control {
     public static final int panelHeight200 = 200;
     public static final int panelHeight100 = 100;
 
-    /*
-     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
-     // Maximum panel height
-     public static final int panelMaxHeight = screenSize.height;
-     */
-    // Default panel edit locations
-    public static final int panelX = 0;
-    public static final int panelY = 0;
-
     // Train build parameters
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
     public static boolean fullTrainOnly = false;
 
-    // Car and Engine attribute maximum string length 
+    // Car and Engine attribute maximum string length
     public static int max_len_string_attibute = 12;
 
-    // Car and Engine number maximum string length 
+    // Car and Engine number maximum string length
     public static int max_len_string_road_number = 10;
-    
-    // Car and Engine number maximum string length when printing  
+
+    // Car and Engine number maximum string length when printing
     public static int max_len_string_print_road_number = 6;
 
     // Location name maximum string length
@@ -82,27 +74,23 @@ public class Control {
 
     // Route name maximum string length
     public static int max_len_string_route_name = 25;
-    
+
     // Automation name maximum string length
     public static int max_len_string_automation_name = 25;
 
-    // Backward compatibility for xml saves (pre 2013 releases)
-    // backward compatibility to false in 2014
-    public static boolean backwardCompatible = false;
-    
     public static int reportFontSize = 10;
+    @SuppressFBWarnings(value = "MS_PKGPROTECT") // allow access for testing
     public static String reportFontName = ""; // use default
-    
+
     public static int excelWaitTime = 120; // in seconds
+
+    public static boolean disablePrintingIfCustom = false;
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {
         Element values;
         Element length;
         Element e = new Element(Xml.CONTROL);
-        // backward compatibility default set to false as of 3.7.1 (early 2014)
-        e.addContent(values = new Element(Xml.BACKWARD_COMPATIBILITY));
-        values.setAttribute(Xml.SAVE_USING_PRE_2013_FORMAT, backwardCompatible ? Xml.TRUE : Xml.FALSE);
         // maximum string lengths
         e.addContent(values = new Element(Xml.MAXIMUM_STRING_LENGTHS));
         values.addContent(length = new Element(Xml.MAX_LEN_STRING_ATTRIBUTE));
@@ -136,7 +124,10 @@ public class Control {
         // actions
         e.addContent(values = new Element(Xml.ACTIONS));
         values.setAttribute(Xml.EXCEL_WAIT_TIME, Integer.toString(excelWaitTime));
-        
+        // print control
+        e.addContent(values = new Element(Xml.PRINT_OPTIONS));
+        values.setAttribute(Xml.DISABLE_PRINT_IF_CUSTOM, disablePrintingIfCustom ? Xml.TRUE : Xml.FALSE);
+
         return e;
     }
 
@@ -144,13 +135,6 @@ public class Control {
         Element eControl = e.getChild(Xml.CONTROL);
         if (eControl == null) {
             return;
-        }
-        Element backwardCompatibility = eControl.getChild(Xml.BACKWARD_COMPATIBILITY);
-        if (backwardCompatibility != null) {
-            Attribute format;
-            if ((format = backwardCompatibility.getAttribute(Xml.SAVE_USING_PRE_2013_FORMAT)) != null) {
-                backwardCompatible = format.getValue().equals(Xml.TRUE);
-            }
         }
         Element maximumStringLengths = eControl.getChild(Xml.MAXIMUM_STRING_LENGTHS);
         if (maximumStringLengths != null) {
@@ -217,7 +201,7 @@ public class Control {
             if ((a = eReports.getAttribute(Xml.FONT_NAME)) != null) {
                 reportFontName = a.getValue();
             }
-        }   
+        }
         Element eActions = eControl.getChild(Xml.ACTIONS);
         if (eActions != null) {
             Attribute a;
@@ -229,7 +213,14 @@ public class Control {
                 }
             }
         }
+        Element ePrintOptions = eControl.getChild(Xml.PRINT_OPTIONS);
+        if (ePrintOptions != null) {
+            Attribute format;
+            if ((format = ePrintOptions.getAttribute(Xml.DISABLE_PRINT_IF_CUSTOM)) != null) {
+                disablePrintingIfCustom = format.getValue().equals(Xml.TRUE);
+            }
+        }
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(Control.class);
 }

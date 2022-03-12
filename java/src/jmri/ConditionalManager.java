@@ -67,10 +67,12 @@ public interface ConditionalManager extends Manager<Conditional> {
 
     public Conditional getConditional(String name);
 
+    @Override
     public Conditional getByUserName(String s);
 
     public Conditional getByUserName(Logix x, String s);
 
+    @Override
     public Conditional getBySystemName(String s);
 
     /**

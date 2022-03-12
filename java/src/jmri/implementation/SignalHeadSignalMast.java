@@ -18,14 +18,14 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF$shsm:basic:one-searchlight:(IH1)(IH2)
+ * IF$shsm:basic:one-searchlight(IH1)(IH2)
  * </pre>
  * The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$shsm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>(IH1)(IH2) - colon-separated list of names for SignalHeads
+ * <li>(IH1)(IH2) - List of signal head names in parentheses.  Note: There is no colon between the mast name and the head names.
  * </ul>
  * There was an older form where the SignalHead names were also colon separated:
  * IF$shsm:basic:one-searchlight:IH1:IH2 This was deprecated because colons appear in
@@ -229,7 +229,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                     setDelayedAppearances(thrDelayedSet, thrDelay);
                 }
             };
-            Thread thr = new Thread(r);
+            Thread thr = jmri.util.ThreadingUtil.newThread(r);
             thr.setName(getDisplayName() + " delayed set appearance");
             thr.setDaemon(true);
             try {
@@ -259,7 +259,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                 }
             };
 
-            Thread thr = new Thread(r);
+            Thread thr = jmri.util.ThreadingUtil.newThread(r);
             thr.setName(getDisplayName());
             thr.setDaemon(true);
             try {
@@ -301,7 +301,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalHead) {
                 for (NamedBeanHandle<SignalHead> bean : getHeadsUsed()) {
                     if (bean.getBean().equals(nb)) {

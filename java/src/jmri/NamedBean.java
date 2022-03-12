@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -92,6 +93,11 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public static final String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
 
     /**
+     * Property of changed state.
+     */
+    public static final String PROPERTY_STATE = "state";
+
+    /**
      * User's identification for the item. Bound parameter so manager(s) can
      * listen to changes. Any given user name must be unique within the layout.
      * Must not match the system name.
@@ -123,6 +129,11 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
 
     /**
      * Display the system-specific name.
+     * <p>Note that this is a firm contract:  toString() in
+     * all implementing classes must return the system name
+     * followed by optional additional information.
+     * Using code can assume that the result of toString() will always be
+     * or start with the system name followed by some kind of separator character.
      *
      * @return the system-specific name
      */
@@ -143,7 +154,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
 
     /**
      * Get the name to display, formatted per {@link NamedBean.DisplayOptions}.
-     * 
+     *
      * @param options the DisplayOptions to use
      * @return the display name formatted per options
      */
@@ -175,42 +186,6 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
             default:
                 return userName != null ? userName : systemName;
         }
-    }
-    
-    /**
-     * Get a fully formatted display that includes the SystemName and, if set,
-     * the UserName.
-     * <p>
-     * This is the same as calling {@link #getDisplayName(DisplayOptions)} with
-     * the parameter {@link DisplayOptions#USERNAME_SYSTEMNAME}.
-     *
-     * @return {@code UserName (SystemName)} or {@code SystemName} if the
-     *         UserName is null, empty, or matches the SystemName
-     * @deprecated since 4.17.2; use {@link #getDisplayName(DisplayOptions)}
-     *             with {@link DisplayOptions#USERNAME_SYSTEMNAME} instead
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    public default String getFullyFormattedDisplayName() {
-        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
-    }
-
-    /**
-     * Returns a fully formatted display that includes the SystemName and
-     * UserName if set. This uses the format {@value #DISPLAY_NAME_FORMAT}
-     *
-     * @param userNameFirst ignored; retained for compatibility until removed
-     * @return {@code UserName (SystemName)} or {@code SystemName} if the
-     *         UserName is null, empty, or matches the SystemName
-     * @deprecated since 4.17.2; use {@link #getDisplayName(DisplayOptions)}
-     *             with {@link DisplayOptions#USERNAME_SYSTEMNAME} instead
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    public default String getFullyFormattedDisplayName(boolean userNameFirst) {
-        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
 
     /**
@@ -366,6 +341,14 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public void setComment(@CheckForNull String comment);
 
     /**
+     * Get a list of references for the specified bean.
+     *
+     * @param bean The bean to be checked.
+     * @return a list of NamedBeanUsageReports or an empty ArrayList.
+     */
+    default List<NamedBeanUsageReport> getUsageReport(@CheckForNull NamedBean bean) { return (new ArrayList<>()); }
+
+    /**
      * Attach a key/value pair to the NamedBean, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
@@ -499,7 +482,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public class BadNameException extends IllegalArgumentException {
 
         private final String localizedMessage;
-        
+
         /**
          * Create an exception with no message to the user or for logging.
          */
@@ -522,12 +505,12 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
             super(logging);
             localizedMessage = display;
         }
-        
+
         @Override
         public String getLocalizedMessage() {
             return localizedMessage;
         }
-        
+
     }
 
     public class BadUserNameException extends BadNameException {
@@ -553,7 +536,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
          * <p>
          * <strong>Note</strong> the message must be accessible by
          * {@link jmri.Bundle}.
-         * 
+         *
          * @param locale  the locale to be used
          * @param message bundle key to be translated
          * @param subs    One or more objects to be inserted into the message
@@ -629,7 +612,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public class DuplicateSystemNameException extends IllegalArgumentException {
 
         private final String localizedMessage;
-        
+
         /**
          * Create an exception with no message to the user or for logging. Use
          * only when calling methods likely have alternate mechanism for

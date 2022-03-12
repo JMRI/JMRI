@@ -36,12 +36,16 @@ public class TrackPowerController extends AbstractController implements Property
     @Override
     public void handleMessage(String message, DeviceServer deviceServer) {
         if (message.charAt(0) == 'A') {
-            if (message.charAt(1) == '1') {
-                setTrackPowerOn();
-            } else if (message.charAt(1) == '0') {
-                setTrackPowerOff();
-            } else {
-                log.warn("Unknown Track Power message from wi-fi device");
+            switch (message.charAt(1)) {
+                case '1':
+                    setTrackPowerOn();
+                    break;
+                case '0':
+                    setTrackPowerOff();
+                    break;
+                default:
+                    log.warn("Unknown Track Power message from wi-fi device");
+                    break;
             }
         }
     }
@@ -71,18 +75,19 @@ public class TrackPowerController extends AbstractController implements Property
             return;
         }
         String message = null;
-        try {
-            if (pwrMgr.getPower() == PowerManager.ON) {
+        switch (pwrMgr.getPower()) {
+            case PowerManager.ON:
                 message = "PPA1";
-            } else if (pwrMgr.getPower() == PowerManager.OFF) {
+                break;
+            case PowerManager.OFF:
                 message = "PPA0";
-            } else if (pwrMgr.getPower() == PowerManager.UNKNOWN) {
+                break;
+            case PowerManager.UNKNOWN:
                 message = "PPA2";
-            } else {
-                log.error("Unexpected state value: +" + pwrMgr.getPower());
-            }
-        } catch (JmriException e) {
-            log.error("Power Manager exception");
+                break;
+            default:
+                log.error("Unexpected state value: +{}", pwrMgr.getPower());
+                break;
         }
 
         for (ControllerInterface listener : listeners) {

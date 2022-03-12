@@ -110,7 +110,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 client.configureRemoteConnection(hostName, 500);
                 connected = true;   // exception during connect skips this
             } catch (jmri.jmrix.loconet.LocoNetException ex) {
-                log.error("Error opening connection to {} was: {}", hostName, ex); // NOI18N
+                log.error("Error opening connection to {}", hostName, ex); // NOI18N
                 f.setTitle("Server connection failed");
                 f.getContentPane().removeAll();
                 f.getContentPane().add(new JLabel("failed, error was " + ex));

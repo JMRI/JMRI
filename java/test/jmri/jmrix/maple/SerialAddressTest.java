@@ -3,15 +3,14 @@ package jmri.jmrix.maple;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  */
 public class SerialAddressTest {
 
@@ -119,7 +118,7 @@ public class SerialAddressTest {
         jmri.Turnout t2 = tMgr.newTurnout("KT32", "userT32");
         // check that turnout was created correctly
         Assert.assertEquals("create KT32 check 1", "KT32", t2.getSystemName());
-        // create two new lights  
+        // create two new lights
         jmri.LightManager lMgr = memo.getLightManager();
         jmri.Light lgt1 = lMgr.newLight("KL36", "userL36");
         jmri.Light lgt2 = lMgr.newLight("KL037", "userL37");
@@ -192,7 +191,7 @@ public class SerialAddressTest {
 
     // from here down is testing infrastructure
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager objects
@@ -206,20 +205,12 @@ public class SerialAddressTest {
         new SerialNode(99, 0,tc);
         new SerialNode(18, 0,tc);
 
-        SerialTurnoutManager l = new SerialTurnoutManager(memo) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        SerialTurnoutManager l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
 
         memo.setTurnoutManager(l);
 
-        SerialLightManager lgt = new SerialLightManager(memo) {
-            @Override
-            public void notifyLightCreationError(String conflict, int bitNum) {
-            }
-        };
+        SerialLightManager lgt = new SerialLightManager(memo);
         jmri.InstanceManager.setLightManager(lgt);
         memo.setLightManager(lgt);
 
@@ -230,8 +221,7 @@ public class SerialAddressTest {
 
     private MapleSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

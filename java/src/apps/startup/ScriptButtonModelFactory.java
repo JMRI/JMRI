@@ -1,12 +1,14 @@
 package apps.startup;
 
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupModelFactory;
+import jmri.util.startup.StartupModel;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
-import jmri.script.ScriptFileChooser;
+import jmri.script.swing.ScriptFileChooser;
 import org.openide.util.lookup.ServiceProvider;
 
 /**

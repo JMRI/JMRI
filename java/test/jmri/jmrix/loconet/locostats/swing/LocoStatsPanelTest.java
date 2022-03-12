@@ -1,17 +1,16 @@
 package jmri.jmrix.loconet.locostats.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LocoStatsPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -20,7 +19,7 @@ public class LocoStatsPanelTest extends jmri.util.swing.JmriPanelTest {
         helpTarget = "package.jmri.jmrix.loconet.locostats.LocoStatsFrame";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

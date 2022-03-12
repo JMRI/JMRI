@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -116,7 +116,7 @@
       de constater un d&eacute;passement.</p>Ceci est la page
       d'aide
       help/fr/package/jmri/jmrit/roster/swing/speedprofile/speedProfileFrame.shtml
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -1,10 +1,24 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Date;
+
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
+import static jmri.Light.INTERMEDIATE;
+import static jmri.Light.TRANSITIONINGHIGHER;
+import static jmri.Light.TRANSITIONINGLOWER;
+import static jmri.Light.TRANSITIONINGTOFULLOFF;
+import static jmri.Light.TRANSITIONINGTOFULLON;
+import static jmri.DigitalIO.OFF;
+import static jmri.DigitalIO.ON;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Timebase;
+import jmri.VariableLight;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +52,8 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2008,2009
  * @author Bob Jacobsen Copyright (C) 2008,2009
  */
-public abstract class AbstractVariableLight extends AbstractLight {
+public abstract class AbstractVariableLight
+        extends AbstractLight implements VariableLight {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractVariableLight.class);
 
@@ -53,6 +68,31 @@ public abstract class AbstractVariableLight extends AbstractLight {
     }
 
     /**
+     * System independent instance variables (saved between runs).
+     */
+//    protected double mMaxIntensity = 1.0;     // Uncomment when mMaxIntensity is removed from AbstractLight due to deprecation
+//    protected double mMinIntensity = 0.0;     // Uncomment when mMinIntensity is removed from AbstractLight due to deprecation
+
+    /**
+     * System independent operational instance variables (not saved between
+     * runs).
+     */
+//    protected double mCurrentIntensity = 0.0; // Uncomment when mCurrentIntensity is removed from AbstractLight due to deprecation
+
+    @Override
+    @Nonnull
+    public String describeState(int state) {
+        switch (state) {
+            case INTERMEDIATE: return Bundle.getMessage("LightStateIntermediate");
+            case TRANSITIONINGTOFULLON: return Bundle.getMessage("LightStateTransitioningToFullOn");
+            case TRANSITIONINGHIGHER: return Bundle.getMessage("LightStateTransitioningHigher");
+            case TRANSITIONINGLOWER: return Bundle.getMessage("LightStateTransitioningLower");
+            case TRANSITIONINGTOFULLOFF: return Bundle.getMessage("LightStateTransitioningToFullOff");
+            default: return super.describeState(state);
+        }
+    }
+
+    /**
      * Handle a request for a state change. ON and OFF go to the MaxIntensity
      * and MinIntensity, specifically, and all others are not permitted
      * <p>
@@ -62,7 +102,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
     @Override
     public void setState(int newState) {
         if (log.isDebugEnabled()) {
-            log.debug("setState " + newState + " was " + mState);
+            log.debug("setState {} was {}", newState, mState);
         }
         int oldState = mState;
         if (newState != ON && newState != OFF) {
@@ -77,7 +117,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
             if (getMaxIntensity() == 1.0 && getTransitionTime() <= 0) {
                 // treat as not variable light
                 if (log.isDebugEnabled()) {
-                    log.debug("setState(" + newState + ") considers not variable for ON");
+                    log.debug("setState({}) considers not variable for ON", newState);
                 }
                 // update the intensity without invoking the hardware
                 notifyTargetIntensityChange(1.0);
@@ -86,7 +126,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
                 if (getTransitionTime() <= 0) {
                     // no transition, just to directly to target using on/off
                     if (log.isDebugEnabled()) {
-                        log.debug("setState(" + newState + ") using variable intensity");
+                        log.debug("setState({}) using variable intensity", newState);
                     }
                     // tell the hardware to change intensity
                     sendIntensity(getMaxIntensity());
@@ -103,7 +143,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
             if (getMinIntensity() == 0.0 && getTransitionTime() <= 0) {
                 // treat as not variable light
                 if (log.isDebugEnabled()) {
-                    log.debug("setState(" + newState + ") considers not variable for OFF");
+                    log.debug("setState({}) considers not variable for OFF", newState);
                 }
                 // update the intensity without invoking the hardware
                 notifyTargetIntensityChange(0.0);
@@ -112,7 +152,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
                 if (getTransitionTime() <= 0) {
                     // no transition, just to directly to target using on/off
                     if (log.isDebugEnabled()) {
-                        log.debug("setState(" + newState + ") using variable intensity");
+                        log.debug("setState({}) using variable intensity", newState);
                     }
                     // tell the hardware to change intensity
                     sendIntensity(getMinIntensity());
@@ -148,7 +188,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
     @Override
     public void setTargetIntensity(double intensity) {
         if (log.isDebugEnabled()) {
-            log.debug("setTargetIntensity " + intensity);
+            log.debug("setTargetIntensity {}", intensity);
         }
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Target intensity value " + intensity + " not in legal range");
@@ -275,7 +315,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
             // if we are more than one step away, keep stepping
             if (Math.abs(mCurrentIntensity - mTransitionTargetIntensity) != 0) {
                 if (log.isDebugEnabled()) {
-                    log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+                    log.debug("before Target: {} Current: {}", mTransitionTargetIntensity, mCurrentIntensity);
                 }
 
                 if (mTransitionTargetIntensity > mCurrentIntensity) {
@@ -306,20 +346,20 @@ public abstract class AbstractVariableLight extends AbstractLight {
                 sendIntensity(mCurrentIntensity);
 
                 if (log.isDebugEnabled()) {
-                    log.debug("after Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+                    log.debug("after Target: {} Current: {}", mTransitionTargetIntensity, mCurrentIntensity);
                 }
             }
         }
         if (origCurrent != mCurrentIntensity) {
             firePropertyChange("CurrentIntensity", Double.valueOf(origCurrent), Double.valueOf(mCurrentIntensity));
             if (log.isDebugEnabled()) {
-                log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+                log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
             }
         }
         if (origState != mState) {
             firePropertyChange("KnownState", Integer.valueOf(origState), Integer.valueOf(mState));
             if (log.isDebugEnabled()) {
-                log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+                log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
             }
         }
     }
@@ -340,15 +380,15 @@ public abstract class AbstractVariableLight extends AbstractLight {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
+            firePropertyChange("TargetIntensity", oldValue, intensity);
         }
     }
 
-    /**
+    /*.*
      * Check if this object can handle variable intensity.
      * <p>
      * @return true, as this abstract class implements variable intensity.
-     */
+     *./
     @Override
     public boolean isIntensityVariable() {
         return true;
@@ -414,6 +454,37 @@ public abstract class AbstractVariableLight extends AbstractLight {
         }
     }
 
+    /**
+     * Get the current intensity value. If the Light is currently transitioning,
+     * this may be either an intermediate or final value.
+     * <p>
+     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
+     * full on.
+     *
+     * @return current intensity
+     */
+    @Override
+    public double getCurrentIntensity() {
+        return mCurrentIntensity;
+    }
+
+    /**
+     * Get the target intensity value for the current transition, if any. If the
+     * Light is not currently transitioning, this is the current intensity
+     * value.
+     * <p>
+     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
+     * full on.
+     * <p>
+     * Bound property
+     *
+     * @return target intensity
+     */
+    @Override
+    public double getTargetIntensity() {
+        return mCurrentIntensity;
+    }
+
     @Override
     public void setCommandedAnalogValue(double value) throws JmriException {
         int origState = mState;
@@ -438,25 +509,149 @@ public abstract class AbstractVariableLight extends AbstractLight {
         // command new intensity
         sendIntensity(mCurrentIntensity);
         if (log.isDebugEnabled()) {
-            log.debug("set analog value: " + value);
+            log.debug("set analog value: {}", value);
         }
         
         firePropertyChange("CurrentIntensity", origCurrent, mCurrentIntensity);
         if (log.isDebugEnabled()) {
-            log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+            log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
         }
         
         if (origState != mState) {
             firePropertyChange("KnownState", origState, mState);
             if (log.isDebugEnabled()) {
-                log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+                log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
             }
         }
+    }
+
+    /**
+     * Get the current value of the minIntensity property.
+     * <p>
+     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
+     * full on.
+     *
+     * @return min intensity value
+     */
+    @Override
+    public double getMinIntensity() {
+        return mMinIntensity;
+    }
+
+    /**
+     * Set the value of the minIntensity property.
+     * <p>
+     * Bound property between 0 and 1.
+     * <p>
+     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
+     * full on.
+     *
+     * @param intensity intensity value
+     * @throws IllegalArgumentException when intensity is less than 0.0 or more
+     *                                  than 1.0
+     * @throws IllegalArgumentException when intensity is not less than the
+     *                                  current value of the maxIntensity
+     *                                  property
+     */
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @Override
+    public void setMinIntensity(double intensity) {
+        if (intensity < 0.0 || intensity > 1.0) {
+            throw new IllegalArgumentException("Illegal intensity value: " + intensity);
+        }
+        if (intensity >= mMaxIntensity) {
+            throw new IllegalArgumentException("Requested intensity " + intensity + " should be less than maxIntensity " + mMaxIntensity);
+        }
+
+        double oldValue = mMinIntensity;
+        mMinIntensity = intensity;
+
+        if (oldValue != intensity) {
+            firePropertyChange("MinIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
+        }
+    }
+
+    /**
+     * Get the current value of the maxIntensity property.
+     * <p>
+     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
+     * full on.
+     *
+     * @return max intensity
+     */
+    @Override
+    public double getMaxIntensity() {
+        return mMaxIntensity;
+    }
+
+    /**
+     * Set the value of the maxIntensity property.
+     * <p>
+     * Bound property between 0 and 1.
+     * <p>
+     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
+     * full on.
+     *
+     * @param intensity max intensity
+     * @throws IllegalArgumentException when intensity is less than 0.0 or more
+     *                                  than 1.0
+     * @throws IllegalArgumentException when intensity is not greater than the
+     *                                  current value of the minIntensity
+     *                                  property
+     */
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @Override
+    public void setMaxIntensity(double intensity) {
+        if (intensity < 0.0 || intensity > 1.0) {
+            throw new IllegalArgumentException("Illegal intensity value: " + intensity);
+        }
+        if (intensity <= mMinIntensity) {
+            throw new IllegalArgumentException("Requested intensity " + intensity + " must be higher than minIntensity " + mMinIntensity);
+        }
+
+        double oldValue = mMaxIntensity;
+        mMaxIntensity = intensity;
+
+        if (oldValue != intensity) {
+            firePropertyChange("MaxIntensity", oldValue, intensity);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public double getState(double v) {
+        return getCommandedAnalogValue();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setState(double newState) throws JmriException {
+        setCommandedAnalogValue(newState);
     }
 
     @Override
     public double getResolution() {
         return 1.0 / getNumberOfSteps();
+    }
+
+    @Override
+    public double getCommandedAnalogValue() {
+        return getCurrentIntensity();
+    }
+
+    @Override
+    public double getMin() {
+        return getMinIntensity();
+    }
+
+    @Override
+    public double getMax() {
+        return getMaxIntensity();
+    }
+
+    @Override
+    public AbsoluteOrRelative getAbsoluteOrRelative() {
+        return AbsoluteOrRelative.ABSOLUTE;
     }
 
 }

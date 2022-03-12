@@ -57,6 +57,7 @@ public class Transit extends AbstractNamedBean {
     /*
      * Instance variables (not saved between runs)
      */
+    private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
     private int mState = Transit.IDLE;
     private final ArrayList<TransitSection> mTransitSectionList = new ArrayList<>();
     private int mMaxSequence = 0;
@@ -93,7 +94,7 @@ public class Transit extends AbstractNamedBean {
             mState = state;
             firePropertyChange("state", old, mState);
         } else {
-            log.error("Attempt to set Transit state to illegal value - " + state);
+            log.error("Attempt to set Transit state to illegal value - {}", state);
         }
     }
 
@@ -402,11 +403,22 @@ public class Transit extends AbstractNamedBean {
             }
         }
         ArrayList<Block> internalBlocks = getInternalBlocksList();
-        for (int i = internalBlocks.size(); i > 0; i--) {
-            if (blockSecSeqList.get(i - 1) > startSeq) {
-                // could stop in this block, keep it
-                list.add(internalBlocks.get(i - 1));
-                destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+        //allow for transits of length 1
+        if (startInTransit) {
+            for (int i = internalBlocks.size(); i > 0; i--) {
+                if (blockSecSeqList.get(i - 1) > startSeq) {
+                    // could stop in this block, keep it
+                    list.add(internalBlocks.get(i - 1));
+                    destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+                }
+            }
+        } else {
+            for (int i = internalBlocks.size(); i > 0; i--) {
+                if (blockSecSeqList.get(i - 1) >= startSeq) {
+                    // could stop in this block, keep it
+                    list.add(internalBlocks.get(i - 1));
+                    destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+                }
             }
         }
         return list;
@@ -453,8 +465,7 @@ public class Transit extends AbstractNamedBean {
                     lastIndex--;
                     lastTS = mTransitSectionList.get(lastIndex);
                 } else {
-                    log.warn("Section mismatch " + (firstTS.getSection()).getSystemName() + " "
-                            + (lastTS.getSection()).getSystemName());
+                    log.warn("Section mismatch {} {}", (firstTS.getSection()).getDisplayName(USERSYS), (lastTS.getSection()).getDisplayName(USERSYS));
                     return false;
                 }
             }
@@ -462,59 +473,10 @@ public class Transit extends AbstractNamedBean {
         }
         // same Section, check direction
         if (firstTS.getDirection() != lastTS.getDirection()) {
-            log.warn("Direction mismatch " + (firstTS.getSection()).getSystemName() + " "
-                    + (lastTS.getSection()).getSystemName());
+            log.warn("Direction mismatch {} {}", (firstTS.getSection()).getDisplayName(USERSYS), (lastTS.getSection()).getDisplayName(USERSYS));
             return false;
         }
         return true;
-    }
-
-    /**
-     * Checks that exit Signal Heads are in place for all Sections in this
-     * Transit and for Block boundaries at turnouts or level crossings within
-     * Sections of the Transit for the direction defined in this Transit. Signal
-     * Heads are not required at anchor point block boundaries where both blocks
-     * are within the same Section, and for turnouts with two or more
-     * connections in the same Section.
-     *
-     * @param panel the panel to check against
-     * @return 0 if all Sections have all required signals or the number of
-     *         Sections missing required signals; -1 if the panel is null
-     */
-    public int checkSignals(LayoutEditor panel) {
-        if (panel == null) {
-            log.error("checkSignals called with a null LayoutEditor panel");
-            return -1;
-        }
-        int numErrors = 0;
-        for (TransitSection ts : mTransitSectionList) {
-            numErrors = numErrors + ts.getSection().placeDirectionSensors(panel);
-        }
-        return numErrors;
-    }
-
-    /**
-     * Validates connectivity through the Transit. Returns the number of errors
-     * found. Sends log messages detailing the errors if break in connectivity
-     * is detected. Checks all Sections before quitting.
-     *
-     * @param panel the panel containing Sections to validate
-     * @return number of invalid sections or -1 if panel if null
-     */
-    public int validateConnectivity(LayoutEditor panel) {
-        if (panel == null) {
-            log.error("validateConnectivity called with a null LayoutEditor panel");
-            return -1;
-        }
-        int numErrors = 0;
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            String s = mTransitSectionList.get(i).getSection().validate(panel);
-            if (!s.equals("")) {
-                log.error(s);
-                numErrors++;
-            }
-        }
-        return numErrors;
     }
 
     /**
@@ -536,11 +498,11 @@ public class Transit extends AbstractNamedBean {
                         s.getForwardBlockingSensor().setState(Sensor.ACTIVE);
                     }
                 } else {
-                    log.warn("Missing forward blocking sensor for section " + s.getSystemName());
+                    log.warn("Missing forward blocking sensor for section {}", s.getDisplayName(USERSYS));
                     numErrors++;
                 }
             } catch (JmriException reason) {
-                log.error("Exception when initializing forward blocking Sensor for Section " + s.getSystemName());
+                log.error("Exception when initializing forward blocking Sensor for Section {}", s.getDisplayName(USERSYS));
                 numErrors++;
             }
             try {
@@ -549,11 +511,11 @@ public class Transit extends AbstractNamedBean {
                         s.getReverseBlockingSensor().setState(Sensor.ACTIVE);
                     }
                 } else {
-                    log.warn("Missing reverse blocking sensor for section " + s.getSystemName());
+                    log.warn("Missing reverse blocking sensor for section {}", s.getDisplayName(USERSYS));
                     numErrors++;
                 }
             } catch (JmriException reason) {
-                log.error("Exception when initializing reverse blocking Sensor for Section " + s.getSystemName());
+                log.error("Exception when initializing reverse blocking Sensor for Section {}", s.getDisplayName(USERSYS));
                 numErrors++;
             }
         }
@@ -606,6 +568,50 @@ public class Transit extends AbstractNamedBean {
         }
         // we ignore the property setConfigureManager
     }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        jmri.SensorManager sm = jmri.InstanceManager.getDefault(jmri.SensorManager.class);
+        jmri.SignalHeadManager head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class);
+        jmri.SignalMastManager mast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        if (bean != null) {
+            getTransitSectionList().forEach((transitSection) -> {
+                if (bean.equals(transitSection.getSection())) {
+                    report.add(new NamedBeanUsageReport("TransitSection"));
+                }
+                if (bean.equals(sm.getSensor(transitSection.getStopAllocatingSensor()))) {
+                    report.add(new NamedBeanUsageReport("TransitSensorStopAllocation"));
+                }
+                // Process actions
+                transitSection.getTransitSectionActionList().forEach((action) -> {
+                    int whenCode = action.getWhenCode();
+                    int whatCode = action.getWhatCode();
+                    if (whenCode == TransitSectionAction.SENSORACTIVE || whenCode == TransitSectionAction.SENSORINACTIVE) {
+                        if (bean.equals(sm.getSensor(action.getStringWhen()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSensorWhen", transitSection.getSection()));
+                        }
+                    }
+                    if (whatCode == TransitSectionAction.SETSENSORACTIVE || whatCode == TransitSectionAction.SETSENSORINACTIVE) {
+                        if (bean.equals(sm.getSensor(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSensorWhat", transitSection.getSection()));
+                        }
+                    }
+                    if (whatCode == TransitSectionAction.HOLDSIGNAL || whatCode == TransitSectionAction.RELEASESIGNAL) {
+                        // Could be a signal head or a signal mast.
+                        if (bean.equals(head.getSignalHead(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSignalHeadWhat", transitSection.getSection()));
+                        }
+                        if (bean.equals(mast.getSignalMast(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSignalMastWhat", transitSection.getSection()));
+                        }
+                    }
+                });
+            });
+        }
+        return report;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(Transit.class);
 

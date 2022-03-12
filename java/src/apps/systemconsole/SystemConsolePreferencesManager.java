@@ -3,18 +3,18 @@ package apps.systemconsole;
 import apps.SystemConsole;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
-import jmri.util.ThreadingUtil;
 import jmri.util.prefs.InitializationException;
-import jmri.util.swing.FontComboUtil;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +30,12 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     public static final String SCHEME = "scheme";
     public static final String FONT_SIZE = "fontSize";
     public static final String FONT_STYLE = "fontStyle";
-    public static final String FONT_FAMILY = "fontFamily";
     public static final String WRAP_STYLE = "wrapStyle";
 
     // default settings
     private int scheme = 0; // Green on Black
     private int fontSize = 12;
     private int fontStyle = Font.PLAIN;
-    private String fontFamily = "Monospaced";  //NOI18N
     private int wrapStyle = SystemConsole.WRAP_STYLE_WORD;
 
     /*
@@ -52,7 +50,6 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     public void initialize(Profile profile) throws InitializationException {
         if (!this.initialized) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-            this.setFontFamily(preferences.get(FONT_FAMILY, this.getFontFamily()));
             this.setFontSize(preferences.getInt(FONT_SIZE, this.getFontSize()));
             this.setFontStyle(preferences.getInt(FONT_STYLE, this.getFontStyle()));
             this.setScheme(preferences.getInt(SCHEME, this.getScheme()));
@@ -64,7 +61,6 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     @Override
     public void savePreferences(Profile profile) {
         Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-        preferences.put(FONT_FAMILY, this.getFontFamily());
         preferences.putInt(FONT_SIZE, this.getFontSize());
         preferences.putInt(FONT_STYLE, this.getFontStyle());
         preferences.putInt(SCHEME, this.getScheme());
@@ -82,11 +78,13 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     @Override
-    public Iterable<Class<? extends PreferencesManager>> getRequires() {
+    @Nonnull
+    public Collection<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
     @Override
+    @Nonnull
     public Iterable<Class<?>> getProvides() {
         Set<Class<?>> provides = new HashSet<>();
         provides.add(this.getClass());
@@ -157,33 +155,6 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     /**
-     * @return the fontFamily
-     */
-    public String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * @param fontFamily the fontFamily to set
-     */
-    public void setFontFamily(String fontFamily) {
-        if (FontComboUtil.isReady()) {
-            if (FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(fontFamily)) {
-                String oldFontFamily = this.fontFamily;
-                this.fontFamily = fontFamily;
-                this.firePropertyChange(FONT_FAMILY, oldFontFamily, fontFamily);
-                SystemConsole.getInstance().setFontFamily(this.getFontFamily());
-            } else {
-                log.warn("Incompatible console font \"{}\" - using \"{}\"", fontFamily, this.getFontFamily());
-            }
-        } else {
-            ThreadingUtil.runOnGUIDelayed(() -> {
-                this.setFontFamily(fontFamily);
-            }, 1000); // one second
-        }
-    }
-
-    /**
      * @return the wrapStyle
      */
     public int getWrapStyle() {
@@ -212,6 +183,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     @Override
+    @Nonnull
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions);
     }

@@ -13,10 +13,43 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <version author="Alain Carasso" version="1" lastUpdated="20180210"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200601"/>
   <!-- Version 1 - using the 2 existing MTH PS3 definitions created by Michael Mosher, merging them into a single one  -->
+  <!-- Version 2 - add function labels -->
   <decoder>
     <family name="MTH HO Full PS3 Definition" mfg="MTH Electric Trains, Inc.">
       <model model="MTH HO Full PS3 Definition" lowVersionID="1" highVersionID="2"/>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Headlight</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Start up - Shutdown</functionlabel>
+        <functionlabel num="4" lockable="true">PFA</functionlabel>
+        <functionlabel num="5" lockable="true">Lights</functionlabel>
+        <functionlabel num="6" lockable="true">Master Volume</functionlabel>
+        <functionlabel num="7" lockable="true">Front Coupler</functionlabel>
+        <functionlabel num="8" lockable="true">Rear Coupler</functionlabel>
+        <functionlabel num="9" lockable="true">Forward Signal</functionlabel>
+        <functionlabel num="10" lockable="true">Reverse Signal</functionlabel>
+        <functionlabel num="11" lockable="true">Grade Crossing Signal</functionlabel>
+        <functionlabel num="12" lockable="true">Clickety Clack</functionlabel>
+        <functionlabel num="13" lockable="true">Idle Sequence 4</functionlabel>
+        <functionlabel num="14" lockable="true">Idle Sequence 3</functionlabel>
+        <functionlabel num="15" lockable="true">Idle Sequence 2</functionlabel>
+        <functionlabel num="16" lockable="true">Idle Sequence 1</functionlabel>
+        <functionlabel num="17" lockable="true">Extended Start Up</functionlabel>
+        <functionlabel num="18" lockable="true">Extended Shut Down</functionlabel>
+        <functionlabel num="19" lockable="true">Rev Up</functionlabel>
+        <functionlabel num="20" lockable="true">Rev Down</functionlabel>
+        <functionlabel num="21" lockable="true">One Shot Doopler</functionlabel>
+        <functionlabel num="22" lockable="true">Coupler Slack</functionlabel>
+        <functionlabel num="23" lockable="true">Coupler Close</functionlabel>
+        <functionlabel num="24" lockable="true">Short Horn</functionlabel>
+        <functionlabel num="25" lockable="true">Engine Sounds</functionlabel>
+        <functionlabel num="26" lockable="true">Brake Sounds</functionlabel>
+        <functionlabel num="27" lockable="true">Cab Chatter</functionlabel>
+        <functionlabel num="28" lockable="true">Feature Reset</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>
     <variables>

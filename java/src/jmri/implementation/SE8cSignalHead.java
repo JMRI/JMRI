@@ -224,10 +224,6 @@ public class SE8cSignalHead extends DefaultSignalHead {
     }
 
     @Override
-    public void dispose() {
-    }
-
-    @Override
     boolean isTurnoutUsed(Turnout t) {
         return (getLow() != null && t.equals(getLow().getBean()))
                 || (getHigh() != null && t.equals(getHigh().getBean()));

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar" -->
 	<div id="mainContent">
@@ -59,7 +59,7 @@ fournit une syntaxe de CV qui peut &#234;tre utilis&#233;e pour acc&#233;der &#2
 
 <p>Retour &#224; la <a href="index.shtml">page principale d'Aide OpenLCB</a></p>
      
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

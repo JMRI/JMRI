@@ -2,9 +2,11 @@ package jmri.jmrit.display.configurexml;
 
 import java.util.HashMap;
 import java.util.List;
+
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.TurnoutIcon;
+import jmri.jmrit.display.*;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -17,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
-    static final HashMap<String, String> _nameMap = new HashMap<String, String>();
+    static final HashMap<String, String> _nameMap = new HashMap<>();
 
     public TurnoutIconXml() {
         // map previous store names to property key names
@@ -71,9 +73,11 @@ public class TurnoutIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor p = (Editor) o;
 
@@ -113,33 +117,31 @@ public class TurnoutIconXml extends PositionableLabelXml {
         List<Element> states = element.getChildren();
         if (states.size() > 0) {
             if (log.isDebugEnabled()) {
-                log.debug("Main element has" + states.size() + " items");
+                log.debug("Main element has{} items", states.size());
             }
             Element elem = element;     // the element containing the icons
             Element icons = element.getChild("icons");
             if (icons != null) {
-                List<Element> s = icons.getChildren();
-                states = s;
+                states = icons.getChildren();
                 elem = icons;          // the element containing the icons
                 if (log.isDebugEnabled()) {
-                    log.debug("icons element has" + states.size() + " items");
+                    log.debug("icons element has{} items", states.size());
                 }
             }
-            for (int i = 0; i < states.size(); i++) {
-                String state = states.get(i).getName();
+            for (Element value : states) {
+                String state = value.getName();
                 if (log.isDebugEnabled()) {
-                    log.debug("setIcon for state \"" + state
-                            + "\" and " + _nameMap.get(state));
+                    log.debug("setIcon for state \"{}\" and {}", state, _nameMap.get(state));
                 }
                 NamedIcon icon = loadIcon(l, state, elem, "TurnoutIcon \"" + name + "\": icon \"" + state + "\" ", p);
                 if (icon != null) {
                     l.setIcon(_nameMap.get(state), icon);
                 } else {
-                    log.info("TurnoutIcon \"" + name + "\": icon \"" + state + "\" removed");
+                    log.info("TurnoutIcon \"{}\": icon \"{}\" removed", name, state);
                     return;
                 }
             }
-            log.debug(states.size() + " icons loaded for " + l.getNameString());
+            log.debug("{} icons loaded for {}", states.size(), l.getNameString());
         } else {        // case when everything was attributes
             int rotation = 0;
             try {
@@ -168,7 +170,11 @@ public class TurnoutIconXml extends PositionableLabelXml {
             }
         }
 
-        p.putItem(l);
+        try {
+            p.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
@@ -182,16 +188,16 @@ public class TurnoutIconXml extends PositionableLabelXml {
             if (icon == null) {
                 icon = ed.loadFailed("Turnout \"" + name + "\" icon \"" + state + "\" ", iconName);
                 if (icon == null) {
-                    log.info("Turnout \"" + name + "\" icon \"" + state + "\" removed for url= " + iconName);
+                    log.info("Turnout \"{}\" icon \"{}\" removed for url= {}", name, state, iconName);
                 }
             } else {
                 icon.setRotation(rotation, l);
             }
         } else {
-            log.warn("did not locate " + state + " icon file for Turnout " + name);
+            log.warn("did not locate {} icon file for Turnout {}", state, name);
         }
         if (icon == null) {
-            log.info("Turnout Icon \"" + name + "\": icon \"" + state + "\" removed");
+            log.info("Turnout Icon \"{}\": icon \"{}\" removed", name, state);
         } else {
             l.setIcon(_nameMap.get(state), icon);
         }

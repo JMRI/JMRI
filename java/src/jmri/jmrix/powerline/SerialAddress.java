@@ -186,7 +186,7 @@ public class SerialAddress {
                 nName = iCodes.group(1) + iCodes.group(2) + iCodes.group(3) + "." + iCodes.group(4) + "." + iCodes.group(5);
             } else {
                 if (log.isDebugEnabled()) {
-                    log.debug("valid name doesn't normalize: " + systemName + " hMatch: " + hMatch + " hCount: " + hCount);
+                    log.debug("valid name doesn't normalize: {} hMatch: {} hCount: {}", systemName, hMatch, hCount);
                 }
             }
         }
@@ -213,7 +213,7 @@ public class SerialAddress {
                 try {
                     hCode = hCodes.group(1);
                 } catch (Exception e) {
-                    log.error("illegal character in house code field system name: " + systemName);
+                    log.error("illegal character in house code field system name: {}", systemName);
                     return "";
                 }
             }
@@ -240,7 +240,7 @@ public class SerialAddress {
                     try {
                         dCode = hCodes.group(2);
                     } catch (Exception e) {
-                        log.error("illegal character in number field system name: " + systemName);
+                        log.error("illegal character in number field system name: {}", systemName);
                         return "";
                     }
                 }
@@ -248,7 +248,7 @@ public class SerialAddress {
                 if (iCodes.reset(systemName).matches()) {
                     dCode = iCodes.group(3) + iCodes.group(4) + iCodes.group(5);
                 } else {
-                    log.error("illegal insteon address: " + systemName);
+                    log.error("illegal insteon address: {}", systemName);
                     return "";
                 }
             }
@@ -276,7 +276,7 @@ public class SerialAddress {
                 try {
                     hCode = hCodes.group(3).charAt(0) - 0x40;
                 } catch (Exception e) {
-                    log.error("illegal character in number field system name: " + systemName);
+                    log.error("illegal character in number field system name: {}", systemName);
                     return -1;
                 }
             }
@@ -304,7 +304,7 @@ public class SerialAddress {
                 try {
                     dCode = Integer.parseInt(hCodes.group(4));
                 } catch (NumberFormatException e) {
-                    log.error("illegal character in number field system name: " + systemName);
+                    log.error("illegal character in number field system name: {}", systemName);
                     return -1;
                 }
             }
@@ -332,7 +332,7 @@ public class SerialAddress {
                 try {
                     dCode = Integer.parseInt(iCodes.group(3), 16);
                 } catch (NumberFormatException e) {
-                    log.error("illegal character in high id system name: " + systemName);
+                    log.error("illegal character in high id system name: {}", systemName);
                     return -1;
                 }
             }
@@ -360,7 +360,7 @@ public class SerialAddress {
                 try {
                     dCode = Integer.parseInt(iCodes.group(4), 16);
                 } catch (NumberFormatException e) {
-                    log.error("illegal character in high id system name: " + systemName);
+                    log.error("illegal character in high id system name: {}", systemName);
                     return -1;
                 }
             }
@@ -388,7 +388,7 @@ public class SerialAddress {
                 try {
                     dCode = Integer.parseInt(iCodes.group(5), 16);
                 } catch (NumberFormatException e) {
-                    log.error("illegal character in high id system name: " + systemName);
+                    log.error("illegal character in high id system name: {}", systemName);
                     return -1;
                 }
             }

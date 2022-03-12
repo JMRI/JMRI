@@ -9,6 +9,10 @@ package jmri.jmrit.operations.rollingstock.cars;
  */
 public class Xml {
 
+    private Xml() {
+        // class of constants
+    }
+
     // Common to operation xml files
     static final String NAME = "name"; // NOI18N
     static final String LOAD = "load"; // NOI18N
@@ -44,6 +48,9 @@ public class Xml {
     static final String RWE_DEST_ID = "rweDestId"; // NOI18N
     static final String RWE_DEST_TRACK_ID = "rweDestTrackId"; // NOI18N
     static final String RWE_LOAD = "rweLoad"; // NOI18N
+    static final String RWL_DEST_ID = "rwlDestId"; // NOI18N
+    static final String RWL_DEST_TRACK_ID = "rwlDestTrackId"; // NOI18N
+    static final String RWL_LOAD = "rwlLoad"; // NOI18N
 
     // CarManager.java
     static final String OPTIONS = "options"; // NOI18N

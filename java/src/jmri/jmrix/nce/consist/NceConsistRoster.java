@@ -46,17 +46,8 @@ import org.slf4j.LoggerFactory;
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
-    
-    public NceConsistRoster() {
-    }
 
-    /**
-     * @return The NCE consist roster object
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    public static synchronized NceConsistRoster instance() {
-        return InstanceManager.getDefault(NceConsistRoster.class);
+    public NceConsistRoster() {
     }
 
     /**
@@ -66,7 +57,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
      */
     public void addEntry(NceConsistRosterEntry e) {
         if (log.isDebugEnabled()) {
-            log.debug("Add entry " + e);
+            log.debug("Add entry {}", e);
         }
         int i = _list.size() - 1;// Last valid index
         while (i >= 0) {
@@ -88,7 +79,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
      */
     public void removeEntry(NceConsistRosterEntry e) {
         if (log.isDebugEnabled()) {
-            log.debug("Remove entry " + e);
+            log.debug("Remove entry {}", e);
         }
         _list.remove(_list.indexOf(e));
         setDirty(true);
@@ -268,7 +259,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
-            log.debug("writeFile " + name);
+            log.debug("writeFile {}", name);
         }
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
@@ -370,7 +361,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
         if (root.getChild("roster") != null) {
             List<Element> l = root.getChild("roster").getChildren("consist");
             if (log.isDebugEnabled()) {
-                log.debug("readFile sees " + l.size() + " children");
+                log.debug("readFile sees {} children", l.size());
             }
             for (int i = 0; i < l.size(); i++) {
                 addEntry(new NceConsistRosterEntry(l.get(i)));
@@ -503,7 +494,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
 
         firePropertyChange("change", null, r);
     }
-    
+
     @Override
     public void initialize() {
         if (checkFile(defaultNceConsistRosterFilename())) {
@@ -514,7 +505,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
             }
         }
     }
-    
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 

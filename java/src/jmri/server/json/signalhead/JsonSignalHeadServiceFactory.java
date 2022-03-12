@@ -17,17 +17,17 @@ import org.openide.util.lookup.ServiceProvider;
 public class JsonSignalHeadServiceFactory implements JsonServiceFactory<JsonSignalHeadHttpService, JsonSignalHeadSocketService> {
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{SIGNAL_HEAD, SIGNAL_HEADS};
     }
 
     @Override
-    public JsonSignalHeadSocketService getSocketService(JsonConnection connection) {
+    public JsonSignalHeadSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonSignalHeadSocketService(connection);
     }
 
     @Override
-    public JsonSignalHeadHttpService getHttpService(ObjectMapper mapper) {
+    public JsonSignalHeadHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonSignalHeadHttpService(mapper);
     }
 

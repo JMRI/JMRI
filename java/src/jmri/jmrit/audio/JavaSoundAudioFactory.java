@@ -69,9 +69,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             return false;
         } else {
             if (log.isInfoEnabled()) {
-                log.info("Initialised JavaSound:"
-                        + " vendor - " + JavaSoundAudioFactory.mixer.getMixerInfo().getVendor()
-                        + " version - " + JavaSoundAudioFactory.mixer.getMixerInfo().getVersion());
+                log.info("Initialised JavaSound: vendor - {} version - {}", JavaSoundAudioFactory.mixer.getMixerInfo().getVendor(), JavaSoundAudioFactory.mixer.getMixerInfo().getVersion());
             }
         }
 
@@ -111,8 +109,8 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             if (log.isDebugEnabled()) {
                 log.debug("Removing JavaSoundAudioSource: {}", source.getSystemName());
             }
-            // Cast to JavaSoundAudioSource and cleanup
-            ((JavaSoundAudioSource) source).cleanup();
+            // Includes cleanup
+            source.dispose();
         }
 
         // Now, retrieve list of AudioBuffer objects and remove the buffers
@@ -121,8 +119,8 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             if (log.isDebugEnabled()) {
                 log.debug("Removing JavaSoundAudioBuffer: {}", buffer.getSystemName());
             }
-            // Cast to JavaSoundAudioBuffer and cleanup
-            ((JavaSoundAudioBuffer) buffer).cleanup();
+            // Includes cleanup
+            buffer.dispose();
         }
 
         // Lastly, retrieve list of AudioListener objects and remove listener.
@@ -131,8 +129,8 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             if (log.isDebugEnabled()) {
                 log.debug("Removing JavaSoundAudioListener: {}", listener.getSystemName());
             }
-            // Cast to JavaSoundAudioListener and cleanup
-            ((JavaSoundAudioListener) listener).cleanup();
+            // Includes cleanup
+            listener.dispose();
         }
 
         // Finally, shutdown JavaSound and close the output device

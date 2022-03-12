@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * manipulation) parts are unchanged.
  * <p>
  * The JComboBox implementation always had to have selected entries, so we added
- * dummy "select from .." items at the top {@literal &} used those to indicate
+ * dummy "select from .." items at the top and used those to indicate
  * that there was no selection in that box. Here, the lack of a selection
  * indicates there's no selection.
  * <p>
@@ -650,7 +650,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }
 
         @Override
-        @SuppressWarnings("unchecked") // required because super.breadthFirstEnumeration not fully typed
         public Enumeration<TreeNode> breadthFirstEnumeration() { // JDK 9 typing
             return super.breadthFirstEnumeration();
         }
@@ -689,7 +688,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                 }
                 realIndex++;
                 if (visibleIndex == index) {
-                    return (TreeNode) children.elementAt(realIndex);
+                    return children.elementAt(realIndex);
                 }
             }
 

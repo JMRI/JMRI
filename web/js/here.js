@@ -1,5 +1,5 @@
 /*
-Highlight the li element with href link to the current page in the left sidebar.
+Highlight the li element with href link to the current JMRI Help web page in the left sidebar.
 nav sidebar a href links occur inside plain <li> as well as <dd><li> tags, supports both.
 Since Nov 2019
 */

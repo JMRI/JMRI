@@ -28,6 +28,14 @@ speedEStopSpeed = -1
 valueSpeedTimerRepeat = 25 # repeat time in ms for speed set task
 valueSpeedIncrement = 0.01
 
+depErr="""Required dependency must be installed!
+
+ You need to install WiiRemoteJ library :
+       https://github.com/micromu/WiiRemoteJ/raw/master/WiiRemoteJ.jar
+
+ Copy the jar file your JMRI lib folder. 
+    """
+
 import java
 import java.awt
 import java.awt.event
@@ -44,10 +52,16 @@ import javax.swing.SwingUtilities as SwingUtilities
 import thread
 import jmri.jmrit.throttle.AddressListener as AddressListener
 import jmri.jmrit.jython.Jynstrument as Jynstrument
-import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
-import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
-import wiiremotej.WiiRemoteJ as WiiRemoteJ
-import wiiremotej.event.WRButtonEvent as WRButtonEvent
+import javax.swing.JOptionPane as JOptionPane
+import javax.swing.JTextArea as JTextArea
+import javax.swing.JFrame as JFrame
+try:
+    import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
+    import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
+    import wiiremotej.WiiRemoteJ as WiiRemoteJ
+    import wiiremotej.event.WRButtonEvent as WRButtonEvent
+except:
+    JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
 
 
 class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, WiiDeviceDiscoveryListener, WiiRemoteListener, Runnable):

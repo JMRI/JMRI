@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.messageinterp;
 
 import java.util.Locale;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.messageinterp.Bundle class.
@@ -33,9 +33,9 @@ public class BundleTest {
         Assert.assertEquals("Set Global (Track) Power to 'Force Idle, Broadcast Emergency STOP'.\n", Bundle.getMessage("LN_MSG_IDLE"));
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessage() {
-            Bundle.getMessage("FFFFFTTTTTTT");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test public void testGoodKeyMessageArg() {
@@ -43,9 +43,9 @@ public class BundleTest {
         Assert.assertEquals("Request status of switch SystemName (UserName).\n", Bundle.getMessage("LN_MSG_SW_STATE", "SystemName", "UserName"));
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessageArg() {
-            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
     @Test public void testLocaleMessage() {

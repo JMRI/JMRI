@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -35,6 +36,10 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
     public EcosTurnoutManager(EcosSystemConnectionMemo memo) {
         super(memo);
+        initEtm();
+    }
+    
+    private void initEtm() {
         tc = getMemo().getTrafficController();
 
         // listen for turnout creation
@@ -54,24 +59,28 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     EcosTrafficController tc;
 
     // The hash table simply holds the object number against the EcosTurnout ref.
-    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>(); // stores known Ecos Object ids to DCC
+    private final Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<>(); // stores known Ecos Object ids to DCC
 
     /**
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
-            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName '{}' to a turnout address", systemName);
-            return null;
+            addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("failed to convert systemName '"+systemName+"' to an Ecos turnout address");
         }
         Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
         t.setUserName(userName);
@@ -80,14 +89,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     // to listen for status changes from Ecos system
     @Override
     public void reply(EcosReply m) {
-        log.debug("reply " + m);
+        log.debug("reply {}", m);
         // is this a list of turnouts?
         EcosTurnout et;
 
@@ -110,7 +119,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                     }
                     //Creation or removal of a turnout from the Ecos.
                 } else {
-                    log.debug("Forwarding on State change for " + ecosObjectId);
+                    log.debug("Forwarding on State change for {}", ecosObjectId);
                     et = _tecos.get(ecosObjectId);
                     if (et != null) {
                         et.reply(m);
@@ -135,13 +144,13 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         // yes, make sure TOs exist
                         //log.debug("found "+(lines.length-2)+" turnout objects");
                         for (String item : m.getContents()) {
-                            log.debug("header " + item);
+                            log.debug("header {}", item);
                             //for (int i = 1; i<lines.length-1; i++) {
                             if (item.contains("addr")) { // skip odd lines
                                 int object = GetEcosObjectNumber.getEcosObjectNumber(item, null, " ");
                                 if ((20000 <= object) && (object < 30000)) { // only physical turnouts
                                     int addr = GetEcosObjectNumber.getEcosObjectNumber(item, "[", "]");
-                                    log.debug("Found turnout object " + object + " addr " + addr);
+                                    log.debug("Found turnout object {} addr {}", object, addr);
 
                                     if (addr > 0) {
                                         Turnout t = getTurnout(getSystemNamePrefix() + addr);
@@ -152,7 +161,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                         }
                                     }
                                 } else if ((30000 <= object) && (object < 40000)) {  //This is a ecos route
-                                    log.debug("Found route object " + object);
+                                    log.debug("Found route object {}", object);
 
                                     Turnout t = getTurnout(getSystemNamePrefix() + object);
                                     if (t == null) {
@@ -270,7 +279,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             end = lines.indexOf(']');
             String turnoutadd = stripChar(lines.substring(start, end));
             String[] straddr = turnoutadd.split(",");
-            log.debug("Number of Address for this device is " + straddr.length);
+            log.debug("Number of Address for this device is {}", straddr.length);
             if (straddr.length <= 2) {
                 if (straddr.length == 2) {
                     if (!straddr[0].equals(straddr[1])) {
@@ -343,7 +352,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
         } else if ((30000 <= object) && (object < 40000)) {  //This is a ecos route
 
-            log.debug("Found route object " + object);
+            log.debug("Found route object {}", object);
 
             Turnout t = getTurnout(getSystemNamePrefix() + object);
             if (t == null) {
@@ -444,7 +453,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                             }
                             int count = et.getNumPropertyChangeListeners() - 1; // one is this table
                             if (log.isDebugEnabled()) {
-                                log.debug("Delete with " + count);
+                                log.debug("Delete with {}", count);
                             }
                             if ((!noWarnDelete) && (count > 0)) {
                                 String msg = java.text.MessageFormat.format(
@@ -498,7 +507,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
     }
 
-    boolean noWarnDelete = false;
+    private boolean noWarnDelete = false;
 
     public String stripChar(String s) {
         String allowed
@@ -626,10 +635,12 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             tc.sendEcosMessage(em, this);
         }
 
-        if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            jmri.InstanceManager.getDefault(ConfigureManager.class).deregister(this);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).deregister(this);
         }
         _tecos.clear();
+        tc.removeEcosListener(this); // disconnect from tc
+        super.dispose(); // remove SensorManager and SystemConnectionMemo change listeners
     }
 
     public List<String> getEcosObjectList() {
@@ -678,6 +689,30 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             em = new EcosMessage("request(" + ecosObjectId + ",view)");
             tc.sendEcosMessage(em, this);
         }
+    }
+    
+    @Override
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        int iName;
+        try {
+                iName = Integer.parseInt(curAddress);
+            } catch (NumberFormatException ex) {
+                throw new JmriException("Hardware Address passed "+curAddress+" should be a number.");
+            }
+        return prefix + typeLetter() + iName;
+    }
+    
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: Custom validation for EcosTurnoutManager could be improved.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateSystemNameFormatOnlyNumeric(name, locale);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class);

@@ -9,18 +9,15 @@ import jmri.util.FileUtil;
 import jmri.jmrit.ctc.CTCFiles;
 
 /**
+ * This just maintains all of the properties a user can create. Stupid simple.
+ * <p>
+ * Default values are assigned when the class instance is created.  The current values
+ * are loaded from the PanelPro data xml file.
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- *
- * This just maintains all of the properties a user can create. Stupid simple.
  */
 public class ProgramProperties {
 
-    private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";  // NOI18N
-
-    public static final String FILENAME_DEFAULT = "preference:ctc/CTCSystem.xml";   // NOI18N
-    private static final String FILENAME_KEY = "_mFilename";    // NOI18N
-    public String _mFilename = FILENAME_DEFAULT;
     private static final String CODE_BUTTON_INTERNAL_SENSOR_PATTERN = "_mCodeButtonInternalSensorPattern";  // NOI18N
     private static final String CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:CB"; // NOI18N
     public String _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
@@ -74,17 +71,33 @@ public class ProgramProperties {
     public int _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
 
     public ProgramProperties() {
+        _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSIDI_CodingTimeInMilliseconds = Integer.parseInt(SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
+        _mSIDI_LeftInternalSensorPattern = SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSIDI_NormalInternalSensorPattern = SIDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSIDI_RightInternalSensorPattern = SIDI_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSIDI_TimeLockingTimeInMilliseconds = Integer.parseInt(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT);
+        _mSIDL_LeftInternalSensorPattern = SIDL_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSIDL_NormalInternalSensorPattern = SIDL_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSIDL_RightInternalSensorPattern = SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSWDI_CodingTimeInMilliseconds = Integer.parseInt(SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
+        _mSWDI_NormalInternalSensorPattern = SWDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSWDI_ReversedInternalSensorPattern = SWDI_REVERSED_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mSWDL_InternalSensorPattern = SWDL_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mCO_CallOnToggleInternalSensorPattern = CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN_DEFAULT;
+        _mTUL_DispatcherInternalSensorLockTogglePattern = TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT;
+        _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT;
+        _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
+    }
+
+    private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";  // NOI18N
+    public void importExternalProgramProperties() {
         try {
             File file = CTCFiles.getFile(PROPERTIES_FILENAME);
             Properties properties = new Properties();
             try (FileInputStream fileInputStream = new FileInputStream(file)) {
                 properties.loadFromXML(fileInputStream);
             }
-
-            // Migrate file name if necessary
-            String tempName = properties.getProperty(FILENAME_KEY, FILENAME_DEFAULT);
-            String fileName = (tempName.startsWith("preference:") ? tempName : "preference:ctc/" + tempName);   // NOI18N
-            _mFilename = FileUtil.getExternalFilename(fileName);
 
             _mCodeButtonInternalSensorPattern = properties.getProperty(CODE_BUTTON_INTERNAL_SENSOR_PATTERN, CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSIDI_CodingTimeInMilliseconds = Integer.parseInt(properties.getProperty(SIDI_CODING_TIME_IN_MILLISECONDS, SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT));
@@ -104,58 +117,8 @@ public class ProgramProperties {
             _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = properties.getProperty(TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN, TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT);
             _mCodeButtonDelayTime = Integer.parseInt(properties.getProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT));
         } catch (IOException | NumberFormatException e) {
-            _mFilename = FileUtil.getExternalFilename(FILENAME_DEFAULT);
-            _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDI_CodingTimeInMilliseconds = Integer.parseInt(SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
-            _mSIDI_LeftInternalSensorPattern = SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDI_NormalInternalSensorPattern = SIDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDI_RightInternalSensorPattern = SIDI_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDI_TimeLockingTimeInMilliseconds = Integer.parseInt(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT);
-            _mSIDL_LeftInternalSensorPattern = SIDL_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDL_NormalInternalSensorPattern = SIDL_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDL_RightInternalSensorPattern = SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSWDI_CodingTimeInMilliseconds = Integer.parseInt(SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
-            _mSWDI_NormalInternalSensorPattern = SWDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSWDI_ReversedInternalSensorPattern = SWDI_REVERSED_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSWDL_InternalSensorPattern = SWDL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mCO_CallOnToggleInternalSensorPattern = CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mTUL_DispatcherInternalSensorLockTogglePattern = TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT;
-            _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT;
-            _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
+            log.error("ProgramProperties: {}", e.getMessage());
         }
     }
-
-    static public boolean programPropertiesFileExists() {
-        return (new File(PROPERTIES_FILENAME)).isFile();
-    }
-
-    public void close() {
-        try {
-            Properties properties = new Properties();
-            properties.setProperty(FILENAME_KEY, FileUtil.getPortableFilename(_mFilename));
-            properties.setProperty(CODE_BUTTON_INTERNAL_SENSOR_PATTERN, _mCodeButtonInternalSensorPattern);
-            properties.setProperty(SIDI_CODING_TIME_IN_MILLISECONDS, Integer.toString(_mSIDI_CodingTimeInMilliseconds));
-            properties.setProperty(SIDI_LEFT_INTERNAL_SENSOR_PATTERN, _mSIDI_LeftInternalSensorPattern);
-            properties.setProperty(SIDI_NORMAL_INTERNAL_SENSOR_PATTERN, _mSIDI_NormalInternalSensorPattern);
-            properties.setProperty(SIDI_RIGHT_INTERNAL_SENSOR_PATTERN, _mSIDI_RightInternalSensorPattern);
-            properties.setProperty(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS, Integer.toString(_mSIDI_TimeLockingTimeInMilliseconds));
-            properties.setProperty(SIDL_LEFT_INTERNAL_SENSOR_PATTERN, _mSIDL_LeftInternalSensorPattern);
-            properties.setProperty(SIDL_NORMAL_INTERNAL_SENSOR_PATTERN, _mSIDL_NormalInternalSensorPattern);
-            properties.setProperty(SIDL_RIGHT_INTERNAL_SENSOR_PATTERN, _mSIDL_RightInternalSensorPattern);
-            properties.setProperty(SWDI_CODING_TIME_IN_MILLISECONDS, Integer.toString(_mSWDI_CodingTimeInMilliseconds));
-            properties.setProperty(SWDI_NORMAL_INTERNAL_SENSOR_PATTERN, _mSWDI_NormalInternalSensorPattern);
-            properties.setProperty(SWDI_REVERSED_INTERNAL_SENSOR_PATTERN, _mSWDI_ReversedInternalSensorPattern);
-            properties.setProperty(SWDL_INTERNAL_SENSOR_PATTERN, _mSWDL_InternalSensorPattern);
-            properties.setProperty(CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN, _mCO_CallOnToggleInternalSensorPattern);
-            properties.setProperty(TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN, _mTUL_DispatcherInternalSensorLockTogglePattern);
-            properties.setProperty(TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN, _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern);
-            properties.setProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, Integer.toString(_mCodeButtonDelayTime));
-            CTCFiles.rotate(PROPERTIES_FILENAME, true);
-            File file = CTCFiles.getFile(PROPERTIES_FILENAME);
-            try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-                properties.storeToXML(fileOutputStream, PROPERTIES_FILENAME);
-            }
-        } catch (IOException e) {
-        }
-    }
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgramProperties.class);
 }

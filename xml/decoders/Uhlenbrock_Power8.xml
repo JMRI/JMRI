@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2021 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock publishes the Article number for each (new) device.
+The Uhlenbrock Power8 has an Article number 6328, which was registered with Uhlenbrock.
+Older LNCV devices may not have their own address, or even no article. They can be programmed using
+Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
+programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20210206"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+    <!-- compare to Power4, a 4A Booster. Because of the way LNCV includes the art.nr. in the CV it could not be included in this file -->
+    <decoder>
+        <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary">
+          <model model="Power8" productID="6328" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
+            <versionCV />
+            <size length="104" width="58" height="33" units="mm" />
+          </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6328.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Module address" >
+              <decVal min="0" max="65534"/>
+              <label xml:lang="it">Indirizzo Modulo: </label>
+              <label xml:lang="fr">Adresse Module: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Module-adres: </label>
+              <label>Module Address: </label>
+              <tooltip>Enter as decimal value (1-65534)</tooltip>
+            </variable>
+            <variable CV="6328.1" item="Decoder Version" readOnly="yes">
+              <decVal/>
+              <label xml:lang="it">Versione Booster: </label>
+              <label xml:lang="fr">Version Booster: </label>
+              <label xml:lang="de">Softwareversion: </label>
+              <label xml:lang="nl">Booster firmware-versie: </label>
+              <label>Booster Firmware Version: </label>
+            </variable>
+
+            <variable CV="6328.3" item="Configuration" default="92">
+              <decVal/>
+              <label xml:lang="de">Gesamtwert LNCV3: </label>
+              <label xml:lang="nl">Gecombineerde waarde LNCV3: </label>
+              <label>Combined LNCV3 Value: </label>
+              <tooltip>Intended for verification only, set options below.</tooltip>
+            </variable>
+            <variable CV="6328.3" mask="XXXXXXXV" item="Ignore DIP Switches" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Nutze CV5 für Grundeinstellung</label>
+              <label xml:lang="nl">Boosterbesturing instellen met CV5</label>
+              <label>Use CV5 for Booster Control</label>
+              <tooltip>On: Set in CV5 (below). Off: Set using DIP hardware switches.</tooltip>
+              <tooltip xml:lang="de">Ein: CV5 (unten) bestimmt die Booster Grundeinstellung. Aus: Eingabe mit DIP Schalter</tooltip>
+              <tooltip xml:lang="nl">Aan: CV5 (hieronder) bepaalt besturing Booster. Uit: Stel in met DIP schakelaars</tooltip>
+            </variable>
+            <variable CV="6328.3" mask="XXXXXXVX" item="Switch STOP/GO" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Einschalten mit GO/STOP</label>
+              <label xml:lang="nl">Inschakelen met GO/STOP</label>
+              <label>Turn on/off by LocoNet GO/STOP</label>
+              <tooltip>Booster switches on/off by LocoNet GO/STOP instruction (GPON/GPOFF). Off: Signal on selected input switches booster on/off</tooltip>
+              <tooltip xml:lang="de">Booster ein-/ausschalten per LocoNet-Befehl GO/STOP (GPON/GPOFF). Aus: Eingangssignal am gewählten Boostereingang schaltet Verstärker ein/aus.</tooltip>
+              <tooltip xml:lang="nl">Booster inschakelen met LocoNet GO/STOP instructie (GPON/GPOFF). Uit: Ingestelde ingangssignaal schakelt booster aan/uit</tooltip>
+            </variable>
+            <variable CV="6328.3" mask="XXXXXVXX" item="Booster All" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Verstärker zusammen schalten</label>
+              <label xml:lang="nl">Alle Boosters gelijk aan/uit</label>
+              <label>All Boosters Off</label>
+              <tooltip>On: At Power Off, send a LocoNet GPOFF message to the Command Station turning off all boosters</tooltip>
+              <tooltip xml:lang="de">Ein: Beim Ausschalten ein GPOFF Bericht and die Zentrale senden damit alle Verstärker ausgeschaltet werden</tooltip>
+              <tooltip xml:lang="nl">Aan: Bij uitschakelen een GPOFF bericht sturen aan de centrale om alle boosters uit te schakelen.</tooltip>
+            </variable>
+            <variable CV="6328.3" mask="XXXXVXXX" item="Signal Off to Input" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sende Ein/Aus über Eingang</label>
+              <label xml:lang="nl">Verstuur Aan/uit op Ingang</label>
+              <label>Signal Off to Input</label>
+              <tooltip>On: At Power Off, send status to Input (Märklin or Lenz DCC Booster Input)</tooltip>
+              <tooltip xml:lang="de">Ein: Beim Ausschalten signal über Eingang senden (Märklin or Lenz DCC Booster Eingang)</tooltip>
+              <tooltip xml:lang="nl">Aan: Uitschakelen melden op de Booster Ingang (Märklin or Lenz DCC Booster Input)</tooltip>
+            </variable>
+            <variable CV="6328.3" mask="XXXVXXXX" item="Send Short" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sende Kurzschluss-bericht</label>
+              <label xml:lang="fr">Envoie un rapport á court-circuit</label>
+              <label xml:lang="nl">Stuur LN bericht bij kortsluiting</label>
+              <label>Send Short Detected LN-message</label>
+              <tooltip>Booster sends a special L.NET report if there is a short circuit or temperature shut down, enabling the control unit to display which booster has a short circuit.</tooltip>
+              <tooltip xml:lang="de">Booster sendet bei Kurzschluss oder Temperaturüberschritt einen besonderen L.NET Bericht für die Intellibox II.</tooltip>
+              <tooltip xml:lang="nl">De booster verstuurt bij kortsluiting of te hoge temperatuur een speciaal bericht op LocoNet zodat de centrale de status kan tonen.</tooltip>
+            </variable>
+            <variable CV="6328.3" mask="XXVXXXXX" item="Invert Outputs" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Gleissignal umpolen</label>
+              <label xml:lang="fr">Booster á polarité inversé́</label>
+              <label xml:lang="nl">Uitgangen Omgekeerd</label>
+              <label>Invert Output Polarity</label>
+              <tooltip>Reverse booster output polarity (to correct swapped wires)</tooltip>
+              <tooltip xml:lang="de">Gleissignal umpolen zur Verwendung gedrehter LocoNet Kabel oder bei Vertauschung von C und D des DCC-Boostereingangs.</tooltip>
+              <tooltip xml:lang="nl">Keer polariteit van de uitgangen om (herstelt omgekeerde aansluitingen)</tooltip>
+              <tooltip xml:lang="fr">Le polarité des sorties du booster sont inversé (cable)</tooltip>
+            </variable>
+            <variable CV="6328.3" mask="XVXXXXXX" item="Cut Out Hardware" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Cut Out Hardware</label>
+              <label xml:lang="de">Cut Out Geräte</label>
+              <label xml:lang="nl">Cut Out </label>
+              <tooltip>Cut Out Hardware activated (required for Selectrix operation)</tooltip>
+              <tooltip xml:lang="de">Cut Out Hardware aktiviert ( (notwendig für den RailCom Betrieb/Selectrix)</tooltip>
+              <tooltip xml:lang="nl">Schakel Cut Out Hardware in (vereist voor Selectrix)</tooltip>
+            </variable>
+
+            <variable CV="6328.4" item="Starting Phase Wait" default="6">
+              <decVal min="0" max="255"/>
+              <label>Starting phase wait period: </label>
+              <label xml:lang="de">Start Wartezeit: </label>
+              <label xml:lang="nl">Opstartpauze: </label>
+              <tooltip>Waiting period in 0.5 s steps. The standard value is equivalent to approx. 3 seconds</tooltip>
+              <tooltip xml:lang="de">Startphase Wartezeit in 0,5s Schritten. Werkseinstellung ~ 3 s.</tooltip>
+              <tooltip xml:lang="nl">Wachttijd inschakelen in stappen van 0,5s. Standaard ingesteld op ca. 3 s.</tooltip>
+            </variable>
+            <!-- no choice, but item="Action Mode" is required to hide elements in UI unless it's a LocoServo -->
+            <variable CV="6328.5" mask="XXXXXXVV" comment="bits 0-1" item="Booster Control" default="0">
+              <enumVal>
+                <enumChoice choice="0" value="0">
+                  <choice>LocoNet Input</choice>
+                  <choice xml:lang="de">LocoNet Eingang</choice>
+                  <choice xml:lang="nl">LocoNet Ingang</choice>
+                </enumChoice>
+                <enumChoice choice="0" value="1">
+                  <choice>DCC Booster Input (Lenz CDE)</choice>
+                  <choice xml:lang="de">DCC Verstärker-eingang (Lenz CDE)</choice>
+                  <choice xml:lang="nl">DCC Booster-ingang (Lenz CDE)</choice>
+                </enumChoice>
+                <enumChoice choice="0" value="2">
+                  <choice>Märklin Booster Input</choice>
+                  <choice xml:lang="de">Märklin Verstärker-eingang</choice>
+                  <choice xml:lang="nl">Märklin Booster-ingang</choice>
+                </enumChoice>
+              </enumVal>
+              <label>Booster Control:</label>
+              <label xml:lang="de">Grundeinstellungen:</label>
+              <label xml:lang="nl">Booster-besturing:</label>
+              <tooltip>Instead of the dip switches, set CV3 bit 0 to 1 and this choice will apply</tooltip>
+              <tooltip xml:lang="de">Soll der Booster nicht über den DIP-Switch sondern per LocoNet CV eingestellt werden, setze Bit 0 in der LNCV 3.</tooltip>
+            </variable>
+            <variable CV="6328.5" mask="XXXXXVXX" item="DCC Brake" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>DCC Brake Generator</label>
+              <label xml:lang="de">DCC-Bremsgenerator</label>
+              <label xml:lang="nl">DCC Afremmen</label>
+              <tooltip>Off: Normal operation, Brake Generator off</tooltip>
+              <tooltip xml:lang="de">Aus: Normalbetrieb</tooltip>
+              <tooltip xml:lang="nl">Uit: Normaal bedrijf, remgenerator uit</tooltip>
+            </variable>
+            <variable CV="6328.5" mask="XXXXVXXX" item="RailCom CutOut" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>DCC-RailCom CutOut</label>
+              <tooltip>Off: RailCom off</tooltip>
+              <tooltip xml:lang="de">Aus: RailCom deaktiviert</tooltip>
+              <tooltip xml:lang="nl">Uit: RailCom uitgeschakeld</tooltip>
+            </variable>
+            <variable CV="6328.6" readOnly="yes" item="Temperature">
+              <decVal max="255"/>
+              <label xml:lang="de">Betriebstemperatur in °C: </label>
+              <label xml:lang="fr">Température (ºC): </label>
+              <label xml:lang="nl">Temperatuur (ºC): </label>
+              <label>Operating Temperature (ºC): </label>
+            </variable>
+            <variable CV="6328.7" readOnly="yes" item="Load">
+              <decVal max="100"/>
+              <label xml:lang="de">Strombelastung (%)): </label>
+              <label xml:lang="fr">Pourcentage de charge: </label>
+              <label xml:lang="nl">Huidige belasting (%): </label>
+              <label>Power Load (%): </label>
+            </variable>
+            <variable CV="6328.8" item="Switch Address" mask="VVVVVVVVVVVV" default="0">
+              <decVal min="1" max="2047"/>
+              <label xml:lang="de">Adresse Ein-/Ausschalten: </label>
+              <label xml:lang="fr">Adresse de commutation: </label>
+              <label xml:lang="nl">Adres voor Aan/Uit: </label>
+              <label>Booster On/Off Address: </label>
+              <tooltip>Solenoid address to turn single booster on or off</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Booster Einzelabschaltung</tooltip>
+              <tooltip xml:lang="fr">Adresse de commutation pour allumer ou éteindre le booster</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor Individuele uitschakeling van de booster</tooltip>
+            </variable>
+            <variable CV="6328.9" item="Braking Signal" default="6">
+              <decVal min="0" max="255"/>
+              <label>Braking Signal Data: </label>
+              <label xml:lang="de">Bremssignaldaten: </label>
+              <label xml:lang="nl">Instelling Afremmen</label>
+              <tooltip>Data for braking signal (not explained in manual)</tooltip>
+              <tooltip xml:lang="de">Daten für Bremssignal (z.B. Langsamfahrt)</tooltip>
+              <tooltip xml:lang="nl">Data voor Remsignaal (bijv. Langzaam rijden)</tooltip>
+            </variable>
+            <variable CV="6328.10" item="DCC Cutout Time" default="63">
+              <decVal min="0" max="255"/>
+              <label>DCC CutOut Time: </label>
+              <label xml:lang="de">DCC CutOut-Zeit: </label>
+              <label xml:lang="nl">DCC CutOut-tijd</label>
+              <tooltip>DCC CutOut time in 7.5 µ seconds steps</tooltip>
+              <tooltip xml:lang="de">DCC CutOut-Dauer in 7,5 μs Schritten</tooltip>
+              <tooltip xml:lang="nl">DCC CutOut-tijd in stappen van 7,5 μs</tooltip>
+            </variable>
+              <variable CV="6328.11" item="Restart Wait" default="20">
+                <decVal min="0" max="255"/>
+                <label xml:lang="de">Wartezeit nach Kurzschluss: </label>
+                <label xml:lang="fr">Activation d'après court-circuit: </label>
+                <label xml:lang="nl">Wachttijd na kortsluiting: </label>
+                <label>Restart Wait after Short: </label>
+                <tooltip>Turn on automatically following a short circuit in 0.5 s steps. The standard value is equivalent to approx. 10 seconds. 0 turns off auto restart.</tooltip>
+                <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im 0,5 s Schritten. Der Standardwert entspricht ca. 10 Sekunden. (0 = schalte nicht wieder ein)</tooltip>
+                <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 0,5 s. La valeur standard équivaut à env. 10 secondes. Valeur 0: automatique désactivé.</tooltip>
+                <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 10 secondes. (Het instellen gebeurt in stappen van 0,5 s)</tooltip>
+              </variable>
+
+        </variables>
+    </decoder>
+
+    <pane>
+        <name>LNCV Configuration</name>
+        <name xml:lang="de">LNCV Konfiguration</name>
+        <name xml:lang="nl">LNCV instellingen</name>
+        <row>
+            <column>
+              <display item="Switch Address"/>
+
+              <label>
+                <text> </text>
+              </label>
+
+              <label>
+                <text>Current Status</text>
+                <text xml:lang="de">Aktueller Zustand</text>
+                <text xml:lang="fr">Condition Actuelle</text>
+                <text xml:lang="nl">Actuele Status</text>
+              </label>
+              <separator/>
+              <display item="Temperature"/>
+              <display item="Load"/>
+            </column>
+
+            <column>
+                <label>
+                  <text>Before writing, open a Programming</text>
+                  <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+                  <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                </label>
+                <label>
+                  <text>session using the LocoNet LNCV Tool.</text>
+                  <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                  <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                </label>
+                <label>
+                  <text> </text>
+                </label>
+
+                <label>
+                  <text>LNCV3 Configuration</text>
+                  <text xml:lang="nl">Instelling LNCV3</text>
+                  <text xml:lang="de">LNCV3 Konfiguration</text>
+                  <text xml:lang="fr">Configuration LNCV3</text>
+                </label>
+                <separator/>
+                <display item="Configuration"/>
+                <display item="Switch STOP/GO" format="checkbox"/>
+                <display item="Booster All" format="checkbox"/>
+                <display item="Signal Off to Input" format="checkbox"/>
+                <display item="Send Short" format="checkbox"/>
+                <display item="Invert Outputs" format="checkbox"/>
+                <display item="Cut Out Hardware" format="checkbox"/>
+                <display item="Ignore DIP Switches" format="checkbox"/>
+                <group>
+                  <separator/>
+                  <qualifier>
+                    <variableref>Ignore DIP Switches</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                  </qualifier>
+                  <row>
+                    <display item="Booster Control"/>
+                  </row>
+                  <row>
+                    <display item="DCC Brake" format="checkbox"/>
+                  </row>
+                  <row>
+                    <display item="RailCom CutOut" format="checkbox"/>
+                  </row>
+                </group>
+            </column>
+
+            <column>
+                <label>
+                  <text>Time Settings</text>
+                  <text xml:lang="nl">Tijdinstellingen</text>
+                  <text xml:lang="de">Zeiteinstellungen</text>
+                  <text xml:lang="fr">Configuration Temporelle</text>
+                </label>
+                <separator/>
+                <row>
+                  <display item="Starting Phase Wait"/>
+                  <display item="Starting Phase Wait" label="" format="hslider"/>
+                </row>
+                <row>
+                  <display item="Restart Wait"/>
+                  <display item="Restart Wait" label="" format="hslider"/>
+                </row>
+                <row>
+                  <display item="DCC Cutout Time"/>
+                  <display item="DCC Cutout Time" label="" format="hslider"/>
+                </row>
+
+                <label>
+                  <text> </text>
+                </label>
+                <row>
+                  <display item="Braking Signal"/>
+                  <display item="Braking Signal" label="" format="hslider"/>
+                </row>
+            </column>
+        </row>
+    </pane>
+
+</decoder-config>

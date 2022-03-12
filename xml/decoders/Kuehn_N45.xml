@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -118,7 +117,7 @@
     <xi:include href="http://jmri.org/xml/decoders/kuehn/analogModeFunction_k.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/functionmap_ext.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/vStartHighMid_k.xml"/>
-    <variable CV="7" default="35" readOnly="yes" item="Decoder Version">
+    <variable CV="7" default="35" item="Decoder Version" readOnly="yes">
     <decVal/>
       <label>Version ID</label>
       <label xml:lang="it">Versione Decoder: </label>

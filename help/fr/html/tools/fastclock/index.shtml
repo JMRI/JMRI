@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -84,6 +84,10 @@
         int&eacute;grer une horloge dans un TCO (au lieu d'une
         fen&ecirc;tre s&eacute;par&eacute;e) de l'&eacute;diteur de
         panneau.</li>
+        
+        <li>Horloge Pragotron clock - &#268;SD 
+            <span class="since">since 4.19.2</span></li>
+
       </ul>
 
       <p>Lorsque l'horloge est en marche, JMRI cr&eacute;e un
@@ -96,7 +100,7 @@
       accessible &agrave; partir de Logix et de scripts.</p>
 
       <p>Chronom&eacute;trage heureux!</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

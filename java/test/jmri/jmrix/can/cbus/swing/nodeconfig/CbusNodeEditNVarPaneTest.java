@@ -1,19 +1,17 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of CbusNodeEditNVarFrame
@@ -31,7 +29,6 @@ public class CbusNodeEditNVarPaneTest {
         t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
         
-        mainpane = null;
     }
     
     @Test
@@ -53,21 +50,19 @@ public class CbusNodeEditNVarPaneTest {
         
         CbusNode nodeToEdit = nodeModel.provideNodeByNodeNum(256);
         // set node to 3 node vars , param6
-        nodeToEdit.setParameters(new int[]{8,1,2,3,4,5,3,7,8});
+        nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
         
         t.setNode( nodeToEdit );
         
         nodeToEdit.dispose();
-        nodeToEdit = null;
-        
-        mainpane = null;
+
     }
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     private CbusNodeEditNVarPane t;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -76,11 +71,14 @@ public class CbusNodeEditNVarPaneTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t = null;
-        memo = null;
-        tcis = null;
+        memo.dispose();
+        memo=null;
+        tcis.terminateThreads();
+        tcis=null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarFrameTest.class);

@@ -3,8 +3,8 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -49,6 +49,8 @@ public class ExportTimetableTest extends OperationsTestCase {
 
         java.io.File file = new java.io.File(ExportTimetable.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportTrainsTest.class);

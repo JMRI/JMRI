@@ -2,18 +2,23 @@ package jmri.jmrit.automat.monitor;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.automat.AbstractAutomaton;
 import jmri.jmrit.automat.AutomatSummary;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Automat instances.
@@ -23,38 +28,43 @@ import org.slf4j.LoggerFactory;
  */
 public class AutomatTableDataModel extends AbstractTableModel {
 
-    static final int NAMECOL = 0;  // display name
-    static final int TURNSCOL = 1;  // number of times through the loop
-    static final int KILLCOL = 2;  //
+    static final int NAMECOL = 0; // display name
+    static final int TURNSCOL = 1; // number of times through the loop
+    static final int KILLCOL = 2; //
 
     static final int NUMCOLUMN = 3;
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle");
-
     AutomatSummary summary = AutomatSummary.instance();
+    private ArrayList<AbstractAutomaton> automats = summary.getAutomats();
 
     private final PropertyChangeListener listener = (PropertyChangeEvent evt) -> {
-        switch (evt.getPropertyName()) {
-            case "Insert":
-                // fireTableRowsInserted(((Integer)e.getNewValue()).intValue(), ((Integer)e.getNewValue()).intValue());
-                fireTableDataChanged();
-                break;
-            case "Remove":
-                //fireTableRowsDeleted(((Integer)e.getNewValue()).intValue(), ((Integer)e.getNewValue()).intValue());
-                fireTableDataChanged();
-                break;
-            case "Count":
-                // it's a count indication, so update TURNS
-                int row = ((Integer) evt.getNewValue());
-                // length might have changed...
-                if (row < getRowCount()) {
-                    fireTableCellUpdated(row, TURNSCOL);
-                }
-                break;
-            default:
-                log.debug("Ignoring unexpected property {}", evt.getPropertyName());
-                break;
-        }
+        SwingUtilities.invokeLater(() -> {
+            // the number of automations can't not change during table update
+            automats = summary.getAutomats();
+            switch (evt.getPropertyName()) {
+                case "Insert":
+                    // fireTableRowsInserted(((Integer)e.getNewValue()).intValue(),
+                    // ((Integer)e.getNewValue()).intValue());
+                    fireTableDataChanged();
+                    break;
+                case "Remove":
+                    // fireTableRowsDeleted(((Integer)e.getNewValue()).intValue(),
+                    // ((Integer)e.getNewValue()).intValue());
+                    fireTableDataChanged();
+                    break;
+                case "Count":
+                    // it's a count indication, so update TURNS
+                    int row = ((Integer) evt.getNewValue());
+                    // length might have changed...
+                    if (row < getRowCount()) {
+                        fireTableCellUpdated(row, TURNSCOL);
+                    }
+                    break;
+                default:
+                    log.debug("Ignoring unexpected property {}", evt.getPropertyName());
+                    break;
+            }
+        });
     };
 
     public AutomatTableDataModel() {
@@ -70,21 +80,21 @@ public class AutomatTableDataModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return AutomatSummary.instance().length();
+        return automats.size();
     }
 
     @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAMECOL:
-                return "Name";
+                return Bundle.getMessage("ColName");
             case TURNSCOL:
-                return "Cycles";
+                return Bundle.getMessage("ColCycles");
             case KILLCOL:
-                return "Kill";  // problem if this is blank?
+                return Bundle.getMessage("ColKill"); // problem if this is blank?
 
             default:
-                return "unknown";
+                return Bundle.getMessage("ColUnknown");
         }
     }
 
@@ -117,17 +127,21 @@ public class AutomatTableDataModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        switch (col) {
-            case NAMECOL:
-                return summary.get(row).getName();
-            case TURNSCOL:
-                return summary.get(row).getCount();
-            case KILLCOL:  // return button text here
-                return rb.getString("ButtonKill");
-            default:
-                log.error("internal state inconsistent with table requst for " + row + " " + col);
-                return null;
+        AbstractAutomaton automat = automats.get(row);
+        if (automat != null) {
+            switch (col) {
+                case NAMECOL:
+                    return automat.getName();
+                case TURNSCOL:
+                    return automat.getCount();
+                case KILLCOL: // return button text here
+                    return Bundle.getMessage("ButtonKill");
+                default:
+                    log.error("internal state inconsistent with table requst for {} {}", row, col);
+                    return null;
+            }
         }
+        return null;
     }
 
     public int getPreferredWidth(int col) {
@@ -137,9 +151,9 @@ public class AutomatTableDataModel extends AbstractTableModel {
             case TURNSCOL:
                 return new JTextField(5).getPreferredSize().width;
             case KILLCOL:
-                return new JButton(rb.getString("ButtonKill")).getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonKill")).getPreferredSize().width;
             default:
-                log.warn("Unexpected column in getPreferredWidth: " + col);
+                log.warn("Unexpected column in getPreferredWidth: {}", col);
                 return new JTextField(5).getPreferredSize().width;
         }
     }
@@ -153,9 +167,9 @@ public class AutomatTableDataModel extends AbstractTableModel {
     }
 
     /**
-     * Configure a table to have our standard rows and columns. This is
-     * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns. This is optional, in
+     * that other table formats can use this table model. But we put it here to help
+     * keep it consistent.
      *
      * @param table the table to configure
      */
@@ -163,7 +177,8 @@ public class AutomatTableDataModel extends AbstractTableModel {
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
 
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p
+        // 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // resize columns as requested
@@ -174,14 +189,13 @@ public class AutomatTableDataModel extends AbstractTableModel {
         table.sizeColumnsToFit(-1);
 
         // have the value column hold a button
-        setColumnToHoldButton(table, KILLCOL, new JButton(rb.getString("ButtonKill")));
+        setColumnToHoldButton(table, KILLCOL, new JButton(Bundle.getMessage("ButtonKill")));
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for its
-     * values
+     * Service method to setup a column so that it will hold a button for its values
      *
-     * @param table the table in which to configure the column
+     * @param table  the table in which to configure the column
      * @param column the position of the configured column
      * @param sample typical button, used for size
      */
@@ -194,8 +208,7 @@ public class AutomatTableDataModel extends AbstractTableModel {
         tcm.getColumn(column).setCellEditor(buttonEditor);
         // ensure the table rows, columns have enough room for buttons
         table.setRowHeight(sample.getPreferredSize().height);
-        table.getColumnModel().getColumn(column)
-                .setPreferredWidth(sample.getPreferredSize().width);
+        table.getColumnModel().getColumn(column).setPreferredWidth(sample.getPreferredSize().width);
     }
 
     synchronized public void dispose() {

@@ -64,7 +64,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
 
         if (shared.getAttribute("defaultFile") != null) {
             if (log.isDebugEnabled()) {
-                log.debug("set programmer default file: " + shared.getAttribute("defaultFile").getValue());
+                log.debug("set programmer default file: {}", shared.getAttribute("defaultFile").getValue());
             }
             InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(shared.getAttribute("defaultFile").getValue());
         }

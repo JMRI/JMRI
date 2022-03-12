@@ -3,6 +3,7 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPopupMenu;
 
@@ -21,15 +22,6 @@ public class LocoLabel extends PositionableRoundRect {
     public void setBlock(OBlock b) {
         _block = b;
         invalidateShape();
-    }
-
-    /**
-     * Deprecated. No replacement for this method
-     * @return Oblock having an IndicatorTrack icon which is displaying this object
-     */
-    @Deprecated     // only known user is LocoLabelXml 2+ years ago
-    public OBlock getBlock() {
-        return _block;
     }
 
     @Override
@@ -66,7 +58,12 @@ public class LocoLabel extends PositionableRoundRect {
     protected void paintHandles(Graphics2D g2d) {
     }
 
-        @Override
+    @Override
+    protected boolean doHandleMove(MouseEvent event) {
+        return false;
+    }
+
+    @Override
     public boolean storeItem() {
         return false;
     }

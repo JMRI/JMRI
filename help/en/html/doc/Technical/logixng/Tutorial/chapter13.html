@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 13</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 13</h1>
+
+<h2>Threads</h2>
+
+The ConditionalNGs run in a separate thread from the rest of JMRI. But it's possible to use several threads for
+LogixNG, to let some ConditionalNGs run on one thread and other ConditionalNGs run on another thread. You might have
+one ConditionalNG that is slow and other ConditionalNGs that needs to respond quickly. It could then be useful to move
+the slow ConditionalNG to a different thread.
+<p>
+Note that if a ConditionalNG is too slow, it will be difficult to edit that ConditionalNG since the editor needs to
+wait on the ConditionalNG to finish execution before the editor can update it.
+<p>
+If you want to move a ConditionalNG from one thread to another, you need to restart JMRI for the change to take effect.
+<p>
+The main reason to use different threads for different ConditionalNGs is the debugger (se chapter 14). When you debug a
+ConditionalNG step by step, the debugger stops the thread that the ConditionalNG is running on. If there are other
+ConditionalNGs running on the same thread, those are stopped as well. Therefore it's often useful to move the
+ConditionalNG that you want to debug to its own thread before you start debugging it. To simplify this, there is an
+extra thread, called the debug thread, that you can use for this purpose. But every thread might be used for debugging.
+
+<h2>Run code on a ConditionalNG thread</h2>
+
+If you want to run some code on a particular ConditionalNG thread, you can use this code:
+
+<pre>
+_conditionalNG.getCurrentThread().runOnLogixNG(() -> {
+    // Do something
+});
+</pre>
+
+<pre>
+int delay = 1000;   // 1 second
+_conditionalNG.getCurrentThread().runOnLogixNGDelayed(() -> {
+    // Do something
+}, delay);
+</pre>
+
+<pre>
+_conditionalNG.getCurrentThread().runOnLogixNGEventually(() -> {
+    // Do something
+});
+</pre>
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>

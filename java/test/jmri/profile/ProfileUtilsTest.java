@@ -4,12 +4,11 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,29 +21,27 @@ public class ProfileUtilsTest {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileUtilsTest.class);
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.tearDown();
     }
 
     @Test
-    public void testCopy() {
+    public void testCopy(@TempDir File folder) {
         Profile source;
         Profile destination;
         try {
-            File dir = folder.newFolder("source");
+            File dir = new File(folder, "source");
+            dir.mkdirs();
             source = new Profile("source", dir.getName(), dir);
-            dir = folder.newFolder("dest");
+            dir = new File(folder, "dest");
             destination = new Profile("destination", dir.getName(), dir);
         } catch (IOException ex) {
             // skip test if unable to create temporary profiles
@@ -68,13 +65,15 @@ public class ProfileUtilsTest {
     }
 
     @Test
-    public void testCopyToActive() {
+    public void testCopyToActive(@TempDir File folder) {
         Profile source;
         Profile destination;
         try {
-            File dir = folder.newFolder("source");
+            File dir = new File(folder, "source");
+            dir.mkdirs();
             source = new Profile("source", dir.getName(), dir);
-            dir = folder.newFolder("dest");
+            dir = new File(folder, "dest");
+            dir.mkdirs();
             destination = new Profile("destination", dir.getName(), dir);
             // Should cause copy() to throw IllegalArgumentException
             ProfileManager.getDefault().setActiveProfile(destination);

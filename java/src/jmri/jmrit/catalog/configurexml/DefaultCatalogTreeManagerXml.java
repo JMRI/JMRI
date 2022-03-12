@@ -3,7 +3,6 @@ package jmri.jmrit.catalog.configurexml;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.swing.tree.*;
@@ -11,8 +10,8 @@ import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.catalog.CatalogTreeLeaf;
-import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -54,7 +53,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
                 CatalogTreeNode root = tree.getRoot();
                 log.debug("enumerateTree called for root= {}, has {} children", root, root.getChildCount());
 
-                @SuppressWarnings("unchecked") // root.depthFirstEnumeration isn't fully typed in JDOM2
                 Enumeration<TreeNode> e = root.depthFirstEnumeration();
                 while (e.hasMoreElements()) {
                     CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
@@ -226,7 +224,13 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
             if (ct != null) {
                 continue;   // tree already registered
             }
-            ct = mgr.newCatalogTree(sysName, userName);
+            try {
+                ct = mgr.newCatalogTree(sysName, userName);
+            }
+            catch (IllegalArgumentException ex){
+                log.error("Could not create CatalogTree: {}",ex.getMessage());
+                continue;
+            }
             if (ct instanceof DefaultTreeModel) {
                 log.debug("CatalogTree: sysName= {}, userName= {}", sysName, userName);
                 CatalogTreeNode root = ct.getRoot();

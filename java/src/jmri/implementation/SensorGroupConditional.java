@@ -42,7 +42,7 @@ public class SensorGroupConditional extends DefaultConditional {
             return currentState;
         }
         String listener = evtSensor.getSystemName();
-        log.debug("SGConditional \"" + getUserName() + "\" (" + getSystemName() + ") has event from \"" + listener + "\"");
+        log.debug("SGConditional \"{}\" ({}) has event from \"{}\"", getUserName(), getSystemName(), listener);
         if (Sensor.INACTIVE == ((Integer) evt.getNewValue()).intValue()) {
             return currentState;
         }
@@ -50,7 +50,7 @@ public class SensorGroupConditional extends DefaultConditional {
             ConditionalAction action = _actionList.get(i);
             Sensor sn = InstanceManager.sensorManagerInstance().getSensor(action.getDeviceName());
             if (sn == null) {
-                log.error("invalid sensor name in action - " + action.getDeviceName());
+                log.error("invalid sensor name in action - {}", action.getDeviceName());
                 return currentState;
             }
             if (sn != evtSensor) { // don't change who triggered the action
@@ -59,13 +59,12 @@ public class SensorGroupConditional extends DefaultConditional {
                     try {
                         sn.setKnownState(action.getActionData());
                     } catch (JmriException e) {
-                        log.warn("Exception setting sensor " + action.getDeviceName() + " in action");
+                        log.warn("Exception setting sensor {} in action", action.getDeviceName());
                     }
                 }
             }
         }
-        log.debug("SGConditional \"" + getUserName() + "\" (" + getSystemName() + "), state= " + currentState
-                + "has set the group actions for " + listener);
+        log.debug("SGConditional \"{}\" ({}), state= {}has set the group actions for {}", getUserName(), getSystemName(), currentState, listener);
         return currentState;
     }
 

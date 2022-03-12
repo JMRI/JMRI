@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
+<!-- version 1.2 - Ronald Kuhn - add CV136Bit9 for v39 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Speed Regulation</name>
   <name xml:lang="it">Regolazione velocità</name>
@@ -11,14 +12,17 @@
     <label>
       <text> </text>
       <text xml:lang="de">Die „km/h – Regelung“ ist ein alternatives Prinzip zum Fahren mit vorbildmäßigen Geschwindigkeiten</text>
+      <text xml:lang="cs">Ovládání "km/h" je alternativní princip k jízdě vzorovou rychlostí</text>
     </label>
     <label>
       <text> </text>
       <text xml:lang="de">in allen Betriebssituationen: die Fahrstufen des Reglers oder Fahrpultes (1 bis 126 im sogenannten</text>
+      <text xml:lang="cs">ve všech provozních situacích: úrovně rychlosti ovladače nebo dálkového ovladače</text>
     </label>
     <label>
       <text> </text>
       <text xml:lang="de">„128-Fahrstufen“-System) werden dabei direkt als km/h - Werte interpretiert.</text>
+      <text xml:lang="cs">(1 až 126 v tzv. systém "128 rychlostních stupňů") jsou interpretovány přímo jako hodnoty km/h.</text>
     </label>
     <label>
       <text> </text>
@@ -93,6 +97,11 @@
         <tooltip>Read Only</tooltip>
         <tooltip xml:lang="de">Nur lesend</tooltip>
       </display>
+      <label>
+       <text> </text>
+      </label>
+      <display item="CV136Bit9">
+      </display>
       </column>
     </row>
 
@@ -114,7 +123,7 @@
         <label>
           <text> Miles or Kilometres per hour per (128) Speed Step</text>
           <text xml:lang="it">Miglia o Kilometri all'ora per (128) Step di Velocità</text>
-          <text xml:lang="cs"> kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
+          <text xml:lang="cs">kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
           <text xml:lang="de">  km/h</text>
         </label>
       </column>

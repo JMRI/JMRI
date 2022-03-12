@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet.streamport.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.streamport.LnStreamConnectionConfig;
 
@@ -12,8 +14,7 @@ import jmri.jmrix.loconet.streamport.LnStreamConnectionConfig;
  */
 public class LnStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractStreamConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +22,7 @@ public class LnStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
         cc = new LnStreamConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         // if we've started a traffic controller, dispose of it

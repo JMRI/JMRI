@@ -1,15 +1,14 @@
 package jmri.jmrix.roco.z21.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Z21SensorManagerXml.java
  *
- * Description: tests for the Z21SensorManagerXml class
+ * Test for the Z21SensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class Z21SensorManagerXmlTest {
       Assert.assertNotNull("Z21SensorManagerXml constructor",new Z21SensorManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

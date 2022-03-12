@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the TamsTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class TamsInterfaceScaffold extends TamsTrafficController {
 
@@ -28,7 +28,7 @@ public class TamsInterfaceScaffold extends TamsTrafficController {
     @Override
     public void sendTamsMessage(TamsMessage m, TamsListener l) {
         if (log.isDebugEnabled()) {
-            log.debug("sendTamsMessage [" + m + "]");
+            log.debug("sendTamsMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -42,7 +42,7 @@ public class TamsInterfaceScaffold extends TamsTrafficController {
     protected void sendTestMessage(TamsMessage m) {
         // forward a test message to Listeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, null);
         return;
@@ -51,7 +51,7 @@ public class TamsInterfaceScaffold extends TamsTrafficController {
     protected void sendTestReply(TamsReply m, TamsProgrammer p) {
         // forward a test message to Listeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestReply    [" + m + "]");
+            log.debug("sendTestReply    [{}]", m);
         }
         notifyReply(m, p);
         return;

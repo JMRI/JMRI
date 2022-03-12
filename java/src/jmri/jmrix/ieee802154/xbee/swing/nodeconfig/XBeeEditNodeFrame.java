@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
@@ -97,7 +96,7 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
                 cancelButtonActionPerformed();
             }
         });
-        contentPane.add(panel4); 
+        contentPane.add(panel4);
 
         // pack for display
         pack();
@@ -114,8 +113,8 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
            return;
         }
 
-        // to update the node's associated XBee Device, we have to 
-        // create a new one, as the library provides no way to update 
+        // to update the node's associated XBee Device, we have to
+        // create a new one, as the library provides no way to update
         // the RemoteXBeeDevice object.
 
         // Check that a node with this address does not exist
@@ -160,7 +159,7 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
      */
     @Override
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         curNode = null;
         // Switch buttons
         editButton.setVisible(true);
@@ -176,7 +175,6 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         nodeIdentifierField.setText(((XBeeNode)curNode).getIdentifier());
     }
 
-    @SuppressWarnings("unused")
-    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class);
+    //private final static Logger log = LoggerFactory.getLogger(XBeeEditNodeFrame.class);
 
 }

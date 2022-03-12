@@ -1,8 +1,8 @@
 package jmri.jmrix.bachrus;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SpeedoPortController class.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class SpeedoPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        SpeedoSystemConnectionMemo memo = new SpeedoSystemConnectionMemo();
@@ -35,8 +35,7 @@ public class SpeedoPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
 
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**
@@ -52,7 +51,7 @@ public class SpeedoPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

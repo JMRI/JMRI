@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008,2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -175,7 +174,7 @@
         <label xml:lang="fr">Décélération (1-255)</label>
         <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="69" tooltip="&lt;html&gt;This is the decoder product family identifier.&lt;br&gt;69 = SoundCar&lt;/html&gt;">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="69" tooltip="&lt;html&gt;This is the decoder product family identifier.&lt;br&gt;69 = SoundCar&lt;/html&gt;">
         <decVal/>
         <label>Manufacturer Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -651,7 +650,7 @@
 	  <!-- begin exchangeable function groups -->
       <variables>
         <qualifier>
-          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <variableref>Function Map Option 1</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
@@ -985,7 +984,7 @@
       </variables>
       <variables>
         <qualifier>
-          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <variableref>Function Map Option 1</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>

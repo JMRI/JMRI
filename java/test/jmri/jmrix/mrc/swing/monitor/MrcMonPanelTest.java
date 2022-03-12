@@ -1,20 +1,24 @@
 package jmri.jmrix.mrc.swing.monitor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
+import jmri.util.ThreadingUtil;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 /**
  * Test simple functioning of MrcMonPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -25,31 +29,31 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     // startup compared to other AbstractMonPane derivatives.
     @Override
     @Test
-    public void checkAutoScrollCheckBox(){
-         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-         AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
-         JmriJFrame f = new JmriJFrame();
-         try{
-            pane.initComponents();
-         } catch(Exception ex) {
-           Assert.fail("Could not load pane: " + ex);
-         }
-         f.add(pane);
-         // set title if available
-         if (pane.getTitle() != null) {
-             f.setTitle(pane.getTitle());
-         }
-         f.pack();
-         f.setVisible(true);
-         Assert.assertTrue(s.getAutoScrollCheckBoxValue());
-         s.checkAutoScrollCheckBox();
-         Assert.assertFalse(s.getAutoScrollCheckBoxValue());
-         f.setVisible(false);
-         f.dispose();
+    public void checkAutoScrollCheckBox() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
+        JmriJFrame f = new JmriJFrame();
+        Throwable thrown = catchThrowable(() -> ThreadingUtil.runOnGUI(() -> pane.initComponents()));
+        assertThat(thrown).withFailMessage("could not load pane: " + thrown).isNull();
+
+        ThreadingUtil.runOnGUI(() -> {
+            f.add(pane);
+            // set title if available
+            if (pane.getTitle() != null) {
+                f.setTitle(pane.getTitle());
+            }
+            f.pack();
+            f.setVisible(true);
+        });
+        Assert.assertTrue(s.getAutoScrollCheckBoxValue());
+        s.checkAutoScrollCheckBox();
+        Assert.assertFalse(s.getAutoScrollCheckBoxValue());
+        f.setVisible(false);
+        f.dispose();
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -59,12 +63,16 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.InstanceManager.store(memo, jmri.jmrix.mrc.MrcSystemConnectionMemo.class);
         // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
         panel = pane = new MrcMonPanel();
-        ((MrcMonPanel)pane).initContext(memo);
+        ((MrcMonPanel) pane).initContext(memo);
         helpTarget = "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
-        title = "Open MRC Monitor"; 
+        title = "Open MRC Monitor";
     }
 
     @Override
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @AfterEach
+    public void tearDown() {
+        panel = pane = null;
+        JUnitUtil.tearDown();
+    }
+
 }

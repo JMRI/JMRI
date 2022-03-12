@@ -35,14 +35,14 @@ public class JMRIClientMonPane extends jmri.jmrix.AbstractMonPane implements JMR
             // connect to TrafficController
             tc = memo.getJMRIClientTrafficController();
             tc.addJMRIClientListener(this);
-	}
+        }
     }
 
     @Override
     public void dispose() {
         tc.removeJMRIClientListener(this);
         tc = null;
-	super.dispose();
+        super.dispose();
     }
 
     @Override

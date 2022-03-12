@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -58,7 +58,7 @@ align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
       fonctionne la carte BDL168, cet outil ne peut pas changer
       l'adresse de base de l'unit&Atilde;&copy;.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

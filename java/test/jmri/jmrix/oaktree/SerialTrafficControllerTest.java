@@ -4,20 +4,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SerialTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -64,27 +64,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 5, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
-        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'        
-    }
-
-    @SuppressWarnings("unused")
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + rcvdReply);
-        }
-        if (i == 0) {
-            log.warn("waitForReply saw an immediate return; is threading right?");
-        }
-        return i < 100;
+        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'
     }
 
     // internal class to simulate a Listener
@@ -176,9 +156,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new OakTreeSystemConnectionMemo();
@@ -187,13 +166,13 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

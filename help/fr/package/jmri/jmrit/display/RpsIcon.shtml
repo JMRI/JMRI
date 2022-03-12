@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -315,7 +315,7 @@
         pour une image avec le num&eacute;ro du train.</li>
       </ul>Une belle interface graphique pour faire cela est
       &agrave; venir, mais elle n'est pas encore l&agrave;. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

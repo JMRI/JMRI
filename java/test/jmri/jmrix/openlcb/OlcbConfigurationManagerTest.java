@@ -2,10 +2,10 @@ package jmri.jmrix.openlcb;
 
 import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.openlcb.MimicNodeStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +14,10 @@ import static org.junit.Assert.assertEquals;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OlcbConfigurationManagerTest {
-        
+
     private static OlcbSystemConnectionMemo scm;
 
     @Test
@@ -30,7 +30,7 @@ public class OlcbConfigurationManagerTest {
     public void testConfigureManagers() {
         OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         // this tet verifies this does not throw an exception
-        t.configureManagers(); 
+        t.configureManagers();
     }
 
     @Test
@@ -60,21 +60,26 @@ public class OlcbConfigurationManagerTest {
         assertEquals("Test Description", nmemo.getSimpleNodeIdent().getUserDesc());
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void preClassInit() {
         JUnitUtil.setUp();
+       // this test is run separately because it leaves a lot of threads behind
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         scm = new OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
         scm.setTrafficController(tc);
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
-        if(scm != null && scm.getInterface() !=null ) {
-           scm.getInterface().dispose();
+        if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false ) {
+            if (scm != null && scm.getInterface() !=null ) {
+                scm.getTrafficController().terminateThreads();
+                scm.getInterface().dispose();
+            }
+            scm = null;
         }
-        scm = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

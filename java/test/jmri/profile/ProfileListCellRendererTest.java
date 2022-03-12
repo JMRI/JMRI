@@ -1,11 +1,11 @@
 package jmri.profile;
 
 import javax.swing.JList;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,13 +13,13 @@ import org.junit.Test;
  */
 public class ProfileListCellRendererTest {
     
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
         JUnitUtil.resetProfileManager();

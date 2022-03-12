@@ -17,7 +17,11 @@
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
+    <author>
+        <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
+        <email>cpunclejoe@gmail.com</email>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -44,7 +48,25 @@
         <date>2011-06-24</date>
         <authorinitials>DB</authorinitials>
         <revremark>Added mapping information</revremark>
-     </revision>    
+     </revision>
+     <revision>
+        <revnumber>3.0.1</revnumber>
+        <date>2021-05-16</date>
+        <authorinitials>MZ</authorinitials>
+        <revremark>Removed duplicate mapping for Clear aspect</revremark>
+     </revision>
+     <revision>
+        <revnumber>3.0.2</revnumber>
+        <date>2021-05-16</date>
+        <authorinitials>MZ</authorinitials>
+        <revremark>Removed duplicate mapping for Approach aspect</revremark>
+     </revision>
+     <revision>
+        <revnumber>3.1.0</revnumber>
+        <date>2021-05-16</date>
+        <authorinitials>MZ</authorinitials>
+        <revremark>Changed Approach aspectMapping and changed ourAspect to Clear</revremark>
+     </revision>
 </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -143,23 +165,13 @@
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
-    <aspectMapping>
+     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
-      <ourAspect>Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-      <advancedAspect>Clear</advancedAspect>
-      <ourAspect>Clear</ourAspect>
-    </aspectMapping>
-
-     <aspectMapping>
-      <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 

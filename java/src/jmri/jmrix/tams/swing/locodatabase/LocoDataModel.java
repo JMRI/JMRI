@@ -2,7 +2,6 @@ package jmri.jmrix.tams.swing.locodatabase;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -245,7 +244,7 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
                 locolist = new ArrayList<String[]>();
                 String msg = r.toString();
                 String[] rawlocolist = msg.split("\\r");
-                log.info("Raw loco list length: " + rawlocolist.length);
+                log.info("Raw loco list length: {}", rawlocolist.length);
                 for (String loco : rawlocolist) {
                     log.info(loco);
                     if (!loco.equals("*END*")) {

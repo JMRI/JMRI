@@ -1,5 +1,5 @@
 A LocoIO programmer, based loosely on Hans DeLoof's LocoIO/HDL programmer.
-Deprecated/No longer supported as of JMRI version 3: Please use DecoderPro with a Public Domain/DIY decoder (2015)
+Deprecated/No longer supported as of JMRI version 3: Please use DecoderPro with a Public Domain/DIY decoder (2015/2020)
 
 JMRI jmrix.loconet.locoio - a LocoNet programmer for LocoIO
 and HDL based LocoNet IO boards using the John Jabour or Hans Deloof
@@ -40,15 +40,17 @@ Usage model:
 
 ----
 
-TODO: need UI to configure the various SV0 states.
+Improvements included in 2020 Public Domain - Deloof LocoIO decoder definition:
 
-TODO: write a "change address" routine that takes both the
+-   UI to configure the various SV0 states.
+
+-   write a "change address" routine that takes both the
     old and new addresses and does the change without using a
     broadcast address.
 
-TODO: write a set of config data out to a text file in the
+-   write a set of config data out to a text file in the
     form used by Hans's programmer, and reread it back when
     requested.
 
-TODO: clear up function of tool compared to the Public Domain HDL
-    basic decoder definition available in DecoderPro
+-   clear up function of tool compared to the Public Domain HDL
+    basic decoder definition available in DecoderPro.

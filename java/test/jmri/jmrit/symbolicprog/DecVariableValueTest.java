@@ -1,16 +1,15 @@
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
- * @author	Bob Jacobsen Copyright 2003, 2006
+ * @author Bob Jacobsen Copyright 2003, 2006
  */
 public class DecVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -117,13 +116,13 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("cv value", 39, cv.getValue());
     }
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
     
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

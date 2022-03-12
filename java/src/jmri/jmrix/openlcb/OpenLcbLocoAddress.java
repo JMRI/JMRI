@@ -22,7 +22,7 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
 
     @Override
     public boolean equals(Object a) {
-        if (a == null) {
+        if (!(a instanceof OpenLcbLocoAddress)) {
             return false;
         }
         try {
@@ -42,6 +42,6 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         return node;
     }
 
-    NodeID node;
+    final NodeID node;
 
 }

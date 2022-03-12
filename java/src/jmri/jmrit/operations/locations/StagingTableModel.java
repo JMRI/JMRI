@@ -26,18 +26,6 @@ public class StagingTableModel extends TrackTableModel {
     }
 
     @Override
-    public String getColumnName(int col) {
-        switch (col) {
-            case NAME_COLUMN:
-                return Bundle.getMessage("StagingName");
-            default:
-                // fall out
-                break;
-        }
-        return super.getColumnName(col);
-    }
-
-    @Override
     protected void editTrack(int row) {
         log.debug("Edit staging");
         if (tef != null) {
@@ -46,10 +34,19 @@ public class StagingTableModel extends TrackTableModel {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(() -> {
             tef = new StagingEditFrame();
-            Track staging = tracksList.get(row);
-            tef.initComponents(_location, staging);
-            tef.setTitle(Bundle.getMessage("EditStaging"));
+            Track staging = _tracksList.get(row);
+            tef.initComponents(staging);
         });
+    }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("StagingName");
+            default:
+                return super.getColumnName(col);
+        }
     }
 
     // this table listens for changes to a location and it's staging tracks
@@ -63,7 +60,7 @@ public class StagingTableModel extends TrackTableModel {
         if (e.getSource().getClass().equals(Track.class)) {
             Track track = ((Track) e.getSource());
             if (track.isStaging()) {
-                int row = tracksList.indexOf(track);
+                int row = _tracksList.indexOf(track);
                 if (Control.SHOW_PROPERTY) {
                     log.debug("Update staging table row: {} track: {}", row, track.getName());
                 }

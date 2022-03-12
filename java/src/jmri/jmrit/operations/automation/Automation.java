@@ -1,26 +1,29 @@
 package jmri.jmrit.operations.automation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Automation for operations
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class Automation implements java.beans.PropertyChangeListener {
+public class Automation extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     protected String _id = "";
     protected String _name = "";
@@ -168,7 +171,7 @@ public class Automation implements java.beans.PropertyChangeListener {
             log.debug("Perform action ({}) item id: {}", item.getAction().getName(), item.getId());
             item.getAction().removePropertyChangeListener(this);
             item.getAction().addPropertyChangeListener(this);
-            Thread runAction = new Thread(() -> {
+            Thread runAction = jmri.util.ThreadingUtil.newThread(() -> {
                 item.getAction().doAction();
             });
             runAction.setName("Run action item: " + item.getId()); // NOI18N
@@ -187,7 +190,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     private void cancelActions() {
         for (AutomationItem item : getItemsBySequenceList()) {
             item.getAction().cancelAction();
-            item.getAction().removePropertyChangeListener(this);
         }
     }
 
@@ -211,7 +213,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         resetAutomationItems(getCurrentAutomationItem());
     }
 
-    private void resetAutomationItems(AutomationItem item) {
+    protected void resetAutomationItems(AutomationItem item) {
         boolean found = false;
         for (AutomationItem automationItem : getItemsBySequenceList()) {
             if (!found && automationItem != item) {
@@ -571,8 +573,6 @@ public class Automation implements java.beans.PropertyChangeListener {
         return e;
     }
 
-    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"},
-            justification = "Need to pause for user action")
     private void checkForActionPropertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)
                 || evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
@@ -619,16 +619,6 @@ public class Automation implements java.beans.PropertyChangeListener {
                 // if old = false, branch if failure
                 if (evt.getOldValue() == null || (boolean) evt.getOldValue() == isLastActionSuccessful()) {
                     _gotoAutomationItem = (AutomationItem) evt.getNewValue();
-                    // pause thread in case goto is a tight loop
-                    // this gives the user a chance to "Stop" the automation
-                    synchronized (this) {
-                        try {
-                            wait(250);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            log.error("Thread interrupeted while waiting", e);
-                        }
-                    }
                 }
             }
         }
@@ -643,24 +633,10 @@ public class Automation implements java.beans.PropertyChangeListener {
         checkForActionPropertyChange(e);
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(Automation.class);

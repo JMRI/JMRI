@@ -7,11 +7,11 @@
     </title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code xml schema usage">
-    <!--#include virtual="/Style" -->
+    <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -191,7 +191,7 @@ valider un fichier .xml ( "instance file" ) qui utilise votre schema nouveau ou
 r&#233;actualis&#233; est une v&#233;rification  importante des deux. Utlisez le souvent pendant 
 le d&#233;veloppement. Vous pouvez aussi l'utiliser depuis les lignes de commande via ex: 
 <code>
-./runtest.csh jmri/jmrit/XmlFileValidateAction xml/decoders/0NMRA.xml 
+./runtest.csh apps/jmrit/XmlFileValidateRunner xml/decoders/0NMRA.xml 
 </code>
 
 <p>
@@ -499,7 +499,7 @@ Description de l'&#233;chantillon du sch&#233;ma: (Mais voir le vrai, qui est pr
 </code>
     </p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

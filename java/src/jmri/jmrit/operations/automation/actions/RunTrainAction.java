@@ -1,13 +1,14 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RunTrainAction extends Action {
 
@@ -43,8 +44,7 @@ public class RunTrainAction extends Action {
                 finishAction(false);
                 return;
             }
-            // a train needs a route in order to be built
-            if (train.getRoute() == null || !train.isBuilt()) {
+            if (!train.isBuilt()) {
                 log.warn("Train ({}) needs to be built before creating a custom manifest", train.getName());
                 finishAction(false);
                 return;
@@ -65,7 +65,11 @@ public class RunTrainAction extends Action {
             if (InstanceManager.getDefault(TrainCustomManifest.class).doesCommonFileExist()) {
                 log.warn("Manifest CSV common file exists!");
             }
-            InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(train.createCSVManifestFile());
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(train.createCsvManifestFile())) {
+                finishAction(false);
+                return;
+            }
+            log.info("Queued train CSV file ({}) for custom processing", train.getName());
             boolean status = InstanceManager.getDefault(TrainCustomManifest.class).process();
             if (status) {
                 try {

@@ -257,7 +257,7 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.LENGTH));
             values.setAttribute(Xml.TEXT, getStringHeader_Length());
         }
-        if (!getStringHeader_Length().equals(Bundle.getMessage("Weight"))) {
+        if (!getStringHeader_Weight().equals(Bundle.getMessage("Weight"))) {
             e.addContent(values = new Element(Xml.WEIGHT));
             values.setAttribute(Xml.TEXT, getStringHeader_Weight());
         }

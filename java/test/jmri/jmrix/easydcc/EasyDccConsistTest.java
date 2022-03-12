@@ -4,10 +4,9 @@ import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.nce.EasyDccConsist class
@@ -68,8 +67,7 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
 
     private EasyDccSystemConnectionMemo _memo;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -82,7 +80,7 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
         c = new EasyDccConsist(5, _memo);
     }
    
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         _memo.getTrafficController().terminateThreads();

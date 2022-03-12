@@ -38,7 +38,8 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     /**
-     * Register a CV to be modified regardless of current value
+     * Register a CV to be modified regardless of current value.
+     * @param cvNum cv number string.
      */
     public void setModifiedCV(String cvNum) {
         if (firstFreeSpace >= maxCVs) {
@@ -60,13 +61,12 @@ public class ShortAddrVariableValue extends DecVariableValue {
                 continue;  // if CV not present this decoder...
             }
             if (!cvNumbers[i].equals(cv.number())) {
-                log.error("CV numbers don't match: "
-                        + cvNumbers[i] + " " + cv.number());
+                log.error("CV numbers don't match: {} {}", cvNumbers[i], cv.number());
             }
             cv.setToWrite(true);
             cv.setState(EDITED);
             if (log.isDebugEnabled()) {
-                log.debug("Mark to write " + cv.number());
+                log.debug("Mark to write {}", cv.number());
             }
         }
     }

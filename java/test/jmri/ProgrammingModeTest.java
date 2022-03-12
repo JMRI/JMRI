@@ -1,7 +1,7 @@
 package jmri;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the ProgrammingMode class

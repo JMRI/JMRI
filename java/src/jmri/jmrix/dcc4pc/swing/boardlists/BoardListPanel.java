@@ -155,7 +155,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 case EDIT_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                     return new JTextField(22).getPreferredSize().width;
                 default:
-                    log.warn("Unexpected column in getPreferredWidth: " + col);
+                    log.warn("Unexpected column in getPreferredWidth: {}", col);
                     return new JTextField(8).getPreferredSize().width;
             }
         }

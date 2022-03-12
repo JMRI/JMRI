@@ -2,8 +2,9 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 
@@ -31,11 +32,12 @@ public class SignalHeadIconTest extends jmri.jmrit.display.SignalHeadIconTest {
         Assert.assertEquals("SignalHeadIcon Initial Appearance", 0, shi.headState());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new LayoutEditor();
             shi = new SignalHeadIcon(editor);
@@ -46,7 +48,7 @@ public class SignalHeadIconTest extends jmri.jmrit.display.SignalHeadIconTest {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (shi != null) {

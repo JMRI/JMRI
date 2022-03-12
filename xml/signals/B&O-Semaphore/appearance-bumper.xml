@@ -28,6 +28,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Corrected spelling in mapping</revremark>
     </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove permissive from specificappearances</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>B&amp;O-Semaphore</aspecttable>
   <name>B&amp;O fixed stop</name>
@@ -50,9 +56,6 @@
     <danger>
       <aspect>Stop</aspect>
     </danger>
-    <permissive>
-      <aspect>Restricting</aspect>
-    </permissive>
     <held>
       <aspect>Stop</aspect>
     </held>

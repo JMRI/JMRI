@@ -1,6 +1,5 @@
 package jmri.jmrix.rps.serial.configurexml;
 
-import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.rps.serial.ConnectionConfig;
 import jmri.jmrix.rps.serial.SerialAdapter;
@@ -35,7 +34,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         /*         while (node != null) { */
         /*             // add node as an element */
         /*             Element n = new Element("node"); */
-        /*             n.setAttribute("name",""+node.getNodeAddress()); */
+        /*             n.setAttribute("name", "" + node.getNodeAddress()); */
         /*             e.addContent(n); */
         /*             // add parameters to the node as needed */
         /*             n.addContent(makeParameter("nodetype", ""+node.getNodeType())); */

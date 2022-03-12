@@ -18,106 +18,132 @@
   <enumChoice choice="None">
 	<choice>Light front on/off</choice>
 	<choice xml:lang="de">Licht vorn ein/aus</choice>
+	<choice xml:lang="cs">Přední světla Zap/Vyp</choice>
   </enumChoice>
   <enumChoice choice="Motor Sound">
 	<choice>Motor Sound</choice>
 	<choice xml:lang="de">Motor Sound</choice>
+	<choice xml:lang="cs">Zvuk motoru</choice>
   </enumChoice>
   <enumChoice choice="Horn low">
 	<choice>Horn low</choice>
 	<choice xml:lang="de">Horn tief</choice>
+	<choice xml:lang="cs">Houkačka nízká</choice>
   </enumChoice>
   <enumChoice choice="Horn High">
 	<choice>Horn High</choice>
 	<choice xml:lang="de">Horn hoch</choice>
+	<choice xml:lang="cs">Houkačka vysoká</choice>
   </enumChoice>
   <enumChoice choice="Double horn">
 	<choice>Double horn (hi-lo)</choice>
 	<choice xml:lang="de">Doppelhorn (hoch-tief)</choice>
+	<choice xml:lang="cs">Dvojitá houkačka (vysoká-nízká)</choice>
   </enumChoice>
   <enumChoice choice="Conductor whistle">
 	<choice>Conductor whistle</choice>
 	<choice xml:lang="de">Schaffnerpfiff</choice>
+	<choice xml:lang="cs">Píšťalka průvodčí</choice>
   </enumChoice>
   <enumChoice choice="Hand pump oil">
 	<choice>Hand pump oil</choice>
 	<choice xml:lang="de">Handpumpe - Öl</choice>
+	<choice xml:lang="cs">Ruční olejová pumpa</choice>
   </enumChoice>
   <enumChoice choice="Shunting">
 	<choice>Shunting</choice>
 	<choice xml:lang="de">Rangiergang</choice>
+	<choice xml:lang="cs">Posun</choice>
   </enumChoice>
   <enumChoice choice="Hand Brake apply/release">
 	<choice>Hand Brake apply/release</choice>
 	<choice xml:lang="de">Handbremse anlegen/lösen</choice>
+	<choice xml:lang="cs">Ruční brzda zabrždění/odbrždění</choice>
   </enumChoice>
   <enumChoice choice="Compressor">
 	<choice>Compressor</choice>
 	<choice xml:lang="de">Kompressor</choice>
+	<choice xml:lang="cs">Kompresor</choice>
   </enumChoice>
   <enumChoice choice="Engineer's door open/close">
 	<choice>Engineer's door open/close</choice>
 	<choice xml:lang="de">Führerstandstüre auf/zu</choice>
+	<choice xml:lang="cs">Dveře strojvedoucího otevřeno/zavřeno</choice>
   </enumChoice>
   <enumChoice choice="Engineer's window open/close">
 	<choice>Engineer's window open/close</choice>
 	<choice xml:lang="de">Führerstandsfenster auf/zu</choice>
+	<choice xml:lang="cs">Okno strojvedoucího otevřeno/zavřeno</choice>
   </enumChoice>
   <enumChoice choice="Radio #1">
 	<choice>Radio #1</choice>
 	<choice xml:lang="de">Funk #1</choice>
+	<choice xml:lang="cs">Rádio #1</choice>
   </enumChoice>
   <enumChoice choice="Radio #2" >
 	<choice>Radio #2</choice>
 	<choice xml:lang="de">Funk #2</choice>
+	<choice xml:lang="cs">Rádio #2</choice>
   </enumChoice>
   <enumChoice choice="Shunting brake">
 	<choice>Shunting brake</choice>
 	<choice xml:lang="de">Rangierbremse</choice>
+	<choice xml:lang="cs">Posun brždění</choice>
   </enumChoice>
   <enumChoice choice="Coupling/release">
 	<choice>Coupling/release</choice>
 	<choice xml:lang="de">Kuppeln ab-/ankuppeln</choice>
+	<choice xml:lang="cs">Svěšení/rozvěšení</choice>
   </enumChoice>
   <enumChoice choice="Engine brake apply/release">
     <choice>Engine brake apply/release</choice>
     <choice xml:lang="de">Zugbremse anlegen/lösen</choice>
+	<choice xml:lang="cs">Lokomotivní brzda zatažena/uvolněna</choice>
   </enumChoice>
   <enumChoice choice="Dead man switch">
     <choice>Dead man switch</choice>
     <choice xml:lang="de">Totmannschalter</choice>
+	<choice xml:lang="cs">Tlačítko bdělosti</choice>
   </enumChoice>
   <enumChoice choice="Direction change">
     <choice>Direction change</choice>
     <choice xml:lang="de">Fahrtrichtungswender</choice>
+	<choice xml:lang="cs">Změna směru</choice>
   </enumChoice>
   <enumChoice choice="Sanding">
     <choice>Sanding</choice>
     <choice xml:lang="de">Sanden</choice>
+	<choice xml:lang="cs">Pískování</choice>
   </enumChoice>
   <enumChoice choice="Curve screech on/off">
     <choice>Curve screech on/off</choice>
     <choice xml:lang="de">Kurvenquietschen ein/aus</choice>
+	<choice xml:lang="cs">Okolky v oblouku Zap/Vyp</choice>
   </enumChoice>
   <enumChoice choice="Rail bump on/off">
     <choice>Rail bump on/off</choice>
     <choice xml:lang="de">Schienenstösse ein/aus</choice>
+	<choice xml:lang="cs">Kolejnicové spoje Zap/Vyp</choice>
   </enumChoice>
   <enumChoice choice="Engine lights: switching">
     <choice>Engine lights: switching</choice>
     <choice xml:lang="de">Zugbeleuchtung: Lok schiebt</choice>
+	<choice xml:lang="cs">Světla lokomotivy: sunutí</choice>
   </enumChoice>
   <enumChoice choice="Engine lights: pulling">
     <choice>Engine lights: pulling</choice>
     <choice xml:lang="de">Zugbeleuchtung: Lok zieht</choice>
+	<choice xml:lang="cs">Světla lokomotivy: tažení</choice>
   </enumChoice>
   <enumChoice choice="Volume control">
     <choice>Volume control</choice>
     <choice xml:lang="de">Lautstärkeregelung</choice>
+	<choice xml:lang="cs">Regulace hlasitosti</choice>
   </enumChoice>
   <enumChoice choice="Sound fader (Tunnel mode)">
     <choice>Sound fader (Tunnel mode)</choice>
     <choice xml:lang="de">Soundfader (Tunnelmodus)</choice>
+	<choice xml:lang="cs">Ztišení zvuku (režim tunel)</choice>
   </enumChoice>
 </enumVal>
 

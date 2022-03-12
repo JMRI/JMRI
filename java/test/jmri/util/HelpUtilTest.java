@@ -1,6 +1,7 @@
 package jmri.util;
 
-import org.junit.*;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import javax.swing.*;
 
@@ -8,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class HelpUtilTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
-        
+
         JMenuBar menuBar = new JMenuBar();
         int initialMenuCount = menuBar.getMenuCount();
         HelpUtil.helpMenu(menuBar,"test",true);
@@ -24,14 +25,14 @@ public class HelpUtilTest {
                 .isGreaterThan(initialMenuCount);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

@@ -205,7 +205,10 @@ public class MakePacket {
      * <p>
      * This is not guaranteed to find the shortest serial stream for a given
      * packet, but it is guaranteed to find a stream if one exists. Also, it
-     * usually does come up with the shortest packet.
+     * usually does come up with the shortest packet
+     * @param inputBitStream sequence of binary bits to send as DCC waveform
+     * @return sequence of long/short codes to send, coded as voltage high 1, 
+     * voltage low 0 values as aynch bytes to send at the DCC rate
      */
     static int[] bitStreamToSerialBytes(int[] inputBitStream) {
         int currentBufferIndex;

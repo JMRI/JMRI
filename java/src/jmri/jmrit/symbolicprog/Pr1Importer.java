@@ -98,9 +98,9 @@ public class Pr1Importer {
                                 cv.setValue(getCV(cvNum));
                             }
                         } catch (JmriException ex) {
-                            log.error("failed to getCV() " + cvNum);
+                            log.error("failed to getCV() {}", cvNum);
                         } catch (ArrayIndexOutOfBoundsException ex) {
-                            log.error("failed to getCvByNumber() " + cvNum);
+                            log.error("failed to getCvByNumber() {}", cvNum);
                         }
                     }
                 }
@@ -118,7 +118,8 @@ public class Pr1Importer {
                 throw new JmriException("CV not found");
             }
 
-            int shiftBits = ((cvNumber - 1) % 4) * 8;
+            int shiftBits = ((cvNumber - 1) % 4) << 3;
+
             long cvValue = Long.parseLong(cvValueStr);
 
             if (cvValue < 0) {

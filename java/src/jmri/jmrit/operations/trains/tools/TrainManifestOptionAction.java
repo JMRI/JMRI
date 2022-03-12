@@ -2,7 +2,9 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.trains.TrainEditFrame;
 
 /**
@@ -15,8 +17,8 @@ public class TrainManifestOptionAction extends AbstractAction {
 
     TrainEditFrame frame = null;
 
-    public TrainManifestOptionAction(String s, TrainEditFrame frame) {
-        super(s);
+    public TrainManifestOptionAction(TrainEditFrame frame) {
+        super(Bundle.getMessage("MenuItemOptions"));
         this.frame = frame;
     }
 

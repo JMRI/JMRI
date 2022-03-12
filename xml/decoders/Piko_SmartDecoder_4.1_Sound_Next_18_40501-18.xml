@@ -1,0 +1,1957 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Konrad MAlkowski" version="1" lastUpdated="20201222"/>
+    <!-- Version 1 - For Piko 40501-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+    <decoder>
+        <family name="PIKO SmartDecoder 4.1" mfg="PIKO" comment="Decoders not sorted (necessarily) in numerical order"><!-- to be checked by hardware owner -->
+            <model model="PIKO40501-18" numOuts="10" numFns="28" maxMotorCurrent="0.8A" formFactor="N" connector="Next18" productID="PIKO40501" comment="Piko SmartDecoder 4.1 Sound Diesel Loco V200.1/BR 221 N Next18 plug and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="21.5" width="10.5" height="3.7" units="mm"/>
+            </model>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter> <!--for Banks -->
+                <parameter name="SI">32</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
+                <parameter name="cvFirst">true</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/><!-- CV1, 17, 29 bit 5 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/vStartHighMid-accelDecel.xml"/><!-- CV2-6 -->
+            <variable item="Decoder Version" CV="7" readOnly="yes" default="39">
+                <decVal/>
+                <label>Manufacturer Version No: </label>
+                <label xml:lang="it">Versione Decoder: </label>
+                <label xml:lang="fr">Version décodeur: </label>
+                <label xml:lang="de">Decoder Version: </label>
+                <label xml:lang="nl">Versie van decoder: </label>
+                <label xml:lang="cs">Verze dekodéru: </label>
+            </variable>
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO40501"><!-- Piko -->
+                <decVal/>
+                <label>Manufacturer ID: </label>
+                <label xml:lang="it">ID Costruttore: </label>
+                <label xml:lang="fr">ID constructeur: </label>
+                <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="nl">Fabrikant-ID: </label>
+                <label xml:lang="cs">ID výrobce: </label>
+            </variable>
+            <variable item="DC Operation" CV="12" default="1" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Analog DC Mode</label>
+                <label xml:lang="de">Analog DC Datenformat</label>
+                <label xml:lang="nl">Analog DC modus</label>
+                <label xml:lang="cs">DC analogový režim</label>
+            </variable>
+            <variable item="AC Operation" CV="12" default="1" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Analog AC Mode</label>
+                <label xml:lang="de">Analog AC Datenformat</label>
+                <label xml:lang="nl">Analog AC modus</label>
+                <label xml:lang="cs">AC analogový režim</label>
+            </variable>       
+            <variable item="DCC Operation" CV="12" default="1" mask="XXXXXVXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>DCC Mode</label>
+                <label xml:lang="de">DCC Datenformat</label>
+                <label xml:lang="nl">DCC modus</label>
+                <label xml:lang="cs">DCC režim</label>
+            </variable>     
+            <variable item="Mfx Operation" CV="12" default="1" mask="XXXXVXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Mfx Mode</label>
+                <label xml:lang="de">Mfx Datenformat</label>
+                <label xml:lang="nl">Mfx modus</label>
+                <label xml:lang="cs">Mfx režim</label>
+            </variable>
+            <variable item="Selectrix Operation" CV="12" default="1" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Selectrix Mode</label>
+                <label xml:lang="de">Selectrix Datenformat</label>
+                <label xml:lang="nl">Selectrix modus</label>
+                <label xml:lang="cs">Selectrix režim</label>
+            </variable>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+            <variable CV="15" item="Decoder Lock ID" default="0">
+                <decVal/>
+                <label>Decoder Lock ID</label>
+                <label xml:lang="de">Decoder Lock</label>
+                <label xml:lang="ca">Bloqueig decoder per ID</label>
+                <label xml:lang="cs">Zámek dekodéru</label>
+                <tooltip>Set this to match value below and decoder will unlock</tooltip>
+                <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+                <tooltip xml:lang="nl">Stel hier dezelfde waarde in als ID hieronder en de decoder kan geprogrammeerd worden</tooltip>
+                <tooltip xml:lang="cs">Nastavením této hodnoty na stejnou hodnotu která je uvedena níže se provede odemčení dekodéru</tooltip>
+            </variable>
+            <variable CV="16" item="Decoder Lock Index" default="0">
+                <decVal/>
+                <label>Preset Lock ID</label>
+                <label xml:lang="de">Decoder-Typ Lock</label>
+                <label xml:lang="ca">ID locomotora per tipus</label>
+                <label xml:lang="cs">ID typ dekodéru</label>
+                <tooltip>Set this to decoder type: 1=motor, 2=sound, 3=function etc.</tooltip>
+                <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion etc.</tooltip>
+                <tooltip xml:lang="nl">Stel in als Decoder-type: 1=motor, 2=geluid, 3=functie e.d.</tooltip>
+                <tooltip xml:lang="cs">Nastaví typ dekodéru: 1=motor, 2=zvuk, 3=funkční atd.</tooltip>
+            </variable>
+            <!-- CV 17-18 already in place with CV 1-->
+            <!-- CV19 Consisting Information -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
+            <variable item="ABC stop with asymmetrical DCC (right rail higher)" CV="27" default="0" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>ABC stop with asymmetrical DCC (right rail higher)</label>
+                <label xml:lang="cs">ABC zastavení s asymetrickým DCC (pravá kolejnice vyšší)</label>
+            </variable>
+            <variable item="ABC stop with asymmetrical DCC (left rail higher)" CV="27" default="0" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>ABC stop with asymmetrical DCC (left rail higher)</label>
+                <label xml:lang="cs">ABC zastavení s asymetrickým DCC (levá kolejnice vyšší)</label>
+            </variable>       
+            <variable item="DC stop when polarity in opposite direction" CV="27" default="0" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>DC stop when polarity in opposite direction</label>
+                <label xml:lang="cs">DC zastavení když je polarita v opačném směru</label>
+            </variable>     
+            <variable item="DC stop when polarity in same direction" CV="27" default="0" mask="XXVXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>DC stop when polarity in same direction</label>
+                <label xml:lang="cs">DC zastavení když je polarita ve stejném směru</label>
+            </variable>  
+            <variable item="ABC stop when moving backward (enabled) or forward (disabled)" CV="27" default="0" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>ABC stop when moving backward (enabled) or forward (disabled)</label>
+                <label xml:lang="cs">ABC zastavení když je pohyb zpět (povoleno) nebo vpřed (zakázáno)</label>
+            </variable>   
+
+            <variable item="RailCom channel 1 (Broadcast)" CV="28" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>RailCom channel 1 (Broadcast)</label>
+                <label xml:lang="it">RailCom canale 1 (Broadcast)</label>
+                <label xml:lang="cs">RailCom kanál 1 (Vysílání)</label>
+                <label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
+                <label xml:lang="nl">RailCom Kanaal 1 (Broadcast)</label>
+            </variable>
+            <variable item="RailCom channel 2 (Data)" CV="28" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>RailCom channel 2 (Data)</label>
+                <label xml:lang="it">RailCom canale 2 (Dati)</label>
+                <label xml:lang="cs">RailCom kanál 2 (Data)</label>
+                <label xml:lang="de">RailCom Kanal 2 (Daten)</label>
+                <label xml:lang="nl">RailCom Kanaal 1 (Data)</label>
+            </variable>
+            <variable item="RailCom Plus" CV="28" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>RailCom Plus®</label>
+            </variable>
+            <!-- CV29 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+            <!--<xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/> already declared as part of nmra/shortAndLongAddress.xml incl-->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv30error.xml"/>
+            <!-- CVs 31-32 Banks are on cv257.512extendedmap include -->
+            <!-- CVs 33-46 function mapping -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/functionmap4outputs.xml"/>
+            <!--Motorola addresses - read only-->
+            <variable item="Motorola 1" CV="47" readOnly="yes" default="12">
+                <decVal/>
+                <label>Motorola 1st Trinary Address</label>
+                <label xml:lang="de">Motorola 1. trinäre adresse</label>
+                <label xml:lang="nl">1e trinair Motorola adres</label>
+                <label xml:lang="cs">Motorola 1. trinární adresa</label>
+            </variable>
+            <variable item="Motorola 2" CV="48" readOnly="yes">
+                <decVal/>
+                <label>Motorola 2nd Trinary Address</label>
+                <label xml:lang="de">Motorola 2. trinäre adresse</label>
+                <label xml:lang="nl">2e trinair Motorola adres</label>
+                <label xml:lang="cs">Motorola 2. trinární adresa</label>
+            </variable>
+            <variable item="Motorola 3" CV="49" readOnly="yes">
+                <decVal/>
+                <label>Motorola 3rd Trinary Address</label>
+                <label xml:lang="de">Motorola 3. trinäre adresse</label>
+                <label xml:lang="nl">3e trinair Motorola adres</label>
+                <label xml:lang="cs">Motorola 3. trinární adresa</label>
+            </variable>
+            <!-- CV50-51 decoder configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv50.51config.xml"/>
+            <!-- CVs 53-58  Motor Control-->
+            <variable item="EMF Option 1" CV="53" default="40">
+                <decVal max="255"/>
+                <label>Repetition rate</label>
+                <label xml:lang="de">Wiederholrate der Motorregelung</label>
+                <label xml:lang="nl">Herhaling Motorregeling</label>
+                <label xml:lang="cs">Míra opakování</label>
+                <tooltip>Lower if the locomotive does not run smoothly - Value * 0.1 sec</tooltip>
+                <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 0.1 S</tooltip>
+                <tooltip xml:lang="nl">verlaag als Loc ongelijkmatig rijdt - Waarde * 0,1s</tooltip>
+                <tooltip xml:lang="cs">Pokud lokomotiva nejede plynule snižte hodnotu - Hodnota × 0,1 s</tooltip>
+            </variable>
+            <variable item="EMF Static Config" CV="54" default="100">
+                <decVal max="255"/>
+                <label>Motor regulation P Constant</label>
+                <label xml:lang="de">Motorregelung P-Konstante</label>
+                <label xml:lang="nl">Motorregeling P-Constante</label>
+                <label xml:lang="cs">Regulace motoru P-složka</label>
+            </variable>
+            <variable item="EMF Dynamic Config" CV="55" default="40">
+                <decVal max="255"/>
+                <label>Motor regulation I Constant</label>
+                <label xml:lang="de">Motorregelung I-Konstante</label>
+                <label xml:lang="nl">Motorregeling I-Constante</label>
+                <label xml:lang="cs">Regulace motoru I-složka</label>
+            </variable>
+            <variable item="EMF Droop Config" CV="56" default="32">
+                <decVal max="255"/>
+                <label>Motor regulation D Constant</label>
+                <label xml:lang="de">Motorregelung D-Konstante</label>
+                <label xml:lang="nl">Motorregeling D-Constante</label>
+                <label xml:lang="cs">Regulace motoru D-složka</label>
+            </variable>
+            <variable item="EMF Option 3" CV="57" default="6">
+                <decVal max="255"/>
+                <label>Control Offset</label>
+                <label xml:lang="de">Regeler Offset</label>
+                <label xml:lang="nl">Regelaar Offset</label>
+                <label xml:lang="cs">Posunutí regulace</label>
+                <tooltip>Lower Value if top speed too low, Raise Value if Speed at Step 1 too fast</tooltip>
+                <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu gering - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
+                <tooltip xml:lang="nl">verlaag als topsnelheid te laag - verhoog als snelheid in Stap 1 te snel</tooltip>
+                <tooltip xml:lang="cs">Snižte hodnotu pokud je horní rychlost příliš malá, Zvyšte hodnotu pokud je rychlost na 1. kroku příliš vysoká</tooltip>
+            </variable>
+            <variable item="EMF Option 2" CV="58" default="8">
+                <decVal max="255"/>
+                <label>Time slot for AD measurement</label>
+                <label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
+                <label xml:lang="nl">Tijdsduur AD-meting</label>
+                <label xml:lang="cs">Časový slot pro AD měření</label>
+                <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
+                <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
+                <tooltip xml:lang="nl">verhoog als de Loc op lage snelheid onregelmatig rijdt; verlaag als bij verlaagde CV 53 topsnelheid van Loc te laag is</tooltip>
+                <tooltip xml:lang="cs">Zvyšte, pokud lokomotiva nejede plynule při malých rychlostech - Snižte pokud na horní rychlosti je příliš nízká poté co CV53 bylo sníženo</tooltip>
+            </variable>
+            <!--CV59 Reset incl at the bottom-->
+            <variable item="Short circuit supervision" CV="60" readOnly="yes">
+                <decVal max="9"/>
+                <label>Motor and Function Output Short circuit supervision</label>
+                <label xml:lang="de">Kurzschlussüberwachung Motor- und Funktionsausgänge</label>
+                <label xml:lang="nl">Kortsluitbeveiliging Motor- und Functie-uitgangen</label>
+                <label xml:lang="cs">Kontrola zkratu na motoru a funkčních výstupech</label>
+                <tooltip>Do not change! 0=deactivated - 137=activated</tooltip>
+                <tooltip xml:lang="cs">Neměňte! 0=deaktivováno - 137=aktivováno</tooltip>
+            </variable>
+            <variable item="Shutdown Temperature" CV="61" readOnly="yes">
+                <decVal/>
+                <label>Shutdown Temperature</label>
+                <label xml:lang="de">Abschalttemperatur</label>
+                <label xml:lang="nl">Uitschakeltemperatuur</label>
+                <label xml:lang="cs">Vypínací teplota</label>
+                <tooltip>in °C, different with each decoder</tooltip>
+                <tooltip xml:lang="cs">v °C, rozdílné pro každý dekodér</tooltip>
+            </variable>
+            <variable item="Function Outputs Short Constant" CV="62" readOnly="yes">
+                <decVal/>
+                <label>Function Outputs Short Constant</label>
+                <label xml:lang="de">Kurzschlussüberwachung Fkt.-Ausgänge</label>
+                <label xml:lang="nl">Kortsluitbeveiliging functieuitgangen</label>
+                <label xml:lang="cs">Konstanta zkratu funkčního výstupu</label>
+            </variable>
+            <variable item="Motor Output Short Constant" CV="63" readOnly="yes">
+                <decVal/>
+                <label>Motor Output Short Constant</label>
+                <label xml:lang="de">Kurzschlussüberwachung Motorausgang</label>
+                <label xml:lang="nl">Kortsluitbeveiliging motoruitgang</label>
+                <label xml:lang="cs">Konstanta zkratu motorového výstupu</label>
+            </variable>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv64.65registers.xml"/><!-- Piko -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/><!-- CV66 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/><!-- CV95 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+            <variable item="Advanced Function Mapping" CV="96" default="0"><!-- Piko -->
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Use Advanced Function Mapping</label>
+                <label xml:lang="de">Erweiterte Funktionsmapping aktiv</label>
+                <label xml:lang="nl">Uitgebreide Functiemapping actief</label>
+                <label xml:lang="cs">Použití mapování pokročilých funkcí</label>
+            </variable>
+            <variable item="ABC Braking Value" CV="97" default="8">
+                <decVal/>
+                <label>ABC detection threshold</label>
+                <label xml:lang="de">ABC-Modus „Empfindlichkeit”</label>
+                <label xml:lang="nl">ABC Remdrempel</label>
+                <label xml:lang="cs">ABC práh detekce</label>
+                <tooltip>Voltage drop in Diode block = CV value * 0.12 Volts</tooltip>
+                <tooltip xml:lang="de">Spannungsdifferenz für Diodenstrecke ist ca. CV-Wert * 0,12V</tooltip>
+                <tooltip xml:lang="nl">Spanningsval over Diodebaanvak is ong. CV-Waarde * 0,12V</tooltip>
+                <tooltip xml:lang="cs">Úbytek napětí na diodách = hodnota CV × 0,12 V</tooltip>
+            </variable>
+            <variable item="ABC Slow Speed" CV="98" default="30">
+                <decVal/>
+                <label>ABC mode reduced speed</label>
+                <label xml:lang="de">ABC Modus „Langsamfahrt”</label>
+                <label xml:lang="ca">Velociatat limitada en mode ABC</label>
+                <label xml:lang="nl">ABC-modus Langzaamrijden</label>
+                <label xml:lang="cs">ABC režim snížení rychlosti</label>
+                <tooltip>Speed in ABC Slow block</tooltip>
+                <tooltip xml:lang="de">Geschwindigkeit in der ABC Langsamfahrstrecke</tooltip>
+                <tooltip xml:lang="nl">Snelheid in ABC Langzaamrijden baanvak</tooltip>
+                <tooltip xml:lang="cs">Rychlost v ABC úseku</tooltip>
+            </variable>
+
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
+
+            <variable item="Analog Control option 1" CV="102" default="2" mask="XXXXXXVV">
+                <enumVal>
+                    <enumChoice choice="Inactive">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Neaktivní</choice>
+                        <choice xml:lang="de">Keine Regelung</choice>
+                        <choice xml:lang="nl">Geen Regeling</choice>
+                    </enumChoice>
+                    <enumChoice choice="Max CV106">
+                        <choice>Max. speed from CV106</choice>
+                        <choice xml:lang="de">max. Geschw. wie CV106</choice>
+                        <choice xml:lang="nl">max. snelheid vlg. CV106</choice>
+                        <choice xml:lang="cs">Maximální rychlost z CV106</choice>
+                    </enumChoice>
+                    <enumChoice choice="Compare voltage to CV103-104">
+                        <choice>Compare voltage to CV103-104</choice>
+                        <choice xml:lang="de">Trafospng. messen und CV103-104</choice>
+                        <choice xml:lang="nl">Spanning meten t.o.v. CV103-104</choice>
+                        <choice xml:lang="cs">Porovná napětí s CV103-104</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Analog Operation Max Speed</label>
+                <label xml:lang="de">Analogbetrieb Max Speed</label>
+                <label xml:lang="nl">Max. Snelheid in Analoogbedrijf</label>
+                <label xml:lang="cs">Maximální rychlost v analogovém provozu</label>
+                <tooltip>uses CVs 103-106 below</tooltip>
+                <tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
+                <tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
+                <tooltip xml:lang="cs">použije VC103-106 níže</tooltip>
+            </variable>
+            <variable item="Analog Control option 2" CV="102" default="3" mask="XXXXVVXX">
+                <enumVal>
+                    <enumChoice choice="Control Off">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Neaktivní</choice>
+                        <choice xml:lang="de">Keine Regelung</choice>
+                        <choice xml:lang="nl">Geen Regeling</choice>
+                    </enumChoice>
+                    <enumChoice choice="PID Control" value="1">
+                        <choice>PID Control</choice>
+                        <choice xml:lang="de">PID-Regler</choice>
+                        <choice xml:lang="nl">PID-Regelaar</choice>
+                        <choice xml:lang="cs">PID Regulace</choice>
+                    </enumChoice>
+                    <enumChoice choice="SX Control" value="3">
+                        <choice>SX Control</choice>
+                        <choice xml:lang="de">SX-Regler</choice>
+                        <choice xml:lang="nl">SX-Regelaar</choice>
+                        <choice xml:lang="cs">SX Regulace</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Analog Operation Control</label>
+                <label xml:lang="de">Analogbetrieb Regelung</label>
+                <label xml:lang="nl">Regeling bij Analoogbedrijf</label>
+                <label xml:lang="cs">Regulace analogového provozu</label>
+                <tooltip>uses CVs 103-106 below</tooltip>
+                <tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
+                <tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
+                <tooltip xml:lang="cs">použije VC103-106 níže</tooltip>
+            </variable>
+            <variable CV="102" item="Analog Control check 1" default="1" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Dynamic repeat rate</label>
+                <label xml:lang="de">dynamische Wiederholrate</label>
+                <label xml:lang="nl">dynamische Herhaling</label>
+                <label xml:lang="cs">Míra dynamického opakování</label>
+            </variable>
+            <variable item="Analog Control slider 1" CV="103" default="150">
+                <decVal/>
+                <label>Minimum Voltage</label>
+                <label xml:lang="de">Mindest Trafospannung</label>
+                <label xml:lang="nl">Laagste Rijspanning</label>
+                <label xml:lang="cs">Minimální napětí</label>
+                <tooltip>for V = 0</tooltip>
+                <tooltip xml:lang="de">für Vsoll = 0</tooltip>
+                <tooltip xml:lang="nl">voor Vwens = 0</tooltip>
+                <tooltip xml:lang="cs">pro V = 0</tooltip>
+            </variable>
+            <variable item="Analog Control slider 2" CV="104" default="180">
+                <decVal/>
+                <label>Maximum Voltage</label>
+                <label xml:lang="de">Maximale Trafospannung</label>
+                <label xml:lang="nl">Maximum Rijspanning</label>
+                <label xml:lang="cs">Maximální napětí</label>
+                <tooltip>for V = Vmax</tooltip>
+                <tooltip xml:lang="de">für Vsoll = Vmax</tooltip>
+                <tooltip xml:lang="nl">voor Vwens = Vmax</tooltip>
+                <tooltip xml:lang="cs">pro V = Vmax</tooltip>
+            </variable>
+            <variable item="Analog Control slider 3" CV="105" default="30">
+                <decVal/>
+                <label>Hysteresis</label>
+                <label xml:lang="de">Hysterese</label>
+                <label xml:lang="nl">Hysteresis</label>
+                <label xml:lang="cs">Hystereze</label>
+                <tooltip>in analog mode</tooltip>
+                <tooltip xml:lang="de">in Analogmodus</tooltip>
+                <tooltip xml:lang="nl">tijdens Analoog rijden</tooltip>
+                <tooltip xml:lang="cs">v analogovém režimu</tooltip>
+            </variable>
+            <variable item="Analog Control slider 4" CV="106" default="150">
+                <decVal/>
+                <label>Vmax</label>
+                <tooltip>in analog mode</tooltip>
+                <tooltip xml:lang="de">in Analogmodus</tooltip>
+                <tooltip xml:lang="nl">tijdens Analoog rijden</tooltip>
+                <tooltip xml:lang="cs">v analogovém režimu</tooltip>
+            </variable>
+            <!-- CVs 116-118 (CVs 116-123 for Piko) -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/optionVars7outputs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv130.134smoke.xml"/>
+            <!-- SmartSound 4.1 variables, CVs 109 - 111 are on Lights tab -->
+            <!--Rangiertango-->
+            <variable item="Rangiertango Step" CV="135" default="0">
+                <decVal/>
+                <label>Shunting Speed</label>
+                <label xml:lang="de">Rangierstufe</label>
+                <label xml:lang="nl">Rangeersnelheid</label>
+                <label xml:lang="cs">Rychlost posunu</label>
+                <tooltip>Autom. shunting speed (0 = Tango Off)</tooltip>
+                <tooltip xml:lang="de">Fahrtgeschwindigkeit in Automatikbetrieb (0 = Tango Aus)</tooltip>
+                <tooltip xml:lang="nl">Rangeersnelheid (0 = Tango Uit)</tooltip>
+                <tooltip xml:lang="cs">Automatická rychlost posunu (0 = Tango Vypnuto)</tooltip>
+            </variable>
+            <variable item="Rangiertango Pushtime" CV="136" default="10">
+                <decVal/>
+                <label>Push Duration</label>
+                <label xml:lang="de">Andrückzeit</label>
+                <label xml:lang="nl">Aanduwtijd</label>
+                <label xml:lang="cs">Čas najetí</label>
+                <tooltip>Coupling Push Duration T1 * 0.1 Sec</tooltip>
+                <tooltip xml:lang="de">Andrückzeit T1 * 0,1 Sek</tooltip>
+                <tooltip xml:lang="nl">Aanduwtijd T1 * 0,1 Sek</tooltip>
+                <tooltip xml:lang="cs">Čas najetí pro přivěšení T1 * 0,1 s</tooltip>
+            </variable>
+            <variable item="Rangiertango Pulltime" CV="137" default="10">
+                <decVal/>
+                <label>Retract Duration</label>
+                <label xml:lang="de">Abrückzeit</label>
+                <label xml:lang="nl">Wegrijtijd</label>
+                <label xml:lang="cs">Čas odstoupení</label>
+                <tooltip>Decoupling Pull Duration T1 * 0.1 Sec</tooltip>
+                <tooltip xml:lang="de">Abrückzeit T2 * 0,1 Sek</tooltip>
+                <tooltip xml:lang="nl">Terugrijtijd T2 * 0,1 s</tooltip>
+                <tooltip xml:lang="cs">Čas odstoupení pro odvěšení T2 * 0,1 s</tooltip>
+            </variable>
+            <!-- CVs 138-143 Bremsweg-->
+            <variable item="Constant Brakedist Threshold" CV="138" default="0">
+                <decVal/>
+                <label>Speed Step Threshold</label>
+                <label xml:lang="de">Fahrstufenschwellwert</label>
+                <label xml:lang="nl">Snelheidsdrempel</label>
+                <label xml:lang="cs">Práh rychlostního kroku</label>
+                <tooltip>Only above this speed step is constant distance braking applied. 0 = Off</tooltip>
+                <tooltip xml:lang="de">Erst oberhalb wird mit konstanter Bremsweg gebremst. 0 = Aus</tooltip>
+                <tooltip xml:lang="nl">Pas vanaf deze snelheid werkt vaste remweg. 0 = Uit</tooltip>
+                <tooltip xml:lang="cs">Pouze ned tímto rychlostním krokem je použito brždění s konstantní dráhou. 0 = Vypnuto</tooltip>
+            </variable>
+            <variable item="Constant Brakedist 1" CV="139" default="50">
+                <decVal/>
+                <label>Brake Distance</label>
+                <label xml:lang="de">Bremsweg</label>
+                <label xml:lang="nl">Remafstand</label>
+                <label xml:lang="cs">Brzdná dráha</label>
+                <tooltip>First brake distance (in cm)</tooltip>
+                <tooltip xml:lang="de">Erster Bremweg (in cm)</tooltip>
+                <tooltip xml:lang="nl">1e Remweg (in cm)</tooltip>
+                <tooltip xml:lang="cs">První brzdná dráha (cm)</tooltip>
+            </variable>
+            <variable item="Constant Brakedist 2" CV="140" default="25">
+                <decVal/>
+                <label>Brake Distance w/CROSS</label>
+                <label xml:lang="de">Bremsweg mit CROSS</label>
+                <label xml:lang="nl">Remafstand met CROSS</label>
+                <label xml:lang="cs">Brzdná dráha s CROSS</label>
+                <tooltip>Alternative brake distance (in cm), activated by CROSS-bit</tooltip>
+                <tooltip xml:lang="de">Alternativer Bremsweg (in cm), aktiviert durch CROSS-bit</tooltip>
+                <tooltip xml:lang="nl">Alternatieve Remweg (in cm), geactiveerd door CROSS-bit</tooltip>
+                <tooltip xml:lang="cs">Alternativní brzdná dráha (cm), aktivováno bitem v CROSS</tooltip>
+            </variable>
+            <variable item="Constant Brakedist Max" CV="141" default="40">
+                <decVal/>
+                <label>Max. Speed</label>
+                <label xml:lang="de">Max. Geschwindigkeit</label>
+                <label xml:lang="nl">Max. snelheid</label>
+                <label xml:lang="cs">Max. rychlost</label>
+                <tooltip>Maximum speed of loco (in cm/sec)</tooltip>
+                <tooltip xml:lang="de">Maximalgeschwindigkeit der Modellok (in cm/S)</tooltip>
+                <tooltip xml:lang="nl">Maximumsnelheid van lok (in cm/s)</tooltip>
+                <tooltip xml:lang="cs">Maximální rychlost lokomotivy (cm/s)</tooltip>
+            </variable>
+            <variable item="Constant Brakedist Rest" CV="142" default="0">
+                <decVal/>
+                <label>Rest Speed</label>
+                <label xml:lang="de">Rest. Geschwindigkeit</label>
+                <label xml:lang="nl">Restsnelheid</label>
+                <label xml:lang="cs">Zbytková rychlost</label>
+                <tooltip>Remainder of calculated max. speed (255 = 100%)</tooltip>
+                <tooltip xml:lang="de">Restwert der ermittelten Maximalgeschwindigkeit (255 = 100%)</tooltip>
+                <tooltip xml:lang="nl">Restant van berekende maximum (255 = 100%)</tooltip>
+                <tooltip xml:lang="cs">Zbytek z vypočítané maximální rychlosti (255 = 100%)</tooltip>
+            </variable>
+            <variable item="Constant Brakedist Trigger" CV="143">
+                <enumVal>
+                    <enumChoice choice="Off">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Vypnuto</choice>
+                        <choice xml:lang="de">Ausgeschaltet</choice>
+                        <choice xml:lang="nl">Uitgeschakeld</choice>
+                    </enumChoice>
+                    <enumChoice choice="ALL" value="15">
+                        <choice>All Types</choice>
+                        <choice xml:lang="de">Alle Bremstypen</choice>
+                        <choice xml:lang="nl">Alle methodes</choice>
+                        <choice xml:lang="cs">Všechny typy</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0" value="1">
+                        <choice>Speed Step 0</choice>
+                        <choice xml:lang="de">Sollfahrstufe 0</choice>
+                        <choice xml:lang="nl">Snelheidsstap 0</choice>
+                        <choice xml:lang="cs">Krok 0</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC" value="2">
+                        <choice>ABC Braking</choice>
+                        <choice xml:lang="de">ABC  Bremsen</choice>
+                        <choice xml:lang="nl">ABC Remmen</choice>
+                        <choice xml:lang="cs">ABC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="DC" value="4">
+                        <choice>DC Braking</choice>
+                        <choice xml:lang="de">DC Bremsen</choice>
+                        <choice xml:lang="nl">DC Remmen</choice>
+                        <choice xml:lang="cs">DC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="DCC" value="8">
+                        <choice>DCC Brake Signal</choice>
+                        <choice xml:lang="de">DCC Bremssignal</choice>
+                        <choice xml:lang="nl">DCC Remsignaal</choice>
+                        <choice xml:lang="cs">DCC brzdící signál</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 ABC" value="3">
+                        <choice>Step 0 and ABC Braking</choice>
+                        <choice xml:lang="de">Stufe 0 u. ABC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0 en ABC Remmen</choice>
+                        <choice xml:lang="cs">Krok 0 ABC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 DC" value="5">
+                        <choice>Step 0 and DC Braking</choice>
+                        <choice xml:lang="de">Stufe 0 u. DC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0 en DC Remmen</choice>
+                        <choice xml:lang="cs">Krok 0 DC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 DCC" value="9">
+                        <choice>Step 0 and DCC Braking</choice>
+                        <choice xml:lang="de">Stufe 0 u. DCC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0 en DCC Remmen</choice>
+                        <choice xml:lang="cs">Krok 0 a DCC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 ABC DC" value="10">
+                        <choice>Step 0, ABC and DC Braking</choice>
+                        <choice xml:lang="de">Stufe 0, ABC u. DC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0, ABC en DC Remmen</choice>
+                        <choice xml:lang="cs">Krok 0, ABC a DC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 ABC DCC" value="11">
+                        <choice>Step 0, ABC and DCC Braking</choice>
+                        <choice xml:lang="de">Stufe 0, ABC u. DCC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0, ABC en DCC Remmen</choice>
+                        <choice xml:lang="cs">Krok 0, ABC a DCC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC DC" value="6">
+                        <choice>ABC and DC Braking</choice>
+                        <choice xml:lang="de">ABC u. DC Bremsen</choice>
+                        <choice xml:lang="nl">ABC en DC Remmen</choice>
+                        <choice xml:lang="cs">ABC a DC brždění</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC DCC" value="10">
+                        <choice>ABC and DCC Braking Signal</choice>
+                        <choice xml:lang="de">ABC u. DCC Bremssignal</choice>
+                        <choice xml:lang="nl">ABC en DCC Remsignal</choice>
+                        <choice xml:lang="cs">ABC a DCC brzdící signál</choice>
+                    </enumChoice>
+                    <enumChoice choice="DC DCC" value="12">
+                        <choice>DC and DCC Braking Signal</choice>
+                        <choice xml:lang="de">DC u. DCC Bremssignal</choice>
+                        <choice xml:lang="nl">DC en DCC Remsignal</choice>
+                        <choice xml:lang="cs">DC a DCC brzdící signál</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC DC DCC" value="14">
+                        <choice>ABC, DC and DCC Braking</choice>
+                        <choice xml:lang="de">ABC, DC u. DCC Bremsen</choice>
+                        <choice xml:lang="nl">ABC, DC en DCC Remmen</choice>
+                        <choice xml:lang="cs">ABC, DC a DCC brzdící signál</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Constant Braking Trigger</label>
+                <label xml:lang="de">Aktiviert durch</label>
+                <label xml:lang="nl">Geactiveerd door</label>
+                <label xml:lang="cs">Spouštěč konstantního brždění</label>
+                <tooltip>Select which (combination of) methods activates CB</tooltip>
+                <tooltip xml:lang="de">Welche Bremstypen aktievieren Konstanter Bremweg?</tooltip>
+                <tooltip xml:lang="nl">Welke remmethoden activeren constante Remweg?</tooltip>
+                <tooltip xml:lang="cs">Vyberte která (nebo kombinace) metoda aktivuje konstantní brždění</tooltip>
+            </variable>
+            <variable CV="144" item="Accel2" default="12" comment="Range 0-255">
+                <decVal/>
+                <label>Acceleration Rate 2</label>
+                <label xml:lang="it">Accellerazione 2</label>
+                <label xml:lang="cs">Míra zrychlení 2</label>
+                <label xml:lang="fr">2ème Accelération</label>
+                <label xml:lang="de">2. Anfahrverzögerung</label>
+                <label xml:lang="nl">2e Wegrijvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable CV="145" item="Decel2" default="12" comment="Range 0-255">
+                <decVal/>
+                <label>Deceleration Rate 2</label>
+                <label xml:lang="it">Decellerazione 2</label>
+                <label xml:lang="cs">Míra zpomalení 2</label>
+                <label xml:lang="fr">2ème Décélération</label>
+                <label xml:lang="de">2. Bremszeit</label>
+                <label xml:lang="nl">2e Remvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable CV="146" item="Accel3" default="24" comment="Range 0-255">
+                <decVal/>
+                <label>Acceleration Rate 3</label>
+                <label xml:lang="it">Accellerazione 3</label>
+                <label xml:lang="cs">Míra zrychlení 3</label>
+                <label xml:lang="fr">3ème Accelération</label>
+                <label xml:lang="de">3. Anfahrverzögerung</label>
+                <label xml:lang="nl">3e Wegrijvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable CV="147" item="Decel3" default="24" comment="Range 0-255">
+                <decVal/>
+                <label>Deceleration Rate 3</label>
+                <label xml:lang="it">Decellerazione 3</label>
+                <label xml:lang="cs">Míra zpomalení 3</label>
+                <label xml:lang="fr">3ème Décélération</label>
+                <label xml:lang="de">3. Bremszeit</label>
+                <label xml:lang="nl">3e Remvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable item="ABV2 F Key" CV="148" default="255">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+                <label>Key to activate Rate 2:</label>
+                <label xml:lang="de">ABV2 Funktionstaste:</label>
+                <label xml:lang="nl">ABV2 Functietoets:</label>
+                <label xml:lang="cs">Tlačítko pro aktivaci Míry 2:</label>
+            </variable>
+            <variable item="ABV3 F Key" CV="149" default="255">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+                <label>Key to activate Rate 3:</label>
+                <label xml:lang="de">ABV3 Funktionstaste:</label>
+                <label xml:lang="nl">ABV3 Functietoets:</label>
+                <label xml:lang="cs">Tlačítko pro aktivaci Míry 3:</label>
+            </variable>
+            <!-- CVs 150-152 are in optionVars7outputs.xml include -->
+            <!-- CV159 pass Function Key to SUSI-->
+            <variable item="SUSI F22" CV="159" mask="XXXXXXXV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Pass F Key to SUSI</label>
+                <label xml:lang="cs">F tlačítko pro odeslání do SUSI</label>
+            </variable>
+            <variable item="SUSI F23" CV="159" mask="XXXXXXVX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F24" CV="159" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F25" CV="159" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F26" CV="159" mask="XXXVXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F27" CV="159" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F28" CV="159" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            
+            <!--PWM-->
+            <variable item="PWM Modulation on A0" CV="170" mask="XVVVVVVV">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+                <label>PWM Modulation on A0</label>
+                <label xml:lang="de">PWM-Verlauf auf A0</label>
+                <label xml:lang="nl">PWM Modulatie op A0</label>
+                <label xml:lang="cs">PWM modulace na A0</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A0</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A0</tooltip>
+                <tooltip xml:lang="cs">Vyberte jeden z 8 dostupných pulzních modulací která bude dostupná na výstupu A0</tooltip>
+            </variable>
+            <variable item="PWM Cross on A0" CV="170" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <label xml:lang="cs">s CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+                <tooltip xml:lang="cs">pouze pokud je nastaven bit CROSS</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A1" CV="171" mask="XVVVVVVV" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+                <label>PWM Modulation on A1</label>
+                <label xml:lang="de">PWM-Verlauf auf A1</label>
+                <label xml:lang="nl">PWM Modulatie op A1</label>
+                <label xml:lang="cs">PWM modulace na A1</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A1</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A1</tooltip>
+                <tooltip xml:lang="cs">Vyberte jeden z 8 dostupných pulzních modulací která bude dostupná na výstupu A1</tooltip>
+            </variable>
+            <variable item="PWM Cross on A1" CV="171" mask="VXXXXXXX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <label xml:lang="cs">s CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+                <tooltip xml:lang="cs">pouze pokud je nastaven bit CROSS</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A2" CV="172" mask="XVVVVVVV" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+                <label>PWM Modulation on A2</label>
+                <label xml:lang="de">PWM-Verlauf auf A2</label>
+                <label xml:lang="nl">PWM Modulatie op A2</label>
+                <label xml:lang="cs">PWM modulace na A2</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A2</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A2</tooltip>
+                <tooltip xml:lang="cs">Vyberte jeden z 8 dostupných pulzních modulací která bude dostupná na výstupu A2</tooltip>
+            </variable>
+            <variable item="PWM Cross on A2" CV="172" mask="VXXXXXXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <label xml:lang="cs">s CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+                <tooltip xml:lang="cs">pouze pokud je nastaven bit CROSS</tooltip>
+            </variable>
+            
+            <variable item="PWM Duration" CV="178" default="15">
+                <decVal/>
+                <label>PWM Duration</label>
+                <label xml:lang="de">PWM Periodendauer</label>
+                <label xml:lang="nl">PWM-duur</label>
+                <label xml:lang="cs">PWM doba</label>
+                <tooltip>Period display duration (value * 64 Milliseconds)</tooltip>
+                <tooltip xml:lang="de">Periodendauer der Wiedergabe (Wert * 64 ms)</tooltip>
+                <tooltip xml:lang="cs">Doba přehrávání (hodnota × 64 ms)</tooltip>
+            </variable>
+            <variable item="PWM Phase A0" CV="179" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">PWM fáze A0</label>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+                <tooltip xml:lang="cs">Nezaškrtnuto Normální = 0°; Zaškrtnuto Otočená = 180°</tooltip>
+            </variable>
+            <variable item="PWM Phase A1" CV="179" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">PWM fáze A1</label>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+                <tooltip xml:lang="cs">Nezaškrtnuto Normální = 0°; Zaškrtnuto Otočená = 180°</tooltip>
+            </variable>
+            <variable item="PWM Phase A2" CV="179" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">PWM fáze A2</label>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+                <tooltip xml:lang="cs">Nezaškrtnuto Normální = 0°; Zaškrtnuto Otočená = 180°</tooltip>
+            </variable>
+            <variable item="PWM Wait" CV="180">
+                <decVal/>
+                <label>PWM Wait</label>
+                <label xml:lang="de">PWM Haltezeit</label>
+                <label xml:lang="nl">PWM-pauze</label>
+                <label xml:lang="cs">PWM zdržení</label>
+                <tooltip>Wait time after CROSS-bit off (value * 100 Milliseconds)</tooltip>
+                <tooltip xml:lang="de">Haltezeit nach dem CROSS-Ausgabebit aus (Wert * 100 ms)</tooltip>
+                <tooltip xml:lang="cs">Doba zdržení po vypnutí bitu CROSS (hodnota × 100 ms)</tooltip>
+            </variable>
+            <!-- Light Effects CVs 181-190 -->
+            <variable item="Light Flicker A0" CV="181" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Blikání na A0</label>
+            </variable>
+            <variable item="Light Flicker A1" CV="181" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Blikání na A1</label>
+            </variable>
+            <variable item="Light Flicker A2" CV="181" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Blikání na A2</label>
+            </variable>
+            <variable item="Light Flicker A3" CV="181" mask="XXXXVXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Blikání na A3</label>
+            </variable>
+            <variable item="Light Flicker A4" CV="181" mask="XXXVXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Blikání na A4</label>
+            </variable>
+            <variable item="Light Flicker Rythm" CV="182" default="0" mask="XXXXVVVV">
+                <decVal max="15"/>
+                <label>Flicker Effect - Rythm</label>
+                <label xml:lang="de">Flackereffekt - Rythmus</label>
+                <label xml:lang="nl">Flakkeren - Tempo</label>
+                <label xml:lang="cs">Efekt blikání - Rytmus</label>
+                <tooltip>Flicker Effect Speed Variation (0-15)</tooltip>
+                <tooltip xml:lang="de">Flackereffekt Rythmusvariation (0-15)</tooltip>
+                <tooltip xml:lang="nl">Tempovariatie (0-15)</tooltip>
+                <tooltip xml:lang="cs">Změna rychlosti efektu blikání (0-15)</tooltip>
+            </variable>
+            <variable item="Light Flicker Change" CV="182" default="0" mask="XVVVXXXX">
+                <decVal max="7"/>
+                <label>Variation</label>
+                <label xml:lang="de">Abwechslung</label>
+                <label xml:lang="nl">Helderheidswissel</label>
+                <label xml:lang="cs">Změna jasu</label>
+                <tooltip>Flicker Effect brightness variation (0-7)</tooltip>
+                <tooltip xml:lang="de">Flackereffekt Helligkeitsabwechslung (0-7)</tooltip>
+                <tooltip xml:lang="nl">Helderheidsvariatie (0-7)</tooltip>
+                <tooltip xml:lang="cs">Změna jasu efektu blikání (0-7)</tooltip>
+            </variable>
+            <variable item="Light Flicker Bright" CV="182" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Full Brightness</label>
+                <label xml:lang="de">Immer hell</label>
+                <label xml:lang="nl">Continu helder</label>
+                <label xml:lang="cs">Plný jas</label>
+                <tooltip>Output always full brightness</tooltip>
+                <tooltip xml:lang="de">Ausgang immer hell</tooltip>
+                <tooltip xml:lang="nl">Flakkeren zonder variatie, steeds op volle helderheid</tooltip>
+                <tooltip xml:lang="cs">Stálý plný jas na výstupu</tooltip>
+            </variable>
+            <variable item="Light Energy A0" CV="183" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Energie světla A0</label>
+            </variable>
+            <variable item="Light Energy A1" CV="183" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Energie světla A1</label>
+            </variable>
+            <variable item="Light Energy A2" CV="183" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Energie světla A2</label>
+            </variable>
+            <variable item="Light Energy A3" CV="183" mask="XXXXVXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Energie světla A3</label>
+            </variable>
+            <variable item="Light Energy A4" CV="183" mask="XXXVXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Energie světla A4</label>
+            </variable>
+            <variable item="Light Energy Start" CV="184" default="10">
+                <decVal max="63"/>
+                <label>Energy Save - Initial brightness</label>
+                <label xml:lang="de">Energiespar - Grundhelligkeit</label>
+                <label xml:lang="nl">Spaarlamp - Beginhelderheid</label>
+                <label xml:lang="cs">Úspora energie - počáteční jas</label>
+                <tooltip>(Value 0-63)</tooltip>
+                <tooltip xml:lang="de">(Wert 0-63)</tooltip>
+                <tooltip xml:lang="nl">(Bereik 0-63)</tooltip>
+                <tooltip xml:lang="cs">(Hodnota 0-63)</tooltip>
+            </variable>
+            <variable item="Light Energy Time" CV="185" default="100">
+                <decVal/>
+                <label>Warm Up Time</label>
+                <label xml:lang="de">Aufheizdauer</label>
+                <label xml:lang="nl">Opwarmtijd</label>
+                <label xml:lang="cs">Čas zahřátí</label>
+                <tooltip>Energy Save - Time to reach full brightness - Value * 5 millisec</tooltip>
+                <tooltip xml:lang="de">Energiespar - Zeit bis maximale Helligkeit erreicht ist - Wert * 5 mSek</tooltip>
+                <tooltip xml:lang="nl">Spaarlamp - Duur totdat max. helderheid is bereikt - waarde * 5 ms</tooltip>
+                <tooltip xml:lang="cs">Úspora energie - čas pro dosažení plného jasu - Hodnota × 5 ms</tooltip>
+            </variable>
+
+            <variable item="Light Blend A0" CV="186" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Rozsvěcení světla A0</label>
+            </variable>
+            <variable item="Light Blend A1" CV="186" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Rozsvěcení světla A1</label>
+            </variable>
+            <variable item="Light Blend A2" CV="186" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Rozsvěcení světla A2</label>
+            </variable>
+            
+            <variable item="Light Blend Time" CV="187" default="30">
+                <decVal/>
+                <label>Blend In/Blend Out - Duration</label>
+                <label xml:lang="de">Ein-/Ausblenden - Blendzeit</label>
+                <label xml:lang="nl">In-/Uitfaden - Duur</label>
+                <label xml:lang="cs">Rozsvěcení/Zhasínání - Doba trvání</label>
+                <tooltip>Blend Effect Duration - Value * 10 millisec</tooltip>
+                <tooltip xml:lang="de">Dauer des Blendes - Wert * 10 mSek</tooltip>
+                <tooltip xml:lang="nl">Duur van het verloop - waarde * 10 ms</tooltip>
+                <tooltip xml:lang="cs">Efekt rozsvěcení/stmívání doba trvání - hodnota × 10 ms</tooltip>
+            </variable>
+            <variable item="Light Neon A0" CV="188" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Zářivkové světlo A0</label>
+            </variable>
+            <variable item="Light Neon A1" CV="188" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Zářivkové světlo A1</label>
+            </variable>
+            <variable item="Light Neon A2" CV="188" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Zářivkové světlo A2</label>
+            </variable>
+            <variable item="Light Neon A3" CV="188" mask="XXXXVXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Zářivkové světlo A3</label>
+            </variable>
+            <variable item="Light Neon A4" CV="188" mask="XXXVXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="cs">Zářivkové světlo A4</label>
+            </variable>
+            
+            <variable item="Light Neon Time" CV="189" default="20">
+                <decVal/>
+                <label>Neon - Flash Time</label>
+                <label xml:lang="de">Neonlicht - Blitzzeit</label>
+                <label xml:lang="nl">Neon - Knippertijd</label>
+                <label xml:lang="cs">Zářivka - Doba záblesku</label>
+                <tooltip>Start Flash Duration - Value * 5 millisec</tooltip>
+                <tooltip xml:lang="de">Dauer des Blitzen - Wert * 5 mSek</tooltip>
+                <tooltip xml:lang="nl">Duur van het knipperen - waarde * 5 ms</tooltip>
+                <tooltip xml:lang="cs">Doba blikání při startu - hodnota × 5 ms</tooltip>
+            </variable>
+            <variable item="Light Neon Flashes" CV="190" default="20">
+                <decVal/>
+                <label>Max. no. of Flashes</label>
+                <label xml:lang="de">Max. Blitsanzahl</label>
+                <label xml:lang="nl">Max. aantal flitsen</label>
+                <label xml:lang="cs">Max. počet záblesků</label>
+                <tooltip>Maximum number of flashes on startup</tooltip>
+                <tooltip xml:lang="de">maximale Blitzanzahl</tooltip>
+                <tooltip xml:lang="nl">Maximum aantal keer knipperen na inschakelen</tooltip>
+                <tooltip xml:lang="cs">Maximální počet záblesků při startu</tooltip>
+            </variable>
+
+            <variable item="Motor Management 1" CV="200" default="10">
+                <decVal/>
+                <label>Minimum Speed Step</label>
+                <label xml:lang="de">minimale Fahrstufe</label>
+                <label xml:lang="cs">Minimální rychlostní krok</label>
+                <tooltip>Minimal speed step to which the Period = CV53 is set</tooltip>
+                <tooltip xml:lang="de">minimale Fahrstufe bis zu der die Periodendauer = CV53 gesetzt wird</tooltip>
+                <tooltip xml:lang="cs">Minimální rychlostní krok do kterého je doba trvání = CV53 nastaveno</tooltip>
+            </variable>
+            <variable item="Motor Management 2" CV="201" default="150">
+                <decVal/>
+                <label>Maximum Speed Step</label>
+                <label xml:lang="de">maximale Fahrstufe</label>
+                <label xml:lang="cs">Maximální rychlostní krok</label>
+                <tooltip>Maximal speed step from where the Period = CV202 is set</tooltip>
+                <tooltip xml:lang="de">maximale Fahrstufe ab der die Periodendauer = CV202 gesetzt wird</tooltip>
+                <tooltip xml:lang="cs">Maximální rychlostní krok od kterého je doba trvání = CV202 nastaveno</tooltip>
+            </variable>
+            <variable item="Motor Management 3" CV="202" default="250">
+                <decVal/>
+                <label>Maximum Period Length</label>
+                <label xml:lang="de">maximale Periodendauer</label>
+                <label xml:lang="cs">Maximální délka doby trvání</label>
+                <tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
+                <tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV53)</tooltip>
+                <tooltip xml:lang="cs">Maximální délka doby trvání je v krocích po 100 μs (min = CV53)</tooltip>
+            </variable>
+            <!--extended function mapping on IntelliDrive2 and Piko Smartdecoder (Sound) 4.1, includes cv 31-32 bank switches-->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
+
+<!--            <group exclude="PIKO56400,PIKO56401">-->
+            <!--Sound CVs -->
+            <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
+            <variable item="Bank_Switch" CV="1021" default="0">
+                <enumVal>
+                    <enumChoice choice="Normal CVs">
+                        <choice>Normal CVs</choice>
+                        <choice xml:lang="de">Normale CVs</choice>
+                        <choice xml:lang="nl">Normale CV's</choice>
+                        <choice xml:lang="cs">Normální CV</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank A">
+                        <choice>Bank A - Hardware</choice>
+                        <choice xml:lang="de">Bank A - Hardware</choice>
+                        <choice xml:lang="nl">Bank A - Hardware</choice>
+                        <choice xml:lang="cs">Banka A - Hardware</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank B">
+                        <choice>Bank B  - Common</choice>
+                        <choice xml:lang="de">Bank B - Algemein</choice>
+                        <choice xml:lang="nl">Bank B - Gedeeld</choice>
+                        <choice xml:lang="cs">Banka B - Všeobecné</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank C">
+                        <choice>Bank C - Speed</choice>
+                        <choice xml:lang="de">Bank C - Geschwindigkeit</choice>
+                        <choice xml:lang="nl">Bank C - Snelheid</choice>
+                        <choice xml:lang="cs">Banka C - Rychlost</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank D">
+                        <choice>Bank D - Volume</choice>
+                        <choice xml:lang="de">Bank D - Lautstärke</choice>
+                        <choice xml:lang="nl">Bank D - Volume</choice>
+                        <choice xml:lang="cs">Banka D - Hlasitost</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank E" value="8">
+                        <choice>Bank E - Fn Keys</choice>
+                        <choice xml:lang="de">Bank E - Fn Tasten</choice>
+                        <choice xml:lang="nl">Bank E - Fn-toetsen</choice>
+                        <choice xml:lang="cs">Banka F - Fn tlačítka</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Program</label>
+                <label xml:lang="de">Programmieren</label>
+                <label xml:lang="nl">Programmeer</label>
+                <label xml:lang="cs">Programování</label>
+                <tooltip>Setting that determines which bank A-E is programmed. Reset to Normal CVs when done!</tooltip>
+                <tooltip xml:lang="de">Einstellung der zu programmierenden Bank A - E. Zurückstellen nach Normale CVs wenn fertig!</tooltip>
+                <tooltip xml:lang="cs">Nastavení programování banky A - E. Po dokončení obnovte na Normální CV!</tooltip>
+            </variable>
+            <!-- Bank A variables -->
+            <variable item="Bank A Manufacturer ID" CV="900.1021=0" readOnly="yes" default="85">
+                <decVal/>
+                <label>Manufacturer ID: </label>
+                <label xml:lang="it">ID Costruttore: </label>
+                <label xml:lang="fr">ID constructeur: </label>
+                <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="nl">Fabrikant-ID: </label>
+                <label xml:lang="cs">ID výrobce: </label>
+            </variable>
+            <variable item="Bank A Software version" CV="901.1021=0" readOnly="yes">
+                <decVal/>
+                <label>Manufacturer Version No: </label>
+                <label xml:lang="it">Versione Decoder: </label>
+                <label xml:lang="fr">Version décodeur: </label>
+                <label xml:lang="de">Decoder Version: </label>
+                <label xml:lang="nl">Versie van decoder: </label>
+                <label xml:lang="cs">Verze dekodéru: </label>
+            </variable>
+            <variable item="Bank A Reset" CV="905.1021=0" readOnly="no">
+                <decVal/>
+                <label>Reset to factory settings: </label>
+                <label xml:lang="de">Rücksetzen der CVs: </label>
+                <label xml:lang="nl">Zet terug naar fabrieksinstellingen: </label>
+                <label xml:lang="cs">Reset do továrního nastavení: </label>
+                <tooltip>To reset write a value other than 0</tooltip>
+                <tooltip xml:lang="de">zum Rücksetzen einen Wert ungleich 0 setzen</tooltip>
+                <tooltip xml:lang="cs">Pro Reset zapište hodnotu jinou než 0</tooltip>
+            </variable>
+            <!-- Bank B variables -->
+            <!--CVs 900.1 - 901.1-->
+            <variable item="Bank B Hardware ID" CV="900.1021=1" readOnly="yes">
+                <decVal/>
+                <label>Hardware ID: </label>
+                <label xml:lang="de">Hardwarekennung: </label>
+                <label xml:lang="nl">Hardware-ID: </label>
+                <label xml:lang="cs">ID hardware: </label>
+            </variable>
+            <variable item="Bank B Subversion ID" CV="901.1021=1" readOnly="yes">
+                <decVal/>
+                <label>Sub Version Number: </label>
+                <label xml:lang="de">Unterversionsnummer: </label>
+                <label xml:lang="nl">Sub-versienummer: </label>
+                <label xml:lang="cs">Číslo podverze: </label>
+            </variable>
+            <!-- Bank C variables -->
+            <!--CVs 900.2, 905.2-911.2-->
+            <variable item="Bank C Sound Setting 1" CV="900.1021=2" default="255" tooltip="0-255">
+                <decVal/>
+                <label>Master Sound Volume</label>
+                <label xml:lang="de">Gesamtlautstärke</label>
+                <label xml:lang="nl">Geluidsvolume</label>
+                <label xml:lang="cs">Hlasitost zvuku</label>
+            </variable>
+            <variable item="Bank C Sound Setting 2" CV="905.1021=2">
+                <decVal/>
+                <label>Minimum Random Period</label>
+                <label xml:lang="de">Minimale Zufallszeit</label>
+                <label xml:lang="nl">Min. toevalstijd</label>
+                <label xml:lang="cs">Minimální náhodná doba</label>
+                <tooltip>From what time (minimum) should a random sound be played?</tooltip>
+                <tooltip xml:lang="de">ab welcher Mindestzeit soll ein Zufallsgeräusch abgespielt werden?</tooltip>
+                <tooltip xml:lang="cs">Od jaké minimální doby mají být přehrávány náhodné zvuky.</tooltip>
+            </variable>
+            <variable item="Bank C Sound Setting 3" CV="906.1021=2">
+                <decVal/>
+                <label>Maximum Random Period</label>
+                <label xml:lang="de">Maximale Zufallszeit</label>
+                <label xml:lang="nl">Max. toevalstijd</label>
+                <label xml:lang="cs">Maximální náhodná doba</label>
+                <tooltip>Until what time (maximum) should a random sound be played? (how often = combination with Min. Rand.Per)</tooltip>
+                <tooltip xml:lang="de">bis zu welcher Zeit soll ein Zufallsgeräusch abgespielt werden? (wie häufig - Kombination mit Mind. Zufallszeit)</tooltip>
+                <tooltip xml:lang="cs">Do jaké maximální doby mají být přehrávány náhodné zvuky. (jak často = kombinace s minimální náhodnou dobou)</tooltip>
+            </variable>
+            <variable item="Bank C Sound Setting 4" CV="907.1021=2">
+                <decVal/>
+                <label>Steam-/Rail-Trigger Param 1</label>
+                <label xml:lang="de">Dampfstoß-/Schienenstoß-Trigger Param 1</label>
+                <label xml:lang="nl">Dampfstoß-/Schienenstoß-Trigger Param 1</label>
+                <label xml:lang="cs">Pára/Koleje - Spouštěč Parametr 1</label>
+            </variable>
+            <variable item="Bank C Sound Setting 5" CV="908.1021=2">
+                <decVal/>
+                <label>Steam-/Rail-Trigger Param 2</label>
+                <label xml:lang="de">Dampfstoß-/Schienenstoß-Trigger Param 2</label>
+                <label xml:lang="nl">Stoom-/Rails-trigger Param 2</label>
+                <label xml:lang="cs">Pára/Koleje - Spouštěč Parametr 2</label>
+            </variable>
+            <variable item="Bank C Sound Setting 6" CV="910.1021=2">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+                <label>Soundfader Function</label>
+                <label xml:lang="de">Funktionstaste für Soundfader</label>
+                <label xml:lang="nl">Functieknop voor Soundfader</label>
+                <label xml:lang="cs">Funkce pro ztišení zvuku</label>
+                <tooltip>Function mapping for Soundfader</tooltip>
+                <tooltip xml:lang="cs">Mapování funkcí pro ztišení zvuku</tooltip>
+            </variable>
+            <variable item="Bank C Sound Setting 7" CV="911.1021=2">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+                <label>Volume Control Function</label>
+                <label xml:lang="de">Funktion für Soundfader</label>
+                <label xml:lang="nl">Functieknop voor Volumeregelaar</label>
+                <label xml:lang="cs">Funkce pro regulaci hlasitosti</label>
+                <tooltip>Function mapping for Volume Control</tooltip>
+                <tooltip xml:lang="cs">Mapování funkcí pro regulaci hlasitosti</tooltip>
+            </variable>
+            <!-- CV 900.3-939.3-->
+            <!-- Piko Info: Fahrstufenschwellen 0-255 für Schaltgeräusche, z.B. das Getriebeschalten eines -->
+            <!-- Schienenbusses o. die Schützschaltung für eine Altbau E-Lok/speed steps for sound effects in the model-->
+            <variable item="Bank D Sound Setting 1" CV="900.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 1</label>
+                <tooltip>At which Speed Step should Switch Sound #1 be activated?</tooltip>
+                <tooltip xml:lang="de">Bei welchen Fahrstufe soll Schaltgeräusch #1 abgespielt werden?</tooltip>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #1.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 2" CV="901.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 2</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #2.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 3" CV="902.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 3</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #3.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 4" CV="903.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 4</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #4.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 5" CV="904.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 5</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #5.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 6" CV="905.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 6</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #6.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 7" CV="906.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 7</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #7.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 8" CV="907.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 8</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #8.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 9" CV="908.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 9</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #9.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 10" CV="909.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 10</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #10.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 11" CV="910.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 11</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #11.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 12" CV="911.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 12</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #12.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 13" CV="912.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 13</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #13.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 14" CV="913.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 14</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #14.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 15" CV="914.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 15</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #15.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 16" CV="915.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 16</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #16.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 17" CV="916.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 17</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #17.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 18" CV="917.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 18</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #18.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 19" CV="918.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 19</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #19.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 20" CV="919.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 20</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #20.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 21" CV="920.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 21</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #21.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 22" CV="921.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 22</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #22.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 23" CV="922.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 23</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #23.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 24" CV="923.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 24</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #24.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 25" CV="924.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 25</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #25.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 26" CV="925.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 26</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #26.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 27" CV="926.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 27</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #27.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 28" CV="927.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 28</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #28.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 29" CV="928.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 29</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #29.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 30" CV="929.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 30</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #30.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 31" CV="930.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 31</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #31.</tooltip>
+            </variable>
+            <variable item="Bank D Sound Setting 32" CV="931.1021=3">
+                <decVal/>
+                <label xml:lang="cs">Banka D nastavení zvuku 32</label>
+                <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #32.</tooltip>
+            </variable>
+            <!-- CV 900.4-931.4-->
+            <!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
+            <variable item="Bank E Sound Setting 1" CV="900.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 1</label>
+                <tooltip>Sound Slot #1 Volume</tooltip>
+                <tooltip xml:lang="de">Sound Slot #1 Lautstärke</tooltip>
+                <tooltip xml:lang="cs">Zvukový slot #1 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 2" CV="901.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 2</label>
+                <tooltip xml:lang="cs">Zvukový slot #2 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 3" CV="902.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 3</label>
+                <tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 4" CV="903.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 4</label>
+                <tooltip xml:lang="cs">Zvukový slot #4 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 5" CV="904.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 5</label>
+                <tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 6" CV="905.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 6</label>
+                <tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 7" CV="906.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 7</label>
+                <tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 8" CV="907.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 8</label>
+                <tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 9" CV="908.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 9</label>
+                <tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 10" CV="909.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 10</label>
+                <tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 11" CV="910.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 11</label>
+                <tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 12" CV="911.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 12</label>
+                <tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 13" CV="912.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 13</label>
+                <tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 14" CV="913.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 14</label>
+                <tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 15" CV="914.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 15</label>
+                <tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 16" CV="915.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 16</label>
+                <tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 17" CV="916.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 17</label>
+                <tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 18" CV="917.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 18</label>
+                <tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 19" CV="918.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 19</label>
+                <tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 20" CV="919.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 20</label>
+                <tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 21" CV="920.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 21</label>
+                <tooltip xml:lang="cs">Zvukový slot #21 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 22" CV="921.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 22</label>
+                <tooltip xml:lang="cs">Zvukový slot #22 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 23" CV="922.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 23</label>
+                <tooltip xml:lang="cs">Zvukový slot #23 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 24" CV="923.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 24</label>
+                <tooltip xml:lang="cs">Zvukový slot #24 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 25" CV="924.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 25</label>
+                <tooltip xml:lang="cs">Zvukový slot #25 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 26" CV="925.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 26</label>
+                <tooltip xml:lang="cs">Zvukový slot #26 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 27" CV="926.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 27</label>
+                <tooltip xml:lang="cs">Zvukový slot #27 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 28" CV="927.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 28</label>
+                <tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 29" CV="928.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 29</label>
+                <tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 30" CV="929.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 30</label>
+                <tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 31" CV="930.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 31</label>
+                <tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 32" CV="931.1021=4">
+                <decVal/>
+                <label xml:lang="cs">Banka E nastavení zvuku 32</label>
+                <tooltip xml:lang="cs">Zvukový slot #32 Hlasitost.</tooltip>
+            </variable>
+        <!--CVs 900.8-939.8-->
+            <!--<group>-->
+                <!--<qualifier>-->
+                    <!--<variableref>Bank_Switch</variableref>-->
+                    <!--<relation>eq</relation>-->
+                    <!--<value>8</value>-->
+                <!--</qualifier>-->
+                <!--PIKO41BR82 sounds-->
+                <variable item="Bank F F0 activated sound" CV="900.1021=8" default="1" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F0 activated sound</label>
+                    <label xml:lang="de">F0 activiert Sound</label>
+                    <label xml:lang="nl">F0 speelt geluid:</label>
+                    <label xml:lang="cs">F0 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F1 activated sound" CV="901.1021=8" default="2" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F1 activated sound</label>
+                    <label xml:lang="de">F1 activiert Sound</label>
+                    <label xml:lang="nl">F1 speelt geluid:</label>
+                    <label xml:lang="cs">F1 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F2 activated sound" CV="902.1021=8" default="3" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F2 activated sound</label>
+                    <label xml:lang="de">F2 activiert Sound</label>
+                    <label xml:lang="nl">F2 speelt geluid:</label>
+                    <label xml:lang="cs">F2 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F3 activated sound" CV="903.1021=8" default="4" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F3 activated sound</label>
+                    <label xml:lang="de">F3 activiert Sound</label>
+                    <label xml:lang="nl">F3 speelt geluid:</label>
+                    <label xml:lang="cs">F3 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F4 activated sound" CV="904.1021=8" default="5" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F4 activated sound</label>
+                    <label xml:lang="de">F4 activiert Sound</label>
+                    <label xml:lang="nl">F4 speelt geluid:</label>
+                    <label xml:lang="cs">F4 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F5 activated sound" CV="905.1021=8" default="6" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F5 activated sound</label>
+                    <label xml:lang="de">F5 activiert Sound</label>
+                    <label xml:lang="nl">F5 speelt geluid:</label>
+                    <label xml:lang="cs">F5 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F6 activated sound" CV="906.1021=8" default="7" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F6 activated sound</label>
+                    <label xml:lang="de">F6 activiert Sound</label>
+                    <label xml:lang="nl">F6 speelt geluid:</label>
+                    <label xml:lang="cs">F6 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F7 activated sound" CV="907.1021=8" default="8" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F7 activated sound</label>
+                    <label xml:lang="de">F7 activiert Sound</label>
+                    <label xml:lang="nl">F7 speelt geluid:</label>
+                    <label xml:lang="cs">F7 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F8 activated sound" CV="908.1021=8" default="9" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F8 activated sound</label>
+                    <label xml:lang="de">F8 activiert Sound</label>
+                    <label xml:lang="nl">F8 speelt geluid:</label>
+                    <label xml:lang="cs">F8 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F9 activated sound" CV="909.1021=8" default="10" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F9 activated sound</label>
+                    <label xml:lang="de">F9 activiert Sound</label>
+                    <label xml:lang="nl">F9 speelt geluid:</label>
+                    <label xml:lang="cs">F9 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F10 activated sound" CV="910.1021=8" default="11" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F10 activated sound</label>
+                    <label xml:lang="de">F10 activiert Sound</label>
+                    <label xml:lang="nl">F10 speelt geluid:</label>
+                    <label xml:lang="cs">F10 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F11 activated sound" CV="911.1021=8" default="12" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F11 activated sound</label>
+                    <label xml:lang="de">F11 activiert Sound</label>
+                    <label xml:lang="nl">F11 speelt geluid:</label>
+                    <label xml:lang="cs">F11 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F12 activated sound" CV="912.1021=8" default="13" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F12 activated sound</label>
+                    <label xml:lang="de">F12 activiert Sound</label>
+                    <label xml:lang="nl">F12 speelt geluid:</label>
+                    <label xml:lang="cs">F12 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F13 activated sound" CV="913.1021=8" default="14" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F13 activated sound</label>
+                    <label xml:lang="de">F13 activiert Sound</label>
+                    <label xml:lang="nl">F13 speelt geluid:</label>
+                    <label xml:lang="cs">F13 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F14 activated sound" CV="914.1021=8" default="15" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F14 activated sound</label>
+                    <label xml:lang="de">F14 activiert Sound</label>
+                    <label xml:lang="nl">F14 speelt geluid:</label>
+                    <label xml:lang="cs">F14 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F15 activated sound" CV="915.1021=8" default="16" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F15 activated sound</label>
+                    <label xml:lang="de">F15 activiert Sound</label>
+                    <label xml:lang="nl">F15 speelt geluid:</label>
+                    <label xml:lang="cs">F15 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F16 activated sound" CV="916.1021=8" default="17" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F16 activated sound</label>
+                    <label xml:lang="de">F16 activiert Sound</label>
+                    <label xml:lang="nl">F16 speelt geluid:</label>
+                    <label xml:lang="cs">F16 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F17 activated sound" CV="917.1021=8" default="18" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F17 activated sound</label>
+                    <label xml:lang="de">F17 activiert Sound</label>
+                    <label xml:lang="nl">F17 speelt geluid:</label>
+                    <label xml:lang="cs">F17 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F18 activated sound" CV="918.1021=8" default="19" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F18 activated sound</label>
+                    <label xml:lang="de">F18 activiert Sound</label>
+                    <label xml:lang="nl">F18 speelt geluid:</label>
+                    <label xml:lang="cs">F18 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F19 activated sound" CV="919.1021=8" default="20" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F19 activated sound</label>
+                    <label xml:lang="de">F19 activiert Sound</label>
+                    <label xml:lang="nl">F19 speelt geluid:</label>
+                    <label xml:lang="cs">F19 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F20 activated sound" CV="920.1021=8" default="21" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F20 activated sound</label>
+                    <label xml:lang="de">F20 activiert Sound</label>
+                    <label xml:lang="nl">F20 speelt geluid:</label>
+                    <label xml:lang="cs">F20 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F21 activated sound" CV="921.1021=8" default="22" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F21 activated sound</label>
+                    <label xml:lang="de">F21 activiert Sound</label>
+                    <label xml:lang="nl">F21 speelt geluid:</label>
+                    <label xml:lang="cs">F21 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F22 activated sound" CV="922.1021=8" default="23" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F22 activated sound</label>
+                    <label xml:lang="de">F22 activiert Sound</label>
+                    <label xml:lang="nl">F22 speelt geluid:</label>
+                    <label xml:lang="cs">F22 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F23 activated sound" CV="923.1021=8" default="24" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F23 activated sound</label>
+                    <label xml:lang="de">F23 activiert Sound</label>
+                    <label xml:lang="nl">F23 speelt geluid:</label>
+                    <label xml:lang="cs">F23 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F24 activated sound" CV="924.1021=8" default="25" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F24 activated sound</label>
+                    <label xml:lang="de">F24 activiert Sound</label>
+                    <label xml:lang="nl">F24 speelt geluid:</label>
+                    <label xml:lang="cs">F24 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F25 activated sound" CV="925.1021=8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F25 activated sound</label>
+                    <label xml:lang="de">F25 activiert Sound</label>
+                    <label xml:lang="nl">F25 speelt geluid:</label>
+                    <label xml:lang="cs">F25 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F26 activated sound" CV="926.1021=8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F26 activated sound</label>
+                    <label xml:lang="de">F26 activiert Sound</label>
+                    <label xml:lang="nl">F26 speelt geluid:</label>
+                    <label xml:lang="cs">F26 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F27 activated sound" CV="927.1021=8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F27 activated sound</label>
+                    <label xml:lang="de">F27 activiert Sound</label>
+                    <label xml:lang="nl">F27 speelt geluid:</label>
+                    <label xml:lang="cs">F27 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F28 activated sound" CV="928.1021=8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F28 activated sound</label>
+                    <label xml:lang="de">F28 activiert Sound</label>
+                    <label xml:lang="nl">F28 speelt geluid:</label>
+                    <label xml:lang="cs">F28 spustí zvuk</label>
+                </variable>
+                <!--end BR82-->
+
+                <!--PIKO41RH2400 sounds-->
+                <variable item="Bank F F0 activated sound" CV="900.1021=8" default="1" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F0 activated sound</label>
+                    <label xml:lang="de">F0 activiert Sound</label>
+                    <label xml:lang="nl">F0 speelt geluid:</label>
+                    <label xml:lang="cs">F0 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F1 activated sound" CV="901.1021=8" default="2" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F1 activated sound</label>
+                    <label xml:lang="de">F1 activiert Sound</label>
+                    <label xml:lang="nl">F1 speelt geluid:</label>
+                    <label xml:lang="cs">F1 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F2 activated sound" CV="902.1021=8" default="3" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F2 activated sound</label>
+                    <label xml:lang="de">F2 activiert Sound</label>
+                    <label xml:lang="nl">F2 speelt geluid:</label>
+                    <label xml:lang="cs">F2 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F3 activated sound" CV="903.1021=8" default="4" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F3 activated sound</label>
+                    <label xml:lang="de">F3 activiert Sound</label>
+                    <label xml:lang="nl">F3 speelt geluid:</label>
+                    <label xml:lang="cs">F3 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F4 activated sound" CV="904.1021=8" default="5" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F4 activated sound</label>
+                    <label xml:lang="de">F4 activiert Sound</label>
+                    <label xml:lang="nl">F4 speelt geluid:</label>
+                    <label xml:lang="cs">F4 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F5 activated sound" CV="905.1021=8" default="6" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F5 activated sound</label>
+                    <label xml:lang="de">F5 activiert Sound</label>
+                    <label xml:lang="nl">F5 speelt geluid:</label>
+                    <label xml:lang="cs">F5 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F6 activated sound" CV="906.1021=8" default="7" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F6 activated sound</label>
+                    <label xml:lang="de">F6 activiert Sound</label>
+                    <label xml:lang="nl">F6 speelt geluid:</label>
+                    <label xml:lang="cs">F6 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F7 activated sound" CV="907.1021=8" default="8" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F7 activated sound</label>
+                    <label xml:lang="de">F7 activiert Sound</label>
+                    <label xml:lang="nl">F7 speelt geluid:</label>
+                    <label xml:lang="cs">F7 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F8 activated sound" CV="908.1021=8" default="9" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F8 activated sound</label>
+                    <label xml:lang="de">F8 activiert Sound</label>
+                    <label xml:lang="nl">F8 speelt geluid:</label>
+                    <label xml:lang="cs">F8 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F9 activated sound" CV="909.1021=8" default="10" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F9 activated sound</label>
+                    <label xml:lang="de">F9 activiert Sound</label>
+                    <label xml:lang="nl">F9 speelt geluid:</label>
+                    <label xml:lang="cs">F9 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F10 activated sound" CV="910.1021=8" default="11" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F10 activated sound</label>
+                    <label xml:lang="de">F10 activiert Sound</label>
+                    <label xml:lang="nl">F10 speelt geluid:</label>
+                    <label xml:lang="cs">F10 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F11 activated sound" CV="911.1021=8" default="12" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F11 activated sound</label>
+                    <label xml:lang="de">F11 activiert Sound</label>
+                    <label xml:lang="nl">F11 speelt geluid:</label>
+                    <label xml:lang="cs">F11 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F12 activated sound" CV="912.1021=8" default="13" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F12 activated sound</label>
+                    <label xml:lang="de">F12 activiert Sound</label>
+                    <label xml:lang="nl">F12 speelt geluid:</label>
+                    <label xml:lang="cs">F12 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F13 activated sound" CV="913.1021=8" default="14" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F13 activated sound</label>
+                    <label xml:lang="de">F13 activiert Sound</label>
+                    <label xml:lang="nl">F13 speelt geluid:</label>
+                    <label xml:lang="cs">F13 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F14 activated sound" CV="914.1021=8" default="15" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F14 activated sound</label>
+                    <label xml:lang="de">F14 activiert Sound</label>
+                    <label xml:lang="nl">F14 speelt geluid:</label>
+                    <label xml:lang="cs">F14 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F15 activated sound" CV="915.1021=8" default="16" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F15 activated sound</label>
+                    <label xml:lang="de">F15 activiert Sound</label>
+                    <label xml:lang="nl">F15 speelt geluid:</label>
+                    <label xml:lang="cs">F15 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F16 activated sound" CV="916.1021=8" default="17" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F16 activated sound</label>
+                    <label xml:lang="de">F16 activiert Sound</label>
+                    <label xml:lang="nl">F16 speelt geluid:</label>
+                    <label xml:lang="cs">F16 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F17 activated sound" CV="917.1021=8" default="18" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F17 activated sound</label>
+                    <label xml:lang="de">F17 activiert Sound</label>
+                    <label xml:lang="nl">F17 speelt geluid:</label>
+                    <label xml:lang="cs">F17 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F18 activated sound" CV="918.1021=8" default="19" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F18 activated sound</label>
+                    <label xml:lang="de">F18 activiert Sound</label>
+                    <label xml:lang="nl">F18 speelt geluid:</label>
+                    <label xml:lang="cs">F18 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F19 activated sound" CV="919.1021=8" default="20" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F19 activated sound</label>
+                    <label xml:lang="de">F19 activiert Sound</label>
+                    <label xml:lang="nl">F19 speelt geluid:</label>
+                    <label xml:lang="cs">F19 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F20 activated sound" CV="920.1021=8" default="21" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F20 activated sound</label>
+                    <label xml:lang="de">F20 activiert Sound</label>
+                    <label xml:lang="nl">F20 speelt geluid:</label>
+                    <label xml:lang="cs">F20 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F21 activated sound" CV="921.1021=8" default="22" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F21 activated sound</label>
+                    <label xml:lang="de">F21 activiert Sound</label>
+                    <label xml:lang="nl">F21 speelt geluid:</label>
+                    <label xml:lang="cs">F21 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F22 activated sound" CV="922.1021=8" default="23" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F22 activated sound</label>
+                    <label xml:lang="de">F22 activiert Sound</label>
+                    <label xml:lang="nl">F22 speelt geluid:</label>
+                    <label xml:lang="cs">F22 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F23 activated sound" CV="923.1021=8" default="24" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F23 activated sound</label>
+                    <label xml:lang="de">F23 activiert Sound</label>
+                    <label xml:lang="nl">F23 speelt geluid:</label>
+                    <label xml:lang="cs">F23 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F24 activated sound" CV="924.1021=8" default="25" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F24 activated sound</label>
+                    <label xml:lang="de">F24 activiert Sound</label>
+                    <label xml:lang="nl">F24 speelt geluid:</label>
+                    <label xml:lang="cs">F24 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F25 activated sound" CV="925.1021=8" default="26" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F25 activated sound</label>
+                    <label xml:lang="de">F25 activiert Sound</label>
+                    <label xml:lang="nl">F25 speelt geluid:</label>
+                    <label xml:lang="cs">F25 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F26 activated sound" CV="926.1021=8" default="0" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F26 activated sound</label>
+                    <label xml:lang="de">F26 activiert Sound</label>
+                    <label xml:lang="nl">F26 speelt geluid:</label>
+                    <label xml:lang="cs">F26 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F27 activated sound" CV="927.1021=8" default="0" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F27 activated sound</label>
+                    <label xml:lang="de">F27 activiert Sound</label>
+                    <label xml:lang="nl">F27 speelt geluid:</label>
+                    <label xml:lang="cs">F27 spustí zvuk</label>
+                </variable>
+                <variable item="Bank F F28 activated sound" CV="928.1021=8" default="0" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F28 activated sound</label>
+                    <label xml:lang="de">F28 activiert Sound</label>
+                    <label xml:lang="nl">F28 speelt geluid:</label>
+                    <label xml:lang="cs">F28 spustí zvuk</label>
+                </variable>
+                <!--end RH2400-->
+            <!--</group>-->
+<!--            </group>-->
+
+        </variables>
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/> 
+    </decoder>
+    <!-- special panes -->
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PaneId2Advanced.xml"/>
+    <!-- IntelliDrive2, overrides some CVs set above -->
+    <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>-->
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/SoundPaneId2.xml"/>
+</decoder-config>

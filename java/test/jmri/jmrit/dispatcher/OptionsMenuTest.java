@@ -1,13 +1,14 @@
 package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
+import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -25,9 +26,7 @@ public class OptionsMenuTest {
         Assert.assertNotNull("exists",t);
         Assert.assertEquals("Stopping Speed Name", "Restricted", d.getStoppingSpeedName());
         Assert.assertEquals("Use Connectivity Option", false, d.getUseConnectivity());
-        Assert.assertEquals("Trains From Roster", true, d.getTrainsFromRoster());
-        Assert.assertEquals("Trains From Trains", false, d.getTrainsFromTrains());
-        Assert.assertEquals("Trains From User", false, d.getTrainsFromUser());
+        Assert.assertEquals("Trains From Roster",TrainsFrom.TRAINSFROMROSTER, d.getTrainsFrom());
         Assert.assertEquals("AutoAllocate", false, d.getAutoAllocate());
         Assert.assertEquals("Auto Turnouts", true, d.getAutoTurnouts());
         Assert.assertEquals("Occupancy detection", true, d.getHasOccupancyDetection());
@@ -40,15 +39,16 @@ public class OptionsMenuTest {
         JUnitUtil.dispose(d);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

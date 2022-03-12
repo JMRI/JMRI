@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta name="keywords" content=
+  "JMRI CBUS help support event request feedback monitor monitoring tool">
+  <title>JMRI: CBUS® Event Request Table</title><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI : Tableau de contrôle des Demandes d'Événements CBUS</h1>
+
+      <ul class="snav">
+        <li><a href="#stats">Colonnes</a>
+        </li>
+
+        <li><a href="#status">État de la Demande d'Événement</a>
+        </li>
+
+        <li><a href="#opc">OPCs</a>
+        </li>
+      </ul>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
+      width="630" height="210" alt="CBUS Event Request Table" align="right">
+      <p>Le tableau des Événements de CBUS affiche les informations relatives aux événements sur
+      votre connexion <a href=".">CBUS</a>.</p>
+
+      <p>Les messages entrants vers JMRI et les messages sortants sont enregistrés dans le
+      tableau.</p>
+
+      <p>Pendant que la fenêtre est ouverte, elle maintient une liste d'événements courts on / off,
+      des événements longs on / off, des événements OPC étendus on / off, des événements on / off
+      de réponse d'accessoires.</p>
+
+      <p>Chaque combinaison d'événement et de nœud est unique, le nombre maximum d'événements est
+      de 65 535.</p>
+
+      <p>Le nombre maximum de nœuds est également de 65 535.</p>
+
+      <p>Le tableau commencera toujours sans aucune entrée, les données ne sont pas maintenues
+      entre les sessions.</p>
+
+      <p>.</p>
+
+      <p>Vous pouvez ouvrir la table automatiquement en l'ajoutant à votre liste d'actions de
+      démarrage JMRI.<br>
+      PanelPro &gt; Modifier les préférences &gt; Démarrage &gt; Ajouter &gt; Effectuer une action
+      &gt; Ouvrir le Tableau des Événements CBUS.</p>
+
+      <p>Les codes d'événements courts seront dépouillés de tout numéro de nœud contenu dans le
+      message CAN de l'événement.</p>
+
+      <p>Toutes les valeurs numériques sont décimales.</p>
+
+      <h2><a name="stats" id="stats">Colonnes</a>
+      </h2>
+
+      <p>Les colonnes peuvent être sélectionnées pour être affichées via la barre de menu
+      supérieure, elles sont divisées en 2 catégories.</p>
+
+      <ul>
+        <li>Colonnes d' Événements</li>
+
+        <li>Colonnes de Rétrosignalisation</li>
+      </ul>
+
+      <p>L'ordre des colonnes peut être réorganisé en faisant glisser l'en-tête de la colonne.</p>
+
+      <p>Changer l'ordre de tri des colonnes en cliquant avec le bouton gauche de la souris sur
+      l'en-tête de colonne.</p>
+
+      <h3>Colonnes d'Événements</h3>
+
+      <ul>
+        <li>Evénement : Numéro de l'Événement ( ou du dispositif ) signalé dans un message CAN
+        d'événement.</li>
+
+        <li>Nœud : Numéro de nœud rapporté par un message CAN d'événement.</li>
+
+        <li>Nom de l'événement .</li>
+
+        <li>Envoyer une Requête : envoie une requête d'événement. Si l'événement a un numéro de
+        nœud, ce sera un événement long sinon court.</li>
+
+        <li>Supprimer: ( L'événement de requête sera réajouté à la table s'il est réentendu sur le
+        réseau. )</li>
+      </ul>
+
+      <h3>Colonnes de Rétrosignalisation</h3>
+
+      <ul>
+        <li>FB Status - Statut de la toute dernière demande de rétrosignalisation. OK, En attente
+        ou PAS de rétrosignalisation.</li>
+
+        <li>FB requise - Nombre de réponse d'événements requis pour prouver.</li>
+
+        <li>FB en suspens - Nombre d'événements de rétrosignalisation sont actuellement en
+        suspens.</li>
+
+        <li>FB Timeout - ms avant que les alertes ne se déclenchent.</li>
+
+        <li>FB Événement - Si un autre événement est en rétrosignalisation pour cet événement,
+        ajoutez le numéro de l'autre événement.</li>
+
+        <li>FB Nœud - Si un autre événement est une rétrosignalisation pour cet événement, ajoutez
+        l'autre numéro de nœud d'événement.</li>
+      </ul>
+
+      <p>Lorsqu'un événement est envoyé par JMRI qui a un numéro dans la colonne de réponse de
+      rétrosignalisation, la table de demande d'événement va surveiller sa réponse et avertir si
+      celle-ci n'est pas reçue.</p>
+
+      <p>Le système surveillera un événement de rétrosignalisation sous la d'un événement de
+      réponse, ou d'un événement normal d'activation et de désactivation. Les événements de réponse
+      n'ont pas besoin de correspondre au statut ( on ou off ), et peuvent être n'importe quelle
+      longueur de données.</p>
+
+      <p><img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-feedback-792x221.png"
+      width="792" height="221" alt="CBUS Event Table Feedback">
+      </p>
+
+      <h3><a name="status" id="status">Demander le Statut d'un Événement</a>
+      </h3>
+
+      <div>
+        <p>En cliquant sur Statut, JMRI envoie un message de demande de statut d'accessoire
+        d'événement. au réseau, long si l'événement possède un nœud, court s'il n'en possède
+        pas.</p>
+
+        <p>Cela déclenche un surveillant d'événement JMRI qui attend une réponse de l'événement,
+        soit une réponse de demande, soit un événement normal est accepté comme réponse.</p>
+
+        <p>Si rien n'est défini dans la rétrosignalisation d'événement, le délai d'attente par
+        défaut est de 4 secondes à partir d'une même combinaison d'événement et de nœud.</p>
+
+        <p>La réponse à un événement est une réponse à une demande.</p>
+
+        <p>Certains utilisateurs peuvent souhaiter créer un nouvel aiguillage, capteur ou lumière
+        JMRI pour représenter le bouton d'obtention d'état et envoyer le message d'état de demande
+        d'événement.<br>
+        Les adresses matérielles de ces événements de demande ressembleraient à quelque chose comme
+        :</p>
+
+        <p>.</p>
+
+        <table border="1" summary="">
+          <tbody>
+            <tr>
+              <th>Adresse Matériel</th>
+              <th>Ops Code Hex</th>
+              <th>Ops Code Translaté</th>
+              <th>Nœud Dec</th>
+              <th>Événement Dec</th>
+            </tr>
+
+            <tr>
+              <td>X9A0000007B</td>
+              <td>9A</td>
+              <td>Demande d'accessoire court</td>
+              <td>0</td>
+              <td>123</td>
+            </tr>
+
+            <tr>
+              <td>X92007B01C8</td>
+              <td>92</td>
+              <td>Demande d'accessoire longue</td>
+              <td>123</td>
+              <td>456</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Il y a quelques méthodes dans JMRI pour envoyer cet événement de ping toutes les
+        quelques secondes, l'une étant de créer un script jython pour envoyer un ping à 1 capteur
+        toutes les quelques secondes, et d'utiliser logix sur ce 1 capteur pour créer d'autres
+        sorties de demandes d'état d'événement ping.</p>
+
+        <p>La réponse à l'événement de ping est envoyée à l'utilisateur.</p>
+
+        <p>Quand un message de demande de réponse d'événement est vu sur le réseau, la table
+        d'événement surveillera le retour d'événement.</p>
+      </div>
+
+      <h3><a name="opc" id="opc">Codes d'Opération pris en Charge</a>
+      </h3>
+      .
+      <ul>
+        <li>ASRQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud 0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>AREQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud &gt;
+        0</li>
+
+        <li style="list-style: none">.</li>
+      </ul>
+
+      <p>Les OPC reçus peuvent provenir d'autres composants JMRI, ou d'une connexion externe
+      CBUS.</p>
+
+      <p>Tous les opscodes définis comme un événement accessoire ( à l'exception de Fast Clock )
+      sont des Surveillants constants, c'est-à-dire</p>
+
+      <p>.</p>
+
+      <ul>
+        <li>ASRQ / AREQ - Démarre automatiquement le minuteur de retour pour l'événement
+        associé.</li>
+
+        <li>ACON / ACOF</li>
+
+        <li>ARON / AROF</li>
+
+        <li>ASON / ASOF</li>
+
+        <li>ARSON / ARSOF</li>
+
+        <li>ACON1 / ACOF1</li>
+
+        <li>ARON1 / AROF1</li>
+
+        <li>ASON1 / ASOF1</li>
+
+        <li>ARSON1 / ARSOF1</li>
+
+        <li>ACON2 / ACOF2</li>
+
+        <li>ARON2 / AROF2</li>
+
+        <li>ASON2 / ASOF2</li>
+
+        <li>ARSON2 / ARSOF2</li>
+
+        <li>ACON3 / ACOF3</li>
+
+        <li>ARON3 / AROF3</li>
+
+        <li>ACDAT</li>
+
+        <li>ARDAT</li>
+
+        <li>ASON3 / ASOF3</li>
+
+        <li>DDES</li>
+
+        <li>DDRS</li>
+
+        <li>ARSON3 / ARSOF3</li>
+      </ul>
+
+      <h4>Variance par rapport au guide du développeur CBUS 6b</h4>
+
+      <p>Dans ce modèle de données, il est supposé que les combinaisons d'événements et de nœuds
+      constituent le facteur unique.</p>
+
+      <p>Il n'y a pas d'événement.</p>
+
+      <p>Tout événement OPC envoyé avec des octets de données supplémentaires sera enregistré en
+      fonction de sa combinaison principale d'événement et de nœud, sans tenir compte des octets de
+      données supplémentaires.</p>
+
+      <p>La combinaison d'événements et de nœuds est unique.</p>
+
+      <h3>Aide JMRI</h3>
+
+      <p>Vous pouvez afficher cette page d'aide dans JMRI en sélectionnant Aide &gt; Aide de la
+      fenêtre dans la barre supérieure de la fenêtre du tableau d'événements du MERG.</p>
+
+      <p>La <a href="../console/CbusConsoleFrame.shtml">CBUS Console</a> peut vous aider à
+      comprendre quels événements se produisent sur votre réseau.</p>
+
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'aide JMRI
+      CBUS</a>.</p>
+
+      <p>CBUS® ; est une marque déposée du Dr Michael Bolton</p>
+      .
+      <p>Traduction2021-03-19</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+</body>
+</html>

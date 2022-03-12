@@ -1,14 +1,16 @@
 package jmri.jmrit.beantable;
 
+import jmri.InstanceManager;
+import jmri.SensorManager;
+import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SignalGroupSubTableActionTest {
 
@@ -17,14 +19,66 @@ public class SignalGroupSubTableActionTest {
         SignalGroupSubTableAction t = new SignalGroupSubTableAction();
         Assert.assertNotNull("exists",t);
     }
+    
+    @Test
+    public void testAddRemoveSignalGroupSensorModelListeners() {
+        
+        JUnitUtil.initInternalSensorManager();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+        Assert.assertEquals("No Sm Listeners at start",0, sm.getPropertyChangeListeners().length);
 
-    // The minimal setup for log4J
-    @Before
+        JUnitUtil.initInternalTurnoutManager();
+        TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+        Assert.assertEquals("No Tm Listeners at start",0, tm.getPropertyChangeListeners().length);
+
+        
+        SignalGroupSubTableAction t = new SignalGroupSubTableAction();
+        Assert.assertEquals("No Sm Listeners in SignalGroupSubTableAction",0, sm.getPropertyChangeListeners().length);
+        Assert.assertEquals("No Tm Listeners in SignalGroupSubTableAction",0, tm.getPropertyChangeListeners().length);
+        
+        SignalGroupSubTableAction.SignalGroupSensorModel _SignalGroupSensorModel = t.new SignalGroupSensorModel();
+        Assert.assertEquals("1 Sm Listener in SignalGroupSensorModel",1, sm.getPropertyChangeListeners().length);
+        Assert.assertEquals("No Tm Listeners in SignalGroupSensorModel",0, tm.getPropertyChangeListeners().length);
+        
+        _SignalGroupSensorModel.dispose();
+        Assert.assertEquals("0 Sm Listener in SignalGroupSensorModel",0, sm.getPropertyChangeListeners().length);
+        Assert.assertEquals("No Tm Listeners in SignalGroupSensorModel",0, tm.getPropertyChangeListeners().length);
+        
+    }
+    
+    @Test
+    public void testAddRemoveSignalGroupTurnoutModelListeners() {
+        
+        JUnitUtil.initInternalSensorManager();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+        Assert.assertEquals("No Sm Listeners at start",0, sm.getPropertyChangeListeners().length);
+
+        JUnitUtil.initInternalTurnoutManager();
+        TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+        Assert.assertEquals("No Tm Listeners at start",0, tm.getPropertyChangeListeners().length);
+
+        
+        SignalGroupSubTableAction t = new SignalGroupSubTableAction();
+        Assert.assertEquals("No Sm Listeners in SignalGroupSubTableAction",0, sm.getPropertyChangeListeners().length);
+        Assert.assertEquals("No Tm Listeners in SignalGroupSubTableAction",0, tm.getPropertyChangeListeners().length);
+        
+        SignalGroupSubTableAction.SignalGroupTurnoutModel _SignalGroupTurnoutModel = t.new SignalGroupTurnoutModel();
+        Assert.assertEquals("0 Sm Listener in SignalGroupTurnoutModel",0, sm.getPropertyChangeListeners().length);
+        Assert.assertEquals("1 Tm Listener in SignalGroupTurnoutModel",1, tm.getPropertyChangeListeners().length);
+        
+        _SignalGroupTurnoutModel.dispose();
+        Assert.assertEquals("0 Sm Listener in SignalGroupTurnoutModel",0, sm.getPropertyChangeListeners().length);
+        Assert.assertEquals("No Tm Listeners in SignalGroupTurnoutModel",0, tm.getPropertyChangeListeners().length);
+        
+    }
+    
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -48,13 +48,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         rcvHandler = new RcvHandler(this);
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
-    @Deprecated
-    public LnOverTcpPacketizer() {
-        this(new LocoNetSystemConnectionMemo());
-    }
-
     public LnNetworkPortController networkController = null;
 
     @Override
@@ -113,7 +106,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
-        @SuppressWarnings("deprecation")
+        @SuppressWarnings("deprecation")  // InputStream#readline
         @Override
         public void run() {
 
@@ -178,12 +171,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             int b = Integer.parseInt(st.nextToken(), 16);
                             // log.debug("char {} is: {}", i, Integer.toHexString(b));
                             if ((b & 0x80) != 0) {
-                                log.warn("LocoNet message with opCode: "
-                                        + Integer.toHexString(opCode)
-                                        + " ended early. Expected length: " + len
-                                        + " seen length: " + i
-                                        + " unexpected byte: "
-                                        + Integer.toHexString(b));
+                                log.warn("LocoNet message with opCode: {} ended early. Expected length: {} seen length: {} unexpected byte: {}", Integer.toHexString(opCode), len, i, Integer.toHexString(b));
                                 throw new LocoNetMessageException();
                             }
                             msg.setElement(i, b);

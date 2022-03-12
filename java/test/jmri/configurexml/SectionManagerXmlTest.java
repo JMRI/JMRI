@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import java.util.List;
+
 import jmri.Block;
 import jmri.ConfigureManager;
 import jmri.EntryPoint;
@@ -10,10 +11,9 @@ import jmri.Path;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
 
 /**
  * Tests for SectionManagerXml.
@@ -531,14 +531,16 @@ public class SectionManagerXmlTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

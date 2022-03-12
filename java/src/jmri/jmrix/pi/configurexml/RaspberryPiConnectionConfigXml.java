@@ -1,6 +1,5 @@
 package jmri.jmrix.pi.configurexml;
 
-import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import jmri.jmrix.pi.RaspberryPiConnectionConfig;

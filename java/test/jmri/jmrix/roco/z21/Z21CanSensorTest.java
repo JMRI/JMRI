@@ -1,12 +1,14 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21CanSensor class.
  *
- * @author	Paul Bender Copyright 2019
+ * @author Paul Bender Copyright 2019
  */
 public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -18,13 +20,15 @@ public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {
+    }
 
     @Override
-    public void checkOffMsgSent() {}
-        
+    public void checkInactiveMsgSent() {
+    }
+
     @Override
-    public void checkStatusRequestMsgSent(){
+    public void checkStatusRequestMsgSent() {
         Assert.assertEquals("Sensor Status Request Sent", "07 00 C4 00 00 CD AB", znis.outbound.elementAt(0).toString());
     }
 
@@ -36,15 +40,17 @@ public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
 
         // notify the Sensor that somebody else changed it...
-        byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x11,(byte)0x00,(byte)0x00};
-        Z21Reply reply = new Z21Reply(msg,14);
-        ((Z21CanSensor)t).reply(reply); 
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
+        byte msg[] = {(byte) 0x0E, (byte) 0x00, (byte) 0xC4, (byte) 0x00, (byte) 0xcd, (byte) 0xab, (byte) 0x01, (byte) 0x00, (byte) 0x01, (byte) 0x01, (byte) 0x00, (byte) 0x11, (byte) 0x00, (byte) 0x00};
+        Z21Reply reply = new Z21Reply(msg, 14);
+        ((Z21CanSensor) t).reply(reply);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return t.getState() == t.getRawState();
+        }, "raw state = state");
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
-        
-        byte msg2[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00};
-        reply = new Z21Reply(msg2,14);
-        ((Z21CanSensor)t).reply(reply);
+
+        byte msg2[] = {(byte) 0x0E, (byte) 0x00, (byte) 0xC4, (byte) 0x00, (byte) 0xcd, (byte) 0xab, (byte) 0x01, (byte) 0x00, (byte) 0x01, (byte) 0x01, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00};
+        reply = new Z21Reply(msg2, 14);
+        ((Z21CanSensor) t).reply(reply);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
 
@@ -59,23 +65,22 @@ public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.INACTIVE);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
         znis = new Z21InterfaceScaffold();
         memo.setTrafficController(znis);
-        t = new Z21CanSensor("ZSabcd:1","hello world",memo);
+        t = new Z21CanSensor("ZSabcd:1", "hello world", memo);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
-	    znis=null;
+        znis = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

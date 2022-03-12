@@ -1,7 +1,7 @@
 package jmri.jmrix.rps;
 
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the rps.Measurement class.

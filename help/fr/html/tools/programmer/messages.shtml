@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -22,7 +22,7 @@
 
 <h1>JMRI: Messages d'Erreur du Programmateur de D&#233;codeur</h1>
 
-<!-- Copy any new content below from page http://jmri.org/help/en/manual/DecoderPro3/Error.shtml -->
+<!-- Copy any new content below from page https://jmri.org/help/en/manual/DecoderPro3/Error.shtml -->
 
 <p>Diverses choses peuvent mal se passer lorsque JMRI essaie de travailler avec votre centrale de commande DCC pour
 programmer un d&#233;codeur DCC.
@@ -101,7 +101,7 @@ Cette page liste les message d'erreur qui peuvent en r&#233;sulter, le num&#233;
     </dd>
 </dl>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>

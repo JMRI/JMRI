@@ -5,31 +5,42 @@ import java.io.DataOutputStream;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
- * Abstract base for classes representing a GridConnect communications port
+ * Abstract base for classes representing a GridConnect communications port.
  *
+ * Implementations will provide InputStream and OutputStream
+ * objects to CabrsTrafficController classes, who in turn will deal in messages.
+ * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland 2008
  */
 public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortController {
-    // base class. Implementations will provide InputStream and OutputStream
-    // objects to CabrsTrafficController classes, who in turn will deal in messages.
 
+    /**
+     * Create a new GC PortController.
+     * @param connectionMemo CAN System Connection.
+     */
     protected GcPortController(CanSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
 
-    // returns the InputStream from the port
+    /**
+     * Get the InputStream to the port.
+     * {@inheritDoc}
+     */
     @Override
     public abstract DataInputStream getInputStream();
 
-    // returns the outputStream to the port
+    /**
+     * Get the outputStream to the port.
+     * {@inheritDoc}
+     */
     @Override
     public abstract DataOutputStream getOutputStream();
 
-    // check that this object is ready to operate
-    @Override
-    public abstract boolean status();
-
+    /**
+     * Get the CAN System Connection.
+     * {@inheritDoc}
+     */
     @Override
     public CanSystemConnectionMemo getSystemConnectionMemo() {
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();

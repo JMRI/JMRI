@@ -3,7 +3,6 @@ package jmri.jmrix.oaktree.simulator.configurexml;
 import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.oaktree.SerialNode;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import jmri.jmrix.oaktree.simulator.ConnectionConfig;
 import jmri.jmrix.oaktree.simulator.SimulatorAdapter;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;

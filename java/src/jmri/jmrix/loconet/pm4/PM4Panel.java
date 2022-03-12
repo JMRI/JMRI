@@ -225,7 +225,7 @@ public class PM4Panel extends AbstractBoardProgPanel {
             case 30:
                 return 0;   // done!
             default:
-                log.error("unexpected state " + state); // NOI18N
+                log.error("unexpected state {}", state); // NOI18N
                 return 0;
         }
     }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software V36+, Intended for Swiss Mapping Dimming Group Menus Nigel Cliffe 13Feb2021 -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="de">keine</choice>
+        <choice xml:lang="cs">Žádný</choice>
+      </enumChoice>
+      <enumChoice choice="1">
+        <choice>1</choice>
+     </enumChoice>
+      <enumChoice choice="2">
+        <choice>2</choice>
+      </enumChoice>
+      <enumChoice choice="3">
+        <choice>3</choice>
+      </enumChoice>
+      <enumChoice choice="4">
+        <choice>4</choice>
+      </enumChoice>
+      <enumChoice choice="5">
+        <choice>5</choice>
+      </enumChoice>
+</enumChoiceGroup>

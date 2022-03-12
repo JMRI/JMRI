@@ -30,6 +30,12 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
     </revision>
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Add missing 'Not Lit' aspect</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>N&amp;W 1981</aspecttable>
@@ -58,6 +64,12 @@
       <show>red</show>
       <reference>Page 66</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/rule-291.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+        <aspectname>Not Lit</aspectname>
+        <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/notlit.gif</imagelink>
     </appearance>
 
   </appearances>

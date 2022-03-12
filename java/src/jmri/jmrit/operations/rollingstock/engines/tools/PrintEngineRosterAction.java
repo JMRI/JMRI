@@ -6,25 +6,20 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of the Roster contents
@@ -43,16 +38,16 @@ public class PrintEngineRosterAction extends AbstractAction {
 
     EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-    public PrintEngineRosterAction(String actionName, boolean preview, EnginesTableFrame pWho) {
-        super(actionName);
-        isPreview = preview;
+    public PrintEngineRosterAction(boolean isPreview, EnginesTableFrame pWho) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreview") : Bundle.getMessage("MenuItemPrint"));
+        _isPreview = isPreview;
         panel = pWho;
     }
 
     /**
      * Variable to set whether this is to be printed or previewed
      */
-    boolean isPreview;
+    boolean _isPreview;
     EnginesTableFrame panel;
     EnginePrintOptionFrame epof = null;
 
@@ -87,7 +82,7 @@ public class PrintEngineRosterAction extends AbstractAction {
         HardcopyWriter writer = null;
         try {
             writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"), fontSize, .5, .5, .5, .5,
-                    isPreview, "", landscape, true, null);
+                    _isPreview, "", landscape, true, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -98,13 +93,13 @@ public class PrintEngineRosterAction extends AbstractAction {
         try {
             // create header
             writer.write(createHeader());
-            
+
             // Loop through the Roster, printing as needed
             String number;
             String road;
             String model;
             String type;
-            String length;   
+            String length;
             String train = "";
             String consist = "";
             String moves = "";
@@ -164,15 +159,15 @@ public class PrintEngineRosterAction extends AbstractAction {
                 writer.write(s + NEW_LINE);
             }
         } catch (IOException we) {
-            log.error("Error printing ConsistRosterEntry: " + we);
+            log.error("Error printing ConsistRosterEntry", we);
         }
         // and force completion of the printing
         writer.close();
     }
-    
+
     private String createHeader() {
         StringBuffer header = new StringBuffer();
-        
+
         header.append(padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number) +
                         padAttribute(Bundle.getMessage("Road"),
                                 InstanceManager.getDefault(CarRoads.class).getMaxNameLength()) +
@@ -181,7 +176,7 @@ public class PrintEngineRosterAction extends AbstractAction {
                         padAttribute(Bundle.getMessage("Type"),
                                 InstanceManager.getDefault(EngineTypes.class).getMaxNameLength()) +
                         padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name));
-        
+
         if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_TRAIN) {
             header.append(padAttribute(Bundle.getMessage("Train"), Control.max_len_string_train_name / 2));
         } else {
@@ -245,11 +240,7 @@ public class PrintEngineRosterAction extends AbstractAction {
             pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFontSize")));
             pFontSize.add(fontSizeComboBox);
 
-            // load font sizes 5 through 14
-            for (int i = 5; i < 15; i++) {
-                fontSizeComboBox.addItem(i);
-            }
-
+            OperationsPanel.loadFontSizeComboBox(fontSizeComboBox);
             fontSizeComboBox.setSelectedItem(Control.reportFontSize);
 
             JPanel pButtons = new JPanel();
@@ -266,10 +257,10 @@ public class PrintEngineRosterAction extends AbstractAction {
 
             initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
         }
-        
+
         @Override
         public void initComponents() {
-            if (isPreview) {
+            if (_isPreview) {
                 setTitle(Bundle.getMessage("MenuItemPreview"));
             } else {
                 setTitle(Bundle.getMessage("MenuItemPrint"));

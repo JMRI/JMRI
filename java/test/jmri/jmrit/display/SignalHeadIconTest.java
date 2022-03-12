@@ -2,7 +2,9 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of SignalHeadIcon.
@@ -28,10 +30,11 @@ public class SignalHeadIconTest extends PositionableIconTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new EditorScaffold();

@@ -6,12 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
+
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
 
 /**
  * Tests for ConfigXmlManager.
@@ -26,11 +26,7 @@ public class ConfigXmlManagerTest {
 
     @Test
     public void testRegisterOK() {
-        ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
-            @SuppressWarnings("unused")
-            void locateFailed(Throwable ex, String adapterName, Object o) {
-            }
-        };
+        ConfigXmlManager configxmlmanager = new ConfigXmlManager();
 
         Object o1 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
         configxmlmanager.registerConfig(o1);
@@ -64,12 +60,7 @@ public class ConfigXmlManagerTest {
 
     @Test
     public void testFind() throws ClassNotFoundException {
-        ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
-            @SuppressWarnings("unused")
-            void locateFailed(Throwable ex, String adapterName, Object o) {
-                innerFlag = true;
-            }
-        };
+        ConfigXmlManager configxmlmanager = new ConfigXmlManager();
         Object o1 = new jmri.implementation.TripleTurnoutSignalHead("SH1", "", null, null, null);
         Object o2 = new jmri.implementation.TripleTurnoutSignalHead("SH2", "", null, null, null);
         Object o3 = new jmri.implementation.TripleTurnoutSignalHead("SH3", "", null, null, null);
@@ -166,13 +157,13 @@ public class ConfigXmlManagerTest {
         f.delete();  // make sure it's gone again
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

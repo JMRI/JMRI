@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * VSD implementation of an audio sound.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 class SoundBite extends VSDSound {
 
@@ -348,7 +350,7 @@ class SoundBite extends VSDSound {
          */
         if (frequency <= 0) {
             // Protect against divide-by-zero errors
-            return 0l;
+            return 0L;
         } else {
             return (1000 * num_frames) / frequency;
         }

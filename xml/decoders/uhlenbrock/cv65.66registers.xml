@@ -32,7 +32,7 @@
       <revremark>Initial version as separate file from Uhlenbrock_73400.xml v2</revremark>
     </revision>
   </revhistory>
-  <variable label="Offset Register" CV="65" default="0" readOnly="yes">
+  <variable item="Offset Register" CV="65" default="0" readOnly="yes">
     <decVal/>
     <label>Offset Register</label>
     <label xml:lang="it">Registro Indice</label>
@@ -40,7 +40,7 @@
     <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale</tooltip>
     <tooltip xml:lang="it">Per programmare le CV con una centrale Motorola</tooltip>
   </variable>
-  <variable label="Page Register" CV="66" default="0" readOnly="yes">
+  <variable item="Page Register" CV="66" default="0" readOnly="yes">
     <decVal/>
     <label>Page Register</label>
     <label xml:lang="it">Registro Pagine</label>

@@ -1,13 +1,14 @@
 package jmri.configurexml;
 
 import java.io.File;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Functional checks of loading basic configuration files. When done across
@@ -41,6 +42,9 @@ public class LoadAndCheckTest {
 
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
         Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+
+        JUnitAppender.assertWarnMessage("Converting route system name IR1 to IO1");
+        JUnitAppender.assertWarnMessage("System names for 1 Routes changed; this may have operational impacts.");
 
     }
 
@@ -78,9 +82,12 @@ public class LoadAndCheckTest {
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
         Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
 
+        JUnitAppender.assertWarnMessage("Converting route system name IR1 to IO1");
+        JUnitAppender.assertWarnMessage("System names for 1 Routes changed; this may have operational impacts.");
+
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -89,10 +96,13 @@ public class LoadAndCheckTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
+        System.setProperty("jmri.test.no-dialogs", "true");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
+        System.setProperty("jmri.test.no-dialogs", "false");
     }
 }

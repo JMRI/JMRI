@@ -4,15 +4,18 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainEditFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of a train
@@ -29,15 +32,14 @@ public class PrintTrainAction extends AbstractAction {
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
 
-    public PrintTrainAction(String actionName, boolean isPreview, TrainEditFrame frame) {
-        super(actionName);
+    public PrintTrainAction(boolean isPreview, TrainEditFrame frame) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreview") : Bundle.getMessage("MenuItemPrint"));
         this.isPreview = isPreview;
         this.trainEditFrame = frame;
     }
     
-    public PrintTrainAction(String actionName, boolean isPreview) {
-        super(actionName);
-        this.isPreview = isPreview;
+    public PrintTrainAction(boolean isPreview) {
+        this(isPreview, null);
     }
 
     TrainEditFrame trainEditFrame;

@@ -3,10 +3,10 @@ package jmri.jmrix.loconet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
-
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -47,10 +47,10 @@ import org.slf4j.LoggerFactory;
 public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetSystemConnectionMemo memo, LocoNetInterface throttledcontroller, boolean mTurnoutNoRetry) {
+    public LnTurnoutManager(LocoNetSystemConnectionMemo memo, LocoNetInterface throttledController, boolean mTurnoutNoRetry) {
         super(memo);
         this.fastcontroller = memo.getLnTrafficController();
-        this.throttledcontroller = throttledcontroller;
+        this.throttledcontroller = throttledController;
         this.mTurnoutNoRetry = mTurnoutNoRetry;
 
         if (fastcontroller != null) {
@@ -68,6 +68,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
     }
@@ -92,8 +93,9 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) throws IllegalArgumentException {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String prefix = getSystemPrefix();
         int addr;
         try {
@@ -159,8 +161,15 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
             case LnConstants.OPC_LONG_ACK: {
                 // might have to resend, check 2nd byte
                 if (lastSWREQ != null && l.getElement(1) == 0x30 && l.getElement(2) == 0 && !mTurnoutNoRetry) {
-                    // received LONG_ACK reject msg, resend
-                    fastcontroller.sendLocoNetMessage(lastSWREQ);
+                    // received LONG_ACK reject msg, resend?
+                    // Skip if this is a status inquiry
+                    int sw1 = lastSWREQ.getElement(1);
+                    int sw2 = lastSWREQ.getElement(2);
+                    addr = address(sw1, sw2);
+
+                    if (addr < 1017 || addr > 1020) { // enquiries are above this
+                        fastcontroller.sendLocoNetMessage(lastSWREQ);
+                    }
                 }
 
                 // clear so can't resend recursively (we'll see
@@ -182,7 +191,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
             if (jmri.InstanceManager.lightManagerInstance().getBySystemName(sx) == null) {
                 // no light, create a turnout
                 LnTurnout t = (LnTurnout) provideTurnout(s);
-                
+
                 // process the message to put the turnout in the right state
                 t.messageFromManager(l);
             }
@@ -197,7 +206,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -205,7 +214,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -213,7 +222,8 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
@@ -246,6 +256,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
         l.add(new BooleanPropertyDescriptor(BYPASSBUSHBYBITKEY, false) {
@@ -259,7 +270,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                 return bean.getClass().getName().contains("LnTurnout");
             }
         });
-        l.add(new BooleanPropertyDescriptor(SENDONANDOFFKEY, _binaryOutput ? false : true) {
+        l.add(new BooleanPropertyDescriptor(SENDONANDOFFKEY, !_binaryOutput) {
             @Override
             public String getColumnHeaderText() {
                 return Bundle.getMessage("SendOnOffHeader");

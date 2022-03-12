@@ -1,12 +1,14 @@
 package jmri.jmrix.xpa;
 
 import jmri.Turnout;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.xpa.XpaTurnout class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
 
@@ -22,14 +24,14 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "ATDT#3#3;",
                 xnis.outbound.get(xnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", t.getInverted()?Turnout.THROWN:Turnout.CLOSED, t.getCommandedState());
+        Assert.assertEquals("CLOSED state", (t.getInverted() ? Turnout.THROWN : Turnout.CLOSED), t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "ATDT#3#1;",
                 xnis.outbound.get(xnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", t.getInverted()?Turnout.CLOSED:Turnout.THROWN, t.getCommandedState());
+        Assert.assertEquals("THROWN state", (t.getInverted() ? Turnout.CLOSED : Turnout.THROWN), t.getCommandedState());
     }
 
     @Test
@@ -37,18 +39,17 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         Assert.assertNotNull(t);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         memo = new XpaSystemConnectionMemo();
         xnis = new XpaTrafficControlScaffold();
         memo.setXpaTrafficController(xnis);
-        t = new XpaTurnout(3,memo);
+        t = new XpaTurnout(3, memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
         memo = null;

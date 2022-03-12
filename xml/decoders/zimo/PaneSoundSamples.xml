@@ -4,6 +4,7 @@
 <!-- From Version 32 firmware -->
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added german translation.   Ronald Kuhn, 26 Apr 2019 -->
+  <!-- v1.2  added CV's 593-598 Nigel Cliffe 14 Feb 2022-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <name>Sound Samples</name>
     <name xml:lang="it">Livelli Suono</name>
@@ -595,7 +596,19 @@
             <label>
                 <text> </text>
             </label>
-        </column>
+            <display item="Panto On Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Panto Away Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Panto Stop Forked Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            </column>
         <column>
             <label>
                 <text>                 </text>

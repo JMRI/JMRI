@@ -5,7 +5,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
@@ -13,7 +13,7 @@ import org.junit.Test;
  * <p>
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarsTest extends OperationsTestCase {
 

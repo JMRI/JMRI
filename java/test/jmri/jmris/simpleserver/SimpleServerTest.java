@@ -1,10 +1,11 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -18,13 +19,13 @@ public class SimpleServerTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(ss);
+        assertThat(ss).isNotNull();
     }
 
     @Test
     public void testCtorwithParameter() {
         SimpleServer a = new SimpleServer(2048);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
         jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
@@ -35,7 +36,7 @@ public class SimpleServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -46,7 +47,6 @@ public class SimpleServerTest {
                ss.handleClient(new java.io.DataInputStream(input),output); }
             catch(java.io.IOException ioe){
                // exception expected at end of input.
-               return;
             }
             });
         t.setName("simpleserver client test thread");
@@ -58,8 +58,7 @@ public class SimpleServerTest {
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -72,7 +71,7 @@ public class SimpleServerTest {
         jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         ss = null;

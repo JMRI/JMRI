@@ -1,6 +1,8 @@
 package jmri.jmrit.catalog;
 
 import java.util.HashMap;
+import jmri.CatalogTreeNode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,15 +33,14 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
      */
     @Override
     public void insertNodes(String pName, String pPath, CatalogTreeNode pParent) {
-        CatalogTreeNode newNode = null;
+        CatalogTreeNode newNode;
         if (pPath == null) {
             newNode = new CatalogTreeNode("Image Index");
         } else {
             newNode = new CatalogTreeNode(pName);
         }
         if (log.isDebugEnabled()) {
-            log.debug("insertNodeInto: newNode= " + newNode.getUserObject()
-                    + ", into parent= " + pParent.getUserObject());
+            log.debug("insertNodeInto: newNode= {}, into parent= {}", newNode.getUserObject(), pParent.getUserObject());
         }
         insertNodeInto(newNode, pParent, pParent.getChildCount());
     }
@@ -47,7 +48,7 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
     @Override
     public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         parameters.put(key, value);
     }
@@ -55,7 +56,7 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
     @Override
     public Object getProperty(String key) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.get(key);
     }
@@ -63,7 +64,7 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
     @Override
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.keySet();
     }

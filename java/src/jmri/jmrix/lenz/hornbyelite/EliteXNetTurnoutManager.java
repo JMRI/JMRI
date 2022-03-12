@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetAddress;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
@@ -21,13 +22,17 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     // XNet-specific methods
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Bit from System Name " + systemName);
         }
         // create the new Turnout object
         Turnout t = new EliteXNetTurnout(getSystemPrefix(), bitNum, tc);
@@ -36,7 +41,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -76,6 +81,6 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class);
 
 }

@@ -24,8 +24,11 @@ public class WavBuffer {
     }
 
     /**
-     * Create from contents of file. The file contents are expected to be in
-     * .wav format, starting with a RIFF header.
+     * Create from contents of file.
+     * The file contents are expected to be in .wav format,
+     * starting with a RIFF header.
+     * @param file file containing the .wav.
+     * @throws java.io.IOException on error.
      */
     public WavBuffer(java.io.File file) throws java.io.IOException {
         if (file == null) {
@@ -56,8 +59,11 @@ public class WavBuffer {
     }
 
     /**
-     * Find a specific header in the .wav fragment
-     *
+     * Find a specific header in the .wav fragment.
+     * @param i1 index 1.
+     * @param i2 index 2.
+     * @param i3 index 3.
+     * @param i4 index 4.
      * @return offset of the 1st byte of the header in the buffer
      */
     public int findHeader(int i1, int i2, int i3, int i4) {
@@ -129,22 +135,25 @@ public class WavBuffer {
     }
 
     /**
-     * Offset to the first data byte in the buffer
+     * Offset to the first data byte in the buffer.
+     * @return first data byte offset.
      */
     public int getDataStart() {
         return dataOffset + 8;
     }
 
     /**
-     * Size of the data segment in bytes
+     * Size of the data segment in bytes.
+     * @return data size in bytes.
      */
     public int getDataSize() {
         return fourByte(dataOffset + 4);
     }
 
     /**
-     * Offset to the last data byte in the buffer. One more than this points to
-     * the next header.
+     * Offset to the last data byte in the buffer.
+     * One more than this points to the next header.
+     * @return data end value.
      */
     public int getDataEnd() {
         return dataOffset + 8 + getDataSize() - 1;

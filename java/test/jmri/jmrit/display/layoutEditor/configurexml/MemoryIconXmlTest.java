@@ -1,15 +1,14 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * MemoryIconXmlTest.java
  *
- * Description: tests for the MemoryIconXml class
+ * Test for the MemoryIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class MemoryIconXmlTest {
       Assert.assertNotNull("MemoryIconXml constructor",new MemoryIconXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

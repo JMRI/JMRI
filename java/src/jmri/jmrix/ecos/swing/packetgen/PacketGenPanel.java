@@ -87,10 +87,11 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-
-        EcosMessage m = new EcosMessage(packetTextField.getText().length());
-        for (int i = 0; i < packetTextField.getText().length(); i++) {
-            m.setElement(i, packetTextField.getText().charAt(i));
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        EcosMessage m = new EcosMessage(input.length());
+        for (int i = 0; i < input.length(); i++) {
+            m.setElement(i, input.charAt(i));
         }
 
         memo.getTrafficController().sendEcosMessage(m, this);

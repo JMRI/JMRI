@@ -1,14 +1,17 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.awt.GraphicsEnvironment;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.text.MessageFormat;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Engines GUI class
@@ -19,78 +22,79 @@ import org.junit.Test;
 public class EngineAttributeEditFrameTest extends OperationsTestCase {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrameModel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         JUnitOperationsUtil.initOperationsData();
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.MODEL);
         // confirm that the right number of models were loaded
-        Assert.assertEquals(27, f.comboBox.getItemCount());
+        assertThat(f.comboBox.getItemCount()).isEqualTo(27);
         // now add a new model name
         f.addTextBox.setText("New Model");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        // new model should appear at start of list
-        Assert.assertEquals("new model name", "New Model", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(12)).withFailMessage("new model name").isEqualTo("New Model");
 
         // test replace
         f.comboBox.setSelectedItem("SD45");
         f.addTextBox.setText("DS54");
         // push replace button
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        
         // did the replace work?
-        Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("replaced SD45 with DS54").isEqualTo("DS54");
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        // new model was next
-        Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(12)).withFailMessage("new model after delete").isEqualTo("New Model");
 
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrameLength() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.LENGTH);
         // confirm that the right number of default lengths were loaded
-        Assert.assertEquals(29, f.comboBox.getItemCount());
+        assertThat(f.comboBox.getItemCount()).isEqualTo(29);
         // now add a new length
         f.addTextBox.setText("12");
         JemmyUtil.enterClickAndLeave(f.addButton);
         // new length should appear at start of list
-        Assert.assertEquals("new length name", "12", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("new length name").isEqualTo("12");
 
         // test replace
         f.comboBox.setSelectedItem("12");
         f.addTextBox.setText("13");
         // push replace button
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        
         // did the replace work?
-        Assert.assertEquals("replaced 12 with 13", "13", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("replaced 12 with 13").isEqualTo("13");
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number after delete").isEqualTo("32");
 
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrameLengthInches() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.LENGTH);
         // confirm that the right number of default lengths were loaded
-        Assert.assertEquals(29, f.comboBox.getItemCount());
+        assertThat(f.comboBox.getItemCount()).isEqualTo(29);
         // now add a new length in inches
         f.addTextBox.setText("10" + "\"");
         JemmyUtil.enterClickAndLeave(f.addButton);
         // new length should appear at start of list
-        Assert.assertEquals("new length name", "72", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(25)).withFailMessage("new length name").isEqualTo("72");
 
         // test replace
         f.comboBox.setSelectedItem("72");
@@ -99,183 +103,188 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
-        Assert.assertEquals("replaced 72 with 73", "73", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(25)).withFailMessage("replaced 72 with 73").isEqualTo("73");
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number after delete").isEqualTo("32");
 
         // now try error condition
         f.addTextBox.setText("A" + "\"");
         // should cause error dialog to appear
-        JemmyUtil.enterClickAndLeave(f.addButton);
-
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorEngineLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+        
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrameLengthCm() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.LENGTH);
         // confirm that the right number of default lengths were loaded
-        Assert.assertEquals(29, f.comboBox.getItemCount());
+        assertThat(f.comboBox.getItemCount()).isEqualTo(29);
         // now add a new length in centimeters
         f.addTextBox.setText("10" + "cm");
         JemmyUtil.enterClickAndLeave(f.addButton);
         // new length should appear at start of list
-        Assert.assertEquals("new length name", "8", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("new length name").isEqualTo("8");
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number after delete").isEqualTo("32");
 
         // now try error condition
         f.addTextBox.setText("A" + "cm");
         // should cause error dialog to appear
-        JemmyUtil.enterClickAndLeave(f.addButton);
-
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorEngineLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+        
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrameLengthErrors() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.LENGTH);
         // confirm that the right number of default lengths were loaded
-        Assert.assertEquals(29, f.comboBox.getItemCount());
+        assertThat(f.comboBox.getItemCount()).isEqualTo(29);
         // now add a bogus length
         f.addTextBox.setText("A");
-        JemmyUtil.enterClickAndLeave(f.addButton);
-
-        jmri.util.JUnitAppender.assertErrorMessage("length not an integer");
-        Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
+                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+        
+        jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
         // check for the value "A" 
         for (int i = 0; i < f.comboBox.getItemCount(); i++) {
-            Assert.assertNotEquals("check for A", "A", f.comboBox.getItemAt(i));
+            assertThat(f.comboBox.getItemAt(i)).withFailMessage("check for A").isNotEqualTo("A");
         }
 
         // now add a negative length
         f.addTextBox.setText("-1");
-        JemmyUtil.enterClickAndLeave(f.addButton);
-
-        jmri.util.JUnitAppender.assertErrorMessage("engine length has to be a positive number");
-        Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
+                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+        
+        jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
         // check for the value "-1" 
         for (int i = 0; i < f.comboBox.getItemCount(); i++) {
-            Assert.assertNotEquals("check for -1", "-1", f.comboBox.getItemAt(i));
+            assertThat(f.comboBox.getItemAt(i)).withFailMessage("check for -1").isNotEqualTo("-1");
         }
 
         // now add a length that is too long
         f.addTextBox.setText("10000");
 
         // should cause error dialog to appear
-        JemmyUtil.enterClickAndLeave(f.addButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
                 .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
-
-        Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
+        JemmyUtil.waitFor(f);
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrameType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.TYPE);
         // confirm that the right number of default lengths were loaded
-        Assert.assertEquals(10, f.comboBox.getItemCount());
-        Assert.assertEquals("1st type", "Electric", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemCount()).isEqualTo(10);
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st type").isEqualTo("Electric");
         // now add a new type
         f.addTextBox.setText("ABC-TEST_TEST_TEST");
         JemmyUtil.enterClickAndLeave(f.addButton);
         // new type should appear at start of list
-        Assert.assertEquals("new type name", "ABC-TEST_TEST_TEST", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("new type name").isEqualTo("ABC-TEST_TEST_TEST");
 
         // test replace
         f.comboBox.setSelectedItem("ABC-TEST_TEST_TEST");
         f.addTextBox.setText("ABCDEF-TEST");
         // push replace button
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
-        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("replaced ABC-TEST").isEqualTo("ABCDEF-TEST");
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("1st type after delete", "Electric", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st type after delete").isEqualTo("Diesel");
 
         // enter a type name that is too long
         f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
         // should cause error dialog to appear
-        JemmyUtil.enterClickAndLeave(f.addButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Type")}),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrameRoad() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.ROAD);
         // confirm that the right number of default lengths were loaded
-        Assert.assertEquals(133, f.comboBox.getItemCount());
-        Assert.assertEquals("1st road", "AA", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemCount()).isEqualTo(133);
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st road").isEqualTo("AA");
         // now add a new road
         f.addTextBox.setText("ABC-TEST");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        // new road should appear at start of list
-        Assert.assertEquals("new road name", "ABC-TEST", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(1)).withFailMessage("new road name").isEqualTo("ABC-TEST");
+        Assert.assertEquals("Select combobox is correct", "ABC-TEST", f.comboBox.getSelectedItem());
 
         // test replace
-        f.comboBox.setSelectedItem("ABC-TEST");
         f.addTextBox.setText("ABCDEF-TEST");
         // push replace button
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
-        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(1)).withFailMessage("replaced ABC-TEST").isEqualTo("ABCDEF-TEST");
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("1st road after delete", "AA", f.comboBox.getItemAt(0));
+        assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st road after delete").isEqualTo("AA");
 
         // enter a road name that is too long
         f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
         // should cause error dialog to appear
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         JemmyUtil.pressDialogButton(
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
                 Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
 
         // enter a road name that has a reserved character
         f.addTextBox.setText("A.B");
         // should cause error dialog to appear
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         JemmyUtil.pressDialogButton(
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEngineAttributeEditFrame2() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.OWNER);

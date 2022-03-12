@@ -3,43 +3,40 @@ package jmri.managers;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
- *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class DefaultRouteManagerTest extends AbstractProvidingManagerTestBase<jmri.RouteManager,jmri.Route> {
+public class DefaultRouteManagerTest extends AbstractProvidingManagerTestBase<jmri.RouteManager, jmri.Route> {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",l);
+        Assert.assertNotNull("exists", l);
     }
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @Deprecated // 4.17.7, eventually should check for IR in which case remove this test to allow super implementation
-    public void testProvideEmpty() throws IllegalArgumentException {
-        l.provide("Foo"); // this should _NOT_ throw an IllegalArgumentException currently
-        jmri.util.JUnitAppender.assertWarnMessage("Invalid Route Name: Foo must start with IR");
-    }
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultRouteManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerTest.class);
 
 }

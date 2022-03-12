@@ -2,11 +2,9 @@ package jmri.jmrix.loconet.duplexgroup;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for jmri.jmrix.loconet.duplexgroup.DuplexGropuMessageType
@@ -15,22 +13,22 @@ import org.junit.Test;
  */
 public class DuplexGroupMessageTypeTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
     }
 
     public DuplexGroupMessageTypeTest() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 

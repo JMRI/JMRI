@@ -170,12 +170,13 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * <p>
      * Package-level access to allow testing
      *
+     * @param <T>           The type of NamedBean being checked, i.e. Turnout, Sensor, etc
      * @param rawSystemName The proposed system name string, before
      *                      normalization
      * @param rawUserName   The proposed user name string, before normalization
      * @param manager       The NamedBeanManager that will be storing this
      */
-    void checkNameNormalization(@Nonnull String rawSystemName, String rawUserName, @Nonnull jmri.Manager manager) {
+    <T extends NamedBean> void checkNameNormalization(@Nonnull String rawSystemName, String rawUserName, @Nonnull Manager<T> manager) {
         // just check and log
         if (rawUserName != null) {
             String normalizedUserName = NamedBean.normalizeUserName(rawUserName);
@@ -184,7 +185,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
                         rawUserName, rawSystemName, normalizedUserName);
             }
             if (normalizedUserName != null) {
-                NamedBean bean = manager.getBeanByUserName(normalizedUserName);
+                NamedBean bean = manager.getByUserName(normalizedUserName);
                 if (bean != null && !bean.getSystemName().equals(rawSystemName)) {
                     log.warn("User name \"{}\" already exists as system name \"{}\"", normalizedUserName, bean.getSystemName());
                 }
@@ -265,7 +266,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param m    Manager used to check name for validity and existence
      * @return name if a matching NamedBean can be found or null
      */
-    public <T extends NamedBean> String checkedNamedBeanName(String name, T type, @Nonnull Manager m) {
+    public <T extends NamedBean> String checkedNamedBeanName(String name, T type, @Nonnull Manager<T> m) {
         if (name == null) {
             return null;
         }
@@ -426,6 +427,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param list list of Elements read from xml
      * @param perNode Top-level XML element containing the private, single-node elements of the description.
      *                always null in current application, included to use for Element panel in jmri.jmrit.display
+     * @return true if the load was successful
      */
     boolean loadInAdapter(List<Element> list, Element perNode) {
         boolean result = true;

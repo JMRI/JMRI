@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -119,7 +119,7 @@
         l'ajout de Logique M&acirc;t de Signalisation voir <a href=
         "../signalling/AddEditSignallingLogic.shtml">Ajout/&eacute;dition
         Logique M&acirc;t de Signalisation</a>.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

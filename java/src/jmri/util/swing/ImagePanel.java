@@ -27,6 +27,9 @@ public class ImagePanel extends JPanel {
      * @param img Image to load as background
      */
     public void setImage(Image img) {
+        if (!(img instanceof BufferedImage)){
+            throw new IllegalArgumentException("Not a Buffered Image: "+img);
+        }
         back = (BufferedImage) img;
         repaint();
         log.debug("DrawPanel ready");

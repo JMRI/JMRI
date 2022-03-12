@@ -20,6 +20,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p host name.
+     * @param m manufacturer name.
      */
     public ConnectionConfig(String p, String m) {
         super();

@@ -1,12 +1,14 @@
 package jmri.jmrix.nce;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Manage the NCE-specific Sensor implementation.
@@ -48,6 +50,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public NceSystemConnectionMemo getMemo() {
         return (NceSystemConnectionMemo) memo;
     }
@@ -69,10 +72,25 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
+     *
+     * @throws IllegalArgumentException if the system name is not in a valid format
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
-        int number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int number = 0;
+        try {
+            number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to NCE sensor address"); // NOI18N
+        }
         Sensor s = new NceSensor(systemName);
         s.setUserName(userName);
 
@@ -227,9 +245,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 if (currentAIU != null) {    // in case it has gone away
                     NceMessage m = makeAIUPoll(aiuNo);
                     synchronized (this) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("queueing poll request for AIU " + aiuNo);
-                        }
+                        log.debug("queueing poll request for AIU {}", aiuNo);
                         getMemo().getNceTrafficController().sendNceMessage(m, this);
                         awaitingReply = true;
                         try {
@@ -246,7 +262,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                     }
                     synchronized (this) {
                         if (awaitingReply && !stopPolling) {
-                            log.warn("timeout awaiting poll response for AIU " + aiuNo);
+                            log.warn("timeout awaiting poll response for AIU {}", aiuNo);
                             // slow down the poll since we're not getting responses
                             // this lets NceConnectionStatus to do its thing
                             delay = pollTimeout;
@@ -289,7 +305,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 String str = jmri.util.StringUtil.twoHexFromInt((bits >> 4) & 0xf);
                 str += " ";
                 str = jmri.util.StringUtil.appendTwoHexFromInt(bits & 0xf, str);
-                log.debug("sensor poll reply received: \"" + str + "\"");
+                log.debug("sensor poll reply received: \"{}\"", str);
             }
         }
     }
@@ -306,7 +322,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 && ((indicator >= 0x41 && indicator <= 0x5e) || (indicator >= 0x61 && indicator <= 0x7e))) {
             lastMessageReceived = System.currentTimeMillis();
             if (aiuArray[index] == null) {
-                log.debug("unsolicited message \"" + r.toString() + "\" for unused sensor array");
+                log.debug("unsolicited message \"{}\" for unused sensor array", r.toString());
             } else {
                 int sensorNo;
                 int newState;
@@ -340,17 +356,18 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 aiuArray[index].sensorChange(sensorNo, newState);
             }
         } else {
-            log.warn("incorrect sensor message: " + r.toString());
+            log.warn("incorrect sensor message: {}", r.toString());
         }
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             // Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
             // Should we be validating the values of aiucab address and pin number?
@@ -360,8 +377,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 aiucab = Integer.parseInt(curAddress.substring(0, seperator));
                 pin = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Unable to convert "+curAddress+" into the cab and pin format of nn:xx");
             }
             iName = (aiucab - 1) * 16 + pin - 1;
 
@@ -370,21 +386,17 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Hardware Address passed "+curAddress+" should be a number or the cab and pin format of nn:xx");
             }
             pin = iName % 16 + 1;
             aiucab = iName / 16 + 1;
         }
         // only pins 1 through 14 are valid
         if (pin == 0 || pin > MAXPIN) {
-            log.error("NCE sensor " + curAddress + " pin number " + pin + " is out of range; only pin numbers 1 - 14 are valid");
-            throw new JmriException("Sensor pin number is out of range");
+            throw new JmriException("Sensor pin number "+pin+" for address "+curAddress+" is out of range; only pin numbers 1 - 14 are valid");
         }
         if (aiucab == 0 || aiucab > MAXAIU) {
-            log.error("NCE sensor " + curAddress + " AIU number " + aiucab + " is out of range; only AIU 1 - 63 are valid");
-            throw new JmriException("AIU number is out of range");
-
+            throw new JmriException("AIU number "+aiucab+" for address "+curAddress+" is out of range; only AIU 1 - 63 are valid");
         }
         return prefix + typeLetter() + iName;
     }
@@ -394,34 +406,26 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     int iName = 0;
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
 
-        String tmpSName = "";
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
+        String tmpSName = createSystemName(curAddress, prefix);
 
         // Check to determine if the systemName is in use, return null if it is,
         // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
-        if (s != null) {
+        if (s != null || ignoreInitialExisting) {
             for (int x = 1; x < 10; x++) {
                 iName = iName + 1;
                 pin = pin + 1;
                 if (pin > MAXPIN) {
-                    return null;
+                    throw new JmriException("Unable to increment "+curAddress+" pin "+pin+" is greater than "+MAXPIN);
                 }
                 s = getBySystemName(prefix + typeLetter() + iName);
                 if (s == null) {
                     return Integer.toString(iName);
                 }
             }
-            return null;
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
         } else {
             return Integer.toString(iName);
         }
@@ -431,7 +435,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         String parts[];
         int num;
         if (name.contains(":")) {
@@ -486,7 +491,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         if (super.validSystemNameFormat(systemName) == NameValidity.VALID) {
             try {
                 validateSystemNameFormat(systemName);

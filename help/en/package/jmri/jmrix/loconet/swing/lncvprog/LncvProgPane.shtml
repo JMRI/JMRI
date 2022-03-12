@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LocoNet LNCV Programming Pane</title>
+  <meta name="author" content="Egbert Broerse">
+  <meta name="keywords" content="JMRI help send loconet lncv uhlenbrock">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LocoNet LNCV Programming Pane</h1>
+
+      <p><span class="since">since 4.21.4</span>The "Configure LNCV Modules" tool lets you access
+      and program connected LocoNet devices that respond to the (Uhlenbrock) LNCV LocoNet
+      programming protocol.<br>
+      Examples are the Uhlenbrock Switch Module 63410 and Digikeijs DR5033 booster. You find the
+      tool in the LocoNet menu as long as a LocoNet connection is available.</p>
+      <img src="images/LNCVTool1.png" alt="Initial view of LNCV Programming Tool pane"> <img src=
+      "images/LNCVTool2.png" alt="LNCV Programming Tool pane with Article and Address filled in">
+      <p>As the tool is new, you might use it in combination with the "Show Raw Data" option in the
+      <a href="../../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
+      responses rejected by the LNCV filters.</p>
+
+      <p>Unless a programming session is running, LNCV modules will not respond to Write commands
+      (the Read and Write buttons in the tool are enabled during a session).</p>
+
+      <h2>Module LNCV Programming</h2>
+
+      <p>LNCV Programming requires 3 elements to address CV in an LNCV module on LocoNet:</p>
+
+      <ol>
+        <li>Article Number (aka type/class/productID)</li>
+
+        <li>Module Address (optional, see below)</li>
+
+        <li>CV number</li>
+      </ol>
+
+      <p>Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device. For
+      example, the Digikeijs DigiBoost DR5033 has Article number 5033, which was registered with
+      Uhlenbrock.<br>
+      Enter the Article number eg. 5033 in the "Article" field before proceeding.<br>
+      Next, enter the Module Address in the corresponding field.</p>
+
+      <p>After opening a programming session, the "Open Module Programming" stays highlighted and
+      the Read and Write buttons are enabled.<br>
+      To close the programming of a module, click the same button, that now reads "Stop Module
+      Programming".<br>
+      While a programming session is running this button is highlighted and the Address field is
+      not editable, to prevent switching module address without first closing the session running.
+      Note that changing the module address stored in CV0 won't immediately halt the session, so
+      take care and close the current session before opening a new session on the new module
+      address.</p>
+
+      <p>For incidental programming, the tool allows reading and writing of individual CV
+      value.<br>
+      To read, enter a CV number in the fields on the right of the tool pane and click [Read] to
+      see the value in the Value field.<br>
+      To write, enter a CV number plus the new value to set in the CV, and click [Write].</p>
+
+      <p>LNCV Responses coming back from the layout will be listed in the table. When your Roster
+      contains (exactly) one entry for a decoder of this article number and address, it will be
+      listed in the table as shown below.<br>
+      When no match was found in your Roster but a matching definition was found in the JMRI
+      Decoder Index, a [Create Entry] button will show. Be sure to complete the Entry creation
+      process by clicking [Save to Roster] on the Roster Entry tab. If your device reponded to a
+      general call but is not yet supported, the button will read [No Match in Roster] (and it
+      won't work). Once you have a Roster Entry, the button will read [Program] and will directly
+      open the entry tabs.</p>
+      <img src="images/LNCVToolEntry.png" alt=
+      "LNCV Programming Tool ask for a name for the new Entry when you click Add Entry"> <img src=
+      "images/LNCVTool3.png" alt=
+      "LNCV Programming Tool found a Decoder Entry and shows Program button"> <img src=
+      "../../../../../../html/hardware/loconet/images/LncvProgrammer/LncvProgrammerPane.png" alt=
+      "LNCV Programming Tool can't find a matching definition">
+      <h2>Broadcast LNCV Programming</h2>
+
+      <p>Older LNCV devices may not have their own address, or even no article ID. They can be
+      programmed using Broadcast mode, but you have to be sure only one such device is powered, as
+      they all would respond to programming commands.</p>
+
+      <p>Click "Start Broadcast Programming" to start a session.</p>
+
+      <p>To close a Broadcast session, click "Stop Broadcast Programming".</p>
+
+      <p>Using the universal address 65535 (or simply leaving the Article field empty) you can, as
+      the name suggests, call up all LNCV Adapters that want to respond (not all do).<br>
+      As the universal address is not valid for addressing specific modules, it can only be used to
+      call up an individual adapter for which the address is unknown. For this you connect the said
+      adapter to the LocoNet. The adapter can then be called up and its address read from LNCV
+      0.<br>
+      By only filling in an Article number (and leaving the address field empty) you can send a
+      Broadcast call to all devices of that specific type, and many devices will respond by
+      providing their DCC address, which will be added to the table. Once you have the report back
+      from the layout, click [Close Broadcast Session] to exit the general access.<br>
+      Click on one of the rows to copy the address to the top, and click [Start Module Programming]
+      to continue.</p>
+
+      <h2>Direct Mode</h2>
+
+      <p>Check the 'Direct Mode' checkbox to access 16 state buttons to set LEDs etc. on
+      Track-Control items.</p>
+
+      <h2>LNCV Decoder definitions</h2>
+      With an LNCV Module Programming session (to a specific device) running, you can use the
+      Roster entry programming panes for more advanced (and accessible) configuration. Easily
+      switch to DecoderPro Roster either by clicking the [Program] button in the table or manually
+      open the entry for the module in your Roster entries list.<br>
+      Go to the "LNCV (Booster) Configuration" tab to read and write options supported by the
+      device.
+      <p>Anyone interested in writing their own LNCV decoder definitions in JMRI, please note that
+      in the definition programming mode should be defined as
+      <code>&lt;mode&gt;LOCONETLNCVMODE&lt;/mode&gt;</code>.<br>
+      The Article part (item 1. in the list above) must be defined in the definition as the<br>
+      <code>&lt;model productID="5033" /&gt;</code>. To process LNCV commands in JMRI
+      LnOpsProgrammer, elements 1. and 3. are combined into a single CV number as
+      "part_1.part_3".<br>
+      For example CV6 in the DR5033 is defined as:<br>
+      <code>&lt;variable CV="5033.6" readOnly="yes" item="Temperature"&gt;</code></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -2,9 +2,6 @@ package jmri.jmrix.can.cbus.simulator;
 
 import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
-import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,26 +22,27 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusSimulator {
 
-    private CanSystemConnectionMemo memo;
+    private final CanSystemConnectionMemo memo;
     public ArrayList<CbusDummyCS> _csArr;
     public ArrayList<CbusDummyNode> _ndArr;
     public ArrayList<CbusEventResponder> _evResponseArr;
 
     public CbusSimulator(CanSystemConnectionMemo sysmemo){
         memo = sysmemo;
-        jmri.InstanceManager.store(this,jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
+        // todo - store in memo, not instance
+        jmri.InstanceManager.store(this,CbusSimulator.class);
         init();
     }
     
-    public void init(){
+    public final void init(){
         log.info("Starting CBUS Network Simulation Tools");
-        _csArr = new ArrayList<CbusDummyCS>();
+        _csArr = new ArrayList<>();
         _csArr.add(new CbusDummyCS(memo)); // type, id, memo
         
-        _ndArr = new ArrayList<CbusDummyNode>();
-        _ndArr.add(new CbusDummyNode(0,165,0,0,memo)); // nn, manufacturer, type, canid, memo
+        _ndArr = new ArrayList<>();
+        // _ndArr.add(new CbusDummyNode(0,165,0,0,memo)); // nn, manufacturer, type, canid, memo
         
-        _evResponseArr = new ArrayList<CbusEventResponder>();
+        _evResponseArr = new ArrayList<>();
         _evResponseArr.add(new CbusEventResponder(memo) );
     }
     
@@ -66,7 +64,15 @@ public class CbusSimulator {
     
     public CbusDummyNode getNd(int id){
         return _ndArr.get(id);
-    }  
+    }
+
+    public void addNode ( CbusDummyNode nd) {
+        _ndArr.add(nd);
+    }
+
+    public void removeNode(CbusDummyNode nd) {
+        _ndArr.remove(nd);
+    }
 
     public CbusEventResponder getEv( int id ){
         return _evResponseArr.get(id);
@@ -76,12 +82,6 @@ public class CbusSimulator {
         CbusDummyCS newcs = new CbusDummyCS(memo);
         _csArr.add(newcs);
         return newcs;
-    }
-    
-    public CbusDummyNode getNewNd(){
-        CbusDummyNode newnd  = new CbusDummyNode(0,165,0,0,memo);
-        _ndArr.add(newnd);
-        return newnd;
     }
 
     public CbusEventResponder getNewEv(){
@@ -112,7 +112,7 @@ public class CbusSimulator {
         } 
         _evResponseArr = null;
         
-        jmri.InstanceManager.deregister(this, jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
+        jmri.InstanceManager.deregister(this, CbusSimulator.class);
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusSimulator.class);

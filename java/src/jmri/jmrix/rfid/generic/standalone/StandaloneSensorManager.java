@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -36,11 +37,14 @@ public class StandaloneSensorManager extends RfidSensorManager {
         tc.addRfidListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("Create new Sensor");
-        TimeoutRfidSensor s;
-        s = new TimeoutRfidSensor(systemName, userName);
+        TimeoutRfidSensor s = new TimeoutRfidSensor(systemName, userName);
         s.addPropertyChangeListener(this);
         return s;
     }
@@ -48,7 +52,7 @@ public class StandaloneSensorManager extends RfidSensorManager {
     @Override
     public void message(RfidMessage m) {
         if (m.toString().equals(new StandaloneMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
-            log.info("Sent init string: " + m);
+            log.info("Sent init string: {}", m);
         } else {
             super.message(m);
         }
@@ -63,7 +67,7 @@ public class StandaloneSensorManager extends RfidSensorManager {
 
     private void processReply(StandaloneReply r) {
         if (!tc.getAdapterMemo().getProtocol().isValid(r)) {
-            log.warn("Invalid message - skipping " + r);
+            log.warn("Invalid message - skipping {}", r);
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
@@ -71,10 +75,14 @@ public class StandaloneSensorManager extends RfidSensorManager {
         sensor.notify(idTag);
     }
 
-    // to free resources when no longer used
+    /**
+     * Validates to contain at least 1 number.
+     * {@inheritDoc}
+     */
     @Override
-    public void dispose() {
-        super.dispose();
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
     }
 
     private static final Logger log = LoggerFactory.getLogger(StandaloneSensorManager.class);

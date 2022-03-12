@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -31,6 +30,12 @@
             <date>2017-11-14</date>
             <authorinitials>DGH</authorinitials>
             <revremark>Created</revremark>
+        </revision>
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2021-04-22</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>More appropriate default address</revremark>
         </revision>
     </revhistory>
     <decoder>
@@ -63,7 +68,7 @@
             <mode>OPSACCBYTEMODE</mode>
         </programming>
         <variables>
-            <variable CV="18" item="Long Address" default="3" opsOnly="yes">
+            <variable CV="18" item="Long Address" default="1" opsOnly="yes">
                 <splitVal highCV="17" upperMask="XXXXXVVV" min="1" max="2043"/>
                 <label>Accessory Address</label>
             </variable>

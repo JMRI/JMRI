@@ -1,15 +1,14 @@
 package jmri.jmrix.acela.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * AcelaSensorManagerXmlTest.java
  *
- * Description: tests for the AcelaSensorManagerXml class
+ * Test for the AcelaSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class AcelaSensorManagerXmlTest {
       Assert.assertNotNull("AcelaSensorManagerXml constructor",new AcelaSensorManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

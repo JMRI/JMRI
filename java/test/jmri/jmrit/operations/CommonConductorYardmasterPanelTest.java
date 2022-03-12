@@ -1,8 +1,7 @@
 package jmri.jmrit.operations;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the CommonConductorYardmasterPanel class
@@ -19,7 +18,7 @@ public class CommonConductorYardmasterPanelTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         p = new CommonConductorYardmasterPanel() {

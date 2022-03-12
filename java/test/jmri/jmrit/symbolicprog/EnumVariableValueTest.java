@@ -2,20 +2,19 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
 import java.util.HashMap;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Test EnumVariableValue
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class EnumVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -53,7 +52,7 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((EnumVariableValue) var).setValue(Integer.valueOf(val).intValue());
+        ((EnumVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override
@@ -148,6 +147,25 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("one", "Reserved value 2", val.getTextValue());
     }
 
+    @Test
+    public void testGetValueString() {
+        EnumVariableValue val = createOutOfSequence();
+        val.setIntValue(0);
+        Assert.assertEquals("setIntValue zero", "0", val.getValueString());
+        val.setIntValue(5);
+        Assert.assertEquals("setIntValue five", "5", val.getValueString());
+        val.setIntValue(7);
+        Assert.assertEquals("setIntValue seven", "7", val.getValueString());
+        val.setIntValue(9);
+        Assert.assertEquals("setIntValue nine", "9", val.getValueString());
+        val.setIntValue(12);
+        Assert.assertEquals("setIntValue twelve", "12", val.getValueString());
+        val.setIntValue(1);
+        Assert.assertEquals("setIntValue one", "1", val.getValueString());
+        val.setIntValue(2);
+        Assert.assertEquals("setIntValue two", "2", val.getValueString());
+    }
+
     public EnumVariableValue createOutOfSequence() {
         // prepare
         HashMap<String, CvValue> v = createCvMap();
@@ -215,13 +233,13 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
                        
     }
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
     
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

@@ -5,25 +5,14 @@ import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.*;
-import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
-import jmri.BasicRosterEntry;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.Programmer;
-import jmri.ProgrammerException;
-import jmri.Sensor;
-import jmri.ThrottleListener;
-import jmri.ThrottleManager;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for user automaton classes, which provide individual bits of
@@ -67,6 +56,10 @@ import org.slf4j.LoggerFactory;
  * {@link #waitSensorState(jmri.Sensor, int)}
  * <li>Wait for a specific sensor to change:
  * {@link #waitSensorChange(int, jmri.Sensor)}
+ * <li>Wait for a specific signal head to show a specific appearance:
+ * {@link #waitSignalHeadState(jmri.SignalHead, int)}
+ * <li>Wait for a specific signal mast to show a specific aspect:
+ * {@link #waitSignalMastState(jmri.SignalMast, String)}
  * <li>Wait for a specific warrant to change run state:
  * {@link #waitWarrantRunState(Warrant, int)}
  * <li>Wait for a specific warrant to enter or leave a specific block:
@@ -120,7 +113,7 @@ public class AbstractAutomaton implements Runnable {
         if (currentThread != null) {
             log.error("Start with currentThread not null!");
         }
-        currentThread = new Thread(this, name);
+        currentThread = jmri.util.ThreadingUtil.newThread(this, name);
         currentThread.start();
         summary.register(this);
         count = 0;
@@ -180,8 +173,9 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides superclass method to handle local accounting.
      */
-    @SuppressWarnings("deprecation") // AbstractAutomaton objects can be waiting on _lots_ of things, so
-                                     // we need to find another way to deal with this besides Interrupt
+    @SuppressWarnings("deprecation") // Thread.stop()
+    // AbstractAutomaton objects can be waiting on _lots_ of things, so
+    // we need to find another way to deal with this besides Interrupt
     public void stop() {
         log.trace("stop() invoked");
         if (currentThread == null) {
@@ -389,7 +383,7 @@ public class AbstractAutomaton implements Runnable {
             log.warn("waitSensorChange invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitSensorChange starts: " + mSensor.getSystemName());
+            log.debug("waitSensorChange starts: {}", mSensor.getSystemName());
         }
         // register a listener
         PropertyChangeListener l;
@@ -455,7 +449,7 @@ public class AbstractAutomaton implements Runnable {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitSensorState starts: " + mSensor.getSystemName() + " " + state);
+            log.debug("waitSensorState starts: {} {}", mSensor.getSystemName(), state);
         }
         // register a listener
         PropertyChangeListener l;
@@ -542,6 +536,79 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
+     * Internal service routine to wait for one SignalHead to be in (or become in) a
+     * specific state.
+     * <p>
+     * This works by registering a listener, which is likely to run in another
+     * thread. That listener then interrupts this thread to confirm the change.
+     *
+     * @param mSignalHead the signal head to wait for
+     * @param state   the expected state
+     */
+    public synchronized void waitSignalHeadState(SignalHead mSignalHead, int state) {
+        if (!inThread) {
+            log.warn("waitSignalHeadState invoked from invalid context");
+        }
+        if (mSignalHead.getAppearance() == state) {
+            return;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("waitSignalHeadState starts: {} {}", mSignalHead.getSystemName(), state);
+        }
+        // register a listener
+        PropertyChangeListener l;
+        mSignalHead.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
+            synchronized (self) {
+                self.notifyAll(); // should be only one thread waiting, but just in case
+            }
+        });
+
+        while (state != mSignalHead.getAppearance()) {
+            wait(-1);  // wait for notification
+        }
+
+        // remove the listener & report new state
+        mSignalHead.removePropertyChangeListener(l);
+
+    }
+
+    /**
+     * Internal service routine to wait for one signal mast to be showing a specific aspect
+     * <p>
+     * This works by registering a listener, which is likely to run in another
+     * thread. That listener then interrupts this thread to confirm the change.
+     *
+     * @param mSignalMast the mast to wait for
+     * @param aspect   the expected aspect
+     */
+    public synchronized void waitSignalMastState(SignalMast mSignalMast, String aspect) {
+        if (!inThread) {
+            log.warn("waitSignalMastState invoked from invalid context");
+        }
+        if (mSignalMast.getAspect().equals(aspect)) {
+            return;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("waitSignalMastState starts: {} {}", mSignalMast.getSystemName(), aspect);
+        }
+        // register a listener
+        PropertyChangeListener l;
+        mSignalMast.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
+            synchronized (self) {
+                self.notifyAll(); // should be only one thread waiting, but just in case
+            }
+        });
+
+        while (! mSignalMast.getAspect().equals(aspect)) {
+            wait(-1);  // wait for notification
+        }
+
+        // remove the listener & report new state
+        mSignalMast.removePropertyChangeListener(l);
+
+    }
+
+    /**
      * Wait for a warrant to change into or out of running state.
      * <p>
      * This works by registering a listener, which is likely to run in another
@@ -556,7 +623,7 @@ public class AbstractAutomaton implements Runnable {
             log.warn("waitWarrantRunState invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantRunState " + warrant.getDisplayName() + ", " + state + " starts");
+            log.debug("waitWarrantRunState {}, {} starts", warrant.getDisplayName(), state);
         }
 
         // do a quick check first, just in case
@@ -598,7 +665,7 @@ public class AbstractAutomaton implements Runnable {
             log.warn("waitWarrantBlock invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlock " + warrant.getDisplayName() + ", " + block + " " + occupied + " starts");
+            log.debug("waitWarrantBlock {}, {} {} starts", warrant.getDisplayName(), block, occupied);
         }
 
         // do a quick check first, just in case
@@ -644,7 +711,7 @@ public class AbstractAutomaton implements Runnable {
             log.warn("waitWarrantBlockChange invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlockChange " + warrant.getDisplayName());
+            log.debug("waitWarrantBlockChange {}", warrant.getDisplayName());
         }
 
         // do a quick check first, just in case
@@ -947,7 +1014,7 @@ public class AbstractAutomaton implements Runnable {
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(int address, boolean longAddress, int waitSecs) {
-        log.debug("requesting DccThrottle for addr " + address);
+        log.debug("requesting DccThrottle for addr {}", address);
         if (!inThread) {
             log.warn("getThrottle invoked from invalid context");
         }
@@ -963,23 +1030,11 @@ public class AbstractAutomaton implements Runnable {
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
-            }
-            
-            /**
-             * No steal or share decisions made locally
-             * <p>
-             * {@inheritDoc}
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Override
-            @Deprecated
-            public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
             }
 
             /**
@@ -989,7 +1044,7 @@ public class AbstractAutomaton implements Runnable {
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
             }
         };
-        boolean ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle( 
+        boolean ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(
             new jmri.DccLocoAddress(address, longAddress), throttleListener, false);
 
         // check if reply is coming
@@ -1007,11 +1062,11 @@ public class AbstractAutomaton implements Runnable {
             wait(1000);  //  1 seconds
             waited++;
             if (throttle == null) {
-                log.warn("Still waiting for throttle " + address + "!");
+                log.warn("Still waiting for throttle {}!", address);
             }
         }
         if (throttle == null) {
-            log.debug("canceling request for Throttle " + address);
+            log.debug("canceling request for Throttle {}", address);
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(
                 new jmri.DccLocoAddress(address, longAddress), throttleListener);  //kill the pending request
         }
@@ -1032,7 +1087,7 @@ public class AbstractAutomaton implements Runnable {
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(BasicRosterEntry re, int waitSecs) {
-        log.debug("requesting DccThrottle for rosterEntry " + re.getId());
+        log.debug("requesting DccThrottle for rosterEntry {}", re.getId());
         if (!inThread) {
             log.warn("getThrottle invoked from invalid context");
         }
@@ -1048,25 +1103,13 @@ public class AbstractAutomaton implements Runnable {
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
-            
-            /**
-             * No steal or share decisions made locally
-             * <p>
-             * {@inheritDoc}
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Override
-            @Deprecated
-            public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
-            }
-            
+
             /**
              * No steal or share decisions made locally
              * {@inheritDoc}
@@ -1080,7 +1123,7 @@ public class AbstractAutomaton implements Runnable {
 
         // check if reply is coming
         if (!ok) {
-            log.info("Throttle for loco " + re.getId() + " not available");
+            log.info("Throttle for loco {} not available", re.getId());
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(
                 re.getDccLocoAddress(), throttleListener);  //kill the pending request
             return null;
@@ -1093,7 +1136,7 @@ public class AbstractAutomaton implements Runnable {
             wait(1000);  //  1 seconds
             waited++;
             if (throttle == null) {
-                log.warn("Still waiting for throttle " + re.getId() + "!");
+                log.warn("Still waiting for throttle {}!", re.getId());
             }
         }
         if (throttle == null) {
@@ -1133,7 +1176,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             });
         } catch (ProgrammerException e) {
-            log.warn("Exception during writeServiceModeCV: " + e);
+            log.warn("Exception during writeServiceModeCV", e);
             return false;
         }
         // wait for the result
@@ -1170,7 +1213,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             });
         } catch (ProgrammerException e) {
-            log.warn("Exception during writeServiceModeCV: " + e);
+            log.warn("Exception during writeServiceModeCV", e);
             return -1;
         }
         // wait for the result
@@ -1205,7 +1248,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             });
         } catch (ProgrammerException e) {
-            log.warn("Exception during writeServiceModeCV: " + e);
+            log.warn("Exception during writeServiceModeCV", e);
             return false;
         }
         // wait for the result
@@ -1342,5 +1385,5 @@ public class AbstractAutomaton implements Runnable {
         }
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAutomaton.class);
 }

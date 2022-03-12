@@ -1,5 +1,6 @@
 package jmri.spi;
 
+import java.util.Collection;
 import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.profile.Profile;
@@ -37,13 +38,11 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * repeatedly initialized.
      *
      * @param profile the configuration profile used for this initialization;
-     *                    may be null to initialize for this user regardless of
-     *                    profile
-     * @throws jmri.util.prefs.InitializationException if the user needs to be
-     *                                                     notified of an issue
-     *                                                     that prevents regular
-     *                                                     use of the
-     *                                                     application
+     *                may be null to initialize for this user regardless of
+     *                profile
+     * @throws InitializationException if the user needs to be notified of an
+     *                                 issue that prevents regular use of the
+     *                                 application
      */
     public void initialize(Profile profile) throws InitializationException;
 
@@ -55,8 +54,8 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * return false.
      *
      * @param profile the configuration profile to test against; may be null to
-     *                    test for exceptions thrown when initializing for this
-     *                    user regardless of profile
+     *                test for exceptions thrown when initializing for this user
+     *                regardless of profile
      * @return true if the provider is initialized without exceptions
      */
     public boolean isInitialized(Profile profile);
@@ -69,8 +68,8 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * isInitialized(Profile) returns true, this method must return false.
      *
      * @param profile the configuration profile to test against; may be null to
-     *                    test for exceptions thrown when initializing for this
-     *                    user regardless of profile
+     *                test for exceptions thrown when initializing for this user
+     *                regardless of profile
      * @return true if the provide is initialized with exceptions
      */
     public boolean isInitializedWithExceptions(Profile profile);
@@ -80,8 +79,8 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * Profile.
      *
      * @param profile the configuration profile to test against; may be null to
-     *                    test for exceptions thrown when initializing for this
-     *                    user regardless of profile
+     *                test for exceptions thrown when initializing for this user
+     *                regardless of profile
      * @return A list of exceptions. If there are no exceptions, return an empty
      *         set instead of null.
      */
@@ -89,18 +88,23 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
     List<Exception> getInitializationExceptions(Profile profile);
 
     /**
-     * Get the set of PreferencesProviders that must be initialized prior to
+     * Get the set of PreferencesManagers that must be initialized prior to
      * initializing this PreferencesManager. It is generally preferable to
      * require an Interface or an abstract Class instead of a concrete Class,
      * since that allows all (or any) concrete implementations of the required
      * class to be initialized to provide required services for the requiring
      * PreferencesManager instance.
+     * <p>
+     * Note that for any set of PreferencesManagers with the same requirements,
+     * or with a circular dependency between each other, the order in which the
+     * PreferencesManagers in that set are initialized should be considered
+     * non-deterministic.
      *
      * @return A set or list of classes. If there are no dependencies, return an
      *         empty set instead of null.
      */
     @Nonnull
-    public Iterable<Class<? extends PreferencesManager>> getRequires();
+    public Collection<Class<? extends PreferencesManager>> getRequires();
 
     /**
      * Get the set of Classes that this PreferencesManager can be registered as
@@ -117,8 +121,8 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * Save the preferences that this provider manages for the provided Profile.
      *
      * @param profile the profile associated with the preferences to save; may
-     *                    be null to save preferences that apply to the current
-     *                    user regardless of profile
+     *                be null to save preferences that apply to the current user
+     *                regardless of profile
      */
     public void savePreferences(Profile profile);
 

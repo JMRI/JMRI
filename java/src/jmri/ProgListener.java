@@ -104,5 +104,5 @@ public interface ProgListener extends java.util.EventListener {
      * station and the PC during programming
      */
     public final int CommError = 0x400;
-}
 
+}

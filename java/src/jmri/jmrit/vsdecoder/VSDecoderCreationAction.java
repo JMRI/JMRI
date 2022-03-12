@@ -1,16 +1,12 @@
 package jmri.jmrit.vsdecoder;
 
 import java.awt.event.ActionEvent;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
+ * Start Virtual Sound Decoder Manager.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -24,27 +20,21 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class VSDecoderCreationAction extends AbstractAction {
-
-    Boolean _useNewGUI = false;
 
     /**
      * Constructor
      *
      * @param s Name for the action.
      */
-    public VSDecoderCreationAction(String s, Boolean ng) {
+    public VSDecoderCreationAction(String s) {
         super(s);
-        _useNewGUI = ng;
-        if (GraphicsEnvironment.isHeadless()) {
-            log.info("GUI lookAndFeel: {}", UIManager.getLookAndFeel().getName());
-        }
     }
 
     public VSDecoderCreationAction() {
-        this("Virtual Sound Decoder", true);
+        this("Virtual Sound Decoder");
     }
 
     /**
@@ -54,32 +44,15 @@ public class VSDecoderCreationAction extends AbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        String fp = null, fn = null;
-        JFrame tf = null;
-        if (_useNewGUI == true) {
-            tf = VSDecoderManager.instance().provideManagerFrame(); // headless will return null
-        } else {
-            tf = new VSDecoderFrame(); // old GUI
-        }
+        JFrame tf;
 
-        // Handle Auto-Load
-        if (VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile() && !GraphicsEnvironment.isHeadless()) {
-            // Force load of a VSD file
-            fp = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
-            fn = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFileName();
-            if (fn.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Cannot auto-load VSD File - file name missing - check your VSD Preferences value",
-                        Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
-            } else {
-                LoadVSDFileAction.loadVSDFile(fp + File.separator + fn);
-            }
-        }
+        tf = VSDecoderManager.instance().provideManagerFrame(); // headless will return null
 
         if (tf != null) {
             tf.toFront();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class);
+    //private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class);
 
 }

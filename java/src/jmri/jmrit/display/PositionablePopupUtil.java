@@ -111,9 +111,7 @@ public class PositionablePopupUtil {
 
     public void propertyUtil(JPopupMenu popup) {
         JMenuItem edit = new JMenuItem(Bundle.getMessage("MenuItemProperties") + "...");
-        edit.addActionListener((ActionEvent e) -> {
-            _propertiesUtil.display();
-        });
+        edit.addActionListener((ActionEvent e) -> _propertiesUtil.display());
         popup.add(edit);
     }
 
@@ -224,7 +222,7 @@ public class PositionablePopupUtil {
     public void setFixedWidth(int w) {
         fixedWidth = w;
         if (log.isDebugEnabled()) {
-            log.debug("setFixedWidth()=" + getFixedWidth());
+            log.debug("setFixedWidth()={}", getFixedWidth());
         }
         _parent.updateSize();
     }
@@ -235,18 +233,14 @@ public class PositionablePopupUtil {
 
     public void setFixedHeight(int h) {
         fixedHeight = h;
-        if (log.isDebugEnabled()) {
-            log.debug("setFixedHeight()=" + getFixedHeight());
-        }
+        log.debug("setFixedHeight()={}", getFixedHeight());
         _parent.updateSize();
     }
 
     public void setFixedSize(int w, int h) {
         fixedWidth = w;
         fixedHeight = h;
-        if (log.isDebugEnabled()) {
-            log.debug("setFixedSize()=" + "(" + getFixedWidth() + "," + getFixedHeight() + ")");
-        }
+        log.debug("setFixedSize()=({},{})", getFixedWidth(), getFixedHeight());
         _parent.updateSize();
     }
 
@@ -318,6 +312,7 @@ public class PositionablePopupUtil {
             setHasBackground(true);
             _textComponent.setBackground(color);
             _parent.setBackground(color);
+            _parent.setOpaque(true);
             if (!_suppressRecentColor) {
                 JmriColorChooser.addRecentColor(color);
             }
@@ -327,7 +322,7 @@ public class PositionablePopupUtil {
         }
         _parent.updateSize();
     }
-    
+
     public void setSuppressRecentColor(boolean b) {
         _suppressRecentColor = b;
     }
@@ -367,7 +362,7 @@ public class PositionablePopupUtil {
         String defaultFontFamilyName = _textComponent.getFont().getFamily();
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
+        String[] fontFamilyNames = ge.getAvailableFontFamilyNames();
 
         // create radiobutton menu items for font names
         ButtonGroup fontButtonGroup = new ButtonGroup(); // manages font names
@@ -423,9 +418,7 @@ public class PositionablePopupUtil {
 
     void addFontSizeMenuEntry(JMenu menu, ButtonGroup fontButtonGroup, final int size) {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem("" + size);
-        r.addActionListener((ActionEvent e) -> {
-            setFontSize(size);
-        });
+        r.addActionListener((ActionEvent e) -> setFontSize(size));
         fontButtonGroup.add(r);
         r.setSelected(_textComponent.getFont().getSize() == size);
         menu.add(r);
@@ -546,9 +539,7 @@ public class PositionablePopupUtil {
 
     public void copyItem(JPopupMenu popup) {
         JMenuItem edit = new JMenuItem("Copy");
-        edit.addActionListener((ActionEvent e) -> {
-            _parent.getEditor().copyItem(_parent);
-        });
+        edit.addActionListener((ActionEvent e) -> _parent.getEditor().copyItem(_parent));
         popup.add(edit);
     }
 
@@ -614,9 +605,7 @@ public class PositionablePopupUtil {
             default:
                 r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
         }
-        r.addActionListener((ActionEvent e) -> {
-            setJustification(just);
-        } //final int justification = just;
+        r.addActionListener((ActionEvent e) -> setJustification(just) //final int justification = just;
         );
         justButtonGroup.add(r);
         if (justification == just) {
@@ -637,8 +626,6 @@ public class PositionablePopupUtil {
                     ((JLabel) _textComponent).setHorizontalAlignment(JLabel.RIGHT);
                     break;
                 case CENTRE:
-                    ((JLabel) _textComponent).setHorizontalAlignment(JLabel.CENTER);
-                    break;
                 default:
                     ((JLabel) _textComponent).setHorizontalAlignment(JLabel.CENTER);
             }
@@ -718,9 +705,7 @@ public class PositionablePopupUtil {
                 r = new JRadioButtonMenuItem("Vertical Down");
                 break;
         }
-        r.addActionListener((ActionEvent e) -> {
-            setOrientation(ori);
-        });
+        r.addActionListener((ActionEvent e) -> setOrientation(ori));
         justButtonGroup.add(r);
         if (orientation == ori) {
             r.setSelected(true);
@@ -767,9 +752,7 @@ public class PositionablePopupUtil {
             return;
         }
         popup.addSeparator();
-        editAdditionalMenu.forEach((mi) -> {
-            popup.add(mi);
-        });
+        editAdditionalMenu.forEach(popup::add);
     }
 
     /**
@@ -781,9 +764,7 @@ public class PositionablePopupUtil {
         if (viewAdditionalMenu.isEmpty()) {
             return;
         }
-        viewAdditionalMenu.forEach((mi) -> {
-            popup.add(mi);
-        });
+        viewAdditionalMenu.forEach(popup::add);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class);

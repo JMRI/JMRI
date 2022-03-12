@@ -6,7 +6,7 @@ import javax.script.ScriptException;
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import jmri.script.JmriScriptEngineManager;
-import jmri.script.ScriptFileChooser;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
@@ -90,7 +90,7 @@ public class RunJythonScript extends JmriAbstractAction {
     File selectFile() {
         if (fci == null) {
             fci = new ScriptFileChooser(FileUtil.getScriptsPath());
-            fci.setDialogTitle("Find desired script file");
+            fci.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
         } else {
             // when reusing the chooser, make sure new files are included
             fci.rescanCurrentDirectory();

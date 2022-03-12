@@ -1,17 +1,19 @@
 package jmri.jmrit.beantable;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.NamedBean;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
@@ -30,6 +32,16 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
 
     protected AbstractTableAction<B> a = null;
     protected String helpTarget = "index"; // index is default value specified in AbstractTableAction.
+
+    /**
+     * Test that AbstractTableAction subclasses do not create Swing objects when
+     * constructed, but defer that to later.
+     */
+    @Test
+    public final void testDeferredCreation() {
+        assertThat(a.m).isNull();
+        assertThat(a.f).isNull();
+    }
 
     @Test
     public void testGetTableDataModel() {
@@ -81,8 +93,8 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
     }
 
     @Test
-    public void testHelpTarget(){
-        Assert.assertEquals("help target",helpTarget,a.helpTarget());
+    public void testHelpTarget() {
+        Assert.assertEquals("help target", helpTarget, a.helpTarget());
     }
 
     @Test
@@ -93,27 +105,27 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-        JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         new QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
     /**
-     * @return the name of the frame resulting from add being pressed, as 
+     * @return the name of the frame resulting from add being pressed, as
      *         returned from the Bundle.
      */
     abstract public String getAddFrameName();
 
     /**
-     * @return the name of the frame resulting from edit being pressed, as 
+     * @return the name of the frame resulting from edit being pressed, as
      *         returned from the Bundle.
      */
-    public String getEditFrameName(){
-	    // defaults to the same as the add frame name
-	    return getAddFrameName();
+    public String getEditFrameName() {
+        // defaults to the same as the add frame name
+        return getAddFrameName();
     }
 
     @Test
@@ -124,18 +136,18 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
-	//Enter 1 in the text field labeled "Hardware address:"
+        // Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).setText("1");
 
-	//and press create
-	JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        //and press create
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
@@ -149,41 +161,40 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
 
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
-	JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
-	//Enter 1 in the text field labeled "Hardware address:"
+        //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        new JTextFieldOperator(hwAddressField).enterText("1");
+        new JTextFieldOperator(hwAddressField).typeText("1");
 
-	//and press create
-	JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        //and press create
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
-	// find the "Edit" button and press it.  This is in the table body.
-	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("ButtonEdit")));
         JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
 
-	JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
-
 
     /**
      * Derived classes should use this method to set a.
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     /**
      * Derived classes should use this method to clean up after tests.
      */
-    @After
+    @AfterEach
     abstract public void tearDown();
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class);

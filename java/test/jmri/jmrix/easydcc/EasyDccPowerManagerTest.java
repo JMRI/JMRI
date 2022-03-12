@@ -4,12 +4,13 @@ import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.NotApplicable;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the EasyDccPowerManager class
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
 
@@ -73,7 +74,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
 
     // setup a default EasyDccTrafficController interface
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
@@ -99,8 +100,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     public void testStateOff() throws JmriException {
     }
 
-    // The minimal setup for log4J
-    @After 
+    @AfterEach
     public void tearDown() {
         controller.terminateThreads();
         JUnitUtil.tearDown();

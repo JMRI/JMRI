@@ -85,7 +85,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             // add help menu to window
             addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true); // fix this later
 
-            pack();
+            super.pack();
         }
     }
 
@@ -175,7 +175,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             }
             String[] sa = new String[displayList.size()];
             displayList.toArray(sa);
-            JComboBox<String> retv = new JComboBox<String>(sa);
+            JComboBox<String> retv = new JComboBox<>(sa);
             return (retv);
 
         }
@@ -265,7 +265,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
          * Load spinners from an existing Reporter
          */
         private void loadSpinners(Reporter r) {
-            log.debug("Load spinners Reporter location " + r.getSystemName());
+            log.debug("Load spinners Reporter location {}", r.getSystemName());
             physicalLocation.setValue(PhysicalLocation.getBeanPhysicalLocation(r));
         }
 
@@ -279,7 +279,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
          * Write spinner values to a Reporter.
          */
         private void saveSpinnerValues(Reporter r) {
-            log.debug("Save train icons coordinates for location " + r.getSystemName());
+            log.debug("Save train icons coordinates for location {}", r.getSystemName());
             PhysicalLocation.setBeanPhysicalLocation(physicalLocation.getValue(), r);
         }
 

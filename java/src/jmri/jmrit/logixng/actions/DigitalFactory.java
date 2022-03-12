@@ -1,0 +1,69 @@
+package jmri.jmrit.logixng.actions;
+
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.Set;
+
+import jmri.jmrit.logixng.*;
+
+import org.openide.util.lookup.ServiceProvider;
+
+/**
+ * The factory for DigitalAction classes.
+ */
+@ServiceProvider(service = DigitalActionFactory.class)
+public class DigitalFactory implements DigitalActionFactory {
+
+    @Override
+    public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses() {
+        Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> digitalActionClasses =
+                Set.of(
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionAudio.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionBlock.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionClock.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionDispatcher.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionEntryExit.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLight.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLightIntensity.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, ActionListenOnBeans.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, ActionListenOnBeansTable.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLocalVariable.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionMemory.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionOBlock.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionPower.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionReporter.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionScript.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSensor.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalHead.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalMast.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSound.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionThrottle.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, ActionTimer.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnout.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnoutLock.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionWarrant.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, DigitalCallModule.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalFormula.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, DoAnalogAction.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, DoStringAction.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, EnableLogix.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, ExecuteDelayed.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, For.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, IfThenElse.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, Logix.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, LogData.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, LogLocalVariables.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, Sequence.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, ShowDialog.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, ShutdownComputer.class),
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, TableForEach.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, Timeout.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, TriggerRoute.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class)
+                );
+        
+        return digitalActionClasses;
+    }
+
+}

@@ -23,14 +23,14 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
       <h1>JMRI: Titre Page???</h1>Contenu???? Ce fichier indique la
       mati&egrave;re en haut et en bas d'une page simple, sans menu
       lat&eacute;ral (sur le web). 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- ferme #mainContent-->
   </div><!-- ferme #mBody-->
 </body>

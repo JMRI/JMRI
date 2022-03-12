@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 4.21.1ish+sg+20200827T1816Z+R891883d96d on Thu Aug 27 14:22:05 EDT 2020-->
+  <traininfo version="3" transitname="South-CW" transitid="South-CW" trainname="TestTrain3" dccaddress="3" trainintransit="yes" startblockname="Block South 1-1" startblockid="Block South 1" startblockseq="1" endblockname="Block South 1-5" endblockid="Block South 1" endblockseq="5" trainfromroster="no" trainfromtrains="no" trainfromuser="yes" priority="5" resetwhendone="no" delayedrestart="no" reverseatend="no" terminatewhendone="no" departuretimehr="8" departuretimemin="0" traintype="LOCAL_PASSENGER" autorun="yes" loadatstartup="no" allocatealltheway="no" allocationmethod="3" speedfactor="1.0" maxspeed="1.0" ramprate="None" resistancewheels="yes" runinreverse="no" sounddecoder="no" maxtrainlength="200.0" usespeedprofile="no" stopbyspeedprofile="no" stopbyspeedprofileadjust="1.0" />
+</traininfofile>

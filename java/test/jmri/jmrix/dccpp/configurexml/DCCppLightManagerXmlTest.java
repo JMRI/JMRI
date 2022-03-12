@@ -1,15 +1,14 @@
 package jmri.jmrix.dccpp.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * DCCppLightManagerXmlTest.java
  *
- * Description: tests for the DCCppLightManagerXml class
+ * Test for the DCCppLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class DCCppLightManagerXmlTest {
       Assert.assertNotNull("DCCppLightManagerXml constructor",new DCCppLightManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

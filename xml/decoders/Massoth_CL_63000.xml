@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -926,7 +925,7 @@
         </enumVal>
         <label>Random sound 4 : Number of repetitions</label>
       </variable>
-      <variable CV="251" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
+      <variable CV="251" item="Decoder Version" readOnly="yes" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
       </variable>

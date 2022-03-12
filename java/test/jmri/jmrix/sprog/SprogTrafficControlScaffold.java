@@ -1,13 +1,16 @@
 package jmri.jmrix.sprog;
 
 import java.util.Vector;
+
+import jmri.util.JUnitUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the SprogTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SprogTrafficControlScaffold extends SprogTrafficController {
 
@@ -24,7 +27,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     // override some SprogTrafficController methods for test purposes
     @Override
     public boolean status() {
-        return true;
+        return isTcThreadAlive();
     }
 
     /**
@@ -68,7 +71,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     protected void sendTestMessage(SprogMessage m, SprogListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
         return;
@@ -80,9 +83,14 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     protected void sendTestReply(SprogReply m) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestReply [" + m + "]");
+            log.debug("sendTestReply [{}]", m);
         }
         notifyReply(m);
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            log.debug("Thread interrupted while sleeping");
+        }
         return;
     }
 
@@ -91,6 +99,12 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
      */
     public int numListeners() {
         return cmdListeners.size();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        JUnitUtil.waitFor(() -> { return status() == false; },"Sprog STCS Thread did not terminate.");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class);

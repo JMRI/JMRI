@@ -1,18 +1,18 @@
 package jmri.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.ConnectionStatus;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.ConnectionLabel class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  * @author Paul Bender Copyright (C) 2017
  */
 public class ConnectionLabelTest {
@@ -69,7 +69,7 @@ public class ConnectionLabelTest {
         Assert.assertEquals("Color for Failure after success", java.awt.Color.BLACK, action.getForeground());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         config = new jmri.jmrix.AbstractConnectionConfig() {
@@ -133,7 +133,7 @@ public class ConnectionLabelTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

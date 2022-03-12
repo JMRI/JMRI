@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -113,7 +113,7 @@ un fen&#234;tre unique compl&#232;te de r&#233;gulateurs.</p>
 
 Assurez-vous que toutes les fen&#234;tres int&#233;rieures du R&#233;gulateur actuel sont &#224; l'int&#233;rieur des limites de la Fen&#234;tre du R&#233;gulateur. <br>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

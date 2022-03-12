@@ -21,9 +21,9 @@
 # options, this one cannot be set in the jmri.conf file, since it determines
 # from where the jmri.conf file is read).
 #
-# If your serial ports are not in the default list, include them in the
+# If your serial ports are not in the default list, include the names in the
 # command line argument --serial-ports separated by commas:
-#    --serial-ports=/dev/locobuffer,/dev/cmri
+#    --serial-ports=locobuffer,cmri
 #
 # You can run separate instances of the program with their own preferences
 # if you
@@ -55,12 +55,16 @@ Usage: $( basename $0 ) [--help] [OPTIONS] [--] [ARGUMENTS]
   --cp:p=CLASSPATH               Prepend specified JARs to the classpath
                                  Multiple JARs are separated with colons (:)
   -d, --debug                    Add verbose output to this script
+  -ea, -da, -enableassertions, -disableassertions Java assertions
   -DPROPERTY                     Set the Java System property PROPERTY
   -JOPTION                       Pass the option OPTION to the JVM
   -m MAIN, --main=MAIN           Use main() method in class MAIN to start JMRI
   -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
-  --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS
+  --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS by name
+                                 Multiple names are separated with commas (,)
   --settingsdir=SETTINGS_DIR     Use SETTINGS_DIR as the settings directory
+  -T                             Running Jemmy tests, set options appropriately
+  -t                             Not running Jemmy tests, use regular menu options
   --                             Do not process anything following as an option,
                                  even if it matches one of the above options
 EOM
@@ -97,6 +101,11 @@ function parse_args() {
             -J-Xmx*) jmri_xmx="${1#-J}" ;;
             # JVM arguments other than max memory
             -J*) jmri_options="${jmri_options} ${1#-J}" ;;
+            # assertions
+            -ea|-enableassertions) jmri_options="${jmri_options} ${1}" ;;
+            -da|-disableassertions) jmri_options="${jmri_options} ${1}" ;;
+            -ea:*|-enableassertions:*) jmri_options="${jmri_options} ${1}" ;;
+            -da:*|-disableassertions:*) jmri_options="${jmri_options} ${1}" ;;
             # main class
             -m|--main) CLASSNAME="${2}" ; shift ;;
             --main=*) CLASSNAME="${1#*=}" ;;
@@ -111,6 +120,8 @@ function parse_args() {
             --settingsdir=*) ;;
             # ignore and do not pass a ProcessSerialNumber argument (from the open command on macOS)
             -psn_*) ;;
+            -T)  JEMMY="yes" ;;
+            -t)  JEMMY="" ;;
             # everything after this is to be passed to JMRI
             --) ARGS="${ARGS} $@" ; break ;;
             # pass anything else on to JMRI
@@ -199,6 +210,9 @@ ARGS=
 # set DEBUG to any non-empty string to see debugging output
 DEBUG=${DEBUG:-}
 
+# set JEMMY to any non-empty string to configure for Jemmy testing
+JEMMY=${JEMMY:-}
+
 # set default classpaths additions
 pre_classpath=""
 post_classpath=""
@@ -277,6 +291,7 @@ fi
 parse_args "${all_options[@]:-}"
 
 # define JAVA_HOME if needed
+[ -n "${DEBUG}" ] && echo "initial JAVA_HOME: '${JAVA_HOME}' OS: '${OS}'" | tee -a ${launcher_log}
 if [ -z "${JAVA_HOME}" ] ; then
     #
     # macOS / OS X get special treatment
@@ -290,25 +305,17 @@ if [ -z "${JAVA_HOME}" ] ; then
         # /usr/libexec/java_home will find the correct version, if a JDK for the
         # required version or newer is installed.
         #
-        # As 10.8 and newer do not ship with a JRE, this command will prompt
-        # the user and download a JRE as needed.
-        #
-        # But if the user already has the Oracle Java 8 JRE installed, we should
-        # use that instead of forcing a download of Apple's Java 6 (10.11 and
-        # newer will always direct the user to Oracle for Java.)
-        #
-        # Look for the Oracle Java 8 JRE and use it if found
+        # Look for the Oracle Java 11 JRE and use it if found
         # Otherwise, use java_home if it's present
         # Otherwise, prompt the user to install Java
         #
-        # Oracle JRE location; note that Oracle only shipped JREs for Java 8, 9, and 10
-        # and now only ships the JRE for Java 8.
         JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
-            # Test if java is present and version 1.8, 9, or 10
+            # Test if java is present and version 11 through 17
             java_version="$( "${JAVACMD}" -version 2>&1 | grep version )"
-            if [[ ! "${java_version}" =~ \"1.8|\"9|\"10 ]] ; then
+            [ -n "${DEBUG}" ] && echo "JAVA_HOME/bin/java: '${java_version}'" | tee -a ${launcher_log}
+            if [[ ! "${java_version}" =~ \"11|\"12|\"13|\"14|\"15|\"16|\"17 ]] ; then
                 JAVA_HOME=""
             fi
         else
@@ -316,13 +323,17 @@ if [ -z "${JAVA_HOME}" ] ; then
             JAVA_HOME=""
         fi
         # Find an installed JRE/JDK location
-        if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
-            # Test for any JDKs of version 1.8 or newer
-            JAVA_HOME=$( /usr/libexec/java_home --version 1.8+ --failfast 2>/dev/null )
-            if [ -n "${JAVA_HOME}" ] ; then
-                JAVACMD="${JAVA_HOME}/bin/java"
+        for jversion in 11 12 13 14 15 16 17 ; do
+            if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
+                # Test for any JDKs
+                [ -n "${DEBUG}" ] && echo "test for Java: '${jversion}'" | tee -a ${launcher_log}
+                JAVA_HOME=$( /usr/libexec/java_home --version ${jversion} --failfast 2>/dev/null )
+                if [ -n "${JAVA_HOME}" ] ; then
+                    JAVACMD="${JAVA_HOME}/bin/java"
+                    break
+                fi
             fi
-        fi
+        done
         if [ -z "${JAVA_HOME}" ] ; then
             # JAVA_HOME is still not defined, so prompt to install Java for OS X
             /usr/bin/osascript << EOT
@@ -343,7 +354,7 @@ EOT
         JAVACMD=$( which java )
         JAVA_HOME="$( dirname ${JAVACMD} )/.."
     else
-        echo "Please install Java 1.8 per your operating system vendor's instructions." | tee -a ${launcher_log}
+        echo "Please install Java 11 per your operating system vendor's instructions." | tee -a ${launcher_log}
         exit 1
     fi
 else
@@ -427,16 +438,18 @@ if [ -z "$ARCH" ] ; then
             if [ "${ARCH:0:3}" = "arm" ] ; then
 
                 #determine arm version & hard vs. soft float using readelf
-                ARCHVERSION=$( readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2 )
-                if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
-                    ARCH="armv5"
-                elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
-                    ARCH="armv6l"
-                elif [ "${ARCHVERSION:1:2}" = "v7" ] ; then
-                    ARCH="armv7l"
-                else
-                    ARCH="armv5"
-                fi
+				if type "readelf" >& /dev/null; then
+					ARCHVERSION=$( readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2 )
+					if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
+						ARCH="armv5"
+					elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
+						ARCH="armv6l"
+					elif [ "${ARCHVERSION:1:2}" = "v7" ] ; then
+						ARCH="armv7l"
+					else
+						ARCH="armv5"
+					fi
+				fi
             fi
 
             if [ "$ARCH" = "aarch64" -o "$ARCH" = "arm64" ] ; then
@@ -453,7 +466,6 @@ if [ -z "$ARCH" ] ; then
         fi
     done
 fi
-
 
 # build classpath dynamically
 CP=""
@@ -506,8 +518,12 @@ fi
 if [ "$OS" = "macosx" ] ; then
     # since bash mangles the application name and icon in $OPTIONS,
     # these are not stored in $OPTIONS
-    OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
-    OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+    OS_OPTIONS=""
+        # omit custom menu bar if running Jemmy tests
+        if [ "$JEMMY" = "" ] ; then
+        OS_OPTIONS="${OS_OPTIONS} -Dapple.laf.useScreenMenuBar=true"
+        OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+    fi
     OS_OPTIONS="${OS_OPTIONS} -Dfile.encoding=UTF-8"
     if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ] ; then
         APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"
@@ -539,6 +555,12 @@ if [ "$OS" = "macosx" ] ; then
     [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'" | tee -a ${launcher_log}
 fi
 
+# check java version
+"${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp lib/JavaVersionCheckWindow.jar apps.JavaVersionCheckWindow
+EXIT_STATUS=$?
+if [ $EXIT_STATUS -ne 0 ] ; then
+    exit $EXIT_STATUS
+fi
 
 RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
@@ -553,5 +575,10 @@ while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
     EXIT_STATUS=$?
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}" | tee -a ${launcher_log}
 done
-
+if [ $EXIT_STATUS -eq 200 ] ; then
+    sudo shutdown -h now
+fi
+if [ $EXIT_STATUS -eq 210 ] ; then
+    sudo shutdown -r now
+fi
 exit $EXIT_STATUS

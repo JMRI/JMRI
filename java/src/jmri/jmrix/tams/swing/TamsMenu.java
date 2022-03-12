@@ -1,7 +1,7 @@
 package jmri.jmrix.tams.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
+import jmri.Turnout;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Create a "Systems" menu containing the Tams-specific tools.
  *
  * Based on work by Bob Jacobsen
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsMenu extends JMenu {
 
@@ -35,7 +35,7 @@ public class TamsMenu extends JMenu {
 
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             try {
-                new jmri.jmrit.beantable.ListedTableFrame();
+                new jmri.jmrit.beantable.ListedTableFrame<Turnout>();
             } catch (java.lang.NullPointerException ex) {
                 log.error("Unable to register Tams table");
             }

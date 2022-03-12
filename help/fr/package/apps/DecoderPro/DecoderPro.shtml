@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -102,7 +102,7 @@
       programme JMRI.</p>
 
       <p>Ceci est la page d'aide
-      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer" -->
+      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

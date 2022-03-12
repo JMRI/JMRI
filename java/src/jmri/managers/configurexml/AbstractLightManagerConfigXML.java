@@ -1,12 +1,12 @@
 package jmri.managers.configurexml;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.implementation.LightControl;
+
+import jmri.*;
+import jmri.implementation.DefaultLightControl;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,14 +57,22 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 storeCommon(lgt, elem);
 
                 // write variable intensity attributes
-                elem.setAttribute("minIntensity", "" + lgt.getMinIntensity());
-                elem.setAttribute("maxIntensity", "" + lgt.getMaxIntensity());
+                if (lgt instanceof VariableLight) {
+                    elem.setAttribute("minIntensity", "" + ((VariableLight)lgt).getMinIntensity());
+                    elem.setAttribute("maxIntensity", "" + ((VariableLight)lgt).getMaxIntensity());
 
-                // write transition attribute
-                elem.setAttribute("transitionTime", "" + lgt.getTransitionTime());
+                    // write transition attribute
+                    elem.setAttribute("transitionTime", "" + ((VariableLight)lgt).getTransitionTime());
+                } else {
+                    elem.setAttribute("minIntensity", "0.0");
+                    elem.setAttribute("maxIntensity", "1.0");
+
+                    // write transition attribute
+                    elem.setAttribute("transitionTime", "0.0");
+                }
 
                 // save child lightcontrol entries
-                ArrayList<LightControl> lcList = lgt.getLightControlList();
+                List<LightControl> lcList = lgt.getLightControlList();
                 for (LightControl lc : lcList) {
                     if (lc != null) {
                         Element lcElem = new Element("lightcontrol");
@@ -114,13 +122,14 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * parent of the set of Light elements.
      *
      * @param lights Element containing the Light elements to load.
+     * @return true when complete, false on error.
      */
     public boolean loadLights(Element lights) {
         boolean result = true;
         List<Element> lightList = lights.getChildren("light");
         log.debug("Found {} lights", lightList.size());
         LightManager lm = InstanceManager.lightManagerInstance();
-        lm.setDataListenerMute(true);
+        lm.setPropertyChangesSilenced("beans", true);
 
         for (Element el : lightList) {
             String sysName = getSystemName(el);
@@ -147,16 +156,18 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             // load common parts
             loadCommon(lgt, el);
 
-            // variable intensity, transition attributes
-            double value;
-            value = Double.parseDouble(el.getAttribute("minIntensity").getValue());
-            lgt.setMinIntensity(value);
+            if (lgt instanceof VariableLight) {
+                // variable intensity, transition attributes
+                double value;
+                value = Double.parseDouble(el.getAttribute("minIntensity").getValue());
+                ((VariableLight)lgt).setMinIntensity(value);
 
-            value = Double.parseDouble(el.getAttribute("maxIntensity").getValue());
-            lgt.setMaxIntensity(value);
+                value = Double.parseDouble(el.getAttribute("maxIntensity").getValue());
+                ((VariableLight)lgt).setMaxIntensity(value);
 
-            value = Double.parseDouble(el.getAttribute("transitionTime").getValue());
-            lgt.setTransitionTime(value);
+                value = Double.parseDouble(el.getAttribute("transitionTime").getValue());
+                ((VariableLight)lgt).setTransitionTime(value);
+            }
 
             // provide for legacy light control - panel files written by 2.9.5 or before
             if (el.getAttribute("controlType") != null) {
@@ -171,7 +182,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 }
                 if (type != Light.NO_CONTROL) {
                     // this legacy light has a control - capture it
-                    LightControl lc = new LightControl(lgt);
+                    LightControl lc = new DefaultLightControl(lgt);
                     lc.setControlType(type);
                     if (type == Light.SENSOR_CONTROL) {
                         lc.setControlSensorName(el.getAttribute("controlSensor").getValue());
@@ -227,7 +238,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             List<Element> lightControlList = el.getChildren("lightcontrol");
             for (Element elem : lightControlList) {
                 boolean noErrors = true;
-                LightControl lc = new LightControl(lgt);
+                LightControl lc = new DefaultLightControl(lgt);
                 String tem = elem.getAttribute("controlType").getValue();
                 int type = Light.NO_CONTROL;
                 try {
@@ -303,7 +314,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             lgt.activateLight();
         }
 
-        lm.setDataListenerMute(false);
+        lm.setPropertyChangesSilenced("beans", false);
         return result;
     }
 

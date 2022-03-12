@@ -4,7 +4,10 @@
 	overflow-x: hidden;
 	border: solid 1px lightgrey;
 }
-
+td.roster-entry-decoder-comment, td.roster-entry-comment {
+	font-size: 0.75em;
+	line-height: 0.75em;
+}
 #dropzone {
 	max-width: 20em;
     text-align: center;

@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.IndicatorTurnoutIcon;
+import jmri.jmrit.display.*;
 import jmri.jmrit.logix.OBlock;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -50,6 +52,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         NamedBeanHandle<OBlock> b = p.getNamedOccBlock();
         if (b != null) {
             element.addContent(storeNamedBean("occupancyblock", b));
+            // additional oblock information for web server is extracted by ControlPanelServlet at runtime, not stored
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
         if (b == null && s != null) { // only write sensor if no OBlock
@@ -74,9 +77,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         while (it.hasNext()) {
             Entry<String, HashMap<Integer, NamedIcon>> ent = it.next();
             elem = new Element(ent.getKey());
-            Iterator<Entry<Integer, NamedIcon>> iter = ent.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<Integer, NamedIcon> entry = iter.next();
+            for (Entry<Integer, NamedIcon> entry : ent.getValue().entrySet()) {
                 elem.addContent(storeIcon(p.getStateName(entry.getKey()), entry.getValue()));
             }
             el.addContent(elem);
@@ -86,9 +87,9 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         elem = new Element("paths");
         ArrayList<String> paths = p.getPaths();
         if (paths != null) {
-            for (int i = 0; i < paths.size(); i++) {
+            for (String path : paths) {
                 Element e = new Element("path");
-                e.addContent(paths.get(i));
+                e.addContent(path);
                 elem.addContent(e);
 
             }
@@ -111,9 +112,11 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor p = (Editor) o;
 
@@ -129,17 +132,16 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         if (elem != null) {
             List<Element> maps = elem.getChildren();
             if (maps.size() > 0) {
-                for (int i = 0; i < maps.size(); i++) {
-                    String status = maps.get(i).getName();
-                    List<Element> states = maps.get(i).getChildren();
-                    for (int k = 0; k < states.size(); k++) {
-                        String msg = "IndicatorTurnout \"" + l.getNameString() + "\" icon \"" + states.get(k).getName() + "\" ";
-                        NamedIcon icon = loadIcon(l, states.get(k).getName(), maps.get(i),
-                                msg, p);
+                for (Element map : maps) {
+                    String status = map.getName();
+                    List<Element> states = map.getChildren();
+                    for (Element state : states) {
+                        String msg = "IndicatorTurnout \"" + l.getNameString() + "\" icon \"" + state.getName() + "\" ";
+                        NamedIcon icon = loadIcon(l, state.getName(), map, msg, p);
                         if (icon != null) {
-                            l.setIcon(status, states.get(k).getName(), icon);
+                            l.setIcon(status, state.getName(), icon);
                         } else {
-                            log.info(msg + " removed for url= " + name);
+                            log.info("{} removed for url= {}", msg, name);
                             return;
                         }
                     }
@@ -154,7 +156,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         name = element.getChild("occupancyblock");
         if (name != null) {
             l.setOccBlock(name.getText());
-        } else {        // only write sensor if no OBlock, don't write double sensing
+        } else {        // we only wrote sensor if no OBlock, so assume sensor is empty
             name = element.getChild("occupancysensor");
             if (name != null) {
                 l.setOccSensor(name.getText());
@@ -171,16 +173,20 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
         elem = element.getChild("paths");
         if (elem != null) {
-            ArrayList<String> paths = new ArrayList<String>();
+            ArrayList<String> paths = new ArrayList<>();
             List<Element> pth = elem.getChildren();
-            for (int i = 0; i < pth.size(); i++) {
-                paths.add(pth.get(i).getText());
+            for (Element value : pth) {
+                paths.add(value.getText());
             }
             l.setPaths(paths);
         }
 
         l.updateSize();
-        p.putItem(l);
+        try {
+            p.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }

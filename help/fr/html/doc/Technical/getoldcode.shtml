@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -156,7 +156,7 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
       mettre &agrave; jour les s&eacute;lectionnera tous, puis
       faites un Clic-Droit et s&eacute;lectionner "CVS Update".
       Vous pouvez aussi mettre &agrave; jour un seul dossier en le
-      s&eacute;lectionnant.</p><!--#include virtual="/Footer" -->
+      s&eacute;lectionnant.</p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

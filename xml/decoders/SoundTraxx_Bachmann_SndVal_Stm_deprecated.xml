@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2011 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -362,7 +361,7 @@
         <label xml:lang="it">Volts intermedi (0-255)</label>
         <label xml:lang="de">Vmittel (0-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="82" tooltip="This is the decoder software version identifier (read only)">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="82" tooltip="This is the decoder software version identifier (read only)">
         <decVal/>
         <label>Manufacturer Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

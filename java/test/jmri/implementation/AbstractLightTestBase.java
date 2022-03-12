@@ -1,32 +1,33 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
-import jmri.Light;
+
+import jmri.*;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Abstract Base Class for Light tests in specific jmrix packages. This is not
  * itself a test class, e.g. should not be added to a suite. Instead, this forms
  * the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
+ * @author Bob Jacobsen 2002, 2004, 2005, 2007, 2008
  */
 public abstract class AbstractLightTestBase {
 
     // implementing classes must provide these abstract members:
     //
-    @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    @BeforeEach
+    abstract public void setUp();       // load t with actual object; create scaffolds as needed
 
-    abstract public int numListeners();	// return number of listeners registered with the TrafficController
+    abstract public int numListeners(); // return number of listeners registered with the TrafficController
 
     abstract public void checkOnMsgSent();
 
     abstract public void checkOffMsgSent();
 
-    protected Light t = null;	// holds objects under test
+    protected Light t = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -70,10 +71,19 @@ public abstract class AbstractLightTestBase {
 
     @Test
     public void testDispose() {
-        t.setState(Light.ON);  	// in case registration with TrafficController
-        //is deferred to after first use
+        t.setState(Light.ON); // in case registration with TrafficController
+                              // is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
+    }
+    
+    @Test
+    public void testRemoveListenerOnDispose() {
+        Assert.assertEquals("starts 0 listeners", 0, t.getNumPropertyChangeListeners());
+        t.addPropertyChangeListener(new Listen());
+        Assert.assertEquals("controller listener added", 1, t.getNumPropertyChangeListeners());
+        t.dispose();
+        Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
     }
 
     @Test
@@ -123,22 +133,20 @@ public abstract class AbstractLightTestBase {
     // add a LightControl
     @Test
     public void testAddLightControls() {
-
         Assert.assertEquals("0 controls attached", 0, t.getLightControlList().size());
-        jmri.implementation.LightControl lc = new jmri.implementation.LightControl(t);
+        LightControl lc = new jmri.implementation.DefaultLightControl(t);
         lc.setControlType(Light.SENSOR_CONTROL);
         t.addLightControl(lc);
         Assert.assertEquals("1 control attached", 1, t.getLightControlList().size());
         t.addLightControl(lc);
         Assert.assertEquals("1 control attached", 1, t.getLightControlList().size());
         Assert.assertEquals("control attached", lc, t.getLightControlList().get(0));
-        t.addLightControl(new jmri.implementation.LightControl(t));
+        t.addLightControl(new jmri.implementation.DefaultLightControl(t));
         Assert.assertEquals("2 controls attached", 2, t.getLightControlList().size());
         Assert.assertNotEquals("2 controls attached", t.getLightControlList().get(0),
                 t.getLightControlList().get(1));
         t.clearLightControls();
         Assert.assertEquals("0 controls attached", 0, t.getLightControlList().size());
-
     }
 
 }

@@ -1,11 +1,6 @@
 package jmri.managers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
@@ -13,7 +8,6 @@ import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.SignalHead;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
@@ -229,17 +223,11 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         }
 
         Conditional c = null;
-        Conditional chkC = null;
-
-        for (String cName : getSystemNameList()) {
-            chkC = getBySystemName(cName);
-            if (chkC == null) {
-                continue;
-            }
+        for (Conditional chkC : getNamedBeanSet()) {
             if (key.equals(chkC.getUserName())) {
                 if (c == null) {
                     // Save first match
-                    c = getBySystemName(chkC.getSystemName());
+                    c = chkC;
                     continue;
                 }
                 // Found a second match, give up
@@ -298,29 +286,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     /**
-     * Get a list of all Conditional system names
-     * Overrides the bean method
-     * @since 4.7.4
-     * @deprecated 4.11.5 - use direct access via
-     *                  {@link #getNamedBeanSet}
-     * @return a list of conditional system names regardless of parent Logix
-     */
-    @Deprecated // 4.11.5
-    @Override
-    public List<String> getSystemNameList() {
-        List<String> nameList = new ArrayList<>();
-
-        jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        for (Logix lgx : logixManager.getNamedBeanSet()) {
-            for (int i = 0; i < lgx.getNumConditionals(); i++) {
-                nameList.add(lgx.getConditionalByNumberOrder(i));
-            }
-        }
-        Collections.sort(nameList);
-        return nameList;
-    }
-
-    /**
      * Create a named bean set for conditionals.  This requires special logic since conditional
      * beans are not registered.
      * @since 4.17.5
@@ -335,9 +300,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         for (Logix lgx : logixManager.getNamedBeanSet()) {
             for (int i = 0; i < lgx.getNumConditionals(); i++) {
                 Conditional cdl = getBySystemName(lgx.getConditionalByNumberOrder(i));
-                if (cdl == null) {
-                    log.error("Conditional not found for \"{}\"", lgx.getConditionalByNumberOrder(i));
-                } else {
+                if (cdl != null) {
                     conditionals.add(cdl);
                 }
             }
@@ -345,17 +308,8 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         return Collections.unmodifiableSortedSet(conditionals);
     }
 
-    /**
-     *
-     * @return the default instance of the DefaultConditionalManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public DefaultConditionalManager instance() {
-        return InstanceManager.getDefault(DefaultConditionalManager.class);
-    }
-
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");
     }

@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -47,7 +47,7 @@ r&#233;pertoire appel&#233; "roster". Vous avez besoin de d&#233;placer le fichi
 
 Plus de renseignement <a href="../../setup/Files.shtml">Configuration Fichiers JMRI</a>
     
- <!--#include virtual="/Footer" -->
+ <!--#include virtual="/Footer.shtml" -->
   </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->    
 </body>

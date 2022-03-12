@@ -181,9 +181,9 @@ public interface Sensor extends DigitalIO {
      * for the pull resistance.  The short name is used in xml files.
      */
     public enum PullResistance {
-        PULL_UP("up","PullResistanceUp"), // NOI18N
-        PULL_DOWN("down","PullResistanceDown"), // NOI18N
-        PULL_OFF("off","PullResistanceOff"); // NOI18N
+        PULL_UP("up", "PullResistanceUp"), // NOI18N
+        PULL_DOWN("down", "PullResistanceDown"), // NOI18N
+        PULL_OFF("off", "PullResistanceOff"); // NOI18N
 
         PullResistance(String shName, String peopleKey) {
            this.shortName = shName;
@@ -241,7 +241,7 @@ public interface Sensor extends DigitalIO {
      */
     public PullResistance getPullResistance();
 
-
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface")
     final static Logger log = LoggerFactory.getLogger(Sensor.class);
     
 }

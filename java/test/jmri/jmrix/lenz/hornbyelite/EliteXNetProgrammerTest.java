@@ -1,9 +1,9 @@
 /**
  * EliteXNetProgrammerTest.java
  *
- * Description:	JUnit tests for the EliteXNetProgrammer class
+ * JUnit tests for the EliteXNetProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.lenz.hornbyelite;
 
@@ -14,20 +14,22 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
     @Test
     @Override
-    @Ignore("Elite behavior is unknown for this sequence")
+    @Disabled("Elite behavior is unknown for this sequence")
     @ToDo("investigate proper sequence and reimplement test")
     public void testWriteHighCvSequence() throws JmriException {
     }
 
     @Test
     @Override
-    @Ignore("Elite behavior is unknown for this sequence")
+    @Disabled("Elite behavior is unknown for this sequence")
     @ToDo("investigate proper sequence and reimplement test")
     public void testReadHighCvSequence() throws JmriException {
     }
@@ -72,16 +74,15 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         mr3.setElement(3, 0x30);
         mr3.setElement(4, 0x4F);
         t.sendTestMessage(mr3);
-       
+
         // At this point, the standard XpressNet programmer
         // should send a result to the programmer listeners, and
         // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
 
     }
 
@@ -128,16 +129,15 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         mr3.setElement(3, 0x22);
         mr3.setElement(4, 0x48);
         t.sendTestMessage(mr3);
-       
+
         // At this point, the standard XpressNet programmer
         // should send a result to the programmer listeners, and
         // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
 
     }
@@ -173,7 +173,6 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         t.sendTestMessage(mr2);
 
         // and now we should send the request for results.
-
         Assert.assertEquals("enquire message sent", 2, t.outbound.size());
         Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
@@ -185,16 +184,15 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         mr3.setElement(3, 0x30);
         mr3.setElement(4, 0x4F);
         t.sendTestMessage(mr3);
-       
+
         // At this point, the standard XpressNet programmer
         // should send a result to the programmer listeners, and
         // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 48, l.getRcvdValue());
 
     }
@@ -233,7 +231,6 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         t.sendTestMessage(mr2);
 
         // and now we should send the request for results.
-
         Assert.assertEquals("enquire message sent", 2, t.outbound.size());
         Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
@@ -245,23 +242,22 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         mr3.setElement(3, 0x22);
         mr3.setElement(4, 0x48);
         t.sendTestMessage(mr3);
-       
+
         // At this point, the standard Elite XnetProgrammer
         // should send a result to the programmer listeners, and
         // wait for either the next read/write request or for the
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
 
     }
 
     // The minimal setup is for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -271,12 +267,12 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-	    t = null;
-	    l = null;
-	    programmer = p = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        t.terminateThreads();
+        t = null;
+        l = null;
+        programmer = p = null;
         JUnitUtil.tearDown();
     }
 

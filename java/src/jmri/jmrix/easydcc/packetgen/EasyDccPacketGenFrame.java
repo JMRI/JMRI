@@ -65,9 +65,11 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        EasyDccMessage m = new EasyDccMessage(packetTextField.getText().length());
-        for (int i = 0; i < packetTextField.getText().length(); i++) {
-            m.setElement(i, packetTextField.getText().charAt(i));
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        EasyDccMessage m = new EasyDccMessage(input.length());
+        for (int i = 0; i < input.length(); i++) {
+            m.setElement(i, input.charAt(i));
         }
 
         _memo.getTrafficController().sendEasyDccMessage(m, this);

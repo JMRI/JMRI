@@ -2,6 +2,11 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -9,13 +14,10 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LocationCopyFrameTest  extends OperationsTestCase {
 
@@ -33,37 +35,40 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         JUnitOperationsUtil.initOperationsData();
-        LocationCopyFrame t = new LocationCopyFrame();
-        Assert.assertNotNull("exists",t);
-        t.setVisible(true);
+        LocationCopyFrame f = new LocationCopyFrame();
+        Assert.assertNotNull("exists",f);
+        f.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         
         // error dialog window show appear
-        JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
                 .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         // enter a name for the new track
-        t.loctionNameTextField.setText("Test location name");
+        f.loctionNameTextField.setText("Test location name");
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         
         // error dialog window show appear
-        JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
                 .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         // select a location to copy
-        t.locationBox.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(t.moveRollingStockCheckBox);
-        JemmyUtil.enterClickAndLeave(t.deleteTrackCheckBox);
+        f.locationBox.setSelectedIndex(1);
+        JemmyUtil.enterClickAndLeave(f.moveRollingStockCheckBox);
+        JemmyUtil.enterClickAndLeave(f.deleteTrackCheckBox);
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterClickAndLeave(f.copyButton);
         
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location loc = lmanager.getLocationByName("Test location name");
         Assert.assertNotNull("exists", loc);
 
-        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(f);
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationCopyFrameTest.class);

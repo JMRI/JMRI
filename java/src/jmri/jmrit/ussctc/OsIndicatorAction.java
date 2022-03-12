@@ -3,6 +3,9 @@ package jmri.jmrit.ussctc;
 /**
  * Swing action to create and register a OsIndicatorFrame object
  *
+ * @see jmri.jmrit.ussctc.OsIndicator
+ * @see jmri.jmrit.ussctc.OsIndicatorFrame
+ * @see jmri.jmrit.ussctc.OsIndicatorPanel
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
 public class OsIndicatorAction extends jmri.util.JmriJFrameAction {

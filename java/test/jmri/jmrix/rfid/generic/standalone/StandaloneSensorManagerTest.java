@@ -1,14 +1,14 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class StandaloneSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -24,20 +24,21 @@ public class StandaloneSensorManagerTest extends jmri.managers.AbstractSensorMgr
         Assert.assertNotNull("exists",l);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        StandaloneSystemConnectionMemo memo = new StandaloneSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
         tc = new StandaloneTrafficController(memo);
         memo.setRfidTrafficController(tc);
         memo.setSystemPrefix("R");
         l = new StandaloneSensorManager(tc.getAdapterMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
 
     }

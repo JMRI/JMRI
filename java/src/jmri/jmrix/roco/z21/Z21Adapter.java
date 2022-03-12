@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Note: This connection uses UDP for communication.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2004,2010,2011,2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2004,2010,2011,2014
  */
 public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
@@ -83,7 +83,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
     }
 
-    /*
+    /**
      * @return the DatagramSocket of this connection.  Returns null
      *         if not connected.
      */
@@ -117,7 +117,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     @Override
     public void dispose(){
        super.dispose();
-       if(opened) {
+       if (opened) {
           socket.close();
        }
        opened = false;

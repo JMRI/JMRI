@@ -5,13 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * EcosInterfaceScaffold.java
+ * Test scaffold implementation of EcosInterface.
+ * Use an object of this type as a EcosTrafficController in tests.
  *
- * Description:	Test scaffold implementation of EcosInterface
- *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
-  *
- * Use an object of this type as a EcosTrafficController in tests
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class EcosInterfaceScaffold extends EcosTrafficController {
 
@@ -31,24 +28,19 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
 
     @Override
     public void sendEcosMessage(EcosMessage m, EcosListener replyTo) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendEcosMessage [" + m + "]");
-        }
+        log.debug("sendEcosMessage [{}]", m);
         // save a copy
         outbound.addElement(m);
     }
 
     // test control member functions
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     public void sendTestMessage(EcosReply m) {
         // forward a test message to EcosListeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
-        }
+        log.debug("sendTestMessage    [{}]", m);
         notifyReply(m, null);
-        return;
     }
 
     /*
@@ -59,14 +51,14 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
     }
 
     /**
-     * Avoid error message, normal in parent
+     * Avoid error message, normal in parent.
      */
     @Override
     protected void connectionWarn() {
     }
 
     /**
-     * Avoid error message, normal in parent
+     * Avoid error message, normal in parent.
      */
     @Override
     protected void portWarn(Exception e) {
@@ -79,6 +71,3 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
     private final static Logger log = LoggerFactory.getLogger(EcosInterfaceScaffold.class);
 
 }
-
-
-

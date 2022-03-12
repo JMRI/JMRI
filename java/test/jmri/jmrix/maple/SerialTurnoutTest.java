@@ -1,15 +1,14 @@
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialTurnout class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
@@ -36,21 +35,20 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Override
     public void checkThrownMsgSent() {
-
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+//      tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//      Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//      Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+//      tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//      Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//      Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // prepare an interface
@@ -62,7 +60,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     // OK to used this for class clean up?
-    @After
+    @AfterEach
     public void tearDown() {
         tcis = null;
         _memo.dispose();
@@ -71,7 +69,6 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         // Some clean up is done through the AbstractTurnoutTestBase
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
-
     }
 
 }

@@ -2,12 +2,10 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
-import jmri.InstanceManager;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -26,7 +24,7 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
 
     private GpioProvider myProvider;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -40,7 +38,7 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (t != null) {
             t.dispose(); // is supposed to unprovisionPin 2

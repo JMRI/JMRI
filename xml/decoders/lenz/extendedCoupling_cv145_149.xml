@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+	<author>
+      <personname>
+        <firstname>Bernd (Ba)</firstname>
+        <surname>Wisotzki</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-04</date>
+      <authorinitials>JC</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2014-05-20</date>
+      <authorinitials>Ba</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+  <!-- Add Your "includes" here -->
+  <variable item="Enable forward coupling with F1" CV="145" mask="XXXXXXXV">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F1</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F1</label>
+        <label xml:lang="cs">Zpřístupnit přední spřáhlo s F1</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F1</label>
+  </variable>
+  <variable item="Enable forward coupling with F2" CV="145" mask="XXXXXXVX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F2</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F2</label>
+	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F2</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F2</label>
+  </variable>
+  <variable item="Enable forward coupling with F3" CV="145" mask="XXXXXVXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F3</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F3</label>
+	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F3</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F3</label>
+  </variable>
+  <variable item="Enable forward coupling with F4" CV="145" mask="XXXXVXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F4</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F4</label>
+	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F4</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F4</label>
+  </variable>
+  <variable item="Enable forward coupling with F5" CV="145" mask="XXXVXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F5</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F5</label>
+	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F5</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F5</label>
+  </variable>
+  <variable item="Enable forward coupling with F6" CV="145" mask="XXVXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F6</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F6</label>
+	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F6</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F6</label>
+  </variable>
+  <variable item="Enable forward coupling with F7" CV="145" mask="XVXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F7</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F7</label>
+	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F7</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F7</label>
+  </variable>
+  <variable item="Enable forward coupling with F8" CV="145" mask="VXXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F8</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F8</label>
+	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F8</label>
+	<label xml:lang="ca">Activa desenganxall davanter amb F8</label>
+  </variable>
+  <variable item="Enable backward coupling with F1" CV="146" mask="XXXXXXXV">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F1</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F1</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F1</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F1</label>
+  </variable>
+  <variable item="Enable backward coupling with F2" CV="146" mask="XXXXXXVX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F2</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F2</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F2</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F2</label>
+  </variable>
+  <variable item="Enable backward coupling with F3" CV="146" mask="XXXXXVXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F3</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F3</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F3</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F3</label>
+  </variable>
+  <variable item="Enable backward coupling with F4" CV="146" mask="XXXXVXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F4</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F4</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F4</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F4</label>
+  </variable>
+  <variable item="Enable backward coupling with F5" CV="146" mask="XXXVXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F5</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F5</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F5</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F5</label>
+  </variable>
+  <variable item="Enable backward coupling with F6" CV="146" mask="XXVXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F6</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F6</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F6</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F6</label>
+  </variable>
+  <variable item="Enable backward coupling with F7" CV="146" mask="XVXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F7</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F7</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F7</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F7</label>
+  </variable>
+  <variable item="Enable backward coupling with F8" CV="146" mask="VXXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F8</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F8</label>
+	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F8</label>
+	<label xml:lang="ca">Activa desenganxall posterior amb F8</label>
+  </variable>
+  <variable CV="147" item="CKICK" default="30" tooltip="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>Coupler kick duration</label>
+	<label xml:lang="de">Kickdauer</label>
+	<tooltip xml:lang="de">Wertebereich 0-255</tooltip>
+        <label xml:lang="cs">Doba pro spřahování</label>
+	<tooltip xml:lang="cs">Meze 0-255</tooltip>
+	<label xml:lang="ca">Duració del desenganxament</label>
+	<tooltip xml:lang="ca">rang 0-255</tooltip>
+  </variable>
+  <variable CV="148" item="CMOVEA" default="80" tooltip="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>Decoupling movement Away</label>
+	<label xml:lang="de">Verfahrweg</label>
+	<tooltip xml:lang="de">Wertebereich 0-255</tooltip>
+        <label xml:lang="cs">Poodjetí při rozpojení</label>
+	<tooltip xml:lang="cs">Meze 0-255</tooltip>
+	<label xml:lang="ca">Moviment al desenganxar</label>
+	<tooltip xml:lang="ca">Rang 0-255</tooltip>
+  </variable>
+  <variable CV="149" item="CMOVET" default="30" tooltip="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>Decoupling movement towards</label>
+	<label xml:lang="de">Verfahrweg</label>
+	<tooltip xml:lang="de">Wertebereich 0-255</tooltip>
+        <label xml:lang="cs">Poodjetí při rozpojení</label>
+	<tooltip xml:lang="cs">Meze 0-255</tooltip>
+	<label xml:lang="ca">Moviment al desenganxar</label>
+	<tooltip xml:lang="ca">Rang 0-255</tooltip>
+  </variable>
+ </variables>

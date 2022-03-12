@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -141,7 +141,9 @@
           <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
         </li>
       </ul>
+
+    <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer" -->
+  </div>
 </body>
 </html>

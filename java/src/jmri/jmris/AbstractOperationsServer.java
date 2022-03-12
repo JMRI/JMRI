@@ -91,7 +91,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      */
     public String setTrainLocation(String trainName, String locationName)
             throws IOException {
-        log.debug("Set train " + trainName + " Location " + locationName);
+        log.debug("Set train {} Location {}", trainName, locationName);
         Train train = tm.getTrainByName(trainName);
         if (train != null) {
             if (!exactLocationName && train.move(locationName)

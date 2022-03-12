@@ -107,7 +107,7 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
         }
         if (log.isDebugEnabled()) {
-            log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
+            log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
         }
     }
 
@@ -151,7 +151,7 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
         this.throttle.addPropertyChangeListener(this);
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
-            log.debug("new address is " + Address.toString());
+            log.debug("new address is {}", Address.toString());
         }
 
         useSpeedProfile = false;  //posit false
@@ -211,5 +211,5 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ControlPanel.class);
+    private final static Logger log = LoggerFactory.getLogger(SpeedPanel.class);
 }

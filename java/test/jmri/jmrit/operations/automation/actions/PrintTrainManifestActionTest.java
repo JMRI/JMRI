@@ -2,6 +2,11 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
@@ -10,13 +15,10 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PrintTrainManifestActionTest extends OperationsTestCase {
 
@@ -88,6 +90,9 @@ public class PrintTrainManifestActionTest extends OperationsTestCase {
                 JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " + train.getDescription());
         Assert.assertNotNull("exists", printPreviewFrame);
         JUnitUtil.dispose(printPreviewFrame);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestActionTest.class);

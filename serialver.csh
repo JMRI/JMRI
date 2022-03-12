@@ -58,28 +58,28 @@ if [ -z "$ARCH" ]
 then
     for cmd in "arch" "uname -i" "uname -p"
     do
-      ARCH=`$cmd 2>/dev/null`
-      if [ -n "$ARCH" ]
-      then
-	    if [ "$ARCH" = "amd64" ]
-	    then
-	      ARCH="x86_64"
-	    fi
+        ARCH=`$cmd 2>/dev/null`
+        if [ -n "$ARCH" ]
+        then
+            if [ "$ARCH" = "amd64" ]
+            then
+                ARCH="x86_64"
+            fi
 
-	    if [ "$ARCH" = "i686" ]
-	    then
-	      ARCH="i386"
-	    fi
+            if [ "$ARCH" = "i686" ]
+            then
+                ARCH="i386"
+            fi
 
-	    if [ -d "lib/$OS/$ARCH" ]
-	    then
-	       SYSLIBPATH="lib/$OS/$ARCH:$SYSLIBPATH"
+            if [ -d "lib/$OS/$ARCH" ]
+            then
+                SYSLIBPATH="lib/$OS/$ARCH:$SYSLIBPATH"
 
-	       # we're only interested in ONE of these values, so as soon as we find a supported
-	       # architecture directory, continue processing and start up the program
-	       break
-	    fi
-      fi
+                # we're only interested in ONE of these values, so as soon as we find a supported
+                # architecture directory, continue processing and start up the program
+                break
+            fi
+        fi
     done
 fi
 

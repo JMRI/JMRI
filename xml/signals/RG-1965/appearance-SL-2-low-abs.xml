@@ -11,10 +11,10 @@
   </copyright>
   
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-	<author>
-    	<personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
-    	<email>dcc2@ebroerse.nl</email>
-		</author>    
+    <author>
+      <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
+      <email>dcc2@ebroerse.nl</email>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -29,13 +29,19 @@
 		<date>2013-01-29</date>
 		<authorinitials>EBR</authorinitials>
 		<revremark>imagelink paths corrected</revremark>
-	</revision>   
-<revision>
-	<revnumber>3</revnumber>
-	<date>2013-01-29</date>
-	<authorinitials>EBR</authorinitials>
-	<revremark>image link pointing to jmri.org, description corrected (color light)</revremark>
-</revision>   
+	</revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2013-01-29</date>
+      <authorinitials>EBR</authorinitials>
+      <revremark>image link pointing to jmri.org, description corrected (color light)</revremark>
+    </revision>
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2020-01-04</date>
+      <authorinitials>EBR</authorinitials>
+      <revremark>fix validation</revremark>
+    </revision>
   </revhistory> 
   
   <aspecttable>RG-1965</aspecttable>
@@ -44,6 +50,30 @@
   <description>Appearances for an absolute (RG: Positive) double head color light dwarf signal with (P)-badge.</description>
   
   <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 281</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <reference>Rule 282</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 285</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-285.gif</imagelink>
+    </appearance>
 
     <appearance>
       <aspectname>Diverging Approach Medium</aspectname>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alger Pike   Alger_P@pacbell.net" version="1.0" lastUpdated="20202406"/>  
+  <!-- This decoder configuration file is based for use with LGB MFX sound decoders -->
+  <!-- By design the first version supports a limited subset of the more common CVs -->
+  <!-- the would need to be programmed -->
+  <!-- V 1 new file -->  
+  <decoder>
+    <family name="LGB MFX decoder" mfg="LGB">
+      <model  model="LGB MFX 27-pin sound decoder." lowVersionID="3" highVersionID="3" maxInputVolts="24V" maxMotorCurrent="2.0A, peak=2.5A" maxTotalCurrent="0.8A" formFactor="LGB" numOuts="0" numFns="32" productID="199">
+            <size length="25" width="11" height="2" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/LGB/CV1-CV99.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/LGB/CV100-CV152.xml"/>
+    </variables>
+  </decoder>
+
+  <xi:include href="http://jmri.org/xml/decoders/LGB/PaneLGBSpecific.xml"/>
+
+</decoder-config>

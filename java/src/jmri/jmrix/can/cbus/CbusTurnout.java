@@ -5,9 +5,6 @@ import jmri.Turnout;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +15,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class CbusTurnout extends jmri.implementation.AbstractTurnout
-        implements CanListener {
+        implements CanListener, CbusEventInterface {
 
-    CbusAddress addrThrown;   // go to thrown state
-    CbusAddress addrClosed;   // go to closed state
+    private CbusAddress addrThrown;   // go to thrown state
+    private CbusAddress addrClosed;   // go to closed state
 
     protected CbusTurnout(String prefix, String address, TrafficController tc) {
         super(prefix + "T" + address);
@@ -30,12 +27,10 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
 
     }
 
-    TrafficController tc;
+    private final TrafficController tc;
 
     /**
      * Common initialization for both constructors.
-     * <p>
-     *
      */
     private void init(String address) {
         // build local addresses
@@ -51,7 +46,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 } else if (address.startsWith("-")) {
                     addrClosed = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname {}", address);
                     return;
                 }
                 break;
@@ -92,21 +87,20 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (s2 != null) s2.requestUpdateFromLayout();
         }
     }
-    
+
     /**
-     * Handle a request to change state by sending CBUS events.
-     *
-     * @param s new state value
+     * {@inheritDoc}
+     * Sends a CBUS event.
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         CanMessage m;
-        if (s == Turnout.THROWN) {
+        if (newState == Turnout.THROWN) {
             m = getAddrThrown();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } 
-        if (s == Turnout.CLOSED) {
+        if (newState == Turnout.CLOSED) {
             m = getAddrClosed();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
@@ -114,7 +108,9 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     }
     
     /**
-     * Package method returning CanMessage for the Thrown Turnout Address
+     * Package method returning CanMessage for the Thrown Turnout Address.
+     *
+     * @return CanMessage with the Thrown Address
      */    
     public CanMessage getAddrThrown(){
         CanMessage m;
@@ -128,6 +124,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
     /**
      * Package method returning CanMessage for the Closed Turnout Address
+     * @return CanReply with the Closed Address
      */    
     public CanMessage getAddrClosed(){
         CanMessage m;
@@ -222,12 +219,12 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      * @see jmri.jmrix.can.CanListener#reply(jmri.jmrix.can.CanReply)
      */
     @Override
-    public void reply(CanReply f) {
-        if ( f.isExtended() || f.isRtr() ) {
+    public void reply(CanReply origf) {
+        if ( origf.extendedOrRtr()) {
             return;
         }
         // convert response events to normal
-        f = CbusMessage.opcRangeToStl(f);
+        CanReply f = CbusMessage.opcRangeToStl(origf);
         if (addrThrown.match(f)) {
             int state = (!getInverted() ? THROWN : CLOSED);
             newCommandedState(state);
@@ -264,6 +261,22 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     @Override
     public boolean canInvert() {
         return true;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrClosed());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrThrown());
     }
 
     /**

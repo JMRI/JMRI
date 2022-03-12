@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/operations-routes.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-routes.dtd">
 <operations-config>
-  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:41:21 EST 2016 $Id$-->
+  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:41:21 EST 2016 -->
   <routes>
     <route id="1" name="Bksfld-Frmnt" comment="">
       <location id="1r1" name="Bakersfield" locationId="78" sequenceId="1" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="12" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />

@@ -23,6 +23,8 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
 
     /**
      * Initialize based on number of first and last nodes.
+     * @param minNode lowest node number, usually 0
+     * @param maxNode highest node number
      */
     protected void init(int minNode, int maxNode) {
         this.minNode = minNode;

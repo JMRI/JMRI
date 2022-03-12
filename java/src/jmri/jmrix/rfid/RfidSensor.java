@@ -10,7 +10,7 @@ import jmri.implementation.AbstractSensor;
  * <p>
  * System names are "FSpppp", where ppp is a representation of the RFID reader.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
@@ -67,6 +67,7 @@ public class RfidSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has left the region covered by
      * this sensor
+     * @param id number of region being left
      */
     void notifyLeaving(Integer id) {
         firePropertyChange("Leaving", null, id);
@@ -75,14 +76,10 @@ public class RfidSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has entered the region covered
      * by this sensor
+     * @param id number of arrived-in region
      */
     void notifyArriving(Integer id) {
         firePropertyChange("Arriving", null, id);
-    }
-
-    @Override
-    public void dispose() {
-//        Model.instance().removeRegion(region);
     }
 
     @Override

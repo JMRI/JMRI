@@ -2,6 +2,7 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -12,8 +13,8 @@ import javax.swing.AbstractAction;
  */
 public class OptionAction extends AbstractAction {
 
-    public OptionAction(String s) {
-        super(s);
+    public OptionAction() {
+        super(Bundle.getMessage("TitleOptions"));
     }
 
     OptionFrame f = null;

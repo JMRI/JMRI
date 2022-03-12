@@ -30,7 +30,7 @@
     <xs:complexType name="SignalElementManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a BlockBossLogic implementation.
+          Define the XML structure for storing the contents of a BlockBossLogic implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.jmrit.blockboss.configurexml.BlockBossLogicXml</jmri:usingclass>

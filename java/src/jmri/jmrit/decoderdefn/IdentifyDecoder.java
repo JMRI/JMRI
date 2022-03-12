@@ -23,7 +23,9 @@ import org.slf4j.LoggerFactory;
  * models, in which case no "productID" can be determined. (This code uses
  * {@link #setOptionalCv(boolean flag) setOptionalCv()} and
  * {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
- * <li>TCS: (mfgID == 153) CV249 is ID</li>
+ * <li>TCS: (mfgID == 153) CV249 is physical hardware id, V5 and above use
+ * CV248, CV110 and CV111 to identify specific sound sets and
+ * features. New productID process triggers if (CV249 &gt; 128).</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
  * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
  * is low byte of ID</li>
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  * <li>DIY: (mfgID == 13) CV47 is the highest byte, CV48 is high byte, CV49 is
  * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
  * Republic</li>
+ * <li>Doehler &amp; Haass: (mfgID == 97) CV261 is ID from 2020 firmwares</li>
  * </ul>
  * <dl>
  * <dt>Optional CVs:</dt>
@@ -135,6 +138,11 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder product ID #1 CV 47");
             readCV("47");
             return false;
+        } else if (mfgID == 97) {  // Doehler and Haass
+            statusUpdate("Read optional decoder ID CV 261");
+            setOptionalCv(true);
+            readCV("261");
+            return false;
         }
         return true;
     }
@@ -146,8 +154,16 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             writeCV("50", 4);
             return false;
         } else if (mfgID == 153) {  // TCS
-            productID = value;
-            return true;
+            if(value < 129){ //check for mobile decoders
+                productID = value;
+                return true;
+            }
+            else{
+                productIDlowest = value;
+                statusUpdate("Read decoder sound version number");
+                readCV("248");
+                return false;
+            }
         } else if (mfgID == 48) {  // Hornby
             if (isOptionalCv()) {
                 return true;
@@ -183,8 +199,14 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder product ID #2 CV 48");
             readCV("48");
             return false;
+        } else if (mfgID == 97) {  // Doehler and Haass
+            if (isOptionalCv()) {
+                return true;
+            }
+            productID = value;
+            return true;
         }
-        log.error("unexpected step 4 reached with value: " + value);
+        log.error("unexpected step 4 reached with value: {}", value);
         return true;
     }
 
@@ -215,8 +237,13 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder product ID #3 CV 49");
             readCV("49");
             return false;
+        } else if (mfgID == 153) {  // TCS
+            productIDlow = value;
+            statusUpdate("Read decoder extended Version ID Low Byte");
+            readCV("111");
+            return false;
         }
-        log.error("unexpected step 5 reached with value: " + value);
+        log.error("unexpected step 5 reached with value: {}", value);
         return true;
     }
 
@@ -237,8 +264,13 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder product ID #4 CV 50");
             readCV("50");
             return false;
+        } else if (mfgID == 153) {  // TCS
+            productIDhigh = value;
+            statusUpdate("Read decoder extended Version ID High Byte");
+            readCV("110");
+            return false;
         }
-        log.error("unexpected step 6 reached with value: " + value);
+        log.error("unexpected step 6 reached with value: {}", value);
         return true;
     }
 
@@ -257,8 +289,17 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productIDlowest = value;
             productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest;
             return true;
+        } else if (mfgID == 153) {  // TCS
+            productIDhighest = value;
+            if (((productIDlowest >= 129 && productIDlowest <= 135) && (productIDlow == 5))||(modelID >= 5)){
+                productID = productIDlowest+(productIDlow*256)+(productIDhigh*256*256)+(productIDhighest*256*256*256);
+            }
+            else{
+                productID = productIDlowest;
+            }
+            return true;
         }
-        log.error("unexpected step 7 reached with value: " + value);
+        log.error("unexpected step 7 reached with value: {}", value);
         return true;
     }
 
@@ -274,7 +315,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("264");
             return false;
         }
-        log.error("unexpected step 8 reached with value: " + value);
+        log.error("unexpected step 8 reached with value: {}", value);
         return true;
     }
 
@@ -284,7 +325,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productID = productID + (value * 256 * 256 * 256);
             return true;
         }
-        log.error("unexpected step 9 reached with value: " + value);
+        log.error("unexpected step 9 reached with value: {}", value);
         return true;
     }
 
@@ -293,9 +334,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         message(s);
         if (s.equals("Done")) {
             done(mfgID, modelID, productID);
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
+            log.info("Decoder returns mfgID:{};modelID:{};productID:{}", mfgID, modelID, productID);
         } else if (log.isDebugEnabled()) {
-            log.debug("received status: " + s);
+            log.debug("received status: {}", s);
         }
     }
 

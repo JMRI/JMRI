@@ -1,14 +1,14 @@
 package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JmriPanelTest {
 
@@ -27,6 +27,13 @@ public class JmriPanelTest {
         panel.initComponents();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testAccessibility() throws Exception{
+        panel.initComponents();
+        jmri.util.AccessibilityChecks.check(panel);
+    }
+
     @Test
     public void testGetHelpTarget(){
         Assert.assertEquals("help target", helpTarget, panel.getHelpTarget());
@@ -37,17 +44,16 @@ public class JmriPanelTest {
         Assert.assertEquals("title", title, panel.getTitle());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new JmriPanel();
         helpTarget = "package.jmri.util.swing.JmriPanel";
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        if(panel!=null) {
+        if (panel!=null) {
            panel.dispose();
         }
         panel = null;

@@ -1,17 +1,16 @@
 package jmri.jmrix.ecos;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * EcosTrafficControllerTest.java
  *
- * Description:	tests for the EcosTrafficController class
+ * Test for the EcosTrafficController class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class EcosTrafficControllerTest {
 
@@ -22,14 +21,13 @@ public class EcosTrafficControllerTest {
        Assert.assertNotNull(tc);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new EcosTrafficController();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

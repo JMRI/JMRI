@@ -1,7 +1,10 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableRectangle;
+
 import org.jdom2.Element;
 
 /**
@@ -44,9 +47,11 @@ public class PositionableRectangleXml extends PositionableShapeXml {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor ed = (Editor) o;
         PositionableRectangle ps = new PositionableRectangle(ed);
@@ -55,7 +60,11 @@ public class PositionableRectangleXml extends PositionableShapeXml {
         ps.setWidth(getInt(elem, "width"));
         ps.setHeight(getInt(elem, "height"));
 
-        ed.putItem(ps);
+        try {
+            ed.putItem(ps);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }

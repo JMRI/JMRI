@@ -1,4 +1,4 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -7,12 +7,13 @@
     <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
-<div class="nomenu" id="mBody">
-    <a href="https://www.jmri.org/index.shtml"><img src="https://www.jmri.org/images/logo-jmri.gif" align="right" width="160" height="135"
-                               hspace="0" vspace="0"></a>
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+     <div id="mainContent" class="no-sidebar">
+     <a href="https://www.jmri.org/index.shtml"><img src="https://www.jmri.org/images/logo-jmri.gif" class="floatRight" width="160" height="135"
+                                alt=""></a>
+
     <h1>JMRI Decoder Comma-Separated Values files</h1>
-    <p>
     <ul>
         <li><a href="pages/decodersizes.csv">decodersizes.csv</a>&nbsp;&nbsp;&nbsp;Physical size for each defined decoder</li>
         <li><a href="pages/decoderpower.csv">decoderpower.csv</a>&nbsp;&nbsp;&nbsp;Power limits and connector by decoder</li>
@@ -27,7 +28,7 @@
         process these files in their localized spreadsheet application.</p>
 
   <hr class="hide">
-<!--#include virtual="/Footer.shtml" -->
+  <!--#include virtual="/Footer.shtml" -->
 
     </div><!-- closes #mainContent-->
 </div><!-- closes #mBody-->

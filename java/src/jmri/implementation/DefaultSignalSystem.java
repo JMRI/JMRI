@@ -80,7 +80,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     @Override
     public Enumeration<String> getAspects() {
-        return new Vector<String>(aspects.keySet()).elements();  // this will be greatly simplified when we can just return keySet
+        return new Vector<>(aspects.keySet()).elements();  // this will be greatly simplified when we can just return keySet
     }
 
     @Override
@@ -147,7 +147,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
                 if (speed != null) {
                     float aspectSpeed = 0.0f;
                     try {
-                        aspectSpeed = Float.valueOf(speed);
+                        aspectSpeed = Float.parseFloat(speed);
                     } catch (NumberFormatException nx) {
                         try {
                             aspectSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
@@ -177,27 +177,6 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     protected java.util.Vector<String> imageTypes = new java.util.Vector<>();
 
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
-    @Override
-    public String toString() {
-        StringBuilder retval = new StringBuilder();
-        retval.append("SignalSystem ").append(getSystemName()).append("\n");
-        Enumeration<String> e1 = getAspects();
-        while (e1.hasMoreElements()) {
-            String s1 = e1.nextElement();
-            retval.append("  ").append(s1).append("\n");
-            Enumeration<String> e2 = getKeys();
-            while (e2.hasMoreElements()) {
-                String s2 = e2.nextElement();
-                retval.append("    ").append(s2).append(": ").append(getProperty(s1, s2)).append("\n");
-            }
-        }
-        return retval.toString();
-    }
-
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalSystem");
@@ -210,17 +189,17 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     public String summary() {
         StringBuilder retval = new StringBuilder();
         retval.append(toString());
-        retval.append("\n  BeanType: "+getBeanType());
+        retval.append("\n  BeanType: ").append(getBeanType());
         
         retval.append("\n  keys:");
-        for (String key : keys) retval.append("\n    "+key);
+        for (String key : keys) retval.append("\n    ").append(key);
         
         retval.append("\n  aspects:");
         Set<String> values = aspects.keySet();
         for (String value : values) 
-            retval.append("\n    "+value);
+            retval.append("\n    ").append(value);
         
-        retval.append("\n  maximumLineSpeed = "+getMaximumLineSpeed());
+        retval.append("\n  maximumLineSpeed = ").append(getMaximumLineSpeed());
         
         return new String(retval);
     }

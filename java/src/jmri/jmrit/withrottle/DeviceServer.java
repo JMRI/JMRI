@@ -35,13 +35,13 @@ package jmri.jmrit.withrottle;
  * 90 - Send '00 90 90' twice, with error byte '90'
  *
  *
- * Out to client, all newline terminated:
+ * Out to client, all newline terminated, cannot have newlines in the message:
  *
  * Track power: 'PPA' + '0' (off), '1' (on), '2' (unknown) Minimum package
  * length of 4 char.
  *
  * Send Info on routes to devices, not specific to any one route. Format:
- * PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey 
+ * PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey
  *
  * Send list of routes Format:
  * PRL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
@@ -49,11 +49,11 @@ package jmri.jmrit.withrottle;
  * sensor, if used)
  *
  * Send Info on turnouts to devices, not specific to any one turnout. Format:
- * PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey 
+ * PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey
  * Send list of turnouts Format:
  * PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
  * States: 1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
- * 
+ *
  * Send time or time&rate:
  * 'PFT' + UTCAdjustedTimeSeconds
  *     -OR-
@@ -70,15 +70,16 @@ package jmri.jmrit.withrottle;
  *
  * RSF 'R'oster 'P'roperties 'F'unctions
  *
- *
  * Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of
  * seconds until eStop. This class sends initial to device, but does not start
  * monitoring until it gets a response of '*+' Device should send heartbeat to
  * server in shorter time than eStop
  *
- * Alert message: 'HM' + message to display. Cannot have newlines in body of
- * text, only at end of message.
- * Info message: 'Hm' + message to display. Same as HM, but informational only.
+ * Alert message: 'HM' + message to display.
+ * Info message: 'Hm' + message to display. Same as HM, but lower priority.
+ *
+ * Server Type message: 'HT' + type. Always 'JMRI' for this server.
+ * Server Description message: 'Ht' + message. Includes version and railroad name.
  *
  */
 import java.io.BufferedReader;
@@ -97,6 +98,8 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.ThreadingUtil;
 import jmri.web.server.WebServerPreferences;
+import jmri.web.servlet.ServletUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,6 +137,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private boolean isConsistAllowed;
     private FastClockController fastClockC = null;
     final boolean isClockDisplayed = InstanceManager.getDefault(WiThrottlePreferences.class).isDisplayFastClock();
+    final String railroadName = InstanceManager.getDefault(ServletUtil.class).getRailroadName(false);
 
     private DeviceManager manager;
 
@@ -143,11 +147,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
         try {
             if (log.isDebugEnabled()) {
-                log.debug("Creating input  stream reader for " + device.getRemoteSocketAddress());
+                log.debug("Creating input  stream reader for {}", device.getRemoteSocketAddress());
             }
             in = new BufferedReader(new InputStreamReader(device.getInputStream(), "UTF8"));
             if (log.isDebugEnabled()) {
-                log.debug("Creating output stream writer for " + device.getRemoteSocketAddress());
+                log.debug("Creating output stream writer for {}", device.getRemoteSocketAddress());
             }
             out = new PrintStream(device.getOutputStream(), true, "UTF8");
 
@@ -156,6 +160,9 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             return;
         }
         sendPacketToDevice("VN" + getWiTVersion());
+        sendPacketToDevice("HTJMRI");
+        sendPacketToDevice("HtJMRI " + jmri.Version.getCanonicalVersion() +
+                " " + railroadName);
         sendPacketToDevice(sendRoster());
         addControllers();
         sendPacketToDevice("PW" + getWebServerPort());
@@ -185,7 +192,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     if (log.isDebugEnabled()) {
                         String s = inPackage + "                    "; //pad output so messages form columns
                         s = s.substring(0, Math.max(inPackage.length(), 20));
-                        log.debug("Rcvd: " + s + " from " + getName() + device.getRemoteSocketAddress());
+                        log.debug("Rcvd: {} from {}{}", s, getName(), device.getRemoteSocketAddress());
                     }
 
                     switch (inPackage.charAt(0)) {
@@ -222,7 +229,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                         case 'D': {
                             if (log.isDebugEnabled()) {
-                                log.debug("Sending hex packet: " + inPackage.substring(2) + " to command station.");
+                                log.debug("Sending hex packet: {} to command station.", inPackage.substring(2));
                             }
                             int repeats = Character.getNumericValue(inPackage.charAt(1));
                             byte[] packet = jmri.util.StringUtil.bytesFromHexString(inPackage.substring(2));
@@ -325,7 +332,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                     break;
                                 }
                                 default:
-                                    log.warn("Unhandled code: {}", inPackage.charAt(1), this);
+                                    log.warn("Unhandled code {} {}", inPackage.charAt(1), this);
                                     break;
                             }
                             break;
@@ -468,7 +475,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         stopEKGCount++;
                         //  Send eStop to each throttle
                         if (log.isDebugEnabled()) {
-                            log.debug("Lost signal from: " + getName() + ", sending eStop");
+                            log.debug("Lost signal from: {}, sending eStop", getName());
                         }
                         if (throttleController != null) {
                             throttleController.sort("X");
@@ -479,7 +486,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         if (multiThrottles != null) {
                             for (char key : multiThrottles.keySet()) {
                                 if (log.isDebugEnabled()) {
-                                    log.debug("Sending eStop to MT key: " + key);
+                                    log.debug("Sending eStop to MT key: {}", key);
                                 }
                                 multiThrottles.get(key).eStop();
                             }
@@ -559,7 +566,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     log.debug("Fast Clock Controller valid.");
                 }
                 fastClockC.addControllerListener(this);
-                fastClockC.sendFastRate();
+                fastClockC.sendFastTimeAndRate();
             }
         }
     }
@@ -596,7 +603,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     /**
-     * since 4.15.4
+     * Get the Roster ID String.
+     *
+     * @since 4.15.4
+     * @return roster ID string.
      */
     public String getCurrentRosterIdString() {
         StringBuilder s = new StringBuilder("");
@@ -644,32 +654,32 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         if (log.isDebugEnabled()) {
             String s = message + "                    "; //pad output so messages form columns
             s = s.substring(0, Math.max(message.length(), 20));
-            log.debug("Sent: " + s + "  to  " + getName() + device.getRemoteSocketAddress());
+            log.debug("Sent: {}  to  {}{}", s, getName(), device.getRemoteSocketAddress());
         }
     }
     /**
      * Send an Alert message (simple text string) to this client
      * <p>
-     * @param message 
+     * @param message
      * Format: HMmessage
      */
     @Override
-    public void sendAlertMessage(String message) {        
+    public void sendAlertMessage(String message) {
         sendPacketToDevice("HM" + message);
     }
 
     /**
      * Send an Info message (simple text string) to this client
      * <p>
-     * @param message 
+     * @param message
      * Format: Hmmessage
      */
     @Override
     public void sendInfoMessage(String message) {
         sendPacketToDevice("Hm" + message);
     }
-   
-    
+
+
 
     /**
      * Add a DeviceListener
@@ -702,7 +712,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             DeviceListener l = listeners.get(i);
             l.notifyDeviceAddressChanged(this);
             if (log.isDebugEnabled()) {
-                log.debug("Notify DeviceListener: " + l.getClass() + " address: " + TC.getCurrentAddressString());
+                log.debug("Notify DeviceListener: {} address: {}", l.getClass(), TC.getCurrentAddressString());
             }
         }
     }
@@ -714,7 +724,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             DeviceListener l = listeners.get(i);
             l.notifyDeviceAddressChanged(this);
             if (log.isDebugEnabled()) {
-                log.debug("Notify DeviceListener: " + l.getClass() + " address: " + TC.getCurrentAddressString());
+                log.debug("Notify DeviceListener: {} address: {}", l.getClass(), TC.getCurrentAddressString());
             }
         }
 
@@ -731,7 +741,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      */
     @Override
     public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address, String reason) {
-        log.warn("notifyControllerAddressDeclined: "+ reason);
+        log.warn("notifyControllerAddressDeclined: {}", reason);
         sendAlertMessage(reason); // let the client know why the request failed
         if (multiThrottles != null) {   //  Should exist by this point
             jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, tc);

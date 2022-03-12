@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
-import jmri.jmrit.logix.PortalManager;
 
 /**
  *
@@ -25,7 +24,7 @@ import jmri.jmrit.logix.PortalManager;
  */
 public class PortalList extends JList<Portal> {
 
-    private PortalListModel _portalListModel;
+    private final PortalListModel _portalListModel;
 
     PortalList(OBlock block, EditFrame parent) {
         super();
@@ -38,6 +37,17 @@ public class PortalList extends JList<Portal> {
 
     void dataChange() {
         _portalListModel.dataChange();
+    }
+
+    void setSelected(Portal portal) {
+        List<Portal> list = _portalListModel._homeBlock.getPortals();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(portal)) {
+                setSelectedIndex(i);
+                return;
+            }
+        }
+        clearSelection();
     }
 
     private static class PortalCellRenderer extends JLabel implements ListCellRenderer<Portal>{
@@ -69,7 +79,7 @@ public class PortalList extends JList<Portal> {
     static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener {
 
         OBlock _homeBlock;
-        private EditFrame _parent;
+        private final EditFrame _parent;
         List<Portal> _list = new ArrayList<>();
 
         PortalListModel(OBlock block, EditFrame parent) {
@@ -106,6 +116,7 @@ public class PortalList extends JList<Portal> {
             fireContentsChanged(this, 0, 0);
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             Object source = e.getSource();
             String property = e.getPropertyName();

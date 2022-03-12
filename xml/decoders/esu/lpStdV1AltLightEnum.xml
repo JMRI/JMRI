@@ -19,10 +19,15 @@
     <choice xml:lang="it">Defective Neon Light</choice>
     <choice xml:lang="ca">Defective Neon Light</choice>
   </enumChoice>
-  <enumChoice value="4">
+  <enumChoice value="4" exclude="Pullman Silberling">
     <choice>Coupler</choice>
     <choice xml:lang="it">Coupler</choice>
     <choice xml:lang="ca">Coupler</choice>
+  </enumChoice>
+  <enumChoice value="4" include="Pullman Silberling">
+    <choice>Flash light (phase 1)</choice>
+    <choice xml:lang="it">Luce a Flash (fase 1)</choice>
+    <choice xml:lang="ca">Llum amb flash (fase 1)</choice>
   </enumChoice>
   <enumChoice value="5">
     <choice>Flash light (phase 2)</choice>

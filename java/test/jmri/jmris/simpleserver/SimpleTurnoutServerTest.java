@@ -1,10 +1,12 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 /**
@@ -23,37 +25,26 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleTurnoutServer a = new SimpleTurnoutServer(jcs);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
     // test sending a message.
     public void testSendMessage() {
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod=null;
-        try {
-          sendMessageMethod = ts.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch(java.lang.NoSuchMethodException nsm) {
-          Assert.fail("Could not find method sendMessage in SimpleTurnoutServer class. " );
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
-           sendMessageMethod.invoke(ts,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",sb.toString());
-        } catch (java.lang.IllegalAccessException iae) {
-           Assert.fail("Could not access method sendMessage in SimpleTurnoutServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite){
-          Throwable cause = ite.getCause();
-          Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-       } 
+        Throwable thrown = catchThrowable( () -> {
+            java.lang.reflect.Method sendMessageMethod = ts.getClass().getDeclaredMethod("sendMessage", String.class);
+            // override the default permissions.
+            sendMessageMethod.setAccessible(true);
+            sendMessageMethod.invoke(ts, "Hello World");
+        });
+        assertThat(thrown).withFailMessage("Error calling sendMessage with reflection").isNull();
+        assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     @Test
@@ -62,32 +53,21 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleTurnoutServer a = new SimpleTurnoutServer(jcs);
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod=null;
-        try {
-          sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch(java.lang.NoSuchMethodException nsm) {
-          Assert.fail("Could not find method sendMessage in SimpleTurnoutServer class. " );
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
-           sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",jcs.getOutput());
-        } catch (java.lang.IllegalAccessException iae) {
-           Assert.fail("Could not access method sendMessage in SimpleTurnoutServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite){
-          Throwable cause = ite.getCause();
-          Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-       } 
+        Throwable thrown = catchThrowable( () -> {
+            java.lang.reflect.Method sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+            // override the default permissions.
+            sendMessageMethod.setAccessible(true);
+            sendMessageMethod.invoke(a,"Hello World");
+        });
+        assertThat(thrown).withFailMessage("Error calling sendMessage with reflection").isNull();
+        assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     /**
@@ -95,7 +75,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkErrorStatusSent(){
-            Assert.assertEquals("Send Error Status check","TURNOUT ERROR\n",sb.toString());
+            assertThat(sb.toString()).withFailMessage("Send Error Status check").isEqualTo("TURNOUT ERROR\n");
     }
 
     /**
@@ -103,7 +83,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkTurnoutThrownSent(){
-            Assert.assertEquals("Send Thrown Status check","TURNOUT IT1 THROWN\n",sb.toString());
+            assertThat(sb.toString()).withFailMessage("Send Thrown Status check").isEqualTo("TURNOUT IT1 THROWN\n");
     }
 
     /**
@@ -111,7 +91,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkTurnoutClosedSent() {
-            Assert.assertEquals("Send Closed Status check","TURNOUT IT1 CLOSED\n",sb.toString());
+            assertThat(sb.toString()).withFailMessage("Send Closed Status check").isEqualTo("TURNOUT IT1 CLOSED\n");
     }
 
     /**
@@ -119,11 +99,10 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkTurnoutUnknownSent() {
-            Assert.assertEquals("Send Error Status check","TURNOUT IT1 UNKNOWN\n",sb.toString());
+            assertThat(sb.toString()).withFailMessage("Send Error Status check").isEqualTo("TURNOUT IT1 UNKNOWN\n");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -136,7 +115,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -144,8 +123,8 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
         ts = new SimpleTurnoutServer(input, output);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         ts = null;
         sb = null;
         JUnitUtil.tearDown();

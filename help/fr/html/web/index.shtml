@@ -11,7 +11,6 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta name="viewport" content="width = device-width">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -22,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -267,7 +266,7 @@ uniquement en utilisant une transformation XSLT.
             pas mettre un contenu important dans ces
             r&eacute;pertoires ou les lier &agrave; d'autres
             parties de votre ordinateur.</p>
-            <!--#include virtual="/Footer" -->
+            <!--#include virtual="/Footer.shtml" -->
           </li>
         </ul>
       </div>

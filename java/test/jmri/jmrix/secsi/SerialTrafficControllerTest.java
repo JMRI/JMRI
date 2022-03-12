@@ -4,12 +4,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,26 +69,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         Assert.assertEquals("byte 3 hi nibble", 0x50, m.getElement(6));
         Assert.assertEquals("byte 4 lo nibble", 0x60, m.getElement(7));
         Assert.assertEquals("byte 4 hi nibble", 0x70, m.getElement(8));
-    }
-
-    @SuppressWarnings("unused")
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + rcvdReply);
-        }
-        if (i == 0) {
-            log.warn("waitForReply saw an immediate return; is threading right?");
-        }
-        return i < 100;
     }
 
     // internal class to simulate a Listener
@@ -179,9 +160,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public  void setUp() {
         JUnitUtil.setUp();
         SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
@@ -189,12 +169,12 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     }
 
     @Override
-    @After
+    @AfterEach
     public  void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

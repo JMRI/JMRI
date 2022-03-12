@@ -195,14 +195,14 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         if (action != null) {
             if (newWindowMenuItemAction == null) {
                 MenuActionListener ml = new MenuActionListener();
-                JMenuItem mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuOpenInNewWindow"));
+                JMenuItem mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.Bundle").getString("MenuOpenInNewWindow"));
                 mi.addActionListener(ml);
                 mi.setActionCommand("newWindow");
                 groupsMenu.insert(mi, 0);
                 groupsMenu.insert(new JSeparator(), 1);
                 // create the menu item twice because a menu item can only
                 // be attached to a single menu
-                mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuOpenInNewWindow"));
+                mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.Bundle").getString("MenuOpenInNewWindow"));
                 mi.addActionListener(ml);
                 mi.setActionCommand("newWindow");
                 allEntriesMenu.insert(mi, 0);
@@ -229,7 +229,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         return newWindowMenuItemAction;
     }
 
-    @SuppressWarnings("unchecked")
     private void setSelectionToGroup(String group) {
         _tree.removeTreeSelectionListener(_TSL);
         if (group == null || group.equals(Roster.ALLENTRIES) || group.equals("")) {
@@ -513,7 +512,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
         @Override
         public boolean importData(JComponent c, Transferable t) {
-            if (canImport(c, t.getTransferDataFlavors())) {
+            if (canImport(c, t.getTransferDataFlavors()) && (c instanceof JTree)) {
                 // getDropLocation is null unless dropping on an existing path
                 return importData(c, t, ((JTree) c).getDropLocation().getPath());
             }
@@ -521,11 +520,12 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
 
         public boolean importData(JComponent c, Transferable t, TreePath p) {
-            JTree l = (JTree) c;
             if (p != null) {
                 TreePath g = new TreePath(_model.getPathToRoot(_groups));
                 // drag onto existing user defined group, but not onto current selection
-                if (g.isDescendant(p) && !p.isDescendant(g) && !p.isDescendant(l.getSelectionPath())) {
+                if (g.isDescendant(p) && !p.isDescendant(g)
+                    && ( (c instanceof JTree) && !p.isDescendant(((JTree)c).getSelectionPath()))
+                    ) {
                     try {
                         ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
                         for (RosterEntry re : REs) {
@@ -535,7 +535,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                         Roster.getDefault().writeRoster();
                         setSelectedRosterGroup(p.getLastPathComponent().toString());
                     } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException | RuntimeException e) {
-                        log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
+                        log.warn("Exception dragging RosterEntries onto RosterGroups", e);
                     }
                 }
             } else {
@@ -544,7 +544,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                     a.setParameter("RosterEntries", RosterEntrySelection.getRosterEntries(t));
                     a.actionPerformed(null);
                 } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException | RuntimeException e) {
-                    log.warn("Exception creating RosterGroups from selection: " + e);
+                    log.warn("Exception creating RosterGroups from selection", e);
                 }
             }
             return false;
@@ -585,7 +585,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
         @Override
         public void treeWillExpand(TreeExpansionEvent e) throws ExpandVetoException {
-            log.debug("Selected rows ", _tree.getSelectionRows());
+            log.debug("Selected rows {}", _tree.getSelectionRows());
         }
 
         @Override

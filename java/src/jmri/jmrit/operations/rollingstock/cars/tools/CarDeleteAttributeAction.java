@@ -1,14 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 final class CarDeleteAttributeAction extends AbstractAction {
 
-    public CarDeleteAttributeAction(String actionName, CarAttributeEditFrame caef) {
-        super(actionName);
+    public CarDeleteAttributeAction(CarAttributeEditFrame caef) {
+        super(Bundle.getMessage("DeleteUnusedAttributes"));
         this.caef = caef;
     }
 

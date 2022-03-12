@@ -22,6 +22,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial Version</revremark>
     </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>CSX-2014-Chessie</aspecttable>
   <name>Double head searchlight dwarf signal</name>
@@ -167,13 +173,11 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
-      <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
-      <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>

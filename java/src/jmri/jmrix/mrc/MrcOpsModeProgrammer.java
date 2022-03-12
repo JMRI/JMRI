@@ -28,7 +28,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
 
     public MrcOpsModeProgrammer(MrcSystemConnectionMemo memo, int pAddress, boolean pLongAddr) {
         super(memo);
-        log.debug("MRC ops mode programmer " + pAddress + " " + pLongAddr); //IN18N
+        log.debug("MRC ops mode programmer {} {}", pAddress, pLongAddr); // NOI18N
         if (pLongAddr) {
             addressLo = pAddress;
             addressHi = pAddress >> 8;
@@ -41,7 +41,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     int addressLo = 0x00;
     int addressHi = 0x00;
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Forward a write request to an ops-mode write operation
@@ -49,7 +49,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     @Override
     public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        log.debug("write CV={} val={}", CV, val); //IN18N
+        log.debug("write CV={} val={}", CV, val); // NOI18N
         MrcMessage msg = MrcMessage.getPOM(addressLo, addressHi, CV, val);
 
         useProgrammer(p);
@@ -64,43 +64,43 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         memo.getMrcTrafficController().sendMrcMessage(msg);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         log.debug("read CV={}", CV);
-        log.error("readCV not available in this protocol"); //IN18N
+        log.error("readCV not available in this protocol"); // NOI18N
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("confirm CV={}", CV);
-        log.error("confirmCV not available in this protocol"); //IN18N
+        log.error("confirmCV not available in this protocol"); // NOI18N
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     // add 200mSec between commands, so MRC command station queue doesn't get overrun
     @Override
     protected void notifyProgListenerEnd(int value, int status) {
-        log.debug("MrcOpsModeProgrammer adds 200mSec delay to response"); //IN18N
+        log.debug("MrcOpsModeProgrammer adds 200mSec delay to response"); // NOI18N
         try {
             wait(200);
         } catch (InterruptedException e) {
-            log.debug("unexpected exception " + e); //IN18N
+            log.debug("unexpected exception", e); // NOI18N
         }
         super.notifyProgListenerEnd(value, status);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Types implemented here.
@@ -113,7 +113,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Can this ops-mode programmer read back values? For now, no, but maybe
@@ -126,7 +126,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return false;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -134,7 +134,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return mLongAddr;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -142,7 +142,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return mAddress;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -150,7 +150,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Ops-mode programming doesn't put the command station in programming mode,

@@ -21,8 +21,10 @@ public class ZTC611XNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
         // command is sent and an off DCC packet when the OFF command is
         // sent.  This causes some decoders to turn off the output 
         // instead of waiting for the time to expire.
+        // so set the known state to the commanded state, and send
+        // the next queued message.
         newKnownState(getCommandedState());
-        internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
+        sendQueuedMessage();
     }
 
 }
