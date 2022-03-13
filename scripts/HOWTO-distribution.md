@@ -234,7 +234,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 - Commit release note, push and pull back
 ```
         cd ../website/releasenotes
-        git commit -m"updated 4.99.5 release note" jmri4.*
+        git commit -m"updated 4.99 release notes" jmri4.*
         git push github
         git pull
         cd ../../JMRI
@@ -264,6 +264,12 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 
 - Remove the 4.99.4 milestone on [unmerged PRs or [click here]](https://github.com/JMRI/JMRI/pulls?q=is%3Aopen+is%3Apr+milestone%3A4.99.4)
 
+- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom)
+
+```
+        ant make-test-release-branch
+```
+
 - Update the &lt;version> element in pom.xml to say the next release:
 ```
         sed -i .bak s/4.99.4-SNAPSHOT/4.99.5-SNAPSHOT/g pom.xml
@@ -271,13 +277,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
         git push github
 ```
 
-- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom)
-
-```
-        ant make-test-release-branch
-```
-
-- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
+- Check that `release.properties` on `master` is showing 4.99.5
 
 - Put the following comment in the [release GitHub item](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.4%22) saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
@@ -300,6 +300,8 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 
 If you're developing any additional (post-4.99.4) changes that you want in the JMRI 4.26 production release, please start from this branch, i.e. do `git checkout -b release-4.99.5` to start your work.
 ```
+
+- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
 
 - Pull back to make sure your repository is fully up to date
 
@@ -338,7 +340,7 @@ If you're developing any additional (post-4.99.4) changes that you want in the J
 ```
 
 
-and attach jvisualvm to the test class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 4.99.4](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.4%22)" Github issue so that historical resource usage info is available.
+and connect jconsole to the test class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 4.99.4](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.4%22)" Github issue so that historical resource usage info is available.
 
 ================================================================================
 ## Put Files Out For Checking
@@ -454,15 +456,17 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
+
 [Release notes](https://jmri.org/releasenotes/jmri4.99.4.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.4+Racb4fb2437.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+Racb4fb2437.dmg) | 04582d65f7a4376f2de5a49b20409feeaa1105ade81021b694538a25daf66a62
-[JMRI.4.99.4+Racb4fb2437.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+Racb4fb2437.exe) | af95f08e5b94873085ce2282538daafca410408d483b549ac85ecc79e80607f3
-[JMRI.4.99.4+Racb4fb2437.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+Racb4fb2437.tgz) | ce50c1dbf18168537c659d621297da4d31bfe42cfeaf7de3e2297cebc83494a7
+[JMRI.4.99.4+R1d78b88a65.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.dmg) | 422d98a69b99d774490ec301c1dd79fd440241981dbeaf81ee7f74b73716dec3
+[JMRI.4.99.4+R1d78b88a65.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.exe) | cfb00463a8ff88e4633c4e174e033da004441f23d6c742fecb76f1fb04ca929a
+[JMRI.4.99.4+R1d78b88a65.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.tgz) | 2de7daa2dd6a42b26b43949a1490f5ff2c6731e9e64b5592e97e11f491e524b4
+
 
 ```
 
