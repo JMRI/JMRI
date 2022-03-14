@@ -46,7 +46,6 @@ public class SCWarrantTest extends WarrantTest {
 
     @Test
     @Override
-    @Disabled("This test fails on CI")
     public void testWarrant() throws JmriException {
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         sEast.setState(Sensor.INACTIVE);
@@ -134,6 +133,8 @@ public class SCWarrantTest extends WarrantTest {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
 
         // setup the sc warrant preliminaries.
         WarrantPreferences.getDefault().setSpeedAssistance(0);
@@ -227,6 +228,12 @@ public class SCWarrantTest extends WarrantTest {
     @AfterEach
     @Override
     public void tearDown() {
+        _turnoutMgr.dispose();
+        _turnoutMgr = null;
+        _OBlockMgr.dispose();
+        _OBlockMgr = null;
+        _sensorMgr.dispose();
+        _sensorMgr = null;
         //JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
