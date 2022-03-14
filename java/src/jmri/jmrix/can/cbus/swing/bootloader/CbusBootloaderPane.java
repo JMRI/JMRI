@@ -689,6 +689,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (CbusMessage.isBootOK(r)) {
                     // We had a response to the initislise so start programming.
                     writeNextData();
+                } else if (CbusMessage.isBootOutOfRange(r)) {
+                    // TODO:
                 } else {
                     protocolError();
                 }
@@ -702,6 +704,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 } else if (CbusMessage.isBootError(r)){
                     // TODO:
                     endProgramming();
+                } else if (CbusMessage.isBootDataOutOfRange(r)) {
+                    // TODO: should send checksum to flush programming data to FLASH
+                    endProgramming();
                 } else {
                     protocolError();
                 }
@@ -713,6 +718,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     // Acknowledge received for NOP sent after skipping
                     bootState = BootState.PROG_DATA;
                     writeNextData();
+                } else if (CbusMessage.isBootOutOfRange(r)) {
+                    // TODO: should send checksum to flush programming data to FLASH
+                    endProgramming();
                 } else {
                     protocolError();
                 }

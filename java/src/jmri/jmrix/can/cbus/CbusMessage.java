@@ -766,6 +766,34 @@ public class CbusMessage {
     }
 
     /**
+     * Tests if incoming CanReply is a Boot Out of Range
+     *
+     * @param r CanReply
+     * @return True if is a Boot Data OK
+     */
+    public static boolean isBootOutOfRange(CanReply r) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_OUT_OF_RANGE)
+                && (r.getNumDataElements() == 1)) {
+            return (true);
+        }
+        return (false);
+    }
+
+    /**
+     * Tests if incoming CanReply is a Boot Out of Range
+     *
+     * @param r CanReply
+     * @return True if is a Boot Data OK
+     */
+    public static boolean isBootDataOutOfRange(CanReply r) {
+        if (r.isExtended() && (r.getHeader() == 0x10000005) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_OUT_OF_RANGE)
+                && (r.getNumDataElements() == 1)) {
+            return (true);
+        }
+        return (false);
+    }
+
+    /**
      * Tests if incoming CanReply is a Boot Confirm.
      *
      * @param r CanReply

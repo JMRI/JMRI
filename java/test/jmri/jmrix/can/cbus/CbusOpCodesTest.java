@@ -122,7 +122,7 @@ public class CbusOpCodesTest {
     
     @Test
     public void testextendedFrameTranslation(){
-    
+        // Outgoing control messages
         CanMessage m = new CanMessage( new int[]{5,1,2,3,0x0d,0,6,7},0x04  );
         m.setExtended(true);
         Assert.assertEquals("extended 4  0","Bootloader: Do nothing",CbusOpCodes.decode(m));
@@ -151,10 +151,11 @@ public class CbusOpCodesTest {
         m.setElement(5, 8);
         Assert.assertEquals("extended 4  8","Unknown Extended Frame",CbusOpCodes.decode(m));
         
+        // Outgoing dat amessages
         m.setHeader(5);
         Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 08 06 07",CbusOpCodes.decode(m));
         
-        
+        // Incoming control replies
         m = new CanMessage( new int[]{0},0x10000004 );
         m.setExtended(true);
         Assert.assertEquals("extended 10000004 0","Bootloader: Boot Command Error",CbusOpCodes.decode(m));
@@ -166,11 +167,10 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 10000004 2","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
         
         m.setElement(0, 3);
-        Assert.assertEquals("extended 10000004 3","Unknown Extended Frame",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
         
         m.setElement(0, 4);
         Assert.assertEquals("extended 10000004 4","Unknown Extended Frame",CbusOpCodes.decode(m));
-        
         
         m = new CanMessage( new int[]{5,4,3,2,1},0x10000004  );
         m.setExtended(true);
@@ -180,7 +180,7 @@ public class CbusOpCodesTest {
         m.setExtended(true);
         Assert.assertEquals("extended 10000004 6","Bootloader: Bootloader ID",CbusOpCodes.decode(m));
 
-        
+        // Incoming data replies
         m = new CanMessage( new int[]{0},0x10000005 );
         m.setExtended(true);
         Assert.assertEquals("extended 10000005 0","Bootloader: Boot Data Error",CbusOpCodes.decode(m));
@@ -190,6 +190,12 @@ public class CbusOpCodesTest {
         
         m.setElement(0, 2);
         Assert.assertEquals("extended 10000005 2","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 3);
+        Assert.assertEquals("extended 10000005 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 4);
+        Assert.assertEquals("extended 10000005 4","Unknown Extended Frame",CbusOpCodes.decode(m));
         
     }
     

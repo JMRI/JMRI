@@ -252,6 +252,9 @@ public class CbusOpCodes {
                             case CbusConstants.CBUS_EXT_BOOTC: // 2
                                 sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTC"));
                                 break;
+                            case CbusConstants.CBUS_EXT_BOOT_OUT_OF_RANGE: // 3
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_OUT_OF_RANGE"));
+                                break;
                             default:
                                 break;
                         }
@@ -286,6 +289,9 @@ public class CbusOpCodes {
                             break;
                         case CbusConstants.CBUS_EXT_BOOT_OK: // 1
                             sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_DATA_OK"));
+                            break;
+                        case CbusConstants.CBUS_EXT_BOOT_OUT_OF_RANGE: // 3
+                            sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_OUT_OF_RANGE"));
                             break;
                         default:
                             break;

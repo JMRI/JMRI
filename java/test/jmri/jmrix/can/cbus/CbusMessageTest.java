@@ -587,20 +587,20 @@ public class CbusMessageTest {
         CanReply r = new CanReply(1);
         r.setExtended(false);
         r.setElement(0,7);
-        Assert.assertEquals("isBootError fff",false,CbusMessage.isBootDataError(r)); // false false false
+        Assert.assertEquals("isBootDataError fff",false,CbusMessage.isBootDataError(r)); // false false false
         r.setElement(0,0);
-        Assert.assertEquals("isBootError ffp",false,CbusMessage.isBootDataError(r)); // ffp
+        Assert.assertEquals("isBootDataError ffp",false,CbusMessage.isBootDataError(r)); // ffp
         r.setHeader(0x10000005);
-        Assert.assertEquals("isBootError fpp",false,CbusMessage.isBootDataError(r)); // fpp
+        Assert.assertEquals("isBootDataError fpp",false,CbusMessage.isBootDataError(r)); // fpp
         r.setElement(0,7);
-        Assert.assertEquals("isBootError fpf",false,CbusMessage.isBootDataError(r)); // fpf
+        Assert.assertEquals("isBootDataError fpf",false,CbusMessage.isBootDataError(r)); // fpf
         r.setExtended(true);
-        Assert.assertEquals("isBootError ppf",false,CbusMessage.isBootDataError(r)); // ppf
+        Assert.assertEquals("isBootDataError ppf",false,CbusMessage.isBootDataError(r)); // ppf
         r.setHeader(0x14);
-        Assert.assertEquals("isBootError pff",false,CbusMessage.isBootDataError(r)); // pff
+        Assert.assertEquals("isBootDataError pff",false,CbusMessage.isBootDataError(r)); // pff
         r.setHeader(0x10000005);
         r.setElement(0,0);
-        Assert.assertEquals("isBootError ppp",true,CbusMessage.isBootDataError(r)); // ppp
+        Assert.assertEquals("isBootDataError ppp",true,CbusMessage.isBootDataError(r)); // ppp
 
     }
 
@@ -631,20 +631,64 @@ public class CbusMessageTest {
         CanReply r = new CanReply(1);
         r.setExtended(false);
         r.setElement(0,7);
-        Assert.assertEquals("isBootOK fff",false,CbusMessage.isBootDataOK(r)); // false false false
+        Assert.assertEquals("isBootDataOK fff",false,CbusMessage.isBootDataOK(r)); // false false false
         r.setElement(0,1);
-        Assert.assertEquals("isBootOK ffp",false,CbusMessage.isBootDataOK(r)); // ffp
+        Assert.assertEquals("isBootDataOK ffp",false,CbusMessage.isBootDataOK(r)); // ffp
         r.setHeader(0x10000005);
-        Assert.assertEquals("isBootOK fpp",false,CbusMessage.isBootDataOK(r)); // fpp
+        Assert.assertEquals("isBootDataOK fpp",false,CbusMessage.isBootDataOK(r)); // fpp
         r.setElement(0,7);
-        Assert.assertEquals("isBootOK fpf",false,CbusMessage.isBootDataOK(r)); // fpf
+        Assert.assertEquals("isBootDataOK fpf",false,CbusMessage.isBootDataOK(r)); // fpf
         r.setExtended(true);
-        Assert.assertEquals("isBootOK ppf",false,CbusMessage.isBootDataOK(r)); // ppf
+        Assert.assertEquals("isBootDataOK ppf",false,CbusMessage.isBootDataOK(r)); // ppf
         r.setHeader(0x14);
-        Assert.assertEquals("isBootOK pff",false,CbusMessage.isBootDataOK(r)); // pff
+        Assert.assertEquals("isBootDataOK pff",false,CbusMessage.isBootDataOK(r)); // pff
         r.setHeader(0x10000005);
         r.setElement(0,1);
-        Assert.assertEquals("isBootOK ppp",true,CbusMessage.isBootDataOK(r)); // ppp
+        Assert.assertEquals("isBootDataOK ppp",true,CbusMessage.isBootDataOK(r)); // ppp
+
+    }
+
+    @Test
+    public void testisBootOutOfRange() {
+        CanReply r = new CanReply(1);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootOutOfRange fff",false,CbusMessage.isBootOutOfRange(r)); // false false false
+        r.setElement(0,1);
+        Assert.assertEquals("isBootOutOfRange ffp",false,CbusMessage.isBootOutOfRange(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootOutOfRange fpp",false,CbusMessage.isBootOutOfRange(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootOutOfRange fpf",false,CbusMessage.isBootOutOfRange(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootOutOfRange ppf",false,CbusMessage.isBootOutOfRange(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootOutOfRange pff",false,CbusMessage.isBootOutOfRange(r)); // pff
+        r.setHeader(0x10000004);
+        r.setElement(0,3);
+        Assert.assertEquals("isBootOutOfRange ppp",true,CbusMessage.isBootOutOfRange(r)); // ppp
+
+    }
+
+    @Test
+    public void testisBootDataOutOfRange() {
+        CanReply r = new CanReply(1);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataOutOfRange fff",false,CbusMessage.isBootDataOutOfRange(r)); // false false false
+        r.setElement(0,1);
+        Assert.assertEquals("isBootDataOutOfRange ffp",false,CbusMessage.isBootDataOutOfRange(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootDataOutOfRange fpp",false,CbusMessage.isBootDataOutOfRange(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataOutOfRange fpf",false,CbusMessage.isBootDataOutOfRange(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootDataOutOfRange ppf",false,CbusMessage.isBootDataOutOfRange(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootDataOutOfRange pff",false,CbusMessage.isBootDataOutOfRange(r)); // pff
+        r.setHeader(0x10000005);
+        r.setElement(0,3);
+        Assert.assertEquals("isBootDataOutOfRange ppp",true,CbusMessage.isBootDataOutOfRange(r)); // ppp
 
     }
 

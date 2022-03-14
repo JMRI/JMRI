@@ -213,6 +213,7 @@ public final class CbusConstants {
     public static final int CBUS_EXT_BOOT_ERROR = 0x00;
     public static final int CBUS_EXT_BOOT_OK = 0x01;
     public static final int CBUS_EXT_BOOTC = 0x02;
+    public static final int CBUS_EXT_BOOT_OUT_OF_RANGE = 0x03;
     public static final int CBUS_EXT_DEVID = 0x05;
     public static final int CBUS_EXT_BOOTID = 0x06;
 
