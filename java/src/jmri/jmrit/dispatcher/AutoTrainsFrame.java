@@ -256,42 +256,70 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
                 return; // ignore if not speed or direction
             }
-            updateThrottleDisplay();
+            updateThrottleDisplay(e);
         }
 
-        private void updateThrottleDisplay() {
-            StringBuilder sb = new StringBuilder();
+        private float lastReportedSpeed;   // for display purposes
+
+        /*
+         * Updates screen control throttle.
+         */
+        private void primeThrottleDisplay() {
             if (throttle != null) {
+                if (throttle.getIsForward()) {
+                    forwardButton.setSelected(true);
+                } else {
+                    reverseButton.setSelected(true);
+                }
+                lastReportedSpeed = throttle.getSpeedSetting();
+                if (speedSlider.isVisible()) {
+                    speedSlider.setValue((int) (lastReportedSpeed * 100.0f));
+                }
+            }
+            updateThrottleStatus();
+        }
+
+        /*
+         * Updates control from events
+         */
+        private void updateThrottleDisplay(java.beans.PropertyChangeEvent e) {
+            if (throttle != null) {
+                if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
+                    if ((boolean) e.getNewValue()) {
+                        forwardButton.setSelected(true);
+                    } else {
+                        reverseButton.setSelected(true);
+                    }
+                } else {
+                    lastReportedSpeed = (float) e.getNewValue();
+                }
+            }
+            updateThrottleStatus();
+        }
+
+        /*
+         * Updates the status words.
+         */
+        private void updateThrottleStatus() {
+            StringBuilder sb = new StringBuilder();
+            if (throttle != null && throttleStatus.isVisible()) {
                 if (rosterEntry != null && rosterEntry.getSpeedProfile() != null) {
                     sb.append("" +
                             rosterEntry.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(
-                                    throttle.getSpeedSetting(),
-                                    throttle.getIsForward()));
+                                    lastReportedSpeed,
+                                    forwardButton.isSelected()));
                 } else {
                     sb.append("" + Math.round(throttle.getSpeedSetting() * 100));
                     sb.append("% ");
                 }
-                if (throttle.getIsForward()) {
+                if (forwardButton.isSelected()) {
                     sb.append("(fwd)");
                 } else {
                     sb.append("(rev)");
                 }
-                if (forwardButton.isVisible() && throttle.getIsForward()) {
-                    forwardButton.setSelected(throttle.getIsForward());
-                }
-                if (reverseButton.isVisible() && !throttle.getIsForward()) {
-                    reverseButton.setSelected(throttle.getIsForward());
-                }
-                if (speedSlider.isVisible()) {
-                    speedSlider.setValue((int)(throttle.getSpeedSetting() * 100.0f));
-                }
-                if (throttleStatus.isVisible()) {
-                    throttleStatus.setText(sb.toString());
-                }
-            } else {
-                if (throttleStatus.isVisible()) {
-                    throttleStatus.setText("No Throttle");
-                }
+                throttleStatus.setText(sb.toString());
+            } else if (throttleStatus.isVisible()) {
+                throttleStatus.setText("No Throttle");
             }
         }
 
@@ -325,6 +353,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                             }
                         };
                         throttle.addPropertyChangeListener(throttleListener);
+                        rosterEntry = autoActiveTrain.getRosterEntry();
                         stopButton.setText(Bundle.getMessage("StopButton"));
                         stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
                         stopButton.setVisible(true);
@@ -336,7 +365,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                         reverseButton.setVisible(false);
                         speedSlider.setVisible(false);
                         throttleStatus.setVisible(true);
-                        updateThrottleDisplay();
+                        primeThrottleDisplay();
                     }
                 } else if ((int) e.getNewValue() == ActiveTrain.TERMINATED) {
                     if (throttle != null && throttleListener != null) {
@@ -366,6 +395,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                             }
                         };
                         throttle.addPropertyChangeListener(throttleListener);
+                        rosterEntry = autoActiveTrain.getRosterEntry();
                     }
                     stopButton.setText(Bundle.getMessage("StopButton"));
                     stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
@@ -378,7 +408,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     reverseButton.setVisible(false);
                     speedSlider.setVisible(false);
                     throttleStatus.setVisible(true);
-                    updateThrottleDisplay();
+                    primeThrottleDisplay();
                 } else if ((int) e.getNewValue() == ActiveTrain.DONE) {
                     stopButton.setText(Bundle.getMessage("RestartButton"));
                     stopButton.setToolTipText(Bundle.getMessage("RestartButtonHint"));
@@ -520,7 +550,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (at.getMode() == ActiveTrain.MANUAL) {
                 autoActiveTrain.setForward(forwardButton.isSelected());
             } else {
-                log.warn("unexpected direction button change on line {}", at.getTrainName());
+                log.debug(" {}:Ignored direction button change, not in manual mode", at.getTrainName());
             }
         }
 
@@ -531,12 +561,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 speedValue = speedValue * 0.01f;
                 autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
             } else {
-                log.warn("unexpected slider change on line {}", at.getTrainName());
+                log.debug(" {}:Ignored slider change, not in manual mode", at.getTrainName());
             }
         }
     }
 
-        private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
 
