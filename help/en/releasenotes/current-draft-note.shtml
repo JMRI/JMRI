@@ -116,7 +116,28 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li><b>Throttle support.</b> JMRI Throttles can now operate
+                OpenLCB locomotives on OpenLCB / LCC Command Stations via the
+                Traction Protocol draft.</li>
+                <li><b>Monitor Log updates.</b> Decodes and prints the Traction
+                Protocol messages in the Monitor Log window.</li>
+                <li><b>Accessibility changes.</b> The network browser / tree is
+                now navigable using keyboard shortcuts. On the Configuration
+                Editor panel the keys F6 and Shift+F6 can be used to navigate
+                between subsequent sections of the configuration and the bar of
+                buttons at the bottom.</li>
+                <li><b>Test Event button.</b> In the Configuration Editor the
+                Event panels have a new button More... which opens a
+                dropdown. In the dropdown there is a Trigger button which sends
+                the given event. This is useful for testing. In the same
+                dropdown there is a Create Sensor button which for JMRI will
+                create a single-event sensor.</li>
+                <li><b>Bug fixes.</b> Fixes memory leak when opening many
+                different nodes' Configuration Editor windows. The CAN
+                Interface engine now correctly supports sending a message to a
+                Destination Node ID for which there is no currently registered
+                Alias in the Alias Map. The outgoing message will be enqueued
+                and an alias lookup interaction is triggered.</li>
             </ul>
 
         <h4>RFID</h4>
