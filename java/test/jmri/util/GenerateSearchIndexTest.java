@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 
 /**
  * Generates the search index for local help files.
- * 
+ *
  * @author Daniel Bergqvist Copyright (C) 2021
  */
 public class GenerateSearchIndexTest {
@@ -21,11 +21,11 @@ public class GenerateSearchIndexTest {
     private final Map<Integer, String> _fileIndex = new HashMap<>();
     private final Map<Integer, Map<String, Set<Integer>>> _searchIndex = new HashMap<>();
     private int _currentFileId = 0;
-    
-    
+
+
     private void addWord(String word, int fileId) {
         if (word.length() < 3) return;
-        
+
         for (int i=3; i <= word.length(); i++) {
             Map<String, Set<Integer>> wordMap = _searchIndex.get(i);
             if (wordMap == null) {
@@ -43,7 +43,7 @@ public class GenerateSearchIndexTest {
             }
         }
     }
-    
+
     private void parseNode(Node node, String pad) {
         for (Node child : node.childNodes()) {
 //            System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
@@ -60,14 +60,14 @@ public class GenerateSearchIndexTest {
             parseNode(child, pad+"    ");
         }
     }
-    
+
     private void searchFolder(String folder) throws IOException {
         Path path = FileSystems.getDefault().getPath(folder);
         Set<String> files = Stream.of(path.toFile().listFiles())
                   .filter(file -> !file.isDirectory())
                   .map(File::getName)
                   .collect(Collectors.toSet());
-        
+
         for (String file : files) {
             if (file.endsWith(".shtml")) {
                 String fileName = folder + file;
@@ -81,18 +81,18 @@ public class GenerateSearchIndexTest {
 //                System.out.format("%n============================================================%n%n");
             }
         }
-        
+
         Set<String> folders = Stream.of(path.toFile().listFiles())
                   .filter(file -> file.isDirectory())
                   .map(File::getName)
                   .collect(Collectors.toSet());
-        
+
         for (String aFolder : folders) {
             searchFolder(folder + aFolder + "/");
         }
-        
+
     }
-    
+
     private void createJsonFile() throws IOException {
 //        String newLine = System.getProperty("line.separator");
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/en/local/search.json");
@@ -107,7 +107,7 @@ public class GenerateSearchIndexTest {
         }
         printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
         printWriter.print("},");
-        
+
         printWriter.print("\"words\":{");
         for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndex.entrySet()) {
             printWriter.format("\"%d\":{", searchIndexEntry.getKey());
@@ -129,15 +129,15 @@ public class GenerateSearchIndexTest {
         printWriter.print("}';");
         printWriter.close();
     }
-    
+
     @Test
     public void testGenerateSearchIndex() throws IOException {
         searchFolder("help/en/");
-        
-        
+
+/*
         List<Map.Entry<String, Integer>> list = new ArrayList<>();
 //        Map<String, java.util.concurrent.atomic.AtomicInteger> wordFileCount = new HashMap<>();
-        
+
         int count = 0;
         for (Map.Entry<Integer, Map<String, Set<Integer>>> wordMap : _searchIndex.entrySet()) {
             for (Map.Entry<String, Set<Integer>> fileIdList : wordMap.getValue().entrySet()) {
@@ -147,27 +147,21 @@ public class GenerateSearchIndexTest {
                     count++;
                     wfc++;
                 }
-//                java.util.concurrent.atomic.AtomicInteger ai = wordFileCount.get(fileIdList.getKey());
-//                if (ai == null) {
-//                    ai = new java.util.concurrent.atomic.AtomicInteger();
-//                    wordFileCount.put(fileIdList.getKey(), ai);
-//                }
-//                ai.addAndGet(wfc);
                 Map.Entry<String, Integer> entry = new HashMap.SimpleEntry<>(fileIdList.getKey(), wfc);
                 list.add(entry);
             }
         }
-        
+
         Collections.sort(list, (a,b) -> {return a.getValue().compareTo(b.getValue());});
-        
-        for (Map.Entry<String, Integer> entry : list) {
-            System.out.format("%8d: %s%n", entry.getValue(), entry.getKey());
-        }
-        
+
+//        for (Map.Entry<String, Integer> entry : list) {
+//            System.out.format("%8d: %s%n", entry.getValue(), entry.getKey());
+//        }
+
         System.out.format("Word count: %d%n", count);
-        
+*/
         createJsonFile();
-        
+
 //        String html = "<html><head><title>First parse</title></head>"
 //                + "<body><p>Parsed HTML into a doc.</p></body></html>";
 //        Document doc = Jsoup.parse(html);
