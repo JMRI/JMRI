@@ -27,7 +27,7 @@ public class GridConnectMessage extends AbstractMRMessage {
     public GridConnectMessage() {
         _nDataChars = 28;
         _dataChars = new int[_nDataChars];
-        setElement(0, ':');
+        GridConnectMessage.this.setElement(0, ':');
     }
 
     /**
@@ -36,7 +36,10 @@ public class GridConnectMessage extends AbstractMRMessage {
      */
     public GridConnectMessage(CanMessage m) {
         this();
+        addCanMessage(m);
+    }
 
+    private void addCanMessage(CanMessage m) {
         // Standard or extended frame
         setExtended(m.isExtended());
 

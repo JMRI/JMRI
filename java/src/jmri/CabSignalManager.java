@@ -42,7 +42,7 @@ public interface CabSignalManager {
      *
      * @return list of cab signal addresses
      */
-    public Set getCabSignalList();
+    public Set<LocoAddress> getCabSignalList();
 
     /**
      * Get an array of known cab signals.

@@ -30,6 +30,7 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -4128,7 +4129,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 */
     JFileChooser sndFileChooser = null;
-    JFileChooser scriptFileChooser = null;
+    ScriptFileChooser scriptFileChooser = null;
     JFileChooser defaultFileChooser = null;
 
     /**
@@ -4152,8 +4153,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.Action.RUN_SCRIPT) {
             if (scriptFileChooser == null) {
-                scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-                scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script file", "py")); // NOI18N
+                scriptFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
             }
             currentChooser = scriptFileChooser;
         } else {
@@ -4564,7 +4564,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     /**
      * Check that a state variable is not also used as an action
-     * 
+     *
      * @param name of the state variable
      * @param itemType item type of the state variable
      * @return true if variable is not an action of if the user OK's
@@ -4580,7 +4580,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 } else {
                     NamedBean bean  = action.getBean();
                     if (bean != null &&
-                        (name.equals(bean.getSystemName()) || 
+                        (name.equals(bean.getSystemName()) ||
                                 name.equals(bean.getUserName()))) {
                         actionName = action.getDeviceName();
                    }
@@ -4595,7 +4595,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     /**
      * Check that an action is not also used as a state variable
-     * 
+     *
      * @param name of the action
      * @param itemType item type of the action
      * @return true if action is not a state variable of if the user OK's
@@ -4611,7 +4611,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 } else {
                     NamedBean bean  = var.getBean();
                     if (bean != null &&
-                        (name.equals(bean.getSystemName()) || 
+                        (name.equals(bean.getSystemName()) ||
                                 name.equals(bean.getUserName()))) {
                         varName = var.getName();
                    }

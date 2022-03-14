@@ -192,7 +192,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                         Class<?> cl = Class.forName(className);
                         config = (ConnectionConfig) cl.getDeclaredConstructor().newInstance();
                         if( !(config instanceof StreamConnectionConfig)) {
-                           // only include if the connection is not a 
+                           // only include if the connection is not a
                            // StreamConnection.  Those connections require
                            // additional context.
                            modeBox.addItem(config.name());
@@ -204,7 +204,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 } catch (NullPointerException e) {
                     log.error("Attempt to load {} failed.", className, e);
                 } catch (InvocationTargetException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-                    log.error("Attempt to load {} failed: {}.", className, e);
+                    log.error("Attempt to load {} failed", className, e);
                 }
             }
             if ((modeBox.getSelectedIndex() == 0) && (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null)) {
@@ -257,7 +257,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                     Class<?> cl = Class.forName(classConnectionNameList1);
                     config = (jmri.jmrix.ConnectionConfig) cl.getDeclaredConstructor().newInstance();
                     if( !(config instanceof StreamConnectionConfig)) {
-                        // only include if the connection is not a 
+                        // only include if the connection is not a
                         // StreamConnection.  Those connections require
                         // additional context.
                         modeBox.addItem(config.name());
@@ -268,9 +268,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                     if (classConnectionNameList.length == 1) {
                         modeBox.setSelectedIndex(1);
                     }
-                } catch (InvocationTargetException | NullPointerException | ClassNotFoundException 
+                } catch (InvocationTargetException | NullPointerException | ClassNotFoundException
                                 | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-                    log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);
+                    log.warn("Attempt to load {} failed", classConnectionNameList1, e);
                 }
             }
             if (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null) {

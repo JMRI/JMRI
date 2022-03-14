@@ -57,13 +57,13 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int momentaryGroup3 = 0;
     private int momentaryGroup4 = 0;
     private int momentaryGroup5 = 0;
-    
+
     /**
      * Accessory state cache. A "1" bit means THROWN, "0" means
-     * CLOSED. 
+     * CLOSED.
      */
     private final BitSet accessoryState = new BitSet(1024);
-    
+
     /**
      * Bit is set if the accessory was operated.
      */
@@ -79,7 +79,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: {}",e);
+            log.error("init (pipe): Exception",e);
             return;
         }
         csStatus = CS_NORMAL_MODE;
@@ -131,7 +131,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         configure(packets);
     }
-    
+
     protected void configure(XNetTrafficController packets) {
         packets.connectPort(this);
 
@@ -493,11 +493,11 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     protected int getTurnoutFeedbackType() {
         return 0x01;
     }
-    
+
     /**
      * Returns accessory state, in the Operation Info Reply bit format. If the
      * accessory has not been operated yet, returns 00 (not operated).
-     * 
+     *
      * @param a accessory number
      * @return two bits representing the accessory state.
      */
@@ -519,7 +519,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
             return accInfoReply(ba, nibble);
         }
     }
-    
+
     protected XNetReply feedbackInfoReply(XNetMessage m) {
         XNetReply reply = new XNetReply();
        reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
@@ -562,7 +562,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         r.setParity();
         return r;
     }
-    
+
     /**
      * Generate reply to accessory request command.
      * The returned XNetReply is the first to be returned by this simulated command station.
@@ -593,7 +593,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     }
 
     /**
-     * Creates a reply for the specific turnout dcc address. 
+     * Creates a reply for the specific turnout dcc address.
      * @param dccTurnoutAddress the turnout address
      * @return a reply packet
      */
@@ -617,7 +617,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         log.debug("Received command {} ... {}", m, m.toMonitorString());
         return generateAccRequestReply(address, output, on, oldState);
     }
-    
+
     private void writeReply(XNetReply r) {
         int i;
         int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC

@@ -36,8 +36,11 @@ public class ActionThrottle extends AbstractDigitalAction
         implements FemaleSocketListener {
 
     public static final int LOCO_ADDRESS_SOCKET = 0;
-    public static final int LOCO_SPEED_SOCKET = 1;
-    public static final int LOCO_DIRECTION_SOCKET = 2;
+    public static final int LOCO_SPEED_SOCKET = LOCO_ADDRESS_SOCKET + 1;
+    public static final int LOCO_DIRECTION_SOCKET = LOCO_SPEED_SOCKET + 1;
+    public static final int LOCO_FUNCTION_SOCKET = LOCO_DIRECTION_SOCKET + 1;
+    public static final int LOCO_FUNCTION_ONOFF_SOCKET = LOCO_FUNCTION_SOCKET + 1;
+    public static final int NUM_LOCO_SOCKETS = LOCO_FUNCTION_ONOFF_SOCKET + 1;
     
     // The throttle if we have one or if a request is sent, null otherwise
     private DccThrottle _throttle;
@@ -46,9 +49,13 @@ public class ActionThrottle extends AbstractDigitalAction
     private String _locoAddressSocketSystemName;
     private String _locoSpeedSocketSystemName;
     private String _locoDirectionSocketSystemName;
+    private String _locoFunctionSocketSystemName;
+    private String _locoFunctionOnOffSocketSystemName;
     private final FemaleAnalogExpressionSocket _locoAddressSocket;
     private final FemaleAnalogExpressionSocket _locoSpeedSocket;
     private final FemaleDigitalExpressionSocket _locoDirectionSocket;
+    private final FemaleAnalogExpressionSocket _locoFunctionSocket;
+    private final FemaleDigitalExpressionSocket _locoFunctionOnOffSocket;
     boolean _isActive = false;
     
     
@@ -60,6 +67,10 @@ public class ActionThrottle extends AbstractDigitalAction
                 .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_Speed"));
         _locoDirectionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_Direction"));
+        _locoFunctionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_Function"));
+        _locoFunctionOnOffSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_FunctionOnOff"));
     }
     
     @Override
@@ -141,6 +152,8 @@ public class ActionThrottle extends AbstractDigitalAction
             
             double speed = 0;
             boolean isForward = true;
+            int function = 0;
+            boolean isFunctionOn = true;
             
             if (_locoSpeedSocket.isConnected()) {
                 speed =
@@ -154,12 +167,29 @@ public class ActionThrottle extends AbstractDigitalAction
                                 .evaluate();
             }
             
+            if (_locoFunctionSocket.isConnected()) {
+                function = (int) Math.round(
+                        ((MaleAnalogExpressionSocket)_locoFunctionSocket.getConnectedSocket())
+                                .evaluate());
+            }
+            
+            if (_locoFunctionOnOffSocket.isConnected()) {
+                isFunctionOn =
+                        ((MaleDigitalExpressionSocket)_locoFunctionOnOffSocket.getConnectedSocket())
+                                .evaluate();
+            }
+            
             DccThrottle throttle = _throttle;
             float spd = (float) speed;
             boolean fwd = isForward;
+            int func = function;
+            boolean funcState = isFunctionOn;
             jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
-                throttle.setSpeedSetting(spd);
-                throttle.setIsForward(fwd);
+                if (_locoSpeedSocket.isConnected()) throttle.setSpeedSetting(spd);
+                if (_locoDirectionSocket.isConnected()) throttle.setIsForward(fwd);
+                if (_locoFunctionSocket.isConnected() && _locoFunctionOnOffSocket.isConnected()) {
+                    throttle.setFunction(func, funcState);
+                }
             });
         }
     }
@@ -176,6 +206,12 @@ public class ActionThrottle extends AbstractDigitalAction
             case LOCO_DIRECTION_SOCKET:
                 return _locoDirectionSocket;
                 
+            case LOCO_FUNCTION_SOCKET:
+                return _locoFunctionSocket;
+                
+            case LOCO_FUNCTION_ONOFF_SOCKET:
+                return _locoFunctionOnOffSocket;
+                
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -184,7 +220,7 @@ public class ActionThrottle extends AbstractDigitalAction
 
     @Override
     public int getChildCount() {
-        return 3;
+        return NUM_LOCO_SOCKETS;
     }
 
     @Override
@@ -197,6 +233,12 @@ public class ActionThrottle extends AbstractDigitalAction
             executeConditionalNG();
         } else if (socket == _locoDirectionSocket) {
             _locoDirectionSocketSystemName = socket.getConnectedSocket().getSystemName();
+            executeConditionalNG();
+        } else if (socket == _locoFunctionSocket) {
+            _locoFunctionSocketSystemName = socket.getConnectedSocket().getSystemName();
+            executeConditionalNG();
+        } else if (socket == _locoFunctionOnOffSocket) {
+            _locoFunctionOnOffSocketSystemName = socket.getConnectedSocket().getSystemName();
             executeConditionalNG();
         } else {
             throw new IllegalArgumentException("unkown socket");
@@ -219,6 +261,12 @@ public class ActionThrottle extends AbstractDigitalAction
             executeConditionalNG();
         } else if (socket == _locoDirectionSocket) {
             _locoDirectionSocketSystemName = null;
+            executeConditionalNG();
+        } else if (socket == _locoFunctionSocket) {
+            _locoFunctionSocketSystemName = null;
+            executeConditionalNG();
+        } else if (socket == _locoFunctionOnOffSocket) {
+            _locoFunctionOnOffSocketSystemName = null;
             executeConditionalNG();
         } else {
             throw new IllegalArgumentException("unkown socket");
@@ -278,6 +326,30 @@ public class ActionThrottle extends AbstractDigitalAction
 
     public void setLocoDirectionSocketSystemName(String systemName) {
         _locoDirectionSocketSystemName = systemName;
+    }
+
+    public FemaleAnalogExpressionSocket getLocoFunctionSocket() {
+        return _locoFunctionSocket;
+    }
+
+    public String getLocoFunctionSocketSystemName() {
+        return _locoFunctionSocketSystemName;
+    }
+
+    public void setLocoFunctionSocketSystemName(String systemName) {
+        _locoFunctionSocketSystemName = systemName;
+    }
+
+    public FemaleDigitalExpressionSocket getLocoFunctionOnOffSocket() {
+        return _locoFunctionOnOffSocket;
+    }
+
+    public String getLocoFunctionOnOffSocketSystemName() {
+        return _locoFunctionOnOffSocketSystemName;
+    }
+
+    public void setLocoFunctionOnOffSocketSystemName(String systemName) {
+        _locoFunctionOnOffSocketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
@@ -348,6 +420,50 @@ public class ActionThrottle extends AbstractDigitalAction
                 }
             } else {
                 _locoDirectionSocket.getConnectedSocket().setup();
+            }
+            
+            if ( !_locoFunctionSocket.isConnected()
+                    || !_locoFunctionSocket.getConnectedSocket().getSystemName()
+                            .equals(_locoFunctionSocketSystemName)) {
+                
+                String socketSystemName = _locoFunctionSocketSystemName;
+                _locoFunctionSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(AnalogExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    _locoFunctionSocket.disconnect();
+                    if (maleSocket != null) {
+                        _locoFunctionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load analog expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _locoFunctionSocket.getConnectedSocket().setup();
+            }
+            
+            if ( !_locoFunctionOnOffSocket.isConnected()
+                    || !_locoFunctionOnOffSocket.getConnectedSocket().getSystemName()
+                            .equals(_locoFunctionOnOffSocketSystemName)) {
+                
+                String socketSystemName = _locoFunctionOnOffSocketSystemName;
+                _locoFunctionOnOffSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    _locoFunctionOnOffSocket.disconnect();
+                    if (maleSocket != null) {
+                        _locoFunctionOnOffSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _locoFunctionOnOffSocket.getConnectedSocket().setup();
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.

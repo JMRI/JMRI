@@ -18,6 +18,7 @@
         </display>
         <display item="Extended Consist Address" tooltip="Sets the multiple unit (consist) address">
           <tooltip xml:lang="de">Erweiterte Adresse für Mehrfachtraktion (Consist)</tooltip>
+          <tooltip xml:lang="cs">Rozšířená adresa soupravy</tooltip>
         </display>
         <display item="Consist Direction" tooltip="Sets the relative direction of the loco when consist is told to move forward">
           <tooltip xml:lang="it">Imposta Direzione relativa della Loco quando il gruppo di loco va in Avanti</tooltip>
@@ -65,10 +66,12 @@
         <display item="Consist Option 1">
           <tooltip xml:lang="it">Opzione Consist 1</tooltip>
           <tooltip xml:lang="ca">Opció de Multi-Tracció 1</tooltip>
+          <tooltip xml:lang="cs">Soupravy Volba 1</tooltip>
         </display>
         <display item="Consist Option 2">
           <tooltip xml:lang="it">Opzione Consist 2</tooltip>
           <tooltip xml:lang="ca">Opció de Multi-Tracció 2</tooltip>
+          <tooltip xml:lang="cs">Soupravy Volba 2</tooltip>
         </display>
         <display item="Auto Consist">
         </display>

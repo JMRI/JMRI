@@ -311,20 +311,20 @@ public class LnPacketizer extends LnTrafficController {
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: {}", e); // NOI18N
+                    log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.trace("EOFException, is LocoNet serial I/O using timeouts?"); // NOI18N
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFIle: {}", e); // NOI18N
+                    log.debug("IOException, should only happen with HexFile", e); // NOI18N
                     log.info("End of file"); // NOI18N
                     disconnectPort(controller);
                     return;
                 } // normally, we don't catch RuntimeException, but in this
                   // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("run: unexpected Exception: {}", e); // NOI18N
+                    log.warn("run: unexpected Exception", e); // NOI18N
                 }
             } // end of permanent loop
         }
@@ -476,7 +476,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
+    @SuppressWarnings("deprecation") // Thread.stop()
     @Override
     public void dispose() {
         if (xmtThread != null) {

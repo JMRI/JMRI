@@ -2,8 +2,8 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Class for messages for a LAWICELL CAN hardware adapter.
@@ -13,13 +13,17 @@ import org.slf4j.LoggerFactory;
  * indicates a standard or extended CAN frame iiiiiiii is the header as hex
  * digits l is the number of bytes of data dd are the (up to) 8 data bytes
  * <p>
+ * RTR Extended frames start with an R, RTR standard frames with r.
+ * <p>
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2009
- */
+ * @author Steve Young Copyright (C) 2022 ( added RTR Can Frame support )
+*/
 public class Message extends AbstractMRMessage {
 
     static final int MAXLEN = 27;
+    private boolean _isRTR = false;
 
     public Message() {
         _nDataChars = MAXLEN;
@@ -28,6 +32,10 @@ public class Message extends AbstractMRMessage {
 
     public Message(CanMessage m) {
         this();
+        addCanMessage(m);
+    }
+
+    private void addCanMessage(CanMessage m){
 
         // Standard or extended frame?
         setExtended(m.isExtended());
@@ -36,10 +44,7 @@ public class Message extends AbstractMRMessage {
         int index = 1;
         index = setHeader(m.getHeader(), index);
 
-        // don't know how to assert RTR in this protocol
-        if (m.isRtr()) {
-            log.error("Lawicell protocol cannot assert RTR");
-        }
+        setRtr(m.isRtr());
 
         // length
         setHexDigit(m.getNumDataElements(), index++);
@@ -76,23 +81,29 @@ public class Message extends AbstractMRMessage {
 
     public void setData(int[] d) {
         int len = (d.length <= MAXLEN) ? d.length : MAXLEN;
-        for (int i = 0; i < len; i++) {
-            _dataChars[i] = d[i];
-        }
+        System.arraycopy(d, 0, _dataChars, 0, len);
     }
 
     public void setExtended(boolean extended) {
-        if (extended) {
-            // extended
-            setElement(0, 'T');
+        if (extended) { // extended
+            setElement(0, ( isRtrSet() ? 'R': 'T'));
         } else {
             // standard
-            setElement(0, 't');
+            setElement(0, ( isRtrSet() ? 'r': 't'));
         }
     }
 
     public boolean isExtended() {
-        return getElement(0) == 'T';
+        return getElement(0) == 'T' || getElement(0) == 'R';
+    }
+    
+    public void setRtr(boolean isrtr){
+        _isRTR = isrtr;
+        setExtended(isExtended()); // reset element 0.
+    }
+    
+    public boolean isRtrSet(){
+        return _isRTR;
     }
 
     /**
@@ -150,7 +161,7 @@ public class Message extends AbstractMRMessage {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Message.class);
+    // private final static Logger log = LoggerFactory.getLogger(Message.class);
 }
 
 

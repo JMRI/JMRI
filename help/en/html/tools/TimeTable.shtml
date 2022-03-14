@@ -222,6 +222,7 @@
             <th>Train</th>
             <td>4</td>
             <td>Add Stop</td>
+            <td>Copy Stops</td>
             <td>Delete Train</td>
           </tr>
 
@@ -415,6 +416,11 @@
       </ul>
 
       <p>The calculated duration for the train is also displayed.</p>
+
+      <p><span class="since">since 4.99.4</span>When a new train is added and before any stops have
+      been added, the <strong>Copy Stops</strong> action button can be used to copy the stops from
+      another train.</p>
+
 
       <h3 id="stop">Stop</h3>
 

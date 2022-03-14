@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1189,8 +1190,8 @@ public class TrainBuilder extends TrainBuilderBase {
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                                new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
-                                        si.getReceiveLoadName(), status }));
+                                new Object[] { StringUtils.capitalize(track.getTrackTypeName()), track.getLocation().getName(), track.getName(),
+                                        car.toString(), si.getReceiveLoadName(), status }));
                 // restore car's load
                 car.setLoadName(oldCarLoad);
                 continue;
@@ -1623,8 +1624,8 @@ public class TrainBuilder extends TrainBuilderBase {
             if (!status.startsWith(Track.LENGTH) || !track.checkSchedule(car).equals(Track.OKAY)) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                                new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
-                                        car.getLoadName(), status }));
+                                new Object[] { StringUtils.capitalize(track.getTrackTypeName()), track.getLocation().getName(), track.getName(),
+                                        car.toString(), car.getLoadName(), status }));
                 return false;
             }
             if (track.getAlternateTrack() == null) {
@@ -1721,8 +1722,8 @@ public class TrainBuilder extends TrainBuilderBase {
         if (!status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                            new Object[] { track.getLocation().getName(), track.getName(), car.toString(),
-                                    car.getLoadName(), status }));
+                            new Object[] { StringUtils.capitalize(track.getTrackTypeName()), track.getLocation().getName(), track.getName(),
+                                    car.toString(), car.getLoadName(), status }));
             return false;
         }
         if (!track.isSpaceAvailable(car)) {
@@ -1810,9 +1811,9 @@ public class TrainBuilder extends TrainBuilderBase {
                     !(status.contains(Track.CUSTOM) && status.contains(Track.LOAD))) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
-                                new Object[] { car.getFinalDestination().getName(),
-                                        car.getFinalDestinationTrack().getName(), car.toString(), car.getLoadName(),
-                                        status }));
+                                new Object[] { StringUtils.capitalize(car.getFinalDestinationTrack().getTrackTypeName()),
+                                        car.getFinalDestination().getName(), car.getFinalDestinationTrack().getName(),
+                                        car.toString(), car.getLoadName(), status }));
                 // is this car or kernel being sent to a track that is too short?
                 if (status.startsWith(Track.CAPACITY)) {
                     // track is too short for this car or kernel, can never go there
@@ -1882,8 +1883,8 @@ public class TrainBuilder extends TrainBuilderBase {
         if (car.getDestination() == null) {
             return false; // the only false return
         }
-        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"),
-                new Object[] { car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"), new Object[] {
+                car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
         if (rld == null) {
             // code check, router doesn't set a car's destination if not carried by train
@@ -2519,7 +2520,6 @@ public class TrainBuilder extends TrainBuilderBase {
     private void buildFailed(BuildFailedException e) {
         String msg = e.getMessage();
         _train.setBuildFailedMessage(msg);
-        _train.setStatusCode(Train.CODE_BUILD_FAILED);
         _train.setBuildFailed(true);
         log.debug(msg);
 
@@ -2548,17 +2548,24 @@ public class TrainBuilder extends TrainBuilderBase {
                         MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
                                 new Object[] { size, trainName }),
                         Bundle.getMessage("buildResetTrain"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
+                    _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             } else if ((size = engineManager.getList(_train).size()) > 0) {
                 if (JOptionPane.showConfirmDialog(null,
                         MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
                                 new Object[] { size, trainName }),
                         Bundle.getMessage("buildResetTrain"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
+                    _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             }
+        } else {
+            // build messages disabled
+            // remove cars and engines from this train via property change
+            _train.setStatusCode(Train.CODE_TRAIN_RESET);
         }
+        
+        _train.setStatusCode(Train.CODE_BUILD_FAILED);
+        
         if (_buildReport != null) {
             addLine(_buildReport, ONE, msg);
             // Write to disk and close buildReport

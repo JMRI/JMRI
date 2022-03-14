@@ -7,8 +7,7 @@ import javax.swing.event.*;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
-import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
+import jmri.jmrix.can.cbus.swing.modules.*;
 import static jmri.jmrix.can.cbus.swing.modules.merg.CansolPaneProvider.*;
 
 /**
@@ -100,16 +99,16 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
             int value = getSelectValue(nv);
             if ((nv > 0) && (nv <= 8)) {
                 //log.debug("Update NV {} to {}", nv, value);
-                pulse[nv].getModel().setValue(value*TIME_STEP_SIZE);
+                pulse[nv].setValue(value*TIME_STEP_SIZE);
             } else if (nv == 9) {
                 //log.debug("Update recharge delay to {}", value);
-                rechargeSpinner.getModel().setValue(value*TIME_STEP_SIZE);
+                rechargeSpinner.setValue(value*TIME_STEP_SIZE);
             } else if (nv == 10) {
                 //log.debug("Update fire delay to {}", value);
-                fireDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
+                fireDelaySpinner.setValue(value*TIME_STEP_SIZE);
             } else if (nv == 11) {
                 //log.debug("Update enable delay to {}", value);
-                enableDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
+                enableDelaySpinner.setValue(value*TIME_STEP_SIZE);
             } else {
                 // Not used, or row was -1
 //                log.debug("Update unknown NV {}", nv);
@@ -125,7 +124,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int delay = ((SpinnerNumberModel)pulse[index].getModel()).getNumber().intValue()/TIME_STEP_SIZE;
+            int delay = pulse[index].getIntegerValue()/TIME_STEP_SIZE;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -139,7 +138,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int delay = ((SpinnerNumberModel)rechargeSpinner.getModel()).getNumber().intValue()/TIME_STEP_SIZE;
+            int delay = rechargeSpinner.getIntegerValue()/TIME_STEP_SIZE;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -153,7 +152,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int delay = ((SpinnerNumberModel)fireDelaySpinner.getModel()).getNumber().intValue()/TIME_STEP_SIZE;
+            int delay = fireDelaySpinner.getIntegerValue()/TIME_STEP_SIZE;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -167,7 +166,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int delay = ((SpinnerNumberModel)enableDelaySpinner.getModel()).getNumber().intValue()/TIME_STEP_SIZE;
+            int delay = enableDelaySpinner.getIntegerValue()/TIME_STEP_SIZE;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }

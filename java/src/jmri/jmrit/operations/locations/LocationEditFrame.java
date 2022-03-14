@@ -140,7 +140,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (_location != null) {
             enableButtons(true);
             locationNameTextField.setText(_location.getName());
-            commentTextArea.setText(TrainCommon.getTextColorString(_location.getComment()));
+            commentTextArea.setText(_location.getComment());
             divisionComboBox.setSelectedItem(_location.getDivision());
             yardModel.initTable(yardTable, location);
             spurModel.initTable(spurTable, location);
@@ -226,7 +226,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         addItem(pC, commentScroller, 0, 0);
         if (_location != null) {
-            addItem(pC, OperationsPanel.getColorChooserPanel(_location.getComment(), commentColorChooser), 2, 0);
+            addItem(pC, OperationsPanel.getColorChooserPanel(_location.getCommentWithColor(), commentColorChooser), 2, 0);
         } else {
             addItem(pC, OperationsPanel.getColorChooserPanel("", commentColorChooser), 2, 0);
         }

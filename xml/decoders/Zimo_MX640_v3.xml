@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Ronald Kuhn" version="3" lastUpdated="20211201"/> <!-- Correction of "Choice_LigthX.xml" -->
   <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20090117"/>
@@ -1564,9 +1565,9 @@
       </variable>
       <variable CV="125" mask="VVVVVVXX" item="Output 1 effect generated">
        <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
       <label>Front light effect generated</label>
         <label xml:lang="cs">Přední světla generovaný efekt</label>
@@ -1578,9 +1579,9 @@
       </variable>
       <variable CV="126" mask="VVVVVVXX" item="Output 2 effect generated">
         <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
         <label>Rear light effect generated</label>
         <label xml:lang="cs">Zadní světla generovaný efekt</label>
@@ -1592,9 +1593,9 @@
       </variable>
       <variable CV="127" mask="VVVVVVXX" item="Output 3 effect generated">
         <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
         <label>Function output 1 effect generated</label>
       </variable>
@@ -1604,9 +1605,9 @@
       </variable>
       <variable CV="128" mask="VVVVVVXX" item="Output 4 effect generated">
         <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
         <label>Function output 2 effect generated</label>
       </variable>
@@ -1616,9 +1617,9 @@
       </variable>
       <variable CV="129" mask="VVVVVVXX" item="Output 5 effect generated">
          <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
         <label>Function output 3 effect generated</label>
       </variable>
@@ -1628,9 +1629,9 @@
       </variable>
       <variable CV="130" mask="VVVVVVXX" item="Output 6 effect generated">
          <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
         <label>Function output 4 effect generated</label>
       </variable>
@@ -1640,9 +1641,9 @@
       </variable>
       <variable item="Output 7 effect generated" CV="131" mask="VVVVVVXX">
          <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
         <label>Output 7 effect generated</label>
       </variable>
@@ -1652,9 +1653,9 @@
       </variable>
       <variable item="Output 8 effect generated" CV="132" mask="VVVVVVXX">
          <enumVal>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
       </enumVal>
         <label>Output 8 effect generated</label>
       </variable>
@@ -1748,7 +1749,7 @@
       </variable>
       <variable item="Distance controlled stopping" CV="140" default="0">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth6.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light6.xml"/>
         </enumVal>
         <label>Distance controlled stopping</label>
         <label xml:lang="it">Fermata controllata da distanza</label>

@@ -219,7 +219,7 @@ public class LnDeferProgrammerTest {
                 startedShortTimer = true;
             }
             @Override
-            protected void stopTimer() {
+            protected synchronized void stopTimer() {
                 super.stopTimer();
                 stoppedTimer = true;
             }

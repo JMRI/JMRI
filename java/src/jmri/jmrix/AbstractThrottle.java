@@ -38,7 +38,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
     protected boolean isForward;
-    
+
     /**
      * Array of Function values.
      * <p>
@@ -56,7 +56,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Needs to be same length as FUNCTION_BOOLEAN_ARRAY.
      */
     private final boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
-    
+
     /**
      * Is this object still usable? Set false after dispose, this variable is
      * used to check for incorrect usage.
@@ -75,7 +75,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         FUNCTION_BOOLEAN_ARRAY = new boolean[29];
         FUNCTION_MOMENTARY_BOOLEAN_ARRAY = new boolean[29];
     }
-    
+
     /**
      * Create a new AbstractThrottle with custom number of functions.
      * <p>
@@ -194,7 +194,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         return Arrays.copyOf(FUNCTION_MOMENTARY_BOOLEAN_ARRAY,
             FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -217,9 +217,9 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             return false;
         }
         return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
-    
+
     }
-    
+
     /**
      * Notify listeners that a Throttle has disconnected and is no longer
      * available for use.
@@ -268,7 +268,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
     /**
      * Temporary behaviour only allowing unique PCLs.
-     * To support Throttle PCL's ( eg. WiThrottle Server ) that rely on the 
+     * To support Throttle PCL's ( eg. WiThrottle Server ) that rely on the
      * previous behaviour of only allowing 1 unique PCL instance.
      * To be removed when WiThrottle Server has been updated.
      * {@inheritDoc}
@@ -281,7 +281,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
         super.addPropertyChangeListener(l);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -306,31 +306,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
                 }
             });
         }
-    }
-
-    /**
-     * Trigger the notification of all PropertyChangeListeners. Will only notify
-     * if oldValue and newValue are not equal and non-null.
-     *
-     * @param property the name of the property to send notifications for
-     * @param oldValue the old value of the property
-     * @param newValue the new value of the property
-     * @deprecated since 4.19.5; use
-     * {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
-     * instead
-     */
-    @Deprecated
-    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        firePropertyChange(property, oldValue, newValue);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public List<PropertyChangeListener> getListeners() {
-        return Arrays.asList(getPropertyChangeListeners());
     }
 
     /**
@@ -390,7 +365,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * functions - note that we use the naming for DCC, though that's not the
      * implication; see also DccThrottle interface
      */
-    
+
     /**
      * Send whole (DCC) Function Group for a particular function number.
      * @param functionNum Function Number
@@ -417,7 +392,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
                 break;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -449,10 +424,10 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         FUNCTION_BOOLEAN_ARRAY[fn] = state;
         firePropertyChange(Throttle.getFunctionString(fn), old, state);
     }
-    
+
     /**
-     * Update the Momentary state of a single function. 
-     * Updates function value and ChangeListener. 
+     * Update the Momentary state of a single function.
+     * Updates function value and ChangeListener.
      * Does not send outward message TO hardware.
      *
      * @param fn    Momentary Function Number 0-28
@@ -766,7 +741,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
         // Only return stop if value is actually 0, jump to first speed
         // step for small positive inputs.
-        // speeds (at this point) larger than 0.5f are already handled 
+        // speeds (at this point) larger than 0.5f are already handled
         // by the rounding above.
         if (speed > 0.0f && speed <= 0.5f) {
             value = 1;

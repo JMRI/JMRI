@@ -39,7 +39,7 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
 
         storeCommon(p, element);
 
-        NamedBeanHandle warrant = p.getWarrant();
+        var warrant = p.getWarrant();
         if (warrant != null) {
             element.addContent(new Element("warrant").addContent(warrant.getName()));
         }

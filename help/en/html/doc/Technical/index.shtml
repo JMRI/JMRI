@@ -19,7 +19,7 @@
       just want to run the programs. You can download completely built copies via the <a href=
       "/download">downloads page</a>. But if you'd like to play with the code, or get a copy of the
       program that contains updates since the last downloadable version was published, this section
-      of the web site will help you get started.</p>
+      of the website will help you get started.</p>
 
       <h2 id="moreinfo">Technical background on the JMRI project</h2>
 
@@ -108,7 +108,7 @@
       "GitFAQ.shtml">"Git FAQ"</a> pages for more information on how to do that.
       <p>If you just want to look at the contents of a few files, you can browse the <a href=
       "https://github.com/JMRI/JMRI">program source code</a> and <a href=
-      "https://github.com/JMRI/website">web site source code</a> over the web.</p>
+      "https://github.com/JMRI/website">website source code</a> over the web.</p>
 
       <h2 id="buildyourcopy">Building Your Own Copy</h2>
 

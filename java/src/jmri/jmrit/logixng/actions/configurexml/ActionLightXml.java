@@ -36,7 +36,7 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
 
         storeCommon(p, element);
 
-        NamedBeanHandle light = p.getLight();
+        var light = p.getLight();
         if (light != null) {
             element.addContent(new Element("light").addContent(light.getName()));
         }

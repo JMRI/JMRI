@@ -156,6 +156,14 @@
           <a href="https://www.sprog-dcc.co.uk">CANISB</a> A galvanically isolated CBUS to USB
           interface.
         </dd>
+        
+        <dt>CANable</dt>
+
+        <dd>
+          <a href="https://canable.io/">CANable</a> An Open-Source USB to CAN Adapter, these use the
+          CAN via Lawicell CANUSB System Connection.
+        </dd>
+        
       </dl>
 
       <h4>Other CAN Hardware Interfaces</h4>

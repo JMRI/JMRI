@@ -273,6 +273,8 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         return true;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     private void handleChannelSignalReport(int extendedVal, int channelNum, int signalValue) {
         int index = -1;
         int fullSignal;
@@ -301,7 +303,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             graphicArea.repaint();
 
         } else {
-            log.error("{}\n", Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
+            log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
         }
     }
 

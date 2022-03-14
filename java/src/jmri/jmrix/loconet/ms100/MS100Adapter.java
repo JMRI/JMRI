@@ -99,7 +99,7 @@ public class MS100Adapter extends LnPortController {
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et);
+                log.info("failed to set serial timeout", et);
             }
 
             // get and save stream

@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -41,7 +41,7 @@ public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPort
     }
 
     @Override
-    @After 
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

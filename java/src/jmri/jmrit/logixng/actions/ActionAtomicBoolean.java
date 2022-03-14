@@ -3,10 +3,10 @@ package jmri.jmrit.logixng.actions;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.DefaultMaleAnalogActionSocket;
 
 /**
  * This action sets the value of an AtomicBoolean. It is mostly used for tests.
@@ -17,12 +17,21 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
 
     private AtomicBoolean _atomicBoolean;
     private boolean _newValue;
+    private AtomicLong _counter;
     
     public ActionAtomicBoolean(AtomicBoolean atomicBoolean, boolean newValue)
             throws BadUserNameException {
         super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _atomicBoolean = atomicBoolean;
         _newValue = newValue;
+    }
+    
+    public ActionAtomicBoolean(AtomicBoolean atomicBoolean, boolean newValue, AtomicLong counter)
+            throws BadUserNameException {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        _atomicBoolean = atomicBoolean;
+        _newValue = newValue;
+        _counter = counter;
     }
 
     public ActionAtomicBoolean(String sys, String user)
@@ -75,6 +84,7 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
     @Override
     public void execute() {
         _atomicBoolean.set(_newValue);
+        if (_counter != null) _counter.addAndGet(1);
     }
 
     @Override

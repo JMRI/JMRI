@@ -211,14 +211,18 @@
 
       </table>
       (* indicates that a compatibility library is used in the early version)
+
       <h2>JRE availability</h2>
 
       <p>This section lists the most recent Java Runtime version recommended by Oracle for various
       operating system versions. Please note that not all users of that operating system will have
       updated to this Java version; many will be using an older one.</p>
 
+      <p>Java installers are now available from multiple sources.  Our
+        <a href="/java/index.shtml">Java installer page</a> lists a number of them.
+
       <p>JMRI development requires Java 8u101 or later through January 2022. 8u101 contains a certificate change that's
-      needed to link to some remote Javadocs. After that, Java 11 will be required.</p>
+      needed to link to some remote Javadocs. After January 2022, Java 11 will be required.</p>
 
       <p><a href="http://www.oracle.com/technetwork/java/javase/config-417990.html">Oracle's page
       on Java 1.7 requirements</a> says "Note: As of April 8, 2014 Microsoft stopped supporting

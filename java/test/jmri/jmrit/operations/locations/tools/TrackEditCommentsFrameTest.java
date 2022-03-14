@@ -43,9 +43,9 @@ public class TrackEditCommentsFrameTest extends OperationsTestCase {
         Track track = loc.getTrackByName("NI Yard", null);
         
         // confirm comment data hasn't changed see initOperationsData
-        Assert.assertEquals("Test comment for NI Yard drops and pulls", track.getCommentBoth());
-        Assert.assertEquals("Test comment for NI Yard pulls only", track.getCommentPickup());
-        Assert.assertEquals("Test comment for NI Yard drops only", track.getCommentSetout());
+        Assert.assertEquals("Test comment for NI Yard drops and pulls", track.getCommentBothWithColor());
+        Assert.assertEquals("Test comment for NI Yard pulls only", track.getCommentPickupWithColor());
+        Assert.assertEquals("Test comment for NI Yard drops only", track.getCommentSetoutWithColor());
         
         TrackEditCommentsFrame tecf = new TrackEditCommentsFrame(track);
         Assert.assertNotNull(tecf);
@@ -72,9 +72,9 @@ public class TrackEditCommentsFrameTest extends OperationsTestCase {
         Assert.assertTrue(track.isPrintSwitchListCommentEnabled());
         
         // confirm comment data hasn't changed
-        Assert.assertEquals("Test comment for NI Yard drops and pulls", track.getCommentBoth());
-        Assert.assertEquals("Test comment for NI Yard pulls only", track.getCommentPickup());
-        Assert.assertEquals("Test comment for NI Yard drops only", track.getCommentSetout());
+        Assert.assertEquals("Test comment for NI Yard drops and pulls", track.getCommentBothWithColor());
+        Assert.assertEquals("Test comment for NI Yard pulls only", track.getCommentPickupWithColor());
+        Assert.assertEquals("Test comment for NI Yard drops only", track.getCommentSetoutWithColor());
         
         // change data
         tecf.commentBothTextArea.setText("Test Both");
@@ -82,9 +82,9 @@ public class TrackEditCommentsFrameTest extends OperationsTestCase {
         tecf.commentSetoutTextArea.setText("Test Spot");
         JemmyUtil.enterClickAndLeave(tecf.saveButton);
         
-        Assert.assertEquals("Test Both", track.getCommentBoth());
-        Assert.assertEquals("Test Pull", track.getCommentPickup());
-        Assert.assertEquals("Test Spot", track.getCommentSetout());
+        Assert.assertEquals("Test Both", track.getCommentBothWithColor());
+        Assert.assertEquals("Test Pull", track.getCommentPickupWithColor());
+        Assert.assertEquals("Test Spot", track.getCommentSetoutWithColor());
         
         JUnitUtil.dispose(tecf);
 

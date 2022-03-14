@@ -670,7 +670,7 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
     /**
      * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
-     * 
+     *
      * This is a common implementation for C/MRI Lights, Sensors and Turnouts
      * of the comparison method.
      * @param suffix1 suffix to compare.
@@ -679,11 +679,11 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
      */
     @CheckReturnValue
     public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
-        
+
         // extract node numbers and bit numbers
         int node1 = 0, node2 = 0, bit1, bit2;
         int t; // a temporary
-        
+
         t = suffix1.indexOf("B");
         if (t < 0) t = suffix1.indexOf(":");
         if (t >= 0) {
@@ -696,7 +696,7 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
             bit1 = Integer.parseInt(suffix1.substring(Math.max(0, len-3)));
             if (len>3) node1 = Integer.parseInt(suffix1.substring(0, len-3));
         }
-        
+
         t = suffix2.indexOf("B");
         if (t < 0) t = suffix2.indexOf(":");
         if (t >= 0) {
@@ -709,7 +709,7 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
             bit2 = Integer.parseInt(suffix2.substring(Math.max(0, len-3)));
             if (len>3) node2 = Integer.parseInt(suffix2.substring(0, len-3));
         }
-        
+
         if (node1 != node2 ) return Integer.signum(node1-node2);
         return Integer.signum(bit1-bit2);
     }
@@ -732,21 +732,21 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class c) -> new SerialTurnoutManager(this));
+        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class<?> c) -> new SerialTurnoutManager(this));
     }
 
     public SerialSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        return (SerialSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new SerialSensorManager(this));
+        return (SerialSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> new SerialSensorManager(this));
     }
 
     public SerialLightManager getLightManager() {
         if (getDisabled()) {
             return null;
         }
-        return (SerialLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new SerialLightManager(this));
+        return (SerialLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class<?> c) -> new SerialLightManager(this));
     }
 
     @Override

@@ -39,14 +39,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -96,8 +96,6 @@ public class VSDecoderManager implements PropertyChangeListener {
     private VSDecoderPreferences vsdecoderPrefs; // local pointer to the preferences object
 
     private JmriJFrame managerFrame = null;
-
-    private VSDecoder default_decoder = null;  // shortcut pointer to the default decoder (do we need this?)
 
     private int vsdecoderID = 0;
     private int locorow = -1; // Will be increased before first use
@@ -268,25 +266,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     * Get the VSdecoder.
-     * @param profile_name the profile name
-     * @param path the path
-     * @return the VSdecoder
-     * @deprecated As of 4.23.3, use {@link #getVSDecoder(VSDConfig config)} instead
-     */
-    @Deprecated // 4.23.3
-    public VSDecoder getVSDecoder(String profile_name, String path) {
-        VSDecoder vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
-        decodertable.put(vsd.getId(), vsd); // poss. broken for duplicate profile names
-        if (vsd.getAddress() != null) {
-            decoderAddressMap.put(vsd.getAddress().toString(), vsd);
-        }
-        return vsd;
-    }
-
-    /**
      * Provide or build a VSDecoder based on a provided configuration.
-     * 
+     *
      * @param config previous configuration, not null.
      * @return vsdecoder, or null on error.
      */
@@ -360,26 +341,6 @@ public class VSDecoderManager implements PropertyChangeListener {
             log.debug("Found: {}", rv.getAddress());
         }
         return rv;
-    }
-
-    /**
-     * Set a VSDecoder to be the default.
-     * @param d The VSDecoder
-     * @deprecated As of 4.23.3, without a replacement
-     */
-    @Deprecated // 4.23.3
-    public void setDefaultVSDecoder(VSDecoder d) {
-        default_decoder = d;
-    }
-
-    /**
-     * Get the default VSDecoder.
-     * @return The VSDecoder
-     * @deprecated As of 4.23.3, without a replacement
-     */
-    @Deprecated // 4.23.3
-    public VSDecoder getDefaultVSDecoder() {
-        return default_decoder;
     }
 
     /**
@@ -511,7 +472,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     /**
      * Retrieve the Path for a given Profile name.
-     * 
+     *
      * @param profile the profile to get the path for
      * @return the path for the profile
      */
@@ -533,7 +494,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
-    protected void registerBeanListener(Manager beanManager, String sysName) {
+    protected void registerBeanListener(Manager<Block> beanManager, String sysName) {
         NamedBean b = beanManager.getBySystemName(sysName);
         if (b == null) {
             log.debug("No bean by name {}", sysName);
@@ -586,7 +547,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             if (r != null) {
                 registerReporterListener(r.getSystemName());
             }
-        } 
+        }
 
         Set<Block> blockSet = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getNamedBeanSet();
         for (Block b : blockSet) {
@@ -598,7 +559,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     /**
      * Delete a VSDecoder
-     * 
+     *
      * @param address The DCC address of the VSDecoder
      */
     public void deleteDecoder(String address) {
@@ -632,7 +593,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         // wait until audio threads are finished and then run audio cleanup via dispose()
         jmri.util.ThreadingUtil.newThread(new Runnable() {
             @Override
-            public void run() { 
+            public void run() {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException ex) {
@@ -653,7 +614,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        log.debug("property change type {} name {} old {} new {}", 
+        log.debug("property change type {} name {} old {} new {}",
                 evt.getSource().getClass().getName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
         if (evt.getSource() instanceof jmri.ReporterManager) {
             reporterManagerPropertyChange(evt);
@@ -668,7 +629,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             blockPropertyChange(evt);
         } else if (evt.getSource() instanceof VSDManagerFrame) {
             if (evt.getPropertyName().equals(VSDManagerFrame.REMOVE_DECODER)) {
-                // Shut down the requested decoder and remove it from the manager's hash maps. 
+                // Shut down the requested decoder and remove it from the manager's hash maps.
                 // Unless there are "illegal" handles, this should put the decoder on the garbage heap.  I think.
                 removeVSDecoder((String) evt.getOldValue());
             } else if (evt.getPropertyName().equals(VSDManagerFrame.CLOSE_WINDOW)) {
@@ -805,7 +766,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     }
                 } else {
                     // newValue is of IdTag type.
-                    // Dcc4Pc, Ecos, 
+                    // Dcc4Pc, Ecos,
                     // Assume Reporter "arp" is the most recent seen location
                     IdTag newValue = (IdTag) event.getNewValue();
                     decoderInBlock.get(arp.getLocoAddress(newValue.getTagID()).getNumber()).savedSound.setTunnel(arp.getPhysicalLocation(null).isTunnel());
@@ -852,7 +813,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                 log.debug("new_rp: {} new_rp_index: {}", new_rp, new_rp_index);
                                 int old_rp = -1; // set to "undefined"
                                 int old_rp_index = -1; // set to "undefined"
-                                int ix = getArrayIndex(xa.getNumber()); 
+                                int ix = getArrayIndex(xa.getNumber());
                                 if (ix < locoInBlock.length) {
                                     old_rp = locoInBlock[ix][BLOCK];
                                     if (old_rp == 0) old_rp = -1; // set to "undefined"
@@ -885,7 +846,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                             posToSet = d.startPos;
                                         }
                                         d.savedSound.setTunnel(blockPositionlists.get(d.setup_index).get(new_rp_index).isTunnel()); // tunnel status
-                                        log.debug("position to set: {}", posToSet);  
+                                        log.debug("position to set: {}", posToSet);
                                         setDecoderPositionByAddr(xa, posToSet); // Sound set position
                                         stopSoundPositionTimer(d);
                                         startSoundPositionTimer(d); // timer restart
@@ -904,12 +865,12 @@ public class VSDecoderManager implements PropertyChangeListener {
                     }
                 } else {
                     // newValue is of IdTag type.
-                    // Dcc4Pc, Ecos, 
+                    // Dcc4Pc, Ecos,
                     // Assume Reporter "arp" is the most recent seen location
                     IdTag tagValue = (IdTag) event.getNewValue();
                     log.debug("new value: {}, id: {}", tagValue, tagValue.getTagID());
                     setDecoderPositionByAddr(arp.getLocoAddress(tagValue.getTagID()), arp.getPhysicalLocation(null));
-                } 
+                }
             } else {
                 log.debug("Reporter's return type is not supported");
                 // do nothing
@@ -946,20 +907,10 @@ public class VSDecoderManager implements PropertyChangeListener {
     public int getArrayIndex(int number) {
         for (int i = 0; i < locoInBlock.length; i++) {
             if (locoInBlock[i][ADDRESS] == number) {
-                return i;   
+                return i;
             }
         }
         return locoInBlock.length;
-    }
-
-    /**
-     * Get number of decoders.
-     * @return the number of decoders
-     * @deprecated As of 4.23.3, use {@link #getVSDecoderList()} instead
-     */
-    @Deprecated // 4.23.3
-    public int getNumberOfDecoders() {
-        return locorow + 1;
     }
 
     public void locoInBlockRemove(int numb) {
@@ -967,11 +918,11 @@ public class VSDecoderManager implements PropertyChangeListener {
         //  find index first
         int remove_index = 0;
         for (int i = 0; i < locoInBlock.length; i++) {
-            if (locoInBlock[i][ADDRESS] == numb) { 
+            if (locoInBlock[i][ADDRESS] == numb) {
                 remove_index = i;
             }
         }
-        for (int i = remove_index; i < locoInBlock.length - 1; i++) {   
+        for (int i = remove_index; i < locoInBlock.length - 1; i++) {
             for (int k = 0; k < locoInBlock[i].length; k++) {
                 locoInBlock[i][k] = locoInBlock[i + 1][k];
             }
@@ -1074,7 +1025,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                         locoInBlock[dadr_index][DIRECTION] = d.dirfn;
                     }
                     distance_rest_new = distance_rest - distance; // Distance to go in Meter
-                    log.debug(" distance_rest_old: {}, distance_rest: {}, distance_rest_new: {} (all in Meter)", distance_rest_old, distance_rest, distance_rest_new); 
+                    log.debug(" distance_rest_old: {}, distance_rest: {}, distance_rest_new: {} (all in Meter)", distance_rest_old, distance_rest, distance_rest_new);
                     // Calculate and set sound position only, if loco would be still inside the block
                     if (distance_rest_new > 0.0f) {
                         // Which geometric element? RADIUS = 0 means "line"

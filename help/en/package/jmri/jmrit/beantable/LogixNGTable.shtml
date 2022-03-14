@@ -77,7 +77,7 @@
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/SelectActions.png"><img src=
-        "../logixng/images/SelectActions.png" alt="Select Actions" width="167" height="123"></a>
+        "../logixng/images/SelectActions.png" alt="Select Actions" width="147" height="98"></a>
       </div>
 
       <dl>
@@ -97,10 +97,19 @@
           Browser</a> for details about the browser.
         </dd>
 
-        <dt>Copy</dt>
+        <dt>Copy<span class="since">since 4.99.4</span></dt>
 
         <dd>The <strong>Copy</strong> action is used to create a duplicate of the current LogixNG.
-        <strong><em>Note: This feature is not available yet.</em></strong></dd>
+
+          <div style="margin-left: 2em">
+            <a href="../logixng/images/CopyLogixNG.png"><img src="../logixng/images/CopyLogixNG.png"
+            alt="Copy LogixNG" width="663" height="171"></a>
+          </div>
+
+          <p>Enter the user name for the new LogixNG and click on <strong>Copy</strong>.  The
+          ConditionalNG user names will have a <em><strong>Copy of</strong></em> prefix.</p>
+
+        </dd>
 
         <dt>Delete</dt>
 
@@ -126,10 +135,11 @@
 
         <dt>Tools</dt>
 
-        <dd>The tools menu has one item: <strong>Open PickList Tables</strong>. The PickList was
-        designed for dragging names, such as sensor names, to a text field. Due to the
-        implementation of ConditionalNG edit dialogs, the drag and drop capability does not
-        function. It can still be used as a reference.</dd>
+        <dd>The tools menu has two items: <strong>Open clipboard</strong> and <strong>Open PickList
+        Tables</strong>.  See <a href="../../../../html/tools/logixng/reference/chapter2.shtml">
+        LogixNG Reference - Chapter 2</a> for details on the using the clipboard. The PickList was
+        designed for dragging names, such as sensor names, to a text field. Most LogixNG name fields
+        use drop down combo boxes, but this could be used when building Formulas.</dd>
       </dl>
 
       <h2 id="addLogixNG">Add a LogixNG</h2>

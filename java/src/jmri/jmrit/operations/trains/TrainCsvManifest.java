@@ -53,8 +53,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
             }
             printValidity(fileOut, getDate(true));
             // train comment can have multiple lines
-            if (!train.getComment().equals(Train.NONE)) {
-                String[] comments = train.getComment().split(NEW_LINE);
+            if (!train.getCommentWithColor().equals(Train.NONE)) {
+                String[] comments = train.getCommentWithColor().split(NEW_LINE);
                 for (String comment : comments) {
                     fileOut.printRecord("TC", Bundle.getMessage("csvTrainComment"), comment); // NOI18N
                 }
@@ -89,9 +89,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
 
                     Location location = rl.getLocation();
                     // add location comment
-                    if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(Location.NONE)) {
+                    if (Setup.isPrintLocationCommentsEnabled() && !location.getCommentWithColor().equals(Location.NONE)) {
                         // location comment can have multiple lines
-                        String[] comments = location.getComment().split(NEW_LINE); // NOI18N
+                        String[] comments = location.getCommentWithColor().split(NEW_LINE); // NOI18N
                         for (String comment : comments) {
                             printLocationComment(fileOut, comment);
                         }

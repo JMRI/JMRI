@@ -23,29 +23,29 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
     /** {@inheritDoc} */
     @Override
-    protected SignalMastAddPane getOTT() { return new OlcbSignalMastAddPane(); }    
-    
+    protected SignalMastAddPane getOTT() { return new OlcbSignalMastAddPane(); }
+
     @Test
     public void testSetMast() {
         OlcbSignalMast s1 = new OlcbSignalMast("MF$olm:basic:one-searchlight($0001)", "user name");
         MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
-        
+
         Assert.assertTrue(vp.canHandleMast(s1));
         Assert.assertFalse(vp.canHandleMast(m1));
-        
+
         vp.setMast(null);
-        
+
         vp.setAspectNames(s1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(s1);
-        
+
         vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
 
     }
-    
+
     @Test
     public void testCanHandleMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
@@ -53,9 +53,9 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
             { setLastRef(4); } // reset references
         };
         Assert.assertTrue(vp.canHandleMast(mast));
-        
+
         Assert.assertFalse(vp.canHandleMast(new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($0001)")));
-        
+
     }
 
     @Test
@@ -64,13 +64,13 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
             { setLastRef(4); } // reset references - this leads to ($0005) below, just in case anybody else has created one
         };
-        
+
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
-                
+
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name"));
         Assert.assertEquals("PL-2-high", InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name").getMastType());
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName("MF$olm:AAR-1946:PL-2-high($0005)"));
-        
+
     }
 
     @Test
@@ -79,7 +79,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         SignalMastManager mgr = InstanceManager.getDefault(SignalMastManager.class);
         for (SignalMast m : mgr.getNamedBeanSet()) mgr.deleteBean(m, "DoDelete");
         Assert.assertEquals(0, InstanceManager.getDefault(SignalMastManager.class).getObjectCount());
-        
+
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
 
         vp.setAspectNames(
@@ -92,12 +92,12 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
                     }
             }
                 , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic") );
-        
+
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
         frame.pack();
         frame.setVisible(true);
-        
+
         // check load
         Assert.assertEquals("00.00.00.00.00.00.00.00", vp.litEventID.getText());
         Assert.assertEquals("00.00.00.00.00.00.00.00", vp.notLitEventID.getText());
@@ -110,12 +110,12 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
             vp.disabledAspects.get("Approach Medium").setSelected(true);
 
             vp.aspectEventIDs.get("Clear").setText("01.02.03.04.05.06.07.08");
-            
+
             vp.litEventID.setText(    "03.02.01.01.01.01.01.01");
             vp.notLitEventID.setText( "04.02.01.01.01.01.01.01");
             vp.heldEventID.setText(   "05.02.01.01.01.01.01.01");
             vp.notHeldEventID.setText("06.02.01.01.01.01.01.01");
-            
+
             vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name 1");
         });
 
@@ -151,13 +151,13 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         mast.setHeldEventId("05.01.01.01.01.01.01.01");
         mast.setNotHeldEventId("06.01.01.01.01.01.01.01");
         InstanceManager.getDefault(jmri.SignalMastManager.class).register(mast);
-        
+
         Assert.assertEquals(1, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
         mast.setAspectDisabled("Stop");
         mast.setAspectDisabled("Unlit"); // we will renable this below
-        
+
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
-        
+
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
                 @Override
@@ -165,18 +165,18 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
             }
                 , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(mast);
-              
+
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
         frame.pack();
         frame.setVisible(true);
-        
+
         // check load
         Assert.assertEquals(new OlcbAddress("03.01.01.01.01.01.01.01"), new OlcbAddress(vp.litEventID.getText()));
         Assert.assertEquals(new OlcbAddress("04.01.01.01.01.01.01.01"), new OlcbAddress(vp.notLitEventID.getText()));
         Assert.assertEquals(new OlcbAddress("05.01.01.01.01.01.01.01"), new OlcbAddress(vp.heldEventID.getText()));
         Assert.assertEquals(new OlcbAddress("06.01.01.01.01.01.01.01"), new OlcbAddress(vp.notHeldEventID.getText()));
-        
+
         // disable Approach, change some of the event IDs
         // then build the mast, all on Swing thread
         jmri.util.ThreadingUtil.runOnGUI(() -> {
@@ -184,7 +184,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
             vp.disabledAspects.get("Unlit").setSelected(false);
 
             vp.aspectEventIDs.get("Clear").setText("01.02.03.04.05.06.07.08");
-            
+
             vp.createMast("basic", "appearance-one-searchlight.xml", "user name 1");
         });
 
@@ -219,7 +219,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
-    
+
     //
     // This only initialized JUnit and Log4J once per class so that it
     // can only initialize the OpenLCB structure once per class
@@ -230,12 +230,13 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @BeforeAll
+    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
-        
+
         messages = new java.util.ArrayList<>();
         connection = new AbstractConnection() {
             @Override

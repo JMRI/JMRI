@@ -1,8 +1,11 @@
 package jmri.implementation;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.JmriException;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for AbstractAnalogIO
@@ -10,8 +13,6 @@ import org.junit.*;
  * @author Daniel Bergqvist Copyright (c) 2018
  */
 public class AbstractAnalogIOTest {
-
-    boolean exceptionThrown = false;
 
     @Test
     public void testCtor() {
@@ -56,23 +57,15 @@ public class AbstractAnalogIOTest {
         Assert.assertTrue("string is correct",
                 33.21 == myAnalogIO.getKnownAnalogValue());
 
-        myAnalogIO = new MyAbstractAnalogIO(1, 2, false);
-        exceptionThrown = false;
-        try {
-            myAnalogIO.setCommandedAnalogValue(5);
-        } catch (JmriException e) {
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("value is too big", exceptionThrown == true);
+        MyAbstractAnalogIO myAnalogIO2 = new MyAbstractAnalogIO(1, 2, false);
+        Exception exception = assertThrows(JmriException.class, () ->
+            myAnalogIO2.setCommandedAnalogValue(5) );
+        Assert.assertEquals("value out of bounds", exception.getMessage());
 
-        myAnalogIO = new MyAbstractAnalogIO(1, 2, false);
-        exceptionThrown = false;
-        try {
-            myAnalogIO.setCommandedAnalogValue(0.2);
-        } catch (JmriException e) {
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("value is too small", exceptionThrown == true);
+        MyAbstractAnalogIO myAnalogIO3 = new MyAbstractAnalogIO(1, 2, false);
+        exception = assertThrows(JmriException.class, () ->
+            myAnalogIO3.setCommandedAnalogValue(0.2) );
+        Assert.assertEquals("value out of bounds", exception.getMessage());
 
         myAnalogIO = new MyAbstractAnalogIO(2.0, 43, false);
         myAnalogIO.setCommandedAnalogValue(2.0);
@@ -110,12 +103,12 @@ public class AbstractAnalogIOTest {
                 3.3 == myAnalogIO.getState(0.0));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -129,6 +129,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Assert.assertFalse(train2.isBuilt());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -174,6 +175,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Assert.assertFalse(p.moveButton.isEnabled());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // test fails with 5,000 loops without any JTextPane access

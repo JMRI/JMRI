@@ -77,7 +77,7 @@
             <model model="LokSound 5 XL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
-            <model model="LokSound 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
+            <model model="LokSound 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554629">
                 <output name="1,37" label="|"/> <!-- suppress unused item -->
                 <output name="1,38" label="|"/> <!-- suppress unused item -->
                 <output name="1,39" label="|"/> <!-- suppress unused item -->
@@ -90,7 +90,7 @@
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
                 <size length="30.5" width="15.5" height="5.5" units="mm"/>
             </model>
-            <model model="LokSound 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554588">
+            <model model="LokSound 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554630">
                 <output name="1,37" label="|"/> <!-- suppress unused item -->
                 <output name="1,38" label="|"/> <!-- suppress unused item -->
                 <output name="1,39" label="|"/> <!-- suppress unused item -->

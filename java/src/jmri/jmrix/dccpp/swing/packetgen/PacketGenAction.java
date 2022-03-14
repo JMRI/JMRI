@@ -38,13 +38,13 @@ public class PacketGenAction extends DCCppSystemConnectionAction {
             log.error("connection memo was null!");
             return;
         }
-        
+
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: {}",ex);
+            log.error("Exception",ex);
         }
         f.setVisible(true);
     }

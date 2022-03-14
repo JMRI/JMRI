@@ -99,7 +99,7 @@
         <label>
           <text>A value of 9 is a Move Away Time of 4,5 sec.</text>
           <text xml:lang="de">Der Wert 9 entspricht einer Abrückzeit von 4,5 Sec.</text>
-          <text xml:lang="cs">Doba odstoupení, hodnota 9 odpovídá 4,5 vteřiny.</text>
+          <text xml:lang="cs">Doba odstoupení, hodnota 9 odpovídá 4,5 sekundy.</text>
         </label>
         <label>
           <text> </text>

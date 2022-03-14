@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts between java types, for example String to Double and double to boolean.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
 public final class TypeConversionUtil {
-    
+
     /**
      * Is this object an integer number?
      * <P>
@@ -43,7 +43,7 @@ public final class TypeConversionUtil {
                 || (object instanceof Integer)
                 || (object instanceof Long);
     }
-    
+
     /**
      * Is this object an integer or a floating point number?
      * <P>
@@ -70,7 +70,7 @@ public final class TypeConversionUtil {
                 || (object instanceof Float)
                 || (object instanceof Double);
     }
-    
+
     /**
      * Is this object a String?
      * @param object the object to check
@@ -79,8 +79,8 @@ public final class TypeConversionUtil {
     public static boolean isString(Object object) {
         return object instanceof String;
     }
-    
-    
+
+
     private static boolean convertStringToBoolean(@Nonnull String str, boolean do_i18n) {
         // try to parse the string as a number
         try {
@@ -107,7 +107,7 @@ public final class TypeConversionUtil {
 //            System.err.format("The string: '%s', result: %b%n", str, !str.isEmpty());
         return !str.isEmpty();
     }
-    
+
     /**
      * Convert a value to a boolean.
      * <P>
@@ -124,7 +124,7 @@ public final class TypeConversionUtil {
      * <P>
      * For objects that implement the Reportable interface, the value is fetched
      * from the method toReportString().
-     * 
+     *
      * @param value the value to convert
      * @param do_i18n true if internationalization should be done, false otherwise
      * @return the boolean value
@@ -133,21 +133,21 @@ public final class TypeConversionUtil {
         if (value == null) {
             return false;
         }
-        
+
         if (value instanceof Map) {
-            Map map = ((Map)value);
+            var map = ((Map<?,?>)value);
             return !map.isEmpty();
         }
-        
+
         if (value instanceof Collection) {
-            Collection collection = ((Collection)value);
+            var collection = ((Collection<?>)value);
             return !collection.isEmpty();
         }
-        
+
         if (value instanceof Reportable) {
             value = ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
             double number = ((Number)value).doubleValue();
             return ! ((-0.5 < number) && (number < 0.5));
@@ -158,9 +158,10 @@ public final class TypeConversionUtil {
             return convertStringToBoolean(value.toString(), do_i18n);
         }
     }
-    
-    private static long convertStringToLong(@Nonnull String str) {
-        String patternString = "(\\-?\\d+)";
+
+    private static long convertStringToLong(@Nonnull String str, boolean checkAll, boolean throwOnError) {
+        String patternString = "^(\\-?\\d+)";
+        if (checkAll) patternString += "$";
         Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(str);
         // Only look at the beginning of the string
@@ -172,10 +173,14 @@ public final class TypeConversionUtil {
             return number;
         } else {
             log.warn("the string \"{}\" cannot be converted to a number", str);
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the string \"%s\" cannot be converted to a number", str));
+            }
             return 0;
         }
     }
-    
+
     /**
      * Convert a value to a long.
      * <P>
@@ -189,33 +194,75 @@ public final class TypeConversionUtil {
      * <P>
      * For objects that implement the Reportable interface, the value is fetched
      * from the method toReportString() before doing the conversion.
-     * 
+     *
      * @param value the value to convert
      * @return the long value
      */
     public static long convertToLong(@CheckForNull Object value) {
+        return convertToLong(value, false, false);
+    }
+
+    /**
+     * Convert a value to a long.
+     * <P>
+     * Rules:
+     * null is converted to 0
+     * empty string is converted to 0
+     * empty collection is converted to 0
+     * an instance of the interface Number is converted to the number
+     * a string that can be parsed as a number is converted to that number.
+     * a string that doesn't start with a digit is converted to 0
+     * <P>
+     * For objects that implement the Reportable interface, the value is fetched
+     * from the method toReportString() before doing the conversion.
+     *
+     * @param value the value to convert
+     * @param checkAll true if the whole string should be checked, false otherwise
+     * @param throwOnError true if a NumberFormatException should be thrown on error, false otherwise
+     * @return the long value
+     * @throws NumberFormatException on error if throwOnError is true
+     */
+    public static long convertToLong(@CheckForNull Object value, boolean checkAll, boolean throwOnError)
+            throws NumberFormatException {
         if (value == null) {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0;
         }
-        
+
         if (value instanceof Reportable) {
             value = ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
 //            System.err.format("Number: %1.5f%n", ((Number)value).doubleValue());
+            if (!(value instanceof Byte) && !(value instanceof Short) && !(value instanceof Integer) && !(value instanceof Long)) {
+                if (throwOnError) {
+                    throw new NumberFormatException(
+                            String.format("the null value cannot be converted to an integer"));
+                }
+            }
             return ((Number)value).longValue();
         } else if (value instanceof Boolean) {
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the boolean value \"%b\" cannot be converted to an integer", ((Boolean)value)));
+            }
             return ((Boolean)value) ? 1 : 0;
         } else {
-            if (value == null) return 0;
-            return convertStringToLong(value.toString());
+            if (value == null) {
+                if (throwOnError) {
+                    throw new NumberFormatException(
+                            String.format("the null value cannot be converted to an integer"));
+                }
+                return 0;
+            }
+            return convertStringToLong(value.toString(), throwOnError, checkAll);
         }
     }
-    
-    private static double convertStringToDouble(@Nonnull String str, boolean do_i18n) {
-        String patternString = "(\\-?\\d+(\\.\\d+)?(e\\-?\\d+)?)";
+
+    private static double convertStringToDouble(@Nonnull String str, boolean checkAll, boolean throwOnError) {
+        String patternString = "^(\\-?\\d+(\\.\\d+)?(e\\-?\\d+)?)";
+        if (checkAll) patternString += "$";
         Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(str);
         // Only look at the beginning of the string
@@ -227,10 +274,14 @@ public final class TypeConversionUtil {
             return number;
         } else {
             log.warn("the string \"{}\" cannot be converted to a number", str);
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the string \"%s\" cannot be converted to a number", str));
+            }
             return 0.0d;
         }
     }
-    
+
     /**
      * Convert a value to a double.
      * <P>
@@ -245,29 +296,65 @@ public final class TypeConversionUtil {
      * <P>
      * For objects that implement the Reportable interface, the value is fetched
      * from the method toReportString() before doing the conversion.
-     * 
+     *
      * @param value the value to convert
      * @param do_i18n true if internationalization should be done, false otherwise
      * @return the double value
      */
     public static double convertToDouble(@CheckForNull Object value, boolean do_i18n) {
+        return convertToDouble(value, do_i18n, false, false);
+    }
+
+    /**
+     * Convert a value to a double.
+     * <P>
+     * Rules:
+     * null is converted to 0
+     * empty string is converted to 0
+     * empty collection is converted to 0
+     * an instance of the interface Number is converted to the number
+     * a string that can be parsed as a number is converted to that number.
+     * if a string starts with a number AND do_i18n is false, it's converted to that number
+     * a string that doesn't start with a digit is converted to 0
+     * <P>
+     * For objects that implement the Reportable interface, the value is fetched
+     * from the method toReportString() before doing the conversion.
+     *
+     * @param value the value to convert
+     * @param do_i18n true if internationalization should be done, false otherwise
+     * @param checkAll true if the whole string should be checked, false otherwise
+     * @param throwOnError true if a NumberFormatException should be thrown on error, false otherwise
+     * @return the double value
+     * @throws NumberFormatException on error if throwOnError is true
+     */
+    public static double convertToDouble(@CheckForNull Object value, boolean do_i18n, boolean checkAll, boolean throwOnError) {
         if (value == null) {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0.0d;
         }
-        
+
         if (value instanceof Reportable) {
             value = ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
 //            System.err.format("Number: %1.5f%n", ((Number)value).doubleValue());
             return ((Number)value).doubleValue();
         } else if (value instanceof Boolean) {
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the boolean value \"%b\" cannot be converted to a number", ((Boolean)value)));
+            }
             return ((Boolean)value) ? 1 : 0;
         } else {
-            if (value == null) return 0.0;
-            
+            if (value == null) {
+                if (throwOnError) {
+                    throw new NumberFormatException(
+                            String.format("the null value cannot be converted to a number"));
+                }
+                return 0.0;
+            }
+
             if (do_i18n) {
                 // try to parse the string as a number
                 try {
@@ -278,13 +365,13 @@ public final class TypeConversionUtil {
                     log.debug("The string '{}' cannot be parsed as a number", value);
                 }
             }
-            return convertStringToDouble(value.toString(), do_i18n);
+            return convertStringToDouble(value.toString(), throwOnError, checkAll);
         }
     }
-    
+
     /**
      * Convert a value to a String.
-     * 
+     *
      * @param value the value to convert
      * @param do_i18n true if internationalization should be done, false otherwise
      * @return the String value
@@ -294,19 +381,19 @@ public final class TypeConversionUtil {
         if (value == null) {
             return "";
         }
-        
+
         if (value instanceof Reportable) {
             return ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
             if (do_i18n) {
                 return IntlUtilities.valueOf(((Number)value).doubleValue());
             }
         }
-        
+
         return value.toString();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(TypeConversionUtil.class);
 }

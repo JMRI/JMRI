@@ -26,7 +26,7 @@ public class ExecuteDelayed
 
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
-    private ProtectedTimerTask _timerTask;
+    private ProtectedTimerTask _defaultTimerTask;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private int _delay;
     private String _stateReference = "";
@@ -35,14 +35,10 @@ public class ExecuteDelayed
     private ExpressionNode _stateExpressionNode;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
     private boolean _resetIfAlreadyStarted;
+    private boolean _useIndividualTimers;
     
-    private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
-    protected final List<SymbolTable.VariableData> _localVariables = new ArrayList<>();
+    private final InternalFemaleSocket _defaultInternalSocket = new InternalFemaleSocket();
     
-    
-    // These variables are used internally in this action
-    private long _timerDelay = 0;   // Timer delay in milliseconds
-    private long _timerStart = 0;   // Timer start in milliseconds
     
     public ExecuteDelayed(String sys, String user) {
         super(sys, user);
@@ -65,6 +61,7 @@ public class ExecuteDelayed
         copy.setDelayReference(_stateReference);
         copy.setUnit(_unit);
         copy.setResetIfAlreadyStarted(_resetIfAlreadyStarted);
+        copy.setUseIndividualTimers(_useIndividualTimers);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -83,8 +80,12 @@ public class ExecuteDelayed
 */    
     /**
      * Get a new timer task.
+     * @param conditionalNG  the ConditionalNG
+     * @param symbolTable    the symbol table
+     * @param timerDelay     the time the timer should wait
+     * @param timerStart     the time when the timer was started
      */
-    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable) throws JmriException {
+    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
 
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(symbolTable);
         
@@ -93,14 +94,21 @@ public class ExecuteDelayed
             public void execute() {
                 try {
                     synchronized(ExecuteDelayed.this) {
-                        _timerTask = null;
-                        long currentTimerTime = System.currentTimeMillis() - _timerStart;
-                        if (currentTimerTime < _timerDelay) {
-                            scheduleTimer(conditionalNG, symbolTable, _timerDelay - currentTimerTime);
+                        if (!_useIndividualTimers) _defaultTimerTask = null;
+                        long currentTime = System.currentTimeMillis();
+                        long currentTimerTime = currentTime - timerStart;
+                        if (currentTimerTime < timerDelay) {
+                            scheduleTimer(conditionalNG, symbolTable, timerDelay - currentTimerTime, currentTime);
                         } else {
-                            _internalSocket.conditionalNG = conditionalNG;
-                            _internalSocket.newSymbolTable = newSymbolTable;
-                            conditionalNG.execute(_internalSocket);
+                            InternalFemaleSocket internalSocket;
+                            if (_useIndividualTimers) {
+                                internalSocket = new InternalFemaleSocket();
+                            } else {
+                                internalSocket = _defaultInternalSocket;
+                            }
+                            internalSocket.conditionalNG = conditionalNG;
+                            internalSocket.newSymbolTable = newSymbolTable;
+                            conditionalNG.execute(internalSocket);
                         }
                     }
                 } catch (RuntimeException | JmriException e) {
@@ -110,10 +118,18 @@ public class ExecuteDelayed
         };
     }
     
-    private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long delay) throws JmriException {
-        if (_timerTask != null) _timerTask.stopTimer();
-        _timerTask = getNewTimerTask(conditionalNG, symbolTable);
-        TimerUtil.schedule(_timerTask, delay);
+    private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
+        synchronized(ExecuteDelayed.this) {
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                _defaultTimerTask.stopTimer();
+            }
+            ProtectedTimerTask timerTask =
+                    getNewTimerTask(conditionalNG, symbolTable, timerDelay, timerStart);
+            if (!_useIndividualTimers) {
+                _defaultTimerTask = timerTask;
+            }
+            TimerUtil.schedule(timerTask, timerDelay);
+        }
     }
     
     private long getNewDelay() throws JmriException {
@@ -147,14 +163,14 @@ public class ExecuteDelayed
     @Override
     public void execute() throws JmriException {
         synchronized(this) {
-            if (_timerTask != null) {
-                if (_resetIfAlreadyStarted) _timerTask.stopTimer();
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                if (_resetIfAlreadyStarted) _defaultTimerTask.stopTimer();
                 else return;
             }
-            _timerDelay = getNewDelay() * _unit.getMultiply();
-            _timerStart = System.currentTimeMillis();
+            long timerDelay = getNewDelay() * _unit.getMultiply();
+            long timerStart = System.currentTimeMillis();
             ConditionalNG conditonalNG = getConditionalNG();
-            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), _timerDelay);
+            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), timerDelay, timerStart);
         }
     }
     
@@ -257,6 +273,23 @@ public class ExecuteDelayed
         _resetIfAlreadyStarted = resetIfAlreadyStarted;
     }
     
+    /**
+     * Get use individual timers.
+     * @return true if the timer should use individual timers, false othervise
+     */
+    public boolean getUseIndividualTimers() {
+        return _useIndividualTimers;
+    }
+    
+    /**
+     * Set reset if timer is already started.
+     * @param useIndividualTimers true if the timer should use individual timers,
+     *                              false othervise
+     */
+    public void setUseIndividualTimers(boolean useIndividualTimers) {
+        _useIndividualTimers = useIndividualTimers;
+    }
+    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
@@ -327,8 +360,11 @@ public class ExecuteDelayed
                 _socket.getName(),
                 delay,
                 _resetIfAlreadyStarted
-                        ? Bundle.getMessage("ExecuteDelayed_ResetRepeat")
-                        : Bundle.getMessage("ExecuteDelayed_IgnoreRepeat"));
+                        ? Bundle.getMessage("ExecuteDelayed_Options", Bundle.getMessage("ExecuteDelayed_ResetRepeat"))
+                        : Bundle.getMessage("ExecuteDelayed_Options", Bundle.getMessage("ExecuteDelayed_IgnoreRepeat")),
+                _useIndividualTimers
+                        ? Bundle.getMessage("ExecuteDelayed_Options", Bundle.getMessage("ExecuteDelayed_UseIndividualTimers"))
+                        : "");
     }
 
     public FemaleDigitalActionSocket getSocket() {
@@ -383,9 +419,11 @@ public class ExecuteDelayed
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        if (_timerTask != null) {
-            _timerTask.stopTimer();
-            _timerTask = null;
+        synchronized(ExecuteDelayed.this) {
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                _defaultTimerTask.stopTimer();
+                _defaultTimerTask = null;
+            }
         }
     }
     

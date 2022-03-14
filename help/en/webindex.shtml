@@ -1649,6 +1649,11 @@
                     </li>
                       
                     <li>
+                        <a href="html/tools/scripting/Python3.shtml">Python 3 Introduction</a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
                         <a href="html/tools/scripting/HowTo.shtml">Scripting How To... </a>
                         <ul></ul>
                     </li>

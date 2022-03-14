@@ -10,11 +10,11 @@ import java.util.ResourceBundle;
  */
 public class MergConnectionConfig extends ConnectionConfig {
 
-    public final static String NAME = "CAN via MERG Network Interface";
+    public final static String MERG_NAME = "CAN via MERG Network Interface";
 
     /**
-     * Create a connection configuration with a preexisting adapter. This is
-     * used principally when loading a configuration that defines this
+     * Create a connection configuration with a preexisting adapter.
+     * This is used principally when loading a configuration that defines this
      * connection.
      *
      * @param p the adapter to create a connection configuration for
@@ -25,7 +25,7 @@ public class MergConnectionConfig extends ConnectionConfig {
 
     @Override
     public String name() {
-        return NAME;
+        return MERG_NAME;
     }
 
     /**

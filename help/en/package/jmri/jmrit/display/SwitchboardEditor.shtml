@@ -53,10 +53,18 @@
         it easy to use the left/right arrows on the pane to jump to the next set of hardware
         addresses while keeping the number of items on the board the same.</li>
       </ul>
+
       <a href="images/Switchboard.png"><img src="images/Switchboard.png" width="276" height="221"
       class="floatRight" alt="Example of a Switchboard pane"></a>
-      <p>Optionally, change the background color for this Switchboard via the Options menu.
-      <span class="since">since 4.21.2</span>The new settings are applied immediately. Sometimes
+
+      <p><span class="since">since 4.99.3</span>
+        Additional settings for a particular Switchboard can be found in the Options menu.<br>
+        For example, change the background color for this Switchboard, set icon size or whether you
+        want to display the user name of connected switches.</p>
+
+      <a href="images/SwitchboardMenu.png"><img src="images/SwitchboardMenu.png" alt="Switchboard Option menu"></a>
+
+      <p>The new settings are applied immediately. Sometimes
       you may want to click [Update Switchboard] to redraw all items on the board.</p>
 
       <p>Note that hybrid Switchboards containing more than one bean type or connection are not

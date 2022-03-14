@@ -21,15 +21,15 @@ import jmri.ShutDownTask;
  * The constructor registers a shutdown task to
  * trigger the necessary cleanup code
  * <p>
- * The internal state machine handles changes of mode, automatic retry of 
+ * The internal state machine handles changes of mode, automatic retry of
  * certain messages, time outs, and sending poll messages when otherwise idle.
  * <p>
- * "Mode" refers to the state of the command station communications. "Normal" 
+ * "Mode" refers to the state of the command station communications. "Normal"
  * and "Programming" are the two modes, used if the command station requires
  * messages to go back and forth between them. <br>
  *
  * <img src="doc-files/AbstractMRTrafficController-StateDiagram.png" alt="UML State diagram">
- * 
+ *
  * <p>
  * The key methods for the basic operation are:
  * <ul>
@@ -41,13 +41,13 @@ import jmri.ShutDownTask;
  *  <li>{@link #forwardMessage(AbstractMRListener, AbstractMRMessage)} and {@link #forwardReply(AbstractMRListener, AbstractMRReply) } handle forwarding of specific types of objects
  * </ul>
  * <p>
- * If your command station requires messages to go in and out of 
- * "programming mode", those should be provided by 
+ * If your command station requires messages to go in and out of
+ * "programming mode", those should be provided by
  * {@link #enterProgMode()} and {@link #enterNormalMode()}.
  * <p>
  * If you want to poll for information when the line is otherwise idle,
  * implement {@link #pollMessage()} and {@link #pollReplyHandler()}.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2004-2010
  */
@@ -58,24 +58,24 @@ import jmri.ShutDownTask;
     [*] --> IDLESTATE
     IDLESTATE --> NOTIFIEDSTATE : sendMessage()
     NOTIFIEDSTATE --> IDLESTATE : queue empty
-    
+
     NOTIFIEDSTATE --> WAITMSGREPLYSTATE : transmitLoop()\nwake, send message
-    
+
     WAITMSGREPLYSTATE --> WAITREPLYINPROGMODESTATE : transmitLoop()\nnot in PROGRAMINGMODE,\nmsg for PROGRAMINGMODE
     WAITMSGREPLYSTATE --> WAITREPLYINNORMMODESTATE : transmitLoop()\nnot in NORMALMODE,\nmsg for NORMALMODE
-    
+
     WAITMSGREPLYSTATE --> NOTIFIEDSTATE : handleOneIncomingReply()
 
     WAITREPLYINPROGMODESTATE --> OKSENDMSGSTATE : handleOneIncomingReply()\nentered PROGRAMINGMODE
     WAITREPLYINNORMMODESTATE --> OKSENDMSGSTATE : handleOneIncomingReply()\nentered NORMALMODE
     OKSENDMSGSTATE --> WAITMSGREPLYSTATE : send original pended message
-    
+
     IDLESTATE --> POLLSTATE : transmitLoop()\nno work
     POLLSTATE --> WAITMSGREPLYSTATE : transmitLoop()\npoll msg exists, send it
     POLLSTATE --> IDLESTATE : transmitLoop()\nno poll msg to send
-    
+
     WAITMSGREPLYSTATE --> AUTORETRYSTATE : handleOneIncomingReply()\nwhen tagged as error reply
-    AUTORETRYSTATE --> IDLESTATE : to drive a repeat of a message 
+    AUTORETRYSTATE --> IDLESTATE : to drive a repeat of a message
 
 NOTIFIEDSTATE : Transmit thread wakes up and processes
 POLLSTATE : Transient while deciding to send poll
@@ -107,15 +107,15 @@ public abstract class AbstractMRTrafficController {
 
         // We use a shutdown task here to make sure the connection is left
         // in a clean state prior to exiting.  This is required on systems
-        // which have a service mode to ensure we don't leave the system 
+        // which have a service mode to ensure we don't leave the system
         // in an unusable state. Once the shutdown task executes, the connection
         // must be considered permanently closed.
-        
+
         InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
     }
 
     private boolean synchronizeRx = true;
-    
+
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;
     }
@@ -784,7 +784,7 @@ public abstract class AbstractMRTrafficController {
                         }
                 }
             });
-            
+
             String[] packages = this.getClass().getName().split("\\.");
             xmtThread.setName(
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
@@ -810,7 +810,7 @@ public abstract class AbstractMRTrafficController {
             rcvThread.setPriority(Thread.MAX_PRIORITY);      //bump up the priority
             rcvThread.setDaemon(true);
             rcvThread.start();
-            
+
         } catch (RuntimeException e) {
             log.error("Failed to start up communications. Error was: ", e);
             log.debug("Full trace:", e);
@@ -1062,7 +1062,7 @@ public abstract class AbstractMRTrafficController {
         loadChars(msg, istream);
 
         if (threadStopRequest) return;
-        
+
         // message is complete, dispatch it !!
         replyInDispatch = true;
         log.debug("dispatch reply of length {} contains \"{}\", state {}", msg.getNumDataElements(), msg, mCurrentState);
@@ -1187,20 +1187,6 @@ public abstract class AbstractMRTrafficController {
         return mLastSender;
     }
 
-    // Override the finalize method for this class
-    // to request termination, which might have happened
-    // before in any case
-    /**
-     * finalize deprecated in Java 9, but not yet removed
-     * @deprecated since Java 9
-     */
-    @Override
-    @Deprecated
-    protected final void finalize() throws Throwable {
-        terminate();
-        super.finalize();
-    }
-
     protected void terminate() {
         log.debug("Cleanup Starts");
         if (ostream == null) {
@@ -1295,7 +1281,7 @@ public abstract class AbstractMRTrafficController {
                 // interrupted during cleanup.
             }
         }
-        
+
         if (rcvThread != null) {
             rcvThread.interrupt();
             try {
@@ -1303,16 +1289,16 @@ public abstract class AbstractMRTrafficController {
             } catch (InterruptedException ie){
                 // interrupted during cleanup.
             }
-        }    
-        // we also need to remove the shutdown task. 
+        }
+        // we also need to remove the shutdown task.
         InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
-    
+
     /**
      * Flag that threads should terminate as soon as they can.
      */
     protected volatile boolean threadStopRequest = false;
-    
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMRTrafficController.class);
 
 }

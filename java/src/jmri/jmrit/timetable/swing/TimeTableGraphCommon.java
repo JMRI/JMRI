@@ -271,7 +271,12 @@ public class TimeTableGraphCommon {
         for (Train train : _trains) {
             _trainName = train.getTrainName();
             _trainThrottle = train.getThrottle();
-            String typeColor = _dataMgr.getTrainType(train.getTypeId()).getTypeColor();
+            String typeColor;
+            if (train.getTypeId() == 0) {
+                typeColor = "#000000";
+            } else {
+                typeColor = _dataMgr.getTrainType(train.getTypeId()).getTypeColor();
+            }
             _trainColor = Color.decode(typeColor);
             _trainLine = new Path2D.Double();
 

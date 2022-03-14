@@ -32,7 +32,7 @@ public class DefaultSignalMastLogicManager
         registerSelf();
         addListeners();
     }
-    
+
     final void addListeners(){
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
@@ -68,7 +68,7 @@ public class DefaultSignalMastLogicManager
 
     /**
      * Provide / create New SML.
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Nonnull
     @Override
@@ -215,7 +215,7 @@ public class DefaultSignalMastLogicManager
             try {
                 sml.useLayoutEditor(false, mast);
             } catch (JmriException e) {
-                log.error("Error occurred while trying to disable layout editor use {}", e);
+                log.error("Error occurred while trying to disable layout editor use", e);
             }
         }
     }
@@ -439,7 +439,7 @@ public class DefaultSignalMastLogicManager
                         sml.setAssociatedSection(sec, destMast);
                         sec.setProperty("forwardMast", destMast.getDisplayName());
                         boolean destIntermediate = false;
-                        Object destMastImSigProp = destMast.getProperty("intermediateSignal"); 
+                        Object destMastImSigProp = destMast.getProperty("intermediateSignal");
                         if ( destMastImSigProp != null) {
                             destIntermediate = ((Boolean) destMastImSigProp);
                         }
@@ -493,7 +493,7 @@ public class DefaultSignalMastLogicManager
             sml.removeDirectionSensors();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void dispose(){

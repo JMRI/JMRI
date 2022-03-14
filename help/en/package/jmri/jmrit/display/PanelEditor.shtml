@@ -52,29 +52,35 @@
         <li>A dropdown menu where you may choose the type of icon or data you may put into the
         panel.
           <ul>
-            <li>Add Right Hand Turnout Icon</li>
+            <li>Right Hand Turnout</li>
 
-            <li>Add Left Hand Turnout Icon</li>
+            <li>Left Hand Turnout</li>
 
-            <li>Add Sensor Icon</li>
+            <li>Slip/3-Way Turnout/Scissor</li>
 
-            <li>Add Signal Head Icon</li>
+            <li>Sensor</li>
 
-            <li>Add Signal Mast Icon</li>
+            <li>Signal Head</li>
 
-            <li>Add Memory Value</li>
+            <li>Signal Mast</li>
 
-            <li>Add Reporter Value</li>
+            <li>Memory</li>
 
-            <li>Add Background Image</li>
+            <li>Block Contents Label</li>
 
-            <li>Add MultiSensor (i.e levers and switches) Icons</li>
+            <li>Reporter</li>
 
-            <li>Add RPS Reporter Icon</li>
+            <li>Light</li>
 
-            <li>Add Fast Clock</li>
+            <li>Background</li>
 
-            <li>Add Icon (unassociated to any JMRI device)</li>
+            <li>MultiSensor (i.e levers and switches)</li>
+
+            <li>RPS Reporter</li>
+
+            <li>Fast Clock</li>
+
+            <li>Icon (unassociated to any JMRI device)</li>
           </ul>
 
           <p>In most cases, selecting one of these items will open a window from which icons or
@@ -113,22 +119,26 @@
         click down and drag. By default new items can be repositioned even if this box isn't
         checked.</li>
 
-        <li>Show item's coordinates in popup menu. When checked, the item's popup menu will include
-        the item's X and Y coordinates. This can help you better position your icons in the
-        panel.</li>
-
         <li>Panel items control layout. Normally you want to control your layout, so leave this box
         checked. Otherwise, uncheck the box if you don't want your panel to send commands to your
         layout.</li>
+
+        <li>Show all hidden items. Individual items can be set to hidden.  If this option is
+        unchecked, those items will be hidden.  This option is linked to the popup menus item.
+        If popup menus is active, this option will also be be active which means that nothing
+        will be hidden.</li>
+
+        <li>Show Tooltips for all items.  When checked, the icon tooltips will be enabled.
+        See <a href="Tooltips.shtml">Tooltips</a> for more information.</li>
 
         <li>Panel has menu. Once you don't need to change or edit your layout, you can disable the
         ability to use the panel editor. The only way to re-enable the editor is to edit the panel
         file. Using a simple editor (Notepad for Window users will work) or XML editor, open your
         panel and find panelmenu="no" and change "no" to "yes" and save the file. The panel will
-        now show the menu the next time you load the panel in PanelPro.</li>
+        now show the menu the next time you load the panel in PanelPro.  Note:  This option does
+        not appear to work anymore (checked at 4.26, probably much earlier).</li>
 
-        <li>Panel scrollbars. (JMRI 2.5.2 and later). Allows you to choose which scrollbars to
-        display.</li>
+        <li>Panel scrollbars. Allows you to choose which scrollbars to display.</li>
       </ul>
 
       <h2>After Creating A Panel</h2>

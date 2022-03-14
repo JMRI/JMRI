@@ -4557,6 +4557,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_WTL12");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS210");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS210PLUS");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240");
             case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
@@ -4565,18 +4567,26 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT402");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DT500:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT500");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DT602:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT602");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS51");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS52");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR92");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UR93:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR93");
             case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR4");
             case LnConstants.RE_IPL_DIGITRAX_HOST_LNWI:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNWI");
             case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BXP88");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BXPA1");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DS74:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DS74");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB210");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DB210OPTO:

@@ -21,15 +21,51 @@ public abstract class AbstractBase
         extends AbstractNamedBean
         implements Base {
 
+    private final Category _category;
     protected boolean _listenersAreRegistered = false;
 
     public AbstractBase(String sys) throws BadSystemNameException {
         super(sys);
+        _category = Category.ITEM;
     }
 
     public AbstractBase(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+        _category = Category.ITEM;
+    }
+
+    public AbstractBase(String sys, Category category) throws BadSystemNameException {
+        super(sys);
+        _category = category;
+    }
+
+    public AbstractBase(String sys, String user, Category category)
+            throws BadUserNameException, BadSystemNameException {
+        super(sys, user);
+        _category = category;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Category getCategory() {
+        return _category;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        // Default implementation is to throw UnsupportedOperationException.
+        // Classes that have children must override this method.
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getChildCount() {
+        // Default implementation is to return 0 children.
+        // Classes that have children must override this method.
+        return 0;
     }
 
     /** {@inheritDoc} */
@@ -111,7 +147,9 @@ public abstract class AbstractBase
      * Important: This method may be called more than once. Methods overriding
      * this method must ensure that listeners are not registered more than once.
      */
-    abstract protected void registerListenersForThisClass();
+    protected void registerListenersForThisClass() {
+        // Do nothing
+    }
 
     /**
      * Unregister listeners if this object needs that.
@@ -119,7 +157,9 @@ public abstract class AbstractBase
      * Important: This method may be called more than once. Methods overriding
      * this method must ensure that listeners are not unregistered more than once.
      */
-    abstract protected void unregisterListenersForThisClass();
+    protected void unregisterListenersForThisClass() {
+        // Do nothing
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -204,6 +244,8 @@ public abstract class AbstractBase
 
     /** {@inheritDoc} */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("## {} :: {}", level, this.getLongDescription());
         level++;
@@ -233,7 +275,9 @@ public abstract class AbstractBase
      * Listeners do not need to be unregistered by this method since they are
      * unregistered by dispose().
      */
-    abstract protected void disposeMe();
+    protected void disposeMe() {
+        // Do nothing
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -246,7 +290,7 @@ public abstract class AbstractBase
         disposeMe();
     }
 
-    protected void assertListenersAreNotRegistered(Logger log, String method) {
+    public void assertListenersAreNotRegistered(Logger log, String method) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
             log.error(method + " must not be called when listeners are registered", e);

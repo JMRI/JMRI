@@ -48,7 +48,6 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         JUnitUtil.initReporterManager();
     }
 
-    @SuppressWarnings("deprecation")
     @AfterEach
     @Override
     public void tearDown() throws Exception {

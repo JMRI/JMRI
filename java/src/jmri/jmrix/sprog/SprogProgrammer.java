@@ -24,7 +24,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Implemented Types.
@@ -38,7 +38,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -60,7 +60,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     int _startVal;
     jmri.ProgListener _progListener;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -72,7 +72,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         startProgramming(_val, CV, 0);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -80,15 +80,15 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         readCV(CV, p);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCVWithDefault(CVname, p, 0);
     }
-    
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -101,7 +101,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             }
             readCVWithDefault(CVname, p, _startVal);
         } else {
-            // The SPROG version is not known yet so request the version 
+            // The SPROG version is not known yet so request the version
             log.debug("SPROG version is unknown - trying to get it");
             // save for later
             _cv = CVname;
@@ -112,7 +112,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     /**
      * Internal method to read a CV with a possible default value
-     * 
+     *
      * @param CVname    Index of CV to read
      * @param p         Programming listener
      * @param startVal  CV default value, Use 0 if no default available
@@ -130,7 +130,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     /**
      * Send the command to start programming operation.
-     * 
+     *
      * @param val       Value to be written, or -1 for read
      * @param CV        CV to read/write
      * @param startVal  Hint of what current CV value may be
@@ -144,7 +144,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             controller().sendSprogMessage(progTaskStart(getMode(), val, CV, startVal), this);
         } catch (Exception e) {
             // program op failed, go straight to end
-            log.error("program operation failed, exception {}",e);
+            log.error("program operation failed",e);
             progState = NOTPROGRAMMING;
         }
     }
@@ -171,7 +171,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * Internal method to create the SprogMessage for programmer task start.
      * @param mode Mode to be used
      * @param val value to be written
-     * @param cvnum CV address to write to 
+     * @param cvnum CV address to write to
      * @param startVal Hint of what the CV may contain, or 0
      * @return formatted message to do programming operation
      */
@@ -189,14 +189,14 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public void notifyMessage(SprogMessage m) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -264,7 +264,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         readCVWithDefault(_cv, _progListener, _startVal);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Internal routine to handle a timeout

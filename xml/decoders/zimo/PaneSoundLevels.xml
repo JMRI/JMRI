@@ -472,13 +472,34 @@
       <label>
         <text> </text>
       </label>
-      <label>
+      <row>
+        <display item="Zimo Sound Setting 43" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Zimo Sound Setting 43" layout="above" format="hslider"/>
+      </row>
+       <label>
         <text> </text>
       </label>
-      <label>
+      <row>
+        <display item="Zimo Sound Setting 44" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Zimo Sound Setting 44" layout="above" format="hslider"/>
+      </row>
+       <label>
         <text> </text>
       </label>
-      <label>
+      <row>
+        <display item="Zimo Sound Setting 45" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Zimo Sound Setting 45" layout="above" format="hslider"/>
+      </row>
+       <label>
         <text> </text>
       </label>
       <label>

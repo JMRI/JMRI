@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-Disque</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+
+ <appearances>
+    <appearance>
+      <aspectname>Disque</aspectname>
+      <show>red</show>
+      <reference>Disque</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueD.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueD.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueVL.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueVL.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueVL.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>ClearSlow</aspectname>
+      <show>green</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueVLr.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueVLr.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueVLr.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueA.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueA.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueA.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advanced Approach</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueAa.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueAa.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueAa.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Restrict30</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueAR30.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueAR30.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueAR30.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advanced Approach Restrict60</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueAaR60.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueAaR60.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueAaR60.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Restrict60</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueAR60.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueAR60.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueAR60.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restrict30</aspectname>
+      <show>yellow</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueR30.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueR30.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueR30.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restrict60</aspectname>
+      <show>yellow</show>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/DisqueR60.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/DisqueR60.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/DisqueR60.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/Disque/Disquedark.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Disque/Disquedark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/Disque/Disquedark.gif</imagelink>
+    </appearance>
+ </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Disque</aspect>
+    </danger>
+    <permissive>
+      <aspect>Approach</aspect>
+    </permissive>
+    <held>
+      <aspect>Disque</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+
+<!--
+  <comment>French~~.advancedaspect.=le signal suivant et .ourAspect. les états que le signal (le notre) peut avoir.</comment>
+ -->
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Semaphore</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach Restrict30</ourAspect>
+      <ourAspect>Approach Restrict60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>ClearSlow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advanced Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop Purple</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach Restrict30</ourAspect>
+      <ourAspect>Approach Restrict60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Not Lit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      	<advancedAspect>GuidonLF</advancedAspect>
+     	 <ourAspect>Disque</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      	<advancedAspect>GuidonMF</advancedAspect>
+     	 <ourAspect>Disque</ourAspect>
+    </aspectMapping>
+<!--
+   <comment>Nomaly not existing-normalement n'existe plus</comment>
+ -->
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach Restrict30</ourAspect>
+      <ourAspect>Approach Restrict60</ourAspect>
+    </aspectMapping>
+
+<!--
+   <comment>même si pas logique-not logic with rules</comment>
+ -->
+    <aspectMapping>
+      <advancedAspect>Slow</advancedAspect>
+      <ourAspect>Approach Restrict30</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>restricted</advancedAspect>
+      <ourAspect>Approach Restrict30</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

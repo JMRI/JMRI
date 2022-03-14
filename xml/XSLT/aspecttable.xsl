@@ -15,8 +15,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
-<xsl:stylesheet	version="1.0" 
+
+<xsl:stylesheet	version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:db="http://docbook.org/ns/docbook"
     >
@@ -26,7 +26,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -34,7 +34,7 @@
 <xsl:output method="html" encoding="ISO-8859-1"/>
 
 
-<!-- Overide basic default template rule to 
+<!-- Overide basic default template rule to
      copy nodes to the output.  This lets e.g.
      XHTML be embedded in comments, etc, and
      be properly carried through. -->
@@ -48,14 +48,14 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='/'>
 
 <html>
 	<head>
 		<title>JMRI &quot;<xsl:value-of select="aspecttable/name"/>&quot; Aspect Table</title>
 	</head>
-	
+
 	<body>
 		<h2>JMRI &quot;<xsl:value-of select="aspecttable/name"/>&quot; Aspect Table</h2>
 
@@ -106,17 +106,17 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:value-of select="name"/>
     </h3>
     <!-- end create section title -->
-    
+
     Indication: <xsl:value-of select="indication"/><br/>
-    
+
     <!-- try to locate all images and show -->
-    
+
     <!-- set the 'matchaspect' variable to the name of the aspect we're doing now -->
     <xsl:variable name="matchaspect"><xsl:value-of select="name" /></xsl:variable>
 
         <xsl:for-each select="/aspecttable/imagetypes/imagetype">
             <xsl:variable name="matchtype"><xsl:value-of select="@type" /></xsl:variable>
-        
+
             <table><tr>
             <!-- index through all the files -->
             <!-- Bug: Firefox doesn't properly preserve document order here... -->
@@ -132,7 +132,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
                                 <xsl:attribute name="src">
                                     <xsl:value-of select="."/>
                                 </xsl:attribute>
-                              </xsl:element></td> 
+                              </xsl:element></td>
 
                         </xsl:if>
 
@@ -157,7 +157,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
                             <xsl:attribute name="src">
                                 <xsl:value-of select="."/>
                             </xsl:attribute>
-                          </xsl:element></td> 
+                          </xsl:element></td>
 
                     </xsl:if>
 
@@ -238,7 +238,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
                 <xsl:attribute name="src">
                     <xsl:value-of select="."/>
                 </xsl:attribute>
-            </xsl:element></td> 
+            </xsl:element></td>
     </xsl:for-each>
     </tr></table>
     <p/>
@@ -247,5 +247,5 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Display revision history -->
 <xsl:include href="show-revhistory.xsl" />
 
-  
+
 </xsl:stylesheet>

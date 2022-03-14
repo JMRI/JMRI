@@ -247,20 +247,6 @@ public abstract class AbstractPanelServlet extends HttpServlet {
      * attribute is actual name of aspect.
      *
      * @param name user/system name of the signalMast using the icons
-     * @return an icons element containing icon URLs for SignalMast states
-     * @deprecated since 4.15.4 use {@link #getSignalMastIconsElement(String, String)} instead
-     */
-    @Deprecated  
-    protected Element getSignalMastIconsElement(String name) {
-        return getSignalMastIconsElement(name, "default") ;
-    }
-    
-    /**
-     * Build and return an "icons" element containing icon URLs for all
-     * SignalMast states. Element names are cleaned-up aspect names, aspect
-     * attribute is actual name of aspect.
-     *
-     * @param name user/system name of the signalMast using the icons
      * @param imageset imageset name or "default"
      * @return an icons element containing icon URLs for SignalMast states
      */

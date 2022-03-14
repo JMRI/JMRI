@@ -8,6 +8,7 @@ import javax.annotation.*;
 
 import jmri.JmriException;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 import jmri.beans.PropertyChangeProvider;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -571,6 +572,7 @@ public interface Base extends PropertyChangeProvider {
 
     public static class PrintTreeSettings {
         public boolean _printLineNumbers = false;
+        public boolean _printDisplayName = false;
         public boolean _printErrorHandling = true;
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;

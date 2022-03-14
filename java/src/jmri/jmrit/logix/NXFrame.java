@@ -530,6 +530,7 @@ public class NXFrame extends WarrantRoute {
             mode = Warrant.MODE_RUN;
             warrant.setShareRoute(_shareRouteBox.isSelected());
             warrant.setAddTracker(_addTracker.isSelected());
+            warrant.setHaltStart(_haltStartBox.isSelected());
             msg = makeCommands(warrant);
         } else {
             mode = Warrant.MODE_MANUAL;
@@ -546,35 +547,6 @@ public class NXFrame extends WarrantRoute {
             if (msg != null) {
                 log.debug("WarrantTableFrame run warrant. msg= {} Remove warrant {}",msg,warrant.getDisplayName());
                 tableFrame.getModel().removeWarrant(warrant, false);
-            }
-        }
-
-        if (msg == null && mode == Warrant.MODE_RUN) {
-            if (_haltStartBox.isSelected()) {
-                class Halter implements Runnable {
-
-                    Warrant war;
-
-                    Halter(Warrant w) {
-                        war = w;
-                    }
-
-                    @Override
-                    public void run() {
-                        int limit = 0;
-                        try {
-                            // wait until _engineer is assigned so HALT can take effect
-                            while (!war.controlRunTrain(Warrant.HALT) && limit < 3000) {
-                                Thread.sleep(200);
-                                limit += 200;
-                            }
-                        } catch (InterruptedException e) {
-                            war.controlRunTrain(Warrant.HALT);
-                        }
-                    }
-                }
-                Halter h = new Halter(warrant);
-                jmri.util.ThreadingUtil.newThread(h).start();
             }
         }
         if (msg != null) {
@@ -641,8 +613,6 @@ public class NXFrame extends WarrantRoute {
         } catch (java.text.ParseException pe) {
             return Bundle.getMessage("MustBeFloat", text);
         }
-        
-        _speedUtil.resetSpeedProfile();
         return null;
     }
 
@@ -786,8 +756,8 @@ public class NXFrame extends WarrantRoute {
             // distance attaining final speed
             intervalDist = _speedUtil.getDistanceOfSpeedChange(_maxThrottle, prevSetting, downRamp.getRampTimeIncrement());
             log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}",
-                    totalLen, upRamp.getRampLength(Warrant.Normal), downRamp.getRampLength(Warrant.Normal));
-        } while ((upRamp.getRampLength(Warrant.Normal) + intervalDist + downRamp.getRampLength(Warrant.Normal)) > totalLen);
+                    totalLen, upRamp.getRampLength(), downRamp.getRampLength());
+        } while ((upRamp.getRampLength() + intervalDist + downRamp.getRampLength()) > totalLen);
         _maxThrottle = downRamp.getMaxSpeed();
 
         float blockLen = _startDist;    // length of path in current block
@@ -800,10 +770,10 @@ public class NXFrame extends WarrantRoute {
         float nextThrottle = 0f;
         float curDistance = 0;  // current distance traveled mm
         float blkDistance = 0;  // distance traveled in current block mm
-        float upRampLength = upRamp.getRampLength(Warrant.Normal);
+        float upRampLength = upRamp.getRampLength();
         float remRamp = upRampLength;
         float remTotal = totalLen;
-        float dnRampLength = downRamp.getRampLength(Warrant.Normal);
+        float dnRampLength = downRamp.getRampLength();
         int timeInterval = downRamp.getRampTimeIncrement();
         boolean rampsShareBlock = false;
 

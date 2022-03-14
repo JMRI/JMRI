@@ -130,7 +130,7 @@
 
         <li>
           <p>If you want the Route to play a sound when it triggers, enter the file name of a sound
-          file in the text box following 'Play sound file'. Clicking <strong>Set</strong> will
+          file in the text box following 'Play sound file'. Clicking <strong>...</strong> will
           bring up a file selection dialog to help locate the file. Once the file is located,
           clicking on its name in the dialog will copy it, complete with path, into the text
           box.</p>
@@ -138,7 +138,7 @@
 
         <li>
           <p>Similarly if you want a script to be run when the Route triggers, enter its file name
-          into the text box on the right. The <strong>Set</strong> button can be used as above to
+          into the text box on the right. The <strong>...</strong> button can be used as above to
           assist in entering script file information.</p>
         </li>
 
@@ -181,13 +181,17 @@
         </li>
 
         <li>
-          <p>Click the <strong>Add Route</strong> button at the bottom of the pane. If everything
+          <p>Click the <strong>Create</strong> button at the bottom of the pane. If everything
           is fine, a message stating "New Route added ... " will be displayed in the notes box near
           the bottom of the pane. If there is trouble with anything, an error message will be
-          displayed in the notes box; you should then correct the error and click <strong>Add
-          Route</strong> again.</p>
+          displayed in the notes box; you should then correct the error and click <strong>
+          Create</strong> again.</p>
         </li>
       </ol>
+
+      <p><span class="since">since 4.99.4</span>The <strong>Copy from...</strong> button is used to
+      to copy the configuration of an existing route to a new route.  This makes it easy to make a
+      set of routes that have minor differences, such as yard ladders.</p>
 
       <h3>Editing an existing Route</h3>
 

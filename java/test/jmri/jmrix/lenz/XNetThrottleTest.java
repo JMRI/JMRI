@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import jmri.util.junit.rules.RetryRule;
 
 /**
  * Test for the jmri.jmrix.lenz.XNetThrottle class
@@ -13,8 +12,6 @@ import jmri.util.junit.rules.RetryRule;
  */
 @Timeout(1)
 public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
-
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     protected XNetInterfaceScaffold tc = null;
     protected XNetSystemConnectionMemo memo = null;

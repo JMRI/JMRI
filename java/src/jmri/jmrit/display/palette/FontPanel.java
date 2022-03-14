@@ -65,7 +65,7 @@ public class FontPanel extends JPanel implements ItemListener {
     }
 
     private void makeFontPanels() {
-        
+
         JPanel fontPanel = new JPanel();
 
         Font defaultFont = _util.getFont();
@@ -94,7 +94,7 @@ public class FontPanel extends JPanel implements ItemListener {
         fontPanel.add(makeBoxPanel("Justification", _fontJustBox)); // NOI18N
         this.add(fontPanel);
     }
-    
+
     public void setFontSelections() {
         _fontFaceBox.setSelectedItem(_util.getFont());
         int row = 4;
@@ -124,8 +124,8 @@ public class FontPanel extends JPanel implements ItemListener {
     @SuppressFBWarnings(value = "Raw use of parameterized class", justification="AJComboBox is checked")
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getSource() instanceof AJComboBox) {
-            AJComboBox comboBox = (AJComboBox) e.getSource();
+        if (e.getSource() instanceof AJComboBox<?>) {
+            AJComboBox<?> comboBox = (AJComboBox<?>) e.getSource();
             switch (comboBox._which) {
                 case SIZE:
                     String size = (comboBox.getSelectedItem() != null ? (String) comboBox.getSelectedItem() : "10");
@@ -181,6 +181,6 @@ public class FontPanel extends JPanel implements ItemListener {
             _callBack.actionPerformed(null);
         }
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FontPanel.class);
 }

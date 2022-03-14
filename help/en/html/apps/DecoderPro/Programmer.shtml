@@ -57,6 +57,9 @@
             e.g. the text box. Possible values are "left", "above", "below", "right" with a default
             of "right".</li>
 
+            <li><dfn>viewOnly</dfn> - Present the variable but do not allow the user to change
+            its value in this place. Possible values are "yes" or "no", with a default of "no".</li>
+
             <li>
               <dfn>format</dfn> -
               <p>How the variable should be presented. Numeric variables can be presented as</p>

@@ -14,7 +14,7 @@
 
 <!-- xsltproc xml/XSLT/decoderAddI18nName.xsl 0NMRA.xml | xmllint -format - | diff - 0NMRA.xml      -->
 
-<!-- This file is part of JMRI.  Copyright 2009-2014.                       -->
+<!-- This file is part of JMRI.  Copyright 2009-2022.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -25,8 +25,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
-<xsl:stylesheet	version="1.0" 
+
+<xsl:stylesheet	version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:db="http://docbook.org/ns/docbook"
     >

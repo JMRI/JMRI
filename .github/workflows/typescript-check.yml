@@ -1,0 +1,25 @@
+# This workflow checks that Typescript code has been properly compiled
+
+name: Typescript Check
+on:
+  push:
+  pull_request:
+
+jobs:
+  tsc:
+    name: tsc
+    runs-on: ubuntu-latest
+    steps:
+    # see https://github.com/marketplace/actions/typescript-compiler
+    - uses: actions/checkout@v1
+    - name: install node v12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: yarn install
+      run:
+        yarn install
+    - name: check changes
+      run: |
+        ant typescript
+        git diff --exit-code web/js

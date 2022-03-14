@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -24,6 +25,13 @@ public class JmriPanelTest {
     public void testInitComponents() throws Exception{
         // for now, just make sure there isn't an exception.
         panel.initComponents();
+    }
+
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testAccessibility() throws Exception{
+        panel.initComponents();
+        jmri.util.AccessibilityChecks.check(panel);
     }
 
     @Test

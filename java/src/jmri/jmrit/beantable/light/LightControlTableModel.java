@@ -24,9 +24,9 @@ import static jmri.jmrit.beantable.LightTableAction.getDescriptionText;
  * Table model for Light Controls in the Add/Edit Light windows.
  * No direct access to this class is normally required, access via
  * LightControlPane.java
- * 
+ *
  * Code originally within LightTableAction.
- * 
+ *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Egbert Broerse Copyright (C) 2017
  * @author Steve Young Copyright (C) 2021
@@ -37,25 +37,25 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
     public static final int DESCRIPTION_COLUMN = 1;
     public static final int EDIT_COLUMN = 2;
     public static final int REMOVE_COLUMN = 3;
-    
+
     private final LightControlPane lcp;
     private final ArrayList<LightControl> controlList;
-    
+
     protected static final String sensorControl = Bundle.getMessage("LightSensorControl");
     protected static final String fastClockControl = Bundle.getMessage("LightFastClockControl");
     protected static final String turnoutStatusControl = Bundle.getMessage("LightTurnoutStatusControl");
     protected static final String timedOnControl = Bundle.getMessage("LightTimedOnControl");
     protected static final String twoSensorControl = Bundle.getMessage("LightTwoSensorControl");
     protected static final String noControl = Bundle.getMessage("LightNoControl");
-    
-    protected static final String[] controlTypes = new String[]{
+
+    static final String[] controlTypes = new String[]{
         noControl,
         sensorControl,
         fastClockControl,
         turnoutStatusControl,
         timedOnControl,
         twoSensorControl };
-    
+
     protected static final List<String> getControlTypeTips(){
         ArrayList<String> typeTooltips = new ArrayList<>();
         typeTooltips.add(null); // no Control Type selected
@@ -98,7 +98,7 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
         controlList = new ArrayList<>();
         lcp = pane;
     }
-    
+
     /**
      * Get the Current Light Control List for the Table.
      * @return unmodifiable List of Light Controls.
@@ -106,19 +106,19 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
     public List<LightControl> getControlList(){
         return java.util.Collections.unmodifiableList(controlList);
     }
-    
+
     public void setTableToLight(Light light){
         // Get a fresh copy of the LightControl list
         controlList.clear();
         light.getLightControlList().forEach((lightControlList1) -> controlList.add(new DefaultLightControl(lightControlList1)));
         fireTableDataChanged();
     }
-    
+
     public void addControl(LightControl lc){
         controlList.add(lc);
         fireTableDataChanged();
     }
-    
+
     public void removeControl(LightControl lc){
         controlList.remove(lc);
         fireTableDataChanged();
@@ -221,11 +221,11 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
             fireTableDataChanged();
         }
     }
-    
+
     protected void configureJTable(JTable table){
-    
+
         table.setRowSelectionAllowed(false);
-    
+
         TableColumnModel lightControlColumnModel = table.getColumnModel();
         TableColumn typeColumn = lightControlColumnModel.getColumn(LightControlTableModel.TYPE_COLUMN);
         typeColumn.setResizable(true);
@@ -248,7 +248,7 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
         TableColumn removeColumn = lightControlColumnModel.getColumn(LightControlTableModel.REMOVE_COLUMN);
         removeColumn.setResizable(false);
         removeColumn.setMinWidth(testButton.getPreferredSize().width);
-        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightControlTableModel.class);

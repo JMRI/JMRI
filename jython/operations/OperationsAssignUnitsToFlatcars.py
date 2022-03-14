@@ -88,6 +88,8 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
     
     # get the car manager
     carManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
+    # get the kernel manager
+    kernelManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.KernelManager)
           
     # get a list of cars from the manager
     carList = carManager.getByTrainDestinationList(train)
@@ -116,7 +118,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
                                 print "    Found flatcar(" + flatcar.toString() + ") type (" + flatcarName + ")"
                                 if flatcar.getKernel() == None:
                                     # create new kernel using train name and unit's id
-                                    kernel = carManager.newKernel(self.trainName + self.regex + unit.toString()) 
+                                    kernel = kernelManager.newKernel(self.trainName + self.regex + unit.toString()) 
                                     print "    Add (" + unit.toString() + ") and flatcar (" + flatcar.toString() + ") to kernel (" + kernel.getName() + ")"                                   
                                     unit.setKernel(kernel)
                                     flatcar.setKernel(kernel)

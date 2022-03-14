@@ -1,10 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -40,23 +37,18 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalManager;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Logix;
-import jmri.LogixManager;
-import jmri.Manager;
-import jmri.UserPreferencesManager;
+
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.conditional.ConditionalEditBase;
 import jmri.jmrit.conditional.ConditionalListEdit;
 import jmri.jmrit.conditional.ConditionalTreeEdit;
 import jmri.jmrit.conditional.ConditionalListCopy;
+import jmri.jmrit.logixng.tools.ImportLogix;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -222,6 +214,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
                     } else if (Bundle.getMessage("ButtonDelete").equals(value)) {  // NOI18N
                         deletePressed(sName);
+                    } else if (Bundle.getMessage("ButtonExportLogixToLogixNG").equals(value)) {  // NOI18N
+                        exportToLogixNGPressed(sName);
                     }
                 } else if (col == ENABLECOL) {
                     // alternate
@@ -299,6 +293,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
+                editCombo.addItem(Bundle.getMessage("ButtonExportLogixToLogixNG"));  // NOI18N
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
                 col.setCellEditor(new DefaultCellEditor(editCombo));
             }
@@ -339,7 +334,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Logix> f) {
         loadSelectionMode();
         loadEditorMode();
 
@@ -474,14 +469,14 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
         item = new JMenuItem(Bundle.getMessage("CrossReference"));  // NOI18N
         item.addActionListener(new ActionListener() {
-            BeanTableFrame parent;
+            BeanTableFrame<?> parent;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 new RefDialog(parent);
             }
 
-            ActionListener init(BeanTableFrame f) {
+            ActionListener init(BeanTableFrame<?> f) {
                 parent = f;
                 return this;
             }
@@ -683,6 +678,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     JmriJFrame addLogixFrame = null;
     JTextField _systemName = new JTextField(20);
     JTextField _addUserName = new JTextField(20);
+    JComboBox<String> _copyCombo = new JComboBox<>();
+
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");  // NOI18N
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");   // NOI18N
@@ -755,7 +752,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         _showReminder = true;
         // make an Add Logix Frame
         if (addLogixFrame == null) {
-            JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage", 
+            JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage",
                     "package.jmri.jmrit.beantable.LogixAddEdit");  // NOI18N
             // Create Logix
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
@@ -795,7 +792,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         addLogixFrame.setLocation(50, 30);
         Container contentPane = addLogixFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -814,7 +810,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         c.anchor = java.awt.GridBagConstraints.WEST;
         c.weightx = 1.0;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        p.add(_systemName, c);
+        if (titleId.equals("TitleCopyLogix")) {
+            p.add(_copyCombo, c);
+        } else {
+            p.add(_systemName, c);
+        }
         c.gridy = 1;
         p.add(_addUserName, c);
         c.gridx = 2;
@@ -917,6 +917,20 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             return;
         }
         _showReminder = true;
+
+        // Refresh combo box Logix list
+        _copyCombo.removeActionListener(this::copyComboListener);
+        _copyCombo.removeAllItems();
+        _copyCombo.addItem("");
+        var logixList = InstanceManager.getDefault(LogixManager.class).getNamedBeanSet();
+        logixList.forEach((lgx) -> {
+            _copyCombo.addItem(lgx.getSystemName());
+        });
+        _copyCombo.setEditable(true);
+        _copyCombo.setSelectedIndex(0);
+        _copyCombo.addActionListener(this::copyComboListener);
+        jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(_copyCombo);
+
         // make an Add Logix Frame
         if (addLogixFrame == null) {
             JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage",
@@ -954,7 +968,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param lgxName Logix system name to be copied
      */
     private void copyLogixPressed(String lgxName) {
-        String sName = _systemName.getText();
+        _systemName.setText((String) _copyCombo.getSelectedItem());
         String uName = _addUserName.getText();
         if (uName.length() == 0) {
             uName = null;
@@ -966,6 +980,13 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
             targetLogix = _logixManager.createNewLogix(uName);
         } else {
+            // Validate the system name
+            if (!checkLogixSysName()) {
+                cancelAddPressed(null);
+                return;
+            }
+            var sName = _systemName.getText();  // Use the validated, possibly changed, system name
+
             targetLogix = _logixManager.getBySystemName(sName);
             if (targetLogix == null && uName != null) {
                 targetLogix = _logixManager.getByUserName(uName);
@@ -981,10 +1002,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 }
             }
             if (targetLogix == null) {
-                if (!checkLogixSysName()) {
-                    return;
-                }
-                // Create the new Logix
                 targetLogix = _logixManager.createNewLogix(sName, uName);
                 if (targetLogix == null) {
                     // should never get here unless there is an assignment conflict
@@ -1000,6 +1017,29 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         _baseEdit.locateAt(getFrame());
         _inCopyMode = true;
         _baseEdit.addLogixEventListener(new ConditionalBaseListener(lgxName));
+    }
+
+    /**
+     * Set the user name input field.
+     * @param e The action event.
+     */
+    private void copyComboListener(ActionEvent e) {
+        if (!e.getActionCommand().equals("comboBoxChanged")) {
+            return;
+        }
+
+        var name = "";
+        var index = _copyCombo.getSelectedIndex();
+        if (index > 0) {
+            var logix = _logixManager.getLogix(_copyCombo.getItemAt(index));
+            if (logix != null) {
+                var userName = logix.getUserName();
+                if (userName != null) {
+                    name = userName;
+                }
+            }
+        }
+        _addUserName.setText(name);
     }
 
     /**
@@ -1041,7 +1081,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
         _systemName.setText(sName);
         return true;
     }
@@ -1075,7 +1114,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         }
 
         if (_inCopyMode) {
-            // Already editing a Logix, ask for completion of that edit
+            // Already copying a Logix, ask for completion of that edit
             JOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixError31", _curLogix.getSystemName()),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1339,6 +1378,57 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         }
 
         f.setVisible(true);
+    }
+
+    /**
+     * Respond to the Export to LogixNG combo selection Logix window request.
+     *
+     * @param sName system name of bean to export
+     */
+    void exportToLogixNGPressed(String sName) {
+        if (!checkConditionalReferences(sName)) {
+            return;
+        }
+        final Logix logix = _logixManager.getBySystemName(sName);
+        if (logix == null) throw new NullPointerException("logix is null");
+
+        boolean error = false;
+        StringBuilder errorMessage = new StringBuilder("<html><table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">");
+        errorMessage.append("<tr><th>");
+        errorMessage.append(Bundle.getMessage("ColumnSystemName"));
+        errorMessage.append("</th><th>");
+        errorMessage.append(Bundle.getMessage("ColumnUserName"));
+        errorMessage.append("</th><th>");
+        errorMessage.append(Bundle.getMessage("ExportLogixColumnError"));
+        errorMessage.append("</th></tr>");
+
+        try {
+            ImportLogix importLogix = new ImportLogix(logix, true, true);
+            importLogix.doImport();
+        } catch (JmriException e) {
+            errorMessage.append("<tr><td>");
+            errorMessage.append(logix.getSystemName());
+            errorMessage.append("</td><td>");
+            errorMessage.append(logix.getUserName() != null ? logix.getUserName() : "");
+            errorMessage.append("</td><td>");
+            errorMessage.append(e.getMessage());
+            errorMessage.append("</td></tr>");
+            log.error("Error thrown: {}", e, e);
+            error = true;
+        }
+
+        if (!error) {
+            try {
+                ImportLogix importLogix = new ImportLogix(logix, true, false);
+                importLogix.doImport();
+                JOptionPane.showMessageDialog(f, Bundle.getMessage("LogixIsExported", logix.getDisplayName()), Bundle.getMessage("TitleLogixExportSuccess"), JOptionPane.INFORMATION_MESSAGE);
+            } catch (JmriException e) {
+                throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
+            }
+        } else {
+            errorMessage.append("</table></html>");
+            JOptionPane.showMessageDialog(f, errorMessage.toString(), Bundle.getMessage("TitleLogixExportError"), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -1735,7 +1825,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             FileUtil.appendTextToFile(file, tStr);
             FileUtil.appendTextToFile(file, textContent.getText());
         } catch (IOException e) {
-            log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
         }
     }
 

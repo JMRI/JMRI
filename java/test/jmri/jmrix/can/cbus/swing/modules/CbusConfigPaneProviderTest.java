@@ -1,15 +1,11 @@
 package jmri.jmrix.can.cbus.swing.modules;
 
-import java.awt.GraphicsEnvironment;
-
-import javax.swing.JPanel;
-
 import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -17,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
  */
 public class CbusConfigPaneProviderTest {
     
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusConfigPaneProviderImpl t = new CbusConfigPaneProviderImpl();
         Assert.assertNotNull("exists",t);
     }

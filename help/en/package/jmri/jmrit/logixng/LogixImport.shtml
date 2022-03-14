@@ -15,7 +15,18 @@
     <div id="mainContent">
       <h1>JMRI: LogixNG Logix Import</h1>
 
-      <p>The LogixNG import Tool at PanelPro <strong>Tools ⇒ LogixNG ⇒ Import Logix</strong> will
+        <ul class="snav">
+          <li>
+            <a href="#importAll">Import All Logixes</a>
+          </li>
+          <li>
+            <a href="#importSingle">Import Single Logix</a>
+          </li>
+      </ul>
+
+      <hr>
+
+      <p id="importAll">The LogixNG import Tool at PanelPro <strong>Tools ⇒ LogixNG ⇒ Import Logix</strong> will
       import the Logix definitions and convert them to LogixNG/ConditionalNG definitions.</p>
 
       <div style="margin-left: 2em">
@@ -53,11 +64,40 @@
 
       <p>Click on <strong>Import</strong> to start. The <strong>Cancel</strong> button will change
       to <strong>Done</strong> when the import has finished. Click on <strong>Cancel</strong> to
-      close the window without doing the import.</p>
+      close the window without doing the import.  If successful, a confirmation dialog will be
+      displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/ImportConfirmation.png"><img src="images/ImportConfirmation.png" alt=
+        "Import Confirmation" width="292" height="173"></a>
+      </div>
 
       <p>The import process will display a message on the JMRI System Console, <strong>Help ⇒
       System Console</strong>, for each Logix Conditional that has been imported. Any errors will
       also be listed.</p>
+
+      <hr>
+
+      <h2 id="importSingle">Import Single Logix<span class="since">since 4.99.1</span></h2>
+
+      <p>Individual Logix definitions can be exported to LogixNG using the Logix <strong>Select</strong>
+      menu and selecting <strong>Export to LogixNG</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/ExportLogix.png"><img src="images/ExportLogix.png" alt=
+        "Export Logix to LogixNG" width="148" height="116"></a>
+      </div>
+
+      <p>The resulting LogixNG will have an automatic system name.  The LogixNG user name will be
+      <code>Logix: &lt;Logix user name&gt;</code>. If the Logix does not have a user name, the
+      LogixNG user name will be <code>Logix: &lt;Logix system name&gt;</code>.  A confirmation
+      dialog will be displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/ExportConfirmation.png"><img src="images/ExportConfirmation.png" alt=
+        "Export Confirmation" width="595" height="173"></a>
+      </div>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

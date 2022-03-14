@@ -59,6 +59,8 @@ import java.nio.file.StandardCopyOption;
             };
             // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
+            JUnitUtil.WAITFOR_DELAY_STEP = 20;  // more time for us less for the waitfor code...
+            
             WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
             // load layout file
@@ -107,7 +109,10 @@ import java.nio.file.StandardCopyOption;
             // ****************************
             // Stop train with stop button, then resume
             // ****************************
-            JButtonOperator boStop = new JButtonOperator(atw, Bundle.getMessage("StopButton"));
+            // first instance is "Stop All Trains", we want "Stop", use index = 1
+            JButtonOperator boStop = new JButtonOperator(atw, Bundle.getMessage("StopButton"),1);
+            boStop.getActionCommand();
+            boStop.getSource();
             boStop.push();
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;

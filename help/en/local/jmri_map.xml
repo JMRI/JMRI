@@ -167,6 +167,7 @@
 <mapID target="html.tools.scripting.Jynstruments" url="html/tools/scripting/Jynstruments.shtml"/>
 <mapID target="html.tools.scripting.JythonApps" url="html/tools/scripting/JythonApps.shtml"/>
 <mapID target="html.tools.scripting.Python" url="html/tools/scripting/Python.shtml"/>
+<mapID target="html.tools.scripting.Python3" url="html/tools/scripting/Python3.shtml"/>
 <mapID target="html.tools.scripting.Start" url="html/tools/scripting/Start.shtml"/>
 <mapID target="html.tools.scripting.WhatWhere" url="html/tools/scripting/WhatWhere.shtml"/>
 <mapID target="html.tools.scripting.ex_set_turnouts" url="html/tools/scripting/ex_set_turnouts.shtml"/>

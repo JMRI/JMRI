@@ -29,7 +29,7 @@ public enum NamedBeanType {
     OBlock(Bundle.getMessage("BeanNameOBlock"), OBlock.class, "state", () -> {
         return InstanceManager.getDefault(OBlockManager.class);
     }),
-    Reporter(Bundle.getMessage("BeanNameReporter"), Reporter.class, "value", () -> {
+    Reporter(Bundle.getMessage("BeanNameReporter"), Reporter.class, "currentReport", () -> {
         return InstanceManager.getDefault(ReporterManager.class);
     }),
     Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", () -> {

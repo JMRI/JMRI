@@ -1,12 +1,10 @@
 package jmri.jmrit.throttle;
 
-import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
-
-import jmri.util.junit.rules.RetryRule;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of ThrottlesPreferencesWindow
@@ -15,29 +13,26 @@ import jmri.util.junit.rules.RetryRule;
  */
 public class ThrottlesPreferencesWindowTest {
 
-    public RetryRule retryRule = new RetryRule(2);  // allow 2 retries
-                                                    // because of possible IndexOutOfBoundsException
-                                                    // in Swing during tearDown
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCtor() {
         try {
-            Assume.assumeFalse(GraphicsEnvironment.isHeadless());
             ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
             Assert.assertNotNull("exists", w);
         } catch (IndexOutOfBoundsException e) {
-            Assert.fail("IndexOutOfBoundsException, fail to retry\n"+e);
+            Assert.fail("IndexOutOfBoundsException\n"+e);
         }
     }
 
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
     @AfterEach
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
     }
 }

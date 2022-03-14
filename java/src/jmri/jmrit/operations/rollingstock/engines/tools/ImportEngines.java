@@ -144,10 +144,10 @@ public class ImportEngines extends ImportRollingStock {
             }
 
             if (inputLine.length > base + 3) {
-                engineNumber = inputLine[base + ENG_NUMBER];
-                engineRoad = inputLine[base + ENG_ROAD];
-                engineModel = inputLine[base + ENG_MODEL];
-                engineLength = inputLine[base + ENG_LENGTH];
+                engineNumber = inputLine[base + ENG_NUMBER].trim();
+                engineRoad = inputLine[base + ENG_ROAD].trim();
+                engineModel = inputLine[base + ENG_MODEL].trim();
+                engineLength = inputLine[base + ENG_LENGTH].trim();
                 engineOwner = "";
                 engineBuilt = "";
                 engineLocationName = "";
@@ -246,7 +246,7 @@ public class ImportEngines extends ImportRollingStock {
                 }
 
                 if (inputLine.length > base + ENG_OWNER) {
-                    engineOwner = inputLine[base + ENG_OWNER];
+                    engineOwner = inputLine[base + ENG_OWNER].trim();
                     if (engineOwner.length() > Control.max_len_string_attibute) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("EngineOwnerNameTooLong"),
@@ -260,7 +260,7 @@ public class ImportEngines extends ImportRollingStock {
                     }
                 }
                 if (inputLine.length > base + ENG_BUILT) {
-                    engineBuilt = inputLine[base + ENG_BUILT];
+                    engineBuilt = inputLine[base + ENG_BUILT].trim();
                     if (engineBuilt.length() > Control.max_len_string_built_name) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("EngineBuiltDateTooLong"),
@@ -273,10 +273,10 @@ public class ImportEngines extends ImportRollingStock {
                     }
                 }
                 if (inputLine.length > base + ENG_LOCATION) {
-                    engineLocationName = inputLine[base + ENG_LOCATION];
+                    engineLocationName = inputLine[base + ENG_LOCATION].trim();
                 }
                 if (comma && inputLine.length > base + ENG_TRACK) {
-                    engineTrackName = inputLine[base + ENG_TRACK];
+                    engineTrackName = inputLine[base + ENG_TRACK].trim();
                 }
                 // Location and track name can be one or more words in a
                 // space delimited file
@@ -379,22 +379,22 @@ public class ImportEngines extends ImportRollingStock {
                 }
                 // check for consist name
                 if (comma && inputLine.length > base + ENG_CONSIST) {
-                    engineConsistName = inputLine[ENG_CONSIST];
+                    engineConsistName = inputLine[ENG_CONSIST].trim();
                     log.debug("Consist name ({})", engineConsistName);
                 }
                 // check for HP
                 if (comma && inputLine.length > base + ENG_HP) {
-                    engineHp = inputLine[ENG_HP];
+                    engineHp = inputLine[ENG_HP].trim();
                     log.debug("Engine HP ({})", engineHp);
                 }
                 // check for engine weight tons
                 if (comma && inputLine.length > base + ENG_WEIGHT) {
-                    engineWeightTons = inputLine[ENG_WEIGHT];
+                    engineWeightTons = inputLine[ENG_WEIGHT].trim();
                     log.debug("Engine weight tons ({})", engineWeightTons);
                 }
                 // check for engine type
                 if (comma && inputLine.length > base + ENG_TYPE) {
-                    engineType = inputLine[ENG_TYPE];
+                    engineType = inputLine[ENG_TYPE].trim();
                     log.debug("Engine type ({})", engineType);
                 }
                 log.debug("Add engine ({} {}) owner ({}) built ({}) location ({}, {})", engineRoad, engineNumber,

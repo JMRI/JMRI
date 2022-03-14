@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JPopupMenu;
 
 import jmri.jmrix.can.CanReply;
@@ -12,24 +10,23 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of CbusSlotMonitorPane.
  *
  * @author Paul Bender Copyright (C) 2016
- * @author Paul Bender Copyright (C) 2019
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
-    public void TestInitComponents() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testTableUpdates() {
         
-        CbusSlotMonitorPane smPanel;
-        
-        smPanel = new CbusSlotMonitorPane();
+        CbusSlotMonitorPane smPanel = new CbusSlotMonitorPane();
         smPanel.initComponents(memo);
         
         Assert.assertNotNull("exists",smPanel);
@@ -97,7 +94,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         
         tbl.waitCell("39",0,4); // Now speed in col 5
         
-        // JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
+        // jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
         
         smPanel.dispose();
         

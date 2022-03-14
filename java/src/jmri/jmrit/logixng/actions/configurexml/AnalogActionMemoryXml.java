@@ -20,7 +20,7 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
 
     public AnalogActionMemoryXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -34,17 +34,17 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         Element element = new Element("AnalogActionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getMemory();
+        var memory = p.getMemory();
         if (memory != null) {
             element.addContent(new Element("memory").addContent(memory.getName()));
         }
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
@@ -67,6 +67,6 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         InstanceManager.getDefault(AnalogActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemoryXml.class);
 }

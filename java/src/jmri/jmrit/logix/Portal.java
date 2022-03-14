@@ -151,7 +151,7 @@ public class Portal {
         }
         _name = newName;
         InstanceManager.getDefault(WarrantManager.class).portalNameChange(oldName, newName);
-        
+
         // for some unknown reason, PortalManager firePropertyChange is not read by PortalTableModel
         // so let OBlock do it
         if (_toBlock != null) {
@@ -170,7 +170,7 @@ public class Portal {
 
     /**
      * Set this portal's toBlock. Remove this portal from old toBlock, if any.
-     * Add this portal in the new toBlock's list of portals. 
+     * Add this portal in the new toBlock's list of portals.
      *
      * @param block to be the new toBlock
      * @param changePaths if true, set block in paths. If false,
@@ -217,7 +217,7 @@ public class Portal {
 
     /**
      * Set this portal's fromBlock. Remove this portal from old fromBlock, if any.
-     * Add this portal in the new toBlock's list of portals. 
+     * Add this portal in the new toBlock's list of portals.
      *
      * @param block to be the new fromBlock
      * @param changePaths if true, set block in paths. If false,
@@ -265,7 +265,7 @@ public class Portal {
     /**
      * Set a signal to protect an OBlock. Warrants look ahead for speed changes
      * and change the train speed accordingly.
-     * 
+     *
      * @param signal either a SignalMast or a SignalHead. Set to null to remove (previous) signal from Portal
      * @param length offset length in millimeters. This is additional
      *               entrance space for the block. This distance added to or subtracted
@@ -472,20 +472,6 @@ public class Portal {
     }
 
     /**
-     * Check signals, if any, for speed into the block. The signal that protects
-     * the "to" block is the signal facing the "from" Block, i.e. the "from"
-     * signal. (and vice-versa)
-     *
-     * @param block is the direction of entry, "from" block
-     * @return permissible speed, null if no signal
-     * @deprecated since 4.17.5 use getPermissibleSpeed(OBlock, boolean)
-     */
-    @Deprecated
-    public String getPermissibleEntranceSpeed(@Nonnull OBlock block) {
-        return getPermissibleSpeed(block, true);
-    }
-
-    /**
      * Set the distance (plus or minus) in millimeters from the portal gap
      * where the speed change indicated by the signal should be completed.
      *
@@ -523,20 +509,6 @@ public class Portal {
             }
         }
         return 0;
-    }
-
-    /**
-     * Check signals, if any, for speed out of the block. The signal that
-     * protects the "to" block is the signal facing the "from" Block, i.e. the
-     * "from" signal. (and vice-versa)
-     *
-     * @param block is the direction of entry, "from" block
-     * @return permissible speed, null if no signal
-     * @deprecated since 4.17.5 use getPermissibleSpeed(OBlock, boolean)
-     */
-    @Deprecated
-    public String getPermissibleExitSpeed(@Nonnull OBlock block) {
-        return getPermissibleSpeed(block, false);
     }
 
     /**
@@ -677,7 +649,7 @@ public class Portal {
 
     /**
      * Check portal has both blocks and they are different blocks.
-     * 
+     *
      * @return true if valid
      */
     public boolean isValid() {

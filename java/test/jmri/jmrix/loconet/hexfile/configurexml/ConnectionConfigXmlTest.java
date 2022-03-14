@@ -35,8 +35,8 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     @Override
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }

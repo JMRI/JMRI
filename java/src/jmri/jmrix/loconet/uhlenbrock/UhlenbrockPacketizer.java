@@ -234,7 +234,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     log.debug("EOFException, is LocoNet serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFile: {}", e);
+                    log.debug("IOException, should only happen with HexFile", e);
                     log.debug("End of file");
                     disconnectPort(controller);
                     return;

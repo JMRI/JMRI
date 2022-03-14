@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
 public class HexFileFrameTest {
 
     @Test
+    @SuppressWarnings("deprecation")        // Thread.stop()
     public void testCTor() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LnHexFilePort p = new LnHexFilePort();

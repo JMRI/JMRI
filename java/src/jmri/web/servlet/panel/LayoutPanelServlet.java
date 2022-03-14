@@ -83,7 +83,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 try {
                     panel.addContent(positionableElement(sub));
                 } catch (Exception ex) {
-                    log.error("Error storing panel positionable element: {}", ex);
+                    log.error("Error storing panel positionable element", ex);
                 }
             }
         }
@@ -162,7 +162,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                             panel.addContent(e);
                         }
                     } catch (Exception e) {
-                        log.error("Error storing panel LayoutTrack element: {}", e);
+                        log.error("Error storing panel LayoutTrack element", e);
                     }
                 }
             }
@@ -177,7 +177,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
-                log.error("Error storing panel LayoutShape element: {}", e);
+                log.error("Error storing panel LayoutShape element", e);
             }
         }
         log.debug("Number of LayoutShape elements: {}", layoutShapes.size());

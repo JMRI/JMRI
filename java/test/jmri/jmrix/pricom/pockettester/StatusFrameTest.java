@@ -30,7 +30,7 @@ public class StatusFrameTest {
         f.setSource(new DataSource() {
 
             @Override
-            void sendBytes(byte[] bytes) {
+            synchronized void sendBytes(byte[] bytes) {
             }
         });
         f.asciiFormattedMessage(TestConstants.version);
@@ -54,7 +54,7 @@ public class StatusFrameTest {
         f.setVisible(true);
         f.setSource(new DataSource() {
             @Override
-            void sendBytes(byte[] bytes) {
+            synchronized void sendBytes(byte[] bytes) {
             }
         });
         f.asciiFormattedMessage(TestConstants.version);

@@ -49,7 +49,7 @@
           how to find that directory and its contents)</p>
 
           <p>If you're modifying a decoder definition, it is best to start with the most recent
-          version, which can always be found here on the JMRI web site at <a href=
+          version, which can always be found here on the JMRI website at <a href=
           "https://jmri.org/xml/decoders/">https://jmri.org/xml/decoders/</a>. That way, it won't
           be hard to merge your changes with ones that might have come before. Please don't do any
           more reformatting than you have to. If you change the tech stuff in the top 5 or 10

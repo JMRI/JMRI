@@ -33,7 +33,6 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
      * @see #provides(java.lang.Class)
      */
     @OverridingMethodsMustInvokeSuper
-    @SuppressWarnings(value = "unchecked")
     <T> T get(Class<?> type);
 
     public static final String DISABLED = "ConnectionDisabled";
@@ -151,7 +150,7 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
      * @return the output interval time in ms
      */
     int getOutputInterval();
-    
+
     /**
      * Get the Default connection specific OutputInterval to wait between/before commands
      * are sent.

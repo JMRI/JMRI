@@ -97,7 +97,7 @@ public class TamsSystemConnectionMemo extends DefaultSystemConnectionMemo implem
      * @return programmer manager.
      */
     public TamsProgrammerManager getProgrammerManager() {
-        return (TamsProgrammerManager) classObjectMap.computeIfAbsent(TamsProgrammerManager.class, (Class c) -> new TamsProgrammerManager(new TamsProgrammer(getTrafficController()),this));
+        return (TamsProgrammerManager) classObjectMap.computeIfAbsent(TamsProgrammerManager.class, (Class<?> c) -> new TamsProgrammerManager(new TamsProgrammer(getTrafficController()),this));
     }
 
     public void setProgrammerManager(TamsProgrammerManager p) {
@@ -105,19 +105,19 @@ public class TamsSystemConnectionMemo extends DefaultSystemConnectionMemo implem
     }
 
     public TamsTurnoutManager getTurnoutManager() {
-        return (TamsTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class c) -> { return new TamsTurnoutManager(this); });
+        return (TamsTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class<?> c) -> { return new TamsTurnoutManager(this); });
     }
 
     public TamsSensorManager getSensorManager() {
-        return (TamsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> { return new TamsSensorManager(this); });
+        return (TamsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> { return new TamsSensorManager(this); });
     }
 
     public TamsThrottleManager getThrottleManager() {
-        return (TamsThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> { return new TamsThrottleManager(this); });
+        return (TamsThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class<?> c) -> { return new TamsThrottleManager(this); });
     }
 
     public TamsPowerManager getPowerManager() {
-        return (TamsPowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> { return new TamsPowerManager(getTrafficController()); });
+        return (TamsPowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class<?> c) -> { return new TamsPowerManager(getTrafficController()); });
     }
 
     @Override

@@ -222,7 +222,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                                     b.getChild(i).getConnectedSocket().getLongDescription());
                         }
                     }
-                    log.error("                                                                 ");
+                    log.error("                                             End Item");
                     List<String> cliperrors = new ArrayList<String>();
                     _clipboard.add((MaleSocket) b, cliperrors);
                 }
@@ -402,7 +402,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             vc.vetoableChange(evt);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
 //    @OverridingMethodsMustInvokeSuper
@@ -411,7 +411,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             ConditionalNG child = logixNG.getConditionalNG(i);
             InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(child, property);
         }
-        
+
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, logixNG);
         if (property.equals("DoDelete")) { // NOI18N
@@ -419,8 +419,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             logixNG.dispose();
         }
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
 
 }

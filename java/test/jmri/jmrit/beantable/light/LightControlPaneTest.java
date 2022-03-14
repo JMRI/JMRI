@@ -2,10 +2,10 @@ package jmri.jmrit.beantable.light;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author Paul Bender Copyright (C) 2017
@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Test;
  */
 public class LightControlPaneTest {
     
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCTor() {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         LightControlPane t = new LightControlPane();
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t);
     }
     
     @BeforeEach

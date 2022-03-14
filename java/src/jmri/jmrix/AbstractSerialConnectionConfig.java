@@ -652,24 +652,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         return null;
     }
 
-    /**
-     *
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    protected final void addToActionList() {
-        // nothing to do
-    }
-
-    /**
-     *
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    protected void removeFromActionList() {
-        // nothing to do
-    }
-
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);
 
 }

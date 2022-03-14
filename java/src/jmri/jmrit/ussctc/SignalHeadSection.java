@@ -24,7 +24,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      *  Anonymous object only for testing
      */
     SignalHeadSection() {
-        this.station = new Station("1", null, new CodeButton("IS1","IT1"));
+        this.station = new Station<CodeGroupThreeBits, CodeGroupThreeBits>("1", null, new CodeButton("IS1","IT1"));
     }
 
     static final int DEFAULT_RUN_TIME_LENGTH = 30000;
@@ -46,7 +46,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     public SignalHeadSection(List<String> rightHeads, List<String> leftHeads,
                              String leftIndicator, String stopIndicator, String rightIndicator,
                              String leftInput, String rightInput,
-                             Station station) {
+                             Station<CodeGroupThreeBits, CodeGroupThreeBits> station) {
 
         this.station = station;
 
@@ -165,9 +165,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
     public boolean isRunningTime() { return timeRunning; }
 
-    Station station;
+    Station<CodeGroupThreeBits, CodeGroupThreeBits> station;
     @Override
-    public Station getStation() { return station;}
+    public Station<CodeGroupThreeBits, CodeGroupThreeBits> getStation() { return station;}
     @Override
     public String getName() { return "SH for "+hStopIndicator.getBean().getDisplayName(); }
 
