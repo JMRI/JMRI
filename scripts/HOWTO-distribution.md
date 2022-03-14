@@ -328,6 +328,8 @@ If you're developing any additional (post-4.99.4) changes that you want in the J
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
+- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/4.99.4/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature.
+
 ================================================================================
 ## Capture A Profile
 
@@ -367,7 +369,7 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 ================================================================================
 ## Further Changes to Contents Before Release
 
-If anybody wants to add a change from here on in, they should
+These instructions result in the initial release-4.99.4 branch label being attached to the master branch sequence.  To put it another way, release-4.99.4 is a parent of master.  If somebody commits to master after that, master will move along with additional contents. Once that happens, if you want to add something to release-4.99.4 and _not_ include other additions to master, you have to branch the contents of release-4.99.4 away from master.  This section describes how to do that.
 
 - Ideally, start the work on either the release-4.99.4 branch (if working after that was started) or on a branch-from-master that's _before_ the release-4.99.4 branch was created.  That way, the change can be cleanly included in the release branch, and also directly onto master.
 
@@ -387,13 +389,15 @@ If anybody wants to add a change from here on in, they should
 
    - Merge master into the release-4.99.4 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
 
-   - `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
+   - `git cherrypick` just the changes you want onto the release-4.99.4 branch. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
 - Make sure that the 4.99.4 milestone is on the original PR and any others that have been pulled in
 
-- If the PR has any changes to the help/en/releasenotes directory, go through the steps to update the master if any section(s) were added, and to move notes and warnings to the 4.99.4 release note.  Merge these as needed to the release-4.99.4 and master branches
+- If the PR(s) has any changes to the help/en/releasenotes directory, go through the steps to update the master if any section(s) were added, and to move notes and warnings to the 4.99.4 release note.  Merge these as needed to the release-4.99.4 and master branches
 
 - If needed, remake the decoder index and helpfile meta data
+
+- Rerun the [Jenkins job]() to recreate the executables.
 
 ====================================================================================
 ## Create zipped .properties
@@ -456,23 +460,21 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
-
 [Release notes](https://jmri.org/releasenotes/jmri4.99.4.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.4+R1d78b88a65.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.dmg) | 422d98a69b99d774490ec301c1dd79fd440241981dbeaf81ee7f74b73716dec3
-[JMRI.4.99.4+R1d78b88a65.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.exe) | cfb00463a8ff88e4633c4e174e033da004441f23d6c742fecb76f1fb04ca929a
-[JMRI.4.99.4+R1d78b88a65.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.tgz) | 2de7daa2dd6a42b26b43949a1490f5ff2c6731e9e64b5592e97e11f491e524b4
-
+[JMRI.4.99.4+R1d78b88a65.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.dmg) | c3a2ca989ea556bc25b83cceb1311b5fe5f8487011f982aadb39f4dea68d1707
+[JMRI.4.99.4+R1d78b88a65.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.exe) | f34c0bba53aed75d0e93d201442cafba29924c08ac33c8c545cc905334eacc5a
+[JMRI.4.99.4+R1d78b88a65.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.4/JMRI.4.99.4+R1d78b88a65.tgz) | 7120a7a47ab000439646f2accc747e1dda7311879b101dc1df9d771fb6d14d2a
 
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
 
-- [ ] it's slow to upload from a typical home connection,; we wish we had a way to cross-load them from Jenkins (see below)
+- [ ] it's slow to upload from a typical home connection; we wish we had a way to cross-load them from Jenkins (see below)
 
 Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all four files (three installers plus properties) are there.
 
@@ -607,7 +609,7 @@ You might want to edit it, i.e. to add
     JMRI 4.99.4 has been released. Files are available in the GitHub release section.
 
 ```
-- Commit this document and push back to github
+- Commit this document and push back to GitHub
 
 - Wait a day for complaints
 
@@ -616,8 +618,6 @@ You might want to edit it, i.e. to add
 - For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
-
-- Commit back any changes made to this doc
 
 - Take a break!
 
@@ -649,7 +649,7 @@ git push github
 ====================================================================================
 ## Local-build Alternative
 
-If you can't use Jenkins for the actual build, you can create the files locally:
+If you can't use Jenkins for the actual build, you can create the files locally. This will make the Windows and Linux installs correctly, but will leave the macOS installer unsigned (only Jenkins can use the signing certificates currently).
 
 If you're building locally:
 
@@ -670,7 +670,7 @@ you want to have it anyway to update the .nsi files and rebuild it, start by get
     git checkout release-4.99.5
 ```
 
-- edit release.properties to say release.official=true (last line)
+- edit release.properties to say `release.official=true` (near the bottom) **Do not commit this back**
 
 - Do the build:
 
@@ -678,24 +678,9 @@ you want to have it anyway to update the .nsi files and rebuild it, start by get
     ant -Dnsis.home="" clean packages
 ```
 
-Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
+   Ant will do the various builds, construct the distribution directories, and finally construct the Linux, macOS and Windows distribution files in dist/releases/
 
-- Put the Linux, Mac OS X and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
-
-    The main JMRI web site gets completely overwritten by Jenkins, so one approach:
-
- ```
-        ssh user,jmri@shell.sf.net create
-        scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
- ```
-
-    puts them at
-
-```
-        http://user.users.sf.net/release
-```
-
-    (The user has to have put the htdocs link in their SF.net account)
+- Put the Linux, macOS and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
 
 ================================================================================
 ## Notes for those attempting this on MS Windows platform:
@@ -752,31 +737,20 @@ Some of the operations that are performed will still generate files with CRLF li
 
 ================================================================================
 
-`ant make-test-release-branch` does (more or less) the following actions (assumes 'github' is a remote pointing at https://github.com/JMRI/JMRI.git ):
-
-```
-        git checkout master
-        git pull
-        (commit a version number increment to master)
-        git checkout -b release-4.99.4
-        git push github release-4.99.4
-        git checkout master
-```
-
-================================================================================
-
 Possibilities for automating GitHub release creation:
 
 
 Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
 
 ```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.99.5 -n "JMRI.4.99.5+Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.21.6/workspace/dist/release/JMRI.4.99.5+Rd144052.dmg
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.99.5 -n "JMRI.4.99.5+Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.21.6/workspace/dist/release/JMRI.4.99.5+Rd144052.exe
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.99.5 -n "JMRI.4.99.5+Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.21.6/workspace/dist/release/JMRI.4.99.5+Rd144052.tgz
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.99.5 -n "JMRI.4.99.5+Rd144052.dmg" -f /var/lib/jenkins/jobs/testreleases/jobs/4.99.4/builds/4/archive/dist/release/JMRI.4.99.5+Rd144052.dmg
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.99.5 -n "JMRI.4.99.5+Rd144052.exe" -f /var/lib/jenkins/jobs/testreleases/jobs/4.99.4/builds/4/archive/dist/release/JMRI.4.99.5+Rd144052.exe
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.99.5 -n "JMRI.4.99.5+Rd144052.tgz" -f /var/lib/jenkins/jobs/testreleases/jobs/4.99.4/builds/4/archive/dist/release/JMRI.4.99.5+Rd144052.tgz
 ```
 
-(It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins )
+Note that `4` in the above will have to be changed to the build number.
+
+It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins
 
 
 
