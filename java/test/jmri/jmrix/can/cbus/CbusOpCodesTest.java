@@ -172,11 +172,11 @@ public class CbusOpCodesTest {
         m.setElement(0, 4);
         Assert.assertEquals("extended 10000004 4","Unknown Extended Frame",CbusOpCodes.decode(m));
         
-        m = new CanMessage( new int[]{5,4,3,2,1},0x10000004  );
+        m = new CanMessage( new int[]{5,4,3,2,1,0,0},0x10000004  );
         m.setExtended(true);
         Assert.assertEquals("extended 10000004 5","Bootloader: Device ID",CbusOpCodes.decode(m));
 
-        m = new CanMessage( new int[]{6,5,4,3,2,1,0},0x10000004  );
+        m = new CanMessage( new int[]{6,5,4,3,2},0x10000004  );
         m.setExtended(true);
         Assert.assertEquals("extended 10000004 6","Bootloader: Bootloader ID",CbusOpCodes.decode(m));
 
