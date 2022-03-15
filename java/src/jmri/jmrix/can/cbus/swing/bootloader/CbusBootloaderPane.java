@@ -1385,8 +1385,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             public void run() {
                 ackTask = null;
                 endProgramming();
-                log.error(Bundle.getMessage("BootAckTimeout"));
-                addToLog(Bundle.getMessage("BootAckTimeout"));
+                log.error("Timeout waiting for data write ACK at address {}", Integer.toHexString(bootAddress));
+                addToLog(MessageFormat.format(Bundle.getMessage("BootAckTimeout"), Integer.toHexString(bootAddress)));
             }
         };
         TimerUtil.schedule(ackTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);
