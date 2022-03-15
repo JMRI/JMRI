@@ -16,21 +16,12 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
@@ -144,9 +135,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JRadioButton numButton = new JRadioButton(Bundle.getMessage("Numeric"));
     protected JRadioButton dialButton = new JRadioButton(Bundle.getMessage("Dial"));
     protected SpeedoDial speedoDialDisplay = new SpeedoDial();
-    protected JToggleButton dirFwdButton = new JToggleButton(Bundle.getMessage("ScanForward"));
-    protected JToggleButton dirRevButton = new JToggleButton(Bundle.getMessage("ScanReverse"));
-    protected JToggleButton toggleGridButton = new JToggleButton(Bundle.getMessage("ToggleGrid"));
+    protected JCheckBox dirFwdButton = new JCheckBox(Bundle.getMessage("ScanForward"));
+    protected JCheckBox dirRevButton = new JCheckBox(Bundle.getMessage("ScanReverse"));
+    protected JCheckBox toggleGridButton = new JCheckBox(Bundle.getMessage("ToggleGrid"));
 
     GraphPane profileGraphPane;
 
@@ -713,6 +704,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedStep28TargetField.setHorizontalAlignment(JTextField.RIGHT);
         speedStep28TargetUnit.setPreferredSize(new Dimension(35, 16));
         speedMatchWarmUpCheckBox.setSelected(true);
+
+        profileSouthPane.add(new JSeparator());
+
         JPanel speedMatchPane = new JPanel();
         speedMatchPane.setLayout(new FlowLayout());
         speedMatchPane.add(speedStep1TargetLabel);
