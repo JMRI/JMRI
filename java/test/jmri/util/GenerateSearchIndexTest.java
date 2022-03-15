@@ -19,6 +19,7 @@ import org.junit.jupiter.api.*;
 public class GenerateSearchIndexTest {
 
     private final Map<Integer, String> _fileIndex = new HashMap<>();
+    private final Map<Integer, String> _fileHeaderIndex = new HashMap<>();
     private final Map<Integer, Map<String, Set<Integer>>> _searchIndex = new HashMap<>();
     private int _currentFileId = 0;
 
@@ -44,10 +45,52 @@ public class GenerateSearchIndexTest {
         }
     }
 
+    private void parseHeader(Node node, String pad) {
+        for (Node child : node.childNodes()) {
+//            System.out.format("Header: %s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
+
+            if (child instanceof Element) {
+                if ("title".equalsIgnoreCase(child.nodeName())) {
+                    String text = ((Element) child).ownText().trim().replaceAll("\r", "").replace("\n", "").replace("\"", "\\\\\"");
+                    if (!text.isBlank()) {
+                        if (_fileHeaderIndex.containsKey(_currentFileId)) {
+                            System.out.format("ERROR: Header already exists for file %s: %s --- %s%n", _fileIndex.get(_currentFileId), _fileHeaderIndex.get(_currentFileId), text);
+                        } else {
+                            _fileHeaderIndex.put(_currentFileId, text);
+                        }
+                    }
+//                    System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
+                    if (text.isBlank()) System.out.format("Header is blank. Num childs: %d%n", child.childNodes().size());
+                    else System.out.format("%sText: %s%n", pad, text);
+                }
+//                System.out.format("Element: %s%n", pad, child.nodeName(), child.getClass().getName());
+            }
+
+            parseHeader(child, pad+"    ");
+        }
+    }
+
     private void parseNode(Node node, String pad) {
         for (Node child : node.childNodes()) {
 //            System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
-            if (child instanceof TextNode) {
+            if (false && child instanceof Element) {
+                if ("h1".equalsIgnoreCase(child.nodeName())) {
+                    String text = ((Element) child).ownText().trim();
+//                    Node child2 = ((Element) child).ownText();
+                    if (!text.isBlank()) {
+                        if (_fileHeaderIndex.containsKey(_currentFileId)) {
+                            System.out.format("ERROR: Header already exists for file %s: %s --- %s%n", _fileIndex.get(_currentFileId), _fileHeaderIndex.get(_currentFileId), text);
+                        } else {
+                            _fileHeaderIndex.put(_currentFileId, text);
+                        }
+                    }
+//                    System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
+                    if (text.isBlank()) System.out.format("Header is blank. Num childs: %d%n", child.childNodes().size());
+                    else System.out.format("%sText: %s%n", pad, text);
+                }
+//                System.out.format("Element: %s%n", pad, child.nodeName(), child.getClass().getName());
+            } else if (child instanceof TextNode) {
+//                System.out.format("Text node: %s%n", pad, child.nodeName(), child.getClass().getName());
                 TextNode textNode = (TextNode)child;
                 String text = textNode.getWholeText().toLowerCase();
                 String[] parts = text.split("\\W+");
@@ -75,8 +118,8 @@ public class GenerateSearchIndexTest {
                 Path filePath = FileSystems.getDefault().getPath(fileName);
                 Document doc = Jsoup.parse(filePath.toFile(), "UTF-8");
 //                Document doc = Jsoup.parse(html);
-                Element body = doc.body();
-                parseNode(body, "");
+                parseHeader(doc.head(), "");
+                parseNode(doc.body(), "");
                 _currentFileId++;
 //                System.out.format("%n============================================================%n%n");
             }
@@ -103,7 +146,7 @@ public class GenerateSearchIndexTest {
         printWriter.print("let searchIndex = '{");
         printWriter.print("\"files\":{");
         for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
-            printWriter.format("\"%d\":\"%s\",", entry.getKey(), entry.getValue());
+            printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
         }
         printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
         printWriter.print("},");

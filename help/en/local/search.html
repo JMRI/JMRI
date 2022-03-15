@@ -26,17 +26,22 @@
 			alert("The search term \""+searchTerm+"\" is not found");
 		} else {
             let searchResult = document.getElementById("searchResult");
+            while (searchResult.firstChild) {
+                searchResult.removeChild(searchResult.lastChild);
+            }
             let target = document.getElementById("page");
 			console.log(fileIDs);
 			for (i=0; i < fileIDs.length; i++) {
 				if (fileIDs[i] != -1) {
-					let fileName = window.searchIndexData.files[fileIDs[i]];
-					console.log(fileName);
+					let fileName = window.searchIndexData.files[fileIDs[i]][0];
+					let title = window.searchIndexData.files[fileIDs[i]][1];
+//					console.log(fileName);
+//					console.log(title);
                     var tag = document.createElement("li");
                     var aTag = document.createElement("a");
                     aTag.href = "../../../" + fileName;
                     aTag.onclick = function(){ target.src = "../../../" + fileName; window.scrollTo(0,0); return false; };
-                    var text = document.createTextNode(fileName);
+                    var text = document.createTextNode(title);
                     aTag.appendChild(text);
                     tag.appendChild(aTag);
                     searchResult.appendChild(tag);
