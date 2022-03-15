@@ -517,8 +517,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             readAddressButton.setEnabled(false);
             statusLabel.setText(Bundle.getMessage("StatMain"));
         });
-
-        basicPane.add(modePanel);
+        // added to left side later
 
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Speedometer Panel">
@@ -649,7 +648,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // Listen to read button
         readAddressButton.addActionListener(e -> readAddress());
 
-        profilePane.add(addrPane, BorderLayout.NORTH);
+        // set up top panel of modePanel and addrPane
+        var topLeftPane = new JPanel();
+        topLeftPane.setLayout(new BorderLayout());
+        topLeftPane.add(modePanel, BorderLayout.NORTH);
+        topLeftPane.add(addrPane, BorderLayout.SOUTH);
+
+        profilePane.add(topLeftPane, BorderLayout.NORTH);
+
 
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Graph and Buttons Panel">
