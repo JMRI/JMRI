@@ -102,6 +102,8 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return smm.getSignalMast("South To West").getAspect().equals("Approach");
             }, "Signal South To West now Approach");
+            // test train runs in reverse, then fwd
+            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "Failed To Start - Stop / Resume");
@@ -254,6 +256,9 @@ import java.nio.file.StandardCopyOption;
 
             JRadioButtonOperator boRev = new JRadioButtonOperator(atw, Bundle.getMessage("ReverseRadio"));
             boRev.push();
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                }, "Throttle should be in reverse");
             sliderSpeed.setValue(100);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 1.0f;

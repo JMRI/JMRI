@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
@@ -273,7 +274,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 }
                 lastReportedSpeed = throttle.getSpeedSetting();
                 if (speedSlider.isVisible()) {
-                    speedSlider.setValue((int) (lastReportedSpeed * 100.0f));
+                    speedSlider.setValue(Math.round(lastReportedSpeed * 100.0f));
                 }
             }
             updateThrottleStatus();
@@ -292,6 +293,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     }
                 } else {
                     lastReportedSpeed = (float) e.getNewValue();
+                    if (speedSlider.isValid()) {
+                        speedSlider.setValue(Math.round(lastReportedSpeed * 100.0f));
+                    }
                 }
             }
             updateThrottleStatus();
@@ -352,8 +356,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                                 handleThrottleListen(e);
                             }
                         };
-                        throttle.addPropertyChangeListener(throttleListener);
+                        jmri.InstanceManager.throttleManagerInstance().attachListener(throttle.getLocoAddress(), throttleListener);
                         rosterEntry = autoActiveTrain.getRosterEntry();
+                        setStatusLabelWidth();
                         stopButton.setText(Bundle.getMessage("StopButton"));
                         stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
                         stopButton.setVisible(true);
@@ -394,8 +399,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                                 handleThrottleListen(e);
                             }
                         };
-                        throttle.addPropertyChangeListener(throttleListener);
+                        jmri.InstanceManager.throttleManagerInstance().attachListener(throttle.getLocoAddress(), throttleListener);
                         rosterEntry = autoActiveTrain.getRosterEntry();
+                        setStatusLabelWidth();
                     }
                     stopButton.setText(Bundle.getMessage("StopButton"));
                     stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
@@ -456,6 +462,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     autoActiveTrain.setSpeedBySignal();
                 }
             }
+            pack();
         }
 
         private JToolBar componentJPanel;
@@ -493,12 +500,15 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             speedSlider.setPreferredSize(new Dimension(100, 20));
             componentJPanel.add(speedSlider);
             speedSlider.addChangeListener(e -> {
-                int val = ((JSlider) (e.getSource())).getValue();
-                sliderChanged(val);
+                if (speedSlider.isVisible()) {
+                    int val = ((JSlider) (e.getSource())).getValue();
+                    float speedValue = val * 0.01f;
+                    autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
+                }
             });
 
             throttleStatus = new JLabel();
-            // prevent JFrame to resize on each % change
+            // prevent JFrame to resize on each % change - temporary size for initialization
             throttleStatus.setPreferredSize(new Dimension(100, 20));
             throttleStatus.setText("Speed Unknown");
             componentJPanel.add(throttleStatus);
@@ -507,6 +517,21 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             pack();
         }
 
+        /*
+         * Using dummy strings get max size of the statustext
+         */
+        private void setStatusLabelWidth() {
+            if (rosterEntry!=null && autoActiveTrain.getUseSpeedProfile()) {
+                throttleStatus.setPreferredSize(
+                        new Dimension(getGraphics().getFontMetrics().stringWidth(rosterEntry.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(
+                                1.0f, true)),
+                                getGraphics().getFontMetrics().getHeight()));
+            } else {
+                throttleStatus.setPreferredSize(
+                        new Dimension(getGraphics().getFontMetrics().stringWidth("100.0% FWD"),
+                                getGraphics().getFontMetrics().getHeight()));
+            }
+        }
         public void stopResume() {
             if (autoActiveTrain.getAutoEngineer() != null) {
                 ActiveTrain at = autoActiveTrain.getActiveTrain();
@@ -531,9 +556,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     autoActiveTrain.saveSpeedAndDirection();
                     autoActiveTrain.setSavedStatus(at.getStatus());
                     at.setStatus(ActiveTrain.STOPPED);
-                    if (at.getMode() == ActiveTrain.MANUAL) {
-                        speedSlider.setValue(0);
-                    }
+                    speedSlider.setValue(0);
                 }
             } else {
                 log.error("unexpected null autoEngineer");
@@ -551,17 +574,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 autoActiveTrain.setForward(forwardButton.isSelected());
             } else {
                 log.debug(" {}:Ignored direction button change, not in manual mode", at.getTrainName());
-            }
-        }
-
-        public void sliderChanged(int value) {
-            ActiveTrain at = autoActiveTrain.getActiveTrain();
-            if (at.getMode() == ActiveTrain.MANUAL) {
-                float speedValue = value;
-                speedValue = speedValue * 0.01f;
-                autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
-            } else {
-                log.debug(" {}:Ignored slider change, not in manual mode", at.getTrainName());
             }
         }
     }
