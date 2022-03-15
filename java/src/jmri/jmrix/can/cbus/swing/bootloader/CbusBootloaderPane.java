@@ -690,7 +690,10 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     // We had a response to the initislise so start programming.
                     writeNextData();
                 } else if (CbusMessage.isBootOutOfRange(r)) {
+                    log.error("Address out of range");
+                    addToLog(Bundle.getMessage("BootOutOfRange"));
                     // TODO:
+                    endProgramming();
                 } else {
                     protocolError();
                 }
@@ -706,6 +709,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     endProgramming();
                 } else if (CbusMessage.isBootDataOutOfRange(r)) {
                     // TODO: should send checksum to flush programming data to FLASH
+                    log.error("Address out of range");
+                    addToLog("BootOutOfRange");
                     endProgramming();
                 } else {
                     protocolError();
@@ -720,6 +725,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     writeNextData();
                 } else if (CbusMessage.isBootOutOfRange(r)) {
                     // TODO: should send checksum to flush programming data to FLASH
+                    log.error("Address out of range");
+                    addToLog(Bundle.getMessage("BootOutOfRange"));
                     endProgramming();
                 } else {
                     protocolError();
@@ -810,6 +817,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     void protocolError() {
         // TODO:
+        log.error("Bootloader Protocol Error");
+        addToLog(Bundle.getMessage("BootProtocol"));
     }
     
     /**
