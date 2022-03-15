@@ -73,6 +73,7 @@ public class GenerateSearchIndexTest {
     private void parseNode(Node node, String pad) {
         for (Node child : node.childNodes()) {
 //            System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
+/*
             if (false && child instanceof Element) {
                 if ("h1".equalsIgnoreCase(child.nodeName())) {
                     String text = ((Element) child).ownText().trim();
@@ -89,7 +90,9 @@ public class GenerateSearchIndexTest {
                     else System.out.format("%sText: %s%n", pad, text);
                 }
 //                System.out.format("Element: %s%n", pad, child.nodeName(), child.getClass().getName());
-            } else if (child instanceof TextNode) {
+            } else
+*/
+            if (child instanceof TextNode) {
 //                System.out.format("Text node: %s%n", pad, child.nodeName(), child.getClass().getName());
                 TextNode textNode = (TextNode)child;
                 String text = textNode.getWholeText().toLowerCase();
