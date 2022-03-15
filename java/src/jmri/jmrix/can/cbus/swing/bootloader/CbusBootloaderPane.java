@@ -690,8 +690,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     // We had a response to the initislise so start programming.
                     writeNextData();
                 } else if (CbusMessage.isBootOutOfRange(r)) {
-                    log.error("Address out of range");
-                    addToLog(Bundle.getMessage("BootOutOfRange"));
+                    log.error("INIT Address out of range");
+                    addToLog(Bundle.getMessage("BootInitOutOfRange"));
                     // TODO:
                     endProgramming();
                 } else {
@@ -709,8 +709,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     endProgramming();
                 } else if (CbusMessage.isBootDataOutOfRange(r)) {
                     // TODO: should send checksum to flush programming data to FLASH
-                    log.error("Address out of range");
-                    addToLog(Bundle.getMessage("BootOutOfRange"));
+                    log.error("Data Address out of range");
+                    addToLog(Bundle.getMessage("BootDataOutOfRange"));
                     endProgramming();
                 } else {
                     protocolError();
@@ -725,8 +725,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     writeNextData();
                 } else if (CbusMessage.isBootOutOfRange(r)) {
                     // TODO: should send checksum to flush programming data to FLASH
-                    log.error("Address out of range");
-                    addToLog(Bundle.getMessage("BootOutOfRange"));
+                    log.error("NOP Address out of range");
+                    addToLog(Bundle.getMessage("BootNopOutOfRange"));
                     endProgramming();
                 } else {
                     protocolError();
@@ -853,8 +853,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         
         CanMessage m = CbusMessage.getBootWriteData(d, 0);
         log.debug("Write frame {} at address {} {}", dataFramesSent, Integer.toHexString(address), m);
-        addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), Integer.toHexString(address)));
-        
+        if ((address & 0xFF) == 0) {
+            addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), Integer.toHexString(address)));
+        } else {
+            bootConsole.append(".");
+        }        
         if (bootProtocol == BootProtocol.CBUS_1_0) {
             setAckTimeout();
         } else {
@@ -889,7 +892,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             while (!isProgrammingNeeded(d) && (bootAddress < hexFile.getProgEnd())) {
                 dataFramesSent++;
                 log.debug("Skip frame {} at address {}", dataFramesSent, Integer.toHexString(bootAddress));
-                addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
+                if (skipFlag == false) {
+                    addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
+                }
                 skipFlag = true;
                 bootAddress += 8;
                 d = hexFile.getData(bootAddress, 8);
@@ -899,7 +904,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (skipFlag == true) {
                     skipFlag = false;
                     // Send NOP to adjust the address after skipping, no reply to this from AN247
-                    log.debug("Send new address after skipping {}", Integer.toHexString(bootAddress));
+                    log.debug("Start writing at new address after skipping {}", Integer.toHexString(bootAddress));
                     addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
                     CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
                     tc.sendCanMessage(m, null);
@@ -929,7 +934,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             while (!isProgrammingNeeded(d) && (bootAddress < hexFile.getProgEnd())) {
                 dataFramesSent++;
                 log.debug("Skip frame {} at address {}", dataFramesSent, Integer.toHexString(bootAddress));
-                addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
+                if (skipFlag == false) {
+                    addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
+                }
                 skipFlag = true;
                 bootAddress += 8;
                 d = hexFile.getData(bootAddress, 8);
@@ -939,7 +946,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (skipFlag == true) {
                     // Send NOP to adjust the address after skipping, reply will come back here
                     // with skipFlag true
-                    log.debug("Send new address after skipping {}", Integer.toHexString(bootAddress));
+                    log.debug("Start writing at new address after skipping {}", Integer.toHexString(bootAddress));
                     addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
                     bootState = BootState.NOP_SENT;
                     CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
@@ -1054,6 +1061,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Tidy up after programming success or failure
      */
     private void endProgramming() {
+        log.debug("Ending Programming");
         if (busyDialog != null) {
             busyDialog.finish();
             busyDialog = null;
