@@ -261,8 +261,8 @@ public class CbusOpCodes {
                         break;
                     case 5:     // 5 data
                         switch (msg.getElement(0)) { // data payload of bootloader control frames
-                            case CbusConstants.CBUS_EXT_DEVID: // 3
-                                sb.append(Bundle.getMessage("decodeCBUS_EXT_DEVID"));
+                            case CbusConstants.CBUS_EXT_BOOTID: // 6
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTID"));
                                 break;
                             default:
                                 break;
@@ -270,8 +270,8 @@ public class CbusOpCodes {
                         break;
                     case 7:     // 7 data
                         switch (msg.getElement(0)) { // data payload of bootloader control frames
-                            case CbusConstants.CBUS_EXT_BOOTID: // 4
-                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTID"));
+                            case CbusConstants.CBUS_EXT_DEVID: // 5
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_DEVID"));
                                 break;
                             default:
                                 break;

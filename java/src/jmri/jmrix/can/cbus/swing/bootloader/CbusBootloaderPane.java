@@ -710,7 +710,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 } else if (CbusMessage.isBootDataOutOfRange(r)) {
                     // TODO: should send checksum to flush programming data to FLASH
                     log.error("Address out of range");
-                    addToLog("BootOutOfRange");
+                    addToLog(Bundle.getMessage("BootOutOfRange"));
                     endProgramming();
                 } else {
                     protocolError();
