@@ -122,7 +122,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     protected enum BootProtocol {
         UNKNOWN,
         AN247,
-        CBUS_1_0
+        CBUS_2_0
     }
     protected BootProtocol bootProtocol = BootProtocol.UNKNOWN;
     
@@ -656,7 +656,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (CbusMessage.isBootDevId(r)) {
                     // We had a response to the Device ID request so we can proceed with the new protocol
                     showDevId(r);
-                    bootProtocol = BootProtocol.CBUS_1_0;
+                    bootProtocol = BootProtocol.CBUS_2_0;
                     requestBootId();
                 } else {
                     protocolError();
@@ -835,7 +835,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 return true;
             }
         }
-        log.debug("Programming not required");
         return false;
     }
 
@@ -858,7 +857,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         } else {
             bootConsole.append(".");
         }        
-        if (bootProtocol == BootProtocol.CBUS_1_0) {
+        if (bootProtocol == BootProtocol.CBUS_2_0) {
             setAckTimeout();
         } else {
             // For AN247 protocol, timeout will be set when we see the outgoing message
@@ -949,6 +948,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     log.debug("Start writing at new address after skipping {}", Integer.toHexString(bootAddress));
                     addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
                     bootState = BootState.NOP_SENT;
+                    setAckTimeout();
                     CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
                     tc.sendCanMessage(m, null);
                 } else {
@@ -1047,6 +1047,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Send bootloader reset frame to put the node back into operating mode.
      *
      * There will be no reply to this.
+     * TODO: could have a timeout to trigger a a test for the module back in operating mode
      */
     protected void sendReset() {
         endProgramming();
@@ -1385,6 +1386,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             public void run() {
                 ackTask = null;
                 endProgramming();
+                bootAddress -= 8;
                 log.error("Timeout waiting for data write ACK at address {}", Integer.toHexString(bootAddress));
                 addToLog(MessageFormat.format(Bundle.getMessage("BootAckTimeout"), Integer.toHexString(bootAddress)));
             }
