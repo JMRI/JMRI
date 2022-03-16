@@ -691,7 +691,7 @@
         commonly used in web development. Although it will take a little time to get used to it, in
         the end it provides a lot of power to control your layout anyway you'd like.
         <p>Run your own scripts or scripts shared by other JMRI users from the
-        <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>⇒ Run
+        <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>&rArr; Run
         Script...</strong> menu.</p>
         <!--#include virtual="/Footer.shtml" -->
       </div>
