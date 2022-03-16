@@ -215,7 +215,7 @@
           gridy="0" puts the item in the topmost row. Other attributes to control the format of the
           grid items are available and are documented in the <a href=
           "http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target=
-          "_blank">Java® GridBagLayout Tutorial</a>.</p>
+          "_blank">Java&reg; GridBagLayout Tutorial</a>.</p>
 
           <ul>
             <li>Attributes of "grid" apply to all items in the table.</li>

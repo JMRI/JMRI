@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI help CBUS NODE Manager CONFIG TOOL configuration variable">
-  <title>JMRI: CBUS® Node Manager</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: CBUS&reg; Node Manager</title><!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -531,7 +531,7 @@
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support
       page</a>.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

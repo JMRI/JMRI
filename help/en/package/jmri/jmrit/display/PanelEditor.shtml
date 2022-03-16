@@ -261,7 +261,7 @@
 
       <h2>Communicating with Multiple Systems</h2>
 
-      <p>PanelPro can communicate with more than one layout hardware system. To configure JMRI® to
+      <p>PanelPro can communicate with more than one layout hardware system. To configure JMRI&reg; to
       talk to multiple systems, select them in the Preferences panel (Edit -&gt; Preferences &gt;
       Connections (tab at left) -&gt; click on the + tab to add the system information for your
       second System Connection.</p>
