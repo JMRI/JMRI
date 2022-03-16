@@ -678,7 +678,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 clearAckTimeout();
                 if (CbusMessage.isBootOK(r)) {
                     // We had a response to the enables so start programming.
-                    initialise(hardwareParams.getLoadAddress());
+                    if (hardwareParams.areValid()) {
+                        initialise(hardwareParams.getLoadAddress());
+                    } else {
+                        initialise(hexFile.getProgStart());
+                    }
                 } else {
                     protocolError();
                 }
@@ -1158,16 +1162,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (busyDialog != null) {
                     busyDialog.finish();
                     busyDialog = null;
-                    hardwareParams.setValid(true);
                     log.debug("Failed to read module parameters from node {}", nodeNumber);
                     addToLog(MessageFormat.format(Bundle.getMessage("BootNodeParametersFailed"), nodeNumber));
-                    log.debug("Looking for module in boot mode");
-                    addToLog(Bundle.getMessage("BootNodeParametersNext"));
+                    hardwareParams.setValid(false);
                     moduleCheckBox.setSelected(true);
-                    setCheckBootTimeout();
-                    bootState = BootState.CHECK_BOOT_MODE;
-                    CanMessage m = CbusMessage.getBootTest(0);
-                    tc.sendCanMessage(m, null);
+                    openFileChooserButton.setEnabled(true);
                 }
             }
         };
@@ -1262,7 +1261,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 bootProtocol = BootProtocol.AN247;
                 log.debug("Found AN247 bootloader");
                 addToLog(Bundle.getMessage("BootIdAn247"));
-                initialise(hardwareParams.getLoadAddress());
+                if (hardwareParams.areValid()) {
+                    initialise(hardwareParams.getLoadAddress());
+                } else {
+                    initialise(hexFile.getProgStart());
+                }
             }
         };
         TimerUtil.schedule(devIdTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);
