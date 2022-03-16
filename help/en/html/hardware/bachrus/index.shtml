@@ -64,9 +64,9 @@
       <p>
       If you are doing this on the the programming track,
       the process will have set the momentum CVs to zero and restored them on
-      successful completion.. This is done
+      successful completion. This is done
       to avoid them interfering with the matching process. If you're programming
-      on the main track, this ste is skipped.  In that case, make sure that you
+      on the main track, this step is skipped.  In that case, make sure that you
       have set the momentum CVs to zero before starting the process, and
       restore them manually afterwards.
 
