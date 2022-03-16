@@ -114,6 +114,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         WRITE66,
         WRITE95
     }
+
+    static final int SPEEDMATCHWARMUPTIME = 60;
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Member Variables">
     //<editor-fold defaultstate="collapsed" desc="General GUI Elements">
@@ -1303,6 +1306,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Timer timeout handler for the speed match timer
      */
     protected synchronized void speedMatchTimeout() {
+        log.info("speedMatchTimeout in states {} {} {}", speedMatchState, speedMatchSetupState, progState);
         switch (speedMatchState) {
             case WAIT_FOR_THROTTLE:
                 tidyUp();
@@ -1400,10 +1404,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 break;
 
             case FORWARD_WARM_UP:
-                //Run 4 minutes at high speed forward
-                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", 240 - speedMatchDuration));
+                //Run for SPEEDMATCHWARMUPTIME seconds at high speed forward
+                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", SPEEDMATCHWARMUPTIME - speedMatchDuration));
 
-                if (speedMatchDuration >= 240) {
+                if (speedMatchDuration >= SPEEDMATCHWARMUPTIME) {
                     speedMatchState = SpeedMatchState.FORWARD_SPEED_MATCH_STEP_1;
                     setupSpeedMatchTimer(true, 0, 5000);
                     speedMatchDuration = 0;
@@ -1481,10 +1485,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 break;
 
             case REVERSE_WARM_UP:
-                //Run 2 minutes at high speed reverse
-                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", 120 - speedMatchDuration));
+                //Run for SPEEDMATCHWARMUPTIME seconds at high speed reverse
+                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", SPEEDMATCHWARMUPTIME - speedMatchDuration));
 
-                if (speedMatchDuration >= 120) {
+                if (speedMatchDuration >= SPEEDMATCHWARMUPTIME) {
                     speedMatchState = SpeedMatchState.REVERSE_SPEED_MATCH_TRIM;
                 } else {
                     speedMatchDuration += 5;
@@ -1503,10 +1507,18 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                         setSpeedMatchError(speedStep28Target);
 
                         if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
-                            speedMatchState = SpeedMatchState.RESTORE_MOMENTUM;
-                            speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_WRITE;
-                            setupSpeedMatchTimer(false, 0, 1500);
-                            speedMatchDuration = 0;
+                            // done
+                            // next step depends on programming on main vs programming track
+                            if (mainButton.isSelected()) {
+                                log.debug("ending by calling tidyup()");
+                                tidyUp();
+                            } else {
+                                log.debug("ending by going to RESTORE_MOMENTUM");
+                                speedMatchState = SpeedMatchState.RESTORE_MOMENTUM;
+                                speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_WRITE;
+                                setupSpeedMatchTimer(false, 0, 1500);
+                                speedMatchDuration = 0;
+                            }
                         } else {
                             reverseTrim = getNextSpeedMatchValue(lastReverseTrim);
 
@@ -1779,7 +1791,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
             // using speed matching timer to trigger each phase of speed matching
             speedMatchState = SpeedMatchState.SETUP;
-            speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_READ;
+
+            // start phase depends on program track vs main track
+            if (mainButton.isSelected()) {
+                log.debug("starting by going to VSTART");
+                speedMatchSetupState = SpeedMatchSetupState.VSTART;
+            } else {
+                log.debug("starting by going to MOMENTUM_ACCEL_READ");
+                speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_READ;
+            }
             speedMatchTimer.setInitialDelay(1500);
             speedMatchTimer.start();
         } else {
