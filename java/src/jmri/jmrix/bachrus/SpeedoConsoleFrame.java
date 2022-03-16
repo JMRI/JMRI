@@ -1306,7 +1306,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Timer timeout handler for the speed match timer
      */
     protected synchronized void speedMatchTimeout() {
-        log.info("speedMatchTimeout in states {} {} {}", speedMatchState, speedMatchSetupState, progState);
+        log.debug("speedMatchTimeout in states {} {} {}", speedMatchState, speedMatchSetupState, progState);
         switch (speedMatchState) {
             case WAIT_FOR_THROTTLE:
                 tidyUp();
