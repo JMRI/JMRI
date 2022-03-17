@@ -385,7 +385,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fixed bouncing speed slider in manual mode.</li>
+             <li>Size AutoTrainsWindow correctly when going between auto and manual with use scroll bars off.</li>
+             <li>Enabled disaplay scale speed for running with speed profiles.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
