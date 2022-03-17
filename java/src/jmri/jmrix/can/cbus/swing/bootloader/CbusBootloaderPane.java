@@ -473,9 +473,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             try {
                 hexFile.openRd();
                 hexFile.read();
+                fileParams = new CbusParameters(hexFile);
                 if (!moduleCheckBox.isSelected()) {
-                    fileParams = new CbusParameters().validate(hexFile, hardwareParams);
-                    if (fileParams.areValid()) {
+                    if (fileParams.validate(fileParams, hardwareParams)) {
                         addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
                         addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileParametersMatch"), hardwareParams.toString()));
                         programButton.setEnabled(true);
@@ -678,11 +678,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 clearAckTimeout();
                 if (CbusMessage.isBootOK(r)) {
                     // We had a response to the enables so start programming.
-                    if (hardwareParams.areValid()) {
-                        initialise(hardwareParams.getLoadAddress());
-                    } else {
-                        initialise(hexFile.getProgStart());
-                    }
+                    initialise();
                 } else {
                     protocolError();
                 }
@@ -1004,17 +1000,16 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     /**
      * Initialise programming
      * 
-     * We normally start at the address from the parameters, unless the hex file 
-     * start address is higher, e.g., in the case of a CANCAB language file which
-     * contains data only for the language settings.
-     *
-     * @param loadAddress Start address from parameters
+     * We normally start at the address from the module parameters, or from the 
+     * hex file, otherwise start at the beginning of the hex file. 
      */
-    private void initialise(int loadAddress) {
-        if (hexFile.getProgStart() > loadAddress) {
-            bootAddress = hexFile.getProgStart();
+    private void initialise() {
+        if (hardwareParams.areValid()) {
+            bootAddress = hardwareParams.getLoadAddress();
+        } else if (fileParams.areValid()) {
+            bootAddress = fileParams.getLoadAddress();
         } else {
-            bootAddress = loadAddress;
+            bootAddress = hexFile.getProgStart();
         }
         checksum = 0;
         dataFramesSent = 0;
@@ -1261,11 +1256,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 bootProtocol = BootProtocol.AN247;
                 log.debug("Found AN247 bootloader");
                 addToLog(Bundle.getMessage("BootIdAn247"));
-                if (hardwareParams.areValid()) {
-                    initialise(hardwareParams.getLoadAddress());
-                } else {
-                    initialise(hexFile.getProgStart());
-                }
+                initialise();
             }
         };
         TimerUtil.schedule(devIdTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);

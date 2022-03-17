@@ -63,6 +63,42 @@ public class CbusParameters {
     
     
     /**
+     * Create parameters from a hex file
+     * 
+     * @param f hex file already read
+     * @return true if valid parameter block found
+     */
+    public CbusParameters(HexFile f) {
+        this();
+        
+        int checksum = 0;
+        
+        byte [] d;
+        CbusParameters fp;
+
+        // Look for new style parameter block @ 0x800
+        d = f.getData(0x820, 32);
+        fp = new CbusParameters(d);
+        
+        // Checksum
+        for (int i = 0; i < 30; i++) {
+            checksum += d[i];
+        }
+        
+        int paramCheck = (d[30] & 0xFF)<<8 + (d[31] & 0xFF);
+        if ((checksum & 0xFFFF) == paramCheck) {
+            valid = true;
+        }
+
+        // Assume old style parameter block @ 0x810
+        d = f.getData(0x810, 7);
+        if (d[NUM_PARAM_IDX] == 7) {
+            valid = true;
+        }
+    }
+    
+    
+    /**
      * Create parameters from byte []
      * 
      * @param d byte [] array 
@@ -100,49 +136,44 @@ public class CbusParameters {
     
     
     /**
-     * Look for a valid parameter block in a hex file by comparing against one
+     * Valid parameter block in a hex file by comparing against one
      * read from hardware (or some other source)
      * 
      * @param f hex file to search
      * @param hp parameters to validate against
-     * @return parameters found in hex file with valid and newVersion flags
+     * @return true if parameter blocks match
      */
-    public CbusParameters validate(HexFile f, CbusParameters hp) {
-        byte [] d;
-        CbusParameters fp;
+    public boolean validate(CbusParameters fp, CbusParameters hp) {
 
-        if (hp.paramData[NUM_PARAM_IDX] == 7) {
-            // Old style
-            d = f.getData(0x810, 7);
-            fp = new CbusParameters(d);
-        } else {
-            // New style
-            d = f.getData(0x820, 32);
-            fp = new CbusParameters(d);
+        if (!fp.valid || !hp.valid) {
+            return false;
         }
-        
+
         // As a minimum, check manufacturer ID, module ID and processor type
-        if (fp.paramData[MANU_ID_IDX] == hp.paramData[MANU_ID_IDX]) {
-            if (fp.paramData[MODULE_ID_IDX] == hp.paramData[MODULE_ID_IDX]) {
-//                checkVersion(fp, hp);
-                fp.valid = true;
-                if (hp.paramData[NUM_PARAM_IDX] > 7) {
-                    if (fp.paramData[PROC_TYPE_IDX] == hp.paramData[PROC_TYPE_IDX]) {
-                        fp.valid = true;
-                    } else {
-                        log.error("Processor type mismatch {} {}", fp.paramData[PROC_TYPE_IDX], hp.paramData[PROC_TYPE_IDX]);
-                    }
-                }
-                return fp;
-            } else {
-                log.error("Module ID mismatch {} {}", fp.paramData[MODULE_ID_IDX], hp.paramData[MODULE_ID_IDX]);
-            }
-        } else {
+        if (fp.paramData[MANU_ID_IDX] != hp.paramData[MANU_ID_IDX]) {
             log.error("Manufacturer ID mismatch {} {}", fp.paramData[MANU_ID_IDX], hp.paramData[MANU_ID_IDX]);
+            return false;
         }
         
-        fp.valid = false;
-        return fp;
+        if (fp.paramData[MODULE_ID_IDX] != hp.paramData[MODULE_ID_IDX]) {
+            log.error("Module ID mismatch {} {}", fp.paramData[MODULE_ID_IDX], hp.paramData[MODULE_ID_IDX]);
+            return false;
+        }
+        
+//        if (!checkVersion(fp, hp)) {
+//            log.error("Version mismatch {}.{} {}.{}", , fp.paramData[MAJOR_VER_IDX], fp.paramData[MINOR_VER_IDX],
+//                                hp.paramData[MAJOR_VER_IDX], hp.paramData[MINOR_VER_IDX]);
+//            return false;
+//        }
+
+        if (hp.paramData[NUM_PARAM_IDX] > 7) {
+            if (fp.paramData[PROC_TYPE_IDX] != hp.paramData[PROC_TYPE_IDX]) {
+                log.error("Processor type mismatch {} {}", fp.paramData[PROC_TYPE_IDX], hp.paramData[PROC_TYPE_IDX]);
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     
