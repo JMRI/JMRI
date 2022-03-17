@@ -86,7 +86,7 @@
           the "System Name" for that Turnout. In this case, it means "LocoNet Turnout with address
           1". "Turnout 1" is the "User Name", which can be anything you want it to be as long as it
           is unique on your Panel. You can edit these from the "Turnout Table" accessed from the
-          Tools ⇒ Tables ⇒ Turnouts menu.<br>
+          Tools &rArr; Tables &rArr; Turnouts menu.<br>
           Signal Heads and Sensors are identified using similar names (see the <a href=
           "../../doc/Technical/Names.shtml">JMRI help page on System Names and Naming</a>).</p>
         </li>
@@ -165,7 +165,7 @@ respectively.
 
         <li>Tell the program about your Sensors:
           <ul>
-            <li>From the Tools menu, open the "Tables" ⇒ "Sensors" tool.</li>
+            <li>From the Tools menu, open the "Tables" &rArr; "Sensors" tool.</li>
 
             <li>If you have a Digitrax DCC system with your occupancy detectors connected to
             LocoNet, just power the track Off and On using either a DT-series throttle or the
@@ -183,7 +183,7 @@ respectively.
 
         <li>Tell the program about your computer-driven Turnouts:
           <ul>
-            <li>From the Tools menu, open the "Tables" ⇒ "Turnouts" tool.</li>
+            <li>From the Tools menu, open the "Tables" &rArr; "Turnouts" tool.</li>
 
             <li>If you have a Digitrax DCC system, just throw or close each Turnout from a
             throttle. PanelPro will capture the Turnout addresses from the resulting LocoNet
@@ -206,7 +206,7 @@ respectively.
         "../../../package/jmri/jmrit/beantable/images/SigHeadTable.png" class="floatRight" width=
         "299" height="118" alt="Signal Head Table Figure"></a>
           <ul>
-            <li>From the PanelPro <strong>Tools</strong> menu, open the <strong>Tables ⇒ Signals ⇒
+            <li>From the PanelPro <strong>Tools</strong> menu, open the <strong>Tables &rArr; Signals &rArr;
             Signal Heads</strong> tool.</li>
 
             <li>Click the "<a href=

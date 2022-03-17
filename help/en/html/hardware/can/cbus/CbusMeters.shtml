@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI CBUS setup voltage current meter">
-  <title>JMRI Hardware Support - CBUS® Voltage / Current Meters</title>
+  <title>JMRI Hardware Support - CBUS&reg; Voltage / Current Meters</title>
   <meta name="author" content="Andrew Crosland"><!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -32,7 +32,7 @@
       DecoderPro3 the meters are currently only available from the CBUS tools menu. <img src=
       "images/meter.png" alt="CBUS Meter "></p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

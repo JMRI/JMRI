@@ -18,7 +18,7 @@
       <h1>Hardware Support: Keyspan USB connections</h1>
 
       <p>This page describes tests of two USB-to-serial adapters, done circa 2010 using the
-      <a href="MS100.shtml">Digitrax MS100</a> LocoNet® interface.</p>
+      <a href="MS100.shtml">Digitrax MS100</a> LocoNet&reg; interface.</p>
 
       <p class="important">We strongly recommend to use a better solution to connect a computer to
       a LocoNet, such as the <a href="LocoBufferUSB.shtml">LocoBuffer USB</a> or the <a href=
@@ -144,7 +144,7 @@ RI       9            22
         </dd>
       </dl>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

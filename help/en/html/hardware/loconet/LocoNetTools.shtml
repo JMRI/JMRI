@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - Tools for LocoNet® Devices</title>
+  <title>JMRI Hardware Support - Tools for LocoNet&reg; Devices</title>
   <meta name="Author" content="B. Milhaupt">
   <meta name="keywords" content=
   "Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex DT402D DT402DCE DT402R Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project'">
@@ -21,16 +21,16 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: JMRI Tools for LocoNet® Devices</h1>
+      <h1>Hardware Support: JMRI Tools for LocoNet&reg; Devices</h1>
 
-      <p>JMRI software provides a variety of tools to support hardware connected to the LocoNet®
+      <p>JMRI software provides a variety of tools to support hardware connected to the LocoNet&reg;
       bus. These tools provide a variety of features, such as monitoring status, reading and
       writing configuration. Each of the tools provides a set of features which is appropriate to
       the type of device it supports, as summarized in the table below.</p>
 
       <h2 id="tools">JMRI LocoNet Tools</h2>
       Access to the LocoNet Tools is from the <strong>LocoNet</strong> menu that appears when JMRI
-      is <a href="Digitrax.shtml#Setup">connected to a LocoNet®</a>-based DCC system, or to a
+      is <a href="Digitrax.shtml#Setup">connected to a LocoNet&reg;</a>-based DCC system, or to a
       <a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>.
       <p>In the table below, each tool name is a link to a tool-specific help page.</p>
 
@@ -440,7 +440,7 @@
         </tr>
       </table>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <title>DecoderPro&reg; Main Window</title><!--#include virtual="/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Debug Menu</h1>
+      <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
@@ -96,7 +96,7 @@
       users Groups.io group</a>. More systems will be added in the future. To enable VSD Location
       Following, follow these steps:
       <ol>
-        <li>Follow the directions appropriate to your hardware system for setting up 
+        <li>Follow the directions appropriate to your hardware system for setting up
         <!-- link below should point to the HELP page for Reporters -->
            <!-- klk32003: it is the HELP page (part 2) for Reporters -->
            <a href="../../html/tools/Reporters.shtml">Reporters</a> or <a href=
@@ -204,7 +204,7 @@
       then select the train in the locomotive's VSDecoder Options pane. When you <em>MOVE</em> the
       train in Operations, the sound will move to the next location on the Route.</p>
 
-      <p>For more information on Operations, see the JMRI® Operations User's Guide</p>
+      <p>For more information on Operations, see the JMRI&reg; Operations User's Guide</p>
 
       <h4 id="advanced_location_following">Advanced Location Following</h4>
 

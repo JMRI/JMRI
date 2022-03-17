@@ -92,7 +92,7 @@
           <p>Some decoders can have multiple possible stored Product IDs for otherwise-identical
           decoders. In this case multiple comma-separated values can be specified in the Product ID
           field and a match to any value in the list will identify the decoder uniquely. For
-          example, the ESU series usesthe RailCom® Product ID CVs, but the Product ID is updated
+          example, the ESU series usesthe RailCom&reg; Product ID CVs, but the Product ID is updated
           for various production batches of the same model:</p>
 
           <pre style="font-family: monospace;">
@@ -818,7 +818,7 @@ alternative more concise methods of specifying in the "CV" variable parameter:
         "_blank">decoder fragment file</a>.
         </li>
 
-        <li>The following example reads the RailCom® Production Date as per <a href=
+        <li>The following example reads the RailCom&reg; Production Date as per <a href=
         "http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">NMRA standard 9.3.2</a>
         from 4 contiguous indexed CVs.
         </li>

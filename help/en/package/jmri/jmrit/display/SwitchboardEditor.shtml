@@ -15,7 +15,7 @@
       <h1>The Switchboard Editor</h1>
       <span class="since">since 4.7.3</span>
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
-      To create a new Switchboard, from the Panels menu, choose New Panel ⇒ Switchboard Editor.<br>
+      To create a new Switchboard, from the Panels menu, choose New Panel &rArr; Switchboard Editor.<br>
       A default pane with switches for Turnouts in the range 1 - 24 opens.<br>
       If any Turnouts were defined in JMRI beforehand, those switches will immediately show their
       current state and immediately let you control them.</p>

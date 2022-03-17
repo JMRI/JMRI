@@ -22,7 +22,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">DecoderPro® Main Window</h1>
+      <h1 id="Top">DecoderPro&reg; Main Window</h1>
 
       <h2>Debug Menu</h2>
 
@@ -82,7 +82,7 @@
 
       <blockquote>
         <p>Opens your operating systems <strong>Open</strong> dialog to locate a decoder definition
-        file to install in DecoderPro®.</p>
+        file to install in DecoderPro&reg;.</p>
       </blockquote>
 
       <p><strong>Import Decoder URL</strong>
@@ -90,7 +90,7 @@
 
       <blockquote>
         <p>Opens an <strong>Input</strong> prompt in which you type a URL of a file to download and
-        install a decoder definition file in DecoderPro®.</p>
+        install a decoder definition file in DecoderPro&reg;.</p>
 
         <p><img src="images/Main_Debug05.png" alt="Input" height="128" width="297">
         </p>
@@ -101,20 +101,20 @@
 
       <blockquote>
         <p>After adding a decoder definition, updates the decoder index that is used by the
-        Programmers in DecoderPro®.</p>
+        Programmers in DecoderPro&reg;.</p>
       </blockquote>
 
       <p><strong>Recreate Roster Index</strong>
       </p>
 
       <blockquote>
-        <p>After importing a new roster file, updates the roster index used by DecoderPro.®</p>
+        <p>After importing a new roster file, updates the roster index used by DecoderPro.&reg;</p>
       </blockquote>
 
       <p><span style="font-weight: bold;">Update Decoder Definitions</span>
       </p>
 
-      <p style="margin-left: 40px;">Updates the decoder definitions for DecoderPro®</p>
+      <p style="margin-left: 40px;">Updates the decoder definitions for DecoderPro&reg;</p>
       <img src="images/separator.png" alt="sep" height="4" width="340">
       <p><a id="ValidateXML"></a><strong>Validate XML File</strong>
       </p>

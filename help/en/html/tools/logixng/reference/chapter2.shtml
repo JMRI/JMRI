@@ -32,7 +32,7 @@
       <p>The clipboard editor works the same way as the ConditionalNG editor, with the exception
       that actions and expressions are never active while on the clipboard.</p>
 
-      <p>The clipboard contents are visible by selecting <strong>Tools ⇒ Open clipboard</strong>.
+      <p>The clipboard contents are visible by selecting <strong>Tools &rArr; Open clipboard</strong>.
       The clipboard can also be opened from the main menu of the three LogixNG tables.</p>
 
       <div style="margin-left: 2em">

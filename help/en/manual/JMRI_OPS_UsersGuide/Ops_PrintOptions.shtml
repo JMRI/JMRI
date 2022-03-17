@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Manifest Print Options</h2>
 
@@ -35,7 +35,7 @@
       width="900">
       </p>
 
-      <p>You can modify how JMRI® OperationsPro prints the Train Manifests and the amount of detail
+      <p>You can modify how JMRI&reg; OperationsPro prints the Train Manifests and the amount of detail
       that the Build Report provides.</p>
 
       <h3>Print Options</h3>

@@ -59,7 +59,7 @@
       </ul>
 
       <p>OperationsPro functions can be accessed from the main PanelPro menu by clicking on
-      <strong>Tools ⇒ OperationsPro</strong>.</p>
+      <strong>Tools &rArr; OperationsPro</strong>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
