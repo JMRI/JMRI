@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
 /**
  * Generates the search index for local help files.
  *
- * @author Daniel Bergqvist Copyright (C) 2021
+ * @author Daniel Bergqvist Copyright (C) 2022
  */
 public class GenerateSearchIndexTest {
 
@@ -47,8 +47,6 @@ public class GenerateSearchIndexTest {
 
     private void parseHeader(Node node, String pad) {
         for (Node child : node.childNodes()) {
-//            System.out.format("Header: %s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
-
             if (child instanceof Element) {
                 if ("title".equalsIgnoreCase(child.nodeName())) {
                     String text = ((Element) child).ownText().trim().replaceAll("\r", "").replace("\n", "").replace("\"", "\\\\\"");
@@ -59,11 +57,7 @@ public class GenerateSearchIndexTest {
                             _fileHeaderIndex.put(_currentFileId, text);
                         }
                     }
-//                    System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
-                    if (text.isBlank()) System.out.format("Header is blank. Num childs: %d%n", child.childNodes().size());
-                    else System.out.format("%sText: %s%n", pad, text);
                 }
-//                System.out.format("Element: %s%n", pad, child.nodeName(), child.getClass().getName());
             }
 
             parseHeader(child, pad+"    ");
@@ -72,36 +66,14 @@ public class GenerateSearchIndexTest {
 
     private void parseNode(Node node, String pad) {
         for (Node child : node.childNodes()) {
-//            System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
-/*
-            if (false && child instanceof Element) {
-                if ("h1".equalsIgnoreCase(child.nodeName())) {
-                    String text = ((Element) child).ownText().trim();
-//                    Node child2 = ((Element) child).ownText();
-                    if (!text.isBlank()) {
-                        if (_fileHeaderIndex.containsKey(_currentFileId)) {
-                            System.out.format("ERROR: Header already exists for file %s: %s --- %s%n", _fileIndex.get(_currentFileId), _fileHeaderIndex.get(_currentFileId), text);
-                        } else {
-                            _fileHeaderIndex.put(_currentFileId, text);
-                        }
-                    }
-//                    System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
-                    if (text.isBlank()) System.out.format("Header is blank. Num childs: %d%n", child.childNodes().size());
-                    else System.out.format("%sText: %s%n", pad, text);
-                }
-//                System.out.format("Element: %s%n", pad, child.nodeName(), child.getClass().getName());
-            } else
-*/
             if (child instanceof TextNode) {
-//                System.out.format("Text node: %s%n", pad, child.nodeName(), child.getClass().getName());
                 TextNode textNode = (TextNode)child;
-                String text = textNode.getWholeText().toLowerCase();
+                String text = textNode.getWholeText().toLowerCase().trim();
+
                 String[] parts = text.split("\\W+");
                 for (String s : parts) {
                     addWord(s, _currentFileId);
                 }
-//                System.out.format("%sText: %s%n", pad, text.getWholeText());
-//                System.out.println(text.getWholeText().trim());
             }
             parseNode(child, pad+"    ");
         }
@@ -120,11 +92,9 @@ public class GenerateSearchIndexTest {
                 _fileIndex.put(_currentFileId, fileName);
                 Path filePath = FileSystems.getDefault().getPath(fileName);
                 Document doc = Jsoup.parse(filePath.toFile(), "UTF-8");
-//                Document doc = Jsoup.parse(html);
                 parseHeader(doc.head(), "");
                 parseNode(doc.body(), "");
                 _currentFileId++;
-//                System.out.format("%n============================================================%n%n");
             }
         }
 
@@ -140,12 +110,8 @@ public class GenerateSearchIndexTest {
     }
 
     private void createJsonFile() throws IOException {
-//        String newLine = System.getProperty("line.separator");
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath() + "help/en/local/search.json");
         PrintWriter printWriter = new PrintWriter(fileWriter);
-//        printWriter.println("<!DOCTYPE html>");
-//        printWriter.println("<html lang=\"en\">");
-//        printWriter.println("{files:[");
         printWriter.print("let searchIndex = '{");
         printWriter.print("\"files\":{");
         for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
@@ -179,40 +145,7 @@ public class GenerateSearchIndexTest {
     @Test
     public void testGenerateSearchIndex() throws IOException {
         searchFolder("help/en/");
-
-/*
-        List<Map.Entry<String, Integer>> list = new ArrayList<>();
-//        Map<String, java.util.concurrent.atomic.AtomicInteger> wordFileCount = new HashMap<>();
-
-        int count = 0;
-        for (Map.Entry<Integer, Map<String, Set<Integer>>> wordMap : _searchIndex.entrySet()) {
-            for (Map.Entry<String, Set<Integer>> fileIdList : wordMap.getValue().entrySet()) {
-                int wfc = 0;
-                for (int fileId : fileIdList.getValue()) {
-//                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
-                    count++;
-                    wfc++;
-                }
-                Map.Entry<String, Integer> entry = new HashMap.SimpleEntry<>(fileIdList.getKey(), wfc);
-                list.add(entry);
-            }
-        }
-
-        Collections.sort(list, (a,b) -> {return a.getValue().compareTo(b.getValue());});
-
-//        for (Map.Entry<String, Integer> entry : list) {
-//            System.out.format("%8d: %s%n", entry.getValue(), entry.getKey());
-//        }
-
-        System.out.format("Word count: %d%n", count);
-*/
         createJsonFile();
-
-//        String html = "<html><head><title>First parse</title></head>"
-//                + "<body><p>Parsed HTML into a doc.</p></body></html>";
-//        Document doc = Jsoup.parse(html);
-//        Element body = doc.body();
-//        parseNode(body, "");
     }
 
     @BeforeEach
