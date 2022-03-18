@@ -66,19 +66,15 @@ public class CbusParameters {
      * Create parameters from a hex file
      * 
      * @param f hex file already read
-     * @return true if valid parameter block found
      */
     public CbusParameters(HexFile f) {
         this();
         
         int checksum = 0;
-        
         byte [] d;
-        CbusParameters fp;
 
         // Look for new style parameter block @ 0x800
         d = f.getData(0x820, 32);
-        fp = new CbusParameters(d);
         
         // Checksum
         for (int i = 0; i < 30; i++) {
@@ -139,7 +135,7 @@ public class CbusParameters {
      * Valid parameter block in a hex file by comparing against one
      * read from hardware (or some other source)
      * 
-     * @param f hex file to search
+     * @param fp Parameters from hex file
      * @param hp parameters to validate against
      * @return true if parameter blocks match
      */
