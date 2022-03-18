@@ -1521,6 +1521,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                             }
                         } else {
                             reverseTrim = getNextSpeedMatchValue(lastReverseTrim);
+                            log.info("setting reverse trim {} was {}", reverseTrim, lastReverseTrim);
 
                             if (((lastReverseTrim == 1) || (lastReverseTrim == 255)) && (reverseTrim == lastReverseTrim)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
