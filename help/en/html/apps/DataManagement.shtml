@@ -146,15 +146,15 @@
       <ol>
         <li>Preferences: "Save"</li>
 
-        <li>Panel editors: <strong>File ⇒ Store ALL table content and panels...</strong> {<em>Old:
-        <strong>File ⇒ Store Panels...</strong></em>} or use the PanelPro main menu item
-        <strong>File ⇒ Store ALL table content and panels...</strong> {<em>Old: <strong>Panels ⇒
+        <li>Panel editors: <strong>File &rArr; Store ALL table content and panels...</strong> {<em>Old:
+        <strong>File &rArr; Store Panels...</strong></em>} or use the PanelPro main menu item
+        <strong>File &rArr; Store ALL table content and panels...</strong> {<em>Old: <strong>Panels &rArr;
         Store Panels...</strong></em>}</li>
 
-        <li>Tables (also Fast Clock): <strong>File ⇒ Store ⇒ Store ALL table content and panels...
+        <li>Tables (also Fast Clock): <strong>File &rArr; Store &rArr; Store ALL table content and panels...
         </strong> {<em>Old: <strong>Store configuration and panels</strong></em>}</li>
 
-        <li>Roster entry: (a) automatic (b) File ⇒ Save or "Save to Roster" (c) "Write" to
+        <li>Roster entry: (a) automatic (b) File &rArr; Save or "Save to Roster" (c) "Write" to
         Decoder</li>
 
         <li>Images/Icons: "Save Image Index"</li>

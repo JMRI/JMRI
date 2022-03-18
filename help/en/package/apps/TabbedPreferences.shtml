@@ -549,7 +549,7 @@
       <h2 id="help">Help</h2>
 
       <div>
-        <p>When <strong>Help ⇒ Window Help</strong> or <strong>Help ⇒ General Help</strong> is
+        <p>When <strong>Help &rArr; Window Help</strong> or <strong>Help &rArr; General Help</strong> is
         selected, <strong>JmriHelp</strong> will display the help page in the default browser.</p>
 
         <p>There are three options that can be selected.</p>
@@ -742,7 +742,7 @@
 
         <h3>Merging Speed Profiles</h3>
 
-        <p><span class="since">since 4.19.2</span>Warrants can compute a track speed when 
+        <p><span class="since">since 4.19.2</span>Warrants can compute a track speed when
         traversing a path with known length and known throttle setting.
         These measurements are made for each Roster Id that is run under
         a warrant and are kept for the entire layout session. When JMRI is quit, at shutdown, these
@@ -772,14 +772,14 @@
         <h3>Slow Speed Assistance</h3>
 
         <p><span class="since">since 4.24.5</span>The ramping parameters and speed interpretation
-        apply to all locomotives when speed changes are required by signal aspects, obstacles 
-        ahead or a user "Halt" control command. You may have a balky engine in your fleet that 
+        apply to all locomotives when speed changes are required by signal aspects, obstacles
+        ahead or a user "Halt" control command. You may have a balky engine in your fleet that
         may not perform well at low throttle settings. Should such a speed be specified before entering
-        a block, the engine might stall and never get there. "Slow Speed Assistance" can be 
-        given when a train is inordinately late in getting to the next block of the script. 
-        This done only when the train approaching the block has a speed less than a specified 
-        throttle setting. If the train has not reached the block within 10 seconds of its scheduled 
-        script time, its speed is increased by one "Ramp Step Throttle Increment". This is 
+        a block, the engine might stall and never get there. "Slow Speed Assistance" can be
+        given when a train is inordinately late in getting to the next block of the script.
+        This done only when the train approaching the block has a speed less than a specified
+        throttle setting. If the train has not reached the block within 10 seconds of its scheduled
+        script time, its speed is increased by one "Ramp Step Throttle Increment". This is
         done at 10 second intervals until either the train reaches the block or has
         attained the specified throttle speed. Upon entering the block the original script
         speed is restored.</p>

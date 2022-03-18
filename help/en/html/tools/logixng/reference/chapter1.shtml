@@ -24,7 +24,7 @@
       <h2>Setting up a LogixNG and a ConditionalNG</h2>
 
       <p>First, we create a LogixNG. We start <strong>PanelPro</strong> and select
-      <strong>Tools</strong> ⇒ <strong>Tables</strong> ⇒ <strong>LogixNG</strong> ⇒
+      <strong>Tools</strong> &rArr; <strong>Tables</strong> &rArr; <strong>LogixNG</strong> &rArr;
       <strong>LogixNG</strong> to open the table with the LogixNGs.</p>
 
       <div style="margin-left: 2em">
@@ -169,7 +169,7 @@
       <p>The action is now moved to the clipboard and the ConditionalNG is empty.</p>
 
       <p>We will not look at the clipboard for now, but as a side note, you can open the clipboard
-      by selecting <strong>Tools ⇒ Clipboard</strong> in the ConditionalNG editor.</p>
+      by selecting <strong>Tools &rArr; Clipboard</strong> in the ConditionalNG editor.</p>
 
       <p>Right click on <code>! A</code> and select <strong>Add</strong>. This time select the
       <strong>Common</strong> category and the <strong>If Then Else</strong> type.</p>

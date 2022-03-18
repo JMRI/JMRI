@@ -21,7 +21,7 @@
       JMRI application is working. Check that you can properly communicate with and operate your
       layout.</p>
 
-      <p>Start web access by selecting <strong>Tools ⇒ Servers ⇒ Start JMRI Web
+      <p>Start web access by selecting <strong>Tools &rArr; Servers &rArr; Start JMRI Web
       Server</strong>.</p>
 
       <p>Test the connection:</p>
