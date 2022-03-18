@@ -3,7 +3,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 
 import org.jdom2.Element;
@@ -27,9 +26,6 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class CarManager extends RollingStockManager<Car>
         implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
-
-    // stores Kernels
-    protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<>();
 
     public CarManager() {
     }

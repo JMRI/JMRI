@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Add Locomotive window</h2>
 
@@ -37,7 +37,7 @@
           alt="Add Engine Menu">
           </td>
           <td>
-            <p>The Add Locomotive pane's Window and Help menus are the standard JMRI® menus used on
+            <p>The Add Locomotive pane's Window and Help menus are the standard JMRI&reg; menus used on
             most JMRI windows.</p>
           </td>
         </tr>

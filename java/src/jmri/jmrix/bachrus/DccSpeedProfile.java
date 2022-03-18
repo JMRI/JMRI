@@ -100,7 +100,7 @@ public class DccSpeedProfile {
         SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
         String today = formatter.format(new Date());
         // title
-        String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
+        String annotate = Bundle.getMessage("ProfileFor") + " "
                 + address + " " + Bundle.getMessage("CreatedOn")
                 + " " + today;
         // should this be printComment instead?

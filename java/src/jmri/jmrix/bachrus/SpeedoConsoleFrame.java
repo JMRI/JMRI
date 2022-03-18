@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -143,9 +144,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JRadioButton numButton = new JRadioButton(Bundle.getMessage("Numeric"));
     protected JRadioButton dialButton = new JRadioButton(Bundle.getMessage("Dial"));
     protected SpeedoDial speedoDialDisplay = new SpeedoDial();
-    protected JRadioButton dirFwdButton = new JRadioButton(Bundle.getMessage("Forward"));
-    protected JRadioButton dirRevButton = new JRadioButton(Bundle.getMessage("Reverse"));
-    protected JRadioButton toggleGridButton = new JRadioButton(Bundle.getMessage("ToggleGrid"));
+    protected JToggleButton dirFwdButton = new JToggleButton(Bundle.getMessage("ScanForward"));
+    protected JToggleButton dirRevButton = new JToggleButton(Bundle.getMessage("ScanReverse"));
+    protected JToggleButton toggleGridButton = new JToggleButton(Bundle.getMessage("ToggleGrid"));
 
     GraphPane profileGraphPane;
 
@@ -369,7 +370,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
         today = new Date();
         result = formatter.format(today);
-        String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
+        String annotate = Bundle.getMessage("ProfileFor") + " "
                 + locomotiveAddress.getNumber() + " " + Bundle.getMessage("CreatedOn")
                 + " " + result;
         printTitleText.setText(annotate);
@@ -894,6 +895,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     circ = 50.2655F;
                     readerLabel.setText(Bundle.getMessage("Reader60"));
                     break;
+                case 103:
+                    circ = (float) ((5.95+0.9) * Math.PI);
+                    readerLabel.setText(Bundle.getMessage("Reader103"));
+                    break;
                 default:
                     speedTextField.setText(Bundle.getMessage("ReaderErr"));
                     log.error("Invalid reader type");
@@ -920,7 +925,16 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     protected void calcSpeed() {
         float thisScale = (selectedScale == -1) ? customScale : selectedScale;
-        if (series > 0) {
+        if (series == 103) {
+            // KPF-Zeller
+            // calculate kph: r/sec * circumference converted to hours and kph in scaleFace()
+            sampleSpeed = (float) ( (count/8.) * circ * 3600 / 1.0E6 * thisScale * speedTestScaleFactor);
+            // data arrives at constant rate, so we don't average nor switch range
+            avSpeed = sampleSpeed;
+            log.debug("New KPF-Zeller sample: {} Average: {}", sampleSpeed, avSpeed);
+
+        } else if (series > 0 && series <= 6) {
+            // Bachrus
             // Scale the data and calculate kph
             try {
                 freq = 1500000 / count;
@@ -929,7 +943,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 log.error("Exception calculating sampleSpeed", ae);
             }
             avFn(sampleSpeed);
-            log.debug("New sample: {} Average: {}", sampleSpeed, avSpeed);
+            log.debug("New Bachrus sample: {} Average: {}", sampleSpeed, avSpeed);
             log.debug("Acc: {} range: {}", acc, range);
             switchRange();
         }

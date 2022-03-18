@@ -19,7 +19,7 @@
       <h2>Updating Decoder Definitions</h2>
       Many people have contributed decoder definition files to DecoderPro. Between new releases,
       new files may be created that you might want to use. These can usually be found either on
-      <a href="https://jmri.org/xml/decoders/">the JMRI web site</a> or in the <a href=
+      <a href="https://jmri.org/xml/decoders/">the JMRI website</a> or in the <a href=
       "https://groups.io/g/jmriusers/files">files area of JMRI users</a> (log in to access).
       <p>To use these xml files you need to download and install them.</p>
 

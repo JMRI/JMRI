@@ -938,9 +938,9 @@
       <p>Select either or both Log options</p>
 
       <ul>
-        <li><strong>Log to the log:</strong> Help ⇒ System Console.</li>
+        <li><strong>Log to the log:</strong> Help &rArr; System Console.</li>
 
-        <li><strong>Log to the Script Output:</strong> Scripting ⇒ Script Output.</li>
+        <li><strong>Log to the Script Output:</strong> Scripting &rArr; Script Output.</li>
       </ul>
 
       <div style="margin-left: 2em">

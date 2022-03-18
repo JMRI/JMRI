@@ -79,23 +79,23 @@
       The text "20 hours ago" tells you when the last change was made to the upstream/master
       branch. The text "This will merge 14 commits from upstream/master into master" tells you how
       many commits that are to be merged, from which branch and to which branch. Ensure you have
-      choosen the correct branches!</p>
+      chosen the correct branches!</p>
 
       <p>Click on the button "Merge upstream/master into master" to do the merge. When it's finish,
       you will see this:<br>
       <a href="images/GHD_Image_6_MergeIntoDone.png"><img src=
       "images/GHD_Image_6_MergeIntoDone.png" height="50%" width="50%" alt="screenshot"></a><br>
       The button "Fetch origin" has now changed its name to "Push origin". The number 14 tells that
-      there is 14 commits to upload to the server.</p>
+      there are 14 commits to upload to the server.</p>
 
       <p>But wait! Why do we want to _upload_ the commits? Haven't we just downloaded them from
       JMRI?</p>
 
-      <p>Yes, we have downloaded the commits from upstream/master into our local master on the
+      <p>Yes, we downloaded the commits from upstream/master into our local master on the
       local computer. It's now time to upload these commits to our repository on the GitHub
       server.</p>
 
-      <p>What's happening is this: We are working with three different repositories. For me, my
+      <p>This is what happened: We are working with three different repositories. For me, my
       username on GitHub is <code>danielb987</code>, so I'm working with these three repositories:</p>
 
       <ul>
@@ -105,17 +105,19 @@
 
         <li>The repository on the local computer</li>
       </ul>
-      What has happened is that we merged "upstream/master" from JMRI/JMRI to our "master" branch in
-      our repository on our local computer. Then we need to upload the changes to our "master"
+      <p>What has happened is that we merged "upstream/master" from JMRI/JMRI to our "master" branch in
+      our repository on our local computer. So we still need to upload these changes to our "master"
       branch on our local computer to our GitHub repository on the GitHub server, which for me is
-      "danielb987/JMRI".
+      "danielb987/JMRI".</p>
+
       <h3>The workflow of JMRI development</h3>
-      The workflow we use:
+      <p>We use the workflow:</p>
+
       <ol>
         <li>Select the branch "master"</li>
 
-        <li>Ensure "master" is up-to-date with upstream/master. If it's not, we merge branch
-        "upstream/master" into "master" sa previously described.</li>
+        <li>Ensure "master" is up-to-date with upstream/master. If it hasn't been merged yet, we
+        merge branch "upstream/master" into "master" as previously described.</li>
 
         <li>Create a new branch. Please use only english letters, digits and underscore for the
         name of the branch. GitHub Desktop can handle international characters, but if you need
@@ -279,14 +281,15 @@
         System.out.println("World");
     }
 </pre>
-      <p>There is two parts here. First, beginning with "&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD" is the
-      code we want to have. This code goes down to the line "=======". Below that are the lines of code that
-      someone else wants to have, and that code goes down to "&gt;&gt;&gt;&gt;&gt;&gt;&gt; hello_world2".<br>
+      <p>There is two parts here. First, beginning with <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>
+      is the code we added. This code goes down to the line <code>=======</code>.<br>
+      Below that are the lines of code that someone else wants to have, and that code goes down to
+      <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; hello_world2</code>.<br>
       In this case, I have used the branch "hello_world2" to get a conflict, but most often you will have
       merged master into your branch so this line will be "&gt;&gt;&gt;&gt;&gt;&gt;&gt; master".</p>
-      <p>What we need to do is to decide if we should keep the original code, replace it with our
-      own, or do something different. The key is to understand what the code does and to make a
-      good decision. If in question, please ask at the JMRI developer mailing list.</p>
+      <p>We need to decide if we should keep the original code, replace it with our
+      own, or do something else. The key is to understand what the code does and to make a
+      good decision. If in question, please ask the JMRI developer mailing list.</p>
 
       <p>In this case, we resolve this by changing the line to:</p>
 

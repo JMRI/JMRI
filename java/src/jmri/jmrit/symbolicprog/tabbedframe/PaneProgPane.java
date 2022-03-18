@@ -2351,6 +2351,9 @@ public class PaneProgPane extends javax.swing.JPanel
             format = attr.getValue();
         }
 
+        boolean viewOnly = var.getAttribute("viewOnly") != null
+                ? var.getAttribute("viewOnly").getValue().equals("yes") : false;
+
         if (i >= 0) {
             rep = getRep(i, format);
             rep.setMaximumSize(rep.getPreferredSize());
@@ -2360,6 +2363,9 @@ public class PaneProgPane extends javax.swing.JPanel
                 tip = rep.getToolTipText();
             }
             rep.setToolTipText(modifyToolTipText(tip, variable));
+            if (viewOnly) {
+            rep.setEnabled(false);
+            }
         }
         return rep;
     }
