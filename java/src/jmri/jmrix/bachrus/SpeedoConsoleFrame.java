@@ -1458,6 +1458,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                         speedMatchDuration = 1;
                     } else {
                         setSpeedMatchError(speedStep28Target);
+                        log.info("forward speed error is {} with vHigh {}", speedMatchError, vHigh);
 
                         if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
                             if (speedMatchWarmUpCheckBox.isSelected()) {
@@ -1468,6 +1469,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                             setupSpeedMatchTimer(false, 0, 5000);
                             speedMatchDuration = 0;
                         } else {
+                            log.info("  setting Vhigh {} was {}", vHigh, lastVHigh);
                             vHigh = getNextSpeedMatchValue(lastVHigh);
 
                             if (((lastVHigh == 1) || (lastVHigh == 255)) && (vHigh == lastVHigh)) {
