@@ -57,7 +57,6 @@ public class VSDecoderPreferences {
     // Private variables to hold preference values
     private boolean _autoStartEngine = false; // play engine sound w/o waiting for "Engine Start" button pressed.
     private boolean _autoLoadDefaultVSDFile = false; // Automatically load a VSD file.
-    private boolean _show_train_symbol = false;
     private boolean _use_blocks = true;
     private String _defaultVSDFilePath = null;
     private String _defaultVSDFileName = null;
@@ -113,9 +112,6 @@ public class VSDecoderPreferences {
         if ((a = e.getAttribute("isAutoLoadingDefaultVSDFile")) != null) {
             setAutoLoadDefaultVSDFile(a.getValue().compareTo("true") == 0);
         }
-        if ((a = e.getAttribute("showTrainSymbol")) != null) {
-            setShowTrainSymbolSetting(a.getValue().compareTo("true") == 0);
-        }
         if ((a = e.getAttribute("useBlocks")) != null) {
             setUseBlocksSetting(a.getValue().compareTo("true") == 0);
         }
@@ -150,7 +146,6 @@ public class VSDecoderPreferences {
         org.jdom2.Element e = new org.jdom2.Element("VSDecoderPreferences");
         e.setAttribute("isAutoStartingEngine", "" + isAutoStartingEngine());
         e.setAttribute("isAutoLoadingDefaultVSDFile", "" + isAutoLoadingDefaultVSDFile());
-        e.setAttribute("showTrainSymbol", "" + getShowTrainSymbolSetting());
         e.setAttribute("useBlocks", "" + getUseBlocksSetting());
         ec = new Element("DefaultVSDFilePath");
         ec.setText("" + getDefaultVSDFilePath());
@@ -171,7 +166,6 @@ public class VSDecoderPreferences {
     public void set(VSDecoderPreferences tp) {
         setAutoStartEngine(tp.isAutoStartingEngine());
         setAutoLoadDefaultVSDFile(tp.isAutoLoadingDefaultVSDFile());
-        setShowTrainSymbolSetting(tp.getShowTrainSymbolSetting());
         setUseBlocksSetting(tp.getUseBlocksSetting());
         setDefaultVSDFilePath(tp.getDefaultVSDFilePath());
         setDefaultVSDFileName(tp.getDefaultVSDFileName());
@@ -191,7 +185,6 @@ public class VSDecoderPreferences {
     public boolean compareTo(VSDecoderPreferences tp) {
         return (isAutoStartingEngine() != tp.isAutoStartingEngine()
                 || isAutoLoadingDefaultVSDFile() != tp.isAutoLoadingDefaultVSDFile()
-                || getShowTrainSymbolSetting() != tp.getShowTrainSymbolSetting()
                 || getUseBlocksSetting() != tp.getUseBlocksSetting()
                 || !(getDefaultVSDFilePath().equals(tp.getDefaultVSDFilePath()))
                 || !(getDefaultVSDFileName().equals(tp.getDefaultVSDFileName()))
@@ -267,14 +260,6 @@ public class VSDecoderPreferences {
 
     public boolean isAutoLoadingDefaultVSDFile() {
         return _autoLoadDefaultVSDFile;
-    }
-
-    public void setShowTrainSymbolSetting(boolean t) {
-        _show_train_symbol = t;
-    }
-
-    public boolean getShowTrainSymbolSetting() {
-        return _show_train_symbol;
     }
 
     public void setUseBlocksSetting(boolean b) {
