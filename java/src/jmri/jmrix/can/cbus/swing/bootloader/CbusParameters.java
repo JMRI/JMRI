@@ -81,7 +81,7 @@ public class CbusParameters {
             checksum += d[i];
         }
         
-        int paramCheck = (d[30] & 0xFF)<<8 + (d[31] & 0xFF);
+        int paramCheck = ((d[30] & 0xFF)<<8) + (d[31] & 0xFF);
         if ((checksum & 0xFFFF) == paramCheck) {
             valid = true;
         }
