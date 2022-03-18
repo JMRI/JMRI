@@ -3,14 +3,10 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.awt.geom.Point2D;
-import java.awt.geom.GeneralPath;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import jmri.Audio;
 import jmri.LocoAddress;
 import jmri.Throttle;
@@ -23,7 +19,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.swing.VSDControl;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
-import jmri.util.MathUtil;
 import jmri.util.PhysicalLocation;
 
 import javax.annotation.*;
@@ -920,32 +915,6 @@ public class VSDecoder implements PropertyChangeListener {
                 result = false;
             }
         } while (result);
-    }
-
-    public void draw(@Nonnull Graphics2D g2) {
-        if (!VSDecoderManager.instance().getVSDecoderPreferences().getShowTrainSymbolSetting() || location == null) return;
-
-        List<Point2D> points = new ArrayList<>();
-        points.add(MathUtil.add(location, new Point2D.Double(+8.0, -4.0)));
-        points.add(MathUtil.add(location, new Point2D.Double(+12.0, +0.0)));
-        points.add(MathUtil.add(location, new Point2D.Double(+8.0, +4.0)));
-        points.add(MathUtil.add(location, new Point2D.Double(-8.0, +4.0)));
-        points.add(MathUtil.add(location, new Point2D.Double(-8.0, -4.0)));
-
-        GeneralPath path = new GeneralPath();
-        for (Point2D p : points) {
-            p.setLocation(MathUtil.rotateRAD(p, location, directionRAD));
-            if (path.getCurrentPoint() == null) { // if this is the 1st point
-                path.moveTo(p.getX(), p.getY());
-            } else {
-                path.lineTo(p.getX(), p.getY());
-            }
-        }
-        path.closePath();
-        g2.setColor(Color.yellow);
-        g2.fill(path);
-        g2.setColor(Color.black);
-        g2.draw(path);
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDecoder.class);

@@ -1123,7 +1123,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                             d.posToSet.z = 0.0f;
                             log.info("address {} position to set: {}", d.getAddress(), d.posToSet);
                             d.setPosition(d.posToSet);
-                            d.getModels().repaint();
                         }
                     }
                 }
