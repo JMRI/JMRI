@@ -280,7 +280,8 @@ public class GenerateSearchIndexTest {
 
     @Test
     public void testGenerateSearchIndex() throws IOException {
-        searchFolder("help/en/");
+        searchFolder("help/en/html/");
+        searchFolder("help/en/package/");
         createJsonFile();
     }
 
