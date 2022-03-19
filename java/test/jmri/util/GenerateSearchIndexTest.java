@@ -282,6 +282,7 @@ public class GenerateSearchIndexTest {
     public void testGenerateSearchIndex() throws IOException {
         searchFolder("help/en/html/");
         searchFolder("help/en/package/");
+        searchFolder("help/en/manual/");
         createJsonFile();
     }
 
