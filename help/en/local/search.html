@@ -32,6 +32,10 @@
             searchIndexData = window.searchIndexDataEnd;
         } else {
             searchIndexData = window.searchIndexDataPart;
+			if (searchIndexData == null) {
+				alert("This search is not supported");
+				return;
+			}
         }
         let wordMap = window.searchIndexData.words[numChars];
         let fileIDs = wordMap[searchTerm];

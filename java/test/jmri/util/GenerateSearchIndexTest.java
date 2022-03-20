@@ -21,7 +21,7 @@ public class GenerateSearchIndexTest {
     private static final boolean GENERATE_WHOLE_WORD_INDEX = true;
     private static final boolean GENERATE_BEGINNING_OF_WORD_INDEX = true;
     private static final boolean GENERATE_END_OF_WORD_INDEX = true;
-    private static final boolean GENERATE_PART_OF_WORD_INDEX = true;
+    private static final boolean GENERATE_PART_OF_WORD_INDEX = false;
 
     private final Map<Integer, String> _fileIndex = new HashMap<>();
     private final Map<Integer, String> _fileHeaderIndex = new HashMap<>();
@@ -161,11 +161,6 @@ public class GenerateSearchIndexTest {
     private void createJsonFile() throws IOException {
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(
                 FileUtil.getProgramPath() + "help/en/local/search.json"))) {
-
-//            printWriter.format("let GENERATE_WHOLE_WORD_INDEX = %s;%n", GENERATE_WHOLE_WORD_INDEX);
-//            printWriter.format("let GENERATE_BEGINNING_OF_WORD_INDEX = %s;%n", GENERATE_BEGINNING_OF_WORD_INDEX);
-//            printWriter.format("let GENERATE_END_OF_WORD_INDEX = %s;%n", GENERATE_END_OF_WORD_INDEX);
-//            printWriter.format("let GENERATE_PART_OF_WORD_INDEX = %s;%n", GENERATE_PART_OF_WORD_INDEX);
 
             // Whole word
             if (GENERATE_WHOLE_WORD_INDEX) {
