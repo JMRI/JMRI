@@ -36,7 +36,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../html/apps/PanelPro/index.shtml">PanelPro™ v4.x</a>
+              <a href="../html/apps/PanelPro/index.shtml">PanelPro&trade; v4.x</a>
             </td>
             <td>
             </td>
@@ -46,7 +46,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro™ v4.x</a>
+              <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a>
             </td>
             <td>
             </td>
@@ -56,7 +56,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro™ v4.x</a>
+              <a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade; v4.x</a>
             </td>
             <td>
             </td>
@@ -96,7 +96,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro™ v3.6-3.10</a>
+              <a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro&trade; v3.6-3.10</a>
             </td>
             <td>
             </td>
@@ -146,20 +146,20 @@
         </li>
 
         <li>Drawing computer based panels for depicting a model railroad layout (<a href=
-        "../html/apps/PanelPro/index.shtml">PanelPro™</a> and <a href=
+        "../html/apps/PanelPro/index.shtml">PanelPro&trade;</a> and <a href=
         "../html/apps/PanelPro/index.shtml#le">Layout Editor</a>)
         </li>
 
         <li>Controlling the layout (All modules)</li>
 
         <li>Creating train manifests for duplicating railroad operations (<a href=
-        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro™</a>)
+        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)
         </li>
 
         <li>Controlling the signals on the layout (All modules)</li>
 
         <li>Controlling lighting and sound in the room, and so forth (<a href=
-        "../html/tools/Audio.shtml">SoundPro™</a>)
+        "../html/tools/Audio.shtml">SoundPro&trade;</a>)
         </li>
       </ul>
 
