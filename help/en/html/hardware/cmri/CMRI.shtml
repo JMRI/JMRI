@@ -381,8 +381,8 @@
         <li>Model Railroad Control Systems (MRCS) CPMEGA</li>
       </ul>
 
-      <p>Note: Some C/MRI output boards can be configured in whole or in part as either ‘current sinking’
-      or ‘current sourcing’, and you will have to keep track of that to successfully use the outputs. Note
+      <p>Note: Some C/MRI output boards can be configured in whole or in part as either &lsquo;current sinking&rsquo;
+      or &lsquo;current sourcing&rsquo;, and you will have to keep track of that to successfully use the outputs. Note
       also that Current Sinking Outputs are not compatible with the inputs, and will thus cause errors in the
       CMRI wraparound test available in JMRI.
       </p>
