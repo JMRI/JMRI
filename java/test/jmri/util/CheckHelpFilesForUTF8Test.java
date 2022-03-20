@@ -103,6 +103,7 @@ public class CheckHelpFilesForUTF8Test {
         convertChar.put(8482, "&trade;");
         convertChar.put(8594, "&rarr;");
         convertChar.put(8629, "&crarr;");
+        convertChar.put(8658, "&rArr;");
         convertChar.put(9662, "&#9662;");
         convertChar.put(10004, "&#10004;");
 
