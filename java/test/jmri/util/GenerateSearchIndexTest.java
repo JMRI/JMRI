@@ -18,6 +18,11 @@ import org.junit.jupiter.api.*;
  */
 public class GenerateSearchIndexTest {
 
+    private static final boolean GENERATE_WHOLE_WORD_INDEX = true;
+    private static final boolean GENERATE_BEGINNING_OF_WORD_INDEX = true;
+    private static final boolean GENERATE_END_OF_WORD_INDEX = true;
+    private static final boolean GENERATE_PART_OF_WORD_INDEX = true;
+
     private final Map<Integer, String> _fileIndex = new HashMap<>();
     private final Map<Integer, String> _fileHeaderIndex = new HashMap<>();
     private final Map<Integer, Map<String, Set<Integer>>> _searchIndexWholeWord = new HashMap<>();
@@ -157,124 +162,137 @@ public class GenerateSearchIndexTest {
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(
                 FileUtil.getProgramPath() + "help/en/local/search.json"))) {
 
+//            printWriter.format("let GENERATE_WHOLE_WORD_INDEX = %s;%n", GENERATE_WHOLE_WORD_INDEX);
+//            printWriter.format("let GENERATE_BEGINNING_OF_WORD_INDEX = %s;%n", GENERATE_BEGINNING_OF_WORD_INDEX);
+//            printWriter.format("let GENERATE_END_OF_WORD_INDEX = %s;%n", GENERATE_END_OF_WORD_INDEX);
+//            printWriter.format("let GENERATE_PART_OF_WORD_INDEX = %s;%n", GENERATE_PART_OF_WORD_INDEX);
+
             // Whole word
-            printWriter.print("let searchIndexWholeWord = '{");
-            printWriter.print("\"files\":{");
-            for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
-                printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("},");
-
-            printWriter.print("\"words\":{");
-            for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexWholeWord.entrySet()) {
-                printWriter.format("\"%d\":{", searchIndexEntry.getKey());
-                for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
-                    printWriter.format("\"%s\":[", wordMapEntry.getKey());
-                    for (int fileId : wordMapEntry.getValue()) {
-    //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
-                        printWriter.format("\"%d\",", fileId);
-                    }
-                    printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
-                    printWriter.print("],");
+            if (GENERATE_WHOLE_WORD_INDEX) {
+                printWriter.print("let searchIndexWholeWord = '{");
+                printWriter.print("\"files\":{");
+                for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
+                    printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
                 }
-                printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
                 printWriter.print("},");
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("}");
 
-            printWriter.println("}';");
+                printWriter.print("\"words\":{");
+                for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexWholeWord.entrySet()) {
+                    printWriter.format("\"%d\":{", searchIndexEntry.getKey());
+                    for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
+                        printWriter.format("\"%s\":[", wordMapEntry.getKey());
+                        for (int fileId : wordMapEntry.getValue()) {
+        //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
+                            printWriter.format("\"%d\",", fileId);
+                        }
+                        printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
+                        printWriter.print("],");
+                    }
+                    printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                    printWriter.print("},");
+                }
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("}");
+
+                printWriter.println("}';");
+            }
 
 
             // Beginning of a word
-            printWriter.print("let searchIndexBeginning = '{");
-            printWriter.print("\"files\":{");
-            for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
-                printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("},");
-
-            printWriter.print("\"words\":{");
-            for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexBeginning.entrySet()) {
-                printWriter.format("\"%d\":{", searchIndexEntry.getKey());
-                for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
-                    printWriter.format("\"%s\":[", wordMapEntry.getKey());
-                    for (int fileId : wordMapEntry.getValue()) {
-    //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
-                        printWriter.format("\"%d\",", fileId);
-                    }
-                    printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
-                    printWriter.print("],");
+            if (GENERATE_BEGINNING_OF_WORD_INDEX) {
+                printWriter.print("let searchIndexBeginning = '{");
+                printWriter.print("\"files\":{");
+                for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
+                    printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
                 }
-                printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
                 printWriter.print("},");
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("}");
 
-            printWriter.println("}';");
+                printWriter.print("\"words\":{");
+                for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexBeginning.entrySet()) {
+                    printWriter.format("\"%d\":{", searchIndexEntry.getKey());
+                    for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
+                        printWriter.format("\"%s\":[", wordMapEntry.getKey());
+                        for (int fileId : wordMapEntry.getValue()) {
+        //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
+                            printWriter.format("\"%d\",", fileId);
+                        }
+                        printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
+                        printWriter.print("],");
+                    }
+                    printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                    printWriter.print("},");
+                }
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("}");
+
+                printWriter.println("}';");
+            }
 
 
             // End of a word
-            printWriter.print("let searchIndexEnd = '{");
-            printWriter.print("\"files\":{");
-            for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
-                printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("},");
-
-            printWriter.print("\"words\":{");
-            for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexEnd.entrySet()) {
-                printWriter.format("\"%d\":{", searchIndexEntry.getKey());
-                for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
-                    printWriter.format("\"%s\":[", wordMapEntry.getKey());
-                    for (int fileId : wordMapEntry.getValue()) {
-    //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
-                        printWriter.format("\"%d\",", fileId);
-                    }
-                    printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
-                    printWriter.print("],");
+            if (GENERATE_END_OF_WORD_INDEX) {
+                printWriter.print("let searchIndexEnd = '{");
+                printWriter.print("\"files\":{");
+                for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
+                    printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
                 }
-                printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
                 printWriter.print("},");
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("}");
 
-            printWriter.println("}';");
+                printWriter.print("\"words\":{");
+                for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexEnd.entrySet()) {
+                    printWriter.format("\"%d\":{", searchIndexEntry.getKey());
+                    for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
+                        printWriter.format("\"%s\":[", wordMapEntry.getKey());
+                        for (int fileId : wordMapEntry.getValue()) {
+        //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
+                            printWriter.format("\"%d\",", fileId);
+                        }
+                        printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
+                        printWriter.print("],");
+                    }
+                    printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                    printWriter.print("},");
+                }
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("}");
+
+                printWriter.println("}';");
+            }
 
 
             // Part of a word
-            printWriter.print("let searchIndexPart = '{");
-            printWriter.print("\"files\":{");
-            for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
-                printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("},");
-
-            printWriter.print("\"words\":{");
-            for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexPart.entrySet()) {
-                printWriter.format("\"%d\":{", searchIndexEntry.getKey());
-                for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
-                    printWriter.format("\"%s\":[", wordMapEntry.getKey());
-                    for (int fileId : wordMapEntry.getValue()) {
-    //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
-                        printWriter.format("\"%d\",", fileId);
-                    }
-                    printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
-                    printWriter.print("],");
+            if (GENERATE_PART_OF_WORD_INDEX) {
+                printWriter.print("let searchIndexPart = '{");
+                printWriter.print("\"files\":{");
+                for (Map.Entry<Integer, String> entry : _fileIndex.entrySet()) {
+                    printWriter.format("\"%d\":[\"%s\",\"%s\"],", entry.getKey(), entry.getValue(), _fileHeaderIndex.get(entry.getKey()));
                 }
-                printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
                 printWriter.print("},");
-            }
-            printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
-            printWriter.print("}");
 
-            printWriter.println("}';");
+                printWriter.print("\"words\":{");
+                for (Map.Entry<Integer, Map<String, Set<Integer>>> searchIndexEntry : _searchIndexPart.entrySet()) {
+                    printWriter.format("\"%d\":{", searchIndexEntry.getKey());
+                    for (Map.Entry<String, Set<Integer>> wordMapEntry : searchIndexEntry.getValue().entrySet()) {
+                        printWriter.format("\"%s\":[", wordMapEntry.getKey());
+                        for (int fileId : wordMapEntry.getValue()) {
+        //                    System.out.format("%5d: %20s, %s%n", wordMap.getKey(), fileIdList.getKey(), _fileIndex.get(fileId));
+                            printWriter.format("\"%d\",", fileId);
+                        }
+                        printWriter.print("\"-1\"");  // Dummy data since we have a comma character after each data
+                        printWriter.print("],");
+                    }
+                    printWriter.print("\"\":\"\"");  // Dummy data since we have a comma character after each data
+                    printWriter.print("},");
+                }
+                printWriter.print("\"-1\":\"\"");  // Dummy data since we have a comma character after each data
+                printWriter.print("}");
+
+                printWriter.println("}';");
+            }
         }
     }
 
