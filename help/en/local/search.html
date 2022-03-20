@@ -18,25 +18,44 @@
     }
 
     function searchHelp() {
+		var beginningSearch = false;
+		var endSearch = false;
+
         var searchTerm = document.getElementById("searchField").value.toLowerCase();
 //        alert(searchTerm);
         var numChars = searchTerm.length;
 //        alert(searchTerm + ", " + numChars);
 //        let lengthMap = window.searchIndexData.words;
 
-        if (document.getElementById("searchTypeWhole").checked) {
-            searchIndexData = window.searchIndexDataWholeWord;
-        } else if (document.getElementById("searchTypeBeginning").checked) {
+        if (numChars == 0) {
+            alert("No search word is given");
+            return;
+        }
+
+		if ((numChars > 1) && (searchTerm.substr(numChars-1,1) == "*")) {
+			beginningSearch = true;
+			searchTerm = searchTerm.substr(0, numChars-1);
+			numChars--;
+		}
+		if ((numChars > 1) && (searchTerm.substr(0,1) == "*")) {
+			endSearch = true;
+			searchTerm = searchTerm.substr(1);
+			numChars--;
+		}
+
+        if (beginningSearch && endSearch) {
+            searchIndexData = window.searchIndexDataPart;
+        } else if (beginningSearch) {
             searchIndexData = window.searchIndexDataBeginning;
-        } else if (document.getElementById("searchTypeEnd").checked) {
+        } else if (endSearch) {
             searchIndexData = window.searchIndexDataEnd;
         } else {
-            searchIndexData = window.searchIndexDataPart;
-			if (searchIndexData == null) {
-				alert("This search is not supported");
-				return;
-			}
+            searchIndexData = window.searchIndexDataWholeWord;
         }
+		if (searchIndexData == null) {
+			alert("This search is not supported");
+			return;
+		}
         let wordMap = window.searchIndexData.words[numChars];
         let fileIDs = wordMap[searchTerm];
         if (typeof fileIDs === 'undefined') {
@@ -95,10 +114,6 @@
 <div>
 <form>
 <p>Enter search term: <input id="searchField" type="text"> <input type="button" value="Search" onclick="searchHelp()"></p>
-<p><input type="radio" id="searchTypeWhole" name="searchType" value="wholeWord" checked><label for="wholeWord">Whole word</label></p>
-<p><input type="radio" id="searchTypeBeginning" name="searchType" value="beginningOfWord"><label for="beginningOfWord">Beginning of a word</label></p>
-<p><input type="radio" id="searchTypeEnd" name="searchType" value="endOfWord"><label for="endOfWord">End of a word</label></p>
-<p><input type="radio" id="searchTypePart" name="searchType" value="partOfWord"><label for="partOfWord">Part of a word</label></p>
 </form>
 </div>
 <div>
