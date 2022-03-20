@@ -18,6 +18,7 @@ public class CheckHelpFilesForUTF8Test {
 
     private final Map<Integer, String> convertChar = new HashMap<>();
     private final Set<Integer> foundChar = new HashSet<>();
+    private int numErrors = 0;
 
 
     private void searchFolder(String folder) throws IOException {
@@ -35,6 +36,7 @@ public class CheckHelpFilesForUTF8Test {
                 for (String s : lines) {
                     s.codePoints().forEach((codePoint) -> {
                         if (codePoint > 127) {
+                            numErrors++;
                             foundChar.add(codePoint);
                             String expected = convertChar.get(codePoint);
                             log.error(
@@ -111,6 +113,8 @@ public class CheckHelpFilesForUTF8Test {
             log.error("Found UTF-8 Codepoint: {}, Character: {}. Expected: {}",
                     codePoint, new String(Character.toChars(codePoint)), expected);
         }
+
+        log.error("Num errors: {}", numErrors);
     }
 
     @BeforeEach
