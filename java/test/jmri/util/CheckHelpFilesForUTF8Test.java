@@ -114,7 +114,7 @@ public class CheckHelpFilesForUTF8Test {
                     codePoint, new String(Character.toChars(codePoint)), expected);
         }
 
-        log.error("Num errors: {}", numErrors);
+        if (numErrors > 0) log.error("Num errors: {}", numErrors);
     }
 
     @BeforeEach
