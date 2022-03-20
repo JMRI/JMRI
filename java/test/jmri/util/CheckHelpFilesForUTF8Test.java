@@ -62,6 +62,8 @@ public class CheckHelpFilesForUTF8Test {
     @Test
     public void testGenerateSearchIndex() throws IOException {
         // See: https://www.w3schools.com/charsets/ref_utf_punctuation.asp
+        convertChar.put(169, "&copy;");
+        convertChar.put(174, "&reg;");
         convertChar.put(176, "&deg;");
         convertChar.put(200, "&Egrave;");
         convertChar.put(201, "&Eacute;");
