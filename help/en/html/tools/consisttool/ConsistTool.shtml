@@ -315,7 +315,7 @@
         <li>Select a locomotive
         <li>Under the Action menu, select Labels and Media
         <li>On that window, select Roster Media
-        <li>In the lower half of the window, enter "Consist Info" over the three dots (…)
+        <li>In the lower half of the window, enter "Consist Info" over the three dots (&hellip;)
             in the Name column, and your value over the three dots in the Value column.
         <li>Hit Return, and then click “Save to Roster”
         <li>Close the window.

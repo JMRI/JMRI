@@ -210,7 +210,7 @@
         <a href="../jmri/jmrit/display/PanelMenuHelp.shtml">layout configuration file</a> at
         startup, so all your turnouts, sensors, panels etc. are available again.</p>
 
-        <p>Click the <strong>Add ▾</strong> button and select the type of start up action to add.
+        <p>Click the <strong>Add &#9662;</strong> button and select the type of start up action to add.
         The new action will be added last.</p>
 
         <p>Start up action order is important. In most cases, scripts should be the last items in
