@@ -16,6 +16,10 @@ import org.junit.jupiter.api.*;
  */
 public class CheckHelpFilesForUTF8Test {
 
+    private final Map<Integer, String> convertChar = new HashMap<>();
+    private final Set<Integer> foundChar = new HashSet<>();
+
+
     private void searchFolder(String folder) throws IOException {
         Path path = FileSystems.getDefault().getPath(folder);
         Set<String> files = Stream.of(path.toFile().listFiles())
@@ -31,9 +35,11 @@ public class CheckHelpFilesForUTF8Test {
                 for (String s : lines) {
                     s.codePoints().forEach((codePoint) -> {
                         if (codePoint > 127) {
+                            foundChar.add(codePoint);
+                            String expected = convertChar.get(codePoint);
                             log.error(
-                                    "Invalid character. Codepoint: {}, Character: {}, File: {}",
-                                    codePoint, new String(Character.toChars(codePoint)), fileName);
+                                    "Invalid character. Codepoint: {}, Character: {}, Replace with: {}, File: {}",
+                                    codePoint, new String(Character.toChars(codePoint)), expected, fileName);
                         }
                     });
                 }
@@ -53,7 +59,58 @@ public class CheckHelpFilesForUTF8Test {
 
     @Test
     public void testGenerateSearchIndex() throws IOException {
+        // See: https://www.w3schools.com/charsets/ref_utf_punctuation.asp
+        convertChar.put(176, "&deg;");
+        convertChar.put(200, "&Egrave;");
+        convertChar.put(201, "&Eacute;");
+        convertChar.put(220, "&Uuml;");
+        convertChar.put(223, "&szlig;");
+        convertChar.put(224, "&agrave;");
+        convertChar.put(225, "&aacute;");
+        convertChar.put(226, "&acirc;");
+        convertChar.put(228, "&auml;");
+        convertChar.put(229, "&aring;");
+        convertChar.put(230, "&aelig;");
+        convertChar.put(231, "&ccedil;");
+        convertChar.put(232, "&egrave;");
+        convertChar.put(233, "&eacute;");
+        convertChar.put(234, "&ecirc;");
+        convertChar.put(237, "&iacute;");
+        convertChar.put(241, "&ntilde;");
+        convertChar.put(244, "&ocirc;");
+        convertChar.put(246, "&ouml;");
+        convertChar.put(248, "&oslash;");
+        convertChar.put(252, "&uuml;");
+        convertChar.put(253, "&yacute;");
+        convertChar.put(268, "&Ccaron;");
+        convertChar.put(283, "&ecaron;");
+        convertChar.put(339, "&oelig;");
+        convertChar.put(345, "&rcaron;");
+        convertChar.put(352, "&Scaron;");
+        convertChar.put(381, "&Zcaron;");
+        convertChar.put(8209, "&#8209;");
+        convertChar.put(8211, "&ndash;");
+        convertChar.put(8212, "&mdash;");
+        convertChar.put(8216, "&lsquo;");
+        convertChar.put(8217, "&rsquo;");
+        convertChar.put(8220, "&ldquo;");
+        convertChar.put(8221, "&rdquo;");
+        convertChar.put(8226, "&bull;");
+        convertChar.put(8230, "&hellip;");
+        convertChar.put(8250, "&rsaquo;");
+        convertChar.put(8482, "&trade;");
+        convertChar.put(8594, "&rarr;");
+        convertChar.put(8629, "&crarr;");
+        convertChar.put(9662, "&#9662;");
+        convertChar.put(10004, "&#10004;");
+
         searchFolder("help/en/");
+
+        for (int codePoint : foundChar) {
+            String expected = convertChar.get(codePoint);
+            log.error("Found UTF-8 Codepoint: {}, Character: {}. Expected: {}",
+                    codePoint, new String(Character.toChars(codePoint)), expected);
+        }
     }
 
     @BeforeEach
