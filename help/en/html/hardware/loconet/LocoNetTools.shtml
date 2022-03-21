@@ -57,7 +57,7 @@
             <a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor
             LocoNet</a>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -74,7 +74,7 @@
             <a href="../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Monitor
             Slots</a>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>(limited)</td>
@@ -90,9 +90,9 @@
             <a href="../../../package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml">Monitor
             Clock</a>
           </td>
-          <td>•</td>
-          <td>•</td>
-          <td>•</td>
+          <td>&bull;</td>
+          <td>&bull;</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -105,7 +105,7 @@
             <a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">Monitor
             LocoNet Stats</a>
           </td>
-          <td rowspan="2">•</td>
+          <td rowspan="2">&bull;</td>
           <td rowspan="2">
           </td>
           <td rowspan="2">
@@ -130,7 +130,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -150,7 +150,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -169,7 +169,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -188,7 +188,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -208,7 +208,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -226,7 +226,7 @@
           </td>
           <td rowspan="2">
           </td>
-          <td rowspan="2">•</td>
+          <td rowspan="2">&bull;</td>
           <td rowspan="2">
           </td>
           <td rowspan="2">
@@ -254,7 +254,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -271,7 +271,7 @@
           <td>(limited)</td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -306,7 +306,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -344,7 +344,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>
           </td>
           <td>
@@ -366,7 +366,7 @@
           </td>
           <td>
           </td>
-          <td>•</td>
+          <td>&bull;</td>
           <td>Digitrax Mobile Sound Decoders</td>
         </tr>
 

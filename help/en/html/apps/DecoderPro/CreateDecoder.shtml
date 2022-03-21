@@ -304,7 +304,7 @@
             <li>
               <p>If your decoder supports it, you can enter a 'speedTableVal' element for the speed
               table. Optional attributes are: "entries", "min", "max" and "mfx" (when true enables
-              the Märklin mfx&reg; style speed table). Example:</p>
+              the M&auml;rklin mfx&reg; style speed table). Example:</p>
 
               <p class="example">&lt;variable item="Speed Table" CV="67"&gt;<br>
               &lt;speedTableVal/&gt;<br>
