@@ -343,12 +343,12 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       If a test fails during the continuous integration execution of "alltest", an e-mail is sent
       to the jmri-build e-mail list as well as to the developers who have checked in code which was
       included in the build.
-      <p>You may visit the web site <a href=
+      <p>You may visit the website <a href=
       "https://lists.sourceforge.net/lists/listinfo/jmri-builds">to subscribe to the jmri-builds
       e-mail list</a> to get the bad news as quickly as possible, or monitor <a href=
       "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds">to view the archives of
       the e-mail list</a> and see past logs. Or you can monitor the "dashboard" at the <a href=
-      "ContinuousIntegration.shtml">continuous integration</a> web site.</p>
+      "ContinuousIntegration.shtml">continuous integration</a> website.</p>
 
       <p>(When the build succeeds, nothing is mailed, to cut down on traffic)</p>
 
@@ -391,7 +391,7 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       </ul>
 
       <p>You can navigate using the bar along the top of the page:<br>
-      <img src="images/JenkinsByPackage.png" width="513" height="340" alt=
+      <img src="images/JenkinsByPackage.png" alt=
       "The JaCoCo coverage report for JMRI in Jenkins"></p>
 
       <h2 id="write">Writing Tests</h2>

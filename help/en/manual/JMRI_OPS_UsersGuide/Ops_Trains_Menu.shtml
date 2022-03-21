@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Using JMRI® to Operate Trains</h1>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Trains Window menu bar</h2>
 
@@ -125,12 +125,12 @@
       </ul>
 
       <ul>
-        <li><strong>Operations</strong> - same as the DecoderPro® Main Window
+        <li><strong>Operations</strong> - same as the DecoderPro&reg; Main Window
         <strong>Operations</strong> menu (when shown)</li>
 
-        <li><strong>Windows</strong> - standard JMRI® Windows menu.</li>
+        <li><strong>Windows</strong> - standard JMRI&reg; Windows menu.</li>
 
-        <li><strong>Help</strong> - standard JMRI® Help menu.</li>
+        <li><strong>Help</strong> - standard JMRI&reg; Help menu.</li>
       </ul>
 
       <div class="ops-right">

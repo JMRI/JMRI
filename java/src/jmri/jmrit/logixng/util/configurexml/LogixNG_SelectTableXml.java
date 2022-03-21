@@ -17,13 +17,16 @@ import org.jdom2.Element;
 public class LogixNG_SelectTableXml {
 
     /**
-     * Default implementation for storing the contents of a ExpressionLocalVariable
+     * Default implementation for storing the contents of a LogixNG_SelectTable
      *
      * @param selectTable the LogixNG_SelectTable object
+     * @param tagName the name of the element
      * @return Element containing the complete info
      */
-    public Element store(LogixNG_SelectTable selectTable) {
-        Element tableElement = new Element("table");
+    public Element store(LogixNG_SelectTable selectTable, String tagName) {
+        Element tableElement = new Element(tagName);
+
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
         Element tableNameElement = new Element("tableName");
         tableNameElement.addContent(new Element("addressing").addContent(selectTable.getTableNameAddressing().name()));
@@ -34,6 +37,9 @@ public class LogixNG_SelectTableXml {
         tableNameElement.addContent(new Element("reference").addContent(selectTable.getTableNameReference()));
         tableNameElement.addContent(new Element("localVariable").addContent(selectTable.getTableNameLocalVariable()));
         tableNameElement.addContent(new Element("formula").addContent(selectTable.getTableNameFormula()));
+        if (selectTable.getTableNameAddressing() == NamedBeanAddressing.Table) {
+            tableNameElement.addContent(selectTableXml.store(selectTable.getSelectTableName(), "table"));
+        }
         tableElement.addContent(tableNameElement);
 
         Element tableRowElement = new Element("row");
@@ -42,6 +48,9 @@ public class LogixNG_SelectTableXml {
         tableRowElement.addContent(new Element("reference").addContent(selectTable.getTableRowReference()));
         tableRowElement.addContent(new Element("localVariable").addContent(selectTable.getTableRowLocalVariable()));
         tableRowElement.addContent(new Element("formula").addContent(selectTable.getTableRowFormula()));
+        if (selectTable.getTableRowAddressing() == NamedBeanAddressing.Table) {
+            tableRowElement.addContent(selectTableXml.store(selectTable.getSelectTableRow(), "table"));
+        }
         tableElement.addContent(tableRowElement);
 
         Element tableColumnElement = new Element("column");
@@ -50,6 +59,9 @@ public class LogixNG_SelectTableXml {
         tableColumnElement.addContent(new Element("reference").addContent(selectTable.getTableColumnReference()));
         tableColumnElement.addContent(new Element("localVariable").addContent(selectTable.getTableColumnLocalVariable()));
         tableColumnElement.addContent(new Element("formula").addContent(selectTable.getTableColumnFormula()));
+        if (selectTable.getTableColumnAddressing() == NamedBeanAddressing.Table) {
+            tableColumnElement.addContent(selectTableXml.store(selectTable.getSelectTableColumn(), "table"));
+        }
         tableElement.addContent(tableColumnElement);
 
         return tableElement;
@@ -58,18 +70,24 @@ public class LogixNG_SelectTableXml {
     public void load(Element tableElement, LogixNG_SelectTable selectTable) throws JmriConfigureXmlException {
 
         if (tableElement != null) {
+
+            LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
             try {
                 Element tableName = tableElement.getChild("tableName");
-                Element name = tableName.getChild("name");
-                if (name != null) {
-                    NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(name.getTextTrim());
-                    if (t != null) selectTable.setTable(t);
-                    else selectTable.removeTable();
-                }
+
+                // Table name
 
                 Element elem = tableName.getChild("addressing");
                 if (elem != null) {
                     selectTable.setTableNameAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
+
+                elem = tableName.getChild("name");
+                if (elem != null) {
+                    NamedTable t = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(elem.getTextTrim());
+                    if (t != null) selectTable.setTable(t);
+                    else selectTable.removeTable();
                 }
 
                 elem = tableName.getChild("reference");
@@ -81,6 +99,13 @@ public class LogixNG_SelectTableXml {
                 elem = tableName.getChild("formula");
                 if (elem != null) selectTable.setTableNameFormula(elem.getTextTrim());
 
+                elem = tableName.getChild("table");
+                if (elem != null) {
+                    selectTableXml.load(elem, selectTable.getSelectTableName());
+                }
+
+
+                // Table row
 
                 Element tableRow = tableElement.getChild("row");
                 elem = tableRow.getChild("addressing");
@@ -88,9 +113,9 @@ public class LogixNG_SelectTableXml {
                     selectTable.setTableRowAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
                 }
 
-                name = tableRow.getChild("name");
-                if (name != null) {
-                    selectTable.setTableRowName(name.getTextTrim());
+                elem = tableRow.getChild("name");
+                if (elem != null) {
+                    selectTable.setTableRowName(elem.getTextTrim());
                 }
 
                 elem = tableRow.getChild("reference");
@@ -102,6 +127,13 @@ public class LogixNG_SelectTableXml {
                 elem = tableRow.getChild("formula");
                 if (elem != null) selectTable.setTableRowFormula(elem.getTextTrim());
 
+                elem = tableRow.getChild("table");
+                if (elem != null) {
+                    selectTableXml.load(elem, selectTable.getSelectTableRow());
+                }
+
+
+                // Table column
 
                 Element tableColumn = tableElement.getChild("column");
                 elem = tableColumn.getChild("addressing");
@@ -109,9 +141,9 @@ public class LogixNG_SelectTableXml {
                     selectTable.setTableColumnAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
                 }
 
-                name = tableColumn.getChild("name");
-                if (name != null) {
-                    selectTable.setTableColumnName(name.getTextTrim());
+                elem = tableColumn.getChild("name");
+                if (elem != null) {
+                    selectTable.setTableColumnName(elem.getTextTrim());
                 }
 
                 elem = tableColumn.getChild("reference");
@@ -122,6 +154,11 @@ public class LogixNG_SelectTableXml {
 
                 elem = tableColumn.getChild("formula");
                 if (elem != null) selectTable.setTableColumnFormula(elem.getTextTrim());
+
+                elem = tableColumn.getChild("table");
+                if (elem != null) {
+                    selectTableXml.load(elem, selectTable.getSelectTableColumn());
+                }
 
             } catch (ParserException e) {
                 throw new JmriConfigureXmlException(e);

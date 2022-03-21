@@ -8,9 +8,10 @@ import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
-import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon;
-import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
+import jmri.jmrix.can.cbus.swing.modules.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Node Variable edit frame for a MERG CANACC8 CBUS module
@@ -22,7 +23,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private static final int USER_FLAGS = 0;
     private static final int OPS_FLAGS = 1;
     private static final int DEBUG_FLAGS = 2;
-    private CbusModulesCommon.CmdStaFlags [] csFlags = new CbusModulesCommon.CmdStaFlags[3];
+    private CmdStaFlags [] csFlags = new CmdStaFlags[3];
     
     private final UpdateNV cmdStaNoUpdateFn = new UpdateCmdStaNo();
     private final UpdateNV canIdUpdateFn = new UpdateCanId();
@@ -35,17 +36,17 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private final UpdateNV meterUpdateFn = new UpdateMeter();
     private final UpdateNV flagUpdateFn = new UpdateFlags();
     
-    private CbusModulesCommon.TitledSpinner cmdStaNoSpinner;
+    private TitledSpinner cmdStaNoSpinner;
     private JComboBox<String> powerModeList ;
-    private CbusModulesCommon.TitledSpinner mainSpinner;
-    private CbusModulesCommon.TitledSpinner progSpinner;
-    private CbusModulesCommon.TitledSpinner accyPktSpinner;
+    private TitledSpinner mainSpinner;
+    private TitledSpinner progSpinner;
+    private TitledSpinner accyPktSpinner;
     private JRadioButton meter;
-    private CbusModulesCommon.TitledSpinner nnMapDccSpinner;
+    private TitledSpinner nnMapDccSpinner;
     private JRadioButton setup;
-    private CbusModulesCommon.TitledSpinner canIdSpinner;
-    private CbusModulesCommon.TitledSpinner nodeNumberSpinner;
-    private CbusModulesCommon.TitledSpinner preambleSpinner;
+    private TitledSpinner canIdSpinner;
+    private TitledSpinner nodeNumberSpinner;
+    private TitledSpinner preambleSpinner;
     private JRadioButton disable ;
             
     protected String flagTitleStrings[] = new String[] {
@@ -144,10 +145,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             int row = e.getFirstRow();
             int nv = row + 1;
             int value = getSelectValue(nv);
+            log.debug("sprog3plus gui table changed NV: {} Value: {}", nv, value);
             
             switch (nv) {
                 case Sprog3PlusPaneProvider.CMD_STATION_NUMBER:
-                    cmdStaNoSpinner.getModel().setValue(value);
+                    cmdStaNoSpinner.setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.USER_FLAGS:
@@ -163,21 +165,25 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                             
                 case Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE:
-                    powerModeList.setSelectedIndex(value);
+                    // Do nothing if nothing has changed, else causes an endless
+                    // round of gui update, table update, ...
+                    if (value != powerModeList.getSelectedIndex()) {
+                        powerModeList.setSelectedIndex(value);
+                    }
                     break;
                     
                 case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT:
                     double progLimit = (double)value/100;
-                    progSpinner.getModel().setValue(progLimit);
+                    progSpinner.setValue(progLimit);
                     break;
                 
                 case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT:
                     double mainLimit = (double)value/100;
-                    mainSpinner.getModel().setValue(mainLimit);
+                    mainSpinner.setValue(mainLimit);
                     break;
                     
                 case Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT:
-                    accyPktSpinner.getModel().setValue(value);
+                    accyPktSpinner.setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.MULTIMETER_MODE:
@@ -186,7 +192,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     
                 case Sprog3PlusPaneProvider.NN_MAP_DCC_HI:
                 case Sprog3PlusPaneProvider.NN_MAP_DCC_LO:
-                    nnMapDccSpinner.getModel().setValue(getSelectValue(Sprog3PlusPaneProvider.NN_MAP_DCC_HI,
+                    nnMapDccSpinner.setValue(getSelectValue(Sprog3PlusPaneProvider.NN_MAP_DCC_HI,
                             Sprog3PlusPaneProvider.NN_MAP_DCC_LO, 0));
                     break;
                     
@@ -195,17 +201,17 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 case Sprog3PlusPaneProvider.CANID:
-                    canIdSpinner.getModel().setValue(value);
+                    canIdSpinner.setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.NN_HI:
                 case Sprog3PlusPaneProvider.NN_LO:
-                    nodeNumberSpinner.getModel().setValue(getSelectValue(Sprog3PlusPaneProvider.NN_HI,
+                    nodeNumberSpinner.setValue(getSelectValue(Sprog3PlusPaneProvider.NN_HI,
                             Sprog3PlusPaneProvider.NN_LO, 0));
                     break;
                     
                 case Sprog3PlusPaneProvider.DCC_PREAMBLE:
-                    preambleSpinner.getModel().setValue(value);
+                    preambleSpinner.setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.CAN_DISABLE:
@@ -236,7 +242,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int cmdStaNo = ((SpinnerNumberModel)cmdStaNoSpinner.getModel()).getNumber().intValue();
+            int cmdStaNo = cmdStaNoSpinner.getIntegerValue();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(cmdStaNo, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -266,7 +272,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int canId = ((SpinnerNumberModel)canIdSpinner.getModel()).getNumber().intValue();
+            int canId = canIdSpinner.getIntegerValue();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(canId, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -282,7 +288,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int nn = ((SpinnerNumberModel)nodeNumberSpinner.getModel()).getNumber().intValue();
+            int nn = nodeNumberSpinner.getIntegerValue();
             int nnHi = nn/256;
             int nnLo = nn%256;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
@@ -314,11 +320,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int limit;
-            float fLimit;
+            double fLimit;
             if (index == Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT) {
-                fLimit = ((SpinnerNumberModel)mainSpinner.getModel()).getNumber().floatValue();
+                fLimit = mainSpinner.getDoubleValue();
             } else {
-                fLimit = ((SpinnerNumberModel)progSpinner.getModel()).getNumber().floatValue();
+                fLimit = progSpinner.getDoubleValue();
             }
             // Limit to 10mA precision
             limit = (int)(fLimit*100 + 0.5);
@@ -335,7 +341,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int cnt = ((SpinnerNumberModel)accyPktSpinner.getModel()).getNumber().intValue();
+            int cnt = accyPktSpinner.getIntegerValue();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(cnt, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -349,7 +355,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int mapNn = ((SpinnerNumberModel)nnMapDccSpinner.getModel()).getNumber().intValue();
+            int mapNn = nnMapDccSpinner.getIntegerValue();
             int mapNnHi = mapNn/256;
             int mapNnLo = mapNn%256;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
@@ -366,7 +372,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int pre = ((SpinnerNumberModel)preambleSpinner.getModel()).getNumber().intValue();
+            int pre = preambleSpinner.getIntegerValue();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(pre, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -380,6 +386,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
+            log.debug("UpdatePowerMode.setNewVal()");
             int mode = powerModeList.getSelectedIndex();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(mode, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
@@ -400,7 +407,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.fill = GridBagConstraints.HORIZONTAL;
 
             for (int i = 0; i < 3; i++) {
-                csFlags[i] = new CbusModulesCommon.CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                csFlags[i] = new CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
                 flagPane[i] = csFlags[i].getContents();
             }
             csFlags[0].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS));
@@ -418,7 +425,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy = 0;
 
             // x = 1
-            cmdStaNoSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("CmdStaNo"), Sprog3PlusPaneProvider.CMD_STATION_NUMBER, cmdStaNoUpdateFn);
+            cmdStaNoSpinner = new TitledSpinner(Bundle.getMessage("CmdStaNo"), Sprog3PlusPaneProvider.CMD_STATION_NUMBER, cmdStaNoUpdateFn);
             cmdStaNoSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
             cmdStaNoSpinner.init(0, 0, 255, 1);
             gridPane.add(cmdStaNoSpinner, c);
@@ -443,7 +450,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             gridPane.add(meter, c);
             c.gridy++;
             
-            mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
+            mainSpinner = new TitledSpinner(Bundle.getMessage("MainLimit"), Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
             mainSpinner.init(getSelectValue(Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(mainSpinner, c);
@@ -458,7 +465,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy++;
             c.gridy++;
             
-            progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
+            progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
             progSpinner.init(getSelectValue(Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(progSpinner, c);
@@ -486,6 +493,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
          * @param e the action event
          */
         protected void pwrModeActionListener(ActionEvent e) {
+            log.debug("pwrModeActionListener()");
             powerModeUpdateFn.setNewVal(Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE);
         }
         
@@ -515,13 +523,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridx = 0;
             c.gridy = 0;
             
-            accyPktSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("AccyPktCnt"), Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT, accyPktUpdateFn);
+            accyPktSpinner = new TitledSpinner(Bundle.getMessage("AccyPktCnt"), Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT, accyPktUpdateFn);
             accyPktSpinner.setToolTip(Bundle.getMessage("AccyPktCntTt"));
             accyPktSpinner.init(getSelectValue(Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT, 1), 1, 7, 1);
             gridPane.add(accyPktSpinner, c);
             c.gridy++;
             
-            nnMapDccSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("NnMapDcc"), Sprog3PlusPaneProvider.NN_MAP_DCC_HI, nnMapUpdateFn);
+            nnMapDccSpinner = new TitledSpinner(Bundle.getMessage("NnMapDcc"), Sprog3PlusPaneProvider.NN_MAP_DCC_HI, nnMapUpdateFn);
             nnMapDccSpinner.setToolTip(Bundle.getMessage("NnMapDccTt"));
             int nn = getSelectValue(Sprog3PlusPaneProvider.NN_MAP_DCC_HI, Sprog3PlusPaneProvider.NN_MAP_DCC_LO, 0);
             nnMapDccSpinner.init(nn, 0, 65535, 1);
@@ -585,6 +593,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
+    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }

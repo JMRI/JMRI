@@ -18,7 +18,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="top">Using JMRI® to Operate Trains</h1>
+      <h1 id="top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Modify Trains by Car Type window</h2>
 

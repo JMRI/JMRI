@@ -354,7 +354,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyTableCellToVariable:
-                    Object value = _selectTable.getTableData(conditionalNG);
+                    Object value = _selectTable.evaluateTableData(conditionalNG);
                     symbolTable.setValue(_localVariable, value);
                     break;
 

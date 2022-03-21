@@ -579,13 +579,12 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             break;
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                fireTableRowsDeleted(row, row);
-                removeWarrant(w, true); // removes any warrant
+                w.deAllocate();
+                fireTableRowDeleted(w, row, true);
             } else {
                 w.controlRunTrain(Warrant.ABORT);
                 if (_warNX.contains(w)) { // don't remove regular warrants
-                    fireTableRowsDeleted(row, row);
-                    removeWarrant(w, false);
+                    fireTableRowDeleted(w, row, false);
                 }
             }
             break;
@@ -661,12 +660,27 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
 
     private void fireCellUpdate(int row, int col) {
         if (row < getRowCount()) {
-            ThreadingUtil.runOnGUIEventually(()-> fireTableCellUpdated(row, col));
+            ThreadingUtil.runOnGUIEventually(()-> {
+                if (row < getRowCount()) {  // when Aborted, row may be gone by now
+                    fireTableCellUpdated(row, col);
+                }
+            });
         }
     }
 
     private void fireTableUpdate() {
         ThreadingUtil.runOnGUIEventually(()-> fireTableDataChanged());
+    }
+
+    private void fireTableRowDeleted(Warrant w, int row, boolean all) {
+        ThreadingUtil.runOnGUIEventually(()-> {
+            removeWarrant(w, all);  // true any warrant, false NX only  
+            fireTableRowsDeleted(row, row);
+        });
+    }
+
+    private void fireTableRowUpdated(Warrant w, int row) {
+        ThreadingUtil.runOnGUIEventually(()-> fireTableRowsUpdated(row, row));
     }
 
     private String _lastProperty;
@@ -694,11 +708,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     if (_warNX.contains(bean)) {
                         if ((property.equals("runMode") && ((Integer)e.getNewValue()).intValue() == Warrant.MODE_NONE) ||
                                 (property.equals("controlChange") && ((Integer)e.getNewValue()).intValue() == Warrant.ABORT)) {
-                            removeWarrant(bean, false);
-                            fireTableRowsDeleted(i, i);
+                            fireTableRowDeleted(bean, i, false);
                         }
                     } else {
-                        fireTableRowsUpdated(i, i);
+                        fireTableRowUpdated(bean, i);
                     }
                     break;
                 }
@@ -783,12 +796,12 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 } else {
                     setFrameStatusText(Bundle.getMessage("RampSpeed", bean.getTrainName(), 
                             speed, bean.getCurrentBlockName()), myGreen, true);
-               }
+                }
                 fireCellUpdate(row, CONTROL_COLUMN);
             } else if (property.equals("RampBegin")) {
-                String ms = (String) e.getOldValue();
+//                String ms = (String) e.getOldValue();
                 String speedType = (String) e.getNewValue();
-                setFrameStatusText(Bundle.getMessage("RampStart", bean.getTrainName(), ms,
+                setFrameStatusText(Bundle.getMessage("RampStart", bean.getTrainName(),
                         speedType, bean.getCurrentBlockName()), myGreen, true);
             } else if (property.equals("ReadyToRun")) {
                 setFrameStatusText(Bundle.getMessage("TrainReady", bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);

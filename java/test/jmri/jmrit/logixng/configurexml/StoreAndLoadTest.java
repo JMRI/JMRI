@@ -1506,67 +1506,177 @@ public class StoreAndLoadTest {
 
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
-        actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
-        actionTurnout.setAddressing(NamedBeanAddressing.Direct);
-        actionTurnout.setFormula("\"IT\"+index");
-        actionTurnout.setLocalVariable("index");
-        actionTurnout.setReference("{IM1}");
-        actionTurnout.setStateAddressing(NamedBeanAddressing.LocalVariable);
-        actionTurnout.setStateFormula("\"IT\"+index2");
-        actionTurnout.setStateLocalVariable("index2");
-        actionTurnout.setStateReference("{IM2}");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Direct);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Formula);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
-        actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
-        actionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionTurnout.setFormula("\"IT\"+index");
-        actionTurnout.setLocalVariable("index");
-        actionTurnout.setReference("{IM1}");
-        actionTurnout.setStateAddressing(NamedBeanAddressing.Formula);
-        actionTurnout.setStateFormula("\"IT\"+index2");
-        actionTurnout.setStateLocalVariable("index2");
-        actionTurnout.setStateReference("{IM2}");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Thrown);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Formula);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.LocalVariable);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
-        actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Toggle);
-        actionTurnout.setAddressing(NamedBeanAddressing.Formula);
-        actionTurnout.setFormula("\"IT\"+index");
-        actionTurnout.setLocalVariable("index");
-        actionTurnout.setReference("{IM1}");
-        actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
-        actionTurnout.setStateFormula("\"IT\"+index2");
-        actionTurnout.setStateLocalVariable("index2");
-        actionTurnout.setStateReference("{IM2}");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Toggle);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.LocalVariable);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Reference);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
-        actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Unknown);
-        actionTurnout.setAddressing(NamedBeanAddressing.Reference);
-        actionTurnout.setFormula("\"IT\"+index");
-        actionTurnout.setLocalVariable("index");
-        actionTurnout.setReference("{IM1}");
-        actionTurnout.setStateAddressing(NamedBeanAddressing.Direct);
-        actionTurnout.setStateFormula("\"IT\"+index2");
-        actionTurnout.setStateLocalVariable("index2");
-        actionTurnout.setStateReference("{IM2}");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Unknown);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Reference);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Table);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
-        actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Inconsistent);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Table);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Direct);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Direct);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Formula);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Thrown);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Formula);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.LocalVariable);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Toggle);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.LocalVariable);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Reference);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Unknown);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Reference);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Table);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Table);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Direct);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -2279,29 +2389,29 @@ public class StoreAndLoadTest {
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.Direct);
-        timeout.setDelay(100);
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Direct);
+        timeout.getSelectDelay().setValue(100);
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.LocalVariable);
-        timeout.setDelayLocalVariable("MyVar");
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.LocalVariable);
+        timeout.getSelectDelay().setLocalVariable("MyVar");
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.Reference);
-        timeout.setDelayReference("{MyMemory}");
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Reference);
+        timeout.getSelectDelay().setReference("{MyMemory}");
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
         timeout.setComment("A comment");
-        timeout.setDelayAddressing(NamedBeanAddressing.Formula);
-        timeout.setDelayFormula("MyVar + 10");
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Formula);
+        timeout.getSelectDelay().setFormula("MyVar + 10");
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2761,6 +2871,42 @@ public class StoreAndLoadTest {
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
         set_LogixNG_SelectTable_Data(csvTable, expressionLocalVariable.getSelectTable(), NamedBeanAddressing.Direct);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setLocalVariable("MyVar");
+        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
+        expressionLocalVariable.setCaseInsensitive(false);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
+        set_LogixNG_SelectTable_Data(csvTable, expressionLocalVariable.getSelectTable(), NamedBeanAddressing.Formula);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setLocalVariable("MyVar");
+        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
+        expressionLocalVariable.setCaseInsensitive(false);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
+        set_LogixNG_SelectTable_Data(csvTable, expressionLocalVariable.getSelectTable(), NamedBeanAddressing.LocalVariable);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setLocalVariable("MyVar");
+        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
+        expressionLocalVariable.setCaseInsensitive(false);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
+        set_LogixNG_SelectTable_Data(csvTable, expressionLocalVariable.getSelectTable(), NamedBeanAddressing.Reference);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -3976,19 +4122,36 @@ public class StoreAndLoadTest {
     private void set_LogixNG_SelectTable_Data(
             NamedTable csvTable,
             LogixNG_SelectTable selectTable,
-            NamedBeanAddressing addressing)
+            NamedBeanAddressing nameAddressing)
             throws ParserException {
-        selectTable.setTableNameAddressing(addressing);
+
+        int next1 = nameAddressing.ordinal() + 1;
+        if ((next1 < NamedBeanAddressing.values().length)
+                && (NamedBeanAddressing.values()[next1] == NamedBeanAddressing.Table)) {
+            next1++;
+        }
+        if (next1 >= NamedBeanAddressing.values().length) next1 = 0;
+        NamedBeanAddressing rowAddressing = NamedBeanAddressing.values()[next1];
+
+        int next2 = next1 + 1;
+        if ((next2 < NamedBeanAddressing.values().length)
+                && (NamedBeanAddressing.values()[next2] == NamedBeanAddressing.Table)) {
+            next2++;
+        }
+        if (next2 >= NamedBeanAddressing.values().length) next2 = 0;
+        NamedBeanAddressing colAddressing = NamedBeanAddressing.values()[next2];
+
+        selectTable.setTableNameAddressing(nameAddressing);
         selectTable.setTable(csvTable);
         selectTable.setTableNameReference("{tableRef}");
         selectTable.setTableNameLocalVariable("tableVariable");
         selectTable.setTableNameFormula("\"IT\"+str(index)");
-        selectTable.setTableRowAddressing(NamedBeanAddressing.Direct);
+        selectTable.setTableRowAddressing(rowAddressing);
         selectTable.setTableRowName("The row");
         selectTable.setTableRowReference("{rowRef}");
         selectTable.setTableRowLocalVariable("rowVariable");
         selectTable.setTableRowFormula("\"Row \"+str(index)");
-        selectTable.setTableColumnAddressing(NamedBeanAddressing.Direct);
+        selectTable.setTableColumnAddressing(colAddressing);
         selectTable.setTableColumnName("The column");
         selectTable.setTableColumnReference("{columnRef}");
         selectTable.setTableColumnLocalVariable("columnVariable");

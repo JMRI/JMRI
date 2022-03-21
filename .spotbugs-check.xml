@@ -25,7 +25,6 @@
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="LI_LAZY_INIT_STATIC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
            <Bug pattern="OS_OPEN_STREAM_EXCEPTION_PATH" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />

@@ -23,7 +23,7 @@
       frame sequencer.</p>
 
       <p>You can enter packets in <a href=
-      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS® address format</a>, e.g. "+1",
+      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS&reg; address format</a>, e.g. "+1",
       "-2" or "+n4e1" ( decimal, without the quotation marks ).<br>
       Once you've entered the packet, just click "send" or press Enter.</p>
 
@@ -77,7 +77,7 @@
       <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support
       page</a>.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

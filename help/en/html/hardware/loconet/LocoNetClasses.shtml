@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Support - LocoNet® Implementation</title>
+  <title>JMRI Support - LocoNet&reg; Implementation</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI LocoNet technical implementation">
   <!--#include virtual="/Style.shtml" -->
@@ -14,9 +14,9 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Support: The JMRI LocoNet® implementation</h1>
+      <h1>Support: The JMRI LocoNet&reg; implementation</h1>
 
-      <p>This page describes various high-level structures of the JMRI LocoNet® implementation.
+      <p>This page describes various high-level structures of the JMRI LocoNet&reg; implementation.
       Please also read the <a href=
       "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">Javadocs for the
       jmrix.loconet package</a>.</p>
@@ -299,7 +299,7 @@
       <code>loconet.SlotManager</code> class. This greatly complicates the class, but is acceptable
       for now.</p>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

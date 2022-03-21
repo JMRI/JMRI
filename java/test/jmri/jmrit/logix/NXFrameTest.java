@@ -282,6 +282,7 @@ public class NXFrameTest {
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
+            if (m == null) return false;
             return m.endsWith("Cmd #3.");
         }, "Train is moving at 3rd command");
 
@@ -332,6 +333,7 @@ public class NXFrameTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
+            if (m == null) return false;
             return m.endsWith("Cmd #8.");
         }, "Train starts to move at 8th command");
 
@@ -352,6 +354,7 @@ public class NXFrameTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
+            if (m == null) return false;
             return m.startsWith("At speed Normal") ||
                     m.startsWith("Overdue for arrival at block");
         }, "Train Resumed");

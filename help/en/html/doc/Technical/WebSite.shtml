@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: JMRI.org Web Site Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code web site">
+  <meta name="keywords" content="JMRI technical code website">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -16,7 +16,7 @@
     <div id="mainContent">
       <h1>JMRI: Web Site</h1>
 
-      <p>This page discusses technical aspects behind the JMRI web site at <a href=
+      <p>This page discusses technical aspects behind the JMRI website at <a href=
       "https://jmri.org">jmri.org</a> and also providing parts of the help system in JMRI.</p>
 
       <p>If you just want to know how to make a small change to a web or help page, please see the
@@ -24,7 +24,7 @@
 
       <h2>Structure of Information</h2>
 
-      <p>We distinguish between three types of information on the main web site:</p>
+      <p>We distinguish between three types of information on the main website:</p>
 
       <ol>
         <li>User information which is useful at run time. This is made available both via program
@@ -48,10 +48,10 @@
 
         <li>Other user information is stored in our <a href=
         "https://github.com/JMRI/website"><code>JMRI/website</code> GitHub repository</a> and
-        placed directly on the web site.
+        placed directly on the website.
         </li>
 
-        <li>Reference information is put on the web site from their own repository locations, or
+        <li>Reference information is put on the website from their own repository locations, or
         created by automated Ant scripts during release builds.</li>
       </ol>
 
@@ -79,7 +79,7 @@
 
       <h2>Directory Organization</h2>
 
-      <p>The web site contains several separate areas:</p>
+      <p>The website contains several separate areas:</p>
 
       <ul>
         <li>jython, resources, xml, web - these are taken directly from the directories of the same
@@ -116,7 +116,7 @@
 
       <h2>Updating the jmri.org site</h2>
 
-      <p>Most of the web site contents is updated hourly from jobs running on one of the project's
+      <p>Most of the website contents is updated hourly from jobs running on one of the project's
       Jenkins build servers. The directories listed above constitute most of the site, and this
       content is updated from the JMRI repository without any additional work.</p>
 
@@ -147,9 +147,9 @@
 
       <h2 id="local">Local Web Site: Mac OS X</h2>
 
-      <p>If you want to host a copy of the JMRI web site on your local Mac OS X machine, follow
+      <p>If you want to host a copy of the JMRI website on your local Mac OS X machine, follow
       these instructions to first configure the Apache server to do server-side includes, and then
-      make a copy of the web site files available to the server.</p>
+      make a copy of the website files available to the server.</p>
 
       <p>A similar process may work for Linux (or even Windows) systems with Apache installed.</p>
 
@@ -233,7 +233,7 @@ like:
               <pre>
         LoadModule rewrite_module libexec/apache2/mod_rewrite.so
         </pre>By default, that's commented out with a leading # character.
-              <p>JMRI's web site uses index.shtml files as index pages. To make sure that those
+              <p>JMRI's website uses index.shtml files as index pages. To make sure that those
               will display by default, e.g. if you use a partial URL like <a href=
               "https://jmri.org/download">https://jmri.org/download</a>, find the line containing
               "DirectoryIndex" and add "index.shtml" to the existing list of index-like file
@@ -270,7 +270,7 @@ like:
         ~me/git/website/setSymLinks.sh  ~me/git/JMRI ~me/git/website
         </pre>where "~me/git/website" is the path to the JMRI/website repository that you just
 checked out, and "~me/git/JMRI" is the path to the JMRI/website repository. setSymLinks.sh sets up
-symbolic links that let your web server see the top of the JMRI web site as if the files were
+symbolic links that let your web server see the top of the JMRI website as if the files were
 directly present.
             </li>
           </ul>

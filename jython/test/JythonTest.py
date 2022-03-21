@@ -30,3 +30,8 @@ class Automat(AbstractAutomaton) :
         print ("handle in Jython")
         return False
 Automat().start()
+
+# time to run
+from time import sleep
+sleep(0.020)
+# stops itself

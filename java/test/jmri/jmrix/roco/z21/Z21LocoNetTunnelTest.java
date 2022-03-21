@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -21,11 +22,6 @@ public class Z21LocoNetTunnelTest {
         Assert.assertNotNull(tunnel);
     }
 
-    @Test
-    public void testGetStreamPortController() {
-        Assert.assertNotNull(tunnel.getStreamPortController());
-    }
-
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -45,10 +41,14 @@ public class Z21LocoNetTunnelTest {
 
     @AfterEach
     public void tearDown() {
+        jmri.jmrix.loconet.streamport.LnStreamPortController lnspc = tunnel.getStreamPortController();
+        Assert.assertNotNull(lnspc);
         tunnel.dispose();
+        memo.getTrafficController().terminateThreads();
+        JUnitUtil.waitFor(() -> {  return !lnspc.status(); });
+        JUnitAppender.assertWarnMessage("sendLocoNetMessage: IOException: java.io.IOException: Read end dead");
         tunnel = null;
         tc = null;
-        memo.getTrafficController().terminateThreads();
         memo = null;
         JUnitUtil.tearDown();
     }

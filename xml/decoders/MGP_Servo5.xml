@@ -1028,7 +1028,7 @@
           </enumChoice>
           <enumChoice choice="Switch Toggle" value="3">
                 <choice>Switch Toggle</choice>
-                <choice xml:lang="cs">Tlačítko</choice>
+                <choice xml:lang="cs">Přepnout</choice>
           </enumChoice>
           <enumChoice choice="Track Status" value="6">
                 <choice>Track Status</choice>
@@ -1092,7 +1092,7 @@
           </enumChoice>
           <enumChoice choice="Switch Toggle" value="3">
                 <choice>Switch Toggle</choice>
-                <choice xml:lang="cs">Tlačítko</choice>
+                <choice xml:lang="cs">Přepnout</choice>
           </enumChoice>
           <enumChoice choice="Track Status" value="6">
                 <choice>Track Status</choice>
@@ -1163,7 +1163,7 @@
               </enumChoice>
               <enumChoice choice="Switch Toggle" value="3">
                     <choice>Switch Toggle</choice>
-                    <choice xml:lang="cs">Tlačítko</choice>
+                    <choice xml:lang="cs">Přepnout</choice>
               </enumChoice>
               <enumChoice choice="Track Status" value="6">
                     <choice>Track Status</choice>
@@ -1287,7 +1287,7 @@
               </enumChoice>
               <enumChoice choice="Switch Toggle" value="3">
                     <choice>Switch Toggle</choice>
-                    <choice xml:lang="cs">Tlačítko</choice>
+                    <choice xml:lang="cs">Přepnout</choice>
               </enumChoice>
               <enumChoice choice="Track Status" value="6">
                     <choice>Track Status</choice>
@@ -1654,7 +1654,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1718,7 +1718,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1782,7 +1782,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1846,7 +1846,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -1910,7 +1910,7 @@
               </enumChoice>
               <enumChoice choice="After move" value="1">
                     <choice>After move</choice>
-                    <choice xml:lang="cs">Po přestavením</choice>
+                    <choice xml:lang="cs">Po přestavení</choice>
               </enumChoice>
         </enumVal>
             <label>When</label>
@@ -2128,7 +2128,7 @@
 
   <pane>
     <name>Extra HW connections</name>
-    <name xml:lang="cs">Doplňková HW připojení</name>
+    <name xml:lang="cs">Další HW připojení</name>
     <column>
       <display item="Usage X1"/>
       <display item="Usage X1 new"/>

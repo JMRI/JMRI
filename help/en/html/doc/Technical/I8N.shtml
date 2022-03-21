@@ -39,7 +39,7 @@
 
       <p>By installing appropriate files and allowing the user to select a default Locale (as part
       of the <a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced
-      Preferences</a>), we can customize the JMRI® program to different countries and
+      Preferences</a>), we can customize the JMRI&reg; program to different countries and
       languages.</p>
 
       <h2 id="resourcebundles">Use of Resource Bundles</h2>
@@ -101,7 +101,7 @@ string; to the right of the equals sign is the String that will be displayed.
 
       <p>The easiest way to find the proper suffix letters for a Language and Country is to set the
       JMRI module to your particular Language via the <a href=
-      "../../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a> ⇒ Display ⇒ Language
+      "../../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a> &rArr; Display &rArr; Language
       tab, quit and restart the program, and then look at the suffix that the JMRI module displays
       on the startup screen/main window (in the bottom line, between the brackets after the Java
       version). You can also check the official <a href=
@@ -145,7 +145,7 @@ string; to the right of the equals sign is the String that will be displayed.
         "index.shtml#buildyourcopy">IDE</a> or however you're doing that
         </li>
 
-        <li>Start the JMRI® application and select "<strong>Preferences</strong>" from the Edit
+        <li>Start the JMRI&reg; application and select "<strong>Preferences</strong>" from the Edit
         menu;</li>
 
         <li>Click the <strong>Display</strong> tab at the left, and the <strong>Locale</strong> tab
@@ -162,7 +162,7 @@ string; to the right of the equals sign is the String that will be displayed.
 
       <p>If there's a problem at this point, check to see what language is listed on the
       application startup screen. Is it showing the same suffix (e.g. _fr or _cs_CZ) as you gave to
-      your files? The suffix JMRI® uses is determined by the Locale you selected in the preferences
+      your files? The suffix JMRI&reg; uses is determined by the Locale you selected in the preferences
       above.</p>
 
       <p>To make your work available to other JMRI users, please share it with us <a href=
@@ -438,7 +438,7 @@ so handling that is part of your user-error handling.
       <p><strong>BundleKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython)
       directory, is used to analyse the bundle keys within a property file. The primary function is
       to identify unused keys. The script is run using PanelPro <strong>Scripting</strong>
-      {<em>Old: <strong>Panels</strong></em>} <strong>⇒ Run Script...</strong>. The output from the
+      {<em>Old: <strong>Panels</strong></em>} <strong>&rArr; Run Script...</strong>. The output from the
       script is written to the Script Output window. The run time will vary based on the number of
       keys to be checked along with the position in the source hierarchy. It will range from
       several to many seconds.</p>
@@ -470,7 +470,7 @@ so handling that is part of your user-error handling.
 
       <p><strong>ClassKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython)
       directory, is used to identify the bundle keys used by a class. The script is run using
-      PanelPro <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>⇒ Run
+      PanelPro <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>&rArr; Run
       Script...</strong>. The output from the script is written to the Script Output window.</p>
 
       <p>When the script is started, a file selection dialog is displayed. Select either a Java
@@ -520,30 +520,30 @@ so handling that is part of your user-error handling.
 
       <p>When the script is done scanning, it provides an option to export the
       <strong>entire</strong> key list to a CSV file.</p>
-      
+
       <h3 id="translatorshelper">Translators Helper</h3>
-      <p><a href="./images/TranslatorsHelper.jar">TranslatorsHelper.jar</a> is a simple tool for translators. 
-          The program searches for all <code>.properties</code> files in all used languages. 
-          It then counts the untranslated keys for a specific language and file. 
-          This will help translators to find untranslated keys. The source code 
-          of the program is available here 
+      <p><a href="./images/TranslatorsHelper.jar">TranslatorsHelper.jar</a> is a simple tool for translators.
+          The program searches for all <code>.properties</code> files in all used languages.
+          It then counts the untranslated keys for a specific language and file.
+          This will help translators to find untranslated keys. The source code
+          of the program is available here
           <a href="https://github.com/sidlo64/TranslatorsHelper">https://github.com/sidlo64/TranslatorsHelper</a>.</p>
       <p>The program can be started from the command line with the command:</p>
       <p><code>java -jar TranslatorsHelper.jar</code></p>
-      <p>After startup enter the directory with the source code 
-          <code>$your-ide-dir$/JMRI/java/src</code> in the 
+      <p>After startup enter the directory with the source code
+          <code>$your-ide-dir$/JMRI/java/src</code> in the
           <strong>Start directory</strong> field.
           Click the <strong>Run</strong> button to start processing.</p>
-      <p>In the <strong>Languages</strong> tab, the program displays 
+      <p>In the <strong>Languages</strong> tab, the program displays
           all found languages and the number of translated keys.</p>
       <a href="images/TranslatorsHelperLanguages.png"><img src="images/TranslatorsHelperLanguages.png"
-      height="602" width="574" alt="tab Languages"></a>
-      <p>In the <strong>Files</strong> tab it is possible to select a specific language. 
-          The table below the selection shows all found .properties files 
+      alt="tab Languages"></a>
+      <p>In the <strong>Files</strong> tab it is possible to select a specific language.
+          The table below the selection shows all found .properties files
           and the number of translated keys.</p>
       <a href="images/TranslatorsHelperFiles.png"><img src="images/TranslatorsHelperFiles.png"
-      height="602" width="574" alt="tab Files"></a>
-      
+      alt="tab Files"></a>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

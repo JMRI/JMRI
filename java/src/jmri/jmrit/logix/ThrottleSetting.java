@@ -500,6 +500,13 @@ public class ThrottleSetting {
         return _namedHandle;
     }
 
+    public NamedBean getBean() {
+        if (_namedHandle == null) {
+            return null;
+        }
+        return _namedHandle.getBean();
+    }
+
     public String getBeanDisplayName() {
         if (_namedHandle == null) {
             return null;

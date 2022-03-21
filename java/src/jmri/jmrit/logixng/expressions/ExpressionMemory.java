@@ -373,7 +373,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 otherValue = getString(_otherMemoryHandle.getBean().getValue());
                 break;
             case Table:
-                otherValue = getString(_selectTable.getTableData(getConditionalNG()));
+                otherValue = getString(_selectTable.evaluateTableData(getConditionalNG()));
                 break;
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_localVariable), false);
