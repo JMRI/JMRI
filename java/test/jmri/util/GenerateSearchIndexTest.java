@@ -32,6 +32,12 @@ public class GenerateSearchIndexTest {
     private int _currentFileId = 0;
 
 
+    // The main() method is used when this class is run directly from ant
+    static public void main(String[] args) throws IOException {
+        new GenerateSearchIndexTest().generateSearchIndex();
+    }
+
+
     private void addWord(String word, int fileId) {
         if (word.length() < 3) return;
 
@@ -293,12 +299,17 @@ public class GenerateSearchIndexTest {
         }
     }
 
-    @Test
-    public void testGenerateSearchIndex() throws IOException {
+    private void generateSearchIndex() throws IOException {
         searchFolder("help/en/html/");
         searchFolder("help/en/package/");
         searchFolder("help/en/manual/");
         createJsonFile();
+    }
+
+    @Test
+    public void testGenerateSearchIndex() throws IOException {
+        Assume.assumeFalse("Ignoring GenerateSearchIndexTest", Boolean.getBoolean("jmri.skipBuildHelpFilesTest"));
+        generateSearchIndex();
     }
 
     @BeforeEach
