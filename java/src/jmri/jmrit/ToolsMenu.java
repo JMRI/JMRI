@@ -194,11 +194,11 @@ public class ToolsMenu extends JMenu {
                     if (connectionThrottleManager == defaultThrottleManager) {
                         throttleConnectionMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(
                                 Bundle.getMessage("MenuItemNewThrottleWithConnectionDefault", c.getConnectionName()),
-                                connectionThrottleManager));
+                                connectionThrottleManager, c.getConnectionName()));
                     } else {
                         throttleConnectionMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(
                                 Bundle.getMessage("MenuItemNewThrottleWithConnection", c.getConnectionName()),
-                                connectionThrottleManager));
+                                connectionThrottleManager, c.getConnectionName()));
                     }
                 }
             }

@@ -17,10 +17,12 @@ import jmri.util.swing.WindowInterface;
 public class ThrottleCreationAction extends JmriAbstractAction {
 
     private final ThrottleManager throttleManager;
+    private final String connectionName;
 
     public ThrottleCreationAction(String s, WindowInterface wi) {
         super(s, wi);
         throttleManager = jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+        connectionName = null;
         // disable the ourselves if there is no throttle Manager
         if (throttleManager == null) {
             super.setEnabled(false);
@@ -30,6 +32,7 @@ public class ThrottleCreationAction extends JmriAbstractAction {
     public ThrottleCreationAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);
         throttleManager = jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+        connectionName = null;
         // disable the ourselves if there is no throttle Manager
         if (throttleManager == null) {
             super.setEnabled(false);
@@ -44,6 +47,7 @@ public class ThrottleCreationAction extends JmriAbstractAction {
     public ThrottleCreationAction(String s) {
         super(s);
         throttleManager = jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+        connectionName = null;
         // disable the ourselves if there is no throttle Manager
         if (throttleManager == null) {
             super.setEnabled(false);
@@ -55,10 +59,12 @@ public class ThrottleCreationAction extends JmriAbstractAction {
      *
      * @param s Name for the action.
      * @param throttleManager the throttle manager
+     * @param connectionName the name of the connection
      */
-    public ThrottleCreationAction(String s, ThrottleManager throttleManager) {
+    public ThrottleCreationAction(String s, ThrottleManager throttleManager, String connectionName) {
         super(s);
         this.throttleManager = throttleManager;
+        this.connectionName = connectionName;
         // disable the ourselves if there is no throttle Manager
         if (throttleManager == null) {
             super.setEnabled(false);
@@ -80,7 +86,7 @@ public class ThrottleCreationAction extends JmriAbstractAction {
         if (BeanUtil.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
             group = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
-        ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame(throttleManager);
+        ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame(throttleManager, connectionName);
         tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(group);
         tf.toFront();
     }

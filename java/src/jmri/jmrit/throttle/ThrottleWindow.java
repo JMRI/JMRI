@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class ThrottleWindow extends JmriJFrame {
 
     private final ThrottleManager throttleManager;
+    private final String connectionName;
 
     private JPanel throttlesPanel;
     private ThrottleFrame currentThrottleFrame;
@@ -78,8 +79,19 @@ public class ThrottleWindow extends JmriJFrame {
      * @param throttleManager the throttle mananger
      */
     public ThrottleWindow(ThrottleManager throttleManager) {
+        this(throttleManager, null);
+    }
+
+    /**
+     * Constructor
+     * @param throttleManager  the throttle mananger
+     * @param connectionName   the name of the connection
+     */
+    public ThrottleWindow(ThrottleManager throttleManager, String connectionName) {
         super();
         this.throttleManager = throttleManager;
+        this.connectionName = connectionName;
+
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
@@ -274,6 +286,16 @@ public class ThrottleWindow extends JmriJFrame {
             });
 
         add(throttleToolBar, BorderLayout.PAGE_START);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setTitle(String title) {
+        if (connectionName != null) {
+            super.setTitle(Bundle.getMessage("ThrottleTitleWithConnection", title, connectionName));
+        } else {
+            super.setTitle(title);
+        }
     }
 
     public void setEditMode(boolean mode) {
