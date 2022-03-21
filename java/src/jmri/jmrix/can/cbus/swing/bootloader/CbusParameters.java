@@ -99,7 +99,7 @@ public class CbusParameters {
         // Assume old style parameter block @ 0x810 and assume only MERG made these
         // as a check
         d = f.getData(0x810, 8);
-        if (d[MANU_ID_IDX] == MANU_MERG) {
+        if (d[MANU_ID_IDX] == (byte)MANU_MERG) {
             for (int i = 0; i < 7; i++) {
                 paramData[i + 1] = d[i];
             }
