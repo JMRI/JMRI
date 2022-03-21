@@ -84,12 +84,14 @@ public class GenerateSearchIndexTest {
                 }
 
                 // Part of a word
-                Set<Integer> fileIdList = wordMapPart.get(part);
-                if (fileIdList == null) {
-                    fileIdList = new HashSet<>();
-                    wordMapPart.put(part, fileIdList);
+                if (GENERATE_PART_OF_WORD_INDEX) {
+                    Set<Integer> fileIdList = wordMapPart.get(part);
+                    if (fileIdList == null) {
+                        fileIdList = new HashSet<>();
+                        wordMapPart.put(part, fileIdList);
+                    }
+                    fileIdList.add(fileId);
                 }
-                fileIdList.add(fileId);
             }
         }
     }
