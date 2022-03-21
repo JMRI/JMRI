@@ -2,6 +2,9 @@ package jmri.jmrix.can.cbus.swing.bootloader;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+
+import static jmri.jmrix.can.cbus.CbusConstants.MANU_MERG;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +35,7 @@ public class CbusParameters {
      * Para 20 Beta revision (numeric), or 0 if release
      *                
      */
-    public static final int NUM_PARAM_IDX = 0;        // Para 1 The manufacturer ID
+    public static final int NUM_PARAM_IDX = 0;      // Para 0 Number of parameters
     public static final int MANU_ID_IDX = 1;        // Para 1 The manufacturer ID
     public static final int MINOR_VER_IDX = 2;      // Para 2 Minor code version as an alphabetic character (ASCII)
     public static final int MODULE_ID_IDX = 3;      // Para 3 Manufacturer module identifier as a HEX numeric
@@ -47,7 +50,7 @@ public class CbusParameters {
     public static final int CPU_ID_IDX = 15;        // Para 15 CPU manufacturer's id as read from the chip config space, 4 bytes, only firs two used for PIC18
     public static final int CPU_CODE_IDX = 19;      // Para 19 CPU manufacturer code
     public static final int BETA_REV_IDX = 20;      // Para 20 Beta revision (numeric), or 0 if release
-
+    
     protected int [] paramData = null;
     protected boolean valid = false;
 //    protected boolean newVersion = false;
@@ -76,19 +79,31 @@ public class CbusParameters {
         // Look for new style parameter block @ 0x800
         d = f.getData(0x820, 32);
         
-        // Checksum
+        // Copy to params array and calculate checksum.
+        // Copy is offset by 1 to match CBUS parameter numbering
         for (int i = 0; i < 30; i++) {
+            paramData[i + 1] = d[i] & 0xFF;
             checksum += d[i];
         }
+        // Copy checksum and parameter count
+        paramData[31] = d[30];
+        paramData[32] = d[31];
+        paramData[0] = d[24] & 0xFF;
         
-        int paramCheck = ((d[30] & 0xFF)<<8) + (d[31] & 0xFF);
+        int paramCheck = ((d[31] & 0xFF)<<8) + (d[30] & 0xFF);
         if ((checksum & 0xFFFF) == paramCheck) {
             valid = true;
+            return;
         }
 
-        // Assume old style parameter block @ 0x810
-        d = f.getData(0x810, 7);
-        if (d[NUM_PARAM_IDX] == 7) {
+        // Assume old style parameter block @ 0x810 and assume only MERG made these
+        // as a check
+        d = f.getData(0x810, 8);
+        if (d[MANU_ID_IDX] == MANU_MERG) {
+            for (int i = 0; i < 7; i++) {
+                paramData[i + 1] = d[i];
+            }
+            paramData[0] = 7;
             valid = true;
         }
     }
@@ -102,12 +117,16 @@ public class CbusParameters {
     public CbusParameters(byte [] d) {
         this();
         
-        paramData[0] = d.length;
-        
-        for (int i = 0; i < paramData[0]; i++) {
-            paramData[i+1] = d[i] & 0xFF;
+        if (d.length > 32) {
+            log.error("Too many parameters");
+            valid = false;
+        } else {
+            paramData[0] = d.length;
+            for (int i = 0; i < paramData[0]; i++) {
+                paramData[i+1] = d[i] & 0xFF;
+            }
+            valid = true;
         }
-        
     }
 
 
