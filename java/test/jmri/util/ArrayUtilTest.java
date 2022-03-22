@@ -49,7 +49,7 @@ public class ArrayUtilTest {
 
     @Test
     public void testReverseArrayLong() {
-        var stringArray = new long[]{10l, 11l, 12l};
+        var stringArray = new long[]{10L, 11L, 12L};
         var reversedStringArray = ArrayUtil.reverse(stringArray);
         Assert.assertEquals(stringArray[0], reversedStringArray[2]);
         Assert.assertEquals(stringArray[1], reversedStringArray[1]);
