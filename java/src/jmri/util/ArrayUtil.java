@@ -14,7 +14,7 @@ public final class ArrayUtil {
       * <p>
       * Not suitable for primitive types.
       *
-      * @param T the Type of the array contents
+      * @param <T> the Type of the array contents
       * @param elements the array
       * @return the reversed array
       */
