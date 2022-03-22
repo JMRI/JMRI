@@ -358,7 +358,7 @@ public class ThrottleWindow extends JmriJFrame {
             }
         });
 
-        fileMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle")));
+        jmri.jmrit.throttle.ThrottleCreationAction.addNewThrottleItemsToThrottleMenu(fileMenu);
         fileMenu.add(fileMenuLoad);
         fileMenu.add(fileMenuSave);
         fileMenu.add(fileMenuSaveAs);
