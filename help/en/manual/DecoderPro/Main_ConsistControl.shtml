@@ -90,7 +90,7 @@
         </li>
 
         <li>A <em><strong>Decoder Assisted Consist (</strong></em>DAC), often referred to as
-        Advanced Consist. The NMRA<sup>®</sup> has set aside CV19 as a dedicated location for
+        Advanced Consist. The NMRA<sup>&reg;</sup> has set aside CV19 as a dedicated location for
         consist addresses. If CV19 contains a value other than 0, the locomotive will respond to
         speed and direction instructions sent to the address in CV19. If CV19 contains zero then it
         will respond to speed and direction commands sent to the usual short or long decoder

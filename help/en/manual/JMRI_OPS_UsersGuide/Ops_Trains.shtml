@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Using JMRI® to Operate Trains</h1>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
       <h2>Operations Trains Window</h2>
 
@@ -33,7 +33,7 @@
 
       <p>The <strong>Trains</strong> window opens which allows you to build trains to run on your
       layout using the assets that you have defined in this program and save to the various
-      rosters.. This window is selected from the DecoderPro® or PanelPro™ main page from
+      rosters.. This window is selected from the DecoderPro&reg; or PanelPro&trade; main page from
       <strong>Tools --&gt; Operations --&gt; Trains</strong> menu or if enabled <strong>Operations
       --&gt; Trains</strong> menu.</p>
 

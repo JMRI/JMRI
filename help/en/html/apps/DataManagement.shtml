@@ -146,18 +146,15 @@
       <ol>
         <li>Preferences: "Save"</li>
 
-        <li>Panel editors: <strong>File ⇒ Store ALL table content and panels...</strong> {<em>Old:
-        <strong>File ⇒ Store Panels...</strong></em>} or use the PanelPro main menu item
-        <strong>File ⇒ Store ALL table content and panels...</strong> {<em>Old: <strong>Panels ⇒
+        <li>Panel editors: <strong>File &rArr; Store ALL table content and panels...</strong> {<em>Old:
+        <strong>File &rArr; Store Panels...</strong></em>} or use the PanelPro main menu item
+        <strong>File &rArr; Store ALL table content and panels...</strong> {<em>Old: <strong>Panels &rArr;
         Store Panels...</strong></em>}</li>
 
-        <li>Tables (also Fast Clock): <strong>File ⇒ Store ⇒</strong><br>
-        (a) <strong>Store Only table content (No Panels)...</strong> {<em>Old: <strong>Store
-        configuration</strong></em>} or<br>
-        (b) <strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store
-        configuration and panels</strong></em>}</li>
+        <li>Tables (also Fast Clock): <strong>File &rArr; Store &rArr; Store ALL table content and panels...
+        </strong> {<em>Old: <strong>Store configuration and panels</strong></em>}</li>
 
-        <li>Roster entry: (a) automatic (b) File ⇒ Save or "Save to Roster" (c) "Write" to
+        <li>Roster entry: (a) automatic (b) File &rArr; Save or "Save to Roster" (c) "Write" to
         Decoder</li>
 
         <li>Images/Icons: "Save Image Index"</li>
@@ -205,7 +202,7 @@
           <td class="cmd">2, 3(b)</td>
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -213,13 +210,13 @@
           <td class="data">Sensor, Turnout, Block, Light</td>
           <td class="where">Table for specific element type</td>
           <td class="who">UC/US</td>
-          <td class="cmd">2, 3(a), 3(b) 
+          <td class="cmd">2, 3(a), 3(b)
           <!-- "Save->" under the File pulldown on each Table window. Wherever "Store Panels" is a command.
           In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only" or
           "Store configuration and panels" which stores tables and panels --></td>
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -254,7 +251,7 @@
 
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -290,7 +287,7 @@
           <td class="who">UC/US followed by <strong>AS</strong></td>
           <td class="cmd">User enters first Block Value, then JMRI updates automatically.</td>
           <td class="store">blockvalues.xml in Preferences location</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -300,7 +297,7 @@
           <td class="who"><strong>AC</strong>/NS</td>
           <td class="cmd">Status data is not saved when JMRI is closed.</td>
           <td class="store">NA</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -317,7 +314,7 @@
 
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -334,7 +331,7 @@
 
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -347,7 +344,7 @@
           <td class="cmd">6</td>
           <td class="store">Scripts are stored in ".py" or ".js" files where specified by user
           (default: Script Location)</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -422,7 +419,7 @@
           <td class="who">UC/<strong>AS</strong></td>
           <td class="cmd">Appropriate file saved when changes made</td>
           <td class="store">In six files in operations/ in User Files location</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -445,7 +442,7 @@
           </td>
           <td class="cmd">NA</td>
           <td class="store">In backupPanels/ in Profile location</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -455,7 +452,7 @@
           <td class="who">UC/<strong>AS</strong></td>
           <td class="cmd">4(a)</td>
           <td class="store">Individual files in subdirectory "roster" in Roster Files Location</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -467,7 +464,7 @@
           <td class="who">UC/US</td>
           <td class="cmd">4(b)</td>
           <td class="store">Individual files in subdirectory "roster" in Roster Files Location</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -479,7 +476,7 @@
           <td class="who">UC/US</td>
           <td class="cmd">4(c)</td>
           <td class="store">Individual files in subdirectory "roster" in Roster Files Location</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -492,7 +489,7 @@
           <td class="who">UC/<strong>AS</strong></td>
           <td class="cmd">4(a)</td>
           <td class="store">roster.xml Roster Files Location</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -528,7 +525,7 @@
           <td class="who">UC/US</td>
           <td class="cmd">1</td>
           <td class="store">In subdirectories under Config File location.</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -538,7 +535,7 @@
           <td class="who">UC/US</td>
           <td class="cmd">1</td>
           <td class="store">In several files in the Settings Location.</td>
-          <td>✔</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>

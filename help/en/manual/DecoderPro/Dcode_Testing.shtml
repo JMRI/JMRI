@@ -59,7 +59,7 @@
         that goes away, the new decoder index should be created and your new definition should be
         available to use.</li>
       </ul>
-      After including in your decoder definitions for DecoderPro® you will want to test the
+      After including in your decoder definitions for DecoderPro&reg; you will want to test the
       definition on an actual decoder installation using the Programmers available to you. When
       satisfied that it works as expected, then follow the next step.
       <p>When you are happy with your definition, you'll probably want to share it with the JMRI

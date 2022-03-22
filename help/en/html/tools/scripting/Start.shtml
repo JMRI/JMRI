@@ -118,12 +118,12 @@ window immediately:
         <p>JMRI does not provide a full "development environment," but it does provide some basic
         information that can help with debugging your scripts.</p>
 
-        <p>Open the JMRI System Console window (<strong>Help ⇒ System Console</strong>). This will
+        <p>Open the JMRI System Console window (<strong>Help &rArr; System Console</strong>). This will
         give you instant information pertaining to WARN and ERROR messages. Text can be copied to a
         text editor for further review.</p>
 
         <p>Open the Script Output window (<strong>Scripting</strong> {<em>Old:
-        <strong>Panels</strong></em>} <strong>⇒ Script Output</strong>). This will display the
+        <strong>Panels</strong></em>} <strong>&rArr; Script Output</strong>). This will display the
         results of any "print" statements in your script as well as some error messages (NOTE that
         some errors go here and some to the System Console so you you should have both windows open
         when you are debugging). Text can be copied to a text editor for further review.</p>
@@ -236,6 +236,10 @@ method calls.
           <li>layoutblocks</li>
 
           <li>warrants</li>
+
+          <li>sections</li>
+
+          <li>transits</li>
         </ul>
         These can then be referenced directly in Jython as
 

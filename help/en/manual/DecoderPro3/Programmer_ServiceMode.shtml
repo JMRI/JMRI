@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Programming Modes</h1>
+      <h1>DecoderPro&reg; Programming Modes</h1>
 
       <h2>Service Mode Programmer</h2>
 
@@ -35,7 +35,7 @@
       <hr>
 
       <p>The <strong>Service Mode Programmer</strong> is opened using the <strong>New Loco</strong>
-      icon in the DecoderPro® <strong>Tool Bar</strong> or by selecting locomotive from your roster
+      icon in the DecoderPro&reg; <strong>Tool Bar</strong> or by selecting locomotive from your roster
       and selecting <input name="radio" type="radio" id="radio" value="radio" checked>
       <strong>Programming Track</strong> and pressing <strong>Program</strong> button.</p>
 
@@ -142,7 +142,7 @@
         sure that you are using the most up to date version of DecoderPro, because manufacturers
         are adding models almost faster than the team can enter the new decoder definitions into
         the files. You can choose a manufacturer's version which is as close as you can find, or if
-        you're only interested in basic programming functions, use the NMRA© decoder which is a
+        you're only interested in basic programming functions, use the NMRA&copy; decoder which is a
         generic file of the CV's contained in their standards.</p>
 
         <p>The last item on this pane is the Programmer Format entry. It is preset by your

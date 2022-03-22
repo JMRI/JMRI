@@ -25,7 +25,7 @@
     <p>If you're viewing this via the JMRI Help menu, the section to the left is a table of
     contents. Clicking on an entry will load the help page in the right section.</p>
 
-    <p>In JMRI, selecting <strong>Preferences ⇒ Help</strong> provides three options.</p>
+    <p>In JMRI, selecting <strong>Preferences &rArr; Help</strong> provides three options.</p>
 
     <ol>
       <li><strong>Open help pages locally</strong>: The help pages will be loaded from your JMRI

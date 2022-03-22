@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Add Car (Edit Car) Window</h2>
 
@@ -300,7 +300,7 @@
           alt="set car location">
           </td>
           <td>
-            <p><strong>Menu</strong> is standard for JMRI®.</p>
+            <p><strong>Menu</strong> is standard for JMRI&reg;.</p>
 
             <p><strong>Car</strong> displays the user name of the selected Car.<br>
             <strong>Type</strong> displays Car Type<br>

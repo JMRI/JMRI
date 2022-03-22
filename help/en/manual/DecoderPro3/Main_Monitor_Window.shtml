@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <title>DecoderPro&reg; Main Window</title><!--#include virtual="/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Main Window</h1>
+      <h1>DecoderPro&reg; Main Window</h1>
 
       <h2>Communications Monitor Window</h2>
 
