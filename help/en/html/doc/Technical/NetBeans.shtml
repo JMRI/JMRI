@@ -49,7 +49,7 @@
 
           <li>
             <a href="#using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans
-            with JMRI’s Git Code Repository</a>
+            with JMRI&rsquo;s Git Code Repository</a>
             <ul class="sectlevel2">
               <li>
                 <a href="#checking_out_code">Checking out code</a>
@@ -198,7 +198,7 @@
                       their development environment. This is absolutely required so that Git can
                       track individual changes on files that you commit.</p>
 
-                      <p>If you don’t follow these instructions, you’ll mess up the line endings
+                      <p>If you don&rsquo;t follow these instructions, you&rsquo;ll mess up the line endings
                       in the files you commit, which will in turn make their revision history
                       much harder to access. Files in this condition will not be accepted as pull
                       requests.</p>
@@ -241,7 +241,7 @@
                     <ol class="arabic">
                       <li>
                         <p>Choose <span class="menuseq"><strong class=
-                        "menu">Tools</strong>&nbsp;<strong class="caret">›</strong> <strong class=
+                        "menu">Tools</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
                         "menuitem">Plugins</strong></span></p>
                       </li>
 
@@ -290,7 +290,7 @@
                   <ol class="arabic">
                     <li>
                       <p>Choose <span class="menuseq"><strong class=
-                      "menu">Tools</strong>&nbsp;<strong class="caret">›</strong> <strong class=
+                      "menu">Tools</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
                       "menuitem">Options</strong></span></p>
                     </li>
 
@@ -330,11 +330,11 @@
 
         <div class="sect1">
           <h2 id="using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans with
-          JMRI’s Git Code Repository</h2>
+          JMRI&rsquo;s Git Code Repository</h2>
 
           <div class="sectionbody">
             <div class="paragraph">
-              <p>GitHub provides JMRI’s code repository using the Git tool. For more information on
+              <p>GitHub provides JMRI&rsquo;s code repository using the Git tool. For more information on
               how JMRI uses Git, see the JMRI Help on <a href="getgitcode.shtml">Getting the code
               via Git</a> and <a href="GitFAQ.shtml">Git FAQ</a>.</p>
             </div>
@@ -363,8 +363,8 @@
               </div>
 
               <div class="paragraph">
-                <p>It’ll take a long time to pull down a copy of the code (note the progress bar in
-                the lower right), but then you’re good to go.</p>
+                <p>It&rsquo;ll take a long time to pull down a copy of the code (note the progress bar in
+                the lower right), but then you&rsquo;re good to go.</p>
               </div>
             </div>
 
@@ -372,12 +372,12 @@
               <h3 id="local_commits">Local Commits</h3>
 
               <div class="paragraph">
-                <p>When using Git, the "commit" operation is local to your computer. It doesn’t
+                <p>When using Git, the "commit" operation is local to your computer. It doesn&rsquo;t
                 make any changes to the main JMRI repository.</p>
               </div>
 
               <div class="paragraph">
-                <p>You’re encouraged to commit often, so that your changes are safely stored away
+                <p>You&rsquo;re encouraged to commit often, so that your changes are safely stored away
                 from your working directory. Having each small change separately recorded can be
                 incredibly helpful later on if you have to track down where a problem was
                 introduced.</p>
@@ -390,20 +390,20 @@
               <div class="paragraph">
                 <p>From time to time, you should update your local copy of the code to match the
                 current "HEAD" of the main JMRI Git repository contents. The basic process is to
-                pull the most recent copies from the main JMRI repository, doing any merging that’s
-                needed if you’ve made conflicting changes, and then pushing that up to your own
+                pull the most recent copies from the main JMRI repository, doing any merging that&rsquo;s
+                needed if you&rsquo;ve made conflicting changes, and then pushing that up to your own
                 GitHub repository.</p>
               </div>
 
               <div class="paragraph">
-                <p>To do this, use the Apache NetBeans [Team] → [Remote] → [Pull from Upstream]
+                <p>To do this, use the Apache NetBeans [Team] &rarr; [Remote] &rarr; [Pull from Upstream]
                 menu choice. Tell Apache NetBeans to pull from the "github" remote you defined
                 above.</p>
               </div>
 
               <div class="paragraph">
                 <p>You may also update a single file or the contents of a folder, by right-clicking
-                on an item in the "Files" window, then selecting [Git] → [Remote] → [Pull from
+                on an item in the "Files" window, then selecting [Git] &rarr; [Remote] &rarr; [Pull from
                 Upstream].</p>
               </div>
             </div>
@@ -429,8 +429,8 @@
 
                   <li>
                     <p>Tell GitHub to <a href=
-                    "https://help.github.com/articles/fork-a-repo/">"fork" JMRI’s repository</a>
-                    into one of your own. There’s a <a href=
+                    "https://help.github.com/articles/fork-a-repo/">"fork" JMRI&rsquo;s repository</a>
+                    into one of your own. There&rsquo;s a <a href=
                     "https://help.github.com/articles/fork-a-repo/">good help page</a>, but
                     basically you go to the <a href="https://github.com/JMRI/JMRI">JMRI repository
                     page</a> and click the "fork" button in the upper right.</p>
@@ -444,8 +444,8 @@
 
               <div class="paragraph">
                 <p>Next, push the changes up to your repository. (Anybody can push to their own
-                repository, but most people don’t have permission to directly modify the main JMRI
-                repository; that’s why the pull request is needed) To do this:</p>
+                repository, but most people don&rsquo;t have permission to directly modify the main JMRI
+                repository; that&rsquo;s why the pull request is needed) To do this:</p>
               </div>
 
               <div class="ulist">
@@ -467,8 +467,8 @@
 
                   <li>
                     <p>Apache NetBeans will check with the repository, and show an indication of
-                    branches to push e.g. "master → master" Check the appropriate box to for the
-                    branch you’ve been working on.</p>
+                    branches to push e.g. "master &rarr; master" Check the appropriate box to for the
+                    branch you&rsquo;ve been working on.</p>
                   </li>
 
                   <li>
@@ -479,7 +479,7 @@
               </div>
 
               <div class="paragraph">
-                <p>You can repeat this as many times as you’d like as you’re working on your
+                <p>You can repeat this as many times as you&rsquo;d like as you&rsquo;re working on your
                 changes. Each time, the most recent changes are pushed up and made available.</p>
               </div>
 
@@ -490,8 +490,8 @@
 
               <div class="paragraph">
                 <p>Eventually, somebody will look at the pull request and decide whether to merge
-                it in. Sometimes they’ll ask for additional changes. In that case, you can update
-                the pull request by just pushing new changes to your repository, where they’ll
+                it in. Sometimes they&rsquo;ll ask for additional changes. In that case, you can update
+                the pull request by just pushing new changes to your repository, where they&rsquo;ll
                 automatically be picked up.</p>
               </div>
             </div>
@@ -542,8 +542,8 @@
 
                   <li>
                     <p>Choose <span class="menuseq"><strong class="menu">shortcut
-                    menu</strong>&nbsp;<strong class="caret">›</strong> <strong class=
-                    "menuitem">Resolve Project Problems…</strong></span> (the shortcut menu is
+                    menu</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
+                    "menuitem">Resolve Project Problems&hellip;</strong></span> (the shortcut menu is
                     usually opened by right-clicking on the project) <a href=
                     "images/netbeans-resolve-project-problems-menu.png">Show example...</a></p>
                   </li>
@@ -583,9 +583,9 @@
 
               <div class="paragraph">
                 <p>To build JMRI, choose <span class="menuseq"><strong class=
-                "menu">Run</strong>&nbsp;<strong class="caret">›</strong> <strong class=
+                "menu">Run</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
                 "menuitem">Build Project (JMRI)</strong></span> or <span class=
-                "menuseq"><strong class="menu">Run</strong>&nbsp;<strong class="caret">›</strong>
+                "menuseq"><strong class="menu">Run</strong>&nbsp;<strong class="caret">&rsaquo;</strong>
                 <strong class="menuitem">Clean and Build Project (JMRI)</strong></span>.</p>
               </div>
 
@@ -612,7 +612,7 @@
                 "image related right"><img src="images/netbeans-run-project.png" alt=
                 "Select Main Class for Execution dialog"></span></a> To run a JMRI
                 application, choose <span class="menuseq"><strong class=
-                "menu">Run</strong>&nbsp;<strong class="caret">›</strong> <strong class=
+                "menu">Run</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
                 "menuitem">Run Project (JMRI)</strong></span> or click the Run icon in the tool
                 bar. You will be prompted for the JMRI main class to run the first time you run the
                 project.</p>
@@ -673,7 +673,7 @@
 
               <div class="paragraph">
                 <p>To debug a JMRI application, choose <span class="menuseq"><strong class=
-                "menu">Debug</strong>&nbsp;<strong class="caret">›</strong> <strong class=
+                "menu">Debug</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
                 "menuitem">Debug Project (JMRI)</strong></span> or click the Debug icon in the tool
                 bar. You will be prompted for the JMRI main class to debug the first time you run
                 the project.</p>
@@ -685,7 +685,7 @@
 
               <div class="paragraph">
                 <p>To profile a JMRI application, choose <span class="menuseq"><strong class=
-                "menu">Profile</strong>&nbsp;<strong class="caret">›</strong> <strong class=
+                "menu">Profile</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
                 "menuitem">Profile Project (JMRI)</strong></span> or click the Profile icon in the
                 tool bar. You will be prompted for the JMRI main class to profile the first time
                 you run the project.</p>
@@ -706,8 +706,8 @@
 
             <div class="paragraph">
               <p>To do this, ctrl-click (or right-click) on the name of the "JMRI" project in the
-              "Projects" window. This will open a pop-up menu, on which you’ll find "Make Jar
-              File". Select that, and a new jmri.jar file will be produced in the project’s main
+              "Projects" window. This will open a pop-up menu, on which you&rsquo;ll find "Make Jar
+              File". Select that, and a new jmri.jar file will be produced in the project&rsquo;s main
               directory.</p>
             </div>
 
@@ -784,7 +784,7 @@
               <ol class="arabic">
                 <li>
                   <p>Choose <span class="menuseq"><strong class=
-                  "menu">Tools</strong>&nbsp;<strong class="caret">›</strong> <strong class=
+                  "menu">Tools</strong>&nbsp;<strong class="caret">&rsaquo;</strong> <strong class=
                   "menuitem">DTDs and XML Schemas</strong></span></p>
                 </li>
 
@@ -861,21 +861,21 @@
             <div class="paragraph">
               <p>The process for building from a branch (i.e. the one where someone has put a
               change) is a bit different from the standard instructions. (The following is NetBeans
-              8.2, but it doesn’t vary with versions much)</p>
+              8.2, but it doesn&rsquo;t vary with versions much)</p>
             </div>
 
             <div class="ulist">
               <ul>
                 <li>
-                  <p>Under "Team" → "Remote" select "Fetch" (not Fetch from Upstream)<br>
+                  <p>Under "Team" &rarr; "Remote" select "Fetch" (not Fetch from Upstream)<br>
                   <a href="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png"><span class=
                   "image"><img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" alt=
                   "image"></span></a></p>
                 </li>
 
                 <li>
-                  <p>Fill out the form to specify the correct user’s repository (After the 1st time
-                  you do this, you’ll be able to select by name in the top choice)<br>
+                  <p>Fill out the form to specify the correct user&rsquo;s repository (After the 1st time
+                  you do this, you&rsquo;ll be able to select by name in the top choice)<br>
                   <a href="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png"><span class=
                   "image"><img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" alt=
                   "image"></span></a></p>
@@ -883,7 +883,7 @@
 
                 <li>
                   <p>On the next screen to select a branch, you can either select all of them
-                  (there’s a button) or find and select just the name of the branch that holds the
+                  (there&rsquo;s a button) or find and select just the name of the branch that holds the
                   desired change:<br>
                   <a href="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png"><img
                   src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" alt=
@@ -896,13 +896,13 @@
               </ul>
             </div>
 
-            <p>At this point, you’ve pulled my changes onto your local machine, but you’re not
+            <p>At this point, you&rsquo;ve pulled my changes onto your local machine, but you&rsquo;re not
             using them yet. To have those files appear locally for Apache NetBeans to build:</p>
 
             <div class="ulist">
               <ul>
                 <li>
-                  <p>Back on the main menu, select "Team" → "Checkout" → "Checkout Revision...". On
+                  <p>Back on the main menu, select "Team" &rarr; "Checkout" &rarr; "Checkout Revision...". On
                   the window you get, click "Select":<br>
                   <a href="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png"><span class=
                   "image"><img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" alt=
@@ -912,8 +912,8 @@
                 <li>
                   <p>In the upper left, find the imported branch you want, which in the example is
                   "bobjacobsen/ast-clock-power-bit". Either click to highlight (show) and then
-                  click "Select", or just double-click on it. (Don’t worry about the upper right or
-                  the lower box, they’ll be automatically set right)<br>
+                  click "Select", or just double-click on it. (Don&rsquo;t worry about the upper right or
+                  the lower box, they&rsquo;ll be automatically set right)<br>
                   <a href="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png"><span class=
                   "image"><img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" alt=
                   "image"></span></a></p>
@@ -928,7 +928,7 @@
             </div>
 
             <div class="paragraph">
-              <p>Now you’ve got a copy of my changes as your checked-out source. You should do a
+              <p>Now you&rsquo;ve got a copy of my changes as your checked-out source. You should do a
               "Clean and Build Project" to make sure that you get a consistent compilation, and
               then you should be able to run it.</p>
             </div>
@@ -945,8 +945,8 @@
                   version, from the main repository, you need to check out the <code>master</code>
                   branch. The process is similar, and simpler. Choose <span class=
                   "menuseq"><strong class="menu">Team</strong>&nbsp;<strong class=
-                  "caret">›</strong> <strong class="submenu">Checkout</strong>&nbsp;<strong class=
-                  "caret">›</strong> <strong class="menuitem">Checkout Revision...</strong></span>,
+                  "caret">&rsaquo;</strong> <strong class="submenu">Checkout</strong>&nbsp;<strong class=
+                  "caret">&rsaquo;</strong> <strong class="menuitem">Checkout Revision...</strong></span>,
                   type <code>master</code> in the <em>Checkout Selected Revision</em> box, and
                   click <strong class="button">Checkout</strong></td>
                 </tr>

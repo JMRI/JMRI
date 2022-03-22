@@ -48,7 +48,7 @@
       <p>Open the <a href="../../package/apps/TabbedPreferences.shtml">Preferences Window</a> to
       configure JMRI to start the server each time you start the program.</p>
 
-      <p>Select the "Start Up" tab, click "Add ▾", and select "Perform action...". In the new
+      <p>Select the "Start Up" tab, click "Add &#9662;", and select "Perform action...". In the new
       selection box that appears, select "Start JMRI Web Server". Don't forget to save your
       changes!</p>
 

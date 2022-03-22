@@ -18,7 +18,7 @@
       <h1>Hardware Support: Uhlenbrock Intellibox</h1>
 
       <p>JMRI can communicate with an Uhlenbrock Intellibox via the Intellibox built-in serial
-      port, the Intellibox II/Basic USB port and the LocoNet™ protocol.<br>
+      port, the Intellibox II/Basic USB port and the LocoNet&trade; protocol.<br>
       This page provides details on the possibilities.</p>
 
       <h2 id="hardware">Supported Hardware</h2>
