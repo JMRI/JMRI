@@ -45,28 +45,17 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return The newly created ThrottleWindow
      */
     public ThrottleWindow createThrottleWindow() {
-        return createThrottleWindow(jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
+        return createThrottleWindow(null);
     }
 
     /**
      * Tell this manager that a new ThrottleWindow was created.
      *
-     * @param throttleManager  the throttle manager
+     * @param connectionConfig the connection config
      * @return The newly created ThrottleWindow
      */
-    public ThrottleWindow createThrottleWindow(ThrottleManager throttleManager) {
-        return createThrottleWindow(throttleManager, null);
-    }
-
-    /**
-     * Tell this manager that a new ThrottleWindow was created.
-     *
-     * @param throttleManager  the throttle manager
-     * @param connectionName   the name of the connection
-     * @return The newly created ThrottleWindow
-     */
-    public ThrottleWindow createThrottleWindow(ThrottleManager throttleManager, String connectionName) {
-        ThrottleWindow tw = new ThrottleWindow(throttleManager, connectionName);
+    public ThrottleWindow createThrottleWindow(jmri.jmrix.ConnectionConfig connectionConfig) {
+        ThrottleWindow tw = new ThrottleWindow(connectionConfig);
         tw.pack();
         synchronized (this) {
             throttleWindows.add(tw);
@@ -81,28 +70,17 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return The newly created ThrottleFrame
      */
     public ThrottleFrame createThrottleFrame() {
-        return createThrottleFrame(jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
+        return createThrottleFrame(null);
     }
 
     /**
      * Tell this manager that a new ThrottleFrame was created.
      *
-     * @param throttleManager the throttle manager
+     * @param connectionConfig the connection config
      * @return The newly created ThrottleFrame
      */
-    public ThrottleFrame createThrottleFrame(ThrottleManager throttleManager) {
-        return createThrottleWindow(throttleManager).getCurrentThrottleFrame();
-    }
-
-    /**
-     * Tell this manager that a new ThrottleFrame was created.
-     *
-     * @param throttleManager  the throttle manager
-     * @param connectionName   the name of the connection
-     * @return The newly created ThrottleFrame
-     */
-    public ThrottleFrame createThrottleFrame(ThrottleManager throttleManager, String connectionName) {
-        return createThrottleWindow(throttleManager, connectionName).getCurrentThrottleFrame();
+    public ThrottleFrame createThrottleFrame(jmri.jmrix.ConnectionConfig connectionConfig) {
+        return createThrottleWindow(connectionConfig).getCurrentThrottleFrame();
     }
 
     /**

@@ -19,6 +19,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.URIDrop;
 
 import org.jdom2.Element;
+import org.jdom2.Attribute;
 import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +27,8 @@ import org.slf4j.LoggerFactory;
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
 public class ThrottleWindow extends JmriJFrame {
 
-    private final ThrottleManager throttleManager;
-    private final String connectionName;
+    private jmri.jmrix.ConnectionConfig connectionConfig;
+    private ThrottleManager throttleManager;
 
     private JPanel throttlesPanel;
     private ThrottleFrame currentThrottleFrame;
@@ -71,26 +72,21 @@ public class ThrottleWindow extends JmriJFrame {
      * Default constructor
      */
     public ThrottleWindow() {
-        this(InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
+        this(null);
     }
 
     /**
      * Constructor
-     * @param throttleManager the throttle mananger
+     * @param connectionConfig the connection config
      */
-    public ThrottleWindow(ThrottleManager throttleManager) {
-        this(throttleManager, null);
-    }
-
-    /**
-     * Constructor
-     * @param throttleManager  the throttle mananger
-     * @param connectionName   the name of the connection
-     */
-    public ThrottleWindow(ThrottleManager throttleManager, String connectionName) {
+    public ThrottleWindow(jmri.jmrix.ConnectionConfig connectionConfig) {
         super();
-        this.throttleManager = throttleManager;
-        this.connectionName = connectionName;
+        this.connectionConfig = connectionConfig;
+        if (connectionConfig != null) {
+            this.throttleManager = connectionConfig.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);
+        } else {
+            this.throttleManager = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+        }
 
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
@@ -291,8 +287,8 @@ public class ThrottleWindow extends JmriJFrame {
     /** {@inheritDoc} */
     @Override
     public void setTitle(String title) {
-        if (connectionName != null) {
-            super.setTitle(Bundle.getMessage("ThrottleTitleWithConnection", title, connectionName));
+        if (connectionConfig != null) {
+            super.setTitle(Bundle.getMessage("ThrottleTitleWithConnection", title, connectionConfig.getConnectionName()));
         } else {
             super.setTitle(title);
         }
@@ -647,6 +643,9 @@ public class ThrottleWindow extends JmriJFrame {
 
     public Element getXml() {
         Element me = new Element("ThrottleWindow");
+        if (connectionConfig != null) {
+            me.setAttribute("systemPrefix", connectionConfig.getAdapter().getSystemPrefix());
+        }
         me.setAttribute("title", titleText);
         me.setAttribute("titleType", titleTextType);
         me.setAttribute("isEditMode",  String.valueOf(isEditMode));
@@ -701,6 +700,24 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     public void setXml(Element e) {
+        Attribute systemPrefixAttr = e.getAttribute("systemPrefix");
+        if (systemPrefixAttr != null) {
+            String systemPrefix = systemPrefixAttr.getValue();
+            // Set connectionConfig to null in case the systemPrefix
+            // points to a connection that doesn't exist anymore.
+            this.connectionConfig = null;
+
+            for (jmri.jmrix.ConnectionConfig c : InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class)) {
+                if (c.getAdapter().getSystemPrefix().equals(systemPrefix)) {
+                    this.connectionConfig = c;
+                }
+            }
+            if (connectionConfig != null) {
+                this.throttleManager = connectionConfig.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);
+            } else {
+                this.throttleManager = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+            }
+        }
         if (e.getAttribute("title") != null) {
             setTitle(e.getAttribute("title").getValue());
         }
