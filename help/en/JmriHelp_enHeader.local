@@ -215,6 +215,6 @@ Format: full-word | starts-with* | *ends-with');
             </p>
         </div>
 
-        <div id="tocID" class="help-toc">
+        <div id="tocID" class="help-list">
             <h3>Table of Contents</h3>
             <ul>

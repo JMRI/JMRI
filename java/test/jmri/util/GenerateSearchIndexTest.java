@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.Assume;
+
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.junit.jupiter.api.*;
