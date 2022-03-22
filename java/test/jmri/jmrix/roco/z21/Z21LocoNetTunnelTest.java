@@ -46,8 +46,7 @@ public class Z21LocoNetTunnelTest {
         tunnel.dispose();
         memo.getTrafficController().terminateThreads();
         JUnitUtil.waitFor(() -> {  return !lnspc.status(); });
-        // The assertWarnMessage() below often fails on Windows CI. Disable it for now. It was added in PR #10773.
-//        JUnitAppender.assertWarnMessage("sendLocoNetMessage: IOException: java.io.IOException: Read end dead");
+        JUnitAppender.suppressWarnMessage("sendLocoNetMessage: IOException: java.io.IOException: Read end dead");
         tunnel = null;
         tc = null;
         memo = null;
