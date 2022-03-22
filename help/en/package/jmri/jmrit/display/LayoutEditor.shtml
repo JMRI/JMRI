@@ -165,7 +165,7 @@
       panel, or you may add them later.</p>
 
       <p>Below is a short tutorial on the basics of using Layout Editor. A more complete tutorial
-      is available for download as a pdf file on the JMRI web site. See <a href=
+      is available for download as a pdf file on the JMRI website. See <a href=
       "https://jmri.org/community/clinics/NMRA2008/index.html"><strong>Using the JMRI/PanelPro
       Layout Editor</strong></a> and its two associated demonstration .xml files.</p>
 
@@ -1410,14 +1410,14 @@
       <p>The track consists of 1 to 4 layers.</p>
 
       <ul>
-        <li><strong>Rail</strong> — There can be from 0 to 3 rails.</li>
+        <li><strong>Rail</strong> &mdash; There can be from 0 to 3 rails.</li>
 
-        <li><strong>Block</strong> — If a block has been assigned to the track component, the block
+        <li><strong>Block</strong> &mdash; If a block has been assigned to the track component, the block
         layer will be drawn.</li>
 
-        <li><strong>Ballast</strong> — Simulate track ballast.</li>
+        <li><strong>Ballast</strong> &mdash; Simulate track ballast.</li>
 
-        <li><strong>Ties</strong> — Add ties to the rails.</li>
+        <li><strong>Ties</strong> &mdash; Add ties to the rails.</li>
       </ul>
 
       <p>The rail layer defaults to a single rail with a width of 1 for sideline and 2 for
@@ -1427,16 +1427,16 @@
 
       <p>The <strong>Block Line Dash Percentage</strong> has <strong><em>nothing</em></strong> to
       do with dashed track. This is a special setting to create an on/off pattern to blocks. The
-      <strong>British 70's</strong> or Czechoslovak <strong>ČSD AŽD-71</strong> preset uses this
+      <strong>British 70's</strong> or Czechoslovak <strong>&Ccaron;SD A&Zcaron;D-71</strong> preset uses this
       option.</p>
 
       <h3>Notes</h3>
 
-      <p><strong>Dashed Track</strong> — If a track segment is defined as dashed and a block has
+      <p><strong>Dashed Track</strong> &mdash; If a track segment is defined as dashed and a block has
       been assigned, the rail layer will not be drawn. This eliminates rail fragments that might
       show up in the block gaps.</p>
 
-      <p><strong>Draw Unselected Turnout Leg</strong> — This option only applies to the block
+      <p><strong>Draw Unselected Turnout Leg</strong> &mdash; This option only applies to the block
       layer. If the rail count is 1, the rail for the unselected leg is drawn with a gap. If the
       option is active, the block line will also be drawn. For maximum turnout position visibliy,
       turn off the option.</p>

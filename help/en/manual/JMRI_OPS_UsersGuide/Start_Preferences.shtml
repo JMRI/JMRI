@@ -16,7 +16,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Using JMRI® to Operate Trains</h1>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Setting your Preferences</h2>
 
@@ -36,7 +36,7 @@
       <p>In either PanelPro or DecoderPro, in the main menu bar click on the Edit menu -&gt;
       Preferences... (Windows) or click on Preferences... in the PanelPro application menu (OS X).
       This opens the <strong>Preferences</strong> panel (The panel may open automatically the first
-      time you run JMRI®).</p>
+      time you run JMRI&reg;).</p>
 
       <p>The <strong>Preferences</strong> panel is split into two panes: on the left side is a list
       of Preference groups that may be set. Clicking on one of the Tabs opens that set of
@@ -53,7 +53,7 @@
       <p>The <strong>Preferences -&gt; Connections</strong> pane provides access to the basic
       configuration information to connect your computer to your DCC system. You may either set up
       JMRI OperationsPro to work as a digital Switch List generator using a "Simulator" Connection
-      Type, or take advantage of the full JMRI Suite by connecting JMRI® OperationsPro to your DCC
+      Type, or take advantage of the full JMRI Suite by connecting JMRI&reg; OperationsPro to your DCC
       layout to actually build and operate trains equipped with DCC decoders and follow them on
       your computer screen.</p>
 
@@ -160,7 +160,7 @@
 
       <h3><a id="StartUp"></a>Other Preference panes</h3>
 
-      <p>All the Preference panes are described in detail in the JMRI PanelPro® and DecoderPro®
+      <p>All the Preference panes are described in detail in the JMRI PanelPro&reg; and DecoderPro&reg;
       online <a href="../index.shtml">Manuals</a>.</p>
 
       <div style="margin: 40">
@@ -242,7 +242,7 @@
               <td><strong><a href="../DecoderPro3/Start_Preferences.shtml#MiniServer">Web
               Server</a></strong>
               </td>
-              <td>Sets up the DecoderPro® Web Server</td>
+              <td>Sets up the DecoderPro&reg; Web Server</td>
             </tr>
           </tbody>
         </table>

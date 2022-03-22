@@ -80,7 +80,7 @@
       Turnouts involved in the Routes to be defined, and that the <a href=
       "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> contains all Sensors
       needed.<br>
-      Then select <strong>Tools</strong> ⇒ <strong>Tables</strong> ⇒ <strong>Routes</strong>, and
+      Then select <strong>Tools</strong> &rArr; <strong>Tables</strong> &rArr; <strong>Routes</strong>, and
       click the <strong>Add...</strong> button at the bottom of the pane to bring up the Add/Edit
       Route pane.</p>
 

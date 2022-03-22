@@ -28,34 +28,33 @@
         <p>The main PanelPro menu has changed as of JMRI release 4.23.3.</p>
 
         <ul>
-          <li><strong>Panels ⇒ Load Panels...</strong> has moved to <strong>File ⇒ Load table
+          <li><strong>Panels &rArr; Load Panels...</strong> has moved to <strong>File &rArr; Load table
           content and panels...</strong></li>
 
-          <li><strong>Panels ⇒ Store Panels...</strong> has moved to <strong>File ⇒ Store ALL table
+          <li><strong>Panels &rArr; Store Panels...</strong> has moved to <strong>File &rArr; Store ALL table
           content and panels...</strong></li>
 
-          <li><strong>Panels ⇒ Show History</strong> has moved to <strong>File ⇒ Show file
+          <li><strong>Panels &rArr; Show History</strong> has moved to <strong>File &rArr; Show file
           history</strong></li>
 
-          <li><strong>Panels ⇒ Run Script...</strong> has moved to <strong>Scripting ⇒ Run
+          <li><strong>Panels &rArr; Run Script...</strong> has moved to <strong>Scripting &rArr; Run
           Script...</strong></li>
 
-          <li><strong>Panels ⇒ Thread Monitor</strong> has moved to <strong>Scripting ⇒ Thread
-          Moniitor</strong></li>
+          <li><strong>Panels &rArr; Thread Monitor</strong> has moved to <strong>Scripting &rArr; Thread
+          Monitor</strong></li>
 
-          <li><strong>Panels ⇒ Script Output</strong> has moved to <strong>Scripting ⇒ Script
+          <li><strong>Panels &rArr; Script Output</strong> has moved to <strong>Scripting &rArr; Script
           Output</strong></li>
 
-          <li><strong>Panels ⇒ Script Entry</strong> has moved to <strong>Scripting ⇒ Script
+          <li><strong>Panels &rArr; Script Entry</strong> has moved to <strong>Scripting &rArr; Script
           Entry</strong></li>
         </ul>
 
-        <p>The text for the panel and table specific File menus is now consistent. The table store
-        without panels is now <strong>Store Only table content (No Panels)...</strong>.</p>
+        <p>The text for the panel and table specific File menus is now consistent.</p>
 
         <p>The panel <strong>Close</strong> button <strong>hides</strong> the panel. It can be
-        shown using the Window menu or <strong>Panels ⇒ Show Panel</strong>. To delete a panel, use
-        the panel's delete option in the panel's File menu or the new <strong>Panels ⇒ Delete
+        shown using the Window menu or <strong>Panels &rArr; Show Panel</strong>. To delete a panel, use
+        the panel's delete option in the panel's File menu or the new <strong>Panels &rArr; Delete
         Panel...</strong> menu item.</p>
 
         <p>The menu paths shown below are the new paths. The old paths are shown in braces.</p>
@@ -130,14 +129,14 @@
             <a href="PanelPro/index.shtml">PanelPro</a>
             <ul>
               <li>
-                <strong>File ⇒ Load table content and panels...</strong> {<em>Old: <strong>Panels ⇒
+                <strong>File &rArr; Load table content and panels...</strong> {<em>Old: <strong>Panels &rArr;
                 Load Panels...</strong></em>}
                 <ul>
-                  <li>Table content for the tables located at <strong>Tools ⇒ Tables</strong></li>
+                  <li>Table content for the tables located at <strong>Tools &rArr; Tables</strong></li>
 
                   <li>Panels</li>
 
-                  <li>Fast clock settings at <strong>Tools ⇒ Clocks</strong></li>
+                  <li>Fast clock settings at <strong>Tools &rArr; Clocks</strong></li>
                 </ul>
               </li>
 
@@ -154,17 +153,17 @@
               <li>
                 <a href="../tools/scripting/index.shtml"><strong>Scripts</strong></a>:
                 <ul>
-                  <li>Run script: <strong>Scripting ⇒ Run Script...</strong> {<em>Old:
-                  <strong>Panels ⇒ Run Script...</strong></em>}</li>
+                  <li>Run script: <strong>Scripting &rArr; Run Script...</strong> {<em>Old:
+                  <strong>Panels &rArr; Run Script...</strong></em>}</li>
 
-                  <li>Load script: <strong>Scripting ⇒ Script Entry</strong> {<em>Old:
-                  <strong>Panels ⇒ Script Entry</strong></em>} and then <strong>Load</strong>.</li>
+                  <li>Load script: <strong>Scripting &rArr; Script Entry</strong> {<em>Old:
+                  <strong>Panels &rArr; Script Entry</strong></em>} and then <strong>Load</strong>.</li>
                 </ul>
               </li>
 
               <li>
                 <a href="../tools/throttle/ThrottleChapter1.shtml"><strong>Throttles</strong></a>:
-                <strong>Tools ⇒ Throttles ⇒</strong>
+                <strong>Tools &rArr; Throttles &rArr;</strong>
                 <ul>
                   <li><strong>Open Throttles Layout...</strong>
                   </li>
@@ -208,12 +207,12 @@
 
         <h3 id="startAction">Loading table content and panels during startup</h3>
 
-        <p>The <strong>Preferences ⇒ Start Up</strong> option includes an <strong>Action</strong>
-        to load a file during the start up proces. Click on the <strong>Add</strong> button and
+        <p>The <strong>Preferences &rArr; Start Up</strong> option includes an <strong>Action</strong>
+        to load a file during the startup process. Click on the <strong>Add</strong> button and
         select <strong>Open File...</strong>. The operating system <strong>Open File</strong>
         dialog will be displayed with the <strong>user file location</strong> selected. Select a
         file and click on <strong>Open</strong>. The new action will be added to the action list.
-        Click on the Preferences <strong>Save</strong> button to retain the start up action
+        Click on the Preferences <strong>Save</strong> button to retain the startup action
         change.</p>
 
         <p><a href="#TopOfPage">[Go to top of page]</a>
@@ -221,17 +220,17 @@
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h2 id="usave">Things you need to take action to "store" or "save"</h2>
+      <h2 id="usave">When to take action to "store" or "save"</h2>
 
       <div class="para">
         <p>JMRI will sometimes (but not always) notify you when you might want to "save" or
-        "store." These are the places user action may be required:</p>
+        "store." These are the places where user action may be required:</p>
 
         <ul>
           <li>
             <a href="../../package/apps/TabbedPreferences.shtml">Preferences (all apps)</a>
             <ul>
-              <li><strong>All Preferences items</strong>: <em>Edit ⇒ Preferences</em>, Hit
+              <li><strong>All Preferences items</strong>: <em>Edit &rArr; Preferences</em>, Hit
               <strong>Save</strong></li>
             </ul>
             <br>
@@ -243,7 +242,7 @@
               <li>
                 <a href="DecoderPro/Roster.shtml"><strong>Roster entry</strong></a>:
                 <ul>
-                  <li>On an individual roster entry window: Select <strong>File ⇒ Save</strong> or
+                  <li>On an individual roster entry window: Select <strong>File &rArr; Save</strong> or
                   <strong>Save to Roster</strong></li>
 
                   <li>On an individual roster entry window: Select <strong>Write</strong> to
@@ -264,27 +263,24 @@
               <li>
                 <strong>Panels</strong>:
                 <ul>
-                  <li>From any panel editor: Select <strong>File ⇒ Store ALL table content and
-                  panels...</strong> {<em>Old: <strong>File ⇒ Store Panels...</strong></em>}.</li>
+                  <li>From any panel editor: Select <strong>File &rArr; Store ALL table content and
+                  panels...</strong> {<em>Old: <strong>File &rArr; Store Panels...</strong></em>}.</li>
 
-                  <li>From the main PanelPro window: Select <strong>File ⇒ Store ALL table content
-                  and panels...</strong> {<em>Old: <strong>Panels ⇒ Store
+                  <li>From the main PanelPro window: Select <strong>File &rArr; Store ALL table content
+                  and panels...</strong> {<em>Old: <strong>Panels &rArr; Store
                   Panels...</strong></em>}.</li>
                 </ul>
               </li>
 
               <li>
-                <strong>Tables</strong>: <em>Tools ⇒ Tables ⇒ [Specific Table]</em>, Select:
+                <strong>Tables</strong>: <em>Tools &rArr; Tables &rArr; [Specific Table]</em>, Select:
                 <ul>
-                  <li><strong>File ⇒ Store ⇒ Store Only table content (No Panels)...</strong>
-                  {<em>Old: <strong>Store configuration</strong></em>}.</li>
-
-                  <li><strong>File ⇒ Store ⇒ Store ALL table content and panels...</strong>
+                  <li><strong>File &rArr; Store &rArr; Store ALL table content and panels...</strong>
                   {<em>Old: <strong>Store configuration and panels</strong></em>}.</li>
                 </ul>
               </li>
 
-              <li><strong>Fast Clock</strong>: <em>Tools ⇒ Clocks ⇒ Set up Fast Clock...</em>, then
+              <li><strong>Fast Clock</strong>: <em>Tools &rArr; Clocks &rArr; Set up Fast Clock...</em>, then
               same as for Tables.</li>
 
               <li>
@@ -295,21 +291,21 @@
 
               <li>
                 <a href="../tools/scripting/index.shtml"><strong>Scripts</strong></a>:
-                <strong>Scripting ⇒ Script Entry</strong> {<em>Old: <strong>Panel ⇒ Script
+                <strong>Scripting &rArr; Script Entry</strong> {<em>Old: <strong>Panel &rArr; Script
                 Entry</strong></em>}, Hit <strong>Store...</strong>
               </li>
 
               <li>
                 <a href="../tools/throttle/ThrottleChapter1.shtml"><strong>Throttles</strong></a>:
-                <strong>Tools ⇒ Throttles ⇒</strong>
+                <strong>Tools &rArr; Throttles &rArr;</strong>
                 <ul>
                   <li><strong>Save Throttle Layout</strong>
                   </li>
 
-                  <li><strong>New Throttle ⇒ File ⇒ Save Current Throttle</strong>
+                  <li><strong>New Throttle &rArr; File &rArr; Save Current Throttle</strong>
                   </li>
 
-                  <li><strong>New Throttle ⇒ File ⇒ Save Current Throttle As...</strong>
+                  <li><strong>New Throttle &rArr; File &rArr; Save Current Throttle As...</strong>
                   [additionally allows you to save custom function buttons]</li>
                 </ul>
               </li>
@@ -320,11 +316,11 @@
           <li>
             <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro</a>
             <ul>
-              <li><strong>Tables (Sections, Transits)</strong>: <em>Tools ⇒ Tables ⇒ [Specific
+              <li><strong>Tables (Sections, Transits)</strong>: <em>Tools &rArr; Tables &rArr; [Specific
               Table]</em>, then same as PanelPro Tables.</li>
 
-              <li><strong>Dispatcher Options</strong>: <em>Tools ⇒ Dispatcher ⇒</em>
-              <strong>Options ⇒ Save Options</strong></li>
+              <li><strong>Dispatcher Options</strong>: <em>Tools &rArr; Dispatcher &rArr;</em>
+              <strong>Options &rArr; Save Options</strong></li>
             </ul>
             <br>
           </li>
@@ -341,7 +337,7 @@
           <li>
             <a href="SoundPro/SoundPro.shtml">SoundPro</a>
             <ul>
-              <li><strong>Audio Tables (Listener, Buffer, Sources)</strong>: <em>Tools ⇒ Tables ⇒
+              <li><strong>Audio Tables (Listener, Buffer, Sources)</strong>: <em>Tools &rArr; Tables &rArr;
               Audio</em>, then same as PanelPro Tables.</li>
             </ul>
             <br>
@@ -352,7 +348,7 @@
         different tools you use within JMRI and you will always have what you worked on the next
         time. And if there is a problem, remember that JMRI keeps backup files when it writes your
         data to permanent storage, either automatically or by your command, so look for files with
-        the ".bak" suffix and you'll be able to recover from most missteps.</p>
+        the ".bak" suffix, and you'll be able to recover from most missteps.</p>
 
         <p><a href="#TopOfPage">[Go to top of page]</a>
         </p>
@@ -367,8 +363,9 @@
         in working with PanelPro is to almost always use <strong>"Store ALL table content and
         panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}" or
         <strong>"Store ALL table content and panels...</strong> {<em>Old: <strong>Store
-        Panels...</strong></em>}" where it appears, and to rename the file you are saving so you
-        have multiple versions named by you to go back to if necessary.</p>
+        Panels...</strong></em>}" where it appears, and to rename the file you are saving, so you
+        have multiple versions named by you to go back to if necessary.  <strong><em>As of 4.99.4,
+        the option to store without panels has been removed.</em></strong></p>
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -396,14 +393,14 @@
             automatically stored when data is changed.
           </li>
 
-          <li>Block values may be restored, dependant on block occupancy and track power
+          <li>Block values may be restored, dependent on block occupancy and track power
           status.</li>
 
           <li>ID Tags are stored on exit, with their Time last seen and last Reporter position.
           When restored on startup, these Reporters will also be created.</li>
 
-          <li>Connection specific tools, e.g. MERG CBUS Event Table may also be have store /
-          restoration settings.</li>
+          <li>Connection specific tools, e.g. MERG CBUS Event Table may also have their own store /
+          restore settings.</li>
         </ul>
         <br>
 

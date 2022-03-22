@@ -202,7 +202,7 @@ it.
 
       <ul>
         <li>Install a local copy of SpotBugs. There are multiple ways to do this, see the
-          <a href="https://spotbugs.github.io">SpotBugs web site</a>.
+          <a href="https://spotbugs.github.io">SpotBugs website</a>.
         </li>
 
         <li>You have to tell the JMRI build systems where that installation is. You can do that

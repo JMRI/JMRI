@@ -96,7 +96,7 @@
       Element's name and if the Element is shared or private.</p>
 
       <p>XML elements for JMRI preferences must all have valid and resolvable namespaces. These
-      namespaces <em>do not</em> have to be unique to or defined within the jmri.org web site.</p>
+      namespaces <em>do not</em> have to be unique to or defined within the jmri.org website.</p>
 
       <h3 id="properties.xml">properties.xml</h3>
 

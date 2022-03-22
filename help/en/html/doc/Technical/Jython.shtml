@@ -42,7 +42,7 @@
       <p>There are a lot of useful Python books and online tutorials. For more information on the
       Jython language and it's relations with Java, the best reference is the <a href=
       "http://www.oreilly.com/catalog/jythoness/">Jython Essentials</a> book published by O'Reilly.
-      The <a href="http://www.jython.org/">jython.org web site</a> is also very useful.</p>
+      The <a href="http://www.jython.org/">jython.org website</a> is also very useful.</p>
 
       <h2>Using Jython directly</h2>
       This section of the page is a pile of useful information on controlling JMRI from Jython

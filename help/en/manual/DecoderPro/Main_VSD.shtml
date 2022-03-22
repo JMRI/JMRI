@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <title>DecoderPro&reg; Main Window</title><!--#include virtual="/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Debug Menu</h1>
+      <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
@@ -222,7 +222,7 @@
       then select the train in the locomotive's VSDecoder Options pane. When you <em>MOVE</em> the
       train in Operations, the sound will move to the next location on the Route.</p>
 
-      <p>For more information on Operations, see the JMRI® Operating User's Guide.</p>
+      <p>For more information on Operations, see the JMRI&reg; Operating User's Guide.</p>
 
       <h4 id="advanced_location_following">Advanced Location Following</h4>
 

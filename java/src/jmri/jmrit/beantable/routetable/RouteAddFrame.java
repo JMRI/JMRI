@@ -160,12 +160,13 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
         routeList.toArray(routeArray);
 
         try {
+            var icon = new ImageIcon(jmri.util.FileUtil.getProgramPath() + jmri.Application.getLogo());
             var choice = JOptionPane.showInputDialog(
                     null,
                     Bundle.getMessage("LabelCopyRoute"),
                     Bundle.getMessage("TitleCopyRoute"),
                     JOptionPane.QUESTION_MESSAGE,
-                    null,
+                    icon,
                     routeArray,
                     null);
             return (String) choice;
