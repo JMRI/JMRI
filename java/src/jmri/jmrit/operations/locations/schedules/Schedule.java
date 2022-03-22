@@ -174,7 +174,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         List<ScheduleItem> scheduleItems = getItemsBySequenceList();
         for (int i = 0; i < scheduleItems.size(); i++) {
             scheduleItems.get(i).setSequenceId(i + 1); // start sequence numbers at 1
-            _sequenceNum = i;
+            _sequenceNum = i + 1;
         }
     }
 
