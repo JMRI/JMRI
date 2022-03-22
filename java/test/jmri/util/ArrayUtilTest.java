@@ -14,7 +14,7 @@ import org.python.modules.math;
 public class ArrayUtilTest {
 
     @Test
-    public void testReverseArray() {
+    public void testReverseArrayObjects() {
         var stringArray = new String[]{"a", "b", "c"};
         var reversedStringArray = ArrayUtil.reverse(stringArray);
         Assert.assertEquals(stringArray[0], reversedStringArray[2]);
@@ -35,6 +35,56 @@ public class ArrayUtilTest {
         Assert.assertEquals(p2dArray[1], reversedP2DArray[1]);
         Assert.assertEquals(p2dArray[2], reversedP2DArray[0]);
         Assert.assertEquals(p2dArray.length, reversedP2DArray.length);
+    }
+
+    @Test
+    public void testReverseArrayInt() {
+        var stringArray = new int[]{10, 11, 12};
+        var reversedStringArray = ArrayUtil.reverse(stringArray);
+        Assert.assertEquals(stringArray[0], reversedStringArray[2]);
+        Assert.assertEquals(stringArray[1], reversedStringArray[1]);
+        Assert.assertEquals(stringArray[2], reversedStringArray[0]);
+        Assert.assertEquals(stringArray.length, reversedStringArray.length);
+    }
+
+    @Test
+    public void testReverseArrayLong() {
+        var stringArray = new long[]{10l, 11l, 12l};
+        var reversedStringArray = ArrayUtil.reverse(stringArray);
+        Assert.assertEquals(stringArray[0], reversedStringArray[2]);
+        Assert.assertEquals(stringArray[1], reversedStringArray[1]);
+        Assert.assertEquals(stringArray[2], reversedStringArray[0]);
+        Assert.assertEquals(stringArray.length, reversedStringArray.length);
+    }
+
+    @Test
+    public void testReverseArrayDouble() {
+        var stringArray = new double[]{10., 11., 12.};
+        var reversedStringArray = ArrayUtil.reverse(stringArray);
+        Assert.assertEquals(stringArray[0], reversedStringArray[2], 0.001);
+        Assert.assertEquals(stringArray[1], reversedStringArray[1], 0.001);
+        Assert.assertEquals(stringArray[2], reversedStringArray[0], 0.001);
+        Assert.assertEquals(stringArray.length, reversedStringArray.length);
+    }
+
+    @Test
+    public void testReverseArrayFloat() {
+        var stringArray = new float[]{10.f, 11.f, 12.f};
+        var reversedStringArray = ArrayUtil.reverse(stringArray);
+        Assert.assertEquals(stringArray[0], reversedStringArray[2], 0.001f);
+        Assert.assertEquals(stringArray[1], reversedStringArray[1], 0.001f);
+        Assert.assertEquals(stringArray[2], reversedStringArray[0], 0.001f);
+        Assert.assertEquals(stringArray.length, reversedStringArray.length);
+    }
+
+    @Test
+    public void testReverseArrayBoolean() {
+        var stringArray = new boolean[]{true, false, false};
+        var reversedStringArray = ArrayUtil.reverse(stringArray);
+        Assert.assertEquals(stringArray[0], reversedStringArray[2]);
+        Assert.assertEquals(stringArray[1], reversedStringArray[1]);
+        Assert.assertEquals(stringArray[2], reversedStringArray[0]);
+        Assert.assertEquals(stringArray.length, reversedStringArray.length);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ArrayUtilTest.class);
