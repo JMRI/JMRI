@@ -65,12 +65,12 @@ public enum LnCommandStationType {
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
             CommandStationFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
-                    new SlotMapEntry(1,120,SlotType.LOCO),   //depends on firmware newer is 100limit
+                    new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,128,SlotType.SYSTEM),
                     new SlotMapEntry(129,247,SlotType.LOCO),
                     new SlotMapEntry(248,256,SlotType.SYSTEM),
-                    new SlotMapEntry(257,376,SlotType.LOCO),
-                    new SlotMapEntry(377,384,SlotType.SYSTEM),
+                    new SlotMapEntry(257,375,SlotType.LOCO),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.LOCO))
             ),
     COMMAND_STATION_DCS210PLUS("DCS210+ (Advanced Command Station)",  // NOI18N
