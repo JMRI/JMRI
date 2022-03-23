@@ -15,6 +15,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -33,7 +34,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      * Controls whether not-in-use slots are shown
      */
     protected final JCheckBox showUnusedCheckBox = new JCheckBox();
-    /**
+   /**
      * Controls whether system slots (0, 121-127) are shown
      */
     protected final JCheckBox showSystemCheckBox = new JCheckBox();
@@ -57,9 +58,10 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
-        slotModel = new SlotMonDataModel(128, 16, memo);
+        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), 39, memo);
         slotTable = new JTable(slotModel);
         slotTable.setName(this.getTitle());
+        
         sorter = new TableRowSorter<>(slotModel);
         slotTable.setRowSorter(sorter);
         slotScroll = new JScrollPane(slotTable);
@@ -92,7 +94,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             // unable to persist because Default class provides no mechanism to
             // ensure window is destroyed when closed or that existing window is
             // reused when hidden and user reopens it from menu
-            // tpm.persist(slotTable, true);
+            //    tpm.persist(slotTable, true);
         });
 
         // install a button renderer & editor in the "DISP" column for freeing a slot
@@ -199,14 +201,18 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         RowFilter<SlotMonDataModel, Integer> rf = new RowFilter<SlotMonDataModel, Integer>() {
             @Override
             public boolean include(RowFilter.Entry<? extends SlotMonDataModel, ? extends Integer> entry) {
-                int slotNum = entry.getIdentifier();
                 // default filter is IN-USE and regular systems slot
-                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() != LnConstants.LOCO_FREE && (slotNum > 0 && slotNum < 121);
-
-                if (!include && showUnusedCheckBox.isSelected() && (slotNum > 0 && slotNum < 121)) {
+                // the default is whatever the person last closed it with
+                jmri.jmrix.loconet.LocoNetSlot slot =  entry.getModel().getSlot(entry.getIdentifier());
+                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() != LnConstants.LOCO_FREE
+                        && slot.getSlotType() == SlotType.LOCO;
+                if (slot.getSlotType() == SlotType.UNKNOWN) {
+                    return false;        // dont ever show unknown
+                }
+                if (!include && showUnusedCheckBox.isSelected() && !slot.isSystemSlot()) {
                     include = true;
                 }
-                if (!include && showSystemCheckBox.isSelected() && (slotNum == 0 || slotNum > 120)) {
+                if (!include && showSystemCheckBox.isSelected() && slot.isSystemSlot()) {
                     include = true;
                 }
                 return include;

@@ -389,6 +389,13 @@ public class LocoNetMessageInterpretTest {
                         "BXP88 Board ID 17 section 1 or "+
                         "the BXPA1 Board ID 129 section).\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
+        l = new LocoNetMessage(new int[] { 0xD0, 0x62, 0x0F, 0x28, 0x2C, 0x46});
+        Assert.assertEquals("BXP88 348 shorted",
+                "BXP88 (Board ID 16) SubSections Power Status Shorted: 3,4,8 UnShorted: 1,2,5,6,7\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] { 0xD0, 0x62, 0x0C, 0x53, 0x00, 0x12});
+        Assert.assertEquals("BXPA1 Normal",
+                "BXPA1 (Board ID 100/104) Power Status Report  - Normal\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Test

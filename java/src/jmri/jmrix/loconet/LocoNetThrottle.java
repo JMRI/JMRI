@@ -6,6 +6,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,17 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected int layout_snd;
     protected int layout_stat1 = 0;
 
+    // with extendedslots the slot may not have been updated by the time a direction change happens
+    // which causes the speed to be resent
+    // so we must use our last send spd.
+    protected int throt_spd;
+
+    // members to record the last known spd/dirf/snd bytes AS READ FROM THE LAYOUT!!
+    protected int throttle_spd;
+    protected int throttle_dirf;
+    protected int throttle_snd;
+    protected int throttle_stat1 = 0;
+
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
     protected boolean isDisposing = false;
@@ -59,6 +71,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         layout_spd = slot.speed();
         layout_dirf = slot.dirf();
         layout_snd = slot.snd();
+
+        // save the last sent values for speed and direction
+        // in the new digitrax protocol, the throttle, with the right ID, is the authority, not the command station
+        // speed and direction are sent in a single message, so you must sent the same direction or speed as was done last time
+        throt_spd = slot.snd();
 
         // cache settings
         synchronized(this) {
@@ -97,12 +114,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // listen for changes
         slot.addSlotListener(this);
 
-        // perform the null slot move
-        LocoNetMessage msg = new LocoNetMessage(4);
-        msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
-        msg.setElement(1, slot.getSlot());
-        msg.setElement(2, slot.getSlot());
-        network.sendLocoNetMessage(msg);
+        network.sendLocoNetMessage(slot.writeNullMove());
 
         // start periodically sending the speed, to keep this
         // attached
@@ -176,17 +188,60 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
+     * Constants to represent Function Groups.
+     * <p>
+     * The are the same groupings for both normal Functions and Momentary.
+     */
+    public static final int[] EXP_FUNCTION_GROUPS = new int[]{
+            1, 1, 1, 1, 1, 1, 1, /** 0-6 */
+            2, 2, 2, 2, 2, 2, 2, /** 7 - 13 */
+            3, 3, 3, 3, 3, 3, 3, /** 14 -20 */
+            4, 4, 4, 4, 4, 4, 4, 4 /** 11 - 28 */
+    };
+   
+    /**
+     * Send whole (DCC) Function Group for a particular function number.
+     * @param functionNum Function Number
+     * @param momentary False to send normal function status, true to send momentary.
+     */
+    @Override
+    protected void sendFunctionGroup(int functionNum, boolean momentary){
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
+            super.sendFunctionGroup(functionNum, momentary);
+            return;
+        }
+        switch (EXP_FUNCTION_GROUPS[functionNum]) {
+            case 1:
+                if (momentary) sendMomentaryFunctionGroup1(); else sendExpFunctionGroup1();
+                break;
+            case 2:
+                if (momentary) sendMomentaryFunctionGroup2(); else sendExpFunctionGroup2();
+                break;
+            case 3:
+                if (momentary) sendMomentaryFunctionGroup3(); else sendExpFunctionGroup3();
+                break;
+            case 4:
+                if (momentary) sendMomentaryFunctionGroup4(); else sendExpFunctionGroup4();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
      * Send the LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
+     * Unfortunately this is used by all throttles to send direction changes, but the expanded slots dont use this
+     * for direction changes, they use speed... And we don't know if the caller wants to send functions or direction.
      */
     @Override
     protected void sendFunctionGroup1() {
-        int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR)
-                | (getF0() ? LnConstants.DIRF_F0 : 0)
-                | (getF1() ? LnConstants.DIRF_F1 : 0)
-                | (getF2() ? LnConstants.DIRF_F2 : 0)
-                | (getF3() ? LnConstants.DIRF_F3 : 0)
-                | (getF4() ? LnConstants.DIRF_F4 : 0));
+        int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR) |
+                (getF0() ? LnConstants.DIRF_F0 : 0) |
+                (getF1() ? LnConstants.DIRF_F1 : 0) |
+                (getF2() ? LnConstants.DIRF_F2 : 0) |
+                (getF3() ? LnConstants.DIRF_F3 : 0) |
+                (getF4() ? LnConstants.DIRF_F4 : 0));
         log.debug("sendFunctionGroup1 sending {} to LocoNet slot {}", new_dirf, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
@@ -200,10 +255,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void sendFunctionGroup2() {
-        int new_snd = ((getF8() ? LnConstants.SND_F8 : 0)
-                | (getF7() ? LnConstants.SND_F7 : 0)
-                | (getF6() ? LnConstants.SND_F6 : 0)
-                | (getF5() ? LnConstants.SND_F5 : 0));
+        int new_snd = ((getF8() ? LnConstants.SND_F8 : 0) |
+                (getF7() ? LnConstants.SND_F7 : 0) |
+                (getF6() ? LnConstants.SND_F6 : 0) |
+                (getF5() ? LnConstants.SND_F5 : 0));
         log.debug("sendFunctionGroup2 sending {} to LocoNet slot {}", new_snd, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SND);
@@ -256,6 +311,102 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
     }
 
+    /**
+     * Send the Expanded LocoNet message to set the state of locomotive direction and
+     * functions F0, F1, F2, F3, F4, F5, F6
+     */
+    protected void sendExpFunctionGroup1() {
+            sendExpSpeedAndDirection();
+            int new_F0F6 = ((getF5() ? 0b00100000 : 0) | (getF6() ? 0b01000000 : 0)
+                | (getF0() ? LnConstants.DIRF_F0 : 0)
+                | (getF1() ? LnConstants.DIRF_F1 : 0)
+                | (getF2() ? LnConstants.DIRF_F2 : 0)
+                | (getF3() ? LnConstants.DIRF_F3 : 0)
+                | (getF4() ? LnConstants.DIRF_F4 : 0));
+            LocoNetMessage msg = new LocoNetMessage(6);
+            msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK );
+            msg.setElement(2,slot.getSlot() & 0b01111111);
+            msg.setElement(3,slot.id() & 0x7F);
+            msg.setElement(4, new_F0F6);
+            network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Send the Expanded LocoNet message to set the state of functions F7, F8, F8, F9, F10, F11, F12, F13
+     */
+    protected void sendExpFunctionGroup2() {
+            int new_F7F13 = ((getF7() ? 0b00000001 : 0) | (getF8() ? 0b00000010 : 0)
+                    | (getF9()  ? 0b00000100 : 0)
+                    | (getF10() ? 0b00001000 : 0)
+                    | (getF11() ? 0b00010000 : 0)
+                    | (getF12() ? 0b00100000 : 0)
+                    | (getF13() ? 0b01000000 : 0));
+                LocoNetMessage msg = new LocoNetMessage(6);
+                msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+                msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK );
+                msg.setElement(2,slot.getSlot() & 0b01111111);
+                msg.setElement(3,slot.id() & 0x7F);
+                msg.setElement(4, new_F7F13);
+                network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends expanded loconet message F14 thru F20
+     * Message.
+     */
+    protected void sendExpFunctionGroup3() {
+        int new_F14F20 = ((getF14() ? 0b00000001 : 0) | (getF15() ? 0b00000010 : 0)
+                | (getF16()  ? 0b00000100 : 0)
+                | (getF17() ? 0b00001000 : 0)
+                | (getF18() ? 0b00010000 : 0)
+                | (getF19() ? 0b00100000 : 0)
+                | (getF20() ? 0b01000000 : 0));
+            LocoNetMessage msg = new LocoNetMessage(6);
+            msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK );
+            msg.setElement(2,slot.getSlot() & 0b01111111);
+            msg.setElement(3,slot.id() & 0x7F);
+            msg.setElement(4, new_F14F20);
+            network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends Expanded loconet message F21 thru F28 Message.
+     */
+    protected void sendExpFunctionGroup4() {
+        int new_F14F20 = ((getF21() ? 0b00000001 : 0) |
+                (getF22() ? 0b00000010 : 0) |
+                (getF23() ? 0b00000100 : 0) |
+                (getF24() ? 0b00001000 : 0) |
+                (getF25() ? 0b00010000 : 0) |
+                (getF26() ? 0b00100000 : 0) |
+                (getF27() ? 0b01000000 : 0));
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        if (!getF28()) {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK);
+        } else {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK);
+        }
+        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(3, slot.id() & 0x7F);
+        msg.setElement(4, new_F14F20);
+        network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Send the expanded slot command for speed and direction.
+     */
+    protected void sendExpSpeedAndDirection() {
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isForward ? 0x00 : 0x08));
+        msg.setElement(2, slot.getSlot() & 0x7f);
+        msg.setElement(3, (slot.id() & 0x7f));
+        msg.setElement(4, throt_spd);   // last sent speed. Cannot use slot as it may not be uptodate.
+        network.sendLocoNetMessage(msg);
+    }
     /**
      * Send a LocoNet message to set the loco speed speed.
      *
@@ -317,9 +468,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // decide whether to send a new LocoNet message
         boolean sendLoconetMessage = false;
-        if (new_spd != layout_spd) {
+        if (new_spd != layout_spd || new_spd != throt_spd) {
             // the new speed is different - send a message
             sendLoconetMessage = true;
+            throt_spd = new_spd;       // save for a direction change before slot updated.
         } else if (allowDuplicates) {
             // calling method wants a new message sent regardless
             sendLoconetMessage = true;
@@ -330,12 +482,23 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         if (sendLoconetMessage) {
             log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_SPD);
-            msg.setElement(1, slot.getSlot());
-            log.debug("setSpeedSetting: float speed: {} LocoNet speed: {}", speed, new_spd);
-            msg.setElement(2, new_spd);
-            network.sendLocoNetMessage(msg);
+            if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
+                LocoNetMessage msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_LOCO_SPD);
+                msg.setElement(1, slot.getSlot());
+                log.debug("setSpeedSetting: float speed: {} LocoNet speed: {}", speed, new_spd);
+                msg.setElement(2, new_spd);
+                network.sendLocoNetMessage(msg);
+            } else {
+                LocoNetMessage msg = new LocoNetMessage(6);
+                msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+                // We cannot use the slot for direction, the slot may not yet be updated
+                msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isForward ? 0x00 : 0x08));
+                msg.setElement(2, slot.getSlot() & 0x7f);
+                msg.setElement(3, (slot.id() & 0x7f));
+                msg.setElement(4, new_spd);
+                network.sendLocoNetMessage(msg);
+            }
 
             // reset timeout - but only if something sent on net
             if (mRefreshTimer != null) {
@@ -367,7 +530,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         boolean old = isForward;
         isForward = forward;
         log.debug("setIsForward to {}, old value {}", isForward, old);
-        sendFunctionGroup1();
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
+            sendFunctionGroup1();
+        } else {
+            sendExpSpeedAndDirection();
+        }
         firePropertyChange(ISFORWARD, old, this.isForward);
     }
 

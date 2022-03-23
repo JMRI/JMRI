@@ -141,9 +141,11 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
      *                                  transopnding reports
+     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
-                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
+                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
+                                            boolean mLoconetProtocolAutoDetect) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
@@ -160,6 +162,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             sm.setCommandStationType(type);
             sm.setSystemConnectionMemo(this);
             sm.setTranspondingAvailable(mTranspondingAvailable);
+            sm.setLoconetProtocolAutoDetect(mLoconetProtocolAutoDetect);
 
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
@@ -218,8 +221,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         setLncvDevicesManager(new jmri.jmrix.loconet.LncvDevicesManager(this));
 
         ClockControl cc = getClockControl();
-
-        InstanceManager.setDefault(ClockControl.class, cc);
+        
+        if (cc != null) {
+            InstanceManager.setDefault(ClockControl.class, cc);
+        }
 
         getIdTagManager();
 
@@ -274,7 +279,11 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnClockControl) classObjectMap.computeIfAbsent(ClockControl.class,(Class<?> c) -> new LnClockControl(this));
+        if (get(ClockControl.class) == null) {
+            return (LnClockControl) classObjectMap.computeIfAbsent(ClockControl.class,
+                    (Class<?> c) -> new LnClockControl(this));
+        }
+        return null;
     }
 
     public LnReporterManager getReporterManager() {

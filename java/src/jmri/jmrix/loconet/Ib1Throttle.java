@@ -114,7 +114,7 @@ public class Ib1Throttle extends LocoNetThrottle {
                 | (getF10() ? LnConstants.RE_IB1_F10_MASK : 0)
                 | (getF9() ? LnConstants.RE_IB1_F9_MASK : 0));
         LocoNetMessage msg1 = new LocoNetMessage(6);
-        msg1.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
+        msg1.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
         msg1.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
         msg1.setElement(2, slot.getSlot());
         msg1.setElement(3, LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN);
@@ -126,7 +126,7 @@ public class Ib1Throttle extends LocoNetThrottle {
                 | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
                 | (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
         LocoNetMessage msg2 = new LocoNetMessage(6);
-        msg2.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
+        msg2.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
         msg2.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
         msg2.setElement(2, slot.getSlot());
         msg2.setElement(3, LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN);
@@ -147,7 +147,7 @@ public class Ib1Throttle extends LocoNetThrottle {
                 | (getF14() ? LnConstants.RE_IB2_F14_MASK : 0)
                 | (getF13() ? LnConstants.RE_IB2_F13_MASK : 0));
         LocoNetMessage msg = new LocoNetMessage(6);
-        msg.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
+        msg.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
         msg.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
         msg.setElement(2, slot.getSlot());
         msg.setElement(3, LnConstants.RE_IB2_SPECIAL_F13_F19_TOKEN);
@@ -160,7 +160,7 @@ public class Ib1Throttle extends LocoNetThrottle {
                 | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
                 | (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
         LocoNetMessage msg2 = new LocoNetMessage(6);
-        msg2.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
+        msg2.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
         msg2.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
         msg2.setElement(2, slot.getSlot());
         msg2.setElement(3, LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN);
@@ -181,7 +181,7 @@ public class Ib1Throttle extends LocoNetThrottle {
                 | (getF22() ? LnConstants.RE_IB2_F22_MASK : 0)
                 | (getF21() ? LnConstants.RE_IB2_F21_MASK : 0));
         LocoNetMessage msg = new LocoNetMessage(6);
-        msg.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
+        msg.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
         msg.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
         msg.setElement(2, slot.getSlot());
         msg.setElement(3, LnConstants.RE_IB2_SPECIAL_F21_F27_TOKEN);
@@ -194,7 +194,7 @@ public class Ib1Throttle extends LocoNetThrottle {
                 | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
                 | (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
         LocoNetMessage msg2 = new LocoNetMessage(6);
-        msg2.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
+        msg2.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
         msg2.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
         msg2.setElement(2, slot.getSlot());
         msg2.setElement(3, LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN);

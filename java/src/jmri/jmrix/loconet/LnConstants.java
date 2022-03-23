@@ -387,7 +387,7 @@ public final class LnConstants {
 
     /* Expanded slot codes */
     public final static int OPC_EXP_REQ_SLOT = 0xbe;
-    public final static int OPC_EXP_SLOT_MOVE = 0xd4;
+    // public final static int OPC_EXP_SLOT_MOVE = 0xd4;
     public final static int OPC_EXP_RD_SL_DATA = 0xe6;
     public final static int OPC_EXP_WR_SL_DATA = 0xee;
     public final static int OPC_EXP_SEND_SUB_CODE_MASK_SPEED = 0b11110000;
@@ -638,7 +638,7 @@ public final class LnConstants {
      *  <FUNC> = functions mask
      */
 // Common to Intellibox-I and -II :
-    public final static int RE_OPC_IB2_SPECIAL = 0xD4; //For functions F13-F28 (IB-II) and by IB-I v2.x ("one") for F0-F28
+    public final static int OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL= 0xD4; //For functions F13-F28 (IB-II) and by IB-I v2.x ("one") for F0-F28
     public final static int RE_IB2_SPECIAL_FUNCS_TOKEN = 0x20;
 //Used only by Intellibox-I ("one") version 2.x
     public final static int RE_IB1_SPECIAL_F0_F4_TOKEN = 0x06; //Used by Intellibox-I ("one") version 2.x

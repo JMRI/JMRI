@@ -48,6 +48,11 @@ public class LnTcpServer {
             }
         });
     }
+    
+    public LnTcpServer(@Nonnull LocoNetSystemConnectionMemo memo, int port) {
+        tc = memo.getLnTrafficController(); // store tc in order to know where to send messages
+        portNumber = port;
+    }
 
     /**
      * Get the default server instance, creating it if necessary.

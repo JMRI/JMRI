@@ -155,10 +155,10 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
 
     @Override
     public InternalConsistManager getConsistManager() {
-        if (defaultInstanceType) {
-            return null;
-        }
-        return (InternalConsistManager) classObjectMap.computeIfAbsent((ConsistManager.class), (Class<?> c) -> {
+        //if (defaultInstanceType) {
+        //    return null;
+        //}
+        return (InternalConsistManager) classObjectMap.computeIfAbsent((ConsistManager.class), (Class c) -> {
             log.debug("Create InternalConsistManager by request");
             ConsistManager consistManager = new InternalConsistManager();
             InstanceManager.store(consistManager, jmri.ConsistManager.class);
@@ -213,6 +213,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.ConsistManager.class)) {
+            return true;
+        }
 
         if (!defaultInstanceType) {
             if (type.equals(jmri.PowerManager.class)) {
@@ -227,9 +230,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
             }
 
             if (type.equals(jmri.ThrottleManager.class)) {
-                return true;
-            }
-            if (type.equals(jmri.ConsistManager.class)) {
                 return true;
             }
         }
@@ -260,6 +260,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         if (type.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
+        if (type.equals(jmri.ConsistManager.class)) {
+            return (T) getConsistManager();
+        }
 
         if (!defaultInstanceType) {
             if (type.equals(jmri.PowerManager.class)) {
@@ -275,9 +278,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
 
             if (type.equals(jmri.ThrottleManager.class)) {
                 return (T) getThrottleManager();
-            }
-            if (type.equals(jmri.ConsistManager.class)) {
-                return (T) getConsistManager();
             }
         }
 

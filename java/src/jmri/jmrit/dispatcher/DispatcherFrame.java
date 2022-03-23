@@ -368,7 +368,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected final List<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
     private AutoTurnouts autoTurnouts = null;
-    private AutoAllocate autoAllocate = null;
+    public AutoAllocate autoAllocate = null;
     private OptionsMenu optionsMenu = null;
     private ActivateTrainFrame atFrame = null;
 
@@ -1060,7 +1060,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         if (at != null) {
-            terminateActiveTrain(at);
+            terminateActiveTrain(at,true);
         }
     }
 
@@ -1479,10 +1479,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     /**
      * Terminate an Active Train and remove it from the Dispatcher. The
      * ActiveTrain object should not be used again after this method is called.
-     *
+     * 
      * @param at the train to terminate
      */
+    @Deprecated
     public void terminateActiveTrain(ActiveTrain at) {
+        terminateActiveTrain(at,true);
+    }
+
+    /**
+     * Terminate an Active Train and remove it from the Dispatcher. The
+     * ActiveTrain object should not be used again after this method is called.
+     *
+     * @param at the train to terminate
+     * @param terminateNow TRue if doing a full terminate, not just an end of transit.
+     */
+    public void terminateActiveTrain(ActiveTrain at, boolean terminateNow) {
         // ensure there is a train to terminate
         if (at == null) {
             log.error("Null ActiveTrain pointer when attempting to terminate an ActiveTrain");
@@ -1496,10 +1508,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         // remove any allocated sections
+        // except occupied if not a full termination
         for (int k = allocatedSections.size(); k > 0; k--) {
             try {
                 if (at == allocatedSections.get(k - 1).getActiveTrain()) {
-                    releaseAllocatedSection(allocatedSections.get(k - 1), true);
+                    if ( !terminateNow ) {
+                        if (allocatedSections.get(k - 1).getSection().getOccupancy()!=Section.OCCUPIED) {
+                            releaseAllocatedSection(allocatedSections.get(k - 1), terminateNow);
+                        } else {
+                            // allocatedSections.get(k - 1).getSection().setState(Section.FREE);
+                            log.debug("Section[{}] State [{}]",allocatedSections.get(k - 1).getSection().getUserName(),
+                                    allocatedSections.get(k - 1).getSection().getState());
+                        }
+                    } else {
+                        releaseAllocatedSection(allocatedSections.get(k - 1), terminateNow);
+                    }
                 }
             } catch (RuntimeException e) {
                 log.warn("releaseAllocatedSection failed - maybe the AllocatedSection was removed due to a terminating train?? {}", e.getMessage());
@@ -1511,7 +1534,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 restartingTrainsList.remove(j - 1);
             }
         }
+        if (autoAllocate != null) {
+            queueReleaseOfReservedSections(at.getTrainName());
+        }
         // terminate the train
+        if (terminateNow) {
         for (int m = activeTrainsList.size(); m > 0; m--) {
             if (at == activeTrainsList.get(m - 1)) {
                 activeTrainsList.remove(m - 1);
@@ -1525,11 +1552,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             aat.dispose();
         }
         removeHeldMast(null, at);
-        if (autoAllocate != null) {
-            queueReleaseOfReservedSections(at.getTrainName());
-        }
         at.terminate();
         at.dispose();
+        }
         activeTrainsTableModel.fireTableDataChanged();
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
@@ -3026,7 +3051,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             if (col == TERMINATEBUTTON_COLUMN) {
                 if (activeTrainsList.get(row) != null) {
-                    terminateActiveTrain(activeTrainsList.get(row));
+                    terminateActiveTrain(activeTrainsList.get(row),true);
                 }
             }
             if (col == RESTARTCHECKBOX_COLUMN) {

@@ -26,6 +26,9 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
         options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"),
                 new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
+        options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
+                new String[]{Bundle.getMessage("LoconetProtocolAutoDetect"),Bundle.getMessage("ButtonNo")} )); // NOI18N
+
     }
 
     public LnTcpDriverAdapter() {
@@ -42,6 +45,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
         setTranspondingAvailable(getOptionState("TranspondingPresent"));
+        setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
 
         // connect to a packetizing traffic controller
         LnOverTcpPacketizer packets = new LnOverTcpPacketizer(this.getSystemConnectionMemo());
@@ -51,7 +55,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
@@ -64,7 +68,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
     }
 
     // private control members
-    private boolean opened = false;
+    private final boolean opened = false;
 
     @Override
     public void configureOption1(String value) {

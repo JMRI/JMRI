@@ -11,6 +11,8 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,26 +56,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     static public int postProgDelay = 100; // this is public to allow changes via script
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
-    /**
-     * slotMapEntry - a from to pair of slot numbers defining a valid range of loco/system slots
-     * TODO add slottype, eg systemslot, std slot, expanded slot etc
-     * @author sg
-     *
-     */
-    static public class SlotMapEntry {
-        public SlotMapEntry(int from, int to) {
-            fromSlot = from;
-            toSlot = to;
-        }
-        int fromSlot;
-        int toSlot;
-        public int getFrom() {
-            return fromSlot;
-        }
-        public int getTo() {
-            return toSlot;
-        }
-    }
 
     /**
      * a Map of the CS slots.
@@ -88,38 +70,44 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public SlotManager(LnTrafficController tc) {
         this.tc = tc;
+
         // change timeout values from AbstractProgrammer superclass
         LONG_TIMEOUT = 180000;  // Fleischmann command stations take forever
         SHORT_TIMEOUT = 8000;   // DCS240 reads
 
-        slotMap = Arrays.asList(new SlotMapEntry(0,127));
+        // dummy slot map until command station set (if ever)
+        slotMap = Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   // potential stat slots
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN));
 
-        loadSlots();
+        loadSlots(true);
 
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);
 
-        // We will scan the slot table every 0.3 s for in-use slots that are stale
-        final int slotScanDelay = 300; // Must be short enough that 128 can be scanned in 90 seconds, see checkStaleSlots()
-        staleSlotCheckTimer = new javax.swing.Timer(slotScanDelay, new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                checkStaleSlots();
-            }
-        });
-
-        staleSlotCheckTimer.setRepeats(true);
-        staleSlotCheckTimer.setInitialDelay(30000);  // wait a bit at startup
-        staleSlotCheckTimer.start();
     }
 
     /**
      * Initialize the slots array.
+     * @param initialize if true a new slot is created else it is just updated with type
+     *                  and protocol
      */
-    protected void loadSlots() {
+    protected void loadSlots(boolean initialize) {
         // initialize slot array
-        for (int i = 0; i < NUM_SLOTS; i++) {
-            _slots[i] = new LocoNetSlot(i);
+        for (SlotMapEntry item : slotMap) {
+            for (int slotIx = item.getFrom(); slotIx <= item.getTo() ; slotIx++) {
+                if (initialize) {
+                    _slots[slotIx] = new LocoNetSlot( slotIx,getLoconetProtocol(),item.getSlotType());
+                }
+                else {
+                    _slots[slotIx].setSlotType(item.getSlotType());
+                }
+            }
         }
     }
 
@@ -208,13 +196,38 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return true;
     }
 
-    final static protected int NUM_SLOTS = 128;
+    /*
+     * command station switches
+     */
+    private final int SLOTS_DCS240 = 433;
+    private int numSlots = SLOTS_DCS240;         // This is the largest number so far.
+    /**
+     * The network protocol.
+     */
+    private int loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;    // defaults to unknown
+
+    /**
+     *
+     * @param value the loconet protocol supported
+     */
+    public void setLoconet2Supported(int value) {
+        loconetProtocol = value;
+    }
+
+    /**
+     *
+     * @return the loconet protocol supported
+     */
+    public int getLoconetProtocol() {
+        return loconetProtocol;
+    }
+
     /**
      * Information on slot state is stored in an array of LocoNetSlot objects.
      * This is declared final because we never need to modify the array itself,
      * just its contents.
      */
-    final protected LocoNetSlot _slots[] = new LocoNetSlot[NUM_SLOTS];
+    protected LocoNetSlot _slots[] = new LocoNetSlot[getNumSlots()];
 
     /**
      * Access the information in a specific slot. Note that this is a mutable
@@ -227,6 +240,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return _slots[i];
     }
 
+    public int getNumSlots() {
+        return numSlots;
+    }
     /**
      * Obtain a slot for a particular loco address.
      * <p>
@@ -252,7 +268,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // send info request
         LocoNetMessage m = new LocoNetMessage(4);
-        m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
+        if (loconetProtocol != 2 ) {
+            m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
+        } else {
+            m.setOpCode(LnConstants.OPC_EXP_REQ_SLOT); //  Extended slot
+        }
         m.setElement(1, (i / 128) & 0x7F);
         m.setElement(2, i & 0x7F);
         tc.sendLocoNetMessage(m);
@@ -269,16 +289,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * This is intended to be called from the staleSlotCheckTimer
      */
     private void checkStaleSlots() {
-        long staleTimeout = System.currentTimeMillis() - 90000;  // 90 seconds ago
+        long staleTimeout = System.currentTimeMillis() - 90000; // 90 seconds ago
         LocoNetSlot slot;
 
-        // We will just check the normal loco slots 1 to 120
-        for (int i = 1; i <= 120; i++) {
+        // We will just check the normal loco slots 1 to numSlots exclude systemslots
+        for (int i = 1; i < numSlots; i++) {
             slot = _slots[i];
-            if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
+            if (!slot.isSystemSlot()) {
+                if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
                     && (slot.getLastUpdateTime() <= staleTimeout)) {
-                sendReadSlot(i);
-                break; // only send the first one found
+                    sendReadSlot(i);
+                    break; // only send the first one found
+                }
             }
         }
     }
@@ -389,6 +411,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             immedPacket = m;
         } else {
             immedPacket = null;
+        }
+        // detect protocol if not yet set
+        if (getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
+            if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
+                    (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
+                if ((m.getElement(7) & 0b01000000) == 0b01000000) {
+                    log.info("Setting protocol Loconet 2");
+                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_TWO);
+                } else {
+                    log.info("Setting protocol Loconet 1");
+                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_ONE);
+                }
+            }
         }
 
         // slot specific message?
@@ -570,10 +605,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         switch (m.getOpCode()) {
             case LnConstants.OPC_WR_SL_DATA:
             case LnConstants.OPC_SL_RD_DATA:
-            case LnConstants.RE_OPC_IB2_SPECIAL:
                 i = m.getElement(2);
                 break;
-
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL:
+                if ( m.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
+                    i = m.getElement(2);
+                    break;
+                }
+                i = ( (m.getElement(1) & 0x03 ) *128) + m.getElement(2);
+                break;
             case LnConstants.OPC_LOCO_DIRF:
             case LnConstants.OPC_LOCO_SND:
             case LnConstants.OPC_LOCO_SPD:
@@ -589,6 +629,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     return i;
                 }
                 break;
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:
+                i = ( (m.getElement(1) & 0x03 ) *128) + m.getElement(2);
+                break;
+            case LnConstants.OPC_EXP_RD_SL_DATA:
+            case LnConstants.OPC_EXP_WR_SL_DATA:
+                //only certain lengths get passed to slot
+                if (m.getElement(1) == 21) {
+                    i = ( (m.getElement(2) & 0x03 ) *128) + m.getElement(3);
+                }
+                return i;
             default:
                 // nothing here for us
                 return i;
@@ -777,11 +827,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     i, _slots.length, m.toString()); // NOI18N
             return; // prevents array index out-of-bounds when referencing _slots[i]
         }
+
+        if ( !validateSlotNumber(i)) {
+            log.warn("Received slot number {} is not in the slot map, have you defined the wrong cammand station type? Message was {}",
+                   i,  m.toString());
+        }
+
         try {
             _slots[i].setSlot(m);
         } catch (LocoNetException e) {
             // must not have been interesting, or at least routed right
             log.error("slot rejected LocoNetMessage {}", m); // NOI18N
+            return;
+        } catch (Exception e) {
+            log.error("Unexplained error _slots[{}].setSlot({})",i,m,e);
             return;
         }
         // notify listeners that slot may have changed
@@ -798,7 +857,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // is called any time a LocoNet message is received.  Note that we do _NOT_ know why a given message happens!
 
         // if this is OPC_SL_RD_DATA
-        if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
+        if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA || m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA ) {
             // yes, see if request exists
             // note that the appropriate _slots[] entry has already been updated
             // to reflect the content of the LocoNet message, so _slots[i]
@@ -835,6 +894,25 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // Changing a slot to common. Depending on a CS and its OpSw, and throttle speed
             // it could have its status changed a number of ways.
             sendReadSlotDelayed(i,100);
+        } else if (m.getOpCode() == LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL) {
+            boolean isSettingStatus = ((m.getElement(3) & 0b01110000) == 0b01100000);
+            if (isSettingStatus) {
+                int stat = m.getElement(4);
+                if ((stat & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON) {
+                    sendReadSlotDelayed(i,100);
+                }
+            }
+            boolean isUnconsisting = ((m.getElement(3) & 0b01110000) == 0b01010000);
+            if (isUnconsisting) {
+                // read lead slot
+                sendReadSlotDelayed(slot(i).getLeadSlot(),100);
+            }
+            boolean isConsisting = ((m.getElement(3) & 0b01110000) == 0b01000000);
+            if (isConsisting) {
+                // read 2nd slot 
+                int slotTwo = ((m.getElement(3) & 0b00000011) * 128 )+ m.getElement(4);
+                sendReadSlotDelayed(slotTwo,100);
+            }
         } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
             // if a true move get the new from slot status
             // the to slot status is sent in the reply, but not if dispatch or null
@@ -1019,6 +1097,23 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         commandStationType = value;
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
+        slotMap = commandStationType.getSlotMap();
+
+        loadSlots(false);
+
+        // We will scan the slot table every 0.3 s for in-use slots that are stale
+        final int slotScanDelay = 300; // Must be short enough that 128 can be scanned in 90 seconds, see checkStaleSlots()
+        staleSlotCheckTimer = new javax.swing.Timer(slotScanDelay, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                checkStaleSlots();
+            }
+        });
+
+        staleSlotCheckTimer.setRepeats(true);
+        staleSlotCheckTimer.setInitialDelay(30000);  // wait a bit at startup
+        staleSlotCheckTimer.start();
+
     }
 
     LocoNetThrottledTransmitter throttledTransmitter = null;
@@ -1571,10 +1666,23 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param interval ms between slt rds
      */
     synchronized public void update(List<SlotMapEntry> inputSlotMap, int interval) {
-        for ( SlotMapEntry item: inputSlotMap) {
-            nextReadSlot = item.getFrom();
-            readNextSlot(item.getTo(),interval);
+        ReadAllSlots_Helper _rAS = new ReadAllSlots_Helper(  inputSlotMap, interval);
+        jmri.util.ThreadingUtil.newThread(_rAS, "Read All Slots ").start();
+    }
+
+    /**
+     * Checks slotNum valid for slot map
+     *
+     * @param slotNum the slot number
+     * @return true if it is
+     */
+    private boolean validateSlotNumber(int slotNum) {
+        for (SlotMapEntry item : slotMap) {
+            if (slotNum >= item.getFrom() && slotNum <= item.getTo()) {
+                return true;
+            }
         }
+        return false;
     }
 
     public void update() {
@@ -1590,12 +1698,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot & 0x7F);
-        if (slot > 127) {
-            m.setElement(2, (slot / 128 ) & 0b00000111 );
-            // and se t expanded format wanted
-            m.setElement(2, m.getElement(2) | 0x40) ;
-        } else {
-            m.setElement(2, 0);
+        // one is always short
+        // THis gets a little akward, slots 121 thru 127 incl. seem to always old slots.
+        // All slots gt 127 are always expanded format.
+        if ( slot > 127 || ( ( slot > 0 && slot < 121 ) && loconetProtocol == LnConstants.LOCONETPROTOCOL_TWO ) ) {
+            m.setElement(2, (slot / 128 ) & 0b00000111 | 0x40 );
         }
         tc.sendLocoNetMessage(m);
     }
@@ -1687,6 +1794,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean getTranspondingAvailable() { return transpondingAvailable; }
 
     /**
+     *
+     * @param val If false then we only use protocol one.
+     */
+    public void setLoconetProtocolAutoDetect(boolean val) {
+        if (!val) {
+            loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
+        }
+    }
+
+    /**
      * Get the memo.
      *
      * @return the memo
@@ -1704,5 +1821,41 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SlotManager.class);
+
+    // Read all slots
+    class ReadAllSlots_Helper implements Runnable {
+
+        ReadAllSlots_Helper(List<SlotMapEntry> inputSlotMap, int interval) {
+//            this.slotMap = inputSlotMap;
+            this.interval = interval;
+        }
+
+//        private List<SlotMapEntry> slotMap;
+        private int interval;
+
+        @Override
+        public void run() {
+            boolean abort = false;
+//            for (SlotMapEntry item : slotMap) {
+//                if (abort) {
+//                    break;
+//                }
+//                for (int slot = item.getFrom(); slot < (item.getTo() + 1) && !abort; slot++) {
+            // read all slots that are not of unknown type
+                for (int slot = 0; slot < getNumSlots() && !abort; slot++) {
+                    if (_slots[slot].getSlotType() != SlotType.UNKNOWN) {
+                        sendReadSlot(slot);
+                        try {
+                            Thread.sleep(this.interval);
+                        } catch (Exception ex) {
+                            // just abort
+                            abort = true;
+                            break;
+                        }
+                    }
+                }
+//            }
+        }
+    }
 
 }

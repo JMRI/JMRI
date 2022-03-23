@@ -83,6 +83,7 @@ public class AutoActiveTrain implements ThrottleListener {
     public static final int NO_TASK = 0x00;     // No task at stop
     public static final int END_REVERSAL = 0x01;     // Handle reversing direction at end for back and forth running
     public static final int BEGINNING_RESET = 0x02;     // Handle reseting beginning for back and forth running
+    public static final int END_TRAIN = 0x04;     // Ending Transit.
 
     // operational instance variables
     private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
@@ -536,7 +537,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(NO_TASK);
+                        stopInCurrentSection(END_TRAIN);
                     }
                 }
                 // are we entering the start point
@@ -550,7 +551,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(NO_TASK);
+                        stopInCurrentSection(END_TRAIN);
                     }
                 } else {
                     // if we are not in first and not in last get the next block
@@ -1335,6 +1336,9 @@ public class AutoActiveTrain implements ThrottleListener {
         cancelStopInCurrentSection();
         log.trace("exec[{}]",task);
         switch (task) {
+            case END_TRAIN:
+                _activeTrain.setStatus(ActiveTrain.DONE);
+                break;
             case NO_TASK:
                 // clean up stop
                 break;
@@ -1756,7 +1760,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.error("Waiting for train to stop crashed - stop tasks not executing.", e);
             }
         }
-
         private final int _delay = 91;
         private int _task = 0;
     }

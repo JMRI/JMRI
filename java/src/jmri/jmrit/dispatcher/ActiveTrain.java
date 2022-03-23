@@ -291,8 +291,8 @@ public class ActiveTrain implements PropertyChangeProvider {
                 mStatus = status;
                 firePropertyChange("status", Integer.valueOf(old), Integer.valueOf(mStatus));
             }
-            if (mStatus == DONE && terminateWhenFinished) {
-                InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(this);
+            if (mStatus == DONE) {
+                InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(this,terminateWhenFinished);
             }
         } else {
             log.error("Invalid ActiveTrain status - {}", status);
@@ -757,6 +757,7 @@ public class ActiveTrain implements PropertyChangeProvider {
         }
         resetAllAllocatedSections();
         clearAllocations();
+        mAllocationReversed=false;
         // wait for autoallocate to do its stuffbefore continuing
         InstanceManager.getDefault(DispatcherFrame.class).queueWaitForEmpty();
         if (mAutoRun) {
