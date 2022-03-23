@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
 public class ThrottleWindow extends JmriJFrame {
 
-    private jmri.jmrix.ConnectionConfig connectionConfig;
-    private ThrottleManager throttleManager;
+    private final jmri.jmrix.ConnectionConfig connectionConfig;
+    private final ThrottleManager throttleManager;
 
     private JPanel throttlesPanel;
     private ThrottleFrame currentThrottleFrame;
@@ -72,7 +72,7 @@ public class ThrottleWindow extends JmriJFrame {
      * Default constructor
      */
     public ThrottleWindow() {
-        this(null);
+        this((jmri.jmrix.ConnectionConfig) null);
     }
 
     /**
@@ -100,6 +100,32 @@ public class ThrottleWindow extends JmriJFrame {
         }
         initGUI();
         applyPreferences();
+    }
+
+    /**
+     * Create a ThrottleWindow
+     * @param e the xml element for the throttle window
+     * @return the throttle window
+     */
+    public static ThrottleWindow createThrottleWindow(Element e) {
+        jmri.jmrix.ConnectionConfig connectionConfig = null;
+
+        Attribute systemPrefixAttr = e.getAttribute("systemPrefix");
+        if (systemPrefixAttr != null) {
+            String systemPrefix = systemPrefixAttr.getValue();
+            // Set connectionConfig to null in case the systemPrefix
+            // points to a connection that doesn't exist anymore.
+
+            for (jmri.jmrix.ConnectionConfig c : InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class)) {
+                if (c.getAdapter().getSystemPrefix().equals(systemPrefix)) {
+                    connectionConfig = c;
+                }
+            }
+        }
+
+        ThrottleWindow tw = new ThrottleWindow(connectionConfig);
+        tw.setXml(e);
+        return tw;
     }
 
     private void initGUI() {
@@ -699,25 +725,7 @@ public class ThrottleWindow extends JmriJFrame {
         return me;
     }
 
-    public void setXml(Element e) {
-        Attribute systemPrefixAttr = e.getAttribute("systemPrefix");
-        if (systemPrefixAttr != null) {
-            String systemPrefix = systemPrefixAttr.getValue();
-            // Set connectionConfig to null in case the systemPrefix
-            // points to a connection that doesn't exist anymore.
-            this.connectionConfig = null;
-
-            for (jmri.jmrix.ConnectionConfig c : InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class)) {
-                if (c.getAdapter().getSystemPrefix().equals(systemPrefix)) {
-                    this.connectionConfig = c;
-                }
-            }
-            if (connectionConfig != null) {
-                this.throttleManager = connectionConfig.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);
-            } else {
-                this.throttleManager = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
-            }
-        }
+    private void setXml(Element e) {
         if (e.getAttribute("title") != null) {
             setTitle(e.getAttribute("title").getValue());
         }

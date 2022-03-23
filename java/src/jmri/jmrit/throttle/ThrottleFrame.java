@@ -794,9 +794,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (e.getAttribute("border") != null) {
             bSize = Integer.parseInt((e.getAttribute("border").getValue()));
         }
-        if (e.getChild("window") != null) { // Old format
-            throttleWindow.setXml(e);
-        }
         Element controlPanelElement = e.getChild("ControlPanel");
         controlPanel.setXml(controlPanelElement);
         if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {

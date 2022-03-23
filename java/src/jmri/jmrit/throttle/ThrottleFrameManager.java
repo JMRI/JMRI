@@ -9,6 +9,7 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.ThrottleManager;
 import jmri.util.JmriJFrame;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return The newly created ThrottleWindow
      */
     public ThrottleWindow createThrottleWindow() {
-        return createThrottleWindow(null);
+        return createThrottleWindow((jmri.jmrix.ConnectionConfig) null);
     }
 
     /**
@@ -56,6 +57,22 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      */
     public ThrottleWindow createThrottleWindow(jmri.jmrix.ConnectionConfig connectionConfig) {
         ThrottleWindow tw = new ThrottleWindow(connectionConfig);
+        tw.pack();
+        synchronized (this) {
+            throttleWindows.add(tw);
+            activeFrame = throttleWindows.indexOf(tw);
+        }
+        return tw;
+    }
+
+    /**
+     * Tell this manager that a new ThrottleWindow was created.
+     *
+     * @param e the xml element for the throttle window
+     * @return The newly created ThrottleWindow
+     */
+    public ThrottleWindow createThrottleWindow(Element e) {
+        ThrottleWindow tw = ThrottleWindow.createThrottleWindow(e);
         tw.pack();
         synchronized (this) {
             throttleWindows.add(tw);
