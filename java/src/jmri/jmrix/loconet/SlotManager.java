@@ -1698,7 +1698,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot & 0x7F);
-        if (loconetProtocol == LnConstants.LOCONETPROTOCOL_TWO || slot > 127 ) {
+        // one is always short
+        // THis gets a little akward, slots 121 thru 127 incl. seem to always old slots.
+        // All slots gt 127 are always expanded format.
+        if ( slot > 127 || ( ( slot > 0 && slot < 121 ) && loconetProtocol == LnConstants.LOCONETPROTOCOL_TWO ) ) {
             m.setElement(2, (slot / 128 ) & 0b00000111 | 0x40 );
         }
         tc.sendLocoNetMessage(m);
