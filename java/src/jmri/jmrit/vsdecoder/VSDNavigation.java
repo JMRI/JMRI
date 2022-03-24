@@ -211,7 +211,7 @@ public class VSDNavigation {
                 d.setReturnLastTrack(tsv.getConnect2());
                 // if entering from the other end...
                 if (tsv.getConnect2().equals(d.getLastTrack())) {
-                    points = MathUtil.reverse(points);     //..reverse the points
+                    points = jmri.util.ArrayUtil.reverse(points);     //..reverse the points
                     d.nextLayoutTrack = tsv.getConnect1(); // and change the next LayoutTrack
                     d.setReturnLastTrack(tsv.getConnect1());
                 }

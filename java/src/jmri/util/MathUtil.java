@@ -1089,21 +1089,6 @@ public final class MathUtil {
         return new Rectangle2D.Double(p.getX(), p.getY(), width, height);
     }
 
-    /**
-     * reverse an array of Point2D's
-     *
-     * @param points the array
-     * @return the reversed array
-     */
-    public static Point2D[] reverse(Point2D[] points) {
-        Point2D[] results = new Point2D[points.length];
-
-        List<Point2D> itemList = Arrays.asList(points);
-        Collections.reverse(itemList);
-        results = itemList.toArray(results);
-        return results;
-    }
-
     // recursive routine to plot a cubic Bezier...
     // (also returns distance!)
     private static double plotBezier(
