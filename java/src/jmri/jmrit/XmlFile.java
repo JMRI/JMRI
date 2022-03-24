@@ -204,7 +204,7 @@ public abstract class XmlFile {
      * @param doc  Document to be written out. This should never be null.
      * @throws FileNotFoundException if file not found
      */
-    public static void writeXML(File file, Document doc) throws IOException, FileNotFoundException {
+    public void writeXML(File file, Document doc) throws IOException, FileNotFoundException {
         // ensure parent directory exists
         if (file.getParent() != null) {
             FileUtil.createDirectory(file.getParent());

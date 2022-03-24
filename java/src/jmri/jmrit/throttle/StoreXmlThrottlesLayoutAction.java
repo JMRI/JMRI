@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -14,12 +13,9 @@ import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
-import static jmri.jmrit.XmlFile.writeXML;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,7 +103,8 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
             }
             root.setContent(children);
 
-            writeXML(f, doc);
+            XmlFile xf = new XmlFile() {};
+            xf.writeXML(f, doc);
         } catch (FileNotFoundException ex) {
             log.warn("Exception in storing throttle xml", ex);
         } catch (IOException ex) {
