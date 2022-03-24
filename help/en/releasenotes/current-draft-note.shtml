@@ -592,7 +592,10 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added a new version of "advanced location following". This is now based
+            on a LayoutEditor panel and hence much easier to setup. See the
+            <a href="https://www.jmri.org/help/en/manual/DecoderPro/VSD_LocationsMgr.shtml#advanced_location_following">
+			documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
