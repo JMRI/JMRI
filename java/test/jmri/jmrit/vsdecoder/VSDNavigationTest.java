@@ -15,15 +15,10 @@ public class VSDNavigationTest {
 
     @Test
     public void testCTor() throws java.util.zip.ZipException, java.io.IOException {
-
-        VSDConfig c = new VSDConfig();
-        c.setLocoAddress(new jmri.DccLocoAddress(3, jmri.LocoAddress.Protocol.DCC_SHORT));
-        c.setProfileName("steam1min8");
-        c.setVSDPath("java/test/jmri/jmrit/vsdecoder/steam1min8.zip");
-        VSDecoder d = new VSDecoder(c);
-
-        VSDNavigation t = new VSDNavigation(d);
+        VSDecoder t = new VSDecoder("Test", "steam1min8","java/test/jmri/jmrit/vsdecoder/steam1min8.zip");
         Assert.assertNotNull("exists", t);
+        VSDNavigation n = new VSDNavigation(t);
+        Assert.assertNotNull("exists", n);
     }
 
     @BeforeEach
