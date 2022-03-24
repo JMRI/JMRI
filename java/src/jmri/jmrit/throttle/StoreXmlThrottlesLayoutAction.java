@@ -74,7 +74,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
         try {
             Element root = new Element("throttle-layout-config");
             root.setAttribute("noNamespaceSchemaLocation",
-                    "http://jmri.org/xml/schema/layout" + schemaVersion + ".xsd",
+                    "http://jmri.org/xml/schema/throttle-layout" + schemaVersion + ".xsd",
                     org.jdom2.Namespace.getNamespace("xsi",
                             "http://www.w3.org/2001/XMLSchema-instance"));
             Document doc = XmlFile.newDocument(root);

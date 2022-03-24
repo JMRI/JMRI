@@ -90,6 +90,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
     public boolean loadThrottlesLayout(java.io.File f) throws java.io.IOException {
         try {
             ThrottlePrefs prefs = new ThrottlePrefs();
+            prefs.setValidate(XmlFile.Validate.RequireSchema);
             Element root = prefs.rootFromFile(f);
             List<Element> throttles = root.getChildren("ThrottleFrame");
             ThrottleFrameManager tfManager = InstanceManager.getDefault(ThrottleFrameManager.class);
