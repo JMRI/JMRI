@@ -6,11 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+
 import jmri.InstanceManager;
+import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
+import static jmri.jmrit.XmlFile.writeXML;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -25,6 +30,13 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau (C) Copyright 2008
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
+
+    /**
+     * Define the current schema version string for the throttle-layout-config schema.
+     * See the <a href="package-summary.html#schema">Schema versioning
+     * discussion</a>. Also controls the stylesheet file version.
+     */
+    static final public String schemaVersion = "-4-99-5";
 
     /**
      * Constructor
@@ -65,7 +77,11 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
         try {
             Element root = new Element("throttle-layout-config");
-            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-layout-config.dtd");
+            root.setAttribute("noNamespaceSchemaLocation",
+                    "http://jmri.org/xml/schema/layout" + schemaVersion + ".xsd",
+                    org.jdom2.Namespace.getNamespace("xsi",
+                            "http://www.w3.org/2001/XMLSchema-instance"));
+            Document doc = XmlFile.newDocument(root);
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle-layout-config.xsl"?>
@@ -74,7 +90,11 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
              m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle-layout-config.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0, p); */
-            java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(5);
+
+            // add version at front
+            ConfigXmlManager.storeVersion(root);
+
+            java.util.ArrayList<Element> children = new java.util.ArrayList<>(5);
 
             // throttle list window
             children.add(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getXml());
@@ -87,18 +107,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
             }
             root.setContent(children);
 
-            FileOutputStream o = new java.io.FileOutputStream(f);
-            try {
-                XMLOutputter fmt = new XMLOutputter();
-                fmt.setFormat(Format.getPrettyFormat()
-                        .setLineSeparator(System.getProperty("line.separator"))
-                        .setTextMode(Format.TextMode.PRESERVE));
-                fmt.output(doc, o);
-            } catch (IOException ex) {
-                log.warn("Exception in storing throttle xml", ex);
-            } finally {
-                o.close();
-            }
+            writeXML(f, doc);
         } catch (FileNotFoundException ex) {
             log.warn("Exception in storing throttle xml", ex);
         } catch (IOException ex) {
