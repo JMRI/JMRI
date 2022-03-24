@@ -20,7 +20,7 @@
       provides a list of LogixNGs that should be run before the rest of them are enabled. This is
       the same concept used by the LRoute/Logix RTXINITIALIZER.</p>
 
-      <p>The initialization table is at PanelPro <strong>Tools ⇒ LogixNG ⇒ LogixNG Initialization
+      <p>The initialization table is at PanelPro <strong>Tools &rArr; LogixNG &rArr; LogixNG Initialization
       table</strong>.</p>
 
       <div style="margin-left: 2em">

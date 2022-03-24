@@ -50,7 +50,7 @@ public class DebugMenu extends JMenu {
         add(new apps.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));
         add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
-                "jmri.jmrit.log.Log4JTreePane"));
+                "apps.jmrit.log.Log4JTreePane"));
 
         add(new JSeparator());
         add(new jmri.jmrit.LogixLoadAction(Bundle.getMessage("MenuItemLogixDisabled"), panel));

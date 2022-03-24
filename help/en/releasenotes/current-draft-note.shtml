@@ -26,8 +26,7 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li>Added CmriExample.py,
-                    a sample script for directly sending a C/MRI frame.</li>
+                <li></li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -70,9 +69,14 @@
                 <li></li>
             </ul>
 
+        <h4>KPF-Zeller</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
-                <li>Added Digitrax DCS210Plus command station</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -112,7 +116,28 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li><b>Throttle support.</b> JMRI Throttles can now operate
+                OpenLCB locomotives on OpenLCB / LCC Command Stations via the
+                Traction Protocol draft.</li>
+                <li><b>Monitor Log updates.</b> Decodes and prints the Traction
+                Protocol messages in the Monitor Log window.</li>
+                <li><b>Accessibility changes.</b> The network browser / tree is
+                now navigable using keyboard shortcuts. On the Configuration
+                Editor panel the keys F6 and Shift+F6 can be used to navigate
+                between subsequent sections of the configuration and the bar of
+                buttons at the bottom.</li>
+                <li><b>Test Event button.</b> In the Configuration Editor the
+                Event panels have a new button More... which opens a
+                dropdown. In the dropdown there is a Trigger button which sends
+                the given event. This is useful for testing. In the same
+                dropdown there is a Create Sensor button which for JMRI will
+                create a single-event sensor.</li>
+                <li><b>Bug fixes.</b> Fixes memory leak when opening many
+                different nodes' Configuration Editor windows. The CAN
+                Interface engine now correctly supports sending a message to a
+                Destination Node ID for which there is no currently registered
+                Alias in the Alias Map. The outgoing message will be enqueued
+                and an alias lookup interaction is triggered.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -147,7 +172,7 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li>Improved handling of the decoder functions.</li>
+                <li></li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -207,8 +232,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Fixed a problem introduced in JMRI 4.99.3 that
-                prevents the function settings from being properly stored.</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -338,7 +362,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Updated some MX640-series definitions, adding menu items for on-track operations.</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -349,7 +373,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>You can now write out just edited CV values to a CSV file.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -361,7 +385,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fixed bouncing speed slider in manual mode.</li>
+             <li>Size AutoTrainsWindow correctly when going between auto and manual with use scroll bars off.</li>
+             <li>Enabled disaplay scale speed for running with speed profiles.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -396,8 +422,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li><i>Copy</i> now works in the LogixNG table. With <i>Copy</i>,
-          you can copy the entire LogixNG to a new LogixNG with all its ConditionalNGs.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -477,7 +502,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>New SNCF-2015 French signal system</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -537,28 +562,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Additional bug fixing and enhancements to Shared Warrants. SWs are
-                useful to animate the simultaneous operation of multiple trains.
-                Be aware that SWs may mutually block movement that can only be resolved
-                by aborting at least one of them. Regular warrants avoid such deadlocks
-                due to the priority of their launch times.
-                <ul>
-               <li>SWs will not allocate any blocks beyond or at a "hazard" (occupation
-                 by foreign train, passage beyond a stop signal, conflict with another
-                 warrant)</li>
-               <li>If a ramp down to stop at a "hazard" stops before entering the next block,
-                   the restart is done automatically when the condition clears.
-                   </li>
-               <li>If a ramp down to stop at a "hazard" overruns into the next block, the
-                   SW will allocate the next block if that is permissible. Whether or not, i.e.
-                   the position of the train is marked yellow or blue, use the normal Control
-                   commands to restart. "Resume" if the "hazard" was occupation or a warrant,
-                   or wait for the signal change to an allowable speed.
-                   </li>
-                 </ul>
-            <li>The messages to the status field of the warrant Table and other information
-                can be displayed to the console by clicking the "Trace Warrants" button in
-                Warrant Preferences.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -594,9 +598,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Developers: The
-                <a href="https://www.jmri.org/help/en/html/doc/Technical/Patterns.shtml#typescript">Typescript and Javascript support</a>
-                has been updated.</li>
-            <li>The included 'ajv' and 'fast-deep-equal' web packages have been updated.
+            <li>Add a search feature to the JmriHelp local web page.</li>
         </ul>
 

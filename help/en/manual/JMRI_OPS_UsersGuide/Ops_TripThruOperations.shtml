@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>A Trip through Operations</h2>
 
@@ -38,7 +38,7 @@
       To get the demo files loaded, go to the JMRI main menu and click on <strong>Tools</strong>,
       scroll all the way to the bottom to select Operations (or pick the Operations menu if set in
       Operations settings), and slide sideways to select Settings. On the Operations Settings
-      screen select the Tools menu and then select Load Demo Files. DecoderPro® will need to
+      screen select the Tools menu and then select Load Demo Files. DecoderPro&reg; will need to
       restart.</p>
 
       <p class="ops-center"><img src="images/Ops_Operations01.png" width="778" height="608" alt="">

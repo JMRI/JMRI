@@ -110,7 +110,7 @@ which checks the dates of the control files to make sure they've benen updated w
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.28 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.28/openlcb-0.7.28.jar or the maven central repository.
+- 0.7.29 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.29/openlcb-0.7.29.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -354,11 +354,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 5.1.14
 - from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
 - Mocks Java Servlet requests and responses
-
-##### AppleJavaExtensions.jar
-- version 1.5
-- from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
-- Used for building only, not at runtime
 
 #### SpotBugs static analysis
 

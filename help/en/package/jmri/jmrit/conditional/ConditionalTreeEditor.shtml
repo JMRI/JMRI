@@ -200,8 +200,8 @@
         </table>
       </div>
 
-      <p>1 — Move is actually an <strong>Up</strong> button and a <strong>Down</strong> button.<br>
-      2 — Move is disabled for Variables if the Logic Type is set to <strong>Mixed</strong>.</p>
+      <p>1 &mdash; Move is actually an <strong>Up</strong> button and a <strong>Down</strong> button.<br>
+      2 &mdash; Move is disabled for Variables if the Logic Type is set to <strong>Mixed</strong>.</p>
 
       <h2>The Edit Process</h2>
 

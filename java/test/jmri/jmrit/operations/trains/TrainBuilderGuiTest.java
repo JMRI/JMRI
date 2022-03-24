@@ -24,12 +24,14 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+import jmri.util.ThreadingUtil;
 
 /**
  * Tests for the Operations Trains GUI class
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class TrainBuilderGuiTest extends OperationsTestCase {
 
     private TrainManager tmanager;
@@ -40,7 +42,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test prompt for which track in staging a train should depart on.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testStagingPromptFrom() {
 
@@ -59,19 +60,15 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t1.start();
 
         // should cause a prompt asking which track to use
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2 OK"); // NOI18N
-        build.start();
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
         }, "Click OK in prompt asking which track to use did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertTrue("build Completed Ok", buildCompleteOk);
 
         Assert.assertTrue("Train status", train2.isBuilt());
 
@@ -85,19 +82,15 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t2.setName("testStagingPromptFrom Thread 2");
         t2.start();
 
-        Thread build2 = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build2.setName("Build Train 2 Cancel"); // NOI18N
-        build2.start();
 
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
         }, "Click Cancel in prompt asking which track to use did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         Assert.assertFalse("Train status", train2.isBuilt());
 
@@ -107,7 +100,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test prompt selecting which track to use in staging.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testStagingPromptTo() {
 
@@ -123,19 +115,15 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t1.start();
 
         // should cause prompt for track into staging
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2 OK"); // NOI18N
-        build.start();
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
         }, "SelectArrivalTrack OK did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertTrue("build Completed Ok", buildCompleteOk);
 
         Assert.assertTrue("Train status", train2.isBuilt());
 
@@ -149,26 +137,21 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t2.setName("testStagingPromptTo Thread 2");
         t2.start();
         
-        Thread build2 = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build2.setName("Build Train 2 Cancel"); // NOI18N
-        build2.start();
 
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
         }, "SelectArrivalTrack Cancel did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         Assert.assertFalse("Train status", train2.isBuilt());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessage() {
 
@@ -188,19 +171,15 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t1.start();
 
         // should cause failure dialog to appear
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
         }, "failure dialog click OK did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         Assert.assertFalse("Train status", train2.isBuilt());
     }
@@ -208,7 +187,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test warning message.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testWarningMessage() {
 
@@ -229,21 +207,16 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t1.setName("testWarningMessage Thread 1");
         t1.start();
         
-        // should cause warning dialog to appear
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
 
         // dialog "Build report for train (SFF) has 1 warnings"
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
         }, "failure dialog click OK did not happen");
         
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertTrue("build Completed Ok", buildCompleteOk);
         Assert.assertTrue("Train status", train2.isBuilt());
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -251,7 +224,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test failure message when cars in staging are stuck there.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingA() {
 
@@ -302,11 +274,9 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t2.start();
 
         // should cause failure dialog to appear
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
 
         // dialog "remove cars from staging" or continue by pressing "OK"
         JUnitUtil.waitFor(() -> {
@@ -318,9 +288,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return !t2.isAlive();
         }, "released from train by reset dialog click no did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         Assert.assertFalse("Train status", train2.isBuilt());
 
@@ -341,7 +309,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when cars in staging are stuck there. Release cars and
      * engines by train reset.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingB() {
 
@@ -396,11 +363,9 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t2.start();
         
         // should cause failure dialogs to appear
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
 
         // dialog "remove cars from staging" or continue by pressing "OK", press OK.
         JUnitUtil.waitFor(() -> {
@@ -412,9 +377,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return !t2.isAlive();
         }, "cars are to be released from train by reset, click Yes did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return !build.isAlive();
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         Assert.assertFalse("Train status", train2.isBuilt());
 
@@ -435,7 +398,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when cars in staging are stuck there. Remove stuck cars
      * from staging.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingC() {
 
@@ -485,11 +447,9 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t2.start();
 
         // should cause failure dialog to appear
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
 
         // dialog "remove cars from staging" or continue by pressing "OK"
         JUnitUtil.waitFor(() -> {
@@ -501,9 +461,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return !t2.isAlive();
         }, "cars are to be released from train by reset, click yes did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED); // FAILED HERE
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         Assert.assertFalse("Train status", train2.isBuilt());
 
@@ -523,7 +481,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when build fails, release engines by reset. No cars in
      * staging for this test.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingD() {
 
@@ -579,15 +536,9 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t2.start();
 
         // should cause failure dialog to appear
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
-
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
 
         // dialog remove engines from staging or continue by pressing OK
         JUnitUtil.waitFor(() -> {
@@ -599,9 +550,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return !t2.isAlive();
         }, "cars are to be released from train by reset, click yes did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         Assert.assertFalse("Train status", train2.isBuilt());
 
@@ -616,7 +565,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when build fails, Don't release engines by reset. No
      * cars in staging for this test.
      */
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testBuildFailedMessageStagingE() {
 
@@ -672,11 +620,9 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         t2.start();
 
         // should cause failure dialog to appear
-        Thread build = new Thread(() -> {
-            new TrainBuilder().build(train2);
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
         });
-        build.setName("Build Train 2"); // NOI18N
-        build.start();
 
         // dialog remove engines from staging or continue by pressing OK
         JUnitUtil.waitFor(() -> {
@@ -688,9 +634,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return !t2.isAlive();
         }, "cars are to be released from train by reset, click no did not happen");
 
-        JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
-        }, "wait for build to complete");
+        Assert.assertFalse("build not Complete Ok", buildCompleteOk);
 
         // only e3 and e4 have been assigned to train
         Assert.assertFalse("Train status", train2.isBuilt());

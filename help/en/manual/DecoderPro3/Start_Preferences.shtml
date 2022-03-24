@@ -25,7 +25,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Getting Started with DecoderPro®</h1>
+      <h1>Getting Started with DecoderPro&reg;</h1>
 
       <h2>How to set up Preferences</h2>
 
@@ -147,7 +147,7 @@
           <tr>
             <td><strong><a href="#MiniServer">Web Server</a></strong>
             </td>
-            <td>Sets up the Decoder Pro® miniServer</td>
+            <td>Sets up the Decoder Pro&reg; miniServer</td>
           </tr>
         </tbody>
       </table>
@@ -294,7 +294,7 @@
       <p><em>Start Up</em> preferences allow windows and files to be opened, scripts to be run, and
       additional buttons to be placed on the main window when the application starts.</p>
 
-      <p>Click the <strong>Add ▾</strong> button and select the type of start up action to add. The
+      <p>Click the <strong>Add &#9662;</strong> button and select the type of start up action to add. The
       new action will be added last.</p>
 
       <p>Start up action order is important. In most cases, scripts should be the last items in the

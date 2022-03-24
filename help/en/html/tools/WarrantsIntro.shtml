@@ -46,7 +46,7 @@
       <ul>
         <li>entering data directly into the <a href=
         "../../package/jmri/jmrit/logix/OBlockEdit.shtml">Occupancy Block Table</a> (under
-        Tools⇒Tables),
+        Tools &rArr; Tables),
         </li>
 
         <li>creating them based on Layout Editor <a href="Blocks.shtml">Blocks</a> (select "Import

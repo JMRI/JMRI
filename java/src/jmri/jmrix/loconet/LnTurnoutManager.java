@@ -161,8 +161,15 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
             case LnConstants.OPC_LONG_ACK: {
                 // might have to resend, check 2nd byte
                 if (lastSWREQ != null && l.getElement(1) == 0x30 && l.getElement(2) == 0 && !mTurnoutNoRetry) {
-                    // received LONG_ACK reject msg, resend
-                    fastcontroller.sendLocoNetMessage(lastSWREQ);
+                    // received LONG_ACK reject msg, resend?
+                    // Skip if this is a status inquiry
+                    int sw1 = lastSWREQ.getElement(1);
+                    int sw2 = lastSWREQ.getElement(2);
+                    addr = address(sw1, sw2);
+
+                    if (addr < 1017 || addr > 1020) { // enquiries are above this
+                        fastcontroller.sendLocoNetMessage(lastSWREQ);
+                    }
                 }
 
                 // clear so can't resend recursively (we'll see
@@ -184,7 +191,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
             if (jmri.InstanceManager.lightManagerInstance().getBySystemName(sx) == null) {
                 // no light, create a turnout
                 LnTurnout t = (LnTurnout) provideTurnout(s);
-                
+
                 // process the message to put the turnout in the right state
                 t.messageFromManager(l);
             }

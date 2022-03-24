@@ -10,33 +10,33 @@ import java.util.Collection;
 
 import org.apache.commons.io.FileUtils;
 
-import org.junit.*;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Checks that files have correct line endings. The list of file patterns tested
+ * Checks that files have correct line endings.
+ * The list of file patterns tested
  * should match the list fixed by the ant fixlineends target.
  * <p>
- * Do not include in the jmri package test suite. Cannot have name ending in *Test,
- * because it'll get picked up.  That will result in it being run on Windows and failing
- * big time.
+ * Disabled on Windows systems where line endings will fail.
+ * <p>
+ * Do not include in the jmri package test suite.
+ * Cannot have name ending in *Test because it'll get picked up.
+ * That used to result in it being run on Windows and failing big time.
  *
  * @author Randall Wood (C) 2017
  */
-@RunWith(Parameterized.class)
 public class FileLineEndingsCheck {
-
-    private final File file;
 
     private final static Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
 
-    @Parameters(name = "{0}")
-    public static Iterable<Object[]> data() {
+    public static Iterable<File> data() {
         return getFiles(new File("."),
                 new String[]{ // patterns to match
                     "**/*.csh",
@@ -88,10 +88,10 @@ public class FileLineEndingsCheck {
      * @param antiPatterns glob patterns of files not to match
      * @return a collection of files to validate
      */
-    public static Collection<Object[]> getFiles(File directory, String[] patterns, String[] antiPatterns) {
-        jmri.util.JUnitUtil.setUp(); // setup logging early so this method can log
-        ArrayList<Object[]> files = new ArrayList<>();
-        ArrayList<PathMatcher> antiMatchers = new ArrayList<>();
+    public static Collection<File> getFiles(File directory, String[] patterns, String[] antiPatterns) {
+        setUp(); // setup logging early so this method can log
+        ArrayList<File> files = new ArrayList<>(22000); // 19350 as of March 2022
+        ArrayList<PathMatcher> antiMatchers = new ArrayList<>(antiPatterns.length);
         for (String antiPattern : antiPatterns) {
             antiMatchers.add(FileSystems.getDefault().getPathMatcher("glob:" + antiPattern));
         }
@@ -103,7 +103,7 @@ public class FileLineEndingsCheck {
                         .filter(matcher::matches)
                         .forEach((path) -> {
                             if (path.toFile().isFile()) {
-                                files.add(new Object[]{path.toFile()});
+                                files.add( path.toFile());
                             }
                         });
             }
@@ -113,27 +113,30 @@ public class FileLineEndingsCheck {
         return files;
     }
 
-    public FileLineEndingsCheck(File file) {
-        this.file = file;
-    }
-
-    @Test
-    public void lineEndings() {
+    @ParameterizedTest(name = "[{index}] {arguments}")
+    @MethodSource("data")
+    @DisabledOnOs(OS.WINDOWS)
+    public void lineEndings(File file) {
         try {
-            String contents = FileUtils.readFileToString(file);
-            Assert.assertFalse("File " + file.getPath() + " has incorrect line endings.", contents.contains("\r\n"));
+            String contents = FileUtils.readFileToString(file, java.nio.charset.Charset.defaultCharset());
+            Assertions.assertFalse(contents.contains("\r\n"), "File " + file.getPath() + " has incorrect line endings.");
         } catch (IOException ex) {
-            log.error("Unable to get path for {}", this.file, ex);
-            Assert.fail("Unable to get get path " + file.getPath() + " for test");
+            log.error("Unable to get path for {}", file, ex);
+            Assertions.fail("Unable to get get path " + file.getPath() + " for test");
         }
     }
 
-    @BeforeClass  // want to reduce burden
+    private static boolean setup = false;
+
+    @BeforeAll // want to reduce burden
     static public void setUp() {
-        JUnitUtil.setUp();
+        if (!setup) {
+            JUnitUtil.setUp();
+            setup = true;
+        }
     }
 
-    @AfterClass// want to reduce burden
+    @AfterAll // want to reduce burden
     static public void tearDown() {
         JUnitUtil.tearDown();
     }
