@@ -18,7 +18,7 @@
 
     <div id="mainContent">
       <a id="Top"></a>
-      <h1>JMRI&reg; OperationsPro™ Manual</h1>
+      <h1>JMRI&reg; OperationsPro&trade; Manual</h1>
 
       <h2>Introduction</h2>
 
@@ -45,15 +45,15 @@
       <ul>
         <li>The programming of Digital Command Control (DCC) decoders (DecoderPro&reg;)</li>
 
-        <li>Drawing computer based Panels for depicting a model railroad layout (PanelPro™)</li>
+        <li>Drawing computer based Panels for depicting a model railroad layout (PanelPro&trade;)</li>
 
         <li>Controlling the layout (Layout Editor)</li>
 
-        <li>Creating Train Manifests to reproduce railroad operations (OperationsPro™)</li>
+        <li>Creating Train Manifests to reproduce railroad operations (OperationsPro&trade;)</li>
 
         <li>Controlling the Signals on the layout</li>
 
-        <li>Controlling lighting and sound in the room, and so forth (SoundPro™)</li>
+        <li>Controlling lighting and sound in the room, and so forth (SoundPro&trade;)</li>
       </ul>
 
       <p>All this capability is contained in one install.</p>

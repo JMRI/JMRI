@@ -184,7 +184,7 @@
               <input name="checkbox3" id="checkbox3" checked="checked" type="checkbox"> <strong>Add
               Operations Menu to Main Menu</strong><br>
               When selected, and saved, the Operations menu will be added to the main menu bar the
-              next time you start JMRI. To remove it, go through the same procedure… in the
+              next time you start JMRI. To remove it, go through the same procedure&hellip; in the
               Settings window uncheck the box, "Save" the change and restart DecoderPro&reg;.<br>
 
               <p><img style="width: 300px; height: 245px;" alt="setting" src=
@@ -213,7 +213,7 @@
 
           <tr>
             <td><strong>Panel options</strong> will not be covered in this manual at this time.
-            Panels are normally created as a part of PanelPro™</td>
+            Panels are normally created as a part of PanelPro&trade;</td>
           </tr>
         </tbody>
       </table>

@@ -122,9 +122,9 @@
       <p>The following descriptions used the following formatting:</p>
 
       <ul>
-        <li>&lt;?? | ??&gt; — List of choices</li>
+        <li>&lt;?? | ??&gt; &mdash; List of choices</li>
 
-        <li>&lt;????&gt; — Required values, usually names or numbers</li>
+        <li>&lt;????&gt; &mdash; Required values, usually names or numbers</li>
 
         <li>Brackets, [], are optional phrases</li>
 

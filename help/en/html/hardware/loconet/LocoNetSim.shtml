@@ -43,15 +43,15 @@
         hex raw data.<br>
         An example hex file is shown here:</p>
 
-        <p><code>A1 0B 00 55 ↵</code>
+        <p><code>A1 0B 00 55 &crarr;</code>
         </p>
 
         <pre>
-B0 2D 10 72 ↵
+B0 2D 10 72 &crarr;
 </pre>
 
         <pre>
-BB 10 00 54 ↵
+BB 10 00 54 &crarr;
 </pre>
         <p>Note that each hex value must be two valid hexadecimal characters plus a space. Each
         message (line) must be terminated by a carriage return. Note that there is a space

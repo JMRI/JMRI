@@ -220,7 +220,7 @@
         systems to the preferences, added the Light Control, provided sample scripts, improved the
         titling of throttle windows, and created the InstallTest app.</li>
 
-        <li>Paco Cañada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">
+        <li>Paco Ca&ntilde;ada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">
           PpP decoders</a>.
         </li>
 
@@ -229,7 +229,7 @@
         <li>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger
         decoders</li>
 
-        <li>Joan Carrancà, who provided the German DB signal set.</li>
+        <li>Joan Carranc&agrave;, who provided the German DB signal set.</li>
 
         <li>Alain Carasso, who provided decoder definition for Arnold and Mistral Train
         decoders</li>
@@ -739,7 +739,7 @@
         on Mac OS X <a id="P"></a>
         </li>
 
-        <li>Pål <-paoSoft -->
+        <li>P&aring;l <-paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
 
         <li>Gopal Patnaik helped with Intellibox development.</li>
@@ -776,7 +776,7 @@
 
         <li>Ian Price who contributed the LocoTracker.py script</li>
 
-        <li>Vladimír Preclík <!-- vpreclik -->
+        <li>Vladim&iacute;r Precl&iacute;k <!-- vpreclik -->
          who contributed fixes to the panel JavaScript code</li>
 
         <li>Oscar A. Pruitt, who provided the implementation to support RFID readers using the
@@ -875,7 +875,7 @@
 
         <li>Dustin Shoup, who figured out how to preserve order in XML files</li>
 
-        <li>Petr Šídlo, <!-- sidlo64 -->
+        <li>Petr &Scaron;&iacute;dlo, <!-- sidlo64 -->
          who provided a large update to the Czech translations of JMRI</li>
 
         <li>Pekka Siiskonen, who suggested we add error numbers to error messages to make it easier
@@ -943,10 +943,10 @@
         <li>Jim Thompson provided a sample script for handling messages from PM42 power
         controllers</li>
 
-        <li>Benny Tjäder, <!-- etxbct -->
+        <li>Benny Tj&auml;der, <!-- etxbct -->
         who provided the MQTT Last Will support and a Swedish signal system.
 
-        <li>Kenneth Tjøstheim, <!-- SeaU2 -->
+        <li>Kenneth Tj&oslash;stheim, <!-- SeaU2 -->
             who provided the Norway-2001 signal system</li>
 
         <li>Walter Thompson, who provided the ID information for the Lionel Challenger decoder and

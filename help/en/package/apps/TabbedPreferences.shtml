@@ -184,7 +184,7 @@
         <ul>
           <li>Tables and panels</li>
 
-          <li>Rosters — also see <a href="#rostertab">Roster Preferences, Roster tab</a>
+          <li>Rosters &mdash; also see <a href="#rostertab">Roster Preferences, Roster tab</a>
           </li>
 
           <li>Operations</li>
@@ -210,7 +210,7 @@
         <a href="../jmri/jmrit/display/PanelMenuHelp.shtml">layout configuration file</a> at
         startup, so all your turnouts, sensors, panels etc. are available again.</p>
 
-        <p>Click the <strong>Add ▾</strong> button and select the type of start up action to add.
+        <p>Click the <strong>Add &#9662;</strong> button and select the type of start up action to add.
         The new action will be added last.</p>
 
         <p>Start up action order is important. In most cases, scripts should be the last items in
@@ -277,42 +277,42 @@
             depend on what kind of computer you have, and not all of the following may be
             available:
             <ul>
-              <li>Nimbus — An alternate style</li>
+              <li>Nimbus &mdash; An alternate style</li>
 
-              <li>Metal — the default Java style, usable on all computers</li>
+              <li>Metal &mdash; the default Java style, usable on all computers</li>
 
-              <li>CDE/Motif — A Linux/Unix form that works well with X Windows screen managers.
+              <li>CDE/Motif &mdash; A Linux/Unix form that works well with X Windows screen managers.
               It's also available on (almost) all computer types.</li>
 
-              <li>Windows — only available on Microsoft Windows systems, this makes the program
+              <li>Windows &mdash; only available on Microsoft Windows systems, this makes the program
               look as much as possible like a regular Windows application.</li>
 
-              <li>Mac OS X — only available on MacOS, this makes the program look like a Macintosh
+              <li>Mac OS X &mdash; only available on MacOS, this makes the program look like a Macintosh
               application.</li>
             </ul>
             In addition, this tab lets you set:
             <ul>
-              <li>Font size — The font size of the GUI.</li>
+              <li>Font size &mdash; The font size of the GUI.</li>
 
-              <li>Use non-standard release event for mouse click? — Provide alternate mouse
+              <li>Use non-standard release event for mouse click? &mdash; Provide alternate mouse
               behavior for specific hardware.</li>
 
-              <li>Use icons to show state in tables — Whether you want to use graphics to show the
+              <li>Use icons to show state in tables &mdash; Whether you want to use graphics to show the
               state of turnouts, lights, sensors and blocks in the state column of their
               tables.</li>
 
-              <li>Use tabbed OBlock editing — See <a href=
+              <li>Use tabbed OBlock editing &mdash; See <a href=
               "../jmri/jmrit/logix/OBlockTable.shtml#oblock_gui_options">OBlock GUI Options</a>.
               </li>
 
-              <li>Use old location and size logic for editor panels — Whether you want to use the
+              <li>Use old location and size logic for editor panels &mdash; Whether you want to use the
               values saved in a panel xml file instead of the standard location and size process
               for JMRI windows.<span class="since">since 4.15.6</span></li>
 
-              <li>Maximum Combo Box List Rows —Limit the size of combo box lists. This can be
+              <li>Maximum Combo Box List Rows &mdash;Limit the size of combo box lists. This can be
               useful for large screens.<span class="since">since 4.23.1</span></li>
 
-              <li>Tool tip display time — How long tooltips (where available) should be shown.</li>
+              <li>Tool tip display time &mdash; How long tooltips (where available) should be shown.</li>
             </ul>
           </dd>
 

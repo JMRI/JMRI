@@ -46,7 +46,7 @@ public class Z21LocoNetTunnelTest {
         tunnel.dispose();
         memo.getTrafficController().terminateThreads();
         JUnitUtil.waitFor(() -> {  return !lnspc.status(); });
-        JUnitAppender.assertWarnMessage("sendLocoNetMessage: IOException: java.io.IOException: Read end dead");
+        JUnitAppender.suppressWarnMessage("sendLocoNetMessage: IOException: java.io.IOException: Read end dead");
         tunnel = null;
         tc = null;
         memo = null;
