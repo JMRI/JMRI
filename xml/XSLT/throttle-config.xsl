@@ -3,7 +3,7 @@
 <!-- Used by default when the throttle file is displayed in a web browser-->
 <!-- This is just a basic implementation for debugging purposes, without -->
 <!-- any real attempt at formatting -->
-<!-- This file is part of JMRI.  Copyright 2022.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2022.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -82,8 +82,22 @@ Width: <xsl:value-of select="window/@width"/>   Height: <xsl:value-of select="wi
       <xsl:for-each select="@*"> 
         <tr>
           <td><xsl:value-of select="name()"/></td>
-           <td><xsl:value-of select="."/></td>
-         </tr>
+          <td>
+          <xsl:choose>
+            <xsl:when test='name() ="displaySpeedSlider"'>              
+              <xsl:choose>
+                <xsl:when test='. = 0'>0 (Percentage)</xsl:when>
+                <xsl:when test='. = 1'>1 (Speed Steps)</xsl:when>
+                <xsl:when test='. = 2'>2 (Shunting)</xsl:when>
+                <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+              </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>        
+              <xsl:value-of select="."/>
+            </xsl:otherwise>
+          </xsl:choose>
+          </td>
+        </tr>
        </xsl:for-each>
     </table>
   </xsl:template>
