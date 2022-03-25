@@ -181,11 +181,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-config.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="/xml/XSLT/throttle-config.xsl"?>
-            java.util.Map<String,String> m = new java.util.HashMap<String, String>();
+            /* java.util.Map<String,String> m = new java.util.HashMap<String, String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle-config.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
-             doc.addContent(0,p);
+             doc.addContent(0,p); */
             Element throttleElement = getXml();
             // don't save the loco address or consist address
             //   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
