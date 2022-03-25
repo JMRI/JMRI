@@ -25,6 +25,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
+    protected boolean mInterrogate = true;
 
     protected boolean mTranspondingAvailable = false;
 
@@ -109,6 +110,17 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         // default (most common state) is off, so just check for Yes
         mTranspondingAvailable = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
         log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
+    }
+
+    /**
+     * Set whether to interrogate at startup
+     *
+     * @param value either yes or no
+     */
+    public void setInterrogate(String value) {
+        // default (most common state) is off, so just check for Yes
+        mInterrogate = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
+        log.debug("Interrogate at StartUp: {}", mInterrogate); // NOI18N
     }
 
     /**

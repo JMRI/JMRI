@@ -50,7 +50,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
-
+    protected boolean mInterrogate;
     protected boolean mTranspondingAvailable = false;
 
     protected LnCommandStationType[] commandStationTypes = {
@@ -119,6 +119,12 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
     }
     
+    public void setInterrogateOnStart(String value) {
+        // default (most common state) is off, so just check for Yes
+        mInterrogate = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
+        log.debug("tInterrogate on Start: {}", mInterrogate); // NOI18N
+    }
+
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
