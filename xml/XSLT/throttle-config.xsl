@@ -46,7 +46,7 @@
       </head>
       <body>
         <h2>JMRI Throttle File
-        <!--: <xsl:value-of select="static-base-uri()" />-->
+        <!-- For when we move to XSL 2.0: <xsl:value-of select="static-base-uri()" />-->
         </h2>
         <xsl:apply-templates/>
         <br/>
@@ -69,13 +69,13 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
   <xsl:template name="window">
     <xsl:if test='window/@isVisible = "true"'>(Visible)</xsl:if>
     <xsl:if test='window/@isIconified = "true"'>(Iconified)</xsl:if>
-Position: <xsl:value-of select="window/@x"/>,<xsl:value-of select="window/@y"/>
-Width: <xsl:value-of select="window/@width"/>   Height: <xsl:value-of select="window/@height"/>
+    [XYPosition:  (<xsl:value-of select="window/@x"/>,<xsl:value-of select="window/@y"/>)
+     Height/Width:  (<xsl:value-of select="window/@height"/>/<xsl:value-of select="window/@width"/>)]
   </xsl:template>
 
   <!-- Display control panel subwindow -->
   <xsl:template match="ControlPanel">
-    <h4>Control Panel   [<xsl:call-template name="window"/>]</h4>
+    <h4>Control Panel   <xsl:call-template name="window"/></h4>
     <xsl:apply-templates/>
     <table border="border-width:thin" width="50%">
       <tr><th>Attribute</th><th>Value</th></tr>      
@@ -105,8 +105,8 @@ Width: <xsl:value-of select="window/@width"/>   Height: <xsl:value-of select="wi
 
   <!-- Display function panel subwindow -->
   <xsl:template match="FunctionPanel">
-    <h4>Function Panel  [<xsl:call-template name="window"/>]</h4>
-    <table border="border-width:thin" width="75%">
+    <h4>Function Panel  <xsl:call-template name="window"/></h4>
+    <table border="border-width:thin" width="100%">
       <tr>
         <th>Button ID</th>
         <th>Text</th>
@@ -126,15 +126,15 @@ Width: <xsl:value-of select="window/@width"/>   Height: <xsl:value-of select="wi
      <td style="text-align:center"><xsl:value-of select="@isLockable"/></td>
      <td style="text-align:center"><xsl:value-of select="@isVisible"/></td>
      <td style="text-align:center"><xsl:value-of select="@fontSize"/></td>
-     <td>ImageSize=<xsl:value-of select="@buttonImageSize"/>; 
-         IconPath=<xsl:value-of select="@iconPath"/>; 
-         selectedIconPath=<xsl:value-of select="@selectedIconPath" /></td>
+     <td>ImageSize: <xsl:value-of select="@buttonImageSize"/>; 
+         "Off" Icon: <xsl:value-of select="@iconPath"/>; 
+         "On" Icon: <xsl:value-of select="@selectedIconPath" /></td>
    </tr>
   </xsl:template>
 
   <!-- Display address panel subwindow -->
   <xsl:template match="AddressPanel">
-    <h4>Address Panel   [<xsl:call-template name="window"/>]</h4>
+    <h4>Address Panel   <xsl:call-template name="window"/></h4>
     <table border="border-width:thin" width="33%">
       <tr>
         <th>Loco Number</th>
@@ -162,7 +162,22 @@ Width: <xsl:value-of select="window/@width"/>   Height: <xsl:value-of select="wi
 
   <!-- Display speed panel subwindow -->
   <xsl:template match="SpeedPanel">
-    <h4>Speed Panel     [<xsl:call-template name="window"/>]</h4>
+    <h4>Speed Panel     <xsl:call-template name="window"/></h4>
     <xsl:apply-templates/>
   </xsl:template>
+
+  <!-- Display Jynstrument panel subwindow -->
+  <xsl:template match="Jynstrument">
+    <h4>Jynstrument Panel     <xsl:call-template name="window"/></h4>
+    <table border="border-width:thin" width="75%">
+      <xsl:for-each select="@*"> 
+        <tr>
+          <td><xsl:value-of select="name()"/></td>
+          <td><xsl:value-of select="."/></td>
+        </tr>
+       </xsl:for-each>
+    </table>
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>
