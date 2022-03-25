@@ -40,11 +40,39 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="JynstrumentToolType">
+    <xs:annotation>
+      <xs:documentation>
+        Jynstrument items in the tool bar do not have a window component but do have a USB component.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element type="USBThrottleType" name="USBThrottle" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="JynstrumentFolder" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="USBThrottleType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="DesiredController" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+<xs:complexType name="ThrottleWindowFrameType">
+  <xs:complexContent>
+    <xs:extension base="ThrottleFrameType">
+      <xs:attribute type="xs:string" name="ThrottleXMLFile" use="optional"/>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
   <xs:complexType name="ThrottleWindowType">
     <xs:sequence>
       <xs:element type="windowType" name="window"/>
-      <xs:element type="ThrottleFrameType" name="ThrottleFrame" maxOccurs="unbounded"/>
-      <xs:element type="JynstrumentType" name="Jynstrument" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="ThrottleWindowFrameType" name="ThrottleFrame" maxOccurs="unbounded"/>
+      <xs:element type="JynstrumentToolType" name="Jynstrument" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute type="xs:string" name="title"/>
     <xs:attribute name="titleType" default="address">

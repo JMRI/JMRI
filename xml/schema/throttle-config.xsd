@@ -105,35 +105,13 @@
   </xs:complexType>
 
   <xs:complexType name="JynstrumentType">
-    <xs:annotation>
-      <xs:documentation>
-        Jynstrument items can be placed in a throttle window or the tool bar.
-        - The window version has a window component.
-        - The tool bar version does not have a window component but it does have a USB component.
-        Either version will have a folder path.
-      </xs:documentation>
-    </xs:annotation>
     <xs:sequence>
-      <xs:element type="windowType" name="window" minOccurs="0"/>
-      <xs:element type="USBThrottleType" name="USBThrottle" minOccurs="0"/>
+      <xs:element type="windowType" name="window"/>
     </xs:sequence>
     <xs:attribute type="xs:string" name="JynstrumentFolder" use="required"/>
   </xs:complexType>
-  <xs:complexType name="USBThrottleType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="DesiredController" use="optional"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
 
   <xs:complexType name="ThrottleFrameType" mixed="true">
-    <xs:annotation>
-      <xs:documentation>
-        The ThrottleFrameType can be copied by throttle-layout-config.  It can use either the
-        full definition or have a file link to a separate throttle-config xml file.
-      </xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element type="ControlPanelType" name="ControlPanel" minOccurs="0"/>
       <xs:element type="FunctionPanelType" name="FunctionPanel" minOccurs="0"/>
@@ -141,7 +119,6 @@
       <xs:element type="SpeedPanelType" name="SpeedPanel" minOccurs="0"/>
       <xs:element type="JynstrumentType" name="Jynstrument" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute type="xs:string" name="ThrottleXMLFile" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="throttle-configType">
