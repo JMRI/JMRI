@@ -126,9 +126,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
      <td style="text-align:center"><xsl:value-of select="@isLockable"/></td>
      <td style="text-align:center"><xsl:value-of select="@isVisible"/></td>
      <td style="text-align:center"><xsl:value-of select="@fontSize"/></td>
-     <td>ImageSize: <xsl:value-of select="@buttonImageSize"/>; 
-         "Off" Icon: <xsl:value-of select="@iconPath"/>; 
-         "On" Icon: <xsl:value-of select="@selectedIconPath" /></td>
+     <td>ImageSize: <xsl:value-of select="@buttonImageSize"/> 
+       <xsl:if test='@iconPath != ""'><br/>"Off" Icon: <xsl:value-of select="@iconPath"/></xsl:if> 
+       <xsl:if test='@selectedIconPath != ""'><br/>"On" Icon: <xsl:value-of select="@selectedIconPath" /></xsl:if>
+     </td>
    </tr>
   </xsl:template>
 
@@ -175,7 +176,17 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
           <td><xsl:value-of select="name()"/></td>
           <td><xsl:value-of select="."/></td>
         </tr>
-       </xsl:for-each>
+      </xsl:for-each>
+      <xsl:for-each select="./*"> 
+       <xsl:if test='name() != "window"'>
+        <tr>
+          <td><xsl:value-of select="name()"/></td>
+          <td><xsl:for-each select="@*">
+            <xsl:value-of select="name()"/>: <xsl:value-of select="."/><br/></xsl:for-each>
+          </td>
+        </tr>
+       </xsl:if>
+      </xsl:for-each>
     </table>
     <xsl:apply-templates/>
   </xsl:template>
