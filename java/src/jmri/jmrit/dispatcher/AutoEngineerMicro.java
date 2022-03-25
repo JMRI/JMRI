@@ -25,12 +25,9 @@ import javax.swing.plaf.basic.BasicToolBarUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.Throttle;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
-import jmri.jmrit.dispatcher.AutoEngineerJButton;
 
 public class AutoEngineerMicro extends AbstractAutoTrainControl {
 
@@ -151,7 +148,6 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
         btnNewBbtnStartStop.setIcon(iconRestartIcon);
     }
 
-    private RosterEntry rosterEntry = null;
     private int currentStep = 0;
     private float currentThrottleSetting = 0;
     private float currentThrottlePerHour = 0;

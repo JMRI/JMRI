@@ -1,15 +1,7 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSlider;
 import javax.swing.JToolBar;
 
 import org.slf4j.Logger;
@@ -119,6 +111,7 @@ abstract  class AbstractAutoTrainControl extends JPanel {
         }
         //super.pack();
     }
+
     protected abstract void activeTrainNewModeDispatched();
     protected abstract void activeTrainNewModeAutomatic();
     protected abstract void activeTrainNewStatusStopped();
