@@ -92,7 +92,7 @@
   <xs:complexType name="throttle-layout-configType">
     <xs:sequence>
       <xs:element type="ThrottlesListPanelType" name="ThrottlesListPanel"/>
-      <xs:element type="ThrottleWindowType" name="ThrottleWindow" maxOccurs="unbounded"/>
+      <xs:element type="ThrottleWindowType" name="ThrottleWindow" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
