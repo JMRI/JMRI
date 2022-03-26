@@ -60,6 +60,7 @@
         <xs:attribute type="xs:string" name="text" use="required"/>
         <xs:attribute type="trueFalseType" name="isLockable" use="required"/>
         <xs:attribute type="trueFalseType" name="isVisible" use="required"/>
+        <xs:attribute type="xs:integer" name="fontSize" use="optional"/>
         <xs:attribute type="xs:integer" name="buttonImageSize" use="required"/>
         <xs:attribute type="xs:string" name="iconPath" use="required"/>
         <xs:attribute type="xs:string" name="selectedIconPath" use="required"/>
