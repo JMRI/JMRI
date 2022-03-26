@@ -75,7 +75,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // now we're going to wait and verify the throttle eventually has
         // its status set to idle.
-        JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);  // give the messages
+        JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);  // give the messages
         // some time to process;
 
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");

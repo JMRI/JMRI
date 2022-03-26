@@ -66,7 +66,7 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
             tistream.flush();
             itempOPipe.flush();
 
-            JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);
+            JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);
 
         } catch (Exception e) {
             log.error("Exception during flush", e);

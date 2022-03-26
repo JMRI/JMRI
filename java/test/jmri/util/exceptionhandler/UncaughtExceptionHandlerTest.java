@@ -26,7 +26,7 @@ public class UncaughtExceptionHandlerTest {
         });
         t.setName("Uncaught Exception Handler Test Thread");
         t.start();
-        JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);
+        JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);
         JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
