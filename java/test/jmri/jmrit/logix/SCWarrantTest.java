@@ -88,7 +88,7 @@ public class SCWarrantTest extends WarrantTest {
             String m = warrant.getRunningMessage();
             return m.endsWith("IH1 showing appearance 16");
         }, "Train starts to move after 2nd command");
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         // confirm one message logged
         //jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
@@ -99,7 +99,7 @@ public class SCWarrantTest extends WarrantTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -108,7 +108,7 @@ public class SCWarrantTest extends WarrantTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -117,7 +117,7 @@ public class SCWarrantTest extends WarrantTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(() -> {
