@@ -52,7 +52,7 @@ import org.netbeans.jemmy.operators.*;
  * Common utility methods for working with JUnit.
  * <p>
  * To release the current thread and allow other listeners to execute:  <code><pre>
- * JUnitUtil.releaseThread(this);
+ * JUnitUtil.waitFor(int time);
  * </pre></code> Note that this is not appropriate for Swing objects; you need
  * to use Jemmy for that.
  * <p>
@@ -83,9 +83,12 @@ public class JUnitUtil {
      * Standard time (in mSec) to wait when releasing
      * a thread during a test.
      * <p>
+     * The method releaseThread() is removed but this constant is still used
+     * by some tests when calling waitFor(int time).
+     * <p>
      * Public in case modification is needed from a test or script.
      */
-    static final public int DEFAULT_RELEASETHREAD_DELAY = 50;
+    static final public int WAITFOR_DEFAULT_DELAY = 50;
 
     /**
      * Default standard time step (in mSec) when looping in a waitFor operation.
@@ -422,51 +425,6 @@ public class JUnitUtil {
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
-    }
-
-    /**
-     * Release the current thread, allowing other threads to process. Waits for
-     * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
-     * <p>
-     * This cannot be used on the Swing or AWT event threads. For those, please
-     * use Jemmy's wait routine.
-     * <p>
-     * The various waitFor(..) methods are much preferred to using this.
-     * They're faster and more reliable.  This is retained only for
-     * cases where there's nothing accessible to wait for.
-     *
-     * @param self currently ignored
-     */
-    public static void releaseThread(Object self) {
-        releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
-    }
-
-    /**
-     * Release the current thread, allowing other threads to process.
-     * <p>
-     * This cannot be used on the Swing or AWT event threads. For those, please
-     * use Jemmy's wait routine.
-     * <p>
-     * The various waitFor(..) methods are much preferred to using this.
-     * They're faster and more reliable.  This is retained only for
-     * cases where there's nothing accessible to wait for.
-     *
-     * @param self  currently ignored
-     * @param delay milliseconds to wait
-     */
-    public static void releaseThread(Object self, int delay) {
-        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
-            log.error("Cannot use releaseThread on Swing thread", new Exception());
-            return;
-        }
-        try {
-            int priority = Thread.currentThread().getPriority();
-            Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-            Thread.sleep(delay);
-            Thread.currentThread().setPriority(priority);
-        } catch (InterruptedException e) {
-            Assert.fail("failed due to InterruptedException");
-        }
     }
 
     /**
