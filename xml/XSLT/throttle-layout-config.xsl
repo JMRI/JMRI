@@ -80,6 +80,23 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <h3>Throttle Frame: "<xsl:value-of select="@ThrottleXMLFile"/>"</h3>
     <xsl:apply-templates/>
   </xsl:template>
+<!-- Title each throttle frames -->
+  <xsl:template match="Jynstrument">
+    <h3>Jynstrument</h3>
+    <table border="border-width:thin" width="67%">
+          <tr><td>Jynstrument Folder</td><td><xsl:value-of select="@JynstrumentFolder"/></td></tr>
+      <!-- Future proofing: ["USBThottle" is only element at current time 2022/03/25] -->
+      <xsl:for-each select="./*"> 
+        <tr>
+          <td><xsl:value-of select="name()"/></td>
+          <td><xsl:for-each select="@*"> <!-- Only one attribute at current time 2022/03/25 -->
+            <xsl:value-of select="name()"/>: <xsl:value-of select="."/><br/></xsl:for-each>
+          </td>
+        </tr>
+      </xsl:for-each>
+    </table>
+  </xsl:template>
+
 
 <!-- All detail process templates in include -->
 <xsl:include href="throttle-include.xsl"/>
