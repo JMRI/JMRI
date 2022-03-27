@@ -120,6 +120,7 @@
       <xs:element type="SpeedPanelType" name="SpeedPanel" minOccurs="0"/>
       <xs:element type="JynstrumentType" name="Jynstrument" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
+    <xs:attribute type="xs:integer" name="border" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="throttle-configType">
