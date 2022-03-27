@@ -60,7 +60,7 @@ roster.xsl      stylesheet for JMRI roster index
 
 rpsfile.xsl     stylesheet for JMRI RPS files
 
-throttle-config.xsl    stylesheet for individual JMRI throttle layout files
+throttle-config.xsl    stylesheet for individual user-named throttle config files
                 [Uses throttle-include.xsl]
 
 throttle-layout-config.xsl    stylesheet for JMRI_ThrottlePreference.xml files
