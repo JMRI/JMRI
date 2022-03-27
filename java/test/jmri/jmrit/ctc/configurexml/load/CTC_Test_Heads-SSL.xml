@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>21</minor>
-    <test>1</test>
-    <modifier>ish</modifier>
+    <minor>99</minor>
+    <test>4</test>
+    <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -324,10 +324,7 @@
     </layoutblock>
   </layoutblocks>
   <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicProviderXml">
-    <signalelement signal="SH-Alpha-Left-C" mode="3" watchedturnout="IT101" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
-      <sensorname>IS101</sensorname>
-    </signalelement>
-    <signalelement signal="SH-Alpha-Right-AU" mode="2" watchedturnout="IT102" watchedsignal1="IH103" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="SH-Alpha-Left-AU" mode="2" watchedturnout="IT101" watchedsignal1="IH107" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IS103</sensorname>
     </signalelement>
     <signalelement signal="SH-Alpha-Left-AL" mode="3" watchedturnout="IT101" watchedsignal1="IH108" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
@@ -336,16 +333,19 @@
     <signalelement signal="SH-Alpha-Left-B" mode="2" watchedturnout="IT101" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IS101</sensorname>
     </signalelement>
-    <signalelement signal="SH-Alpha-Left-AU" mode="2" watchedturnout="IT101" watchedsignal1="IH107" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>IS103</sensorname>
+    <signalelement signal="SH-Alpha-Left-C" mode="3" watchedturnout="IT101" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensorname>IS101</sensorname>
     </signalelement>
-    <signalelement signal="SH-Alpha-Right-C" mode="3" watchedturnout="IT102" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
-      <sensorname>IS106</sensorname>
+    <signalelement signal="SH-Alpha-Right-AU" mode="2" watchedturnout="IT102" watchedsignal1="IH103" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>IS103</sensorname>
     </signalelement>
     <signalelement signal="SH-Alpha-Right-AL" mode="3" watchedturnout="IT102" watchedsignal1="IH104" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
       <sensorname>IS104</sensorname>
     </signalelement>
     <signalelement signal="SH-Alpha-Right-B" mode="2" watchedturnout="IT102" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>IS106</sensorname>
+    </signalelement>
+    <signalelement signal="SH-Alpha-Right-C" mode="3" watchedturnout="IT102" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
       <sensorname>IS106</sensorname>
     </signalelement>
   </signalelements>
@@ -388,7 +388,7 @@
       <conditionalAction option="1" type="9" systemName="Reset" data="2" delay="0" string="" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Sep 04 12:10:56 CDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Sep 04 13:10:56 EDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <ctcdata class="jmri.jmrit.ctc.configurexml.CtcManagerXml">
     <ctcProperties>
       <CodeButtonInternalSensorPattern>IS#:CB</CodeButtonInternalSensorPattern>
@@ -745,7 +745,7 @@
       </IL_Signals>
     </ctcCodeButtonData>
   </ctcdata>
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My SSL Layout" x="97" y="22" windowheight="276" windowwidth="733" panelheight="180" panelwidth="680" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My SSL Layout" x="97" y="25" windowheight="276" windowwidth="733" panelheight="180" panelwidth="680" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="My Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -1922,54 +1922,15 @@
   </paneleditor>
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Wed Sep 09 16:57:14 CDT 2020</date>
-      <filename>JMRI program</filename>
-    </operation>
-    <operation>
       <type>Load OK</type>
-      <date>Wed Sep 09 16:57:25 CDT 2020</date>
-      <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/CTC_Test_Heads-SSL.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Sat Sep 05 22:28:45 CDT 2020</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Sat Sep 05 22:28:57 CDT 2020</date>
-          <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/CTC%20Test%20Heads-SSL.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Sep 04 12:10:56 CDT 2020</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Sep 04 12:40:50 CDT 2020</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Sat Sep 05 22:45:31 CDT 2020</date>
-          <filename>/Users/das/JMRI/_Profiles/CTC_Test.jmri/ctc/GUIObjects.xml</filename>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Sat Sep 05 22:48:12 CDT 2020</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <date>Sun Mar 27 18:26:04 EDT 2022</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Heads-SSL.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Sep 09 16:57:51 CDT 2020</date>
+      <date>Sun Mar 27 18:26:10 EDT 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.1ish+das+20200909T2157Z+Rfc09655fcc on Wed Sep 09 16:57:51 CDT 2020-->
+  <!--Written by JMRI version 4.99.4plus+jake+20220327T2147Z+R55db2edd25 on Sun Mar 27 18:26:10 EDT 2022-->
 </layout-config>
