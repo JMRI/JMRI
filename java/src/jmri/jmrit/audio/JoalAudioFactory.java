@@ -325,6 +325,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
     @Override
     public String toString() {
+        if (al == null) return "JoalAudioFactory, using null";
         try {
             return "JoalAudioFactory, using OpenAL:"
                     + " vendor - " + al.alGetString(AL.AL_VENDOR)
