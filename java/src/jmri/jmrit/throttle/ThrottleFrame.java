@@ -245,6 +245,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         try {
             XmlFile xf = new XmlFile() {
             };   // odd syntax is due to XmlFile being abstract
+            xf.setValidate(XmlFile.Validate.CheckDtdThenSchema);
             File f = new File(sfile);
             Element root = xf.rootFromFile(f);
             Element conf = root.getChild("ThrottleFrame");
