@@ -25,6 +25,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.EnableDestinationAction;
+import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
@@ -394,6 +395,18 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                     JOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), car.toString(), status),
                             Bundle.getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
+                } else {
+                    // check to see if car can be routed to final destination
+                    Router router = InstanceManager.getDefault(Router.class);
+                    if (!router.isCarRouteable(car, null, (Location) finalDestinationBox.getSelectedItem(),
+                                    finalDestTrack, null)) {
+                        JOptionPane.showMessageDialog(this,
+                                MessageFormat.format(Bundle.getMessage("rsCanNotRouteMsg"), car.toString(),
+                                        car.getLocationName(), car.getTrackName(),
+                                        finalDestinationBox.getSelectedItem(),
+                                        finalDestTrack == null ? "" : finalDestTrack.getName()),
+                                Bundle.getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
+                    }
                 }
             }
         }

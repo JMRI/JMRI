@@ -592,12 +592,18 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added a new version of "advanced location following". This is now based
+            on a LayoutEditor panel and hence much easier to setup. See the
+            <a href="https://www.jmri.org/help/en/manual/DecoderPro/VSD_LocationsMgr.shtml#advanced_location_following">
+			documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Add a search feature to the JmriHelp local web page.</li>
+            <li>The method JUnitUtil.releaseThread(this) and JUnitUtil.releaseThread(this, delay)
+            has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
+            JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
         </ul>
 
