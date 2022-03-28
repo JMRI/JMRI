@@ -76,13 +76,13 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:apply-templates/>
   </xsl:template>
 <!-- Title each throttle frames -->
-  <xsl:template match="ThrottleFrame">
+  <xsl:template match="ThrottleWindow/ThrottleFrame">
     <h3>Throttle Frame: "<xsl:value-of select="@ThrottleXMLFile"/>"</h3>
     <xsl:apply-templates/>
   </xsl:template>
 <!-- Title each throttle frames -->
-  <xsl:template match="Jynstrument">
-    <h3>Jynstrument</h3>
+  <xsl:template match="ThrottleWindow/Jynstrument">
+    <h3>Toolbar Jynstrument</h3>
     <table border="border-width:thin" width="67%">
           <tr><td>Jynstrument Folder</td><td><xsl:value-of select="@JynstrumentFolder"/></td></tr>
       <!-- Future proofing: ["USBThottle" is only element at current time 2022/03/25] -->
