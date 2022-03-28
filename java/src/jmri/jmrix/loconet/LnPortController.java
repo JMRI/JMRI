@@ -50,7 +50,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
-    protected boolean mInterrogate;
+    protected boolean mInterrogateAtStart;
     protected boolean mTranspondingAvailable = false;
 
     protected LnCommandStationType[] commandStationTypes = {
@@ -120,9 +120,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
     
     public void setInterrogateOnStart(String value) {
-        // default (most common state) is off, so just check for Yes
-        mInterrogate = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
-        log.debug("tInterrogate on Start: {}", mInterrogate); // NOI18N
+        // default (most common state) is on, so just check for No
+        mInterrogateAtStart = !(value.equals("No") || value.equals(Bundle.getMessage("ButtonNo")));
+        log.debug("tInterrogate on Start: {}", mInterrogateAtStart); // NOI18N
     }
 
     @Override
