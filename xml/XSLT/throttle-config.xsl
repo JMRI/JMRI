@@ -65,32 +65,6 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:apply-templates/>
   </xsl:template>
 
-  <!-- Display Jynstrument panel subwindow -->
-  <xsl:template match="Jynstrument">
-    <h4>Jynstrument Panel     <xsl:call-template name="window"/></h4>
-    <table border="border-width:thin" width="75%">
-      <!-- Future proofing [only one attribute at current time 2022/03/25] -->
-      <xsl:for-each select="@*"> 
-        <tr>
-          <td><xsl:value-of select="name()"/></td>
-          <td><xsl:value-of select="."/></td>
-        </tr>
-      </xsl:for-each>
-      <xsl:for-each select="./*"> 
-      <!-- Future proofing ["window" is only element at current time 2022/03/25] -->
-       <xsl:if test='name() != "window"'>
-        <tr>
-          <td><xsl:value-of select="name()"/></td>
-          <td><xsl:for-each select="@*">
-            <xsl:value-of select="name()"/>: <xsl:value-of select="."/><br/></xsl:for-each>
-          </td>
-        </tr>
-       </xsl:if>
-      </xsl:for-each>
-    </table>
-    <xsl:apply-templates/>
-  </xsl:template>
-
 
 <!-- All detail process templates in include -->
 <xsl:include href="throttle-include.xsl"/>
