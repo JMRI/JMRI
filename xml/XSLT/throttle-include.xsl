@@ -15,7 +15,7 @@
   </xsl:template>
 
   <!-- Display control panel subwindow -->
-  <xsl:template match="ControlPanel">
+  <xsl:template match="ThrottleFrame/ControlPanel">
     <h4>Control Panel   <xsl:call-template name="window"/></h4>
     <xsl:apply-templates/>
     <table border="border-width:thin" width="50%">
@@ -45,7 +45,7 @@
 
 
   <!-- Display function panel subwindow -->
-  <xsl:template match="FunctionPanel">
+  <xsl:template match="ThrottleFrame/FunctionPanel">
     <h4>Function Panel  <xsl:call-template name="window"/></h4>
     <table border="border-width:thin" width="100%">
       <tr>
@@ -75,9 +75,9 @@
   </xsl:template>
 
   <!-- Display address panel subwindow -->
-  <xsl:template match="AddressPanel">
+  <xsl:template match="ThrottleFrame/AddressPanel">
     <h4>Address Panel   <xsl:call-template name="window"/></h4>
-    <table border="border-width:thin" width="33%">
+    <table border="border-width:thin" width="50%">
       <tr>
         <th>Loco Number</th>
         <th>Attributes</th>
@@ -95,19 +95,45 @@
           </xsl:if>
         </td>
         <td>
-          <xsl:if test='dcclocoaddress/@number > 0'>DCC</xsl:if>
-          <xsl:if test='dcclocoaddress/@longaddress = "yes"'>[Long]</xsl:if>
+          <xsl:if test='dcclocoaddress/@number > 0'>DCC </xsl:if>
+          <xsl:if test='dcclocoaddress/@longaddress = "yes"'> [Long]</xsl:if>
         </td>
       </tr>
     </xsl:if>
   </xsl:template>
 
   <!-- Display speed panel subwindow -->
-  <xsl:template match="SpeedPanel">
+  <xsl:template match="ThrottleFrame/SpeedPanel">
     <h4>Speed Panel     <xsl:call-template name="window"/></h4>
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <!-- Display Jynstrument panel subwindow -->
+  <xsl:template match="ThrottleFrame/Jynstrument">
+    <h4>Panel Jynstrument  <xsl:call-template name="window"/></h4>
+    <table border="border-width:thin" width="50%">
+      <!-- Future proofing [only one attribute at current time 2022/03/25] -->
+      <xsl:for-each select="@*"> 
+        <tr>
+          <td><xsl:value-of select="name()"/></td>
+          <td><xsl:value-of select="."/></td>
+        </tr>
+      </xsl:for-each>
+      <xsl:for-each select="./*"> 
+      <!-- Future proofing ["window" is only element at current time 2022/03/25] -->
+       <xsl:if test='name() != "window"'>
+        <tr>
+          <td><xsl:value-of select="name()"/></td>
+          <td><xsl:for-each select="@*">
+            <xsl:value-of select="name()"/>: <xsl:value-of select="."/><br/></xsl:for-each>
+          </td>
+        </tr>
+       </xsl:if>
+      </xsl:for-each>
+    </table>
     <xsl:apply-templates/>
   </xsl:template>
 
   
   </xsl:stylesheet>
-
+  
