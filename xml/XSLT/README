@@ -60,10 +60,10 @@ roster.xsl      stylesheet for JMRI roster index
 
 rpsfile.xsl     stylesheet for JMRI RPS files
 
-throttle-config.xsl    stylesheet for individual user-named throttle config files
+throttle-config.xsl    stylesheet for individual throttle config files
                 [Uses throttle-include.xsl]
 
-throttle-layout-config.xsl    stylesheet for JMRI_ThrottlePreference.xml files
+throttle-layout-config.xsl    stylesheet for default (JMRI_ThrottlePreference.xml) and user-named layout config files
                 [Uses throttle-include.xsl]
 
 LogixToCode.xml Tool for creating Java code from the Logix and Routes
