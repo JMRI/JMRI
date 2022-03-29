@@ -16,6 +16,7 @@ import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.swing.NamedBeanComboBox;
 
@@ -107,6 +108,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 bean.getFirstSensor(),
                 DisplayOptions.DISPLAYNAME);
         sensorFeedBack1ComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(sensorFeedBack1ComboBox);
         feedback.addItem(new BeanEditItem(sensorFeedBack1ComboBox,
                 Bundle.getMessage("FeedbackSensor1"),
                 Bundle.getMessage("FeedbackSensorToolTip")));
@@ -116,6 +118,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 bean.getSecondSensor(),
                 DisplayOptions.DISPLAYNAME);
         sensorFeedBack2ComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(sensorFeedBack2ComboBox);
         feedback.addItem(new BeanEditItem(sensorFeedBack2ComboBox,
                 Bundle.getMessage("FeedbackSensor2"),
                 Bundle.getMessage("FeedbackSensorToolTip")));
@@ -389,7 +392,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         }
         bei.add(lock);
         return lock;
-    }   // lock() 
+    }   // lock()
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<>();
@@ -501,4 +504,4 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         return speed;
     }
 
-} 
+}
