@@ -118,6 +118,9 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
             }
         } catch (org.jdom2.JDOMException ex) {
             log.warn("Loading Throttles exception", ex);
+            jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
+                    null, "parsing file " + f.getName(),
+                    "Parse error", null, null, ex);
             return false;
         }
         return true;
