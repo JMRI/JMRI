@@ -291,7 +291,12 @@
 		<li>TSU Genesis Steam - N Challenger add CV and change some default value per user request</li>
             </ul>
 
-        <h4>TAMS</h4>
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>QuadLN_S - added support for new firmware version 3.1 features</li>
+            </ul>
+            
+       <h4>TAMS</h4>
             <ul>
                 <li></li>
             </ul>
