@@ -605,5 +605,6 @@
             <li>The method JUnitUtil.releaseThread(this) and JUnitUtil.releaseThread(this, delay)
             has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
             JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
+            <li>Improve Block tracking in the case of a broken train being rejoined.
         </ul>
 
