@@ -1081,7 +1081,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
                 } else {
                     // handle merging trains: All neighbors with same content (train ID)
-                    if (allNeighborsAgree) {
+                    if (allNeighborsAgree && next != null) {
                         setValue(next.getBlock().getValue());
                         setDirection(next.getFromBlockDirection());
                     } else {
