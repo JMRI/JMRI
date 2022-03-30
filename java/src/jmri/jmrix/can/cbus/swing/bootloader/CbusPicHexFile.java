@@ -3,9 +3,6 @@ package jmri.jmrix.can.cbus.swing.bootloader;
 import static jmri.jmrix.can.cbus.CbusConstants.MANU_MERG;
 import static jmri.jmrix.can.cbus.swing.bootloader.CbusParameters.MANU_ID_IDX;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Extend hex file class for a CBUS PIC with parameter block
  * 
@@ -126,6 +123,6 @@ public class CbusPicHexFile extends HexFile{
             return new CbusParameters();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusPicHexFile.class);
+//    private final static Logger log = LoggerFactory.getLogger(CbusPicHexFile.class);
 
 }

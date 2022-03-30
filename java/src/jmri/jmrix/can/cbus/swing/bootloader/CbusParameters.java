@@ -1,9 +1,6 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
-import java.text.MessageFormat;
 import java.util.Arrays;
-
-import static jmri.jmrix.can.cbus.CbusConstants.MANU_MERG;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

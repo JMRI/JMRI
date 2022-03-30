@@ -7,8 +7,6 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanMutableFrame;
 import jmri.jmrix.can.CanReply;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to allow use of CBUS concepts to access the underlying can message.
@@ -657,7 +655,7 @@ public class CbusMessage {
         m.setHeader(0x5);
         for (int i = 0; i < d.length; i++) {
             m.setElement(i, d[i] & 0xff);
-        };
+        }
         return m;
     }
 
@@ -674,7 +672,7 @@ public class CbusMessage {
         m.setHeader(0x5);
         for (int i = 0; i < d.length; i++) {
             m.setElement(i, d[i] & 0xff);
-        };
+        }
         return m;
     }
 
@@ -817,5 +815,5 @@ public class CbusMessage {
         return (false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusMessage.class);
+//    private final static Logger log = LoggerFactory.getLogger(CbusMessage.class);
 }

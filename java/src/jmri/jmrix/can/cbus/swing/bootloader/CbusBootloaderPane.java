@@ -846,8 +846,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     /**
      * Send data to the hardware and keep a running checksum
      *
-     * @param address load address
-     * @param d       byte array of data being written
      * @param timeout timeout for write operation
      */
     protected void sendData(int timeout) {
@@ -905,8 +903,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     
     /**
      * Write next data for AN247 protocol
-     * 
-     * @return true if data was written
      */
     void writeNextDataAn247() {
 //        log.debug("writeNextDataAn247()");
@@ -937,8 +933,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
     /**
      * Write next data for CBUS protocol
-     * 
-     * @return true if data was written or address update sent
      */
     void writeNextDataCbus() {
 //        log.debug("writeNextDataCbus()");
