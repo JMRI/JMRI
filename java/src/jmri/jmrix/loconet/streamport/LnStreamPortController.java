@@ -82,6 +82,7 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
+    protected boolean mInterrogateAtStart = false;
 
     /**
      * Set config info from the Command Station type enum.
@@ -106,6 +107,17 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
             mTurnoutExtraSpace = true;
         }
         log.debug("turnout extra space: {}", mTurnoutExtraSpace); // NOI18N
+    }
+
+    /**
+     * Set whether to interrogate at startup
+     *
+     * @param value either yes or no
+     */
+    public void setInterrogateOnStart(String value) {
+        // default (most common state) is on, so just check for No
+        mInterrogateAtStart = !(value.equals("No") || value.equals(Bundle.getMessage("ButtonNo")));
+        log.debug("Interrogate at StartUp: {}", mInterrogateAtStart); // NOI18N
     }
 
     @Override

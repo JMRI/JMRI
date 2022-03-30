@@ -50,7 +50,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
-    protected boolean mInterrogateAtStart;
+    protected boolean mInterrogateAtStart = true;
     protected boolean mTranspondingAvailable = false;
 
     protected LnCommandStationType[] commandStationTypes = {
