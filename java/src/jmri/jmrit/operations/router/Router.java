@@ -76,7 +76,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      * 
      * @param car         the car being tested
      * @param train       the first train servicing the car, can be null
-     * @param track       the destination track
+     * @param track       the destination track, can not be null
      * @param buildReport the report, can be null
      * @return true if the car can be routed to the track
      */
@@ -85,10 +85,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 MessageFormat.format(Bundle.getMessage("RouterIsCarRoutable"),
                         new Object[]{car.toString(), car.getLocationName(), car.getTrackName(), car.getLoadName(),
                                 track.getLocation().getName(), track.getName()}));
-
+        return isCarRouteable(car, train, track.getLocation(), track, buildReport);
+    }
+    
+    public boolean isCarRouteable(Car car, Train train, Location location, Track track, PrintWriter buildReport) {
         Car c = car.copy();
         c.setTrack(car.getTrack());
-        c.setFinalDestination(track.getLocation());
+        c.setFinalDestination(location);
         c.setFinalDestinationTrack(track);
         boolean results = setDestination(c, train, buildReport);
         c.setDestination(null, null); // clear router car destinations

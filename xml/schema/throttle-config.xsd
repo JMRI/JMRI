@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- XML Schema for Throttle Config xml file                                -->
+
+<!-- This schema is part of JMRI. Copyright 2022.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+           >
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+
+  <xs:element name="throttle-config" type="throttle-configType"/>
+
+  <xs:complexType name="windowType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:integer" name="x" use="required"/>
+        <xs:attribute type="xs:integer" name="y" use="required"/>
+        <xs:attribute type="xs:integer" name="width" use="required"/>
+        <xs:attribute type="xs:integer" name="height" use="required"/>
+        <xs:attribute type="trueFalseType" name="isVisible" use="optional"/>
+        <xs:attribute type="trueFalseType" name="isIconified" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ControlPanelType">
+    <xs:sequence>
+      <xs:element type="windowType" name="window"/>
+    </xs:sequence>
+    <xs:attribute type="xs:integer" name="displaySpeedSlider"/>
+    <xs:attribute type="trueFalseType" name="trackSlider"/>
+    <xs:attribute type="xs:integer" name="trackSliderMinInterval"/>
+    <xs:attribute type="xs:string" name="switchSliderOnFunction"/>
+    <xs:attribute type="xs:string" name="hideSpeedStep"/>
+  </xs:complexType>
+
+  <xs:complexType name="FunctionButtonType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:integer" name="id" use="required"/>
+        <xs:attribute type="xs:string" name="text" use="required"/>
+        <xs:attribute type="trueFalseType" name="isLockable" use="required"/>
+        <xs:attribute type="trueFalseType" name="isVisible" use="required"/>
+        <xs:attribute type="xs:integer" name="fontSize" use="optional"/>
+        <xs:attribute type="xs:integer" name="buttonImageSize" use="required"/>
+        <xs:attribute type="xs:string" name="iconPath" use="required"/>
+        <xs:attribute type="xs:string" name="selectedIconPath" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="FunctionPanelType">
+    <xs:sequence>
+      <xs:element type="windowType" name="window"/>
+      <xs:element type="FunctionButtonType" name="FunctionButton" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dcclocoaddressType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="number" use="optional"/>
+        <xs:attribute type="yesNoType" name="longaddress" default="no" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="locoaddressType">
+    <xs:sequence>
+      <xs:element type="dcclocoaddressType" name="dcclocoaddress"/>
+      <xs:element type="xs:string" name="number"/>
+      <xs:element type="xs:string" name="protocol"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AddressPanelType">
+    <xs:sequence>
+      <xs:element type="windowType" name="window"/>
+      <xs:element type="locoaddressType" name="locoaddress" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SpeedPanelType">
+    <xs:sequence>
+      <xs:element type="windowType" name="window"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="JynstrumentType">
+    <xs:sequence>
+      <xs:element type="windowType" name="window"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="JynstrumentFolder" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="ThrottleFrameType" mixed="true">
+    <xs:sequence>
+      <xs:element type="ControlPanelType" name="ControlPanel" minOccurs="0"/>
+      <xs:element type="FunctionPanelType" name="FunctionPanel" minOccurs="0"/>
+      <xs:element type="AddressPanelType" name="AddressPanel" minOccurs="0"/>
+      <xs:element type="SpeedPanelType" name="SpeedPanel" minOccurs="0"/>
+      <xs:element type="JynstrumentType" name="Jynstrument" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:integer" name="border" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="throttle-configType">
+    <xs:sequence>
+      <xs:element type="ThrottleFrameType" name="ThrottleFrame"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
