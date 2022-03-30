@@ -1040,25 +1040,38 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 log.debug("Block {} has {} active linked blocks, comparing directions", getDisplayName(), count);
                 next = null;
                 count = 0;
+                boolean allNeighborsAgree = true;  // true until it's found that some neighbor blocks contain different contents (trains)
+
+                // scan for neighbors without matching direction
                 for (int i = 0; i < currPathCnt; i++) {
                     if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
                         log.debug("comparing {} ({}) to {} ({})",
                                 pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
                                 getDisplayName(), Path.decodeDirection(pFromDir[i]));
                         if ((pDir[i] & pFromDir[i]) > 0) { //use bitwise comparison to support combination directions such as "North, West"
+                            if (next != null && ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
+                                allNeighborsAgree = false;
+                            }
                             count++;
                             next = pList[i];
                         }
                     }
                 }
+
+                // If loop above didn't find neighbors with matching direction, scan w/out direction for neighbors
+                // This is used when directions are not being used
                 if (next == null) {
                     for (int i = 0; i < currPathCnt; i++) {
                         if (isSet[i] && isActive[i]) {
+                            if (next != null && ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
+                                allNeighborsAgree = false;
+                            }
                             count++;
                             next = pList[i];
                         }
                     }
                 }
+
                 if (next != null && count == 1) {
                     // found one block with proper direction, use it
                     setValue(next.getBlock().getValue());
@@ -1067,14 +1080,20 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             getDisplayName(), next.getBlock().getValue(),
                             next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
                 } else {
-                    // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                    log.warn("count of {} ACTIVE neightbors with proper direction can't be handled for block {} but maybe it can be determined when another block becomes free", count, getDisplayName());
-                    pListOfPossibleEntrancePaths = new Path[currPathCnt];
-                    cntOfPossibleEntrancePaths = 0;
-                    for (int i = 0; i < currPathCnt; i++) {
-                        if (isSet[i] && isActive[i]) {
-                            pListOfPossibleEntrancePaths[cntOfPossibleEntrancePaths] = pList[i];
-                            cntOfPossibleEntrancePaths++;
+                    // handle merging trains: All neighbors with same content (train ID)
+                    if (allNeighborsAgree && next != null) {
+                        setValue(next.getBlock().getValue());
+                        setDirection(next.getFromBlockDirection());
+                    } else {
+                    // don't all agree, so can't determine unique value
+                        log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for block {} but maybe it can be determined when another block becomes free", count, getDisplayName());
+                        pListOfPossibleEntrancePaths = new Path[currPathCnt];
+                        cntOfPossibleEntrancePaths = 0;
+                        for (int i = 0; i < currPathCnt; i++) {
+                            if (isSet[i] && isActive[i]) {
+                                pListOfPossibleEntrancePaths[cntOfPossibleEntrancePaths] = pList[i];
+                                cntOfPossibleEntrancePaths++;
+                            }
                         }
                     }
                 }
