@@ -129,6 +129,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
+    protected boolean mInterrogateAtStart = true;
 
     /**
      * Configure the programming manager and "command station" objects.
@@ -141,13 +142,16 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
      *                                  transopnding reports
+     * @param mInterrogate       Send interrogate messages at start up
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
-                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
+                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
+                                            boolean mInterrogate) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;
+        this.mInterrogateAtStart = mInterrogate;
 
         // create and install SlotManager
         if (sm != null) {
@@ -288,7 +292,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> new LnSensorManager(this, mInterrogateAtStart));
     }
 
     public LnLightManager getLightManager() {

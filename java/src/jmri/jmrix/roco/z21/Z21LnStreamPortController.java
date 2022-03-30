@@ -26,6 +26,7 @@ public class Z21LnStreamPortController extends jmri.jmrix.loconet.streamport.LnS
         // hardcode options for now
         setCommandStationType(LnCommandStationType.COMMAND_STATION_STANDALONE);
         setTurnoutHandling("");
+        setInterrogateOnStart("No");  // same default as turnout handling
         // connect to a packetizing traffic controller
         Z21LnStreamPortPacketizer packets = new Z21LnStreamPortPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
@@ -34,7 +35,7 @@ public class Z21LnStreamPortController extends jmri.jmrix.loconet.streamport.LnS
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, false); // never transponding
+                mTurnoutNoRetry, mTurnoutExtraSpace, false, mInterrogateAtStart); // never transponding
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
