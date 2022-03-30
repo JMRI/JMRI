@@ -652,47 +652,29 @@ public class CbusMessage {
      * @return ready to send CanMessage
      */
     static public CanMessage getBootWriteData(int[] d, int header) {
-        CanMessage m = new CanMessage(8, header);
+        CanMessage m = new CanMessage(d.length, header);
         m.setExtended(true);
         m.setHeader(0x5);
-        try {
-            m.setElement(0, d[0] & 0xff);
-            m.setElement(1, d[1] & 0xff);
-            m.setElement(2, d[2] & 0xff);
-            m.setElement(3, d[3] & 0xff);
-            m.setElement(4, d[4] & 0xff);
-            m.setElement(5, d[5] & 0xff);
-            m.setElement(6, d[6] & 0xff);
-            m.setElement(7, d[7] & 0xff);
-        } catch (Exception e) {
-            log.error("Exception in bootloader data", e);
-        }
+        for (int i = 0; i < d.length; i++) {
+            m.setElement(i, d[i] & 0xff);
+        };
         return m;
     }
 
     /**
-     * Microchip AN247 format message to write 8 bytes of data
+     * Microchip AN247 format message to write up to 8 bytes of data
      *
-     * @param d data array, 8 length, values 0-255
+     * @param d data array, values 0-255
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootWriteData(byte[] d, int header) {
-        CanMessage m = new CanMessage(8, header);
+        CanMessage m = new CanMessage(d.length, header);
         m.setExtended(true);
         m.setHeader(0x5);
-        try {
-            m.setElement(0, d[0] & 0xff);
-            m.setElement(1, d[1] & 0xff);
-            m.setElement(2, d[2] & 0xff);
-            m.setElement(3, d[3] & 0xff);
-            m.setElement(4, d[4] & 0xff);
-            m.setElement(5, d[5] & 0xff);
-            m.setElement(6, d[6] & 0xff);
-            m.setElement(7, d[7] & 0xff);
-        } catch (Exception e) {
-            log.error("Exception in bootloader data", e);
-        }
+        for (int i = 0; i < d.length; i++) {
+            m.setElement(i, d[i] & 0xff);
+        };
         return m;
     }
 

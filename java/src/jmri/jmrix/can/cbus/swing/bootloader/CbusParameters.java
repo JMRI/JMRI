@@ -65,48 +65,48 @@ public class CbusParameters {
     }
     
     
-    /**
-     * Create parameters from a hex file
-     * 
-     * @param f hex file already read
-     */
-    public CbusParameters(HexFile f) {
-        this();
-        
-        int checksum = 0;
-        byte [] d;
-
-        // Look for new style parameter block @ 0x800
-        d = f.getData(0x820, 32);
-        
-        // Copy to params array and calculate checksum.
-        // Copy is offset by 1 to match CBUS parameter numbering
-        for (int i = 0; i < 30; i++) {
-            paramData[i + 1] = d[i] & 0xFF;
-            checksum += d[i];
-        }
-        // Copy checksum and parameter count
-        paramData[31] = d[30];
-        paramData[32] = d[31];
-        paramData[0] = d[24] & 0xFF;
-        
-        int paramCheck = ((d[31] & 0xFF)<<8) + (d[30] & 0xFF);
-        if ((checksum & 0xFFFF) == paramCheck) {
-            valid = true;
-            return;
-        }
-
-        // Assume old style parameter block @ 0x810 and assume only MERG made these
-        // as a check
-        d = f.getData(0x810, 8);
-        if (d[MANU_ID_IDX] == (byte)MANU_MERG) {
-            for (int i = 0; i < 7; i++) {
-                paramData[i + 1] = d[i];
-            }
-            paramData[0] = 7;
-            valid = true;
-        }
-    }
+//    /**
+//     * Create parameters from a hex file
+//     * 
+//     * @param f hex file already read
+//     */
+//    public CbusParameters(HexFile f) {
+//        this();
+//        
+//        int checksum = 0;
+//        byte [] d;
+//
+//        // Look for new style parameter block @ 0x800
+//        d = f.getData(0x820, 32);
+//        
+//        // Copy to params array and calculate checksum.
+//        // Copy is offset by 1 to match CBUS parameter numbering
+//        for (int i = 0; i < 30; i++) {
+//            paramData[i + 1] = d[i] & 0xFF;
+//            checksum += d[i];
+//        }
+//        // Copy checksum and parameter count
+//        paramData[31] = d[30];
+//        paramData[32] = d[31];
+//        paramData[0] = d[24] & 0xFF;
+//        
+//        int paramCheck = ((d[31] & 0xFF)<<8) + (d[30] & 0xFF);
+//        if ((checksum & 0xFFFF) == paramCheck) {
+//            valid = true;
+//            return;
+//        }
+//
+//        // Assume old style parameter block @ 0x810 and assume only MERG made these
+//        // as a check
+//        d = f.getData(0x810, 8);
+//        if (d[MANU_ID_IDX] == (byte)MANU_MERG) {
+//            for (int i = 0; i < 7; i++) {
+//                paramData[i + 1] = d[i];
+//            }
+//            paramData[0] = 7;
+//            valid = true;
+//        }
+//    }
     
     
     /**
@@ -239,7 +239,11 @@ public class CbusParameters {
         if (valid == false) {
             return Bundle.getMessage("ParamsInvalid");
         } else {
-            return super.toString();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < paramData[0]; i++) {
+                sb.append(paramData[i] + " ");
+            }
+            return sb.toString();
         }
     }
     

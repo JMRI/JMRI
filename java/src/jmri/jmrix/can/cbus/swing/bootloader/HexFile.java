@@ -5,32 +5,39 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.text.MessageFormat;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Class to encapsulate an intel format hex file for a CBUS PIC.
  *
- * @author Andrew Crosland Copyright (C) 2020
+ * Assumes hex record addresses are 8-byte aligned and that addresses increase
+ * monotonically.
+ * 
+ * @author Andrew Crosland Copyright (C) 2020, 2022
  */
 public class HexFile {
 
-    private String name;
-    private final File file;
-    private FileInputStream in;
-    private BufferedInputStream buffIn;
-    // 4MB should be enough for most CBUS modules 
-    protected static final int MAX_PROG_SIZE = 4*1024*1024;
+    protected String name;
+    protected File file;
+    protected FileInputStream in;
+    protected BufferedInputStream buffIn;
+    // Number of hex records
+    protected static final int MAX_HEX_SIZE = 10000;
 
-    private int address = 0;
-    private boolean read;
-    private int lineNo = 0;
-    private int progStart = MAX_PROG_SIZE;
+    protected int address = 0;
+    protected boolean read;
+    protected int lineNo = 0;
+    private int progStart = 99999999;
     private int progEnd = 0;
 
     // Storage for raw program data
-    private byte [] hexData;
+    protected HexRecord [] hexRecords;
+    protected int readIndex = 0;
+    protected int endRecord = 0;
 
 
     /**
@@ -42,17 +49,9 @@ public class HexFile {
         name = fileName;
         file = new File(fileName);
 
-        hexData = new byte [MAX_PROG_SIZE];
-        setDataToErasedState();
+        hexRecords = new HexRecord[MAX_HEX_SIZE];
     }
 
-
-    /**
-     * Set data arrays to erased state, usually all FFs
-     */
-    private void setDataToErasedState() {
-        Arrays.fill(hexData, (byte)-1);
-    }
 
     /**
      * @return name of the open file
@@ -94,51 +93,72 @@ public class HexFile {
 
 
     /**
+     * DProcess record if required
+     * @param r hex record
+     */
+    protected void checkRecord(HexRecord r) {
+        
+    }
+    
+    /**
+     * Read one hex record from the file
+     * 
+     * @return the hex record
+     * @throws java.io.IOException on read error.
+     */
+    protected HexRecord readOneRecord() throws IOException {
+        HexRecord r;
+        try {
+            r = new HexRecord(this);
+        } catch (IOException e) {
+            log.error("Exception reading hex record", e);
+            throw new IOException(e);
+        }
+        
+        checkRecord(r);
+        
+        return r;
+    }
+    
+    /**
      * Read a hex file.
      * <p>
-     * Read hex records into the array of programming data. A second array is
-     * used as a map to flag which bytes have actually been loaded from the hex
-     * file.
-     * 
-     * @throws java.io.IOException on read error.
+     * Read hex records and store DATA records in the array. 
      */
     public void read() throws IOException {
         HexRecord r;
-        try {
-            do {
-                r = new HexRecord(this);
-                if (r.type == HexRecord.EXT_ADDR) {
-                    // Extended address record so update the address and read
-                    // next record. Cast data from byte to int
-                    address = (r.data[0]& 0xff) * 256 * 65536 + (r.data[1] & 0xff) * 65536;
-                    log.debug("Found extended adress record. Address is now {}", Integer.toHexString(address));
-                    lineNo++;
-                    r = new HexRecord(this);
+        
+        lineNo = 0;
+        endRecord = 0;
+        
+        do {
+            r = readOneRecord();
+            r.setLineNo(lineNo);
+            hexRecords[lineNo] = r;
+            if (r.type == HexRecord.EXT_ADDR) {
+                // Extended address record so update the record address
+                address = (r.data[0]& 0xff) * 256 * 65536 + (r.data[1] & 0xff) * 65536;
+//                hexRecords[lineNo].address = address;
+                log.debug("Found extended adress record for address {}", Integer.toHexString(address));
+                continue;
+            }
+            if (r.type == HexRecord.DATA) {
+                address = (address & 0xffff0000) + r.getAddress();
+                hexRecords[lineNo].address = address;
+                log.debug("Hex record for address {}", Integer.toHexString(hexRecords[lineNo].address));
+                // Keep track of start and end addresses that have been read
+                if (address < progStart) {
+                    progStart = address;
                 }
-                if (r.type == HexRecord.DATA) {
-                    lineNo++;
-                    r.setLineNo(lineNo);
-                    address = (address & 0xffff0000) + r.getAddress();
-                    log.debug("Hex record for address {}", Integer.toHexString(address));
-
-                    for (int i = 0; i < r.len; i++) {
-                        hexData[address + i] = r.getData(i);
-                    }
-                    
-                    // Keep track of start and end addresses that have been read
-                    if (address < progStart) {
-                        progStart = address;
-                    }
-                    if ((address + r.len) > progEnd) {
-                        progEnd = address + r.len;
-                    }
+                if ((address + r.len) > progEnd) {
+                    progEnd = address + r.len;
                 }
-            } while (r.type != HexRecord.END);
-        } catch (IOException e) {
-            log.error("Exception reading hex file", e);
-            setDataToErasedState();
-            throw new IOException(e);
-        }
+            }
+            if (r.type == HexRecord.END) {
+                endRecord = lineNo;
+            }
+            lineNo++;
+        } while (r.type != HexRecord.END);
         log.debug("Done reading hex file");
     }
 
@@ -173,8 +193,7 @@ public class HexFile {
      * @throws IOException  from the underlying read operation or if there's an invalid hex digit
      */
     private int rdHexDigit() throws IOException {
-        int b = 0;
-        b = buffIn.read();
+        int b = buffIn.read();
         if ((b >= '0') && (b <= '9')) {
             b = b - '0';
         } else if ((b >= 'A') && (b <= 'F')) {
@@ -208,52 +227,49 @@ public class HexFile {
         return lineNo;
     }
 
-
+    
     /**
-     * Get program data bytes from a data array
+     * Return the next DATA record from the file
      * 
-     * @param offset    address of data to retrieve
-     * @param len       number of bytes to retrieve
-     * @return          array of bytes
+     * @return the next hex record
      */
-    private byte [] getBytes(int offset, int len) {
-        byte [] d = new byte[len];
-        Arrays.fill(d, (byte)-1);
-
-        int end = offset + len;
-        if ((offset + len) > MAX_PROG_SIZE) {
-            end = MAX_PROG_SIZE;
-        }
-
-        try {
-            System.arraycopy(hexData, offset, d, 0, end - offset);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            log.error("Index out of bounds", e);
-            d = new byte[len];
-            Arrays.fill(d, (byte)-1);
-        }
-        return d;
+    public HexRecord getNextRecord() throws ArrayIndexOutOfBoundsException {
+        return hexRecords[readIndex++];
     }
 
-
+    
     /**
-     * Get program data bytes from the data array
+     * Get the hex record for a given address
+     * 
+     * Expected that the address will be the start address of a record but will
+     * return the first record that encompasses the address and increment the
+     * index to point at the next record.
      *
-     * @param offset address of data to retrieve
-     * @param len   number of bytes to retrieve
-     * @return      array of bytes
+     * @param addr The address
+     * @return the hex record
      */
-    public byte [] getData(int offset, int len) {
-        byte [] d;
-        d = getBytes(offset, len);
-        return d;
+    public Optional<HexRecord> getRecordForAddress(int addr) throws ArrayIndexOutOfBoundsException {
+        HexRecord r;
+        readIndex = 0;
+        
+        while (true) { 
+            try {
+                r = hexRecords[readIndex++];
+                if ((r.type == HexRecord.DATA)
+                        && (addr >= r.address) && (addr < (r.address + r.len))) {
+                    return Optional.of(r);
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return Optional.empty();
+            }
+        }
     }
-
-
+    
+    
     /**
      * Return the lowest address read from the hex file
      *
-     * @return the highest addresss
+     * @return the highest address
      */
     public int getProgStart() {
         return progStart;
@@ -263,7 +279,7 @@ public class HexFile {
     /**
      * Return the highest address read from the hex file
      *
-     * @return the highest addresss
+     * @return the highest address
      */
     public int getProgEnd() {
         return progEnd;

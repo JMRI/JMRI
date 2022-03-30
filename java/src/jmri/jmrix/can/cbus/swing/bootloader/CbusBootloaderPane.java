@@ -7,9 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimerTask;
+import java.util.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -103,10 +101,12 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
     boolean hexForBootloader = false;
     
-    boolean skipFlag = false;
-
     int nodeNumber;
     int nextParam;
+    
+    protected HexRecord currentRecord;
+    protected int recordIndex = 0;
+    protected boolean recordDone = false;
 
     // Set Program memory upper limit for PIC18
     // Only needed for old AN274 based bootloader, which had no acknowledge. Used
@@ -409,9 +409,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     /**
      * Get the delay to be inserted between bootloader data writes.
      * 
-     * Used for AN247 porotocol that has no handshaking and relies on delays.
+     * For AN247, that has no handshaking can be slow or fast and then extended 
+     * for slow writes to EEPROM and CONFIG.
      * 
-     * Can be slow or fast and then extended for slow writes to EEPROM and CONFIG
+     * Only a single long timeout is used for CBUS protocol, which has full
+     * handshaking
      *
      * @return Delay in ms
      */
@@ -425,6 +427,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             if (bootAddress > CONFIG_START) {
                 delay *= 8;
             }
+        } else {
+            delay = CbusNode.BOOT_LONG_TIMEOUT_TIME;
         }
         
         return delay;
@@ -467,13 +471,13 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            hexFile = new HexFile(hexFileChooser.getSelectedFile().getPath());
+            hexFile = new CbusPicHexFile(hexFileChooser.getSelectedFile().getPath());
             log.debug("hex file chosen: {}", hexFile.getName());
             addToLog(MessageFormat.format(Bundle.getMessage("BootFileChosen"), hexFile.getName()));
             try {
                 hexFile.openRd();
                 hexFile.read();
-                fileParams = new CbusParameters(hexFile);
+                fileParams = ((CbusPicHexFile)hexFile).getParams();
                 if (!moduleCheckBox.isSelected()) {
                     if (fileParams.validate(fileParams, hardwareParams)) {
                         addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
@@ -721,7 +725,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             case NOP_SENT:
                 clearAckTimeout();
                 if (CbusMessage.isBootOK(r)) {
-                    // Acknowledge received for NOP sent after skipping
+                    // Acknowledge received for NOP
                     bootState = BootState.PROG_DATA;
                     writeNextData();
                 } else if (CbusMessage.isBootOutOfRange(r)) {
@@ -846,15 +850,16 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * @param d       byte array of data being written
      * @param timeout timeout for write operation
      */
-    protected void sendData(int address, byte [] d, int timeout) {
+    protected void sendData(int timeout) {
+
+        byte [] d = getDataFromRecord();
         updateChecksum(d);
-        bootAddress += d.length;
         dataFramesSent++;
         
         CanMessage m = CbusMessage.getBootWriteData(d, 0);
-        log.debug("Write frame {} at address {} {}", dataFramesSent, Integer.toHexString(address), m);
-        if ((address & 0xFF) == 0) {
-            addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), Integer.toHexString(address)));
+        log.debug("Write frame {} at address {} {}", dataFramesSent, Integer.toHexString(bootAddress), m);
+        if ((bootAddress & 0xFF) == 0) {
+            addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), Integer.toHexString(bootAddress)));
         } else {
             bootConsole.append(".");
         }        
@@ -865,19 +870,47 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             dataTimeout = timeout;
         }
         
+        bootAddress += d.length;
         tc.sendCanMessage(m, null);
     }
 
+    
+    /**
+     * Extract data from the current hex record
+     * 
+     * Returns 8 byte array or whatever is left in the record if less than 8 bytes.
+     * 
+     * Sets recordDone flag if record is exhausted.
+     * 
+     * @return data array
+     */
+    private byte [] getDataFromRecord() {
+        byte [] d;
+        
+        if (currentRecord.len - recordIndex >= 8) {
+            d = new byte[8];
+            if (currentRecord.len - recordIndex == 8) {
+                recordDone = true;
+            }
+        } else {
+            d = new byte[currentRecord.len - recordIndex];
+            recordDone = true;
+        }
+        for (int i = 0; i < d.length; i++) {
+            d[i] = currentRecord.getData(recordIndex++);
+        }
+        return d;
+    }
 
+    
     /**
      * Write next data for AN247 protocol
      * 
      * @return true if data was written
      */
-    boolean writeNextDataAn247() {
-        byte [] d;
-
-        log.debug("writeNextDataAn247()");
+    void writeNextDataAn247() {
+//        log.debug("writeNextDataAn247()");
+        
         if ((bootAddress == 0x7f8) && (hexForBootloader == true)) {
             log.debug("Pause for bootloader reset");
             // Special case for Pi-SPROG One, pause at end of bootloader code to allow time for node to reset
@@ -885,37 +918,20 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             checksum = 0;
             bootState = BootState.PROG_PAUSE;
             setPauseTimeout();
-            return true;
         } else {
-            // Skip frames that are in unprogrammed state
-            d = hexFile.getData(bootAddress, 8);
-            while (!isProgrammingNeeded(d) && (bootAddress < hexFile.getProgEnd())) {
-                dataFramesSent++;
-//                log.debug("Skip frame {} at address {}", dataFramesSent, Integer.toHexString(bootAddress));
-                if (skipFlag == false) {
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
-                }
-                skipFlag = true;
-                bootAddress += 8;
-                d = hexFile.getData(bootAddress, 8);
-            }
-
-            if (bootAddress < hexFile.getProgEnd()) {
-                if (skipFlag == true) {
-                    skipFlag = false;
-                    // Send NOP to adjust the address after skipping, no reply to this from AN247
-                    log.debug("Start writing at new address {} after skipping", Integer.toHexString(bootAddress));
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
-                    CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
-                    tc.sendCanMessage(m, null);
-                }
-                // Send the data
-                sendData(bootAddress, d, getWriteDelay());
-                return true;
-            }
+            // If the address has skipped we need to send a new address to the bootloader
+             if ((currentRecord.address + recordIndex) != bootAddress) {
+                 bootAddress = currentRecord.address;
+                 // Send NOP to adjust the address, no reply to this from AN247
+                 log.debug("Start writing at new address {} after skipping", Integer.toHexString(bootAddress));
+                 addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
+                 CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
+                 tc.sendCanMessage(m, null);
+             } else {
+                // Extract the data, send it and update bootAddress for next packet
+                sendData(getWriteDelay());
+             }
         }
-        
-        return false;
     }
 
 
@@ -924,51 +940,23 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * 
      * @return true if data was written or address update sent
      */
-    boolean writeNextDataCbus() {
-        byte [] d;
-
+    void writeNextDataCbus() {
 //        log.debug("writeNextDataCbus()");
-        if (skipFlag == false) {
-            // Skip frames that are in unprogrammed state
-            d = hexFile.getData(bootAddress, 8);
-            while (!isProgrammingNeeded(d) && (bootAddress < hexFile.getProgEnd())) {
-                dataFramesSent++;
-                if (skipFlag == false) {
-                    log.debug("Skip frame {} at address {}", dataFramesSent, Integer.toHexString(bootAddress));
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootAddressSkip"), Integer.toHexString(bootAddress)));
-                }
-                skipFlag = true;
-                bootAddress += 8;
-                d = hexFile.getData(bootAddress, 8);
-            }
 
-            if (bootAddress < hexFile.getProgEnd()) {
-                if (skipFlag == true) {
-                    // Send NOP to adjust the address after skipping, reply will come back here
-                    // with skipFlag true
-                    log.debug("Start writing at new address {} after skipping", Integer.toHexString(bootAddress));
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
-                    bootState = BootState.NOP_SENT;
-                    setAckTimeout();
-                    CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
-                    tc.sendCanMessage(m, null);
-                } else {
-                    // Nothing skipped so send the next data
-                    sendData(bootAddress, d, getWriteDelay());
-                }
-                return true;
-            }
+        // If the address has skipped we need to send a new address to the bootloader
+        if ((currentRecord.address + recordIndex) != bootAddress) {
+            bootAddress = currentRecord.address;
+            // Send NOP to adjust the address 
+            log.debug("Start writing at new address {}", Integer.toHexString(bootAddress));
+            addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
+            bootState = BootState.NOP_SENT;
+            setAckTimeout();
+            CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
+            tc.sendCanMessage(m, null);
         } else {
-            // We have been skipping, sent NOP address update and received ACK, so send data
-            skipFlag = false;
-            if (bootAddress < hexFile.getProgEnd()) {
-                d = hexFile.getData(bootAddress, 8);
-                sendData(bootAddress, d, CbusNode.BOOT_LONG_TIMEOUT_TIME);
-                return true;
-            }
+            // Extract the data, send it and update bootAddress for next packet
+            sendData(getWriteDelay());
         }
-        
-        return false;
     }
 
 
@@ -976,23 +964,28 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Write the next data frame for the bootloader
      */
     void writeNextData() {
-        boolean written;
-
+        if (recordDone) {
+            // Current record is exhausted, Get next ONE
+            recordDone = false;
+            recordIndex = 0;
+            currentRecord = hexFile.getNextRecord();
+            if (currentRecord.type == HexRecord.END) {
+                // No more data to send so send checksum
+                bootState = BootState.CHECK_SENT;
+                addToLog(Bundle.getMessage("BootVerifyChecksum"));
+                log.debug("Sending checksum {} as 2s complement {}", checksum, 0 - checksum);
+                setCheckTimeout();
+                CanMessage m = CbusMessage.getBootCheck(0 - checksum, 0);
+                tc.sendCanMessage(m, null);
+                return;
+            }
+        }
+        
         bootState = BootState.PROG_DATA;
         if (bootProtocol == BootProtocol.AN247) {
-            written = writeNextDataAn247();
+            writeNextDataAn247();
         } else {
-            written = writeNextDataCbus();
-        }
-
-        if (written == false) {
-            // No data to send so send checksum
-            bootState = BootState.CHECK_SENT;
-            addToLog(Bundle.getMessage("BootVerifyChecksum"));
-            log.debug("Sending checksum {} as 2s complement {}", checksum, 0 - checksum);
-            setCheckTimeout();
-            CanMessage m = CbusMessage.getBootCheck(0 - checksum, 0);
-            tc.sendCanMessage(m, null);
+            writeNextDataCbus();
         }
     }
 
@@ -1004,12 +997,26 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * hex file, otherwise start at the beginning of the hex file. 
      */
     private void initialise() {
+        Optional<HexRecord> hexRecord;
+        
         if (hardwareParams.areValid()) {
             bootAddress = hardwareParams.getLoadAddress();
         } else if (fileParams.areValid()) {
             bootAddress = fileParams.getLoadAddress();
         } else {
             bootAddress = hexFile.getProgStart();
+        }
+        
+        recordDone = false;
+        recordIndex = 0;
+        
+        hexRecord = hexFile.getRecordForAddress(bootAddress);
+        if (hexRecord.isPresent()) {
+            currentRecord = hexRecord.get();
+        } else {
+            log.debug("Did not find hex record for load address {}", "0x"+Integer.toHexString(bootAddress));
+            addToLog(MessageFormat.format(Bundle.getMessage("BootLoadAddressError"), Integer.toHexString(bootAddress)));
+            endProgramming(10);
         }
         checksum = 0;
         dataFramesSent = 0;
