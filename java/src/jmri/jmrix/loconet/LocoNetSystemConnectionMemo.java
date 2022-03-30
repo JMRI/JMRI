@@ -129,7 +129,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
-    protected boolean mInterrogate = true;
+    protected boolean mInterrogateAtStart = true;
 
     /**
      * Configure the programming manager and "command station" objects.
@@ -151,7 +151,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;
-        this.mInterrogate = mInterrogate;
+        this.mInterrogateAtStart = mInterrogate;
 
         // create and install SlotManager
         if (sm != null) {
@@ -292,7 +292,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> new LnSensorManager(this, mInterrogate));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> new LnSensorManager(this, mInterrogateAtStart));
     }
 
     public LnLightManager getLightManager() {
