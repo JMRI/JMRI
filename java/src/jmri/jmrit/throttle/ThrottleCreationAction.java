@@ -25,20 +25,18 @@ public class ThrottleCreationAction extends JmriAbstractAction {
     public ThrottleCreationAction(String s, WindowInterface wi) {
         super(s, wi);
         connectionConfig = null;
-        ThrottleManager throttleManager = jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
         // disable the ourselves if there is no throttle Manager
-        if (throttleManager == null) {
-            super.setEnabled(false);
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
+            setEnabled(false);
         }
     }
 
     public ThrottleCreationAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);
         connectionConfig = null;
-        ThrottleManager throttleManager = jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
         // disable the ourselves if there is no throttle Manager
-        if (throttleManager == null) {
-            super.setEnabled(false);
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
+            setEnabled(false);
         }
     }
 
@@ -50,10 +48,9 @@ public class ThrottleCreationAction extends JmriAbstractAction {
     public ThrottleCreationAction(String s) {
         super(s);
         connectionConfig = null;
-        ThrottleManager throttleManager = jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
         // disable the ourselves if there is no throttle Manager
-        if (throttleManager == null) {
-            super.setEnabled(false);
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
+            setEnabled(false);
         }
     }
 
