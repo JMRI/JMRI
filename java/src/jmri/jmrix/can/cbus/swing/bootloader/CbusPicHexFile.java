@@ -57,7 +57,7 @@ public class CbusPicHexFile extends HexFile{
         if (r.type == HexRecord.DATA) {
             // Look for "old" 8-byte paraneter block at 0x810, assuming aligned hex address
             if (r.address == PARAM_OLD_START) {
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i <= PARAM_OLD_LEN; i++) {
                     oldParams.setParam(pStart++, r.getData(i) & 0xFF);
                 }
                 checkValid = true;
@@ -68,8 +68,8 @@ public class CbusPicHexFile extends HexFile{
                     // and encompasses the whole parameter block.
                     rStart = PARAM_NEW_START - r.address;
                     pStart = 1;
-                    if (r.len > 32) {
-                        rEnd = rStart + 32;
+                    if (r.len > PARAM_NEW_LEN) {
+                        rEnd = rStart + PARAM_NEW_LEN;
                     } else {
                         rEnd = rStart + r.len;
                     }
@@ -96,11 +96,12 @@ public class CbusPicHexFile extends HexFile{
                 // First record after parameter block so check if parameters are
                 checkValid = false;
                 // Copy new parameter count to parameter
-                newParams.setParam(0, newParams.getParam(24));
+                newParams.setParam(CbusParameters.NUM_PARAM_IDX, newParams.getParam(CbusParameters.PARAM_COUNT_IDX));
                 if (checksum == 0) {
                     newParams.setValid(true);
                 } else if (oldParams.getParam(MANU_ID_IDX) == (byte)MANU_MERG) {
                     // Assume old style parameter block @ 0x810 and assume only MERG made these
+                    oldParams.setParam(CbusParameters.NUM_PARAM_IDX, PARAM_OLD_LEN);
                     oldParams.setValid(true);
                 }
             }

@@ -480,7 +480,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 if (!moduleCheckBox.isSelected()) {
                     if (fileParams.validate(fileParams, hardwareParams)) {
                         addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileParametersMatch"), hardwareParams.toString()));
+                        addToLog(Bundle.getMessage("BootHexFileParametersMatch"));
                         programButton.setEnabled(true);
                     } else {
                         addToLog(Bundle.getMessage("BootHexFileParametersMismatch"));
