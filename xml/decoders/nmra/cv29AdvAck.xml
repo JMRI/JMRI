@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -52,5 +52,6 @@
 		<label xml:lang="de">Erweiterte Decoder-Bestätigung</label>
 		<label xml:lang="cs">Pokročilé potvrzování dekodérem</label>
 		<label xml:lang="nl">Geavanceerde decoder bevestiging</label>
+		<label xml:lang="es">Reconocimiento de decodificador avanzado</label>
 	</variable>
 </variables>

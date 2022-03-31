@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -48,6 +48,7 @@
         <label xml:lang="de">Benutzer-CV #1 (0-255)</label>
         <label xml:lang="cs">Uživatel ID #1 (0-255)</label>
         <label xml:lang="nl">Gebruiker-CV #1 (0-255)</label>
+        <label xml:lang="es">ID de usuario #1 (0-255)</label>
   </variable>
   <variable item="User Id #2" CV="106" default="0">
     <decVal max="255"/>
@@ -57,5 +58,6 @@
         <label xml:lang="de">Benutzer-CV #2 (0-255)</label>
         <label xml:lang="cs">Uživatel ID #2 (0-255)</label>
         <label xml:lang="nl">Gebruiker-CV #2 (0-255)</label>
+        <label xml:lang="es">ID de usuario #2 (0-255)</label>
   </variable>
 </variables>
