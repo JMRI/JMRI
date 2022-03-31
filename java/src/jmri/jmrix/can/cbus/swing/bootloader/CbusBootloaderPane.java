@@ -154,6 +154,25 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     }
     protected BootState bootState = BootState.IDLE;
     
+    /**
+     * Bootloader status values
+     */
+    protected enum BootStatus {
+        NONE,
+        PARAMETER_TIMEOUT,
+        INIT_OUT_OF_RANGE,
+        DATA_ERROR,
+        DATA_OUT_OF_RANGE,
+        ADDRESS_OUT_OF_RANGE,
+        CHECKSUM_FAILED,
+        ADDRESS_NOT_FOUND,
+        COMPLETE,
+        BOOT_TIMEOUT,
+        ACK_TIMEOUT,
+        CHECKSUM_TIMEOUT,
+        PROTOCOL_ERROR
+    }
+    
     protected int bootAddress;
     protected int checksum;
     protected int dataFramesSent;
@@ -477,28 +496,30 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             try {
                 hexFile.openRd();
                 hexFile.read();
-                fileParams = hexFile.getParams();
-                if (!moduleCheckBox.isSelected()) {
-                    if (fileParams.validate(fileParams, hardwareParams)) {
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
-                        addToLog(Bundle.getMessage("BootHexFileParametersMatch"));
-                        programButton.setEnabled(true);
-                    } else {
-                        addToLog(Bundle.getMessage("BootHexFileParametersMismatch"));
-                    }
-                } else {
-                    addToLog(Bundle.getMessage("BootHexFileIgnoringParameters"));
-                    programButton.setEnabled(true);
-                }
-                if (hardwareParams.getLoadAddress() == 0) {
-                    // Special case of rewriting the bootloader for Pi-SPROG One
-                    addToLog(Bundle.getMessage("BootBoot"));
-                    hexForBootloader = true;
-                    programButton.setEnabled(true);
-                }
             } catch (IOException ex) {
                 log.error("Error opening hex file");
                 addToLog(Bundle.getMessage("BootHexFileOpenFailed"));
+                return;
+            }
+            
+            fileParams = hexFile.getParams();
+            if (!moduleCheckBox.isSelected()) {
+                if (fileParams.validate(fileParams, hardwareParams)) {
+                    addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
+                    addToLog(Bundle.getMessage("BootHexFileParametersMatch"));
+                    programButton.setEnabled(true);
+                } else {
+                    addToLog(Bundle.getMessage("BootHexFileParametersMismatch"));
+                }
+            } else {
+                addToLog(Bundle.getMessage("BootHexFileIgnoringParameters"));
+                programButton.setEnabled(true);
+            }
+            if ((hardwareParams.areValid()) && (hardwareParams.getLoadAddress() == 0)) {
+                // Special case of rewriting the bootloader for Pi-SPROG One
+                addToLog(Bundle.getMessage("BootBoot"));
+                hexForBootloader = true;
+                programButton.setEnabled(true);
             }
         }
     }
@@ -695,9 +716,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     writeNextData();
                 } else if (CbusMessage.isBootOutOfRange(r)) {
                     log.error("INIT Address out of range");
-                    addToLog(Bundle.getMessage("BootInitOutOfRange"));
-                    // TODO:
-                    endProgramming(1);
+                    endProgramming(BootStatus.INIT_OUT_OF_RANGE);
                 } else {
                     protocolError();
                 }
@@ -709,14 +728,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     // Acknowledge received for CBUS protocol
                     writeNextData();
                 } else if (CbusMessage.isBootError(r)){
-                    // TODO:
                     log.error("Data Error");
-                    endProgramming(2);
+                    endProgramming(BootStatus.DATA_ERROR);
                 } else if (CbusMessage.isBootDataOutOfRange(r)) {
-                    // TODO: should send checksum to flush programming data to FLASH
                     log.error("Data Address out of range");
-                    addToLog(Bundle.getMessage("BootDataOutOfRange"));
-                    endProgramming(3);
+                    endProgramming(BootStatus.DATA_OUT_OF_RANGE);
                 } else {
                     protocolError();
                 }
@@ -729,10 +745,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     bootState = BootState.PROG_DATA;
                     writeNextData();
                 } else if (CbusMessage.isBootOutOfRange(r)) {
-                    // TODO: should send checksum to flush programming data to FLASH
                     log.error("NOP Address out of range");
-                    addToLog(Bundle.getMessage("BootNopOutOfRange"));
-                    endProgramming(4);
+                    endProgramming(BootStatus.ADDRESS_OUT_OF_RANGE);
                 } else {
                     protocolError();
                 }
@@ -745,8 +759,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 } else if (CbusMessage.isBootError(r)) {
                     // Checksum verify failed
                     log.error("Node {} checksum failed", nodeNumber);
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumFailed"), nodeNumber));
-                    endProgramming(5);
+                    endProgramming(BootStatus.CHECKSUM_FAILED);
                 } else {
                     protocolError();
                 }
@@ -821,9 +834,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Protocol Error
      */
     void protocolError() {
-        // TODO:
-        log.error("Bootloader Protocol Error");
-        addToLog(Bundle.getMessage("BootProtocol"));
+        log.error("Bootloader Protocol Error in state {}", bootState.toString());
+        addToLog(MessageFormat.format(Bundle.getMessage("BootProtocol"), bootState.toString()));
+        endProgramming(BootStatus.PROTOCOL_ERROR);
     }
     
     /**
@@ -1008,9 +1021,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         if (hexRecord.isPresent()) {
             currentRecord = hexRecord.get();
         } else {
-            log.debug("Did not find hex record for load address {}", "0x"+Integer.toHexString(bootAddress));
-            addToLog(MessageFormat.format(Bundle.getMessage("BootLoadAddressError"), Integer.toHexString(bootAddress)));
-            endProgramming(10);
+            log.error("Did not find hex record for load address {}", "0x"+Integer.toHexString(bootAddress));
+            endProgramming(BootStatus.ADDRESS_NOT_FOUND);
         }
         checksum = 0;
         dataFramesSent = 0;
@@ -1048,28 +1060,28 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Send bootloader reset frame to put the node back into operating mode.
      *
      * There will be no reply to this.
-     * TODO: could have a timeout to trigger a a test for the module back in operating mode
      */
     protected void sendReset() {
-        endProgramming(6);
         CanMessage m = CbusMessage.getBootReset(0);
         log.debug("Done. Resetting node...");
         addToLog(Bundle.getMessage("BootFinished"));
         tc.sendCanMessage(m, null);
+        endProgramming(BootStatus.COMPLETE);
     }
 
 
     /**
      * Tidy up after programming success or failure
      */
-    private void endProgramming(int reason) {
-        log.debug("Ending Programming for reason {}", reason);
+    private void endProgramming(BootStatus status) {
+        log.debug("Boot status is {}", status.toString());
+        addToLog(MessageFormat.format(Bundle.getMessage("BootStatus"), status.toString()));
         if (busyDialog != null) {
             busyDialog.finish();
             busyDialog = null;
         }
         openFileChooserButton.setEnabled(true);
-        programButton.setEnabled(true);
+        programButton.setEnabled(false);
         bootState = BootState.IDLE;
     }
 
@@ -1160,11 +1172,10 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     busyDialog.finish();
                     busyDialog = null;
                     log.debug("Failed to read module parameters from node {}", nodeNumber);
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootNodeParametersFailed"), nodeNumber));
                     hardwareParams.setValid(false);
                     moduleCheckBox.setSelected(true);
                     openFileChooserButton.setEnabled(true);
-                    bootState = BootState.IDLE;
+                    endProgramming(BootStatus.PARAMETER_TIMEOUT);
                 }
             }
         };
@@ -1226,8 +1237,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             public void run() {
                 checkBootTask = null;
                 log.error("Timeout checking for boot mode");
-                addToLog(Bundle.getMessage("BootTimeout"));
-                endProgramming(7);
+                endProgramming(BootStatus.BOOT_TIMEOUT);
             }
         };
         TimerUtil.schedule(checkBootTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);
@@ -1383,10 +1393,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 ackTask = null;
-                endProgramming(8);
+                endProgramming(BootStatus.ACK_TIMEOUT);
                 bootAddress -= 8;
                 log.error("Timeout waiting for data write ACK at address {}", Integer.toHexString(bootAddress));
-                addToLog(MessageFormat.format(Bundle.getMessage("BootAckTimeout"), Integer.toHexString(bootAddress)));
             }
         };
         TimerUtil.schedule(ackTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);
@@ -1413,9 +1422,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 checkTask = null;
-                endProgramming(9);
+                endProgramming(BootStatus.CHECKSUM_TIMEOUT);
                 log.error("Timeout verifying checksum");
-                addToLog(Bundle.getMessage("BootCheckTimeout"));
             }
         };
         TimerUtil.schedule(checkTask, CbusNode.BOOT_LONG_TIMEOUT_TIME);
