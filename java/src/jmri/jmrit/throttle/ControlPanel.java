@@ -34,6 +34,9 @@ import org.w3c.dom.Document;
  * @author Lionel Jeanson 2009-2021
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, AddressListener {
+
+    private final ThrottleManager throttleManager;
+
     private DccThrottle throttle;
 
     private JSlider speedSlider;
@@ -128,6 +131,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Constructor.
      */
     public ControlPanel() {
+        this(InstanceManager.getDefault(ThrottleManager.class));
+    }
+
+    /**
+     * Constructor.
+     * @param tm the throttle manager
+     */
+    public ControlPanel(ThrottleManager tm) {
+        throttleManager = tm;
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
@@ -723,7 +735,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "giveUpFocus");
         speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "giveUpFocus");
 
-        EnumSet<SpeedStepMode> speedStepModes = InstanceManager.throttleManagerInstance().supportedSpeedModes();
+        EnumSet<SpeedStepMode> speedStepModes = throttleManager.supportedSpeedModes();
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
 
         forwardButton = new JRadioButton();

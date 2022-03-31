@@ -5,19 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.ButtonGroup;
-import javax.swing.JDesktopPane;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.PowerManager;
-import jmri.SpeedStepMode;
+
+import javax.swing.*;
+
+import jmri.*;
 import jmri.jmrit.throttle.FunctionButton;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +40,15 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
      * @param warrantFrame caller
      */
     public LearnThrottleFrame(WarrantFrame warrantFrame) {
+        this(warrantFrame, InstanceManager.getDefault(ThrottleManager.class));
+    }
+
+    /**
+     * Default constructor
+     * @param warrantFrame caller
+     * @param tm the throttle manager
+     */
+    public LearnThrottleFrame(WarrantFrame warrantFrame, ThrottleManager tm) {
         super(false, false);
         _warrantFrame = warrantFrame;
         powerMgr = InstanceManager.getNullableDefault(jmri.PowerManager.class);
