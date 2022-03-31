@@ -85,7 +85,7 @@ public class ThrottleWindow extends JmriJFrame {
         if (connectionConfig != null) {
             this.throttleManager = connectionConfig.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);
         } else {
-            this.throttleManager = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+            this.throttleManager = InstanceManager.getDefault(jmri.ThrottleManager.class);
         }
 
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {

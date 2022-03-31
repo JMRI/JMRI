@@ -93,7 +93,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
 
     public ThrottleFrame(ThrottleWindow tw) {
-        this(tw, InstanceManager.getNullableDefault(ThrottleManager.class));
+        this(tw, InstanceManager.getDefault(ThrottleManager.class));
     }
 
     public ThrottleFrame(ThrottleWindow tw, ThrottleManager tm) {
