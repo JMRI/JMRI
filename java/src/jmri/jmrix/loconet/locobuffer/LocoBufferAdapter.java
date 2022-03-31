@@ -44,8 +44,10 @@ public class LocoBufferAdapter extends LnPortController {
         options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
         options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"), packetizerOptions()));  // NOI18N
-        options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"), 
+        options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"),
                 new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
+        options.put("InterrogateOnStart", new Option(Bundle.getMessage("InterrogateOnStart"),
+                new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
         options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
                 new String[]{Bundle.getMessage("LoconetProtocolAutoDetect"),Bundle.getMessage("ButtonNo")} )); // NOI18N
     }
@@ -174,8 +176,8 @@ public class LocoBufferAdapter extends LnPortController {
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
         setTranspondingAvailable(getOptionState("TranspondingPresent"));
+        setInterrogateOnStart(getOptionState("InterrogateOnStart"));
         setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
-
         // connect to a packetizing traffic controller
         LnPacketizer packets = getPacketizer(getOptionState(option4Name));
         packets.connectPort(this);
@@ -185,7 +187,7 @@ public class LocoBufferAdapter extends LnPortController {
         // do the common manager config
 
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
