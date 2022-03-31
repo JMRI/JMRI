@@ -63,7 +63,9 @@ public class ThrottleCreationAction extends JmriAbstractAction {
         super(s);
         this.connectionConfig = connectionConfig;
         // disable the ourselves if there is no throttle Manager
-        if (!connectionConfig.getAdapter().getSystemConnectionMemo().provides(jmri.ThrottleManager.class)) {
+        if ((connectionConfig == null)
+                || !connectionConfig.getAdapter().getSystemConnectionMemo()
+                        .provides(jmri.ThrottleManager.class)) {
             super.setEnabled(false);
         }
     }
