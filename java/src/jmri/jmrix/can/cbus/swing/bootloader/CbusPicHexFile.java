@@ -114,6 +114,7 @@ public class CbusPicHexFile extends HexFile{
      * 
      * @return CBUS parameters from the file
      */
+    @Override
     public CbusParameters getParams() {
         if (newParams.areValid()) {
             return newParams;

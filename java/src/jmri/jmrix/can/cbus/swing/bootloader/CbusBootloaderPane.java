@@ -468,7 +468,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     private void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start at current file, show dialog
         int retVal = hexFileChooser.showOpenDialog(this);
-
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             hexFile = new CbusPicHexFile(hexFileChooser.getSelectedFile().getPath());
@@ -477,7 +476,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             try {
                 hexFile.openRd();
                 hexFile.read();
-                fileParams = ((CbusPicHexFile)hexFile).getParams();
+                fileParams = hexFile.getParams();
                 if (!moduleCheckBox.isSelected()) {
                     if (fileParams.validate(fileParams, hardwareParams)) {
                         addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));

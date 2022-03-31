@@ -266,6 +266,19 @@ public class HexFile {
     
     
     /**
+     * Get the file parameters
+     * 
+     * Create an invalid parameter set of necessary. Override in hardware specific
+     * implementations.
+     * 
+     * @return CBUS parameters from the file
+     */
+    public CbusParameters getParams() {
+        return new CbusParameters();
+    }
+    
+
+    /**
      * Return the lowest address read from the hex file
      *
      * @return the highest address
