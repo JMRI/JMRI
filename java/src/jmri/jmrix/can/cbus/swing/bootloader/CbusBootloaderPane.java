@@ -140,6 +140,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     protected enum BootState {
         IDLE,
+        GET_PARAMS,
         START_BOOT,
         CHECK_BOOT_MODE,
         WAIT_BOOT_DEVID,
@@ -608,8 +609,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     private void handleStandardReply(CanReply r) {
         int opc = CbusMessage.getOpcode(r);
         int nn = (r.getElement(1) * 256 ) + r.getElement(2);
-        if (nn != nodeNumber) {
-            log.debug("NN {} Not for me {}", nn, nodeNumber);
+        if (bootState != BootState.GET_PARAMS) {
+            log.debug("Reply not for me");
             return;
         }
 
@@ -627,6 +628,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 busyDialog.finish();
                 busyDialog = null;
                 openFileChooserButton.setEnabled(true);
+                bootState = BootState.IDLE;
             }
         } else {
             // ignoring OPC
@@ -1098,6 +1100,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         if (hasActiveTimers()){
             return;
         }
+        bootState = BootState.GET_PARAMS;
         setAllParamTimeout();
         send.rQNPN(nodeNumber, param);
     }
@@ -1162,6 +1165,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     hardwareParams.setValid(false);
                     moduleCheckBox.setSelected(true);
                     openFileChooserButton.setEnabled(true);
+                    bootState = BootState.IDLE;
                 }
             }
         };

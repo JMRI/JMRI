@@ -124,7 +124,7 @@ public class HexFile {
      * <p>
      * Read hex records and store DATA records in the array.
      * 
-     * @throws IOException 
+     * @throws IOException on read error
      */
     public void read() throws IOException {
         HexRecord r;
