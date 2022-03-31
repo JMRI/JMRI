@@ -6,7 +6,6 @@ import java.util.Iterator;
 import javax.swing.JFrame;
 
 import jmri.InstanceManagerAutoDefault;
-import jmri.ThrottleManager;
 import jmri.util.JmriJFrame;
 
 import org.jdom2.Element;
