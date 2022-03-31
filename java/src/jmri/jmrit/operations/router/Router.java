@@ -60,11 +60,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private boolean _addtoReportVeryDetailed = false;
 
     /**
-     * Returns the status of the router when using the setDestination() for a car.
+     * Returns the status of the router when using the setDestination() for a
+     * car.
      *
      * @return Track.OKAY, STATUS_NOT_THIS_TRAIN, STATUS_NOT_ABLE,
-     *         STATUS_ROUTER_DISABLED, or the destination track status is there's an
-     *         issue.
+     *         STATUS_ROUTER_DISABLED, or the destination track status is
+     *         there's an issue.
      */
     public String getStatus() {
         return _status;
@@ -75,19 +76,22 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      * 
      * @param car         the car being tested
      * @param train       the first train servicing the car, can be null
-     * @param track       the destination track
+     * @param track       the destination track, can not be null
      * @param buildReport the report, can be null
      * @return true if the car can be routed to the track
      */
     public boolean isCarRouteable(Car car, Train train, Track track, PrintWriter buildReport) {
         addLine(buildReport, SEVEN,
                 MessageFormat.format(Bundle.getMessage("RouterIsCarRoutable"),
-                        new Object[] { car.toString(), car.getLocationName(), car.getTrackName(), car.getLoadName(),
-                                track.getLocation().getName(), track.getName() }));
-
+                        new Object[]{car.toString(), car.getLocationName(), car.getTrackName(), car.getLoadName(),
+                                track.getLocation().getName(), track.getName()}));
+        return isCarRouteable(car, train, track.getLocation(), track, buildReport);
+    }
+    
+    public boolean isCarRouteable(Car car, Train train, Location location, Track track, PrintWriter buildReport) {
         Car c = car.copy();
         c.setTrack(car.getTrack());
-        c.setFinalDestination(track.getLocation());
+        c.setFinalDestination(location);
         c.setFinalDestinationTrack(track);
         boolean results = setDestination(c, train, buildReport);
         c.setDestination(null, null); // clear router car destinations
@@ -126,14 +130,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         // note clone car has the car's "final destination" as its destination
         Car clone = clone(car);
-        // Note the following test doesn't check for car length which is what we want.
-        // Also ignores spur schedule since the car's destination is already set.
+        // Note the following test doesn't check for car length which is what we
+        // want.
+        // Also ignores spur schedule since the car's destination is already
+        // set.
         _status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
         if (!_status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
-                    new Object[] { car.toString(), car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
+                    new Object[]{car.toString(), car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
                             _status, (car.getFinalDestinationTrack() == null ? Bundle.getMessage("RouterDestination")
-                                    : car.getFinalDestinationTrack().getTrackTypeName()) }));
+                                    : car.getFinalDestinationTrack().getTrackTypeName())}));
             return false;
         }
         if (clone.getDestination() != null && clone.getDestinationTrack() == null) {
@@ -148,7 +154,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             }
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 addLine(_buildReport, SEVEN, _status = MessageFormat.format(Bundle.getMessage("RouterNoTracks"),
-                        new Object[] { clone.getDestinationName(), car.toString() }));
+                        new Object[]{clone.getDestinationName(), car.toString()}));
                 return false;
             }
         }
@@ -170,13 +176,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (car.getLocationName().equals(car.getFinalDestinationName())) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterCouldNotFindTrain"),
-                            new Object[] { car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
-                                    car.getFinalDestinationTrackName() }));
+                            new Object[]{car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
+                                    car.getFinalDestinationTrackName()}));
         }
         if (_addtoReport) {
             addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterBeginTwoTrain"),
-                    new Object[] { car.toString(), car.getLocationName(), car.getFinalDestinationName() }));
+                    new Object[]{car.toString(), car.getLocationName(), car.getFinalDestinationName()}));
         }
 
         _nextLocationTracks.clear();
@@ -221,12 +227,14 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     }
 
     /**
-     * Checks to see if a single train can transport car to its final destination.
+     * Checks to see if a single train can transport car to its final
+     * destination.
      *
      * @return true if single train can transport car to its final destination.
      */
     private boolean checkForSingleTrain(Car car, Car clone) {
-        boolean trainServicesCar = false; // true the specified train can service the car
+        boolean trainServicesCar = false; // true the specified train can
+                                          // service the car
         Train testTrain = null;
         if (_train != null) {
             trainServicesCar = _train.isServiceable(_buildReport, clone);
@@ -234,14 +242,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (trainServicesCar) {
             testTrain = _train; // use the specified train
             log.debug("Train ({}) can service car ({})", _train.getName(), car.toString());
-        } else if (!car.getTrack().isStaging() && _train != null &&
+        } else if (!car.getTrack().isStaging() &&
+                _train != null &&
                 !_train.isServiceAllCarsWithFinalDestinationsEnabled() &&
                 !_train.getServiceStatus().equals(Train.NONE)) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
-                            new Object[] { _train.getName(), car.toString(), car.getFinalDestinationName(),
-                                    car.getFinalDestinationTrackName(), _train.getServiceStatus() }));
-            return true; // temporary issue with train moves, length, or destination track length
+                            new Object[]{_train.getName(), car.toString(), car.getFinalDestinationName(),
+                                    car.getFinalDestinationTrackName(), _train.getServiceStatus()}));
+            return true; // temporary issue with train moves, length, or
+                         // destination track length
         }
         // Determines if specified train can service car out of staging.
         // Note that the router code will try to route the car using
@@ -249,8 +259,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (car.getTrack().isStaging() && _train != null && !trainServicesCar) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterTrainCanNotStaging"),
-                            new Object[] { _train.getName(), car.toString(), car.getLocationName(),
-                                    clone.getDestinationName(), clone.getDestinationTrackName() }));
+                            new Object[]{_train.getName(), car.toString(), car.getLocationName(),
+                                    clone.getDestinationName(), clone.getDestinationTrackName()}));
             if (!_train.getServiceStatus().equals(Train.NONE)) {
                 addLine(_buildReport, SEVEN, _train.getServiceStatus());
             }
@@ -261,11 +271,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 _train != null &&
                 !trainServicesCar &&
                 _train.isServiceAllCarsWithFinalDestinationsEnabled()) {
-            // log.debug("Option to service all cars with a final destination is enabled");
+            // log.debug("Option to service all cars with a final destination is
+            // enabled");
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"),
-                            new Object[] { _train.getName(), testTrain.getName(), car.toString(),
-                                    clone.getDestinationName(), clone.getDestinationTrackName() }));
+                            new Object[]{_train.getName(), testTrain.getName(), car.toString(),
+                                    clone.getDestinationName(), clone.getDestinationTrackName()}));
             testTrain = null;
         }
         if (testTrain != null) {
@@ -275,30 +286,31 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     }
 
     /**
-     * A single train can service the car. Provide various messages to build report
-     * detailing which train can service the car. Also checks to see if the needs to
-     * go the alternate track or yard track if the car's final destination track is
-     * full. Returns false if car is stuck in staging. Sets the car's destination.
+     * A single train can service the car. Provide various messages to build
+     * report detailing which train can service the car. Also checks to see if
+     * the needs to go the alternate track or yard track if the car's final
+     * destination track is full. Returns false if car is stuck in staging. Sets
+     * the car's destination.
      *
-     * @return true for all cases except if car is departing staging and is stuck
-     *         there.
+     * @return true for all cases except if car is departing staging and is
+     *         stuck there.
      */
     private boolean routeUsingOneTrain(Train testTrain, Car car, Car clone) {
         addLine(_buildReport, SEVEN,
                 MessageFormat.format(Bundle.getMessage("RouterTrainCanTransport"),
-                        new Object[] { testTrain.getName(), car.toString(), car.getTrack().getTrackTypeName(),
+                        new Object[]{testTrain.getName(), car.toString(), car.getTrack().getTrackTypeName(),
                                 car.getLocationName(), car.getTrackName(), clone.getDestinationName(),
-                                clone.getDestinationTrackName() }));
+                                clone.getDestinationTrackName()}));
         showRoute(car, new ArrayList<>(Arrays.asList(testTrain)), new ArrayList<>());
         // now check to see if specified train can service car directly
         if (_train != null && _train != testTrain) {
             addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"), new Object[] { _train.getName(),
-                            car.toString(), clone.getDestinationName(), clone.getDestinationTrackName() }));
+                    MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"), new Object[]{_train.getName(),
+                            car.toString(), clone.getDestinationName(), clone.getDestinationTrackName()}));
             if (!_train.getServiceStatus().equals(Train.NONE)) {
                 addLine(_buildReport, SEVEN, _train.getServiceStatus());
             }
-            _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[] { testTrain.getName() });
+            _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{testTrain.getName()});
             return true; // car can be routed, but not by this train!
         }
         _status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
@@ -307,9 +319,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         addLine(_buildReport, SEVEN,
                 MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
-                        new Object[] { car.toString(), clone.getDestinationName(), clone.getDestinationTrackName(),
+                        new Object[]{car.toString(), clone.getDestinationName(), clone.getDestinationTrackName(),
                                 _status, (clone.getDestinationTrack() == null ? Bundle.getMessage("RouterDestination")
-                                        : clone.getDestinationTrack().getTrackTypeName()) }));
+                                        : clone.getDestinationTrack().getTrackTypeName())}));
         // check to see if an alternative track was specified
         if ((_status.startsWith(Track.LENGTH) || _status.startsWith(Track.SCHEDULE)) &&
                 clone.getDestinationTrack() != null &&
@@ -320,19 +332,19 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 if (_train == null || _train.isServiceable(car)) {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("RouterSendCarToAlternative"),
-                                    new Object[] { car.toString(),
+                                    new Object[]{car.toString(),
                                             clone.getDestinationTrack().getAlternateTrack().getName(),
-                                            clone.getDestination().getName() }));
+                                            clone.getDestination().getName()}));
                     return true; // car is going to alternate track
                 }
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("RouterNotSendCarToAlternative"),
-                                new Object[] { _train.getName(), car.toString(),
+                                new Object[]{_train.getName(), car.toString(),
                                         clone.getDestinationTrack().getAlternateTrack().getName(),
-                                        clone.getDestination().getName() }));
+                                        clone.getDestination().getName()}));
             } else {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterAlternateFailed"),
-                        new Object[] { clone.getDestinationTrack().getAlternateTrack().getName(), status }));
+                        new Object[]{clone.getDestinationTrack().getAlternateTrack().getName(), status}));
             }
         } else if (clone.getDestinationTrack() != null &&
                 clone.getDestinationTrack().getAlternateTrack() != null &&
@@ -340,20 +352,21 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             // state that car is spotted at the alternative track
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterAtAlternate"),
-                            new Object[] { car.toString(), clone.getDestinationTrack().getAlternateTrack().getName(),
-                                    clone.getLocationName(), clone.getDestinationTrackName() }));
+                            new Object[]{car.toString(), clone.getDestinationTrack().getAlternateTrack().getName(),
+                                    clone.getLocationName(), clone.getDestinationTrackName()}));
         } else if (car.getLocation() == clone.getDestination()) {
-            // state that alternative and yard track options are not available if car is at
+            // state that alternative and yard track options are not available
+            // if car is at
             // final destination
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterIgnoreAlternate"),
-                    new Object[] { car.toString(), car.getLocationName() }));
+                    new Object[]{car.toString(), car.getLocationName()}));
         }
         // check to see if spur was full, if so, forward to yard if possible
         if (Setup.isForwardToYardEnabled() &&
                 _status.startsWith(Track.LENGTH) &&
                 car.getLocation() != clone.getDestination()) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSpurFull"),
-                    new Object[] { clone.getDestinationTrackName(), clone.getDestinationName() }));
+                    new Object[]{clone.getDestinationTrackName(), clone.getDestinationName()}));
             Location dest = clone.getDestination();
             List<Track> yards = dest.getTracksByMovesList(Track.YARD);
             log.debug("Found {} yard(s) at destination ({})", yards.size(), clone.getDestinationName());
@@ -366,15 +379,15 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         continue;
                     }
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSendCarToYard"),
-                            new Object[] { car.toString(), track.getName(), dest.getName() }));
+                            new Object[]{car.toString(), track.getName(), dest.getName()}));
                     return true; // car is going to a yard
                 } else {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotUseYard"),
-                            new Object[] { track.getName(), status }));
+                            new Object[]{track.getName(), status}));
                 }
             }
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNoYardTracks"),
-                    new Object[] { dest.getName(), car.toString() }));
+                    new Object[]{dest.getName(), car.toString()}));
         }
         car.setDestination(null, null);
         if (car.getTrack().isStaging()) {
@@ -386,13 +399,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     }
 
     /**
-     * Sets a car's destination to an interchange track if two trains can route the
-     * car.
+     * Sets a car's destination to an interchange track if two trains can route
+     * the car.
      *
      * @param car the car to be routed
-     * @return true if car's destination has been modified to an interchange. False
-     *         if an interchange track wasn't found that could service the car's
-     *         final destination.
+     * @return true if car's destination has been modified to an interchange.
+     *         False if an interchange track wasn't found that could service the
+     *         car's final destination.
      */
     private boolean setCarDestinationTwoTrainsInterchange(Car car) {
         return setCarDestinationTwoTrains(car, Track.INTERCHANGE);
@@ -414,17 +427,18 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     }
 
     /**
-     * Sets a car's destination to a staging track if two trains can route the car.
+     * Sets a car's destination to a staging track if two trains can route the
+     * car.
      *
      * @param car the car to be routed
-     * @return true if car's destination has been modified to a staging track. False
-     *         if a staging track wasn't found that could service the car's final
-     *         destination.
+     * @return true if car's destination has been modified to a staging track.
+     *         False if a staging track wasn't found that could service the
+     *         car's final destination.
      */
     private boolean setCarDestinationTwoTrainsStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
             addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[] { car.toString() }));
+                    MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{car.toString()}));
             return setCarDestinationTwoTrains(car, Track.STAGING);
         }
         return false;
@@ -442,11 +456,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterFindTrack"),
-                            new Object[] { Track.getTrackTypeName(trackType), car.toString(),
-                                    testCar.getDestinationName(), testCar.getDestinationTrackName() }));
+                            new Object[]{Track.getTrackTypeName(trackType), car.toString(),
+                                    testCar.getDestinationName(), testCar.getDestinationTrackName()}));
         }
         boolean foundRoute = false;
-        // now search for a yard or interchange that a train can pick up and deliver the
+        // now search for a yard or interchange that a train can pick up and
+        // deliver the
         // car to its destination
         List<Track> tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(trackType);
         for (Track track : tracks) {
@@ -459,8 +474,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     addLine(_buildReport, SEVEN, BLANK_LINE);
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
-                                    new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
-                                            status, track.getTrackTypeName() }));
+                                    new Object[]{car.toString(), track.getLocation().getName(), track.getName(),
+                                            status, track.getTrackTypeName()}));
                 }
                 continue;
             }
@@ -472,13 +487,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 addLine(_buildReport, SEVEN, BLANK_LINE);
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("RouterFoundTrack"),
-                                new Object[] { Track.getTrackTypeName(trackType), track.getLocation().getName(),
-                                        track.getName(), car.toString() }));
+                                new Object[]{Track.getTrackTypeName(trackType), track.getLocation().getName(),
+                                        track.getName(), car.toString()}));
             }
-            // test to see if there's a train that can deliver the car to its final location
+            // test to see if there's a train that can deliver the car to its
+            // final location
             testCar.setTrack(track);
             testCar.setDestination(car.getFinalDestination());
-            testCar.setDestinationTrack(car.getFinalDestinationTrack()); // can be null
+            testCar.setDestinationTrack(car.getFinalDestinationTrack()); // can
+                                                                         // be
+                                                                         // null
             Train secondTrain = tmanager.getTrainForCar(testCar, _buildReport);
             if (secondTrain == null) {
                 if (debugFlag) {
@@ -489,9 +507,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 if (_addtoReport) {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("RouterNotFindTrain"),
-                                    new Object[] { Track.getTrackTypeName(trackType), track.getLocation().getName(),
+                                    new Object[]{Track.getTrackTypeName(trackType), track.getLocation().getName(),
                                             track.getName(), testCar.getDestinationName(),
-                                            testCar.getDestinationTrackName() }));
+                                            testCar.getDestinationTrackName()}));
                 }
                 continue;
             }
@@ -503,16 +521,20 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (_addtoReport) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("RouterTrainCanTransport"),
-                                new Object[] { secondTrain.getName(), car.toString(), Track.getTrackTypeName(trackType),
+                                new Object[]{secondTrain.getName(), car.toString(), Track.getTrackTypeName(trackType),
                                         testCar.getLocationName(), testCar.getTrackName(), testCar.getDestinationName(),
-                                        testCar.getDestinationTrackName() }));
+                                        testCar.getDestinationTrackName()}));
             }
             // Save the "last" tracks for later use
             _lastLocationTracks.add(track);
             _lastLocationTrains.add(secondTrain);
             // now try to forward car to this interim location
-            testCar.setTrack(car.getTrack()); // restore test car's location and track
-            testCar.setDestination(track.getLocation()); // forward test car to this interim destination and track
+            testCar.setTrack(car.getTrack()); // restore test car's location and
+                                              // track
+            testCar.setDestination(track.getLocation()); // forward test car to
+                                                         // this interim
+                                                         // destination and
+                                                         // track
             testCar.setDestinationTrack(track);
             // determine if car can be transported from current location to this
             // interchange, yard, or staging track
@@ -524,18 +546,19 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             } else if (specified.equals(NOT_NOW)) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
-                                new Object[] { _train.getName(), car.toString(), track.getLocation().getName(),
-                                        track.getName(), _train.getServiceStatus() }));
-                foundRoute = true; // however, the issue is route moves or train length
+                                new Object[]{_train.getName(), car.toString(), track.getLocation().getName(),
+                                        track.getName(), _train.getServiceStatus()}));
+                foundRoute = true; // however, the issue is route moves or train
+                                   // length
             } else {
                 firstTrain = tmanager.getTrainForCar(testCar, _buildReport);
             }
             if (firstTrain == null && _addtoReport) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("RouterNotFindTrain"),
-                                new Object[] { testCar.getTrack().getTrackTypeName(),
+                                new Object[]{testCar.getTrack().getTrackTypeName(),
                                         testCar.getTrack().getLocation().getName(), testCar.getTrack().getName(),
-                                        testCar.getDestinationName(), testCar.getDestinationTrackName() }));
+                                        testCar.getDestinationName(), testCar.getDestinationTrackName()}));
             }
             // Can the specified train carry this car out of staging?
             if (_train != null && car.getTrack().isStaging() && !specified.equals(YES)) {
@@ -546,8 +569,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 if (_addtoReport) {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("RouterTrainCanNot"),
-                                    new Object[] { _train.getName(), car.toString(), car.getLocationName(),
-                                            car.getTrackName(), track.getLocation().getName(), track.getName() }));
+                                    new Object[]{_train.getName(), car.toString(), car.getLocationName(),
+                                            car.getTrackName(), track.getLocation().getName(), track.getName()}));
                 }
                 continue; // can't use this train
             }
@@ -559,8 +582,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 if (_addtoReport) {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"),
-                                    new Object[] { _train.getName(), firstTrain.getName(), car.toString(),
-                                            track.getLocation().getName(), track.getName() }));
+                                    new Object[]{_train.getName(), firstTrain.getName(), car.toString(),
+                                            track.getLocation().getName(), track.getName()}));
                 }
                 continue; // can't use this train
             }
@@ -573,32 +596,36 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
                 _status = car.testDestination(track.getLocation(), track);
                 if (_status.startsWith(Track.LENGTH)) {
-                    // if the issue is length at the interim track, add message to build report
+                    // if the issue is length at the interim track, add message
+                    // to build report
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
-                                    new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
-                                            _status, track.getTrackTypeName() }));
+                                    new Object[]{car.toString(), track.getLocation().getName(), track.getName(),
+                                            _status, track.getTrackTypeName()}));
                     continue;
                 }
                 if (_status.equals(Track.OKAY)) {
-                    // only set car's destination if specified train can service car
+                    // only set car's destination if specified train can service
+                    // car
                     if (_train != null && _train != firstTrain) {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
-                                        new Object[] { _train.getName(), car.toString(), testCar.getDestinationName(),
-                                                testCar.getDestinationTrackName() }));
-                        _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[] { firstTrain.getName() });
-                        continue;// found a route but it doesn't start with the specified train
+                                        new Object[]{_train.getName(), car.toString(), testCar.getDestinationName(),
+                                                testCar.getDestinationTrackName()}));
+                        _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{firstTrain.getName()});
+                        continue;// found a route but it doesn't start with the
+                                 // specified train
                     }
-                    // is this the staging track assigned to the specified train?
+                    // is this the staging track assigned to the specified
+                    // train?
                     if (track.isStaging() &&
                             firstTrain.getTerminationTrack() != null &&
                             firstTrain.getTerminationTrack() != track) {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
-                                        new Object[] { firstTrain.getName(),
+                                        new Object[]{firstTrain.getName(),
                                                 firstTrain.getTerminationTrack().getLocation().getName(),
-                                                firstTrain.getTerminationTrack().getName() }));
+                                                firstTrain.getTerminationTrack().getName()}));
                         continue;
                     }
                     _status = car.setDestination(track.getLocation(), track);
@@ -610,17 +637,18 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     if (_addtoReport) {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("RouterTrainCanService"),
-                                        new Object[] { firstTrain.getName(), car.toString(), car.getLocationName(),
+                                        new Object[]{firstTrain.getName(), car.toString(), car.getLocationName(),
                                                 car.getTrackName(), Track.getTrackTypeName(trackType),
-                                                track.getLocation().getName(), track.getName() }));
+                                                track.getLocation().getName(), track.getName()}));
                     }
-                    return true; // the specified train and another train can carry the car to its destination
+                    return true; // the specified train and another train can
+                                 // carry the car to its destination
                 }
             }
         }
         if (foundRoute) {
             if (_train != null) {
-                _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[] { _train.getName() });
+                _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{_train.getName()});
             } else {
                 _status = STATUS_NOT_ABLE;
             }
@@ -630,15 +658,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     /*
      * Note that "last" set of location/tracks was loaded by
-     * setCarDestinationTwoTrains. The following code builds two additional sets of
-     * location/tracks called "next" and "other". "next" is the next set of
-     * location/tracks that the car can reach by a single train. "last" is the last
-     * set of location/tracks that services the cars final destination. And "other"
-     * is the remaining sets of location/tracks that are not "next" or "last". The
-     * code then tries to connect the "next" and "last" location/track sets with a
-     * train that can service the car. If successful, that would be a three train
-     * route for the car. If not successful, the code than tries combinations of
-     * "next", "other" and "last" location/tracks to create a route for the car.
+     * setCarDestinationTwoTrains. The following code builds two additional sets
+     * of location/tracks called "next" and "other". "next" is the next set of
+     * location/tracks that the car can reach by a single train. "last" is the
+     * last set of location/tracks that services the cars final destination. And
+     * "other" is the remaining sets of location/tracks that are not "next" or
+     * "last". The code then tries to connect the "next" and "last"
+     * location/track sets with a train that can service the car. If successful,
+     * that would be a three train route for the car. If not successful, the
+     * code than tries combinations of "next", "other" and "last"
+     * location/tracks to create a route for the car.
      */
     private boolean setCarDestinationMultipleTrains(Car car, boolean useStaging) {
         if (useStaging && !Setup.isCarRoutingViaStagingEnabled())
@@ -651,10 +680,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (_lastLocationTracks.isEmpty()) {
             if (useStaging) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFindStaging"),
-                        new Object[] { car.getFinalDestinationName() }));
+                        new Object[]{car.getFinalDestinationName()}));
             } else {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFind"),
-                        new Object[] { car.getFinalDestinationName() }));
+                        new Object[]{car.getFinalDestinationName()}));
             }
             return false;
         }
@@ -663,16 +692,14 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // build the "next" and "other" location/tracks
         // start with interchanges
         List<Track> tracks;
-        if (!useStaging) {
-            tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.INTERCHANGE);
-            loadTracks(car, testCar, tracks);
-        }
+        tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.INTERCHANGE);
+        loadTracks(car, testCar, tracks);
         // next load yards if enabled
-        if (!useStaging && Setup.isCarRoutingViaYardsEnabled()) {
+        if (Setup.isCarRoutingViaYardsEnabled()) {
             tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.YARD);
             loadTracks(car, testCar, tracks);
         }
-        // now staging if enabled
+        // add staging if requested
         if (useStaging) {
             tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
             loadTracks(car, testCar, tracks);
@@ -680,28 +707,32 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
         if (_nextLocationTracks.isEmpty()) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFindLoc"),
-                    new Object[] { car.getLocationName() }));
+                    new Object[]{car.getLocationName()}));
             return false;
         }
 
-        if (log.isDebugEnabled()) {
+        if (_addtoReport) {
             // tracks that could be the very next destination for the car
             for (Track t : _nextLocationTracks) {
-                log.debug("Next location ({}, {}) can service car ({}) using train ({})", t.getLocation().getName(),
-                        t.getName(), car, _nextLocationTrains.get(_nextLocationTracks.indexOf(t)));
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNextTrack"),
+                        new Object[]{t.getTrackTypeName(), t.getLocation().getName(),
+                                t.getName(), car, _nextLocationTrains.get(_nextLocationTracks.indexOf(t))}));
             }
             // tracks that could be the next to last destination for the car
             for (Track t : _lastLocationTracks) {
-                log.debug("Last location ({}, {}) can service car ({}) using train ({})", t.getLocation().getName(),
-                        t.getName(), car, _lastLocationTrains.get(_lastLocationTracks.indexOf(t)));
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterLastTrack"),
+                        new Object[]{t.getTrackTypeName(), t.getLocation().getName(),
+                                t.getName(), car, _lastLocationTrains.get(_lastLocationTracks.indexOf(t))}));
             }
             // tracks that are not the next or the last list
             for (Track t : _otherLocationTracks) {
-                log.debug("Other location ({}, {}) may be needed to service car ({})", t.getLocation().getName(),
-                        t.getName(), car);
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterOtherTrack"),
+                        new Object[]{t.getTrackTypeName(), t.getLocation().getName(),
+                                t.getName(), car}));
             }
-            log.debug("Try to find route using 3 trains");
+            addLine(_buildReport, SEVEN, BLANK_LINE);
         }
+        log.debug("Try to find route using 3 trains");
         boolean foundRoute = routeUsing3Trains(car);
         if (!foundRoute) {
             log.debug("Using 3 trains to route car to ({}) was unsuccessful", car.getFinalDestinationName());
@@ -720,7 +751,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     private boolean routeUsing3Trains(Car car) {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNTrains"),
-                new Object[] { "3", car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
+                new Object[]{"3", car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
         Car testCar = clone(car); // reload
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
@@ -731,7 +762,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     log.debug("Found 3 train route, setting car destination ({}, {})", nlt.getLocation().getName(),
                             nlt.getName());
                     foundRoute = true;
-                    // show the car's route by building an ordered list of trains and tracks
+                    // show the car's route by building an ordered list of
+                    // trains and tracks
                     List<Train> trains = new ArrayList<>(
                             Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), middleTrain,
                                     _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
@@ -740,7 +772,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     if (finshSettingRouteFor(car, nlt)) {
                         return true; // done 3 train routing
                     }
-                    break; // there was an issue with the first stop in the route
+                    break; // there was an issue with the first stop in the
+                           // route
                 }
             }
         }
@@ -749,7 +782,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     private boolean routeUsing4Trains(Car car) {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNTrains"),
-                new Object[] { "4", car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
+                new Object[]{"4", car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
         Car testCar = clone(car); // reload
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
@@ -770,7 +803,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     log.debug("Found 4 train route, setting car destination ({}, {})", nlt.getLocation().getName(),
                             nlt.getName());
                     foundRoute = true;
-                    // show the car's route by building an ordered list of trains and tracks
+                    // show the car's route by building an ordered list of
+                    // trains and tracks
                     List<Train> trains = new ArrayList<>(
                             Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), middleTrain2,
                                     middleTrain3, _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
@@ -779,7 +813,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     if (finshSettingRouteFor(car, nlt)) {
                         return true; // done 4 train routing
                     }
-                    break otherloop; // there was an issue with the first stop in the route
+                    break otherloop; // there was an issue with the first stop
+                                     // in the route
                 }
             }
         }
@@ -788,7 +823,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     private boolean routeUsing5Trains(Car car) {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNTrains"),
-                new Object[] { "5", car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
+                new Object[]{"5", car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
         Car testCar = clone(car); // reload
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
@@ -822,7 +857,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         log.debug("Found 5 train route, setting car destination ({}, {})", nlt.getLocation().getName(),
                                 nlt.getName());
                         foundRoute = true;
-                        // show the car's route by building an ordered list of trains and tracks
+                        // show the car's route by building an ordered list of
+                        // trains and tracks
                         List<Train> trains = new ArrayList<>(Arrays.asList(
                                 _nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), middleTrain2, middleTrain3,
                                 middleTrain4, _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
@@ -831,7 +867,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         if (finshSettingRouteFor(car, nlt)) {
                             return true; // done 5 train routing
                         }
-                        break otherloop; // there was an issue with the first stop in the route
+                        break otherloop; // there was an issue with the first
+                                         // stop in the route
                     }
                 }
             }
@@ -841,7 +878,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     private boolean routeUsing6Trains(Car car) {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNTrains"),
-                new Object[] { "6", car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
+                new Object[]{"6", car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
         Car testCar = clone(car); // reload
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
@@ -874,18 +911,21 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             log.debug("Found 6 train route, setting car destination ({}, {})",
                                     nlt.getLocation().getName(), nlt.getName());
                             foundRoute = true;
-                            // show the car's route by building an ordered list of trains and tracks
+                            // show the car's route by building an ordered list
+                            // of trains and tracks
                             List<Train> trains = new ArrayList<>(
                                     Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)),
                                             middleTrain2, middleTrain3, middleTrain4, middleTrain5,
                                             _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
                             List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, mlt3, llt));
                             showRoute(car, trains, tracks);
-                            // only set car's destination if specified train can service car
+                            // only set car's destination if specified train can
+                            // service car
                             if (finshSettingRouteFor(car, nlt)) {
                                 return true; // done 6 train routing
                             }
-                            break otherloop; // there was an issue with the first stop in the route
+                            break otherloop; // there was an issue with the
+                                             // first stop in the route
                         }
                     }
                 }
@@ -896,39 +936,40 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     private Train getTrainForCar(Car testCar, Track from, Track to) {
         testCar.setTrack(from); // set car to this location and track
-        testCar.setDestinationTrack(to); // set car to this destination and track
+        testCar.setDestinationTrack(to); // set car to this destination and
+                                         // track
         // does a train service these two locations?
         return tmanager.getTrainForCar(testCar, null);
     }
 
     private void showRoute(Car car, List<Train> trains, List<Track> tracks) {
         StringBuffer buf = new StringBuffer(MessageFormat.format(Bundle.getMessage("RouterRouteForCar"),
-                new Object[] { car.toString(), car.getLocationName(), car.getTrackName() }));
+                new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}));
         for (Track track : tracks) {
             if (_addtoReport) {
                 buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrain"),
-                        new Object[] { trains.get(tracks.indexOf(track)).getName() }));
+                        new Object[]{trains.get(tracks.indexOf(track)).getName()}));
             }
             buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrack"),
-                    new Object[] { track.getLocation().getName(), track.getName() }));
+                    new Object[]{track.getLocation().getName(), track.getName()}));
         }
         // finish up with car's final destination
         if (_addtoReport) {
             buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrain"),
-                    new Object[] { trains.get(trains.size() - 1).getName() }));
+                    new Object[]{trains.get(trains.size() - 1).getName()}));
         }
         buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrack"),
-                new Object[] { car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
+                new Object[]{car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
         addLine(_buildReport, SEVEN, buf.toString());
     }
 
     /**
-     * 
-     * @param car   The car to which the destination (track) is going to be applied.
-     *              Will set car's destination if specified train can service car
+     * @param car   The car to which the destination (track) is going to be
+     *              applied. Will set car's destination if specified train can
+     *              service car
      * @param track The destination track for car
-     * @return false if there's an issue with the destination track length or wrong
-     *         track into staging, otherwise true.
+     * @return false if there's an issue with the destination track length or
+     *         wrong track into staging, otherwise true.
      */
     private boolean finshSettingRouteFor(Car car, Track track) {
         // only set car's destination if specified train can service car
@@ -937,14 +978,14 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         String specified = canSpecifiedTrainService(ts2);
         if (specified.equals(NO)) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
-                    new Object[] { _train.getName(), car.toString(), track.getLocation().getName(), track.getName() }));
-            _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[] { _train.getName() });
+                    new Object[]{_train.getName(), car.toString(), track.getLocation().getName(), track.getName()}));
+            _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{_train.getName()});
             return true;
         } else if (specified.equals(NOT_NOW)) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
-                            new Object[] { _train.getName(), car.toString(), track.getLocation().getName(),
-                                    track.getName(), _train.getServiceStatus() }));
+                            new Object[]{_train.getName(), car.toString(), track.getLocation().getName(),
+                                    track.getName(), _train.getServiceStatus()}));
             return true; // the issue is route moves or train length
         }
         // check to see if track is staging
@@ -954,15 +995,15 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 _train.getTerminationTrack() != track) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
-                            new Object[] { _train.getName(), _train.getTerminationTrack().getLocation().getName(),
-                                    _train.getTerminationTrack().getName() }));
+                            new Object[]{_train.getName(), _train.getTerminationTrack().getLocation().getName(),
+                                    _train.getTerminationTrack().getName()}));
             return false; // wrong track into staging
         }
         _status = car.setDestination(track.getLocation(), track);
         if (!_status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
-                            track.getLocation().getName(), track.getName(), _status, track.getTrackTypeName() }));
+                    MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"), new Object[]{car.toString(),
+                            track.getLocation().getName(), track.getName(), _status, track.getTrackTypeName()}));
             if (_status.startsWith(Track.LENGTH)) {
                 return false;
             }
@@ -979,10 +1020,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         clone.setTrack(car.getTrack());
         clone.setFinalDestination(car.getFinalDestination());
-        // don't set the clone's final destination track, that will record the car as
+        // don't set the clone's final destination track, that will record the
+        // car as
         // being inbound
         // next two items is where the clone is different
-        clone.setDestination(car.getFinalDestination()); // note that final destination track can be null
+        clone.setDestination(car.getFinalDestination()); // note that final
+                                                         // destination track
+                                                         // can be null
         clone.setDestinationTrack(car.getFinalDestinationTrack());
         return clone;
     }
@@ -992,7 +1036,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (track == car.getTrack()) {
                 continue; // don't use car's current track
             }
-            // note that last could equal next if this routine was used for two train
+            // note that last could equal next if this routine was used for two
+            // train
             // routing
             if (_lastLocationTracks.contains(track)) {
                 continue;
@@ -1005,7 +1050,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 log.debug("Found {} track ({}, {}) for car ({})", track.getTrackType(), track.getLocation().getName(),
                         track.getName(), car);
             }
-            // test to see if there's a train that can deliver the car to this destination
+            // test to see if there's a train that can deliver the car to this
+            // destination
             testCar.setDestinationTrack(track);
             Train train = null;
             String specified = canSpecifiedTrainService(testCar);
@@ -1024,8 +1070,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     _train.isServiceAllCarsWithFinalDestinationsEnabled() &&
                     !specified.equals(YES)) {
                 addLine(_buildReport, SEVEN,
-                        MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"), new Object[] { _train.getName(),
-                                train.getName(), car.toString(), track.getLocation().getName(), track.getName() }));
+                        MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"), new Object[]{_train.getName(),
+                                train.getName(), car.toString(), track.getLocation().getName(), track.getName()}));
                 train = null;
             }
             if (train != null) {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: CBUS® Bootloader Tool</title>
+  <title>JMRI: CBUS&reg; Bootloader Tool</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI CBUS Bootloader"><!--#include virtual="/Style.shtml" -->
 </head>
@@ -11,7 +11,7 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>JMRI : CBUS® Bootloader Tool</h1>
+      <h1>JMRI : CBUS&reg; Bootloader Tool</h1>
 
       <p>The bootloader tool allows you to update the firmware in a connected CBUS node</p>
 

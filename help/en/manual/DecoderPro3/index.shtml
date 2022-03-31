@@ -27,16 +27,16 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">JMRI®: DecoderPro® Manual</h1>
+      <h1 id="Top">JMRI&reg;: DecoderPro&reg; Manual</h1>
 
       <p class="important">This Manual deals with DP3 up to version 3.6.<br>
-      Online Help for the current version of JMRI® DecoderPro® is <a href=
+      Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href=
       "../../html/apps/DecoderPro/index.shtml">here</a>.</p>
 
-      <p><strong>DecoderPro3®</strong> is a Java-based cross-platform application for model
+      <p><strong>DecoderPro3&reg;</strong> is a Java-based cross-platform application for model
       railroaders.</p>
 
-      <p>DecoderPro® can run on any computer system that will run Java 1.6.0 or later, whether it
+      <p>DecoderPro&reg; can run on any computer system that will run Java 1.6.0 or later, whether it
       is Macintosh, Windows, or Linux based. It does require that Java be installed on the
       computer.<br>
       You can get Java as a free (but large) download at: <a href="http://java.com/download/"
@@ -49,11 +49,11 @@
         connected to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive
         samples will be Digitrax, except for sound examples.</li>
 
-        <li>This entire manual has been updated to correspond to JMRI® 3.6 DecoderPro only, and the
+        <li>This entire manual has been updated to correspond to JMRI&reg; 3.6 DecoderPro only, and the
         SHTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you
         probably need to update your browser.</li>
 
-        <li>DecoderPro® v3.x was at one time known as DecoderPro3® v3.x, however since JMRI version
+        <li>DecoderPro&reg; v3.x was at one time known as DecoderPro3&reg; v3.x, however since JMRI version
         4 we leave out the 3 in the name.</li>
       </ol>
 
@@ -77,7 +77,7 @@
           <a href="Start_DCC.shtml"><strong>What is DCC?</strong></a>
         </li>
 
-        <li><strong><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro3® work
+        <li><strong><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro3&reg; work
         with?</a></strong>
         </li>
 
@@ -204,7 +204,7 @@
         </li>
       </ul>
 
-      <h4 id="Main">DecoderPro3® Main Window</h4>
+      <h4 id="Main">DecoderPro3&reg; Main Window</h4>
 
       <ul>
         <li>
@@ -310,7 +310,7 @@
             <td>2/26/2012</td>
             <td>Dale A. Tripp<br>
             Bruce Shanks</td>
-            <td>Create DecoderPro® User's Guide</td>
+            <td>Create DecoderPro&reg; User's Guide</td>
           </tr>
 
           <tr>

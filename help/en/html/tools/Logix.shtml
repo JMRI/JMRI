@@ -16,7 +16,7 @@
     <div id="mainContent">
       <h1>JMRI: Logix Documentation</h1>
 
-      <p>Logix™ provide a powerful capability for JMRI to monitor one or more conditions on a
+      <p>Logix&trade; provide a powerful capability for JMRI to monitor one or more conditions on a
       layout, and take action when these conditions change in a user-specified way. Logix can be
       used to control signals, crossing gates, and other types of automation on the layout. The
       user interface is designed to be user friendly to all users with basic familiarity with JMRI.

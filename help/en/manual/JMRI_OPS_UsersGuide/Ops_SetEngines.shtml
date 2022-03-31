@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>Set Locomotive Location</h2>
 
@@ -45,7 +45,7 @@
             height="400" width="500">
             </td>
             <td>
-              <p><strong>Menu</strong> is standard for DecoderPro®.</p>
+              <p><strong>Menu</strong> is standard for DecoderPro&reg;.</p>
 
               <p><strong>Locomotive</strong> displays the selected engine.</p>
 

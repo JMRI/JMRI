@@ -1,5 +1,5 @@
 /**
- * Defines classes for interfacing to a KPF-eller
+ * Defines classes for interfacing to a KPF-Zeller
  * speedo reader via an RS232 serial line, or a virtual COM port.
  */
 // include empty DefaultAnnotation to avoid excessive recompilation

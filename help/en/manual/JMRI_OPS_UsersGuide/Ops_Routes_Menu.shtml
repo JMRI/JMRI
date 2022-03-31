@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>Operations Routes Menu Bar</h2>
 
@@ -144,9 +144,9 @@
 
       <h3><strong>Operations</strong> menu (same as main OperationsPro menu)</h3>
 
-      <p><strong>Window</strong> - the standard JMRI® Window menu.</p>
+      <p><strong>Window</strong> - the standard JMRI&reg; Window menu.</p>
 
-      <p><strong>Help</strong> - the standard JMRI® Help menu.</p>
+      <p><strong>Help</strong> - the standard JMRI&reg; Help menu.</p>
 
       <hr>
 
