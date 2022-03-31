@@ -50,7 +50,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
-
+    protected boolean mInterrogateAtStart = true;
     protected boolean mTranspondingAvailable = false;
 
     protected boolean mLoconetProtocolAutoDetect = true;
@@ -125,6 +125,12 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         // default (most common state) is off, so just check for Yes
         mLoconetProtocolAutoDetect = (value.equals("Yes") || value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
         log.debug("Loconet XPSlots: {}", mLoconetProtocolAutoDetect); // NOI18N
+    }
+    
+    public void setInterrogateOnStart(String value) {
+        // default (most common state) is on, so just check for No
+        mInterrogateAtStart = !(value.equals("No") || value.equals(Bundle.getMessage("ButtonNo")));
+        log.debug("tInterrogate on Start: {}", mInterrogateAtStart); // NOI18N
     }
 
     @Override

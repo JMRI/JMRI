@@ -192,7 +192,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * <p>
      * The are the same groupings for both normal Functions and Momentary.
      */
-    public static final int[] EXP_FUNCTION_GROUPS = new int[]{
+    private static final int[] EXP_FUNCTION_GROUPS = new int[]{
             1, 1, 1, 1, 1, 1, 1, /** 0-6 */
             2, 2, 2, 2, 2, 2, 2, /** 7 - 13 */
             3, 3, 3, 3, 3, 3, 3, /** 14 -20 */

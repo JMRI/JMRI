@@ -472,8 +472,8 @@ public class LnPacketizer extends LnTrafficController {
         log.info("lnPacketizer Started");
     }
 
-    Thread rcvThread;
-    Thread xmtThread;
+    protected Thread rcvThread;
+    protected Thread xmtThread;
 
     /**
      * {@inheritDoc}

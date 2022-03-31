@@ -82,7 +82,7 @@ public class PR4Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);  // never transponding!
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);  // never transponding!
             this.getSystemConnectionMemo().configureManagersPR2();
 
             // start operation
@@ -101,6 +101,7 @@ public class PR4Adapter extends LocoBufferAdapter {
             // MS100 modes - connecting to a separate command station
             // get transponding option
             setTranspondingAvailable(getOptionState("TranspondingPresent"));
+            setInterrogateOnStart(getOptionState("InterrogateOnStart"));
             // connect to a packetizing traffic controller
             LnPacketizer packets = getPacketizer(getOptionState(option4Name));
             packets.connectPort(this);
@@ -109,7 +110,7 @@ public class PR4Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);
 
             this.getSystemConnectionMemo().configureManagersMS100();
 
