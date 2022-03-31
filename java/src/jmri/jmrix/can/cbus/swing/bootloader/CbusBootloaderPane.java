@@ -608,7 +608,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     private void handleStandardReply(CanReply r) {
         int opc = CbusMessage.getOpcode(r);
-        int nn = (r.getElement(1) * 256 ) + r.getElement(2);
         if (bootState != BootState.GET_PARAMS) {
             log.debug("Reply not for me");
             return;
