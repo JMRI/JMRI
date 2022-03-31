@@ -7,7 +7,6 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 
 import jmri.InstanceManager;
-import jmri.ThrottleManager;
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
@@ -64,7 +63,7 @@ public class ThrottleCreationAction extends JmriAbstractAction {
         super(s);
         this.connectionConfig = connectionConfig;
         // disable the ourselves if there is no throttle Manager
-        if (connectionConfig == null) {
+        if (!connectionConfig.getAdapter().getSystemConnectionMemo().provides(jmri.ThrottleManager.class)) {
             super.setEnabled(false);
         }
     }
