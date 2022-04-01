@@ -1,11 +1,9 @@
 package jmri.jmrix.can.cbus;
 
 import java.util.ResourceBundle;
-import jmri.CabSignalManager;
-import jmri.ClockControl;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.ThrottleManager;
+
+import jmri.*;
+import jmri.implementation.NmraConsistManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 // import org.slf4j.Logger;
@@ -79,6 +77,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         // InternalSensorManager when ISCLOCKRUNNING may be created.
         InstanceManager.setDefault(ClockControl.class, getClockControl());
         
+        InstanceManager.store(getConsistManager(), jmri.ConsistManager.class);
+        
     }
 
     /**
@@ -112,6 +112,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         } else if (type.equals(CbusPreferences.class)) {
             return true;
         } else if (type.equals(CabSignalManager.class)) {
+            return true;
+        } else if (type.equals(jmri.ConsistManager.class)) {
             return true;
         }
         
@@ -150,6 +152,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getCbusPreferences();
         } else if (T.equals(CabSignalManager.class)) {
             return (T) getCabSignalManager();
+        } else if (T.equals(jmri.ConsistManager.class)) {
+            return (T) getConsistManager();
         }
         return null; // nothing, by default
         
@@ -296,7 +300,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return cbusPreferences;
     }
     
-    protected CbusCabSignalManager cabSignalManager;
+    protected CbusCabSignalManager cabSignalManager = null;
 
     public CbusCabSignalManager getCabSignalManager() {
         if ( adapterMemo.getDisabled() ) {
@@ -306,6 +310,18 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             cabSignalManager = new CbusCabSignalManager(adapterMemo);
         }
         return cabSignalManager;
+    }
+
+    protected ConsistManager consistManager = null;
+
+    public ConsistManager getConsistManager() {
+        if ( adapterMemo.getDisabled() ) {
+            return null;
+        }
+        if (consistManager == null) {
+            consistManager = new NmraConsistManager(get(jmri.CommandStation.class));
+        }
+        return consistManager;
     }
 
     /**
@@ -346,6 +362,12 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (cbusPreferences != null) {
             InstanceManager.deregister(cbusPreferences, jmri.jmrix.can.cbus.CbusPreferences.class);
+        }
+        if (cabSignalManager != null) {
+            InstanceManager.deregister(cabSignalManager, jmri.jmrix.can.cbus.CbusCabSignalManager.class);
+        }
+        if (consistManager != null) {
+            InstanceManager.deregister(consistManager, ConsistManager.class);
         }
         InstanceManager.deregister(this, CbusConfigurationManager.class);
     }
