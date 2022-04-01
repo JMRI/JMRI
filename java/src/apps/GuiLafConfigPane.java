@@ -29,6 +29,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JComboBoxUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -188,6 +189,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
         panel.add(localeBox);
+        JComboBoxUtil.setupComboBoxMaxRows(localeBox);
 
         // create object to find locales in new Thread
         Runnable r = () -> {
@@ -246,6 +248,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(fontSizeComboBox);
         panel.add(fontSizeUoM);
         panel.add(resetButton);
+
+        JComboBoxUtil.setupComboBoxMaxRows(fontSizeComboBox);
 
         fontSizeComboBox.addActionListener((ActionEvent e) -> {
             manager.setFontSize((int) fontSizeComboBox.getSelectedItem());
