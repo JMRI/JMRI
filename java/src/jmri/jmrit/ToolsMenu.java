@@ -170,8 +170,4 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.logixng.tools.swing.LogixNGMenu());
     }
 
-    private void checkConsistManager() {
-
-    }
-
 }
