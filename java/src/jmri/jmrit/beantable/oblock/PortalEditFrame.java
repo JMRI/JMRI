@@ -8,6 +8,7 @@ import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JComboBoxUtil;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -91,6 +92,7 @@ public class PortalEditFrame extends JmriJFrame {
         configGrid.add(fromBlockLabel);
         configGrid.add(fromBlockComboBox);
         fromBlockComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(fromBlockComboBox);
         // row 3
         toBlockComboBox.addActionListener(e -> {
             if ((toBlockComboBox.getItemCount() > 0) && (fromBlockComboBox.getSelectedItem() != null) &&
@@ -103,6 +105,7 @@ public class PortalEditFrame extends JmriJFrame {
         configGrid.add(toBlockLabel);
         configGrid.add(toBlockComboBox);
         toBlockComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(toBlockComboBox);
 
         p.add(configGrid);
         p.add(Box.createVerticalGlue());
