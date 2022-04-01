@@ -315,7 +315,12 @@
                 <li></li>
             </ul>
 
-        <h4>TAMS</h4>
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>QuadLN_S - added support for new firmware version 3.1 features</li>
+            </ul>
+            
+       <h4>TAMS</h4>
             <ul>
                 <li></li>
             </ul>
@@ -544,6 +549,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
+            <li>Add capability to display/print throttle files in easy-to-read browser format (using XSL transform)</li>
             <li>If there are at least two connections that have support for throttles, a
             <a href="https://github.com/JMRI/JMRI/pull/10697#issuecomment-1038477488">new menu</a>
             appears that lets you open a throttle for a particular connection.</li>
@@ -594,12 +600,19 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added a new version of "advanced location following". This is now based
+            on a LayoutEditor panel and hence much easier to setup. See the
+            <a href="https://www.jmri.org/help/en/manual/DecoderPro/VSD_LocationsMgr.shtml#advanced_location_following">
+			documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Add a search feature to the JmriHelp local web page.</li>
+            <li>The method JUnitUtil.releaseThread(this) and JUnitUtil.releaseThread(this, delay)
+            has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
+            JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
+            <li>Improve Block tracking in the case of a broken train being rejoined.
         </ul>
 

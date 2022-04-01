@@ -170,7 +170,7 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
 
         // do the common manager config
         port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
-                false, false, false);
+                false, false, false, false);
         port.getSystemConnectionMemo().configureManagers();
         jmri.SensorManager sm = port.getSystemConnectionMemo().getSensorManager();
         if (sm != null) {

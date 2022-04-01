@@ -52,6 +52,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
     // radio buttons
     JRadioButton addLocAtTop = new JRadioButton(Bundle.getMessage("Top"));
+    JRadioButton addLocAtMiddle = new JRadioButton(Bundle.getMessage("Middle"));
     JRadioButton addLocAtBottom = new JRadioButton(Bundle.getMessage("Bottom"));
     JRadioButton sequentialRadioButton = new JRadioButton(Bundle.getMessage("Sequential"));
     JRadioButton matchRadioButton = new JRadioButton(Bundle.getMessage("Match"));
@@ -147,9 +148,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         addItem(p3, typeBox, 0, 1);
         addItem(p3, addTypeButton, 1, 1);
         addItem(p3, addLocAtTop, 2, 1);
-        addItem(p3, addLocAtBottom, 3, 1);
+        addItem(p3, addLocAtMiddle, 3, 1);
+        addItem(p3, addLocAtBottom, 4, 1);
         ButtonGroup group = new ButtonGroup();
         group.add(addLocAtTop);
+        group.add(addLocAtMiddle);
         group.add(addLocAtBottom);
         addLocAtBottom.setSelected(true);
 
@@ -274,6 +277,16 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         // add item to this schedule
         if (addLocAtTop.isSelected()) {
             _schedule.addItem((String) typeBox.getSelectedItem(), 0);
+        } else if (addLocAtMiddle.isSelected()) {
+            if (scheduleTable.getSelectedRow() >= 0) {
+                int row = scheduleTable.getSelectedRow();
+                log.debug("Selected row: {}", row);
+                _schedule.addItem((String) typeBox.getSelectedItem(), row);
+                // we need to reselect the table since the content has changed
+                scheduleTable.getSelectionModel().setSelectionInterval(row, row);
+            } else {
+                _schedule.addItem((String) typeBox.getSelectedItem(), _schedule.getSize() / 2);
+            }
         } else {
             _schedule.addItem((String) typeBox.getSelectedItem());
         }
@@ -367,6 +380,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         typeBox.setEnabled(enabled);
         addTypeButton.setEnabled(enabled);
         addLocAtTop.setEnabled(enabled);
+        addLocAtMiddle.setEnabled(enabled);
         addLocAtBottom.setEnabled(enabled);
         saveScheduleButton.setEnabled(enabled);
         deleteScheduleButton.setEnabled(enabled);
