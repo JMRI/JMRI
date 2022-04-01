@@ -105,8 +105,13 @@ public class ToolsMenu extends JMenu {
         add(consistAction);
 
         // disable the consist tool if there is no consist Manager
-        if (jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class) == null) {
+        jmri.ConsistManager consistManager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
+        if (consistManager == null) {
             consistAction.setEnabled(false);
+        } else if (consistManager.canBeDisabled()) {
+            consistManager.registerEnableListener((value) -> {
+                consistAction.setEnabled(value);
+            });
         }
 
         JMenu clockMenu = new JMenu(Bundle.getMessage("MenuClocks"));
@@ -163,6 +168,10 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // LogixNG menu
         add(new jmri.jmrit.logixng.tools.swing.LogixNGMenu());
+    }
+
+    private void checkConsistManager() {
+
     }
 
 }
