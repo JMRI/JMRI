@@ -77,7 +77,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         // InternalSensorManager when ISCLOCKRUNNING may be created.
         InstanceManager.setDefault(ClockControl.class, getClockControl());
         
-        InstanceManager.store(getConsistManager(), jmri.ConsistManager.class);
+        if (getConsistManager() != null) {
+            InstanceManager.store(getConsistManager(), jmri.ConsistManager.class);
+        }
         
     }
 
@@ -319,7 +321,18 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return null;
         }
         if (consistManager == null) {
-            consistManager = new NmraConsistManager(get(jmri.CommandStation.class));
+            if (adapterMemo.getProgModeSwitch().equals(ProgModeSwitch.EITHER)) {
+                // Could be either programmer or command station
+                if (getProgrammerManager().isAddressedModePossible()) {
+                    // We have a command station
+                    consistManager = new NmraConsistManager(get(jmri.CommandStation.class));
+                } else {
+                    consistManager = null;
+                }
+            } else {
+                // Command station is always avaliable
+                consistManager = new NmraConsistManager(get(jmri.CommandStation.class));
+            }
         }
         return consistManager;
     }
