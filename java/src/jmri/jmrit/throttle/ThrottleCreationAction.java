@@ -7,8 +7,11 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 
 import jmri.InstanceManager;
+import jmri.ThrottleManager;
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
@@ -19,13 +22,13 @@ import jmri.util.swing.WindowInterface;
  */
 public class ThrottleCreationAction extends JmriAbstractAction {
 
-    private final jmri.jmrix.ConnectionConfig connectionConfig;
+    private final ConnectionConfig connectionConfig;
 
     public ThrottleCreationAction(String s, WindowInterface wi) {
         super(s, wi);
         connectionConfig = null;
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -34,7 +37,7 @@ public class ThrottleCreationAction extends JmriAbstractAction {
         super(s, i, wi);
         connectionConfig = null;
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -48,7 +51,7 @@ public class ThrottleCreationAction extends JmriAbstractAction {
         super(s);
         connectionConfig = null;
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -59,13 +62,13 @@ public class ThrottleCreationAction extends JmriAbstractAction {
      * @param s Name for the action.
      * @param connectionConfig the connection config
      */
-    public ThrottleCreationAction(String s, jmri.jmrix.ConnectionConfig connectionConfig) {
+    public ThrottleCreationAction(String s, ConnectionConfig connectionConfig) {
         super(s);
         this.connectionConfig = connectionConfig;
         // disable the ourselves if there is no throttle Manager
         if ((connectionConfig == null)
                 || !connectionConfig.getAdapter().getSystemConnectionMemo()
-                        .provides(jmri.ThrottleManager.class)) {
+                        .provides(ThrottleManager.class)) {
             super.setEnabled(false);
         }
     }
@@ -100,24 +103,27 @@ public class ThrottleCreationAction extends JmriAbstractAction {
 
         throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle")));
 
-        jmri.jmrix.ConnectionConfigManager ccm = InstanceManager.getNullableDefault(jmri.jmrix.ConnectionConfigManager.class);
+        ConnectionConfigManager ccm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
         if (ccm == null) return;
 
         int numConnectionsWithThrottleManager = 0;
 
-        for (jmri.jmrix.ConnectionConfig c : ccm) {
-            jmri.ThrottleManager connectionThrottleManager = c.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);
-            if (connectionThrottleManager != null) numConnectionsWithThrottleManager++;
+        for (ConnectionConfig c : ccm) {
+            if (c.getAdapter().getSystemConnectionMemo().provides(ThrottleManager.class)) {
+                ThrottleManager connectionThrottleManager =
+                        c.getAdapter().getSystemConnectionMemo().get(ThrottleManager.class);
+                if (connectionThrottleManager != null) numConnectionsWithThrottleManager++;
+            }
         }
 
         if (numConnectionsWithThrottleManager > 1) {
             JMenu throttleConnectionMenu = new JMenu(Bundle.getMessage("MenuThrottlesForConnections"));
 
-            jmri.ThrottleManager defaultThrottleManager = InstanceManager.getDefault(jmri.ThrottleManager.class);
+            ThrottleManager defaultThrottleManager = InstanceManager.getDefault(ThrottleManager.class);
 
-            for (jmri.jmrix.ConnectionConfig c : InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class)) {
+            for (ConnectionConfig c : InstanceManager.getDefault(ConnectionConfigManager.class)) {
 
-                jmri.ThrottleManager connectionThrottleManager = c.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);
+                ThrottleManager connectionThrottleManager = c.getAdapter().getSystemConnectionMemo().get(ThrottleManager.class);
                 if (connectionThrottleManager != null) {
                     if (connectionThrottleManager == defaultThrottleManager) {
                         throttleConnectionMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(
