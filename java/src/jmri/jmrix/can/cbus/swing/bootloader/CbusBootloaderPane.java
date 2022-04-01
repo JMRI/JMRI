@@ -929,17 +929,17 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             setPauseTimeout();
         } else {
             // If the address has skipped we need to send a new address to the bootloader
-             if ((currentRecord.address + recordIndex) != bootAddress) {
-                 bootAddress = currentRecord.address;
-                 // Send NOP to adjust the address, no reply to this from AN247
-                 log.debug("Start writing at new address {} after skipping", Integer.toHexString(bootAddress));
-                 addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
-                 CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
-                 tc.sendCanMessage(m, null);
-             } else {
-                // Extract the data, send it and update bootAddress for next packet
-                sendData(getWriteDelay());
-             }
+            // There's no ACK so send data immediately afterwards
+            if ((currentRecord.address + recordIndex) != bootAddress) {
+                bootAddress = currentRecord.address;
+                // Send NOP to adjust the address, no reply to this from AN247
+                log.debug("Start writing at new address {}", Integer.toHexString(bootAddress));
+                addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
+                CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
+                tc.sendCanMessage(m, null);
+            }
+            // Extract the data, send it and update bootAddress for next packet
+            sendData(getWriteDelay());
         }
     }
 
@@ -1028,11 +1028,17 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         dataFramesSent = 0;
         log.debug("Initialise at address {}", "0x"+Integer.toHexString(bootAddress));
         addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
-        // Initialise the bootloader
-        setAckTimeout();
+        // Initialise the bootloader, only CBUS protocol will ACK this
+        if (bootProtocol == BootProtocol.CBUS_2_0) {
+            setAckTimeout();
+        }
         CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
         bootState = BootState.INIT_SENT;
         tc.sendCanMessage(m, null);
+        if (bootProtocol == BootProtocol.AN247) {
+            // No wait for ACK so start sending data
+            writeNextData();
+        }
     }
 
     

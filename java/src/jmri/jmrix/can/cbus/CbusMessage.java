@@ -683,7 +683,7 @@ public class CbusMessage {
      * @return true if the message is a bootloader data write
      */
     public static boolean isBootWriteData(CanMessage m) {
-        if (m.isExtended() && (m.getHeader() == 0x5) && (m.getNumDataElements() == 8)) {
+        if (m.isExtended() && (m.getHeader() == 0x5)) {
             return (true);
         }
         return (false);
