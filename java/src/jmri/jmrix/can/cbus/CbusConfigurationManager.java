@@ -321,7 +321,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return null;
         }
         if (consistManager == null) {
-            if (adapterMemo.getProgModeSwitch().equals(ProgModeSwitch.EITHER)) {
+            if (adapterMemo.getProgModeSwitch() == ProgModeSwitch.EITHER) {
                 // Could be either programmer or command station
                 if (getProgrammerManager().isAddressedModePossible()) {
                     // We have a command station
