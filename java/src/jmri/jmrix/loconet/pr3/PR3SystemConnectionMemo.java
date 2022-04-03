@@ -68,6 +68,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
      */
     public void configureManagersPR2() {
         mode = PR3MODE;
+        log.info("Connection [{}] initialized as \"Stand Alone Programmer\", no access to attached devices. (see preferences)",getSystemPrefix());
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setThrottleManager(
@@ -164,6 +165,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
      */
     public void configureManagersMS100() {
         mode = MS100MODE;
+        log.info("Connection [{}] initialized as LocoNet interface, allows access to attached devices. (see preferences)",getSystemPrefix());
         super.configureManagers();
     }
 

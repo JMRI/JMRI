@@ -81,7 +81,7 @@ public class BeanSelectPanel<E extends NamedBean> extends JPanel {
     }
 
     /**
-     * Check that the user selected something in this BeanSelectCreatePanel.
+     * Check that the user selected something in this BeanSelectPanel.
      * @return true if nothing selected
      */
     public boolean isEmpty() {

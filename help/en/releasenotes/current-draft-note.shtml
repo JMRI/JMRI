@@ -315,7 +315,12 @@
                 <li></li>
             </ul>
 
-        <h4>TAMS</h4>
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>QuadLN_S - added support for new firmware version 3.1 features</li>
+            </ul>
+            
+       <h4>TAMS</h4>
             <ul>
                 <li></li>
             </ul>
@@ -544,7 +549,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Add capability to display/print throttle files in easy-to-read browser format (using XSL transform)</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -605,5 +610,6 @@
             <li>The method JUnitUtil.releaseThread(this) and JUnitUtil.releaseThread(this, delay)
             has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
             JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
+            <li>Improve Block tracking in the case of a broken train being rejoined.
         </ul>
 

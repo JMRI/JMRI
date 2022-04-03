@@ -52,7 +52,7 @@ decoder.xsl     used as a stylesheet by decoder XML files for web display;
 DecoderID.xsl   used by Ant "id" target and used as an XML stylesheet to 
                 display the decoderIndex.xml file.
                 
-panelfile.xsl   stylesheet for JMRI panel files
+panelfile[VERSION].xsl   stylesheet for JMRI panel files
 
 locomotive.xsl  stylesheet for JMRI roster entry files
 
@@ -60,7 +60,11 @@ roster.xsl      stylesheet for JMRI roster index
 
 rpsfile.xsl     stylesheet for JMRI RPS files
 
-throttle.xsl    stylesheet for JMRI throttle layout files
+throttle-config.xsl    stylesheet for individual throttle config files
+                [Uses throttle-include.xsl]
+
+throttle-layout-config.xsl    stylesheet for default (JMRI_ThrottlePreference.xml) and user-named layout config files
+                [Uses throttle-include.xsl]
 
 LogixToCode.xml Tool for creating Java code from the Logix and Routes
                 in a panel file.  The code will (with a little adjustment)
