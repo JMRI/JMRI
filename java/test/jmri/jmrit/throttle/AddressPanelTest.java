@@ -1,6 +1,5 @@
 package jmri.jmrit.throttle;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -15,7 +14,7 @@ public class AddressPanelTest {
 
     @Test
     public void testCtor() {
-        AddressPanel panel = new AddressPanel(InstanceManager.getNullableDefault(jmri.ThrottleManager.class));
+        AddressPanel panel = new AddressPanel(null);
         Assert.assertNotNull("exists", panel);
     }
 
