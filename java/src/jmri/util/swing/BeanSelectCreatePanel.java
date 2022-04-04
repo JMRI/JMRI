@@ -66,6 +66,7 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
             newItem.setSelected(true);
         }
         existingCombo.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(existingCombo);
 
         JPanel radio = new JPanel();
         radio.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
