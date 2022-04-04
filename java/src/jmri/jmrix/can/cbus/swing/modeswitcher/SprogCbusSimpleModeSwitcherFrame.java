@@ -79,6 +79,7 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
 
             // Handle Programmer mode button activity
             ActionListener listener = ae -> {
+                CbusConsistManager cm = (CbusConsistManager)InstanceManager.getNullableDefault(jmri.ConsistManager.class);
                 if (progModeButton.isSelected() && mode != PROG_MODE) {
                     // Switch to programmer mode
                     log.info("Setting Global Programmer Available");
@@ -87,7 +88,9 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     _memo.setMultipleThrottles(false);
                     showServiceModeWarningDialogue();
                     closeProgrammerWarningDialogue();
-                    ((CbusConsistManager)InstanceManager.getNullableDefault(jmri.ConsistManager.class)).setEnabled(false);
+                    if (cm != null) {
+                        cm.setEnabled(false);
+                    }
                     mode = PROG_MODE;
                 } else if (cmdModeButton.isSelected() && mode != CMD_MODE) {
                     // Switch to command station mode
@@ -96,7 +99,9 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     pm.setAddressedModePossible(true);
                     _memo.setMultipleThrottles(true);
                     closeProgrammerWarningDialogue();
-                    ((CbusConsistManager)InstanceManager.getNullableDefault(jmri.ConsistManager.class)).setEnabled(true);
+                    if (cm != null) {
+                        cm.setEnabled(true);
+                    }
                     mode = CMD_MODE;
                 }
                 setHardwareMode(mode);
