@@ -207,7 +207,7 @@ public class MatrixSignalMastTest {
     @AfterEach
     public void tearDown() {
         // has dumpd a bunch of stuff to AWT thread
-        JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.waitFor(20);
 
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.tearDown();

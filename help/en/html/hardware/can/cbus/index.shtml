@@ -15,7 +15,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JMRI Hardware Support: CBUS® Main Support Page</h1>
+      <h1>JMRI Hardware Support: CBUS&reg; Main Support Page</h1>
 
       <ul class="snav">
         <li>

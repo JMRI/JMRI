@@ -1,6 +1,7 @@
 package jmri.util.exceptionhandler;
 
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -25,7 +26,7 @@ public class UncaughtExceptionHandlerTest {
         });
         t.setName("Uncaught Exception Handler Test Thread");
         t.start();
-        jmri.util.JUnitUtil.releaseThread(this);
+        JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);
         JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 

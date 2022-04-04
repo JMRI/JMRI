@@ -4,13 +4,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
+import jmri.util.JUnitUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of XNetPortController that eases
  * checking whether data was forwarded or not.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2006, 2015
  */
 public class XNetPortControllerScaffold extends XNetSimulatorPortController {
@@ -48,10 +51,10 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
 
     PipedInputStream otempIPipe;
     PipedOutputStream otempOPipe;
-    
+
     PipedInputStream itempIPipe;
     PipedOutputStream itempOPipe;
-    
+
     public XNetPortControllerScaffold() throws Exception {
         otempIPipe = new PipedInputStream(200);
         tostream = new DataInputStream(otempIPipe);
@@ -65,20 +68,20 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
     }
 
     public void flush() {
-        try { 
+        try {
             ostream.flush();
             otempOPipe.flush();
-        
+
             tistream.flush();
             itempOPipe.flush();
 
-            jmri.util.JUnitUtil.releaseThread(this);
+            JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);
 
         } catch (Exception e) {
             log.error("Exception during flush", e);
         }
     }
-    
+
     /**
      * Returns the InputStream from the port.
      */

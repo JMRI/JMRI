@@ -17,9 +17,9 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">JMRI® OperationsPro Manual</h1>
+      <h1 id="Top">JMRI&reg; OperationsPro Manual</h1>
 
-      <h2>Installing JMRI®</h2>
+      <h2>Installing JMRI&reg;</h2>
 
       <div class="ops-right">
         <p><a href="index.shtml#Installing">Back to Index</a>
@@ -28,16 +28,16 @@
 
       <hr>
 
-      <h3>Preparing to Install JMRI®</h3>
+      <h3>Preparing to Install JMRI&reg;</h3>
 
       <p>The JMRI software package includes:</p>
 
       <ul>
-        <li>DecoderPro®</li>
+        <li>DecoderPro&reg;</li>
 
-        <li>PanelPro™</li>
+        <li>PanelPro&trade;</li>
 
-        <li>SoundPro™</li>
+        <li>SoundPro&trade;</li>
       </ul>
 
       <p>Two versions of the software are available:</p>
@@ -63,7 +63,7 @@
         </li>
 
         <li>
-          <a href="http://www.jmri.org/install/MacOSX.shtml">Mac OS X</a>
+          <a href="http://www.jmri.org/install/MacOSX.shtml">macOS</a>
         </li>
 
         <li>
@@ -73,7 +73,7 @@
 
       <h3>Installing Java</h3>
 
-      <p><a href="Installing_JMRI.shtml#InstallJMRI">Versions of JMRI®</a> can run on any computer
+      <p><a href="Installing_JMRI.shtml#InstallJMRI">Versions of JMRI&reg;</a> can run on any computer
       system that will run Java 1.6.0 or later, whether it is Macintosh, Windows, or Linux based.
       It does require that Java be installed on the computer. You can get Java as a free (but
       large) download at: <a href="http://java.com/download/" target=
@@ -90,7 +90,7 @@
         </li>
 
         <li>
-          <a href="http://www.jmri.org/install/MacOSX.shtml" target="_blank">Mac OS X Installation
+          <a href="http://www.jmri.org/install/MacOSX.shtml" target="_blank">macOS Installation
           Guide</a>
         </li>
 

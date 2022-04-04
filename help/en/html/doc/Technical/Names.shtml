@@ -179,7 +179,7 @@
         <li>
           <strong>M</strong> Model railroad layout control buses, including <a href=
           "../../hardware/openlcb/index.shtml">OpenLCB</a> and <a href=
-          "../../hardware/can/cbus/index.shtml">CBUS®</a><br>
+          "../../hardware/can/cbus/index.shtml">CBUS&reg;</a><br>
           <a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a><br>
           <a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
         </li>
@@ -1108,7 +1108,7 @@ how to get them from the <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHan
       bottom of jmri.jmrix.cmri.serial.SerialTurnout and
       jmri.jmrix.cmri.serial.SerialTurnoutTest.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

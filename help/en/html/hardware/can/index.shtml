@@ -58,7 +58,7 @@
       "http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">Layout Command
       Control (LCC, formerly NMRAnet)</a>.</p>
 
-      <h3><a href="cbus/index.shtml">CBUS®</a>
+      <h3><a href="cbus/index.shtml">CBUS&reg;</a>
       </h3>
 
       <p>Originally named CBUS by co-founder Gil Fuchs, CBUS is an 'open' protocol for Model
@@ -156,14 +156,14 @@
           <a href="https://www.sprog-dcc.co.uk">CANISB</a> A galvanically isolated CBUS to USB
           interface.
         </dd>
-        
+
         <dt>CANable</dt>
 
         <dd>
           <a href="https://canable.io/">CANable</a> An Open-Source USB to CAN Adapter, these use the
           CAN via Lawicell CANUSB System Connection.
         </dd>
-        
+
       </dl>
 
       <h4>Other CAN Hardware Interfaces</h4>

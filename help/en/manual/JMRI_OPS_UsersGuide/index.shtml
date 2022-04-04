@@ -18,13 +18,13 @@
 
     <div id="mainContent">
       <a id="Top"></a>
-      <h1>JMRI® OperationsPro™ Manual</h1>
+      <h1>JMRI&reg; OperationsPro&trade; Manual</h1>
 
       <h2>Introduction</h2>
 
       <p class="important">This Manual deals with OperationsPro versions 3.6 <a href=
       "#newfeatures">up to 3.10</a>.<br>
-      Online Help for the current version of JMRI® OperationsPro is <a href=
+      Online Help for the current version of JMRI&reg; OperationsPro is <a href=
       "../../package/jmri/jmrit/operations/Operations.shtml">here</a></p>
 
       <p>JMRI <strong>OperationsPro</strong> is contained within the DecoderPro, PanelPro and
@@ -36,24 +36,24 @@
       "images/Ops_Operations09.png" width="497" height="178" alt=""></p>
 
       <p>If this is your first visit to the OperationsPro Manual we suggest that you <a href=
-      "Ops_TripThruOperations.shtml">take the OperationsPro® Tour</a> to get an overview of what
+      "Ops_TripThruOperations.shtml">take the OperationsPro&reg; Tour</a> to get an overview of what
       we're about to cover.</p>
 
       <p><strong>JMRI</strong> is a Java-based cross-platform program suite for model railroaders.
       It contains modular applications for:</p>
 
       <ul>
-        <li>The programming of Digital Command Control (DCC) decoders (DecoderPro®)</li>
+        <li>The programming of Digital Command Control (DCC) decoders (DecoderPro&reg;)</li>
 
-        <li>Drawing computer based Panels for depicting a model railroad layout (PanelPro™)</li>
+        <li>Drawing computer based Panels for depicting a model railroad layout (PanelPro&trade;)</li>
 
         <li>Controlling the layout (Layout Editor)</li>
 
-        <li>Creating Train Manifests to reproduce railroad operations (OperationsPro™)</li>
+        <li>Creating Train Manifests to reproduce railroad operations (OperationsPro&trade;)</li>
 
         <li>Controlling the Signals on the layout</li>
 
-        <li>Controlling lighting and sound in the room, and so forth (SoundPro™)</li>
+        <li>Controlling lighting and sound in the room, and so forth (SoundPro&trade;)</li>
       </ul>
 
       <p>All this capability is contained in one install.</p>
@@ -82,7 +82,7 @@
 
       <ul>
         <li>
-          <a href="Start_DecoderPro.shtml">Starting DecoderPro® and OperationsPro</a>
+          <a href="Start_DecoderPro.shtml">Starting DecoderPro&reg; and OperationsPro</a>
         </li>
 
         <li>
@@ -94,7 +94,7 @@
         </li>
       </ul>
 
-      <h4 id="Main">DecoderPro® Main Window</h4>
+      <h4 id="Main">DecoderPro&reg; Main Window</h4>
 
       <ul>
         <li style="font-weight: bold;">
@@ -545,7 +545,7 @@
       </ul>
 
       <div style="margin:40px; padding:10px; background-color:#eee;">
-        <h3 id="newfeatures">Changes for JMRI® OperationsPro 3.8 and 3.10</h3>
+        <h3 id="newfeatures">Changes for JMRI&reg; OperationsPro 3.8 and 3.10</h3>
 
         <h4>New in 3.8</h4>
 
@@ -669,7 +669,7 @@
             <td>1/5/2013</td>
             <td>Dale A. Tripp<br>
             Bruce Shanks</td>
-            <td>Updated from JMRI 2.14.1 and removed from DecoderPro® as a separate Guide</td>
+            <td>Updated from JMRI 2.14.1 and removed from DecoderPro&reg; as a separate Guide</td>
           </tr>
 
           <tr>

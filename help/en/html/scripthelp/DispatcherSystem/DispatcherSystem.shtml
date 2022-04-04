@@ -30,15 +30,15 @@
           </li>
 
           <li>
-            <a href="#stage1">Running Stage 1 — Editing the panel</a>
+            <a href="#stage1">Running Stage 1 &mdash; Editing the panel</a>
           </li>
 
           <li>
-            <a href="#stage2">Running Stage 2 — Producing the transits</a>
+            <a href="#stage2">Running Stage 2 &mdash; Producing the transits</a>
           </li>
 
           <li>
-            <a href="#stage3">Running Stage 3 — Final checks</a>
+            <a href="#stage3">Running Stage 3 &mdash; Final checks</a>
           </li>
 
           <li>
@@ -175,7 +175,7 @@
         </li>
       </ul>
 
-      <h2 id="stage1">Running Stage1 — Editing the panel</h2>
+      <h2 id="stage1">Running Stage1 &mdash; Editing the panel</h2>
 
       <p>Run DispatcherSystem.py in the main jython directory. You will get something like
       this:</p>
