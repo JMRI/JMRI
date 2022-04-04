@@ -54,7 +54,8 @@
     <label xml:lang="fr">Accelération (0-31)</label>
     <label xml:lang="de">Anfahrverzögerung (0-31)</label>
     <label xml:lang="cs">Míra zrychlení</label>
-    <label xml:lang="nl">Versnelling (0-31)</label><label xml:lang="es">Aceleración (0-31)</label>
+    <label xml:lang="nl">Versnelling (0-31)</label>
+    <label xml:lang="es">Aceleración (0-31)</label>
   </variable>
   <variable CV="4" item="Decel">
     <decVal max="31"/>

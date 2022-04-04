@@ -56,7 +56,7 @@
     <label xml:lang="de">Anfahrverzögerung</label>
     <label xml:lang="nl">Versnelling</label>
     <label xml:lang="es">Aceleración</label>
-  <comment>Range 0-254</comment>
+    <comment>Range 0-254</comment>
 	<comment xml:lang="da">Værdi 0-254</comment>
     <comment xml:lang="it">Valori 0-254</comment>
     <comment xml:lang="cs">Meze 0-254</comment>
