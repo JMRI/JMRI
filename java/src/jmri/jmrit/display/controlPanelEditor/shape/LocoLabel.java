@@ -24,15 +24,6 @@ public class LocoLabel extends PositionableRoundRect {
         invalidateShape();
     }
 
-    /**
-     * Deprecated. No replacement for this method
-     * @return Oblock having an IndicatorTrack icon which is displaying this object
-     */
-    @Deprecated     // only known user is LocoLabelXml 2+ years ago
-    public OBlock getBlock() {
-        return _block;
-    }
-
     @Override
     public boolean showPopUp(JPopupMenu popup) {
         setRotateMenu(popup);

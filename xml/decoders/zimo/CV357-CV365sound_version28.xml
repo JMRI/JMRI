@@ -17,6 +17,7 @@
     <label xml:lang="de">Thyristor: Lautstärke Reduktion Steilheit</label>
     <tooltip>0 to 255, Internal Speed step from which volume is decreased</tooltip>
     <label xml:lang="cs">Hlasitost tyristorů při změně rychlostního stupně</label>
+    <tooltip xml:lang="cs">0 až 255, Interní rychlostní krok při kterém je hlasitost snížena</tooltip>
   </variable>
   <variable item="Switchgear noise Duration at speed change" CV="359" default="30">
     <decVal min="0" max="255"/>
@@ -25,6 +26,7 @@
     <label xml:lang="de">Schaltwerk-Sound-Dauer</label>
     <tooltip>0 to 255(0-25sec)</tooltip>
     <label xml:lang="cs">Doba trvání zvuku kontroleru při změně rychlosti</label>
+    <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Switchgear noise Duration after stop" CV="360" default="0">
     <decVal min="0" max="255"/>
@@ -33,6 +35,7 @@
     <label xml:lang="de">Schaltwerk-Sound-Dauer nach Anhalten</label>
     <tooltip>0 to 255(0-25sec)</tooltip>
     <label xml:lang="cs">Doba trvání zvuku kontroleru po zastavení</label>
+    <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Switchgear noise minimum Wait before the next play" CV="361" default="0">
     <decVal min="0" max="255"/>
@@ -41,6 +44,7 @@
     <label xml:lang="de">Schaltwerk-Sound Mindest-Intervall</label>
     <tooltip>0 to 255(0-25sec)</tooltip>
     <label xml:lang="cs">Minimální pauza zvuku kontroleru před dalším přehráním</label>
+    <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Thyristor Second Switching Threshold" CV="362" default="0">
     <decVal min="0" max="255"/>
@@ -49,6 +53,7 @@
     <label xml:lang="de">Thyristor: Schwelle für Thyristor 2</label>
     <tooltip>0 to 255</tooltip>
     <label xml:lang="cs">Tyristory mez druhé frekvence</label>
+    <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Switchgear noise Distribution of speed in Switching stages" CV="363" default="0">
     <decVal min="0" max="255"/>
@@ -57,6 +62,7 @@
     <label xml:lang="de">Schaltwerk: Anzahl der Stufen</label>
     <tooltip>0 to 255,0 is the default which is equivalent to five stages</tooltip>
     <label xml:lang="cs">Celkový počet stupňů kontroleru</label>
+    <tooltip>0 až 255, 0 je výchozí hodnota která odpovídá pěti stupňům</tooltip>
   </variable>
   <variable item="Engine Speed Fallback when changing gear" CV="364" default="0">
     <decVal min="0" max="255"/>
@@ -65,6 +71,7 @@
     <label xml:lang="de">&lt;html&gt;Diesel-Mechanisch:&lt;br&gt;Motor-Drehzahl beim Hochschalten&lt;/html&gt;</label>
     <label xml:lang="cs">Pokles otáček spalovacího motoru při řazení mechanické převodovky nahoru</label>
     <tooltip>0 to 255</tooltip>
+    <tooltip xml:lang="cs">0 až 255</tooltip>
   </variable>
   <variable item="Maximum speed before upshifting" CV="365" default="0">
     <decVal min="0" max="255"/>
@@ -73,5 +80,6 @@
     <label xml:lang="de">&lt;html&gt;Diesel-Mechanisch:&lt;br&gt;Max. Motor-Drehzahl&lt;/html&gt;</label>
     <tooltip>0 to 255</tooltip>
     <label xml:lang="cs">Maximální otáčky spalovacího motoru před řazení mechanické převodovky nahoru</label>
+    <tooltip xml:lang="cs">0 až 255</tooltip>
   </variable>
 </variables>

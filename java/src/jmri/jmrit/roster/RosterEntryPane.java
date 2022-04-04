@@ -165,6 +165,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         cL.anchor = GridBagConstraints.NORTHWEST;
         cL.insets = new Insets(0, 0, 0, 15);
         JLabel row0Label = new JLabel(rb.getString("FieldID") + ":");
+        id.getAccessibleContext().setAccessibleName(rb.getString("FieldID"));
         gbLayout.setConstraints(row0Label, cL);
         super.add(row0Label);
 
@@ -177,6 +178,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row1Label = new JLabel(rb.getString("FieldRoadName") + ":");
+        roadName.getAccessibleContext().setAccessibleName(rb.getString("FieldRoadName"));
         gbLayout.setConstraints(row1Label, cL);
         super.add(row1Label);
 
@@ -187,6 +189,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row2Label = new JLabel(rb.getString("FieldRoadNumber") + ":");
+        roadNumber.getAccessibleContext().setAccessibleName(rb.getString("FieldRoadNumber"));
         gbLayout.setConstraints(row2Label, cL);
         super.add(row2Label);
 
@@ -197,6 +200,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row3Label = new JLabel(rb.getString("FieldManufacturer") + ":");
+        mfg.getAccessibleContext().setAccessibleName(rb.getString("FieldManufacturer"));
         gbLayout.setConstraints(row3Label, cL);
         super.add(row3Label);
 
@@ -207,6 +211,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row4Label = new JLabel(rb.getString("FieldOwner") + ":");
+        owner.getAccessibleContext().setAccessibleName(rb.getString("FieldOwner"));
         gbLayout.setConstraints(row4Label, cL);
         super.add(row4Label);
 
@@ -217,6 +222,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row5Label = new JLabel(rb.getString("FieldModel") + ":");
+        model.getAccessibleContext().setAccessibleName(rb.getString("FieldModel"));
         gbLayout.setConstraints(row5Label, cL);
         super.add(row5Label);
 
@@ -227,6 +233,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row6Label = new JLabel(rb.getString("FieldDCCAddress") + ":");
+        selPanel.getAccessibleContext().setAccessibleName(rb.getString("FieldDCCAddress"));
         gbLayout.setConstraints(row6Label, cL);
         super.add(row6Label);
 
@@ -236,6 +243,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit") + ":");
+        maxSpeedSpinner.getAccessibleContext().setAccessibleName(rb.getString("FieldSpeedLimit"));
         gbLayout.setConstraints(row7Label, cL);
         super.add(row7Label);
 
@@ -245,6 +253,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row8Label = new JLabel(rb.getString("FieldComment") + ":");
+        commentScroller.getAccessibleContext().setAccessibleName(rb.getString("FieldComment"));
         gbLayout.setConstraints(row8Label, cL);
         super.add(row8Label);
 
@@ -255,6 +264,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row9Label = new JLabel(rb.getString("FieldDecoderFamily") + ":");
+        decoderFamily.getAccessibleContext().setAccessibleName(rb.getString("FieldDecoderFamily"));
         gbLayout.setConstraints(row9Label, cL);
         super.add(row9Label);
 
@@ -265,6 +275,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row10Label = new JLabel(rb.getString("FieldDecoderModel") + ":");
+        decoderModel.getAccessibleContext().setAccessibleName(rb.getString("FieldDecoderModel"));
         gbLayout.setConstraints(row10Label, cL);
         super.add(row10Label);
 
@@ -275,6 +286,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment") + ":");
+        decoderCommentScroller.getAccessibleContext().setAccessibleName(rb.getString("FieldDecoderComment"));
         gbLayout.setConstraints(row11Label, cL);
         super.add(row11Label);
 
@@ -285,6 +297,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
         cL.gridy++;
         JLabel row13Label = new JLabel(rb.getString("FieldDateUpdated") + ":");
+        dateUpdated.getAccessibleContext().setAccessibleName(rb.getString("FieldDateUpdated"));
         gbLayout.setConstraints(row13Label, cL);
         super.add(row13Label);
 

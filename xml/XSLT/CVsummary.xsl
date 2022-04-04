@@ -22,7 +22,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -38,7 +38,7 @@
 		<head>
 			<title>JMRI decoder CV cross-reference</title>
 		</head>
-	
+
 		<body>
 			<h2>JMRI decoder CV cross-reference</h2>
 	<xsl:apply-templates select="decoderIndex-config/decoderIndex/familyList"/>
@@ -70,7 +70,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 		</tr>
 
-	<!-- fill table rows -->	
+	<!-- fill table rows -->
 	<xsl:for-each select="family">
 		<xsl:variable name="filename" select="@file" />
 		<xsl:if test="not( @file = '0NMRA_test.xml' )" >
@@ -79,9 +79,9 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 				<xsl:with-param name="file" select="$filename"/>
 			</xsl:call-template>
 		  </xsl:for-each>
-		</xsl:if> 
+		</xsl:if>
 	</xsl:for-each>
-	
+
 	<!-- end table -->
 	</table>
 </xsl:template>

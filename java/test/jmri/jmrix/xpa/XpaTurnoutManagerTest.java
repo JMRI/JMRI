@@ -1,7 +1,6 @@
 package jmri.jmrix.xpa;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -34,11 +33,11 @@ public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         l = new XpaTurnoutManager(memo);
     }
 
-    @After 
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.tearDown();
         memo = null;
         l = null;
+        JUnitUtil.tearDown();
     }
 
 }

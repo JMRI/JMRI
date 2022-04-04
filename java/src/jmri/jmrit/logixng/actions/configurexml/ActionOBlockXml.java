@@ -39,7 +39,7 @@ public class ActionOBlockXml extends jmri.managers.configurexml.AbstractNamedBea
 
         storeCommon(p, element);
 
-        NamedBeanHandle oblock = p.getOBlock();
+        var oblock = p.getOBlock();
         if (oblock != null) {
             element.addContent(new Element("oblock").addContent(oblock.getName()));
         }

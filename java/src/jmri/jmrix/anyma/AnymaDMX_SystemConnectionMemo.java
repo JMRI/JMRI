@@ -316,7 +316,7 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
         if (getDisabled()) {
             return null;
         }
-        return (UsbLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new UsbLightManager(this));
+        return (UsbLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class<?> c) -> new UsbLightManager(this));
     }
 
     /**
@@ -334,7 +334,7 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
     public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
         return new NamedBeanComparator<>();
     }
-    
+
     /**
      * dispose
      */

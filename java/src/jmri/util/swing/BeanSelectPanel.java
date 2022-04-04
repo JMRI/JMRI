@@ -59,7 +59,7 @@ public class BeanSelectPanel<E extends NamedBean> extends JPanel {
      * Provide the actual combo box object to provide direct access, such as adding listeners.
      * @return the combo box
      */
-    public NamedBeanComboBox getBeanCombo() {
+    public NamedBeanComboBox<E> getBeanCombo() {
         return _beanComboBox;
     }
 
@@ -81,7 +81,7 @@ public class BeanSelectPanel<E extends NamedBean> extends JPanel {
     }
 
     /**
-     * Check that the user selected something in this BeanSelectCreatePanel.
+     * Check that the user selected something in this BeanSelectPanel.
      * @return true if nothing selected
      */
     public boolean isEmpty() {

@@ -45,7 +45,6 @@ public class TrainBuilderBase extends TrainCommon {
     protected static final int DISPLAY_CAR_LIMIT_50 = 50;
     protected static final int DISPLAY_CAR_LIMIT_100 = 100;
 
-    protected static final int PERCENT_100 = 100;
     protected static final boolean USE_BUNIT = true;
 
     // build variables shared between local routines
@@ -2662,7 +2661,6 @@ public class TrainBuilderBase extends TrainCommon {
             // check to see if alternate track is available if track full
             if (status.startsWith(Track.LENGTH) &&
                     testTrack.getAlternateTrack() != null &&
-                    car.getFinalDestination() == null &&
                     car.getTrack() != testTrack.getAlternateTrack() &&
                     checkTrainCanDrop(car, testTrack.getAlternateTrack())) {
                 addLine(_buildReport, SEVEN,
@@ -2941,7 +2939,7 @@ public class TrainBuilderBase extends TrainCommon {
                 }
                 if (!stageTrack.isLoadNameAndCarTypeAccepted(load, car.getTypeName())) {
                     addLine(_buildReport, SEVEN,
-                            MessageFormat.format(Bundle.getMessage("BuildDestTrackNoLoad"), new Object[] {
+                            MessageFormat.format(Bundle.getMessage("buildDestTrackNoLoad"), new Object[] {
                                     stageTrack.getLocation().getName(), stageTrack.getName(), car.toString(), load, }));
                 }
                 if (!_train.isLoadNameAccepted(load, car.getTypeName())) {

@@ -1642,7 +1642,7 @@ public class LnIPLImplementationTest {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
 
         memo.configureManagers();
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);

@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.node;
 
-import jmri.InstanceManager;
+import javax.annotation.CheckForNull;
+
 import jmri.PowerManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusPowerManager;
@@ -25,7 +26,7 @@ public class CbusBasicNodeWithMgrsCommandStation extends CbusBasicNodeWithManage
      * @param connmemo   The CAN Connection to use
      * @param nodenumber The Node Number
      */
-    public CbusBasicNodeWithMgrsCommandStation(CanSystemConnectionMemo connmemo, int nodenumber) {
+    public CbusBasicNodeWithMgrsCommandStation( @CheckForNull CanSystemConnectionMemo connmemo, int nodenumber) {
         super(connmemo, nodenumber);
         _csNum = -1;
         _csFlags = -1;
@@ -101,7 +102,7 @@ public class CbusBasicNodeWithMgrsCommandStation extends CbusBasicNodeWithManage
 
     private void checkSingleFlag(int flagNum, String errorText) {
         if (((_csFlags >> flagNum) & 1) == 1) {
-            log.error(errorText, "" + getCsNum() + " " + getNodeNumber());
+            log.error("{} CS{} Node {}",errorText, getCsNum(), getNodeNumber());
         }
     }
 

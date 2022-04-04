@@ -84,8 +84,8 @@ public class TrainSwitchLists extends TrainCommon {
                 newLine(fileOut);
                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringSwitchListFor(),
                         new Object[] { splitString(location.getName()) }));
-                if (!location.getSwitchListComment().equals(Location.NONE)) {
-                    newLine(fileOut, location.getSwitchListComment());
+                if (!location.getSwitchListCommentWithColor().isEmpty()) {
+                    newLine(fileOut, location.getSwitchListCommentWithColor());
                 }
             } else {
                 newLine(fileOut);

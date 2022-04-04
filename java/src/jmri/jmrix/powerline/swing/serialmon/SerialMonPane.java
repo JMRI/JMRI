@@ -77,20 +77,4 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         logMessage(l);
     }
 
-    /**
-     * Nested class to create one of these using old-style defaults.
-     * @deprecated since 4.19.7; use {@link SerialMonPaneAction} instead
-     */
-    @Deprecated
-    static public class Default extends jmri.jmrix.powerline.swing.PowerlineNamedPaneAction {
-
-        public Default() {
-            super("Open Powerline Monitor",
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    SerialMonPane.class.getName(),
-                    jmri.InstanceManager.getDefault(SerialSystemConnectionMemo.class));
-        }
-
-    }
-
 }

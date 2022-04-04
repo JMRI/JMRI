@@ -105,6 +105,12 @@ public class CdiPanelDemo {
         return f;
     }
 
+    @BeforeAll
+    static public void checkSeparate() {
+       // this test is run separately because it leaves a lot of threads behind
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

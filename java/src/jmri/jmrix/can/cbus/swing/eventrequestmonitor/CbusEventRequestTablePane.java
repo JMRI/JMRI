@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,7 +47,6 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
     private final double _splitratio = 0.95;
 
     private JScrollPane scrolltablefeedback;
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     public static final Color VERY_LIGHT_RED = new Color(255,176,173);
     public static final Color VERY_LIGHT_GREEN = new Color(165,255,164);
     public static final Color GOLD = new Color(255,204,51);
@@ -234,7 +232,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
             boolean hasFocus, int row, int column) {
             JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (value != null && value instanceof Date) {
-                c.setText(DATE_FORMAT.format((Date) value));
+                c.setText(new SimpleDateFormat("HH:mm:ss").format((Date) value));
             }
             return c;
         }

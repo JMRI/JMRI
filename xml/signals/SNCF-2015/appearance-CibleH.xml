@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-CibleH</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+
+ <appearances>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <reference>Carré d'arrêt</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHC_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHC_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHC_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop Purple</aspectname>
+      <show>red</show>
+        <comment>real color is purple</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHCv_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHCv_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHCv_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Semaphore</aspectname>
+      <show>red</show>
+      <reference>Semaphore, permissif ou non permissif</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHS_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHS_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHS_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>Voie libre</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHVL_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHVL_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHVL_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>ClearSlow</aspectname>
+      <show>green</show>
+      <reference>Voie libre avec ralentissement vitesse max 130km/h</reference>
+      <comment>flashgreen</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHVLr_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHVLr_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHVLr_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHFb_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHFb_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHFb_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>RestrictedSlow</aspectname>
+      <show>lunar</show>
+      <comment>flashlunar</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHFbc_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHFbc_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHFbc_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <reference>Avertissement</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHA_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHA_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHA_face.gif</imagelink>
+    </appearance>
+
+   <appearance>
+      <aspectname>Advanced Approach</aspectname>
+      <show>yellow</show>
+      <reference>Jaune clignotant</reference>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAa_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAa_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAa_face.gif</imagelink>
+    </appearance>
+
+   <appearance>
+      <aspectname>Restricted</aspectname>
+      <show>red</show>
+      <reference>Rouge clignotant</reference>
+      <comment>flashred</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHSa_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHSa_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHSa_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHDark_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHDark_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHDark_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advanced Approach Restrict30</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaR30_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR30_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR30_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Restrict30</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAR30_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAR30_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAR30_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advanced Approach Restrict60</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaR60_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR60_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR60_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Restrict60</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAR60_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAR60_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAR60_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restrict30</aspectname>
+      <show>yellow</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHR30_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHR30_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHR30_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restrict60</aspectname>
+      <show>yellow</show>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHR60_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHR60_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHR60_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advanced Approach RRestrict30</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaRR30_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR30_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR30_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach RRestrict30</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHARR30_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHARR30_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHARR30_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advanced Approach RRestrict60</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaRR60_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR60_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR60_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach RRestrict60</aspectname>
+      <show>yellow</show>
+      <reference>.</reference>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHARR60_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHARR60_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHARR60_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>RRestrict30</aspectname>
+      <show>yellow</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHRR30_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHRR30_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHRR30_face.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>RRestrict60</aspectname>
+      <show>yellow</show>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHRR60_face.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHRR60_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHRR60_face.gif</imagelink>
+    </appearance>
+
+ </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Approach</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+
+  <aspectMappings>
+
+    <aspectMapping>
+      <advancedAspect>Semaphore</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted</ourAspect>
+      <ourAspect>Approach RRestrict30</ourAspect>
+      <ourAspect>Approach RRestrict60</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted</ourAspect>
+      <ourAspect>Approach RRestrict30</ourAspect>
+      <ourAspect>Approach RRestrict60</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>ClearSlow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advanced Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advanced Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Restricted</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach Restrict30</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Not Lit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advanced Approach RRestrict30</advancedAspect>
+      <ourAspect>Approach Restrict30</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advanced Approach RRestrict60</advancedAspect>
+      <ourAspect>Approach Restrict60</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>RRestrict30</advancedAspect>
+      <ourAspect>Restrict30</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>RRestrict60</advancedAspect>
+      <ourAspect>Restrict60</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+
+</appearancetable>

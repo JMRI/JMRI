@@ -10,6 +10,7 @@
       </enumChoice>
       <enumChoice choice="Servo Power Management">
         <choice>Servo Power Management</choice>
+        <choice xml:lang="cs">Řízení napájení serva</choice>
       </enumChoice>
       <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
         <choice>Operation dependent Smoke for Diesels</choice>

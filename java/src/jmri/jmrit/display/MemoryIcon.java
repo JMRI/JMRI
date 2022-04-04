@@ -385,7 +385,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(val.toString());
                     setIcon(null);
                 } else if (val instanceof jmri.IdTag){
-                    // most IdTags are Reportable objects, so 
+                    // most IdTags are Reportable objects, so
                     // this needs to be before Reportable
                     _icon = false;
                     _text = true;
@@ -397,8 +397,13 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(((Reportable)val).toReportString());
                     setIcon(null);
                 } else {
-                    log.warn("can't display current value of {}, val= {} of Class {}",
+                    // don't recognize the type, do our best with toString
+                    log.debug("display current value of {} as String, val= {} of Class {}",
                             getNameString(), val, val.getClass().getName());
+                    _icon = false;
+                    _text = true;
+                    setText(val.toString());
+                    setIcon(null);
                 }
             } else {
                 // map exists, use it

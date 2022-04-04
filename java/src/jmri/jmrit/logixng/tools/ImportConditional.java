@@ -929,24 +929,24 @@ public class ImportConditional {
                                 .getAutoSystemName(), null);
 
                 if (reference != null) {
-                    action.setAddressing(NamedBeanAddressing.Reference);
-                    action.setReference(reference);
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+                    action.getSelectNamedBean().setReference(reference);
                 } else {
-                    action.setAddressing(NamedBeanAddressing.Direct);
-                    action.setTurnout(tn);
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+                    action.getSelectNamedBean().setNamedBean(tn);
                 }
 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setBeanState(ActionTurnout.TurnoutState.Toggle);
+                        action.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Toggle);
                         break;
 
                     case Turnout.CLOSED:
-                        action.setBeanState(ActionTurnout.TurnoutState.Closed);
+                        action.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Closed);
                         break;
 
                     case Turnout.THROWN:
-                        action.setBeanState(ActionTurnout.TurnoutState.Thrown);
+                        action.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Thrown);
                         break;
 
                     default:

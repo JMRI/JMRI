@@ -39,7 +39,13 @@ public class DirectionPane extends JPanel {
         cbl = cbcl;
         init();
     }
-    
+
+    public void setSimCanListener( CbusSimCanListener cbcl) {
+        cbl = cbcl;
+        setWhichActive();
+        setListeners();
+    }
+
     private void init() {
         
         initPanes();
@@ -98,7 +104,7 @@ public class DirectionPane extends JPanel {
     }
     
     private JSpinner getNewJSpinner(){
-        delaySpinner = new JSpinner(new SpinnerNumberModel(777,0,999999,1));
+        delaySpinner = new JSpinner(new SpinnerNumberModel(80,0,999999,1));
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(delaySpinner, "#");
         delaySpinner.setEditor(editor);
         JFormattedTextField fieldEv = (JFormattedTextField) editor.getComponent(0);
@@ -111,6 +117,9 @@ public class DirectionPane extends JPanel {
     }
 
     private void setListeners(){
+        if (cbl == null ) {
+            return;
+        }
         processIn.addActionListener ((ActionEvent e) -> {
             cbl.setProcessIn(processIn.isSelected());
         }); 
@@ -133,6 +142,15 @@ public class DirectionPane extends JPanel {
     }
 
     private void setWhichActive(){
+        processOut.setEnabled(cbl != null);
+        processIn.setEnabled(cbl != null);
+        sendOut.setEnabled(cbl != null);
+        sendIn.setEnabled(cbl != null);
+        delaySpinner.setEnabled(cbl != null);
+
+        if (cbl == null ) {
+            return;
+        }
         processOut.setSelected(cbl.getProcessOut());
         processIn.setSelected(cbl.getProcessIn());
         sendOut.setSelected(cbl.getSendOut());

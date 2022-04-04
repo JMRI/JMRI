@@ -108,12 +108,6 @@ public class ProxyReporterManager extends AbstractProvidingProxyManager<Reporter
         return ((ReporterManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
-    @SuppressWarnings("deprecation") // user warned by actual manager class
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, typeLetter());
-    }
-    
     /**
      * {@inheritDoc}
      */

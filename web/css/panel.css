@@ -73,6 +73,9 @@ body {
     border-radius: 10px; /* mimick JButtons */
     box-shadow: 1px 1px gray;
 }
+.beanswitch.button.connected { 
+    font-weight: bold;
+}
 
 .beanswitch:hover { /* on Switchboard */
     margin: 2px;

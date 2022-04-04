@@ -26,11 +26,12 @@
     </revision>
   </revhistory>
   
-  <aspecttable>Norway2001</aspecttable>
+  <aspecttable>Norway-2001</aspecttable>
 
   <name>Main 2-lamp over 2 lamp distant Signal</name>
   
-  <description>This uses a head with red and green and a head with flashing orange and green. Used before diverging og difficult routes</description>
+  <description>This uses a head with red and green and a head with flashing orange and flashing green.</description>
+  <description>Used before diverging or difficult routes in station, on newer systems</description>
   
   <appearances>
 
@@ -88,7 +89,7 @@
     <held>
       <aspect>Stop</aspect>
     </held>
-	<dark>
+    <dark>
       <aspect>Off</aspect>
     </dark>
   </specificappearances>
@@ -112,11 +113,32 @@
    </aspectMapping>
 
 
-   <!-- we need to have all possible advanced aspects even though they have nothing to do with our aspect !!!???  -->
+   <aspectMapping>
+     <advancedAspect>Diverging Expect Stop</advancedAspect>
+     <ourAspect>Diverging Expect Diverging</ourAspect>
+   </aspectMapping> 
+   <aspectMapping>
+     <advancedAspect>Diverging Expect Diverging</advancedAspect>
+     <ourAspect>Diverging Expect Diverging</ourAspect>
+   </aspectMapping>   
+   <aspectMapping>
+     <advancedAspect>Diverging Expect Clear</advancedAspect>
+     <ourAspect>Diverging Expect Diverging</ourAspect>
+   </aspectMapping>   
 
 
-
-
+   <aspectMapping>
+     <advancedAspect>Clear Expect Stop</advancedAspect>
+     <ourAspect>Diverging Expect Clear</ourAspect>
+   </aspectMapping> 
+   <aspectMapping>
+     <advancedAspect>Clear Expect Diverging</advancedAspect>
+     <ourAspect>Diverging Expect Clear</ourAspect>
+   </aspectMapping>   
+   <aspectMapping>
+     <advancedAspect>Clear Expect Clear</advancedAspect>
+     <ourAspect>Diverging Expect Clear</ourAspect>
+   </aspectMapping>   
 
 
 

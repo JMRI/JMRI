@@ -43,83 +43,64 @@
         repository on a USB stick.</li>
       </ul>
 
-      <p>The following approach should also work with other cloud-based file-synchronisation
-      services such as <a href="https://www.google.com.au/drive/" target="_blank">Google Drive</a>
-      and <a href="https://onedrive.live.com" target="_blank">OneDrive</a>. However the <a href=
-      "https://www.dropbox.com" target="_blank">Dropbox</a> solution is well tested, having been
-      used by a number of JMRI developers and users for quite some time.</p>
+      <h3>Step 1 - Creating Your Common Repository On GitHub</h3>
 
-      <h3>Step 1</h3>
+        First, <a href="https://github.com/join">create a GitHub account</a> if you don't have one.
 
-      <p>To set up a shared User File Location on the web:</p>
+        <p>Next we're going to put an existing JMRI user files location up onto GitHub for sharing.
+           (These instructions assume that the associated JMRI profile is also in that
+           user files location.)
+           If you don't have that set up yet in JMRI, please create a profile, set the preferences, etc.
 
-      <ul>
-        <li>Create a JMRI folder under Git control on the first computer. If you want to use
-        GitHub, the steps are:
-          <ul>
-            <li>
-              <a href="https://github.com/join">Create a GitHub account</a> if you don't have one.
-            </li>
+        <p>Next, locate the JMRI user files location directory for that profile on your computer's file system.
+           To do that, go to
+            Help-&gt;Locations and press Open User Files Location.<br>
+            <a href="images/Help_Locations.png"><img src="images/Help_Locations.png" width="682" height="139" alt="user filess location"></a><br>
+            This will open a window on your desktop showing that directory.
 
-            <li>Create a new repository on GitHub using the "New" button on your Repositories
-            pane.</li>
+        <p>On your command line, change directory to that location.
+           (How you do this depends on what kind of computer you have)
 
-            <li>Click the button named "(downarrow) Code" and copy the URL for your
-            repository.</li>
-
-            <li>On your computer, in the directory you want to contain your JMRI files, check that
-            repository out with (for example):
-
-              <pre>
-            git clone https://github.com/myaccountname/JMRI.git
+        <p>Execute the following git commands:
+<pre>
+            git init
+            git add .
+            git commit -m"initial contents"
 </pre>
-            </li>
-          </ul>
-        </li>
+        This will turn the directory into a git repository
+        and commit your current contents into it.
 
-        <li>If you have already created items (roster entries, panels etc.) go to
-        Help‑&gt;Locations and press Open User Files Location.<br>
-          <a href="images/Help_Locations.png"><img src="images/Help_Locations.png" width="682"
-          height="139" alt="user filess location"></a><br>
-          This will open a window on your desktop showing a directory. Remember where that is,
-          because you'll move items from there later.
-        </li>
+        <p>Now we move to GitHub and create a corresponding repository there. To do that
+            <ul>
+            <li>Sign into your GitHub account
+            <li>Create a new repository on GitHub using the "New" button on your Repositories
+            pane. Name it for your profile (to reduce confusion).</li>
+            <li>Click the button named "(downarrow) Code" and copy the URL for your
+            repository. It will be something like
+            <code>https://github.com/myaccountname/myreponame.git</code></li>
+            <li>Back on your own computer, enter the <command>
+<pre>
+        git remote add origin https://github.com/myaccountname/myreponame.git
+</pre>
+            where the URL is the one you copied from GitHub.
+            <li>Finally, push your directory contents up to GitHub using the command
+<pre>
+        git branch -M main
+        git push --set-upstream origin main
+</pre>
+            (The <code>-u origin</code> option is a one-time thing to associate the
+            repository on your computer with the one on GitHub.)
+            </ul>
+        <p>At this point, you have a working setup.  When you make changes in your
+           profile directory, you can record them in git with the usual
+           "<code>git commit</code>"
+           command, and move them to and from github with
+           "<code>git push</code>" and
+           "<code>git pull</code>"
+           as usual.
 
-        <li>Still on the Help‑&gt;Locations window, check to see if your Roster Location is
-        different from the User Files Location. If so, click Open Roster Location to open a window
-        on that location. You'll copy files from there later.<br>
-          <a href="images/Help_Locations_Roster.png"><img src="images/Help_Locations_Roster.png"
-          width="682" height="139" alt="roster location"></a>
-        </li>
 
-        <li>Preferences‑&gt;Roster‑&gt;Roster‑&gt;Roster Location‑&gt;Reset. Do not enter a Roster
-        Location. That way it will follow the setting for the User Files Location.<br>
-          <a href="images/Roster_Reset.png"><img src="images/Roster_Reset.png" width="416" height=
-          "159" alt="reset roster location"></a>
-        </li>
-
-        <li>Preferences‑&gt;File Locations‑&gt;User Files Location and set it to the JMRI folder
-        you created in Dropbox.<br>
-          <a href="images/Locations_Files.png"><img src="images/Locations_Files.png" width="418"
-          height="157" alt="set user files location"></a>
-        </li>
-
-        <li>Restart JMRI and use Help ‑&gt; Locations to make sure everything is changed
-        correctly.</li>
-
-        <li>If you have already created any files of the types listed at this link (see <a href=
-        "../../package/apps/TabbedPreferences.shtml#FileLocations" target="_blank">this page</a>
-        for help), move them from the old location to your new location. For example, your files in
-        the User Files window we opened at the first step should be moved to the new User Files
-        Location you just created.
-        </li>
-
-        <li>Use "git add", "git commit" to move all those files under Git's control.</li>
-
-        <li>Finally, "git push" to push the contents back up to GitHub.</li>
-      </ul>
-
-      <h3>Step 2-...</h3>
+      <h3>Step 2 - Sharing To Another Computer</h3>
 
       <p>The only steps you need to do on subsequent computers are:</p>
 
@@ -127,23 +108,23 @@
         <li>"git clone" with the roster URL to make your initial download of the repository ("git
         pull" after that)</li>
 
-        <li>Preferences ‑&gt; Roster ‑&gt; Roster ‑&gt; Roster Location ‑&gt; Reset. Do not enter a
+        <li>Preferences -&gt; Roster -&gt; Roster -&gt; Roster Location -&gt; Reset. Do not enter a
         Roster Location. That way it will follow the User Files Location.</li>
 
-        <li>Preferences ‑&gt; Locations ‑&gt; User Files Location and set it to the JMRI folder you
-        created in Dropbox.</li>
+        <li>Preferences -&gt; Locations -&gt; User Files Location and set it to the JMRI folder you
+        created in with the "git clone".</li>
       </ul>
 
-      <h2>Sneaker Net</h2>
+      <h2>Sharing Existing Content Using Sneaker Net</h2>
 
-      <p>First, copy the <u>entire</u> directory from one of your computers to the USB stick. This
+      <p>First, copy the <u>entire</u> profile directory from one of your computers to the USB stick. This
       will be a master that you're moving around. (You can also directly 'git clone' onto the USB
       stick.)</p>
 
       <p>Then, from your computer's JMRI preferences Git directory, you can bring the USB stick up
       to date with your directory with</p>
 
-      <pre>
+<pre>
             git commit -m"really lucid comment" .
             git push /path/to/USB/directory
 </pre>

@@ -39,14 +39,27 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         
         storeCommon(p, element);
         
-        Element e2 = new Element("Socket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
-        MaleSocket socket = p.getSocket().getConnectedSocket();
+        Element e2 = new Element("ValidateSocket");
+        e2.addContent(new Element("socketName").addContent(p.getValidateSocket().getName()));
+        MaleSocket socket = p.getValidateSocket().getConnectedSocket();
         String socketSystemName;
         if (socket != null) {
             socketSystemName = socket.getSystemName();
         } else {
-            socketSystemName = p.getSocketSystemName();
+            socketSystemName = p.getValidateSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
+        
+        e2 = new Element("ExecuteSocket");
+        e2.addContent(new Element("socketName").addContent(p.getExecuteSocket().getName()));
+        socket = p.getExecuteSocket().getConnectedSocket();
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getExecuteSocketSystemName();
         }
         if (socketSystemName != null) {
             e2.addContent(new Element("systemName").addContent(socketSystemName));
@@ -64,7 +77,8 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         element.addContent(new Element("formatType").addContent(p.getFormatType().name()));
         element.addContent(new Element("format").addContent(p.getFormat()));
         
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
+        element.addContent(new Element("localVariableForSelectedButton").addContent(p.getLocalVariableForSelectedButton()));
+        element.addContent(new Element("localVariableForInputString").addContent(p.getLocalVariableForInputString()));
         element.addContent(new Element("modal").addContent(p.getModal() ? "yes" : "no"));
         element.addContent(new Element("multiLine").addContent(p.getMultiLine() ? "yes" : "no"));
         
@@ -88,16 +102,37 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         
         loadCommon(h, shared);
         
-        Element socketNameElement = shared.getChild("Socket").getChild("socketName");
-        String socketName = socketNameElement.getTextTrim();
-        Element socketSystemNameElement = shared.getChild("Socket").getChild("systemName");
-        String socketSystemName = null;
-        if (socketSystemNameElement != null) {
-            socketSystemName = socketSystemNameElement.getTextTrim();
+        Element validateSocket = shared.getChild("ValidateSocket");
+        if (validateSocket != null) {
+            Element socketNameElement = validateSocket.getChild("socketName");
+            String socketName = socketNameElement.getTextTrim();
+            Element socketSystemNameElement = validateSocket.getChild("systemName");
+            String socketSystemName = null;
+            if (socketSystemNameElement != null) {
+                socketSystemName = socketSystemNameElement.getTextTrim();
+            }
+
+            h.getValidateSocket().setName(socketName);
+            h.setValidateSocketSystemName(socketSystemName);
         }
         
-        h.getChild(0).setName(socketName);
-        h.setSocketSystemName(socketSystemName);
+        Element executeSocket = shared.getChild("ExecuteSocket");
+        // Keep this if statement for backwards compability with JMRI 4.26. Remove for 5.2
+        if ((executeSocket == null) && (shared.getChild("Socket") != null)) {
+            executeSocket = shared.getChild("Socket");
+        }
+        if (executeSocket != null) {
+            Element socketNameElement = executeSocket.getChild("socketName");
+            String socketName = socketNameElement.getTextTrim();
+            Element socketSystemNameElement = executeSocket.getChild("systemName");
+            String socketSystemName = null;
+            if (socketSystemNameElement != null) {
+                socketSystemName = socketSystemNameElement.getTextTrim();
+            }
+
+            h.getExecuteSocket().setName(socketName);
+            h.setExecuteSocketSystemName(socketSystemName);
+        }
         
         List<Element> buttons = shared.getChild("Buttons").getChildren();  // NOI18N
         Set<Button> enabledButtons = h.getEnabledButtons();
@@ -112,8 +147,17 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         elem = shared.getChild("format");  // NOI18N
         h.setFormat((elem != null) ? elem.getValue() : "");
         
+        elem = shared.getChild("localVariableForSelectedButton");  // NOI18N
+        h.setLocalVariableForSelectedButton((elem != null) ? elem.getValue() : "");
+        
+        // Keep for backwards compability with 4.26. Changed in 4.99.1 / 5.0
         elem = shared.getChild("localVariable");  // NOI18N
-        h.setLocalVariable((elem != null) ? elem.getValue() : "");
+        if (elem != null) {
+            h.setLocalVariableForSelectedButton(elem.getValue());
+        }
+        
+        elem = shared.getChild("localVariableForInputString");  // NOI18N
+        h.setLocalVariableForInputString((elem != null) ? elem.getValue() : "");
         
         elem = shared.getChild("modal");  // NOI18N
         h.setModal((elem != null) ? elem.getTextTrim().equals("yes") : false);  // NOI18N

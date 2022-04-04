@@ -9,7 +9,7 @@ import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.script.ScriptOutput;
+import jmri.script.swing.ScriptOutput;
 
 /**
  * This action logs some data.
@@ -142,7 +142,7 @@ public class LogData extends AbstractDigitalExpression
                     if (_data._expressionNode != null) {
                         values.add(_data._expressionNode.calculate(getConditionalNG().getSymbolTable()));
                     }
-                    
+
                     break;
 
                 default:
@@ -182,7 +182,7 @@ public class LogData extends AbstractDigitalExpression
 
         if (_logToLog) log.warn(str);
         if (_logToScriptOutput) ScriptOutput.getDefault().getOutputArea().append(str+"\n");
-        
+
         return _result;
     }
 
@@ -239,7 +239,7 @@ public class LogData extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-/*        
+/*
         log.debug("getUsageReport :: LogData: bean = {}, report = {}", cdl, report);
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {

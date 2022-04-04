@@ -25,6 +25,7 @@
       <xs:element name="turnoutsignalmast" type="TurnoutSignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="dccsignalmast" type="DccSignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="olcbsignalmast" type="OlcbSignalMastType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="mqttsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="matrixsignalmast" type="MatrixSignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="virtualsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />

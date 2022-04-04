@@ -27,7 +27,7 @@ public class CtcEditorSignalHeadsTest {
 
     JFrameOperator _jfo = null;
 
-    static final int DELAY = 0;
+    static int DELAY = 0;  // if this is final, get dead code warnings
     static final boolean PAUSE = false;
 
     @Test

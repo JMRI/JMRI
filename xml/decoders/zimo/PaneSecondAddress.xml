@@ -8,6 +8,7 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <name>Secondary Function Map</name>
     <name xml:lang="de">Zweitadresse</name>
+    <name xml:lang="cs">Druhé přiřazení funkcí</name>
     <column>
       <label>
         <text> </text>
@@ -33,12 +34,12 @@
       <label>
         <text>   </text>
         <text xml:lang="de">    Zum Setzen der Zweitadresse zunächst den gewünschten Wert</text>
-        <text xml:lang="cs">    Chcete-li nastavit druhou adresu, nejprve požadovanou hodnotu</text>
+        <text xml:lang="cs">    Chcete-li nastavit druhou adresu, nejprve nastavte požadovanou hodnotu</text>
       </label>
       <label>
         <text>   </text>
         <text xml:lang="de">    in der "Erweiterten Adresse" im  Reiter "Basis" setzen.</text>
-        <text xml:lang="cs">    nastavte v "Rozšířená adresa" v kartě "Základní".</text>
+        <text xml:lang="cs">    v "Rozšířená adresa" v kartě "Základní".</text>
       </label>
       <label>
         <text>   </text>

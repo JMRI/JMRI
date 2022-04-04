@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.locations;
 
+import jmri.Reporter;
+import jmri.implementation.decorators.TimeoutReporter;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,10 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
+import org.junit.jupiter.api.Timeout;
+import org.mockito.Mockito;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -159,6 +165,33 @@ public class LocationManagerTest extends OperationsTestCase {
         Assert.assertFalse(lm.hasDivisions());
         boston.setDivision(new Division("testId", "testName"));
         Assert.assertTrue(lm.hasDivisions());
+    }
+
+    @Test
+    void getTrackByReporter() {
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
+        Reporter baseReporter= Mockito.mock(Reporter.class);
+        Mockito.when(baseReporter.getSystemName()).thenReturn("foo");
+        TimeoutReporter timeoutReporter = new TimeoutReporter(baseReporter);
+        Location expectedLocation = lm.getLocationByName("North Industries");
+        Track expected = expectedLocation.getTracksList().get(0);
+        expected.setReporter(timeoutReporter);
+        Assert.assertEquals(expected,lm.getTrackByReporter(timeoutReporter));
+        Assert.assertEquals(expected,lm.getTrackByReporter(baseReporter));
+    }
+
+    @Test
+    void getLocationByReporter() {
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
+        Reporter baseReporter= Mockito.mock(Reporter.class);
+        Mockito.when(baseReporter.getSystemName()).thenReturn("foo");
+        Location expected = lm.getLocationByName("North Industries");
+        TimeoutReporter timeoutReporter = new TimeoutReporter(baseReporter);
+        expected.setReporter(timeoutReporter);
+        Assert.assertEquals(expected,lm.getLocationByReporter(timeoutReporter));
+        Assert.assertEquals(expected,lm.getLocationByReporter(baseReporter));
     }
 
 }

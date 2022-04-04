@@ -1,67 +1,62 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 /**
  * This is a parameterized test for Editor object's getIconFrame
- * method.  It tests that the method returns a vaid value for all
+ * method.
+ * It tests that the method returns a valid value for all
  * expected parameters to the method.
  *
  * @author Paul Bender Copyright (C) 2018
  */
-@RunWith(Parameterized.class)
 public class EditorIconFrameTest {
 
-    private Editor e = null;
-    private EditorFrameOperator jfo;
-    private String inputString;
-    private boolean expectNull;
-
-    public EditorIconFrameTest(String input,boolean nullExpected){
-       inputString = input;
-       expectNull = nullExpected;
+    public static Stream<Arguments> iconTypes() {
+       return Stream.of(
+          arguments("Sensor",false),
+          arguments("RightTurnout",false),
+          arguments("LeftTurnout",false),
+          arguments("SlipTOEditor",false),
+          arguments("SignalHead",false),
+          arguments("SignalMast",false),
+          arguments("Memory",false),
+          arguments("Reporter",false),
+          arguments("Light",false),
+          arguments("Background",false),
+          arguments("MultiSensor",false),
+          arguments("Icon",false),
+          //arguments("Text",true),  //see note in test method.
+          arguments("BlockLabel",false),
+          arguments("bar",true)
+        );
     }
 
-    @Parameterized.Parameters
-    public static Collection iconTypes() {
-       return Arrays.asList(new Object[][] {
-          {"Sensor",false},
-          {"RightTurnout",false},
-          {"LeftTurnout",false},
-          {"SlipTOEditor",false},
-          {"SignalHead",false},
-          {"SignalMast",false},
-          {"Memory",false},
-          {"Reporter",false},
-          {"Light",false},
-          {"Background",false},
-          {"MultiSensor",false},
-          {"Icon",false},
-          //{"Text",true},  //see note in test method.
-          {"BlockLabel",false},
-          {"bar",true},
-       });
-    }
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @ParameterizedTest
+    @MethodSource("iconTypes")
+    public void checkGetIconFrame(String inputString, boolean expectNull) {
 
-    @Test
-    public void checkGetIconFrame() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Editor e = new EditorScaffold(inputString + " IconAdder test Editor");
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        
         if(expectNull) {
-           if(inputString == "Text" ) {
+           if("Text".equals(inputString) ) {
               // "Text" pops up a modal JOptionPane, we need to close it.
            }
            JFrame frame = e.getIconFrame(inputString);
@@ -71,28 +66,21 @@ public class EditorIconFrameTest {
            Assert.assertNotNull(inputString + " Editor available", frame );
            frame.dispose();
         }
+        
+        jfo.requestClose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp(){
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalSignalHeadManager();
-        if(!GraphicsEnvironment.isHeadless()) {
-            e = new EditorScaffold(inputString + " IconAdder test Editor");
-            e.setVisible(true);
-            jfo = new EditorFrameOperator(e);
-        }
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
-        if(!GraphicsEnvironment.isHeadless()) {
-            jfo.requestClose();
-            JUnitUtil.dispose(e);
-        }
-        e = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();

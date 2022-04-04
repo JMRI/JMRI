@@ -8,19 +8,19 @@
 
     <output name="1" label="White" connection="plug">
         <label xml:lang="cs">Bílý</label>
-        <label xml:lang="es">White</label>
+        <label xml:lang="es">Blanco</label>
     </output>
     <output name="2" label="Yellow" connection="plug">
         <label xml:lang="cs">Žlutý</label>
-        <label xml:lang="es">Yellow</label>
+        <label xml:lang="es">Amarillo</label>
     </output>
     <output name="3" label="Green" connection="wire">
         <label xml:lang="cs">Zelený</label>
-        <label xml:lang="es">Green</label>
+        <label xml:lang="es">Verde</label>
     </output>
     <output name="4" label="Violet" connection="wire">
         <label xml:lang="cs">Fialový</label>
-        <label xml:lang="es">Violet</label>
+        <label xml:lang="es">Violeta</label>
     </output>
 
 </outputs>

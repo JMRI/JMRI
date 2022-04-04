@@ -25,7 +25,7 @@
     <div id="mainContent">
       <a id="Top"></a> <img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width="163" height=
       "117">
-      <h1>Getting Started with DecoderPro®</h1>
+      <h1>Getting Started with DecoderPro&reg;</h1>
 
       <h2>What is DCC?</h2>
 
@@ -45,7 +45,7 @@
       and interprets them to control the locomotive's speed, direction, lighting effects, sound,
       and other functions. Each decoder responds only to those commands addressed to it. Not every
       decoder will have functions beyond basic throttle commands available. Although there are
-      NMRA® standards for the format of communication (allowing the decoders from different
+      NMRA&reg; standards for the format of communication (allowing the decoders from different
       manufacturers to work on the same railroad), beyond that there is considerable variety in the
       functions supported and the implementation of those functions.</p>
 

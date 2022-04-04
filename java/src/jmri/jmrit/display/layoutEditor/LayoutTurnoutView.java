@@ -3025,18 +3025,19 @@ public class LayoutTurnoutView extends LayoutTrackView {
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!isDisabled() && !(isDisabledWhenOccupied() && isOccupied())) {
             Color foregroundColor = g2.getColor();
-            // if turnout is not continuing state
-            if (getState() != getContinuingSense()) {
-                // then switch to background color
+
+            if (getState() != Turnout.CLOSED) {
+                // then switch to background (thrown) color
                 g2.setColor(g2.getBackground());
             }
+
             if (layoutEditor.isTurnoutFillControlCircles()) {
                 g2.fill(trackControlCircleAt(getCoordsCenter()));
             } else {
                 g2.draw(trackControlCircleAt(getCoordsCenter()));
             }
-            // if turnout is not continuing state
-            if (getState() != getContinuingSense()) {
+
+            if (getState() != Turnout.CLOSED) {
                 // then restore foreground color
                 g2.setColor(foregroundColor);
             }

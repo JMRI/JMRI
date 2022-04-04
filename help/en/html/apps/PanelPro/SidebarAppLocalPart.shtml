@@ -10,6 +10,7 @@
     <li><a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a></li>
     <li><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a></li>
     <li><a href="../../../package/jmri/jmrit/display/SwitchboardEditor.shtml">Switchboard Editor</a></li>
+    <li><a href="../../../package/jmri/jmrit/display/Tooltips.shtml">Panel Tooltips</a></li>
     <li><a href="FAQ.shtml">FAQ</a></li>
     <li><a href="/community/examples/Gallery.shtml">User's Examples</a></li>
     <li><a href="/community/examples/Modules.shtml">Modular Layout Example</a></li>

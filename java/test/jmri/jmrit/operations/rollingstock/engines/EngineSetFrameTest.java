@@ -115,5 +115,6 @@ public class EngineSetFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(Bundle.getMessage("enginePartConsist"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 }

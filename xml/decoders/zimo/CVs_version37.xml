@@ -205,6 +205,9 @@
     <label xml:lang="cs">Chování funkčního výstupu 8</label>
     <label xml:lang="de">FA8 Verhalten</label>
   </variable>
+
+  <!-- CV300, CV301, CV302, moved to feature "Extra Menu" on 14 Feb 2022 / JMRI 4.99.3.  All three CVs trigger behaviour, rather than setting a value, hence the change. --> 
+  <!--
   <variable CV="300" item="CV300-procedures" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <decVal/>
     <label>Pseudo programming 1</label>
@@ -232,6 +235,8 @@
       <tooltip xml:lang="de">Messfahrt zur Bestimmung der Motor-Grundlast</tooltip>
       <tooltip xml:lang="cs">Průběh měření pro zjištění základního zatížení mototu</tooltip>
   </variable>
+  -->
+
   <variable CV="307" item="Curve squeal reed" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <decVal/>
     <label>Curve squeal reed input</label>

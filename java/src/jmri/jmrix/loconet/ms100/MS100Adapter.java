@@ -99,7 +99,7 @@ public class MS100Adapter extends LnPortController {
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et);
+                log.info("failed to set serial timeout", et);
             }
 
             // get and save stream
@@ -139,7 +139,7 @@ public class MS100Adapter extends LnPortController {
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

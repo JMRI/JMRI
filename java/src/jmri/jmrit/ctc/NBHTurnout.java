@@ -66,7 +66,7 @@ public class NBHTurnout {
         return null;
     }
 
-    public NamedBeanHandle getBeanHandle() {
+    public NamedBeanHandle<?> getBeanHandle() {
         if (valid()) return _mNamedBeanHandleTurnout;
         return null;
     }

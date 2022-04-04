@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+  <!-- v1. Nigel Cliffe.  Feb 14th 2022.  New feature added in JMRI 4.99.3 to add further menus to top  -->
+  <!--     of decoder pane, for CVs which don't really work as DecoderPro elements, such as Pseudo Programming and Load Calibration -->
+  <!--     CVs also removed from decoder normal list at same date -->
+<extraMenu name="Pseudo/Incremental Programming" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+           <mode>OPSBITMODE</mode>
+           <mode>OPSBYTEMODE</mode>
+           <extraMenuItem label="PP - Select Steam Chuff Set" CV="300" default="100"/>
+           <extraMenuItem label="PP - Boiling sounds (Steam loco)" CV="300" default="128"/>
+           <extraMenuItem label="PP - Blow-off sound (Steam loco)" CV="300" default="133"/>
+           <extraMenuItem label="PP - Direction-change sound" CV="300" default="129"/>
+           <extraMenuItem label="PP - Brake squeal" CV="300" default="130"/>
+           <extraMenuItem label="PP - Start whistle or horn" CV="300" default="132"/>
+           <extraMenuItem label="PP - Rolling noise" CV="300" default="135"/>
+           <extraMenuItem label="PP - Driving sounds (Electric loco)" CV="300" default="134"/>
+           <extraMenuItem label="PP - Thyrister-control start (Electric loco)" CV="300" default="131"/>
+           <extraMenuItem label="PP - Switchgear sound (Electric loco)" CV="300" default="136"/>
+           <extraMenuItem label="PP - Second Thyristor (Electric Loco)" CV="300" default="137"/>
+           <extraMenuItem label="PP - Dynamic brake (Electric loco)" CV="300" default="142"/>
+           <extraMenuItem label="PP - Turbo charger (Diesel loco)" CV="300" default="141"/>
+           <extraMenuItem label="PP - Random Generator Z1" CV="300" default="101"/>
+           <extraMenuItem label="PP - Random Generator Z2" CV="300" default="102"/>
+           <extraMenuItem label="PP - Random Generator Z3" CV="300" default="103"/>
+           <extraMenuItem label="PP - Random Generator Z4" CV="300" default="104"/>
+           <extraMenuItem label="PP - Random Generator Z5" CV="300" default="105"/>
+           <extraMenuItem label="PP - Random Generator Z6" CV="300" default="106"/>
+           <extraMenuItem label="PP - Random Generator Z7" CV="300" default="107"/>
+           <extraMenuItem label="PP - Random Generator Z8" CV="300" default="108"/>
+           <extraMenuItem label="PP - Switch Input S1" CV="300" default="111"/>
+           <extraMenuItem label="PP - Switch Input S2" CV="300" default="112"/>
+           <extraMenuItem label="PP - Switch Input S3" CV="300" default="113"/>
+           <extraMenuItem label="PP - Function key F1" CV="300" default="1"/>
+           <extraMenuItem label="PP - Function key F2" CV="300" default="2"/>
+           <extraMenuItem label="PP - Function key F3" CV="300" default="3"/>
+           <extraMenuItem label="PP - Function key F4" CV="300" default="4"/>
+           <extraMenuItem label="PP - Function key F5" CV="300" default="5"/>
+           <extraMenuItem label="PP - Function key F6" CV="300" default="6"/>
+           <extraMenuItem label="PP - Function key F7" CV="300" default="7"/>
+           <extraMenuItem label="PP - Function key F8" CV="300" default="8"/>
+           <extraMenuItem label="PP - Function key F9" CV="300" default="9"/>
+           <extraMenuItem label="PP - Function key F10" CV="300" default="10"/>
+           <extraMenuItem label="PP - Function key F11" CV="300" default="11"/>
+           <extraMenuItem label="PP - Function key F12" CV="300" default="12"/>
+           <extraMenuItem label="PP - Function key F13" CV="300" default="13"/>
+           <extraMenuItem label="PP - Function key F14" CV="300" default="14"/>
+           <extraMenuItem label="PP - Function key F15" CV="300" default="15"/>
+           <extraMenuItem label="PP - Function key F16" CV="300" default="16"/>
+           <extraMenuItem label="PP - Function key F17" CV="300" default="17"/>
+           <extraMenuItem label="PP - Function key F18" CV="300" default="18"/>
+           <extraMenuItem label="PP - Function key F19" CV="300" default="19"/>
+           <extraMenuItem label="PP - Function key F0" CV="300" default="20"/>
+           <extraMenuItem label="Incremental Progamming" CV="301" default="0"/>
+           <extraMenuItem label="IP - Group 1 CV66-68" CV="301" default="66"/>
+           <extraMenuItem label="IP - Group 2 CV69-71" CV="300" default="69"/>
+           <extraMenuItem label="IP - Group 3 CV72-74" CV="300" default="72"/>
+           <extraMenuItem label="IP - Group 4 CV75-77" CV="300" default="75"/>
+           <extraMenuItem label="IP - Group 5 CV78-79" CV="300" default="78"/>
+           <extraMenuItem label="IP - Group 6 CV81-83" CV="300" default="81"/>
+           <extraMenuItem label="IP - Group 7 CV84-86" CV="300" default="84"/>
+    </extraMenu>

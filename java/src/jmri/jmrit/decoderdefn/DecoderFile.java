@@ -7,10 +7,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.swing.JLabel;
 
 import jmri.LocoAddress;
+import jmri.Programmer;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.ResetTableModel;
+import jmri.jmrit.symbolicprog.ExtraMenuTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -60,7 +63,7 @@ public class DecoderFile extends XmlFile {
         _element = decoder;
 
         log.trace("Create DecoderFile with Family \"{}\" Model \"{}\"", family, model);
-        
+
         // store the default range of version id's
         setVersionRange(lowVersionID, highVersionID);
     }
@@ -512,7 +515,7 @@ public class DecoderFile extends XmlFile {
                     continue;
                 }
             } catch (NumberFormatException | DataConversionException ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception: {}", e.getAttribute("item"), ex);
+                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception", e.getAttribute("item"), ex);
             }
             // load each row
             variableModel.setRow(nextCvStoreIndex++, e, _element == null ? null : this);
@@ -538,7 +541,7 @@ public class DecoderFile extends XmlFile {
                     continue;
                 }
             } catch (DataConversionException ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception: {}", e.getAttribute("item"), ex);
+                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception", e.getAttribute("item"), ex);
             }
             // load each row
             variableModel.setConstant(e);
@@ -559,6 +562,29 @@ public class DecoderFile extends XmlFile {
                 Element e = resetList.get(i);
                 resetModel.setRow(i, e, decoderElement.getChild("resets"), _model);
             }
+        }
+    }
+
+    // process "extraMenu" elements into data model(s)
+    public void loadExtraMenuModel(Element decoderElement, ArrayList<ExtraMenuTableModel> extraMenuModelList, JLabel progStatus, Programmer mProgrammer) {
+        var menus = decoderElement.getChildren("extraMenu");
+        log.trace("loadExtraMenuModel {} {}", menus.size(), extraMenuModelList);
+        int i = 0;
+        for (var menuElement : menus) {
+            if (i >= extraMenuModelList.size() || extraMenuModelList.get(i) == null) {
+                log.trace("Add element {} in array of size {}",i,extraMenuModelList.size());
+                var model = new ExtraMenuTableModel(progStatus, mProgrammer);
+                model.setName(menuElement.getAttributeValue("name","Extra"));
+                extraMenuModelList.add(i, model);
+            }
+
+            List<Element> itemList = menuElement.getChildren("extraMenuItem");
+            var extraMenuModel = extraMenuModelList.get(i);
+            for (int j = 0; j < itemList.size(); j++) {
+                Element e = itemList.get(j);
+                extraMenuModel.setRow(j, e, menuElement, _model);
+            }
+            i++;
         }
     }
 

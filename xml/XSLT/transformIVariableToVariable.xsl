@@ -7,7 +7,7 @@
 <!--  xml/XSLT/transformIVariableToVariable.xsl                                   -->
 <!--  xmllint -format                                                       -->
 
-<!-- This file is part of JMRI.  Copyright 2009-2015.                       -->
+<!-- This file is part of JMRI.  Copyright 2009-2022.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,8 +18,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
-<xsl:stylesheet	version="1.0" 
+
+<xsl:stylesheet	version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
 
@@ -71,7 +71,7 @@
         </decVal>
     </xsl:template>
 
-    
+
 <!--rename indexedPairVal element to splitVal -->
     <xsl:template match="indexedPairVal" priority="5">
         <splitVal>
@@ -87,7 +87,7 @@
         </splitVal>
     </xsl:template>
 
-    
+
 <!--Identity template copies content forward -->
     <xsl:template match="@*|node()">
         <xsl:copy>

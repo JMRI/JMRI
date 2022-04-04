@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable-no-check.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-TIVR</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+
+ <appearances>
+    <appearance>
+      <aspectname>TIVRDark</aspectname>
+      <show>dark</show>
+      <reference>TIVRDark</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_Dark.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_Dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_Dark.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR30</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_30.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_30.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_30.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR40</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_40.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_40.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_40.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR50</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_50.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_50.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_50.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR60</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_60.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_60.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_60.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR70</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_70.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_70.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_70.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR80</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_80.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_80.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_80.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR90</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_90.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_90.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_90.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR100</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_100.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_100.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_100.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR110</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_110.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_110.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_110.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR120</aspectname>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_120.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_120.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_120.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR130</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_130.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_130.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_130.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR140</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_140.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_140.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_140.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR150</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_150.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_150.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_150.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>TIVR160</aspectname>
+      <show>lunar</show>
+      <reference>.</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_R_160.gif</imagelink>
+      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_R_160.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_R_160.gif</imagelink>
+    </appearance>
+ </appearances>
+
+  <specificappearances>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>TIVR30</advancedAspect>
+      <ourAspect>TIVA30</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR40</advancedAspect>
+      <ourAspect>TIVA40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR50</advancedAspect>
+      <ourAspect>TIVA50</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR60</advancedAspect>
+      <ourAspect>TIVA60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR70</advancedAspect>
+      <ourAspect>TIVA70</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR80</advancedAspect>
+      <ourAspect>TIVA80</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR90</advancedAspect>
+      <ourAspect>TIVA90</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR100</advancedAspect>
+      <ourAspect>TIVA100</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR110</advancedAspect>
+      <ourAspect>TIVA110</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      	<advancedAspect>TIVR120</advancedAspect>
+     	 <ourAspect>TIVA120</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR130</advancedAspect>
+      <ourAspect>TIVA130</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR140</advancedAspect>
+      <ourAspect>TIVA140</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR150</advancedAspect>
+      <ourAspect>TIVA150</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVR160</advancedAspect>
+      <ourAspect>TIVA160</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>TIVRDark</advancedAspect>
+      <ourAspect>TIVPDark</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+
+</appearancetable>

@@ -43,6 +43,7 @@ import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.JTablePersistenceManager;
@@ -122,10 +123,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 try {
                     info = tif.readTrainInfo(names[i]);
                 } catch (java.io.IOException ioe) {
-                    log.error("IO Exception when reading train info file {}: {}", names[i], ioe);
+                    log.error("IO Exception when reading train info file {}", names[i], ioe);
                     continue;
                 } catch (org.jdom2.JDOMException jde) {
-                    log.error("JDOM Exception when reading train info file {}: {}", names[i], jde);
+                    log.error("JDOM Exception when reading train info file {}", names[i], jde);
                     continue;
                 }
                 if (info != null && info.getLoadAtStartup()) {
@@ -185,10 +186,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             try {
                 info = tif.readTrainInfo(traininfoFileName);
             } catch (java.io.IOException ioe) {
-                log.error("IO Exception when reading train info file {}: {}", traininfoFileName, ioe);
+                log.error("IO Exception when reading train info file {}", traininfoFileName, ioe);
                 return -2;
             } catch (org.jdom2.JDOMException jde) {
-                log.error("JDOM Exception when reading train info file {}: {}", traininfoFileName, jde);
+                log.error("JDOM Exception when reading train info file {}", traininfoFileName, jde);
                 return -3;
             }
             return loadTrainFromTrainInfo(info, overRideType, overRideValue);
@@ -302,6 +303,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
                 aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
                 aat.setUseSpeedProfile(info.getUseSpeedProfile());
+                getAutoTrainsFrame().addAutoActiveTrain(aat);
                 if (!aat.initialize()) {
                     log.error("ERROR initializing autorunning for train {}", at.getTrainName());
                     JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
@@ -309,7 +311,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             JOptionPane.INFORMATION_MESSAGE);
                     return -1;
                 }
-                getAutoTrainsFrame().addAutoActiveTrain(aat);
             }
             allocateNewActiveTrain(at);
             newTrainDone(at);
@@ -412,9 +413,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         try {
             InstanceManager.getDefault(OptionsFile.class).readDispatcherOptions(this);
         } catch (org.jdom2.JDOMException jde) {
-            log.error("JDOM Exception when retrieving dispatcher options {}", jde);
+            log.error("JDOM Exception when retrieving dispatcher options", jde);
         } catch (java.io.IOException ioe) {
-            log.error("I/O Exception when retrieving dispatcher options {}", ioe);
+            log.error("I/O Exception when retrieving dispatcher options", ioe);
         }
     }
 
@@ -1073,7 +1074,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *
      * <p>
      * Moved from Transit in JMRI 4.19.7
-     * 
+     *
      * @param panel the panel to check against
      * @return 0 if all Sections have all required signals or the number of
      *         Sections missing required signals; -1 if the panel is null
@@ -1089,7 +1090,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         return numErrors;
     }
-  
+
     /**
      * Validates connectivity through a Transit. Returns the number of errors
      * found. Sends log messages detailing the errors if break in connectivity
@@ -1097,7 +1098,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *
      * <p>
      * Moved from Transit in JMRI 4.19.7
-     * 
+     *
      * @param panel the panel containing Sections to validate
      * @return number of invalid sections or -1 if panel if null
      */
@@ -1445,7 +1446,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (ar == null) {
             log.debug("First allocation returned null, normal for auotallocate");
         }
-        // removed. initializeFirstAllocation already does this. 
+        // removed. initializeFirstAllocation already does this.
         /* if (ar != null) {
             if ((ar.getSection()).containsBlock(at.getStartBlock())) {
                 // Active Train is in the first Section, go ahead and allocate it
@@ -1520,7 +1521,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         if (at.getAutoRun()) {
             AutoActiveTrain aat = at.getAutoActiveTrain();
-            _autoTrainsFrame.removeAutoActiveTrain(aat);
             aat.terminate();
             aat.dispose();
         }
@@ -1554,7 +1554,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *                          suppress error message dialogs from this method.
      * @param frame             window request is from, or "null" if not from a
      *                          window
-     * @param firstAllocation           True if first allocation                         
+     * @param firstAllocation           True if first allocation
      * @return true if successful; false otherwise
      */
     protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
@@ -1615,7 +1615,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocationRequestTableModel.fireTableDataChanged();
         return true;
     }
-    
+
     protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
             int seqNumber, boolean showErrorMessages, JmriJFrame frame) {
         return requestAllocation( activeTrain,  section,  direction,
@@ -1738,7 +1738,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         //check here to see if block is already assigned to an allocated section;
-        if (getSignalType() == SIGNALMAST && checkBlocksNotInAllocatedSection(s, ar) != null) {
+        if (checkBlocksNotInAllocatedSection(s, ar) != null) {
             return null;
         }
         // Programming
@@ -1810,16 +1810,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         List<Section> intermediateSections = new ArrayList<>();
         Section mastHeldAtSection = null;
         Object imSecProperty = ar.getSection().getProperty("intermediateSection");
-        if (nextSection != null 
-            && imSecProperty != null 
+        if (nextSection != null
+            && imSecProperty != null
                 && ((Boolean) imSecProperty)) {
-            
+
             String property = "forwardMast";
             if (at.isAllocationReversed()) {
                 property = "reverseMast";
             }
-            
-            Object sectionDirProp = ar.getSection().getProperty(property); 
+
+            Object sectionDirProp = ar.getSection().getProperty(property);
             if ( sectionDirProp != null) {
                 SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(sectionDirProp.toString());
                 if (endMast != null) {
@@ -1837,7 +1837,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         found = true;
                     } else if (found) {
                         Object imSecProp = ts.getSection().getProperty("intermediateSection");
-                        if ( imSecProp != null) { 
+                        if ( imSecProp != null) {
                             if ((Boolean) imSecProp) {
                                 intermediateSections.add(ts.getSection());
                             } else {
@@ -2126,10 +2126,30 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
+     * returns a list of level crossings (0 to n) in a section.
+     */
+    private List<LevelXing> containedLevelXing(Section s) {
+        List<LevelXing> _levelXingList = new ArrayList<>();
+        if (s == null) {
+            log.error("null argument to 'containsLevelCrossing'");
+            return _levelXingList;
+        }
+        for (Block blk: s.getBlockList()) {
+            for (LevelXing temLevelXing: getLayoutEditor().getConnectivityUtil().getLevelCrossingsThisBlock(blk)) {
+                // it is returned if the block is in the crossing or connected to the crossing
+                // we only need it if it is in the crossing
+                if (temLevelXing.getLayoutBlockAC().getBlock() == blk || temLevelXing.getLayoutBlockBD().getBlock() == blk ) {
+                    _levelXingList.add(temLevelXing);
+                }
+            }
+        }
+        return _levelXingList;
+    }
+
+    /*
      * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
      */
     protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
-
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 List<Block> blas = as.getSection().getBlockList();
@@ -2171,6 +2191,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     }
                 } else {
                     bls = s.getBlockList();
+                    // Add Blocks in any XCrossing, dont add ones already in the list
+                    for ( LevelXing lx: containedLevelXing(s)) {
+                        Block bAC = lx.getLayoutBlockAC().getBlock();
+                        Block bBD = lx.getLayoutBlockBD().getBlock();
+                        if (!bls.contains(bAC)) {
+                            bls.add(bAC);
+                        }
+                        if (!bls.contains(bBD)) {
+                            bls.add(bBD);
+                        }
+                    }
                 }
 
                 for (Block b : bls) {
@@ -2512,7 +2543,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected boolean getAutoAllocate() {
         return _AutoAllocate;
     }
-    
+
     protected boolean getAutoRelease() {
         return _AutoRelease;
     }

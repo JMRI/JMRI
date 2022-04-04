@@ -194,7 +194,7 @@ public class WarrantTest {
             String m = warrant.getRunningMessage();
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -203,7 +203,7 @@ public class WarrantTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -212,7 +212,7 @@ public class WarrantTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        jmri.util.JUnitUtil.releaseThread(this, 100);
+        JUnitUtil.waitFor(100);
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(() -> {

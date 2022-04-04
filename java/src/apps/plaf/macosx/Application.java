@@ -18,12 +18,8 @@ import jmri.util.SystemType;
  * {@link java.lang.NoClassDefFoundError} Failure to use one of these methods
  * will result in crashes.
  * <p>
- * This wrapper currently provides incomplete support for the Apple
- * {@link com.apple.eawt.Application} class, as it only provides support for
- * those integration aspects that were implemented in JMRI 3.1.
  *
  * @author Randall Wood (c) 2011, 2016
- * @see EawtApplication
  * @see Jdk9Application
  */
 abstract public class Application {
@@ -41,9 +37,7 @@ abstract public class Application {
                     sharedApplication = new Jdk9Application();
                 }
             } catch (IllegalArgumentException ex) {
-                // if Desktop.Action does not include AboutHandlers, its not
-                // recognized to be (un)supported, so assume the Eawt is available 
-                sharedApplication = new EawtApplication();
+                log.error("failed to start desktop support");
             }
         }
         return sharedApplication;
@@ -58,4 +52,6 @@ abstract public class Application {
     abstract public void setPreferencesHandler(final PreferencesHandler handler);
 
     abstract public void setQuitHandler(final QuitHandler handler);
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Application.class);
 }

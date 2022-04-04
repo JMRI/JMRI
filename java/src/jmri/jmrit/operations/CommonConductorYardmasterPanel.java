@@ -359,8 +359,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             textTrainCommentPane.setVisible(false);
         } else {
             textTrainCommentPane.setVisible(true);
-            textTrainCommentPane.setText(TrainCommon.getTextColorString(_train.getComment()));
-            textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
+            textTrainCommentPane.setText(_train.getComment());
+            textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getCommentWithColor()));
         }
     }
 
@@ -376,18 +376,18 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     protected void loadLocationComment(Location location) {
         textLocationCommentPane
-                .setVisible(!location.getComment().equals(Location.NONE) && Setup.isPrintLocationCommentsEnabled());
+                .setVisible(!location.getComment().isEmpty() && Setup.isPrintLocationCommentsEnabled());
         if (textLocationCommentPane.isVisible()) {
-            textLocationCommentPane.setText(TrainCommon.getTextColorString(location.getComment()));
-            textLocationCommentPane.setForeground(TrainCommon.getTextColor(location.getComment()));
+            textLocationCommentPane.setText(location.getComment());
+            textLocationCommentPane.setForeground(TrainCommon.getTextColor(location.getCommentWithColor()));
         }
     }
 
     protected void loadLocationSwitchListComment(Location location) {
-        textSwitchListCommentPane.setVisible(!location.getSwitchListComment().equals(Location.NONE));
+        textSwitchListCommentPane.setVisible(!location.getSwitchListComment().isEmpty());
         if (textSwitchListCommentPane.isVisible()) {
-            textSwitchListCommentPane.setText(TrainCommon.getTextColorString(location.getSwitchListComment()));
-            textSwitchListCommentPane.setForeground(TrainCommon.getTextColor(location.getSwitchListComment()));
+            textSwitchListCommentPane.setText(location.getSwitchListComment());
+            textSwitchListCommentPane.setForeground(TrainCommon.getTextColor(location.getSwitchListCommentWithColor()));
         }
     }
 
@@ -440,14 +440,14 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 if (pickup || setout) {
                     JTextPane commentTextPane = new JTextPane();
                     if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
-                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentBoth()));
-                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentBoth()));
+                        commentTextPane.setText(track.getCommentBoth());
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentBothWithColor()));
                     } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
-                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentPickup()));
-                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentPickup()));
+                        commentTextPane.setText(track.getCommentPickup());
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentPickupWithColor()));
                     } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
-                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentSetout()));
-                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentSetout()));
+                        commentTextPane.setText(track.getCommentSetout());
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentSetoutWithColor()));
                     }
                     if (!commentTextPane.getText().isEmpty()) {
                         commentTextPane.setBorder(

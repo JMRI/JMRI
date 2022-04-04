@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
+import jmri.util.swing.JComboBoxUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -33,6 +34,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         p.setLayout(new java.awt.FlowLayout());
         p.add(new JLabel("Format:"));
         p.add(programmerBox = new JComboBox<>(ProgDefault.findListOfProgFiles()));
+        JComboBoxUtil.setupComboBoxMaxRows(programmerBox);
         programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         programmerBox.addActionListener((ActionEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(programmerBox.getSelectedItem().toString());
@@ -42,19 +44,19 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         // also create the advanced panel
         advancedPanel = new JPanel();
         advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.Y_AXIS));
-        
+
         advancedPanel.add(showEmptyTabs = new JCheckBox(this.apb.getString("ProgShowEmptyTabs")));
         showEmptyTabs.setSelected(PaneProgFrame.getShowEmptyPanes());
         showEmptyTabs.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(showEmptyTabs.isSelected());
         });
-        
+
         advancedPanel.add(showCvNums = new JCheckBox(this.apb.getString("ProgShowCVInTips")));
         showCvNums.setSelected(PaneProgFrame.getShowCvNumbers());
         showCvNums.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(showCvNums.isSelected());
         });
-        
+
         advancedPanel.add(canCacheDefault = new JCheckBox(this.apb.getString("ProgCanCacheDefault")));
         canCacheDefault.setSelected(PaneProgFrame.getCanCacheDefault());
         canCacheDefault.addItemListener((ItemEvent e) -> {
@@ -86,7 +88,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
     JCheckBox showCvNums;
     JCheckBox canCacheDefault;
     JCheckBox doConfirmRead;
-    
+
     public boolean getShowEmptyTabs() {
         return showEmptyTabs.isSelected();
     }
@@ -98,11 +100,11 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
     public boolean getCanCacheDefault() {
         return canCacheDefault.isSelected();
     }
-    
+
     public boolean getDoConfirmRead() {
         return doConfirmRead.isSelected();
     }
-    
+
     @Override
     public String getPreferencesItem() {
         return "ROSTER"; // NOI18N

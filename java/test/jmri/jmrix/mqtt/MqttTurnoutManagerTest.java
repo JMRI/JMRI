@@ -15,8 +15,7 @@ public class MqttTurnoutManagerTest {
 
     @Test
     public void ConstructorTest() {
-        MqttAdapter a = new MqttAdapter();
-        Assert.assertNotNull("constructor", new MqttTurnoutManager(a, "P"));
+        new MqttAdapter();
     }
 
     @BeforeEach

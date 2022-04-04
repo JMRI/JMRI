@@ -35,9 +35,10 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager();
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.tearDown();
     }
+    
 }

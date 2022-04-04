@@ -64,14 +64,15 @@ public class JmriConfigurationManager implements ConfigureManager {
      */
     private final Set<PreferencesManager> initializing = new HashSet<>();
 
-    @SuppressWarnings("unchecked") // For types in InstanceManager.store()
     public JmriConfigurationManager() {
         ServiceLoader<PreferencesManager> sl = ServiceLoader.load(PreferencesManager.class);
         for (PreferencesManager pp : sl) {
             InstanceManager.store(pp, PreferencesManager.class);
-            for (Class provided : pp.getProvides()) { // use raw class so next line can compile
-                InstanceManager.store(provided.cast(pp), provided);
+
+            for (Class<?> provided : pp.getProvides()) {
+                InstanceManager.storeUnchecked(pp, provided);
             }
+
         }
         Profile profile = ProfileManager.getDefault().getActiveProfile();
         if (profile != null) {
@@ -304,15 +305,15 @@ public class JmriConfigurationManager implements ConfigureManager {
 
         if (list instanceof JList) {
             JPopupMenu popupMenu = new JPopupMenu();
-            JMenuItem copyMenuItem = buildCopyMenuItem((JList) list);
+            JMenuItem copyMenuItem = buildCopyMenuItem((JList<?>) list);
             popupMenu.add(copyMenuItem);
 
-            JMenuItem copyAllMenuItem = buildCopyAllMenuItem((JList) list);
+            JMenuItem copyAllMenuItem = buildCopyAllMenuItem((JList<?>) list);
             popupMenu.add(copyAllMenuItem);
 
-            ((JList) list).setComponentPopupMenu(popupMenu);
+            ((JList<?>) list).setComponentPopupMenu(popupMenu);
 
-            ((JList) list).addListSelectionListener((ListSelectionEvent e) -> copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1));
+            ((JList<?>) list).addListSelectionListener((ListSelectionEvent e) -> copyMenuItem.setEnabled(((JList<?>)e.getSource()).getSelectedIndex() != -1));
         }
 
         JOptionPane pane = getjOptionPane(list, options);
@@ -376,7 +377,7 @@ public class JmriConfigurationManager implements ConfigureManager {
             );
     }
 
-    private JMenuItem buildCopyAllMenuItem(JList list) {
+    private JMenuItem buildCopyAllMenuItem(JList<?> list) {
         JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
         ActionListener copyAllActionListener = (ActionEvent e) -> {
             StringBuilder text = new StringBuilder();
@@ -392,7 +393,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         return copyAllMenuItem;
     }
 
-    private JMenuItem buildCopyMenuItem(JList list) {
+    private JMenuItem buildCopyMenuItem(JList<?> list) {
         JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
         TransferActionListener copyActionListener = new TransferActionListener();
         copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));

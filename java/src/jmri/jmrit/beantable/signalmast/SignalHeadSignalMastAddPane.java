@@ -36,6 +36,7 @@ import jmri.implementation.SignalHeadSignalMast;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * A pane for configuring SignalHeadSignalMast objects.
@@ -49,9 +50,9 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
     public SignalHeadSignalMastAddPane() {
         initPane();
     }
-    
+
     final void initPane() {
-        
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // lit/unlit controls
         JPanel p = new JPanel();
@@ -118,6 +119,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             head.setExcludedItems(alreadyUsed);
             headList.add(head);
             signalHeadPanel.add(head);
+            JComboBoxUtil.setupComboBoxMaxRows(head);
         }
         signalHeadPanel.add(includeUsed);
 
@@ -175,6 +177,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             head.setEnabled(false);
             head.setSelectedItem(currentMast.getHeadsUsed().get(i).getBean()); // must match NamedBeanComboBox above
             signalHeadPanel.add(head);
+            JComboBoxUtil.setupComboBoxMaxRows(head);
         }
         signalHeadPanel.add(includeUsed);
         signalHeadPanel.revalidate();

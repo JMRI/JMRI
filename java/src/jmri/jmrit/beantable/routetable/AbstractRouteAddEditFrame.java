@@ -7,9 +7,8 @@ import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.util.swing.JComboBoxUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -58,8 +57,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     // safe methods to set the above 4 static field values
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
-
-    private static final Logger log = LoggerFactory.getLogger(AbstractRouteAddEditFrame.class);
 
     static int ROW_HEIGHT;
     // This group will get runtime updates to system-specific contents at
@@ -121,7 +118,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     protected boolean routeDirty = false;  // true to fire reminder to save work
     private boolean showAll = true;   // false indicates show only included Turnouts
     private JFileChooser soundChooser = null;
-    private JFileChooser scriptChooser = null;
+    private ScriptFileChooser scriptChooser = null;
 
     public AbstractRouteAddEditFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
@@ -725,7 +722,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
      */
     private void setScriptPressed() {
         if (scriptChooser == null) {
-            scriptChooser = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+            scriptChooser = new ScriptFileChooser();
         }
         scriptChooser.rescanCurrentDirectory();
         int retVal = scriptChooser.showOpenDialog(null);
@@ -757,6 +754,94 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         if (curRoute != null) {
             curRoute.activateRoute();
         }
+    }
+
+    /**
+     * Populate the page fields.  The route names are not included since they are handled
+     * by the Edit or Add actions.
+     * <p>
+     * The route is either the route being edited or a source route for doing a copy during
+     * the add action.
+     *
+     * @param route The route that contains the content.
+     */
+    protected void setPageContent(Route route) {
+        // set up Turnout list for this route
+        int setRow = 0;
+        for (int i = _turnoutList.size() - 1; i >= 0; i--) {
+            RouteTurnout turnout = _turnoutList.get(i);
+            String tSysName = turnout.getSysName();
+            if (route.isOutputTurnoutIncluded(tSysName)) {
+                turnout.setIncluded(true);
+                turnout.setState(route.getOutputTurnoutSetState(tSysName));
+                setRow = i;
+            } else {
+                turnout.setIncluded(false);
+                turnout.setState(Turnout.CLOSED);
+            }
+        }
+        setRow -= 1;
+        if (setRow < 0) {
+            setRow = 0;
+        }
+        _routeTurnoutScrollPane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
+        _routeTurnoutModel.fireTableDataChanged();
+
+        // set up Sensor list for this route
+        for (int i = _sensorList.size() - 1; i >= 0; i--) {
+            RouteSensor sensor = _sensorList.get(i);
+            String tSysName = sensor.getSysName();
+            if (route.isOutputSensorIncluded(tSysName)) {
+                sensor.setIncluded(true);
+                sensor.setState(route.getOutputSensorSetState(tSysName));
+                setRow = i;
+            } else {
+                sensor.setIncluded(false);
+                sensor.setState(Sensor.INACTIVE);
+            }
+        }
+        setRow -= 1;
+        if (setRow < 0) {
+            setRow = 0;
+        }
+        _routeSensorScrollPane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
+        _routeSensorModel.fireTableDataChanged();
+
+        // get Sound and  Script file names
+        scriptFile.setText(route.getOutputScriptName());
+        soundFile.setText(route.getOutputSoundName());
+
+        // get Turnout Aligned sensor
+        turnoutsAlignedSensor.setSelectedItem(route.getTurnoutsAlgdSensor());
+
+        // set up Control Sensors if there are any
+        Sensor[] temNames = new Sensor[Route.MAX_CONTROL_SENSORS];
+        int[] temModes = new int[Route.MAX_CONTROL_SENSORS];
+        for (int k = 0; k < Route.MAX_CONTROL_SENSORS; k++) {
+            temNames[k] = route.getRouteSensor(k);
+            temModes[k] = route.getRouteSensorMode(k);
+        }
+        sensor1.setSelectedItem(temNames[0]);
+        setSensorModeBox(temModes[0], sensor1mode);
+
+        sensor2.setSelectedItem(temNames[1]);
+        setSensorModeBox(temModes[1], sensor2mode);
+
+        sensor3.setSelectedItem(temNames[2]);
+        setSensorModeBox(temModes[2], sensor3mode);
+
+        // set up Control Turnout if there is one
+        cTurnout.setSelectedItem(route.getCtlTurnout());
+
+        setTurnoutModeBox(route.getControlTurnoutState(), cTurnoutStateBox);
+
+        // set up Lock Control Turnout if there is one
+        cLockTurnout.setSelectedItem(route.getLockCtlTurnout());
+
+        setTurnoutModeBox(route.getLockControlTurnoutState(), cLockTurnoutStateBox);
+
+        // set up additional route specific Delay
+        timeDelay.setValue(route.getRouteCommandDelay());
     }
 
     private void clearPage() {
@@ -917,4 +1002,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         _routeTurnoutModel.dispose();
         this.dispose();
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractRouteAddEditFrame.class);
 }

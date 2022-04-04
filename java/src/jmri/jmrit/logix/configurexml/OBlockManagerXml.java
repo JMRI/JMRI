@@ -242,11 +242,6 @@ public class OBlockManagerXml // extends XmlFile
         for (Element bl : blockList) {
             loadBlock(bl);
         }
-        // Build data structure for blocks to know with whom they share turnouts.
-        // check whether any turnouts are shared between two blocks;
-        for (OBlock oblock : _manager.getNamedBeanSet()) {
-            WarrantTableAction.getDefault().checkSharedTurnouts(oblock);
-        }
         return true;
     }
 
@@ -309,7 +304,7 @@ public class OBlockManagerXml // extends XmlFile
                     block.setReporter(rep);
                 }
             } catch (Exception ex) {
-                log.error("No Reporter named \"{}\" found. threw exception: {}", name,  ex);
+                log.error("No Reporter named \"{}\" found. threw exception", name,  ex);
             }
             if (reporter.getAttribute("reportCurrent") != null) {
                 block.setReportingCurrent(reporter.getAttribute("reportCurrent").getValue().equals("true"));

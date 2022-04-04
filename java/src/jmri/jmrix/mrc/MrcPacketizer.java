@@ -108,13 +108,12 @@ public class MrcPacketizer extends MrcTrafficController {
                     log.debug("xmt list size {}", xmtList.size()); // NOI18N
                     Iterator<MrcMessage> iterator = xmtList.iterator();
                     while (iterator.hasNext()) {
-                        log.debug(iterator.next().toString());
+                        log.debug("  entry: {}",iterator.next().toString());
                     }
-                    log.debug("==");
                 }
             }
         } catch (RuntimeException e) {
-            log.warn("passing to xmit: unexpected exception: {}", e); // NOI18N
+            log.warn("passing to xmit: unexpected exception", e); // NOI18N
         }
     }
 
@@ -474,7 +473,7 @@ public class MrcPacketizer extends MrcTrafficController {
                     // done with this one
                 } catch (MrcMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected MrcMessageException: {}", e); // NOI18N
+                    log.warn("run: unexpected MrcMessageException", e); // NOI18N
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.trace("EOFException, is Mrc serial I/O using timeouts?");
@@ -606,7 +605,7 @@ public class MrcPacketizer extends MrcTrafficController {
                         consecutiveMissedPolls = 0;
                     }
                 } catch (java.io.IOException e) {
-                    log.warn("sendMrcMessage: IOException: {}", e); // NOI18N
+                    log.warn("sendMrcMessage: IOException", e); // NOI18N
                 }
             }
         }

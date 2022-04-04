@@ -13,7 +13,7 @@ import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-// import org.jdom2.ProcessingInstruction;
+import org.jdom2.ProcessingInstruction;
 
 import jmri.jmrit.timetable.*;
 
@@ -36,11 +36,21 @@ public class TimeTableXml {
 
         // Create root element
         Element root = new Element("timetable-data");  // NOI18N
+
         root.setAttribute("noNamespaceSchemaLocation",  // NOI18N
                 "http://jmri.org/xml/schema/timetable.xsd",  // NOI18N
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));  // NOI18N
         Document doc = new Document(root);
+
+        // add XSLT processing instruction
+        // <?xml-stylesheet href="/xml/XSLT/timetable.xsl" type="text/xsl"?>
+        java.util.Map<String, String> m = new java.util.HashMap<>();
+        m.put("type", "text/xsl");
+        m.put("href", TimeTableXmlFile.xsltLocation + "timetable.xsl");
+        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+        doc.addContent(0, p);
+
         Element values;
 
         root.addContent(values = new Element("layouts"));  // NOI18N
@@ -134,10 +144,10 @@ public class TimeTableXml {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: {}", ex);  // NOI18N
+            log.error("File not found when writing", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("IO Exception when writing: {}", ex);  // NOI18N
+            log.error("IO Exception when writing", ex);  // NOI18N
             return false;
         }
 
@@ -351,8 +361,10 @@ public class TimeTableXml {
                 int routeDuration = (route_duration == null) ? 0 : Integer.parseInt(route_duration.getValue());
                 Element train_notes = train.getChild("train_notes");  // NOI18N
                 String trainNotes = (train_notes == null) ? "" : train_notes.getValue();
-                log.debug("      Train: {} - {} - {} - {} - {} - {} - {} - {} - {}",  // NOI18N
-                        trainId, scheduleId, typeId, trainName, trainDesc, defaultSpeed, startTime, throttle, routeDuration, trainNotes);
+                log.debug("      Train: {} - {} - {} - {} - {} - {} - {} - {} - {} - {}",  // NOI18N
+                        trainId, scheduleId, typeId, trainName,
+                        trainDesc, defaultSpeed, startTime, throttle,
+                        routeDuration, trainNotes);
 
                 // Validate scheduleId
                 if (!checkScheduleIds.contains(scheduleId)) {
@@ -419,10 +431,10 @@ public class TimeTableXml {
                 dataMgr.addStop(stopId, newStop);
             }
         } catch (JDOMException ex) {
-            log.error("File invalid: {}", ex);  // NOI18N
+            log.error("File invalid", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("Error reading file: {}", ex);  // NOI18N
+            log.error("Error reading file", ex);  // NOI18N
             return false;
         }
 

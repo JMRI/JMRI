@@ -102,7 +102,7 @@ public class LnMessageClient extends LnTrafficRouter {
         clientMemo.setLnTrafficController(this);
         // do the common manager config
         clientMemo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // for now, assume full capability
-                false, false, false);
+                false, false, false,false);
         clientMemo.configureManagers();
 
         // the serial connections (LocoBuffer et al) start

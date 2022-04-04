@@ -196,7 +196,7 @@ public class TieTableModel extends AbstractTableModel {
                 w.write("\n");
                 lineString = new StringBuilder();
             } catch (IOException e) {
-                log.warn("error during printing: {}", e);
+                log.warn("error during printing", e);
             }
         }
     }

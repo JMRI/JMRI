@@ -38,11 +38,9 @@ public class CbusBasicNodeEvent extends CbusEvent {
     }
     
     protected void notifyModel(){
-        jmri.util.ThreadingUtil.runOnGUI( ()->{
-            if ( eventDataModel != null ) {
-                eventDataModel.fireTableDataChanged();
-            }
-        });
+        if ( eventDataModel != null ) {
+            eventDataModel.fireTableDataChanged();
+        }
     }
     
     /**

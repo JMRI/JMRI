@@ -167,6 +167,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
         ToolTip tip = p.getToolTip();
         if (tip != null) {
+            if (tip.getPrependToolTipWithDisplayName()) {
+                element.addContent(
+                        new Element("tooltip_prependWithDisplayName")
+                                .addContent("yes"));
+            }
             String txt = tip.getText();
             if (txt != null) {
                 Element elem = new Element("tooltip").addContent(txt); // was written as "toolTip" 3.5.1 and before
@@ -270,12 +275,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 java.util.List<Attribute> attrs = element.getAttributes();
                 log.debug("\tElement Has {} Attributes:", attrs.size());
                 for (Attribute a : attrs) {
-                    log.debug("\t\t{} = {}", a.getName(), a.getValue());
+                    log.debug("  attribute:  {} = {}", a.getName(), a.getValue());
                 }
                 java.util.List<Element> kids = element.getChildren();
                 log.debug("\tElementHas {} children:", kids.size());
                 for (Element e : kids) {
-                    log.debug("\t\t{} = \"{}\"", e.getName(), e.getValue());
+                    log.debug("  child:  {} = \"{}\"", e.getName(), e.getValue());
                 }
             }
             editor.loadFailed();
@@ -437,7 +442,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
 
     public void loadCommonAttributes(Positionable l, int defaultLevel, Element element)
             throws JmriConfigureXmlException {
-        
+
         if (element.getAttribute("id") != null) {
             try {
                 l.setId(element.getAttribute("id").getValue());
@@ -514,7 +519,15 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             }
         }
 
-        Element elem = element.getChild("tooltip");
+        Element elem = element.getChild("tooltip_prependWithDisplayName");
+        if (elem != null) {
+            ToolTip tip = l.getToolTip();
+            if (tip != null) {
+                tip.setPrependToolTipWithDisplayName("yes".equals(elem.getText()));
+            }
+        }
+
+        elem = element.getChild("tooltip");
         if (elem == null) {
             elem = element.getChild("toolTip"); // pre JMRI 3.5.2
         }

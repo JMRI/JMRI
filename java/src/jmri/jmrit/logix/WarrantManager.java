@@ -409,7 +409,7 @@ public class WarrantManager extends AbstractManager<Warrant>
     @Override
     public void dispose(){
         for(Warrant w:_beans){
-            w.stopWarrant(true, true);
+            w.dispose();
         }
         super.dispose();
     }

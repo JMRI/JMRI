@@ -42,7 +42,7 @@
 
       <h3>Manipulating Icons</h3>
       To move an icon around on the panel, you "meta-drag" it. On a Mac, that's "hold the cmd key
-      and drag with the cursor"; on windows, it might be the Windows or control key. Or it might be
+      and drag with the cursor"; on Windows it might be the Windows or Control key. Or it might be
       a right-drag. Sorry, I don't have a Windows machine here to figure it out.
       <p>There's also a pop-up menu (ctrl-click on a Mac) that will provide various ways to
       manipulate the icon. It will let you rotate the icon so that it points in whatever direction
@@ -71,7 +71,7 @@
       <ul>
         <li>On the Panel Editor window for your Panel, find the "Add Reporter" button.</li>
 
-        <li>In the text box next to that button, type the user name or System Name of the desired
+        <li>In the text box next to that button, type the User Name or System Name of the desired
         Reporter.</li>
 
         <li>Click the "Add to Panel" button. The Reporter icon will be placed on your Panel. If
@@ -86,7 +86,7 @@
       <p>See xml/samples/ReporterIconExample.xml for info on how to set this code up by hand.</p>
 
       <ul>
-        <li>First check that JMRI is seeing the LocoNet messages OK. From the tools menu, open the
+        <li>First check that JMRI is seeing the LocoNet messages OK. From the Tools menu, open the
         "Reporter Table". Run a locomotive across your transponding sections, and you should see
         the arrival and departure status show up on one of the lines in the table.</li>
 
