@@ -14,7 +14,7 @@ public class AddressPanelTest {
 
     @Test
     public void testCtor() {
-        AddressPanel panel = new AddressPanel();
+        AddressPanel panel = new AddressPanel(null);
         Assert.assertNotNull("exists", panel);
     }
 

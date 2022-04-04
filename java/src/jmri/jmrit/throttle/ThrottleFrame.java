@@ -27,6 +27,7 @@ import javax.swing.event.InternalFrameEvent;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.ThrottleManager;
 import jmri.configurexml.LoadXmlConfigAction;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
@@ -50,6 +51,8 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Berridge Copyright 2010
  */
 public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener {
+
+    private final ThrottleManager throttleManager;
 
     private final Integer BACKPANEL_LAYER = Integer.MIN_VALUE;
     private final Integer PANEL_LAYER_FRAME = 1;
@@ -90,8 +93,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
 
     public ThrottleFrame(ThrottleWindow tw) {
+        this(tw, InstanceManager.getDefault(ThrottleManager.class));
+    }
+
+    public ThrottleFrame(ThrottleWindow tw, ThrottleManager tm) {
         super();
         throttleWindow = tw;
+        throttleManager = tm;
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
@@ -294,7 +302,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     private void initGUI() {
         frameListener = new FrameListener();
 
-        controlPanel = new ControlPanel();
+        controlPanel = new ControlPanel(throttleManager);
         controlPanel.setResizable(true);
         controlPanel.setClosable(true);
         controlPanel.setIconifiable(true);
@@ -331,7 +339,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         speedPanel.addInternalFrameListener(frameListener);
         speedPanel.pack();
 
-        addressPanel = new AddressPanel();
+        addressPanel = new AddressPanel(throttleManager);
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
@@ -791,9 +799,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         // Get InternalFrame border size
         if (e.getAttribute("border") != null) {
             bSize = Integer.parseInt((e.getAttribute("border").getValue()));
-        }
-        if (e.getChild("window") != null) { // Old format
-            throttleWindow.setXml(e);
         }
         Element controlPanelElement = e.getChild("ControlPanel");
         controlPanel.setXml(controlPanelElement);

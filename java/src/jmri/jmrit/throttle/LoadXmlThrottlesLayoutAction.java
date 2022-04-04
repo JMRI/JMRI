@@ -105,9 +105,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
                 throttles = root.getChildren("ThrottleWindow");
                 for (Element e : throttles) {
                     SwingUtilities.invokeLater(() -> {
-                        ThrottleWindow tw = tfManager.createThrottleWindow();
-                        tw.setXml(e);
-                        tw.setVisible(true);
+                        tfManager.createThrottleWindow(e).setVisible(true);
                     });
                 }
                 Element tlp = root.getChild("ThrottlesListPanel");
