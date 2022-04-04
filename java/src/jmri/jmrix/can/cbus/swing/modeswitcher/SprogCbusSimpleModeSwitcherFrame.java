@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import jmri.InstanceManager;
 import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.CbusConsistManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +87,7 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     _memo.setMultipleThrottles(false);
                     showServiceModeWarningDialogue();
                     closeProgrammerWarningDialogue();
+                    ((CbusConsistManager)InstanceManager.getNullableDefault(jmri.ConsistManager.class)).setEnabled(false);
                     mode = PROG_MODE;
                 } else if (cmdModeButton.isSelected() && mode != CMD_MODE) {
                     // Switch to command station mode
@@ -93,6 +96,7 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     pm.setAddressedModePossible(true);
                     _memo.setMultipleThrottles(true);
                     closeProgrammerWarningDialogue();
+                    ((CbusConsistManager)InstanceManager.getNullableDefault(jmri.ConsistManager.class)).setEnabled(true);
                     mode = CMD_MODE;
                 }
                 setHardwareMode(mode);

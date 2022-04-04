@@ -314,24 +314,33 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return cabSignalManager;
     }
 
-    protected ConsistManager consistManager = null;
+    protected CbusConsistManager consistManager = null;
 
+    /**
+     * Get the ConsistManager, creating one if neccessary.
+     * 
+     * Only enable it if we definitely have a command station.
+     * 
+     * @return ConsistManager object
+     */
     public ConsistManager getConsistManager() {
         if ( adapterMemo.getDisabled() ) {
             return null;
         }
         if (consistManager == null) {
+            consistManager = new CbusConsistManager(get(jmri.CommandStation.class));
             if (adapterMemo.getProgModeSwitch() == ProgModeSwitch.EITHER) {
                 // Could be either programmer or command station
                 if (getProgrammerManager().isAddressedModePossible()) {
-                    // We have a command station
-                    consistManager = new NmraConsistManager(get(jmri.CommandStation.class));
+                    // We have a command station so enable the ConsistManager
+                    consistManager.setEnabled(true);
                 } else {
-                    consistManager = null;
+                    // Disable for now, may be enabled later if user switches modes, avoid returning a null manager
+                    consistManager.setEnabled(false);
                 }
             } else {
                 // Command station is always avaliable
-                consistManager = new NmraConsistManager(get(jmri.CommandStation.class));
+                consistManager.setEnabled(true);
             }
         }
         return consistManager;

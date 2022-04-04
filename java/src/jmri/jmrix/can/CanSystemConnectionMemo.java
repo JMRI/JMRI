@@ -104,7 +104,12 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
             return mgr.isAddressedModePossible();
         }
         if (type.equals(jmri.ConsistManager.class)) { // until a CAN ConsistManager is implemented, use Internal
-            return false;
+            if (_protocol == ConfigurationManager.SPROGCBUS) {
+                // SPROG CBUS DOES have a consist manager but we'll do things correctly and check with the manager
+                return manager.provides(type);
+            } else {
+                return false;
+        }
         }
         boolean result = manager.provides(type);
         if(result) {
