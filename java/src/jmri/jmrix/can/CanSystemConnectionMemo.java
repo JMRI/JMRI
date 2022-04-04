@@ -109,7 +109,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
                 return manager.provides(type);
             } else {
                 return false;
-        }
+            }
         }
         boolean result = manager.provides(type);
         if(result) {
