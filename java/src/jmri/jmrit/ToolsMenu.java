@@ -4,6 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 
 /**
@@ -81,7 +82,8 @@ public class ToolsMenu extends JMenu {
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
-        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle")));
+        ThrottleCreationAction.addNewThrottleItemsToThrottleMenu(throttleMenu);
+
         throttleMenu.add(new jmri.jmrit.throttle.ThrottlesListAction(Bundle.getMessage("MenuItemThrottlesList")));
         throttleMenu.addSeparator();
         throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveThrottleLayout")));

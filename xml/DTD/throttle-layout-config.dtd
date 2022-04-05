@@ -6,11 +6,13 @@
 <!ELEMENT ThrottleWindow (window, ThrottleFrame*) >
 <!ATTLIST ThrottleWindow title CDATA #REQUIRED>
 <!ATTLIST ThrottleWindow titleType (address | text | textAddress | addresstext | rosterID) "address" >
+<!ATTLIST ThrottleWindow isEditMode CDATA #IMPLIED>
 
 <!--TODO Here it would be good to include this as throttle-config-2.dtd -->
 <!-- <!ENTITY % throttle-config SYSTEM "throttle-config-2.dtd"> ?? not working ?? -->
-<!ELEMENT ThrottleFrame ( (ControlPanel, FunctionPanel, AddressPanel, Jynstrument*)? ) >
+<!ELEMENT ThrottleFrame ( (ControlPanel, FunctionPanel, AddressPanel, Jynstrument*, SpeedPanel*)? ) >
 <!ATTLIST ThrottleFrame ThrottleXMLFile CDATA #IMPLIED>
+<!ATTLIST ThrottleFrame border CDATA #IMPLIED>
 
 <!ELEMENT ControlPanel (window) >
 <!ATTLIST ControlPanel displaySpeedSlider CDATA #IMPLIED>
@@ -18,6 +20,7 @@
 <!ATTLIST ControlPanel trackSliderMinInterval CDATA #IMPLIED>
 <!ATTLIST ControlPanel speedMode CDATA #IMPLIED>
 <!ATTLIST ControlPanel switchSliderOnFunction CDATA #IMPLIED>
+<!ATTLIST ControlPanel hideSpeedStep CDATA #IMPLIED>
 
 <!ELEMENT FunctionPanel (window, FunctionButton*) >
 <!ELEMENT FunctionButton EMPTY >
@@ -28,6 +31,7 @@
 <!ATTLIST FunctionButton fontSize CDATA #REQUIRED>
 <!ATTLIST FunctionButton iconPath CDATA #REQUIRED>
 <!ATTLIST FunctionButton selectedIconPath CDATA #REQUIRED>
+<!ATTLIST FunctionButton buttonImageSize CDATA #IMPLIED>
 
 <!ELEMENT AddressPanel (window, address*, locoaddress*) >
 
@@ -35,7 +39,7 @@
 <!ATTLIST address value CDATA #REQUIRED>
 
 <!-- define general locomotive address -->
-<!ELEMENT locoaddress (dcclocoaddress) >
+<!ELEMENT locoaddress (dcclocoaddress, number*, protocol*) >
 
 <!-- define DCC locomotive address -->
 <!ELEMENT dcclocoaddress EMPTY >
@@ -54,3 +58,9 @@
 <!ATTLIST window height CDATA #REQUIRED>
 <!ATTLIST window isIconified CDATA #IMPLIED>
 <!ATTLIST window isVisible CDATA #IMPLIED>
+
+<!ELEMENT number (#PCDATA) >
+
+<!ELEMENT protocol (#PCDATA) >
+
+<!ELEMENT SpeedPanel (window) >
