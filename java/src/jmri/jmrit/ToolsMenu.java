@@ -114,6 +114,7 @@ public class ToolsMenu extends JMenu {
             consistManager.registerEnableListener((value) -> {
                 consistAction.setEnabled(value);
             });
+            consistAction.setEnabled(consistManager.isEnabled());
         }
 
         JMenu clockMenu = new JMenu(Bundle.getMessage("MenuClocks"));

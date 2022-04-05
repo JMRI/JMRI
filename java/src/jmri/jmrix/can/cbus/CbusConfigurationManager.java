@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.implementation.NmraConsistManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 // import org.slf4j.Logger;

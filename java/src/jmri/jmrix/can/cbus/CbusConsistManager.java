@@ -32,6 +32,7 @@ public class CbusConsistManager extends NmraConsistManager implements EnableList
     }
 
     protected static final Vector<EnableListener> enableListeners = new Vector<EnableListener>();
+    protected boolean _enabled = false;
     
     /**
      * Register a listener that is called if this manager is enabled or disabled.
@@ -60,13 +61,26 @@ public class CbusConsistManager extends NmraConsistManager implements EnableList
     }
 
     /**
+     * Check if this manager is enabled
+     * @return true if enabled
+     */
+    @Override
+    public boolean isEnabled() {
+        return _enabled;
+    }
+
+    /**
      * A listener that listens to whether the manager is enabled or disabled.
+     * 
+     * Call each listeners setEnabled() method.
+     * 
      * @param value true to enable
      */
     @Override
     public void setEnabled(boolean value) {
+        _enabled = value;
         for (int i = 0; i < enableListeners.size(); i++) {
-            enableListeners.elementAt(i);
+            enableListeners.elementAt(i).setEnabled(value);
         }
     }
 

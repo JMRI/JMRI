@@ -117,6 +117,14 @@ public interface ConsistManager {
     public default void unregisterEnableListener(EnableListener listener) {
         // Do nothing
     }
+    
+    /**
+     * Check if this manager is enabled
+     * @return true if enabled
+     */
+    public default boolean isEnabled() {
+        return true;
+    }
 
     /**
      * A listener that listens to whether the manager is enabled or disabled.
