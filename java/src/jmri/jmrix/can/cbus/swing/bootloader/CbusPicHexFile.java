@@ -8,7 +8,8 @@ import static jmri.jmrix.can.cbus.swing.bootloader.CbusParameters.MANU_ID_IDX;
  * 
  * Assumes hex record addresses are "nicely" aligned, i.e., on 8, 16, 32, ...
  * -byte boundaries and that addresses increase monotonically. With Microchip
- * tools you should select the option to format the hex file for download.
+ * tools you should select the options to format the hex file for download and 
+ * program with default config words.
  *
  * @author Andrew Crosland Copyright (C) 2022
  */
@@ -43,7 +44,8 @@ public class CbusPicHexFile extends HexFile{
      * 
      * Assumes hex record addresses are "nicely" aligned, i.e., on 8, 16, 32, ...
      * -byte boundaries and that addresses increase monotonically. With Microchip
-     * tools you should select the option to format the hex file for download.
+     * tools you should select the options to format the hex file for download
+     * and program with default config words.
      *
      * @param r hex record
      */
