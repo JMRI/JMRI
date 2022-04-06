@@ -550,6 +550,9 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Add capability to display/print throttle files in easy-to-read browser format (using XSL transform)</li>
+            <li>If there are at least two connections that have support for throttles, a
+            <a href="https://github.com/JMRI/JMRI/pull/10697#issuecomment-1038477488">new menu</a>
+            appears that lets you open a throttle for a particular connection.</li>
         </ul>
 
     <h3>Timetable</h3>
