@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>The consist tool is now available for the Pi-SPROG 3v2 in command station mode and for the SPROG 3 Plus.</li>
+                <li>The consist tool is now available for the Pi-SPROG 3v2 in command station mode, the SPROG 3 Plus and the MERG CANCMD.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -91,7 +91,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>The consist tool is now available for CBUS.</li>
             </ul>
 
         <h4>MQTT</h4>
