@@ -319,7 +319,7 @@
             <ul>
                 <li>QuadLN_S - added support for new firmware version 3.1 features</li>
             </ul>
-            
+
        <h4>TAMS</h4>
             <ul>
                 <li></li>
@@ -367,7 +367,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Fixed the coding for CV155 Half Speed Settings</li>
             </ul>
 
         <h4>Miscellaneous</h4>
