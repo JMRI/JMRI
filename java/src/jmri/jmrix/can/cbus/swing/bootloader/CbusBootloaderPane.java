@@ -839,6 +839,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         endProgramming(BootStatus.PROTOCOL_ERROR);
     }
     
+    
     /**
      * Is Programming Needed
      * 
@@ -856,6 +857,37 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         return false;
     }
 
+    
+    protected void logFrame(CanMessage m) {
+        log.debug("Write frame {} at address {} {}", dataFramesSent, Integer.toHexString(bootAddress), m);
+        if ((bootAddress & 0xFF) == 0) {
+            addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), Integer.toHexString(bootAddress)));
+        } else {
+            bootConsole.append(".");
+        }        
+    }
+    
+    
+    /**
+     * Check if data is filtered (e.g., EEPROM selection unticked)
+     * 
+     * Used only for AN247
+     * 
+     * @param address of data record
+     * @return true if data is filtered and should not be written
+     */
+    protected boolean dataIsFiltered(int address) {
+        if ((address >= 0x300000) && (address < 0x310000) && (!configCheckBox.isSelected())) {
+            // PIC18 Config space at 0x200000 is filtered
+            return true;
+        } else if ((address >= 0x310000) && (!eepromCheckBox.isSelected())) {
+            // PIC18 EEPROM space at 0x300000, 0x310000 or 0x380000 is filtered
+            return true;
+        }
+        return false;
+    }
+    
+    
     /**
      * Send data to the hardware and keep a running checksum
      *
@@ -864,25 +896,28 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     protected void sendData(int timeout) {
 
         byte [] d = getDataFromRecord();
-        updateChecksum(d);
         dataFramesSent++;
         
         CanMessage m = CbusMessage.getBootWriteData(d, 0);
-        log.debug("Write frame {} at address {} {}", dataFramesSent, Integer.toHexString(bootAddress), m);
-        if ((bootAddress & 0xFF) == 0) {
-            addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), Integer.toHexString(bootAddress)));
-        } else {
-            bootConsole.append(".");
-        }        
         if (bootProtocol == BootProtocol.CBUS_2_0) {
             setAckTimeout();
+            updateChecksum(d);
+            logFrame(m);       
+            tc.sendCanMessage(m, null);
         } else {
-            // For AN247 protocol, timeout will be set when we see the outgoing message
-            dataTimeout = timeout;
+            // For AN247 protocol, we need to filter data
+            if (!dataIsFiltered(bootAddress)) {
+                // Timeout will be set when we see the outgoing message
+                dataTimeout = timeout;
+                updateChecksum(d);
+                logFrame(m);       
+                tc.sendCanMessage(m, null);
+            } else {
+                // No data to send, set short timeout to trigger next data
+                setDataTimeout(10);
+            }
         }
-        
         bootAddress += d.length;
-        tc.sendCanMessage(m, null);
     }
 
     
@@ -938,7 +973,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
                 tc.sendCanMessage(m, null);
             }
-            // Extract the data, send it and update bootAddress for next packet
             sendData(getWriteDelay());
         }
     }
