@@ -71,7 +71,7 @@
 
         <h4>KPF-Zeller</h4>
             <ul>
-                <li></li>
+                <li>Improved the speed calibration</li>
             </ul>
 
         <h4>LocoNet</h4>
@@ -614,5 +614,12 @@
             has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
             JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
             <li>Improve Block tracking in the case of a broken train being rejoined.
+            <li>Multiple updates to the Bachrus/KPF-Zeller speedometer support:
+                <ul>
+                <li>Improved GUI
+                <li>Now handles programming on main without needing to go to service track first
+                <li>Improved speed matching algorithm
+                <li>Updated docs
+                </ul>
         </ul>
 
