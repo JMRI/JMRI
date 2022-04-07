@@ -76,7 +76,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Configuration - Permit disabling of interrogate messages.</li>
+                <li>Slotmonitor - better guess the column widths</li>
             </ul>
 
         <h4>Maple</h4>
