@@ -255,7 +255,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         JLabel row8Label = new JLabel(rb.getString("FieldComment") + ":");
         // ensure same font on textarea as textfield
         // as this is not true in all GUI types.
-        commentScroller.setFont(owner.getFont());
+        comment.setFont(owner.getFont());
         commentScroller.getAccessibleContext().setAccessibleName(rb.getString("FieldComment"));
         gbLayout.setConstraints(row8Label, cL);
         super.add(row8Label);
@@ -291,7 +291,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment") + ":");
         // ensure same font on textarea as textfield
         // as this is not true in all GUI types.
-        decoderCommentScroller.setFont(owner.getFont());
+        decoderComment.setFont(owner.getFont());
         decoderCommentScroller.getAccessibleContext().setAccessibleName(rb.getString("FieldDecoderComment"));
         gbLayout.setConstraints(row11Label, cL);
         super.add(row11Label);
