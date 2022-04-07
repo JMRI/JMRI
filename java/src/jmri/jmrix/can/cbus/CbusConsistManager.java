@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus;
 import java.util.Vector;
 
 import jmri.implementation.*;
-import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
 import jmri.ConsistManager.EnableListener;
 
