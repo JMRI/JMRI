@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.VetoableChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -20,7 +19,7 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionReporter extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionReporter extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
@@ -311,15 +310,8 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionReporter: bean = {}, report = {}", cdl, report);
-        NamedBeanHandle<Reporter> handle = _selectNamedBean.getNamedBean();
-        if (handle != null && bean.equals(handle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
-        NamedBeanHandle<Memory> memoryHandle = _selectMemoryNamedBean.getNamedBean();
-        if (memoryHandle != null && bean.equals(memoryHandle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionReporter.class);

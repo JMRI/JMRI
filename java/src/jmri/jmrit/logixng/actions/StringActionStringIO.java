@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -15,8 +12,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class StringActionStringIO extends AbstractStringAction
-        implements VetoableChangeListener {
+public class StringActionStringIO extends AbstractStringAction {
 
     private final LogixNG_SelectNamedBean<StringIO> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
@@ -105,11 +101,7 @@ public class StringActionStringIO extends AbstractStringAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: StringActionStringIO: bean = {}, report = {}", cdl, report);
-        NamedBeanHandle<StringIO> handle = _selectNamedBean.getNamedBean();
-        if (handle != null && bean.equals(handle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIO.class);

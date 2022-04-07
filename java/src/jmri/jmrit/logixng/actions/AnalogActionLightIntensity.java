@@ -1,24 +1,17 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.*;
 import java.util.*;
-
-import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
-import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.*;
-import jmri.util.TypeConversionUtil;
 
 /**
  * Sets the light intensity.
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class AnalogActionLightIntensity extends AbstractAnalogAction
-        implements VetoableChangeListener {
+public class AnalogActionLightIntensity extends AbstractAnalogAction {
 
     public static final int INTENSITY_SOCKET = 0;
 

@@ -1,12 +1,9 @@
 package jmri.jmrit.logixng.util;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.beans.*;
+import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -254,6 +251,58 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                     removeNamedBean();
                 }
             }
+        }
+    }
+
+    /**
+     * Add a {@link java.beans.PropertyChangeListener} for a specific property.
+     *
+     * @param propertyName The name of the property to listen on.
+     * @param listener     The PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(
+            @CheckForNull String propertyName,
+            @CheckForNull PropertyChangeListener listener) {
+        if ((_addressing == NamedBeanAddressing.Direct) && (_handle != null)) {
+            _handle.getBean().addPropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    /**
+     * Remove the specified listener of the specified property from this object.
+     *
+     * @param propertyName The name of the property to stop listening to.
+     * @param listener     The {@link java.beans.PropertyChangeListener} to
+     *                     remove.
+     */
+    public void removePropertyChangeListener(
+            @CheckForNull String propertyName,
+            @CheckForNull PropertyChangeListener listener) {
+        if (_handle != null) {
+            _handle.getBean().removePropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl, Base base, Type type) {
+        log.debug("getUsageReport :: {}: bean = {}, report = {}", base.getShortDescription(), cdl, report);
+        if (_handle != null && bean.equals(_handle.getBean())) {
+            report.add(new NamedBeanUsageReport(type.toString(), cdl, base.getLongDescription()));
+        }
+    }
+
+    public static enum Type {
+        Action("LogixNGAction"),
+        Expression("LogixNGExpression");
+
+        private final String _descr;
+
+        private Type(String descr) {
+            this._descr = descr;
+        }
+
+        @Override
+        public String toString() {
+            return _descr;
         }
     }
 

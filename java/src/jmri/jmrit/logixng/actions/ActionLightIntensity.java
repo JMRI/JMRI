@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.*;
 import java.util.*;
 
 import jmri.*;
@@ -16,7 +15,7 @@ import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
  * @author Daniel Bergqvist Copyright 2019
  */
 public class ActionLightIntensity extends AbstractDigitalAction
-        implements FemaleSocketListener, VetoableChangeListener {
+        implements FemaleSocketListener {
 
     public static final int INTENSITY_SOCKET = 0;
 

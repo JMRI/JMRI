@@ -207,7 +207,9 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         memory.setValue("A value");
         otherMemory.setValue("Some other value");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
+        actionMemory.unregisterListeners();
         actionMemory.getSelectOtherMemoryNamedBean().setNamedBean(otherMemory);
+        actionMemory.registerListeners();
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the memory should been copied to the other memory

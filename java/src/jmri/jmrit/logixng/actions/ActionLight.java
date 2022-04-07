@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.VetoableChangeListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -24,7 +23,7 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ActionLight extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionLight extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Light> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
@@ -452,11 +451,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionLight: bean = {}, report = {}", cdl, report);
-        NamedBeanHandle<Light> handle = _selectNamedBean.getNamedBean();
-        if (handle != null && bean.equals(handle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLight.class);

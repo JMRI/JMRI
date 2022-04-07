@@ -243,4 +243,15 @@ public class ArchitectureTest {
             .that().haveSimpleNameEndingWith("Bundle")
             .should().beAssignableTo(jmri.Bundle.class);
 
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
 }

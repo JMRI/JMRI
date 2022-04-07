@@ -1,10 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyVetoException;
-
-import jmri.jmrit.logixng.TableRowOrColumn;
-
-import java.beans.VetoableChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -22,7 +17,7 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class TableForEach extends AbstractDigitalAction
-        implements FemaleSocketListener, VetoableChangeListener {
+        implements FemaleSocketListener {
 
     private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(

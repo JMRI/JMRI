@@ -20,7 +20,7 @@ import jmri.util.ThreadingUtil;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ActionMemory extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
@@ -260,11 +260,8 @@ public class ActionMemory extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        NamedBeanHandle<Memory> otherMemoryHandle = _selectOtherMemoryNamedBean.getNamedBean();
-        if (!_listenersAreRegistered && (otherMemoryHandle != null)) {
-            if (_listenToMemory) {
-                otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
-            }
+        if (!_listenersAreRegistered && _listenToMemory) {
+            _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
             _listenersAreRegistered = true;
         }
     }
@@ -272,13 +269,10 @@ public class ActionMemory extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        NamedBeanHandle<Memory> otherMemoryHandle = _selectOtherMemoryNamedBean.getNamedBean();
-        if (_listenersAreRegistered) {
-            if (_listenToMemory && (otherMemoryHandle != null)) {
-                otherMemoryHandle.getBean().removePropertyChangeListener("value", this);
-            }
-            _listenersAreRegistered = false;
+        if (_listenersAreRegistered && _listenToMemory) {
+            _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
         }
+        _listenersAreRegistered = false;
     }
 
     /** {@inheritDoc} */
@@ -317,15 +311,8 @@ public class ActionMemory extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionMemory: bean = {}, report = {}", cdl, report);
-        NamedBeanHandle<Memory> handle = _selectNamedBean.getNamedBean();
-        if (handle != null && bean.equals(handle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
-        NamedBeanHandle<Memory> otherMemoryHandle = _selectOtherMemoryNamedBean.getNamedBean();
-        if (otherMemoryHandle != null && bean.equals(otherMemoryHandle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectOtherMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionMemory.class);

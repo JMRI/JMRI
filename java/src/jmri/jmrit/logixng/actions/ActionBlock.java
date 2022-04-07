@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -27,7 +24,7 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionBlock extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionBlock extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Block> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
@@ -436,11 +433,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionBlock: bean = {}, report = {}", cdl, report);
-        NamedBeanHandle<Block> handle = _selectNamedBean.getNamedBean();
-        if (handle != null && bean.equals(handle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionBlock.class);

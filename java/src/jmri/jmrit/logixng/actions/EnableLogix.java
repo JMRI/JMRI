@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -23,7 +20,7 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class EnableLogix extends AbstractDigitalAction implements VetoableChangeListener {
+public class EnableLogix extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Logix> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
