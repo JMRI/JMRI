@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -48,11 +48,13 @@
     <label xml:lang="fr">Adresse décodeur</label>
     <label xml:lang="de">Basisadresse</label>
     <label xml:lang="nl">Primair adres</label>
+    <label xml:lang="es">Dirección primaria</label>
 	<label xml:lang="da">Primær Adresse</label>
     <comment xml:lang="it">Indirizzo Corto</comment>
     <comment xml:lang="fr">Adresse courte</comment>
     <comment xml:lang="de">Kurze Adresse</comment>
     <comment xml:lang="nl">Kort adres</comment>
+    <comment xml:lang="es">Dirección corta</comment>
     <comment xml:lang="cs">Krátká adresa</comment>
   </variable>
   <variable CV="17" item="Long Address">
@@ -62,6 +64,7 @@
     <label xml:lang="fr">Adresse longue</label>
     <label xml:lang="de">Erweiterte Adresse</label>
     <label xml:lang="nl">Lang adres</label>
+    <label xml:lang="es">Dirección larga</label>
     <label xml:lang="cs">Rozšířená adresa</label>
 	<label xml:lang="da">Udvidet Adresse</label>
   </variable>
@@ -73,6 +76,7 @@
         <choice xml:lang="de">Basisadresse (1 byte)</choice>
         <choice xml:lang="cs">Základní adresa (1 byte)</choice>
         <choice xml:lang="nl">Basisadres (1 byte)</choice>
+        <choice xml:lang="es">Dirección corta  (1 byte)</choice>
 		<choice xml:lang="da">Kort (1 byte) adresse</choice>
       </enumChoice>
       <enumChoice choice="Long (two byte) address">
@@ -81,6 +85,7 @@
         <choice xml:lang="de">Erweiterte Adresse (2 byte)</choice>
         <choice xml:lang="cs">Rozšířená adresa (2 byte)</choice>
         <choice xml:lang="nl">Lang adres (2 byte)</choice>
+        <choice xml:lang="es">Dirección larga (2 byte)</choice>
 		<choice xml:lang="da">Lang (2 byte) adresse</choice>
       </enumChoice>
     </enumVal>
@@ -90,6 +95,7 @@
     <label xml:lang="de">Adresse Format</label>
     <label xml:lang="nl">Adresformaat</label>
     <label xml:lang="cs">Typ adresy</label>
+    <label xml:lang="es">Tipo de dirección</label>
 	<label xml:lang="da">Adresse Format</label>
   </variable>
 </variables>
