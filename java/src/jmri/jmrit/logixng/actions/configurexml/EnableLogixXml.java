@@ -5,6 +5,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.EnableLogix;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -36,15 +37,8 @@ public class EnableLogixXml extends jmri.managers.configurexml.AbstractNamedBean
 
         storeCommon(p, element);
 
-        var logix = p.getLogix();
-        if (logix != null) {
-            element.addContent(new Element("logix").addContent(logix.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Logix>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
         element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
@@ -63,30 +57,12 @@ public class EnableLogixXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
-        Element logixName = shared.getChild("logix");
-        if (logixName != null) {
-            Logix t = InstanceManager.getDefault(LogixManager.class).getLogix(logixName.getTextTrim());
-            if (t != null) h.setLogix(t);
-            else h.removeLogix();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Logix>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "logix");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("operationAddressing");
+            Element elem = shared.getChild("operationAddressing");
             if (elem != null) {
                 h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

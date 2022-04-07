@@ -722,7 +722,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
 
         analogMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         analogActionMemory = new AnalogActionMemory("IQAA1", null);
-        analogActionMemory.setMemory(analogMemory);
+        analogActionMemory.getSelectNamedBean().setNamedBean(analogMemory);
         MaleSocket socketAnalogActionMemory = InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
         doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
 

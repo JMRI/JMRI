@@ -11,6 +11,7 @@ import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -26,12 +27,9 @@ import jmri.util.TypeConversionUtil;
  */
 public class ActionOBlock extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<OBlock> _oblockHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<OBlock> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class));
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private DirectOperation _operationDirect = DirectOperation.Deallocate;
@@ -61,11 +59,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionOBlock copy = new ActionOBlock(sysName, userName);
         copy.setComment(getComment());
-        copy.setAddressing(_addressing);
-        if (_oblockHandle != null) copy.setOBlock(_oblockHandle);
-        copy.setReference(_reference);
-        copy.setLocalVariable(_localVariable);
-        copy.setFormula(_formula);
+        _selectNamedBean.copy(copy._selectNamedBean);
 
         copy.setOperationAddressing(_operationAddressing);
         copy.setOperationDirect(_operationDirect);
@@ -82,89 +76,9 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         return manager.registerAction(copy);
     }
 
-    public void setOBlock(@Nonnull String oblockName) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getNamedBean(oblockName);
-        if (oblock != null) {
-            ActionOBlock.this.setOBlock(oblock);
-        } else {
-            removeOBlock();
-            log.error("OBlock \"{}\" is not found", oblockName);
-        }
+    public LogixNG_SelectNamedBean<OBlock> getSelectNamedBean() {
+        return _selectNamedBean;
     }
-
-    public void setOBlock(@Nonnull OBlock oblock) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        ActionOBlock.this.setOBlock(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(oblock.getDisplayName(), oblock));
-    }
-
-    public void setOBlock(@Nonnull NamedBeanHandle<OBlock> handle) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        _oblockHandle = handle;
-        InstanceManager.getDefault(OBlockManager.class).addVetoableChangeListener(this);
-    }
-
-    public void removeOBlock() {
-        assertListenersAreNotRegistered(log, "removeOBlock");
-        if (_oblockHandle != null) {
-            InstanceManager.getDefault(OBlockManager.class).removeVetoableChangeListener(this);
-            _oblockHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<OBlock> getOBlock() {
-        return _oblockHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
 
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
         _operationAddressing = addressing;
@@ -279,19 +193,6 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         return _oblockValue;
     }
 
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof OBlock) {
-                if (evt.getOldValue().equals(getOBlock().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionOBlock_OBlockInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -353,39 +254,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        OBlock oblock;
-
-        switch (_addressing) {
-            case Direct:
-                oblock = _oblockHandle != null ? _oblockHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                oblock = InstanceManager.getDefault(OBlockManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                oblock = InstanceManager.getDefault(OBlockManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                oblock = _expressionNode != null ?
-                        InstanceManager.getDefault(OBlockManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
+        OBlock oblock = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
         if (oblock == null) {
             return;
@@ -450,35 +319,8 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String state = "";
-
-        switch (_addressing) {
-            case Direct:
-                String oblockName;
-                if (_oblockHandle != null) {
-                    oblockName = _oblockHandle.getBean().getDisplayName();
-                } else {
-                    oblockName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", oblockName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_operationAddressing) {
             case Direct:
@@ -566,7 +408,8 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionOBlock: bean = {}, report = {}", cdl, report);
-        if (getOBlock() != null && bean.equals(getOBlock().getBean())) {
+        NamedBeanHandle<OBlock> handle = _selectNamedBean.getNamedBean();
+        if (handle != null && bean.equals(handle.getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }

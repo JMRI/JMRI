@@ -7,15 +7,13 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionEntryExit;
 import jmri.jmrit.logixng.actions.ActionEntryExit.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -25,15 +23,7 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPaneEntryExit;
-    private BeanSelectPanel<DestinationPoints> entryExitBeanPanel;
-    private JPanel _panelEntryExitDirect;
-    private JPanel _panelEntryExitReference;
-    private JPanel _panelEntryExitLocalVariable;
-    private JPanel _panelEntryExitFormula;
-    private JTextField _entryExitReferenceTextField;
-    private JTextField _entryExitLocalVariableTextField;
-    private JTextField _entryExitFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<DestinationPoints> _selectNamedBeanSwing;
 
     private JTabbedPane _tabbedPaneOperation;
     private JComboBox<Operation> _stateComboBox;
@@ -50,33 +40,17 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionEntryExit action = (ActionEntryExit)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), getJDialog(), this);
+
         panel = new JPanel();
 
-        _tabbedPaneEntryExit = new JTabbedPane();
-        _panelEntryExitDirect = new javax.swing.JPanel();
-        _panelEntryExitReference = new javax.swing.JPanel();
-        _panelEntryExitLocalVariable = new javax.swing.JPanel();
-        _panelEntryExitFormula = new javax.swing.JPanel();
-
-        _tabbedPaneEntryExit.addTab(NamedBeanAddressing.Direct.toString(), _panelEntryExitDirect);
-        _tabbedPaneEntryExit.addTab(NamedBeanAddressing.Reference.toString(), _panelEntryExitReference);
-        _tabbedPaneEntryExit.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelEntryExitLocalVariable);
-        _tabbedPaneEntryExit.addTab(NamedBeanAddressing.Formula.toString(), _panelEntryExitFormula);
-
-        entryExitBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), null);
-        _panelEntryExitDirect.add(entryExitBeanPanel);
-
-        _entryExitReferenceTextField = new JTextField();
-        _entryExitReferenceTextField.setColumns(30);
-        _panelEntryExitReference.add(_entryExitReferenceTextField);
-
-        _entryExitLocalVariableTextField = new JTextField();
-        _entryExitLocalVariableTextField.setColumns(30);
-        _panelEntryExitLocalVariable.add(_entryExitLocalVariableTextField);
-
-        _entryExitFormulaTextField = new JTextField();
-        _entryExitFormulaTextField.setColumns(30);
-        _panelEntryExitFormula.add(_entryExitFormulaTextField);
+        JPanel _tabbedPaneNamedBean;
+        if (action != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+        }
 
 
         _tabbedPaneOperation = new JTabbedPane();
@@ -112,26 +86,12 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
 
 
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneEntryExit.setSelectedComponent(_panelEntryExitDirect); break;
-                case Reference: _tabbedPaneEntryExit.setSelectedComponent(_panelEntryExitReference); break;
-                case LocalVariable: _tabbedPaneEntryExit.setSelectedComponent(_panelEntryExitLocalVariable); break;
-                case Formula: _tabbedPaneEntryExit.setSelectedComponent(_panelEntryExitFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            if (action.getDestinationPoints() != null) {
-                entryExitBeanPanel.setDefaultNamedBean(action.getDestinationPoints().getBean());
-            }
-            _entryExitReferenceTextField.setText(action.getReference());
-            _entryExitLocalVariableTextField.setText(action.getLocalVariable());
-            _entryExitFormulaTextField.setText(action.getFormula());
-
             switch (action.getOperationAddressing()) {
                 case Direct: _tabbedPaneOperation.setSelectedComponent(_panelOperationDirect); break;
                 case Reference: _tabbedPaneOperation.setSelectedComponent(_panelOperationReference); break;
                 case LocalVariable: _tabbedPaneOperation.setSelectedComponent(_panelOperationLocalVariable); break;
                 case Formula: _tabbedPaneOperation.setSelectedComponent(_panelOperationFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getOperationAddressing().name());
             }
             _stateComboBox.setSelectedItem(action.getOperationDirect());
             _entryExitLockReferenceTextField.setText(action.getOperationReference());
@@ -140,7 +100,7 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneEntryExit,
+            _tabbedPaneNamedBean,
             _tabbedPaneOperation};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -156,15 +116,6 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         ActionEntryExit action = new ActionEntryExit("IQDA1", null);
 
         try {
-            if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitReference) {
-                action.setReference(_entryExitReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-
-        try {
             if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
                 action.setOperationReference(_entryExitLockReferenceTextField.getText());
             }
@@ -173,24 +124,8 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
             return false;
         }
 
-        try {
-            action.setFormula(_entryExitFormulaTextField.getText());
-            if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-            return false;
-        }
-        return true;
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -208,35 +143,8 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an TriggerEntryExit but is a: "+object.getClass().getName());
         }
         ActionEntryExit action = (ActionEntryExit)object;
-        if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
-            DestinationPoints entryExit = entryExitBeanPanel.getNamedBean();
-            if (entryExit != null) {
-                NamedBeanHandle<DestinationPoints> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(entryExit.getDisplayName(), entryExit);
-                action.setDestinationPoints(handle);
-            } else {
-                action.removeDestinationPoints();
-            }
-        } else {
-            action.removeDestinationPoints();
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
         try {
-            if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_entryExitReferenceTextField.getText());
-            } else if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_entryExitLocalVariableTextField.getText());
-            } else if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_entryExitFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneEntryExit has unknown selection");
-            }
-
             if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
                 action.setOperationAddressing(NamedBeanAddressing.Direct);
                 action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
@@ -265,9 +173,7 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        if (entryExitBeanPanel != null) {
-            entryExitBeanPanel.dispose();
-        }
+        // Do nothing
     }
 
 

@@ -7,6 +7,7 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionWarrant;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -39,15 +40,8 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
 
         storeCommon(p, element);
 
-        var warrant = p.getWarrant();
-        if (warrant != null) {
-            element.addContent(new Element("warrant").addContent(warrant.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Warrant>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
         element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
@@ -74,30 +68,12 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
 
         loadCommon(h, shared);
 
-        Element warrantName = shared.getChild("warrant");
-        if (warrantName != null) {
-            Warrant t = InstanceManager.getDefault(WarrantManager.class).getNamedBean(warrantName.getTextTrim());
-            if (t != null) h.setWarrant(t);
-            else h.removeWarrant();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Warrant>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "warrant");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("operationAddressing");
+            Element elem = shared.getChild("operationAddressing");
             if (elem != null) {
                 h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

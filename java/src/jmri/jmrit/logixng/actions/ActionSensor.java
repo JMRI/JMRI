@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -23,12 +24,9 @@ import jmri.util.TypeConversionUtil;
  */
 public class ActionSensor extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<Sensor> _sensorHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class));
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private SensorState _sensorState = SensorState.Active;
     private String _stateReference = "";
@@ -49,12 +47,8 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionSensor copy = new ActionSensor(sysName, userName);
         copy.setComment(getComment());
-        if (_sensorHandle != null) copy.setSensor(_sensorHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         copy.setBeanState(_sensorState);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
         copy.setStateAddressing(_stateAddressing);
         copy.setStateFormula(_stateFormula);
         copy.setStateLocalVariable(_stateLocalVariable);
@@ -62,87 +56,8 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         return manager.registerAction(copy);
     }
 
-    public void setSensor(@Nonnull String sensorName) {
-        assertListenersAreNotRegistered(log, "setSensor");
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
-        if (sensor != null) {
-            setSensor(sensor);
-        } else {
-            removeSensor();
-            log.warn("sensor \"{}\" is not found", sensorName);
-        }
-    }
-
-    public void setSensor(@Nonnull NamedBeanHandle<Sensor> handle) {
-        assertListenersAreNotRegistered(log, "setSensor");
-        _sensorHandle = handle;
-        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-    }
-
-    public void setSensor(@Nonnull Sensor sensor) {
-        assertListenersAreNotRegistered(log, "setSensor");
-        setSensor(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(sensor.getDisplayName(), sensor));
-    }
-
-    public void removeSensor() {
-        assertListenersAreNotRegistered(log, "setSensor");
-        if (_sensorHandle != null) {
-            InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
-            _sensorHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Sensor> getSensor() {
-        return _sensorHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
+    public LogixNG_SelectNamedBean<Sensor> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -201,24 +116,6 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         }
     }
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Sensor) {
-                if (evt.getOldValue().equals(getSensor().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Sensor_SensorInUseSensorActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Sensor) {
-                if (evt.getOldValue().equals(getSensor().getBean())) {
-                    removeSensor();
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -252,43 +149,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        Sensor sensor;
-
-//        System.out.format("ActionSensor.execute: %s%n", getLongDescription());
-
-        switch (_addressing) {
-            case Direct:
-                sensor = _sensorHandle != null ? _sensorHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                sensor = InstanceManager.getDefault(SensorManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                sensor = InstanceManager.getDefault(SensorManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                sensor = _expressionNode != null ?
-                        InstanceManager.getDefault(SensorManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-//        System.out.format("ActionSensor.execute: sensor: %s%n", sensor);
+        Sensor sensor = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
         if (sensor == null) {
 //            log.warn("sensor is null");
@@ -335,35 +196,8 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String state;
-
-        switch (_addressing) {
-            case Direct:
-                String sensorName;
-                if (_sensorHandle != null) {
-                    sensorName = _sensorHandle.getBean().getDisplayName();
-                } else {
-                    sensorName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", sensorName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_stateAddressing) {
             case Direct:
@@ -468,7 +302,8 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionSensor: bean = {}, cdl = {}, report = {}", bean, cdl, report);
-        if (getSensor() != null && bean.equals(getSensor().getBean())) {
+        NamedBeanHandle<Sensor> handle = _selectNamedBean.getNamedBean();
+        if (handle != null && bean.equals(handle.getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }

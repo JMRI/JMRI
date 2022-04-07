@@ -5,6 +5,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionSensor;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -36,15 +37,8 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
 
         storeCommon(p, element);
 
-        var sensor = p.getSensor();
-        if (sensor != null) {
-            element.addContent(new Element("sensor").addContent(sensor.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
         element.addContent(new Element("sensorState").addContent(p.getBeanState().name()));
@@ -63,30 +57,12 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
 
         loadCommon(h, shared);
 
-        Element sensorName = shared.getChild("sensor");
-        if (sensorName != null) {
-            Sensor t = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName.getTextTrim());
-            if (t != null) h.setSensor(t);
-            else h.removeSensor();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "sensor");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("stateAddressing");
+            Element elem = shared.getChild("stateAddressing");
             if (elem != null) {
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

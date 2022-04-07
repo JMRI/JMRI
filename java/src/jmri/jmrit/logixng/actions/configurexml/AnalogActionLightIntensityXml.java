@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AnalogActionLightIntensity;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -36,15 +37,8 @@ public class AnalogActionLightIntensityXml extends jmri.managers.configurexml.Ab
 
         storeCommon(p, element);
 
-        var light = p.getLight();
-        if (light != null) {
-            element.addContent(new Element("variableLight").addContent(light.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<VariableLight>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         return element;
     }
@@ -58,32 +52,9 @@ public class AnalogActionLightIntensityXml extends jmri.managers.configurexml.Ab
 
         loadCommon(h, shared);
 
-        Element lightName = shared.getChild("variableLight");
-        if (lightName != null) {
-            VariableLight t = InstanceManager.getDefault(VariableLightManager.class)
-                    .getNamedBean(lightName.getTextTrim());
-            if (t != null) h.setLight(t);
-            else h.removeLight();
-        }
-
-        try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<VariableLight>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "variableLight");
 
         InstanceManager.getDefault(AnalogActionManager.class).registerAction(h);
         return true;

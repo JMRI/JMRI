@@ -5,6 +5,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionAudio;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -36,15 +37,8 @@ public class ActionAudioXml extends jmri.managers.configurexml.AbstractNamedBean
 
         storeCommon(p, element);
 
-        var audio = p.getAudio();
-        if (audio != null) {
-            element.addContent(new Element("audio").addContent(audio.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Audio>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("stateAddressing").addContent(p.getOperationAddressing().name()));
         element.addContent(new Element("audioState").addContent(p.getOperation().name()));
@@ -63,30 +57,12 @@ public class ActionAudioXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
-        Element audioName = shared.getChild("audio");
-        if (audioName != null) {
-            Audio t = InstanceManager.getDefault(AudioManager.class).getAudio(audioName.getTextTrim());
-            if (t != null) h.setAudio(t);
-            else h.removeAudio();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Audio>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "audio");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("stateAddressing");
+            Element elem = shared.getChild("stateAddressing");
             if (elem != null) {
                 h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

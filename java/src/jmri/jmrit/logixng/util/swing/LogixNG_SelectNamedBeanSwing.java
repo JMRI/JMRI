@@ -160,27 +160,69 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         }
 
         try {
-            if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Reference);
-                selectNamedBean.setReference(_referenceTextField.getText());
-            } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.LocalVariable);
-                selectNamedBean.setLocalVariable(_localVariableTextField.getText());
-            } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Formula);
-                selectNamedBean.setFormula(_formulaTextField.getText());
-            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.Table);
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneNamedBean has unknown selection");
+            NamedBeanAddressing addressing = getAddressing();
+            selectNamedBean.setAddressing(addressing);
+
+            switch (addressing) {
+                case Direct:
+                    // Do nothing
+                    break;
+                case Reference:
+                    selectNamedBean.setReference(_referenceTextField.getText());
+                    break;
+                case LocalVariable:
+                    selectNamedBean.setLocalVariable(_localVariableTextField.getText());
+                    break;
+                case Formula:
+                    selectNamedBean.setFormula(_formulaTextField.getText());
+                    break;
+                case Table:
+                    // Do nothing
+                    break;
+                default:
+                    throw new IllegalArgumentException("unknown addressing: "+addressing.name());
             }
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
 
         _selectTableSwing.updateObject(selectNamedBean.getSelectTable());
+    }
+
+    public BeanSelectPanel getBeanSelectPanel() {
+        return _namedBeanPanel;
+    }
+
+    public NamedBeanAddressing getAddressing() {
+        if (_tabbedPane.getSelectedComponent() == _panelDirect) {
+            return NamedBeanAddressing.Direct;
+        } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
+            return NamedBeanAddressing.Reference;
+        } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
+            return NamedBeanAddressing.LocalVariable;
+        } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
+            return NamedBeanAddressing.Formula;
+        } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+            return NamedBeanAddressing.Table;
+        } else {
+            throw new IllegalArgumentException("_tabbedPane has unknown selection");
+        }
+    }
+
+    public void addAddressingListener(javax.swing.event.ChangeListener l) {
+        _tabbedPane.addChangeListener(l);
+    }
+
+    public void removeAddressingListener(javax.swing.event.ChangeListener l) {
+        _tabbedPane.removeChangeListener(l);
+    }
+
+    public E getBean() {
+        if (getAddressing() == NamedBeanAddressing.Direct) {
+            return _namedBeanPanel.getNamedBean();
+        } else {
+            throw new IllegalArgumentException("Addressing is not Direct");
+        }
     }
 
     public void dispose() {

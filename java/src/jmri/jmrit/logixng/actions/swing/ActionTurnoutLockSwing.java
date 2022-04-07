@@ -7,8 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.*;
@@ -16,7 +14,7 @@ import jmri.jmrit.logixng.actions.ActionTurnoutLock;
 import jmri.jmrit.logixng.actions.ActionTurnoutLock.TurnoutLock;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -26,15 +24,7 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPaneTurnout;
-    private BeanSelectPanel<Turnout> turnoutBeanPanel;
-    private JPanel _panelTurnoutDirect;
-    private JPanel _panelTurnoutReference;
-    private JPanel _panelTurnoutLocalVariable;
-    private JPanel _panelTurnoutFormula;
-    private JTextField _turnoutReferenceTextField;
-    private JTextField _turnoutLocalVariableTextField;
-    private JTextField _turnoutFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<Turnout> _selectNamedBeanSwing;
 
     private JTabbedPane _tabbedPaneTurnoutLock;
     private JComboBox<TurnoutLock> _stateComboBox;
@@ -51,33 +41,17 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionTurnoutLock action = (ActionTurnoutLock)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(TurnoutManager.class), getJDialog(), this);
+
         panel = new JPanel();
 
-        _tabbedPaneTurnout = new JTabbedPane();
-        _panelTurnoutDirect = new javax.swing.JPanel();
-        _panelTurnoutReference = new javax.swing.JPanel();
-        _panelTurnoutLocalVariable = new javax.swing.JPanel();
-        _panelTurnoutFormula = new javax.swing.JPanel();
-
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.Direct.toString(), _panelTurnoutDirect);
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.Reference.toString(), _panelTurnoutReference);
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutLocalVariable);
-        _tabbedPaneTurnout.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutFormula);
-
-        turnoutBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
-        _panelTurnoutDirect.add(turnoutBeanPanel);
-
-        _turnoutReferenceTextField = new JTextField();
-        _turnoutReferenceTextField.setColumns(30);
-        _panelTurnoutReference.add(_turnoutReferenceTextField);
-
-        _turnoutLocalVariableTextField = new JTextField();
-        _turnoutLocalVariableTextField.setColumns(30);
-        _panelTurnoutLocalVariable.add(_turnoutLocalVariableTextField);
-
-        _turnoutFormulaTextField = new JTextField();
-        _turnoutFormulaTextField.setColumns(30);
-        _panelTurnoutFormula.add(_turnoutFormulaTextField);
+        JPanel _tabbedPaneNamedBean;
+        if (action != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+        }
 
 
         _tabbedPaneTurnoutLock = new JTabbedPane();
@@ -113,26 +87,12 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
 
 
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutDirect); break;
-                case Reference: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutReference); break;
-                case LocalVariable: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutLocalVariable); break;
-                case Formula: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            if (action.getTurnout() != null) {
-                turnoutBeanPanel.setDefaultNamedBean(action.getTurnout().getBean());
-            }
-            _turnoutReferenceTextField.setText(action.getReference());
-            _turnoutLocalVariableTextField.setText(action.getLocalVariable());
-            _turnoutFormulaTextField.setText(action.getFormula());
-
             switch (action.getLockAddressing()) {
                 case Direct: _tabbedPaneTurnoutLock.setSelectedComponent(_panelTurnoutLockDirect); break;
                 case Reference: _tabbedPaneTurnoutLock.setSelectedComponent(_panelTurnoutLockReference); break;
                 case LocalVariable: _tabbedPaneTurnoutLock.setSelectedComponent(_panelTurnoutLockLocalVariable); break;
                 case Formula: _tabbedPaneTurnoutLock.setSelectedComponent(_panelTurnoutLockFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getLockAddressing().name());
             }
             _stateComboBox.setSelectedItem(action.getTurnoutLock());
             _turnoutLockReferenceTextField.setText(action.getLockReference());
@@ -141,7 +101,7 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneTurnout,
+            _tabbedPaneNamedBean,
             _tabbedPaneTurnoutLock};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -157,15 +117,6 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
         ActionTurnoutLock action = new ActionTurnoutLock("IQDA1", null);
 
         try {
-            if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutReference) {
-                action.setReference(_turnoutReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-
-        try {
             if (_tabbedPaneTurnoutLock.getSelectedComponent() == _panelTurnoutLockReference) {
                 action.setLockReference(_turnoutLockReferenceTextField.getText());
             }
@@ -174,24 +125,8 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
             return false;
         }
 
-        try {
-            action.setFormula(_turnoutFormulaTextField.getText());
-            if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-            return false;
-        }
-        return true;
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -209,35 +144,8 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionTurnoutLock but is a: "+object.getClass().getName());
         }
         ActionTurnoutLock action = (ActionTurnoutLock)object;
-        if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
-            Turnout turnout = turnoutBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Turnout> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                action.setTurnout(handle);
-            } else {
-                action.removeTurnout();
-            }
-        } else {
-            action.removeTurnout();
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
         try {
-            if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_turnoutReferenceTextField.getText());
-            } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_turnoutLocalVariableTextField.getText());
-            } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_turnoutFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneTurnout has unknown selection");
-            }
-
             if (_tabbedPaneTurnoutLock.getSelectedComponent() == _panelTurnoutLockDirect) {
                 action.setLockAddressing(NamedBeanAddressing.Direct);
                 action.setTurnoutLock(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
@@ -266,9 +174,7 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        if (turnoutBeanPanel != null) {
-            turnoutBeanPanel.dispose();
-        }
+        // Do nothing
     }
 
 

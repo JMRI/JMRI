@@ -6,6 +6,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionEntryExit;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -37,15 +38,8 @@ public class ActionEntryExitXml extends jmri.managers.configurexml.AbstractNamed
 
         storeCommon(p, element);
 
-        var entryExit = p.getDestinationPoints();
-        if (entryExit != null) {
-            element.addContent(new Element("destinationPoints").addContent(entryExit.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<DestinationPoints>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
         element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
@@ -64,30 +58,12 @@ public class ActionEntryExitXml extends jmri.managers.configurexml.AbstractNamed
 
         loadCommon(h, shared);
 
-        Element entryExitName = shared.getChild("destinationPoints");
-        if (entryExitName != null) {
-            DestinationPoints t = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(entryExitName.getTextTrim());
-            if (t != null) h.setDestinationPoints(t);
-            else h.removeDestinationPoints();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<DestinationPoints>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "destinationPoints");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("operationAddressing");
+            Element elem = shared.getChild("operationAddressing");
             if (elem != null) {
                 h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

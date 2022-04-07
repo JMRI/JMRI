@@ -7,6 +7,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionOBlock;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -39,15 +40,8 @@ public class ActionOBlockXml extends jmri.managers.configurexml.AbstractNamedBea
 
         storeCommon(p, element);
 
-        var oblock = p.getOBlock();
-        if (oblock != null) {
-            element.addContent(new Element("oblock").addContent(oblock.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<OBlock>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
         element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
@@ -73,30 +67,12 @@ public class ActionOBlockXml extends jmri.managers.configurexml.AbstractNamedBea
 
         loadCommon(h, shared);
 
-        Element oblockName = shared.getChild("oblock");
-        if (oblockName != null) {
-            OBlock t = InstanceManager.getDefault(OBlockManager.class).getNamedBean(oblockName.getTextTrim());
-            if (t != null) h.setOBlock(t);
-            else h.removeOBlock();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<OBlock>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "oblock");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("operationAddressing");
+            Element elem = shared.getChild("operationAddressing");
             if (elem != null) {
                 h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

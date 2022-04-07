@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
@@ -39,10 +40,12 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JDialog dialog = new JDialog();
+
         Assert.assertTrue("panel is not null",
-            null != new ActionLightSwing().getConfigPanel(new JPanel()));
+            null != new ActionLightSwing(dialog).getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ActionLightSwing().getConfigPanel(new ActionLight("IQDA1", null), new JPanel()));
+            null != new ActionLightSwing(dialog).getConfigPanel(new ActionLight("IQDA1", null), new JPanel()));
     }
 
     ConditionalNG conditionalNG = null;
@@ -76,10 +79,10 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return action.getLight() != null;});
+        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
         JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getBeanState();});
 
-        Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
+        Assert.assertEquals("IL1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
     }
 

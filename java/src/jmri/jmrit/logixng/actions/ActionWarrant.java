@@ -11,6 +11,7 @@ import jmri.*;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -26,12 +27,9 @@ import jmri.util.TypeConversionUtil;
  */
 public class ActionWarrant extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<Warrant> _warrantHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<Warrant> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Warrant.class, InstanceManager.getDefault(WarrantManager.class));
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private DirectOperation _operationDirect = DirectOperation.AllocateWarrantRoute;
@@ -62,11 +60,7 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionWarrant copy = new ActionWarrant(sysName, userName);
         copy.setComment(getComment());
-        copy.setAddressing(_addressing);
-        if (_warrantHandle != null) copy.setWarrant(_warrantHandle);
-        copy.setReference(_reference);
-        copy.setLocalVariable(_localVariable);
-        copy.setFormula(_formula);
+        _selectNamedBean.copy(copy._selectNamedBean);
 
         copy.setOperationAddressing(_operationAddressing);
         copy.setOperationDirect(_operationDirect);
@@ -85,90 +79,9 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         return manager.registerAction(copy);
     }
 
-    public void setWarrant(@Nonnull String warrantName) {
-        assertListenersAreNotRegistered(log, "setWarrant");
-        Warrant warrant = InstanceManager.getDefault(WarrantManager.class).getNamedBean(warrantName);
-        if (warrant != null) {
-            ActionWarrant.this.setWarrant(warrant);
-        } else {
-            removeWarrant();
-            log.error("Warrant \"{}\" is not found", warrantName);
-        }
+    public LogixNG_SelectNamedBean<Warrant> getSelectNamedBean() {
+        return _selectNamedBean;
     }
-
-    public void setWarrant(@Nonnull Warrant warrant) {
-        assertListenersAreNotRegistered(log, "setWarrant");
-        ActionWarrant.this.setWarrant(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(warrant.getDisplayName(), warrant));
-    }
-
-    public void setWarrant(@Nonnull NamedBeanHandle<Warrant> handle) {
-        assertListenersAreNotRegistered(log, "setWarrant");
-        _warrantHandle = handle;
-        InstanceManager.getDefault(WarrantManager.class).addVetoableChangeListener(this);
-    }
-
-    public void removeWarrant() {
-        assertListenersAreNotRegistered(log, "removeWarrant");
-        if (_warrantHandle != null) {
-            InstanceManager.getDefault(WarrantManager.class).removeVetoableChangeListener(this);
-            _warrantHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Warrant> getWarrant() {
-        return _warrantHandle;
-    }
-
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
 
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
         _operationAddressing = addressing;
@@ -292,18 +205,6 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         return _controlAutoTrain;
     }
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Warrant) {
-                if (evt.getOldValue().equals(getWarrant().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionWarrant_WarrantInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -374,39 +275,7 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        Warrant warrant;
-
-        switch (_addressing) {
-            case Direct:
-                warrant = _warrantHandle != null ? _warrantHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                warrant = InstanceManager.getDefault(WarrantManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                warrant = InstanceManager.getDefault(WarrantManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                warrant = _expressionNode != null ?
-                        InstanceManager.getDefault(WarrantManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
+        Warrant warrant = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
         if (warrant == null) {
             return;
@@ -518,35 +387,8 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String state = "";
-
-        switch (_addressing) {
-            case Direct:
-                String warrantName;
-                if (_warrantHandle != null) {
-                    warrantName = _warrantHandle.getBean().getDisplayName();
-                } else {
-                    warrantName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", warrantName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_operationAddressing) {
             case Direct:
@@ -662,7 +504,8 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionWarrant: bean = {}, report = {}", cdl, report);
-        if (getWarrant() != null && bean.equals(getWarrant().getBean())) {
+        NamedBeanHandle<Warrant> handle = _selectNamedBean.getNamedBean();
+        if (handle != null && bean.equals(handle.getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }

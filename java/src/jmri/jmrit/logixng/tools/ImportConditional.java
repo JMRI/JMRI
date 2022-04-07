@@ -838,11 +838,11 @@ public class ImportConditional {
                                 .getAutoSystemName(), null);
 
                 if (reference != null) {
-                    action.setAddressing(NamedBeanAddressing.Reference);
-                    action.setReference(reference);
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+                    action.getSelectNamedBean().setReference(reference);
                 } else {
-                    action.setAddressing(NamedBeanAddressing.Direct);
-                    action.setSensor(sn);
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+                    action.getSelectNamedBean().setNamedBean(sn);
                 }
 
                 switch (ca.getActionData()) {
@@ -1001,11 +1001,11 @@ public class ImportConditional {
                                 .getAutoSystemName(), null);
 
                 if (reference != null) {
-                    action2.setAddressing(NamedBeanAddressing.Reference);
-                    action2.setReference(reference);
+                    action2.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+                    action2.getSelectNamedBean().setReference(reference);
                 } else {
-                    action2.setAddressing(NamedBeanAddressing.Direct);
-                    action2.setTurnout(tn);
+                    action2.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+                    action2.getSelectNamedBean().setNamedBean(tn);
                 }
 
                 switch (ca.getActionData()) {
@@ -1045,11 +1045,11 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setMemory(my);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(my);
         }
 
         switch (ca.getType()) {
@@ -1060,7 +1060,7 @@ public class ImportConditional {
 
             case COPY_MEMORY:
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
-                action.setOtherMemory(ca.getActionString());
+                action.getSelectOtherMemoryNamedBean().setNamedBean(ca.getActionString());
                 break;
 
             default:
@@ -1078,11 +1078,11 @@ public class ImportConditional {
                 .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setLight(l);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(l);
         }
 
         switch (ca.getType()) {
@@ -1250,11 +1250,11 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setDestinationPoints(dp);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(dp);
         }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
 
@@ -1283,11 +1283,11 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setWarrant(w);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(w);
         }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
 
@@ -1369,11 +1369,11 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setOBlock(b);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(b);
         }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
 
@@ -1430,7 +1430,7 @@ public class ImportConditional {
                 new EnableLogix(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
 
-        action.setAddressing(NamedBeanAddressing.Direct);
+        action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         action.setOperationAddressing(NamedBeanAddressing.Direct);
 
         String devName = ca.getDeviceName();
@@ -1440,7 +1440,7 @@ public class ImportConditional {
                 action.setOperationAddressing(NamedBeanAddressing.Reference);
                 action.setOperationReference("{" + memName + "}");
             } else {
-                action.setLogix(devName);
+                action.getSelectNamedBean().setNamedBean(devName);
             }
         }
 
@@ -1496,15 +1496,15 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         action.setOperationAddressing(NamedBeanAddressing.Direct);
-        action.setAddressing(NamedBeanAddressing.Direct);
+        action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
 
         String sound = ca.getActionString();
         if (sound != null && sound.length() > 0 && sound.charAt(0) == '@') {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(sound.substring(1));
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(sound.substring(1));
         } else {
             Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(ca.getDeviceName());
-            if (audio != null) action.setAudio(audio);
+            if (audio != null) action.getSelectNamedBean().setNamedBean(audio);
         }
 
         switch (ca.getActionData()) {
@@ -1618,7 +1618,7 @@ public class ImportConditional {
                 new TriggerRoute(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
 
-        action.setAddressing(NamedBeanAddressing.Direct);
+        action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         action.setOperationAddressing(NamedBeanAddressing.Direct);
 
         String devName = ca.getDeviceName();
@@ -1628,7 +1628,7 @@ public class ImportConditional {
                 action.setOperationAddressing(NamedBeanAddressing.Reference);
                 action.setOperationReference("{" + memName + "}");
             } else {
-                action.setRoute(devName);
+                action.getSelectNamedBean().setNamedBean(devName);
             }
         }
 

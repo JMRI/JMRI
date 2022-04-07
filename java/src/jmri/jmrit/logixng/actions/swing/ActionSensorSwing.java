@@ -7,8 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.*;
@@ -16,7 +14,7 @@ import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.actions.ActionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -26,15 +24,7 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionSensorSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPaneSensor;
-    private BeanSelectPanel<Sensor> sensorBeanPanel;
-    private JPanel _panelSensorDirect;
-    private JPanel _panelSensorReference;
-    private JPanel _panelSensorLocalVariable;
-    private JPanel _panelSensorFormula;
-    private JTextField _sensorReferenceTextField;
-    private JTextField _sensorLocalVariableTextField;
-    private JTextField _sensorFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<Sensor> _selectNamedBeanSwing;
 
     private JTabbedPane _tabbedPaneSensorState;
     private JComboBox<SensorState> _stateComboBox;
@@ -47,37 +37,28 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
     private JTextField _sensorStateFormulaTextField;
 
 
+    public ActionSensorSwing() {
+    }
+
+    public ActionSensorSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionSensor action = (ActionSensor)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(SensorManager.class), getJDialog(), this);
+
         panel = new JPanel();
 
-        _tabbedPaneSensor = new JTabbedPane();
-        _panelSensorDirect = new javax.swing.JPanel();
-        _panelSensorReference = new javax.swing.JPanel();
-        _panelSensorLocalVariable = new javax.swing.JPanel();
-        _panelSensorFormula = new javax.swing.JPanel();
-
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.Direct.toString(), _panelSensorDirect);
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.Reference.toString(), _panelSensorReference);
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSensorLocalVariable);
-        _tabbedPaneSensor.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorFormula);
-
-        sensorBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SensorManager.class), null);
-        _panelSensorDirect.add(sensorBeanPanel);
-
-        _sensorReferenceTextField = new JTextField();
-        _sensorReferenceTextField.setColumns(30);
-        _panelSensorReference.add(_sensorReferenceTextField);
-
-        _sensorLocalVariableTextField = new JTextField();
-        _sensorLocalVariableTextField.setColumns(30);
-        _panelSensorLocalVariable.add(_sensorLocalVariableTextField);
-
-        _sensorFormulaTextField = new JTextField();
-        _sensorFormulaTextField.setColumns(30);
-        _panelSensorFormula.add(_sensorFormulaTextField);
+        JPanel _tabbedPaneNamedBean;
+        if (action != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+        }
 
 
         _tabbedPaneSensorState = new JTabbedPane();
@@ -113,20 +94,6 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
 
 
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneSensor.setSelectedComponent(_panelSensorDirect); break;
-                case Reference: _tabbedPaneSensor.setSelectedComponent(_panelSensorReference); break;
-                case LocalVariable: _tabbedPaneSensor.setSelectedComponent(_panelSensorLocalVariable); break;
-                case Formula: _tabbedPaneSensor.setSelectedComponent(_panelSensorFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            if (action.getSensor() != null) {
-                sensorBeanPanel.setDefaultNamedBean(action.getSensor().getBean());
-            }
-            _sensorReferenceTextField.setText(action.getReference());
-            _sensorLocalVariableTextField.setText(action.getLocalVariable());
-            _sensorFormulaTextField.setText(action.getFormula());
-
             switch (action.getStateAddressing()) {
                 case Direct: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateDirect); break;
                 case Reference: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateReference); break;
@@ -141,7 +108,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneSensor,
+            _tabbedPaneNamedBean,
             _tabbedPaneSensorState};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -157,15 +124,6 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
         ActionSensor action = new ActionSensor("IQDA1", null);
 
         try {
-            if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
-                action.setReference(_sensorReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-
-        try {
             if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateReference) {
                 action.setStateReference(_sensorStateReferenceTextField.getText());
             }
@@ -174,24 +132,8 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             return false;
         }
 
-        try {
-            action.setFormula(_sensorFormulaTextField.getText());
-            if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-            return false;
-        }
-        return true;
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -215,35 +157,8 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionSensor but is a: "+object.getClass().getName());
         }
         ActionSensor action = (ActionSensor)object;
-        if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
-            Sensor sensor = sensorBeanPanel.getNamedBean();
-            if (sensor != null) {
-                NamedBeanHandle<Sensor> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-                action.setSensor(handle);
-            } else {
-                action.removeSensor();
-            }
-        } else {
-            action.removeSensor();
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
         try {
-            if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_sensorReferenceTextField.getText());
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_sensorLocalVariableTextField.getText());
-            } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_sensorFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneSensor has unknown selection");
-            }
-
             if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
                 action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
@@ -272,9 +187,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        if (sensorBeanPanel != null) {
-            sensorBeanPanel.dispose();
-        }
+        // Do nothing
     }
 
 

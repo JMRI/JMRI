@@ -96,6 +96,31 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
             LogixNG_SelectNamedBean<E> selectNamedBean,
             String beanElementName)
             throws JmriConfigureXmlException {
+        loadLegacy(shared, selectNamedBean, beanElementName, "addressing", "reference", "localVariable", "formula");
+    }
+
+    /**
+     * This method is for backward compability up to and including 4.99.4.Remove this class after 5.0.
+     *
+     * @param shared the shared element
+     * @param selectNamedBean           the LogixNG_SelectNamedBean
+     * @param beanElementName           the name of the element of the bean, for example "turnout"
+     * @param addressingElementName     the name of the element of the addressing, for example "addressing"
+     * @param referenceElementName      the name of the element of the reference, for example "reference"
+     * @param localVariableElementName  the name of the element of the local variable, for example "localVariable"
+     * @param formulaElementName        the name of the element of the formula, for example "formula"
+     * @throws JmriConfigureXmlException if an exception occurs
+     */
+    public void loadLegacy(
+            Element shared,
+            LogixNG_SelectNamedBean<E> selectNamedBean,
+            String beanElementName,
+            String addressingElementName,
+            String referenceElementName,
+            String localVariableElementName,
+            String formulaElementName
+            )
+            throws JmriConfigureXmlException {
 
         Element beanName = shared.getChild(beanElementName);
         if (beanName != null) {

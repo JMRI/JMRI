@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +10,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -27,12 +26,9 @@ import jmri.util.TypeConversionUtil;
  */
 public class ActionLight extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<Light> _lightHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<Light> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Light.class, InstanceManager.getDefault(LightManager.class));
 
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private LightState _lightState = LightState.On;
@@ -62,12 +58,8 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionLight copy = new ActionLight(sysName, userName);
         copy.setComment(getComment());
-        if (_lightHandle != null) copy.setLight(_lightHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         copy.setBeanState(_lightState);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
 
         copy.setStateAddressing(_stateAddressing);
         copy.setStateFormula(_stateFormula);
@@ -84,89 +76,9 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         return manager.registerAction(copy);
     }
 
-    public void setLight(@Nonnull String lightName) {
-        assertListenersAreNotRegistered(log, "setLight");
-        Light light = InstanceManager.getDefault(LightManager.class).getLight(lightName);
-        if (light != null) {
-            setLight(light);
-        } else {
-            removeLight();
-            log.warn("light \"{}\" is not found", lightName);
-        }
+    public LogixNG_SelectNamedBean<Light> getSelectNamedBean() {
+        return _selectNamedBean;
     }
-
-    public void setLight(@Nonnull NamedBeanHandle<Light> handle) {
-        assertListenersAreNotRegistered(log, "setLight");
-        _lightHandle = handle;
-        InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
-    }
-
-    public void setLight(@Nonnull Light light) {
-        assertListenersAreNotRegistered(log, "setLight");
-        setLight(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(light.getDisplayName(), light));
-    }
-
-    public void removeLight() {
-        assertListenersAreNotRegistered(log, "setLight");
-        if (_lightHandle != null) {
-            InstanceManager.lightManagerInstance().removeVetoableChangeListener(this);
-            _lightHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Light> getLight() {
-        return _lightHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
 
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
@@ -282,25 +194,6 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         return _lightValue;
     }
 
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Light) {
-                if (evt.getOldValue().equals(getLight().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Light_LightInUseLightActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Light) {
-                if (evt.getOldValue().equals(getLight().getBean())) {
-                    removeLight();
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -373,39 +266,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        Light light;
-
-        switch (_addressing) {
-            case Direct:
-                light = _lightHandle != null ? _lightHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                light = InstanceManager.getDefault(LightManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                light = InstanceManager.getDefault(LightManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                light = _expressionNode != null ?
-                        InstanceManager.getDefault(LightManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
+        Light light = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
         if (light == null) {
 //            log.warn("light is null");
@@ -463,35 +324,8 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String state;
-
-        switch (_addressing) {
-            case Direct:
-                String lightName;
-                if (_lightHandle != null) {
-                    lightName = _lightHandle.getBean().getDisplayName();
-                } else {
-                    lightName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", lightName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_stateAddressing) {
             case Direct:
@@ -619,7 +453,8 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionLight: bean = {}, report = {}", cdl, report);
-        if (getLight() != null && bean.equals(getLight().getBean())) {
+        NamedBeanHandle<Light> handle = _selectNamedBean.getNamedBean();
+        if (handle != null && bean.equals(handle.getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }

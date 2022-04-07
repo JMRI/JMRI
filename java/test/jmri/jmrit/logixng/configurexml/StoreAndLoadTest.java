@@ -234,10 +234,10 @@ public class StoreAndLoadTest {
         actionAudio.setComment("A comment");
 //        actionAudio.setAudio(audioSource);
         actionAudio.setOperation(ActionAudio.Operation.Play);
-        actionAudio.setAddressing(NamedBeanAddressing.Direct);
-        actionAudio.setFormula("\"IT\"+index");
-        actionAudio.setLocalVariable("index");
-        actionAudio.setReference("{IM1}");
+        actionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionAudio.getSelectNamedBean().setLocalVariable("index");
+        actionAudio.getSelectNamedBean().setReference("{IM1}");
         actionAudio.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionAudio.setOperationFormula("\"IT\"+index2");
         actionAudio.setOperationLocalVariable("index2");
@@ -249,10 +249,10 @@ public class StoreAndLoadTest {
         actionAudio.setComment("A comment");
 //        actionAudio.setAudio(audioSource);
         actionAudio.setOperation(ActionAudio.Operation.PlayToggle);
-        actionAudio.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionAudio.setFormula("\"IT\"+index");
-        actionAudio.setLocalVariable("index");
-        actionAudio.setReference("{IM1}");
+        actionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionAudio.getSelectNamedBean().setLocalVariable("index");
+        actionAudio.getSelectNamedBean().setReference("{IM1}");
         actionAudio.setOperationAddressing(NamedBeanAddressing.Formula);
         actionAudio.setOperationFormula("\"IT\"+index2");
         actionAudio.setOperationLocalVariable("index2");
@@ -264,10 +264,10 @@ public class StoreAndLoadTest {
         actionAudio.setComment("A comment");
 //        actionAudio.setAudio(audioSource);
         actionAudio.setOperation(ActionAudio.Operation.Pause);
-        actionAudio.setAddressing(NamedBeanAddressing.Formula);
-        actionAudio.setFormula("\"IT\"+index");
-        actionAudio.setLocalVariable("index");
-        actionAudio.setReference("{IM1}");
+        actionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionAudio.getSelectNamedBean().setLocalVariable("index");
+        actionAudio.getSelectNamedBean().setReference("{IM1}");
         actionAudio.setOperationAddressing(NamedBeanAddressing.Reference);
         actionAudio.setOperationFormula("\"IT\"+index2");
         actionAudio.setOperationLocalVariable("index2");
@@ -279,10 +279,10 @@ public class StoreAndLoadTest {
         actionAudio.setComment("A comment");
 //        actionAudio.setAudio(audioSource);
         actionAudio.setOperation(ActionAudio.Operation.PauseToggle);
-        actionAudio.setAddressing(NamedBeanAddressing.Reference);
-        actionAudio.setFormula("\"IT\"+index");
-        actionAudio.setLocalVariable("index");
-        actionAudio.setReference("{IM1}");
+        actionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionAudio.getSelectNamedBean().setLocalVariable("index");
+        actionAudio.getSelectNamedBean().setReference("{IM1}");
         actionAudio.setOperationAddressing(NamedBeanAddressing.Direct);
         actionAudio.setOperationFormula("\"IT\"+index2");
         actionAudio.setOperationLocalVariable("index2");
@@ -329,8 +329,8 @@ public class StoreAndLoadTest {
         actionBlock.setComment("Direct / Direct / Direct :: SetValue");
         maleSocket.setLocked(false);
 
-        actionBlock.setAddressing(NamedBeanAddressing.Direct);
-        actionBlock.setBlock(block1);
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionBlock.getSelectNamedBean().setNamedBean(block1);
 
         actionBlock.setOperationAddressing(NamedBeanAddressing.Direct);
         actionBlock.setOperationDirect(ActionBlock.DirectOperation.SetValue);
@@ -346,8 +346,8 @@ public class StoreAndLoadTest {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / Direct :: SetOccupied");
 
-        actionBlock.setAddressing(NamedBeanAddressing.Direct);
-        actionBlock.setBlock(block1);
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionBlock.getSelectNamedBean().setNamedBean(block1);
 
         actionBlock.setOperationAddressing(NamedBeanAddressing.Direct);
         actionBlock.setOperationDirect(ActionBlock.DirectOperation.SetOccupied);
@@ -360,8 +360,8 @@ public class StoreAndLoadTest {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / LocalVariable");
 
-        actionBlock.setAddressing(NamedBeanAddressing.Direct);
-        actionBlock.setBlock(block1);
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionBlock.getSelectNamedBean().setNamedBean(block1);
 
         actionBlock.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionBlock.setOperationLocalVariable("index2");
@@ -374,8 +374,8 @@ public class StoreAndLoadTest {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("LocalVariable / Formula");
 
-        actionBlock.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionBlock.setLocalVariable("index");
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionBlock.getSelectNamedBean().setLocalVariable("index");
 
         actionBlock.setOperationAddressing(NamedBeanAddressing.Formula);
         actionBlock.setOperationFormula("\"IT\"+index2");
@@ -388,8 +388,8 @@ public class StoreAndLoadTest {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Formula / Reference");
 
-        actionBlock.setAddressing(NamedBeanAddressing.Formula);
-        actionBlock.setFormula("\"IT\"+index");
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionBlock.getSelectNamedBean().setFormula("\"IT\"+index");
 
         actionBlock.setOperationAddressing(NamedBeanAddressing.Reference);
         actionBlock.setOperationReference("{IM2}");
@@ -402,8 +402,8 @@ public class StoreAndLoadTest {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Reference / Direct :: SetAltColorOn");
 
-        actionBlock.setAddressing(NamedBeanAddressing.Reference);
-        actionBlock.setReference("{IM1}");
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionBlock.getSelectNamedBean().setReference("{IM1}");
 
         actionBlock.setOperationAddressing(NamedBeanAddressing.Direct);
         actionBlock.setOperationDirect(ActionBlock.DirectOperation.SetNullValue);
@@ -459,12 +459,12 @@ public class StoreAndLoadTest {
 
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
-        actionLight.setLight(light1);
+        actionLight.getSelectNamedBean().setNamedBean(light1);
         actionLight.setBeanState(ActionLight.LightState.Off);
-        actionLight.setAddressing(NamedBeanAddressing.Direct);
-        actionLight.setFormula("\"IT\"+index");
-        actionLight.setLocalVariable("index");
-        actionLight.setReference("{IM1}");
+        actionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLight.getSelectNamedBean().setLocalVariable("index");
+        actionLight.getSelectNamedBean().setReference("{IM1}");
         actionLight.setStateAddressing(NamedBeanAddressing.LocalVariable);
         actionLight.setStateFormula("\"IT\"+index2");
         actionLight.setStateLocalVariable("index2");
@@ -475,12 +475,12 @@ public class StoreAndLoadTest {
 
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
-        actionLight.setLight(light1);
+        actionLight.getSelectNamedBean().setNamedBean(light1);
         actionLight.setBeanState(ActionLight.LightState.On);
-        actionLight.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionLight.setFormula("\"IT\"+index");
-        actionLight.setLocalVariable("index");
-        actionLight.setReference("{IM1}");
+        actionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLight.getSelectNamedBean().setLocalVariable("index");
+        actionLight.getSelectNamedBean().setReference("{IM1}");
         actionLight.setStateAddressing(NamedBeanAddressing.Formula);
         actionLight.setStateFormula("\"IT\"+index2");
         actionLight.setStateLocalVariable("index2");
@@ -491,12 +491,12 @@ public class StoreAndLoadTest {
 
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
-        actionLight.setLight(light1);
+        actionLight.getSelectNamedBean().setNamedBean(light1);
         actionLight.setBeanState(ActionLight.LightState.Toggle);
-        actionLight.setAddressing(NamedBeanAddressing.Formula);
-        actionLight.setFormula("\"IT\"+index");
-        actionLight.setLocalVariable("index");
-        actionLight.setReference("{IM1}");
+        actionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLight.getSelectNamedBean().setLocalVariable("index");
+        actionLight.getSelectNamedBean().setReference("{IM1}");
         actionLight.setStateAddressing(NamedBeanAddressing.Reference);
         actionLight.setStateFormula("\"IT\"+index2");
         actionLight.setStateLocalVariable("index2");
@@ -507,12 +507,12 @@ public class StoreAndLoadTest {
 
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
-        actionLight.setLight(light1);
+        actionLight.getSelectNamedBean().setNamedBean(light1);
         actionLight.setBeanState(ActionLight.LightState.Intensity);
-        actionLight.setAddressing(NamedBeanAddressing.Reference);
-        actionLight.setFormula("\"IT\"+index");
-        actionLight.setLocalVariable("index");
-        actionLight.setReference("{IM1}");
+        actionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLight.getSelectNamedBean().setLocalVariable("index");
+        actionLight.getSelectNamedBean().setReference("{IM1}");
         actionLight.setStateAddressing(NamedBeanAddressing.Direct);
         actionLight.setStateFormula("\"IT\"+index2");
         actionLight.setStateLocalVariable("index2");
@@ -522,21 +522,21 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
-        actionLight.setLight(light1);
+        actionLight.getSelectNamedBean().setNamedBean(light1);
         actionLight.setBeanState(ActionLight.LightState.Interval);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
-        actionLight.setLight(light1);
+        actionLight.getSelectNamedBean().setNamedBean(light1);
         actionLight.setBeanState(ActionLight.LightState.Unknown);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
-        actionLight.setLight(light1);
+        actionLight.getSelectNamedBean().setNamedBean(light1);
         actionLight.setBeanState(ActionLight.LightState.Inconsistent);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setEnabled(false);
@@ -561,44 +561,44 @@ public class StoreAndLoadTest {
 
         actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
         actionLightIntensity.setComment("A comment");
-        actionLightIntensity.setLight(variableLight1);
-        actionLightIntensity.setAddressing(NamedBeanAddressing.Direct);
-        actionLightIntensity.setFormula("\"IT\"+index");
-        actionLightIntensity.setLocalVariable("index");
-        actionLightIntensity.setReference("{IM1}");
+        actionLightIntensity.getSelectNamedBean().setNamedBean(variableLight1);
+        actionLightIntensity.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionLightIntensity.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLightIntensity.getSelectNamedBean().setLocalVariable("index");
+        actionLightIntensity.getSelectNamedBean().setReference("{IM1}");
         maleSocket = digitalActionManager.registerAction(actionLightIntensity);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
         actionLightIntensity.setComment("A comment");
-        actionLightIntensity.setLight(variableLight1);
-        actionLightIntensity.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionLightIntensity.setFormula("\"IT\"+index");
-        actionLightIntensity.setLocalVariable("index");
-        actionLightIntensity.setReference("{IM1}");
+        actionLightIntensity.getSelectNamedBean().setNamedBean(variableLight1);
+        actionLightIntensity.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionLightIntensity.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLightIntensity.getSelectNamedBean().setLocalVariable("index");
+        actionLightIntensity.getSelectNamedBean().setReference("{IM1}");
         maleSocket = digitalActionManager.registerAction(actionLightIntensity);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
         actionLightIntensity.setComment("A comment");
-        actionLightIntensity.setLight(variableLight1);
-        actionLightIntensity.setAddressing(NamedBeanAddressing.Formula);
-        actionLightIntensity.setFormula("\"IT\"+index");
-        actionLightIntensity.setLocalVariable("index");
-        actionLightIntensity.setReference("{IM1}");
+        actionLightIntensity.getSelectNamedBean().setNamedBean(variableLight1);
+        actionLightIntensity.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionLightIntensity.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLightIntensity.getSelectNamedBean().setLocalVariable("index");
+        actionLightIntensity.getSelectNamedBean().setReference("{IM1}");
         maleSocket = digitalActionManager.registerAction(actionLightIntensity);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionLightIntensity = new ActionLightIntensity(digitalActionManager.getAutoSystemName(), null);
         actionLightIntensity.setComment("A comment");
-        actionLightIntensity.setLight(variableLight1);
-        actionLightIntensity.setAddressing(NamedBeanAddressing.Reference);
-        actionLightIntensity.setFormula("\"IT\"+index");
-        actionLightIntensity.setLocalVariable("index");
-        actionLightIntensity.setReference("{IM1}");
+        actionLightIntensity.getSelectNamedBean().setNamedBean(variableLight1);
+        actionLightIntensity.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionLightIntensity.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionLightIntensity.getSelectNamedBean().setLocalVariable("index");
+        actionLightIntensity.getSelectNamedBean().setReference("{IM1}");
         maleSocket = digitalActionManager.registerAction(actionLightIntensity);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -862,13 +862,13 @@ public class StoreAndLoadTest {
 
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
-        actionMemory.setMemory(memory1);
-        actionMemory.setAddressing(NamedBeanAddressing.Direct);
-        actionMemory.setFormula("\"IT\"+index");
-        actionMemory.setLocalVariable("index");
-        actionMemory.setReference("{IM1}");
+        actionMemory.getSelectNamedBean().setNamedBean(memory1);
+        actionMemory.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionMemory.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionMemory.getSelectNamedBean().setLocalVariable("index");
+        actionMemory.getSelectNamedBean().setReference("{IM1}");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
-        actionMemory.setOtherMemory(memory3);
+        actionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         actionMemory.setOtherConstantValue("Some string");
         actionMemory.setOtherFormula("n + 3");
         actionMemory.setOtherLocalVariable("Somevar");
@@ -877,13 +877,13 @@ public class StoreAndLoadTest {
 
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
-        actionMemory.setMemory(memory1);
-        actionMemory.setAddressing(NamedBeanAddressing.Formula);
-        actionMemory.setFormula("\"IT\"+index");
-        actionMemory.setLocalVariable("index");
-        actionMemory.setReference("{IM1}");
+        actionMemory.getSelectNamedBean().setNamedBean(memory1);
+        actionMemory.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionMemory.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionMemory.getSelectNamedBean().setLocalVariable("index");
+        actionMemory.getSelectNamedBean().setReference("{IM1}");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
-        actionMemory.setOtherMemory(memory3);
+        actionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         actionMemory.setOtherConstantValue("Some string");
         actionMemory.setOtherFormula("n + 3");
         actionMemory.setOtherLocalVariable("Somevar");
@@ -892,13 +892,13 @@ public class StoreAndLoadTest {
 
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
-        actionMemory.setMemory(memory1);
-        actionMemory.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionMemory.setFormula("\"IT\"+index");
-        actionMemory.setLocalVariable("index");
-        actionMemory.setReference("{IM1}");
+        actionMemory.getSelectNamedBean().setNamedBean(memory1);
+        actionMemory.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionMemory.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionMemory.getSelectNamedBean().setLocalVariable("index");
+        actionMemory.getSelectNamedBean().setReference("{IM1}");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
-        actionMemory.setOtherMemory(memory3);
+        actionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         actionMemory.setOtherConstantValue("Some string");
         actionMemory.setOtherFormula("n + 3");
         actionMemory.setOtherLocalVariable("Somevar");
@@ -908,13 +908,13 @@ public class StoreAndLoadTest {
 
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
-        actionMemory.setMemory(memory1);
-        actionMemory.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionMemory.setFormula("\"IT\"+index");
-        actionMemory.setLocalVariable("index");
-        actionMemory.setReference("{IM1}");
+        actionMemory.getSelectNamedBean().setNamedBean(memory1);
+        actionMemory.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionMemory.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionMemory.getSelectNamedBean().setLocalVariable("index");
+        actionMemory.getSelectNamedBean().setReference("{IM1}");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyTableCellToMemory);
-        actionMemory.setOtherMemory(memory3);
+        actionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         actionMemory.setOtherConstantValue("Some string");
         actionMemory.setOtherFormula("n + 3");
         actionMemory.setOtherLocalVariable("Somevar");
@@ -924,13 +924,13 @@ public class StoreAndLoadTest {
 
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
-        actionMemory.setMemory(memory1);
-        actionMemory.setAddressing(NamedBeanAddressing.Reference);
-        actionMemory.setFormula("\"IT\"+index");
-        actionMemory.setLocalVariable("index");
-        actionMemory.setReference("{IM1}");
+        actionMemory.getSelectNamedBean().setNamedBean(memory1);
+        actionMemory.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionMemory.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionMemory.getSelectNamedBean().setLocalVariable("index");
+        actionMemory.getSelectNamedBean().setReference("{IM1}");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
-        actionMemory.setOtherMemory(memory3);
+        actionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         actionMemory.setOtherConstantValue("Some string");
         actionMemory.setOtherFormula("n + 3");
         actionMemory.setOtherLocalVariable("Somevar");
@@ -940,13 +940,13 @@ public class StoreAndLoadTest {
 
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
-        actionMemory.setMemory(memory1);
-        actionMemory.setAddressing(NamedBeanAddressing.Direct);
-        actionMemory.setFormula("\"IT\"+index");
-        actionMemory.setLocalVariable("index");
-        actionMemory.setReference("{IM1}");
+        actionMemory.getSelectNamedBean().setNamedBean(memory1);
+        actionMemory.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionMemory.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionMemory.getSelectNamedBean().setLocalVariable("index");
+        actionMemory.getSelectNamedBean().setReference("{IM1}");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
-        actionMemory.setOtherMemory(memory3);
+        actionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         actionMemory.setOtherConstantValue("Some string");
         actionMemory.setOtherFormula("n + 3");
         actionMemory.setOtherLocalVariable("Somevar");
@@ -974,8 +974,8 @@ public class StoreAndLoadTest {
         actionOBlock = new ActionOBlock(digitalActionManager.getAutoSystemName(), null);
         actionOBlock.setComment("Direct / Direct / Direct :: SetValue");
 
-        actionOBlock.setAddressing(NamedBeanAddressing.Direct);
-        actionOBlock.setOBlock("OB99");
+        actionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionOBlock.getSelectNamedBean().setNamedBean("OB99");
 
         actionOBlock.setOperationAddressing(NamedBeanAddressing.Direct);
         actionOBlock.setOperationDirect(ActionOBlock.DirectOperation.SetValue);
@@ -991,8 +991,8 @@ public class StoreAndLoadTest {
         actionOBlock = new ActionOBlock(digitalActionManager.getAutoSystemName(), null);
         actionOBlock.setComment("Direct / Direct :: ClearError");
 
-        actionOBlock.setAddressing(NamedBeanAddressing.Direct);
-        actionOBlock.setOBlock("OB99");
+        actionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionOBlock.getSelectNamedBean().setNamedBean("OB99");
 
         actionOBlock.setOperationAddressing(NamedBeanAddressing.Direct);
         actionOBlock.setOperationDirect(ActionOBlock.DirectOperation.ClearError);
@@ -1005,8 +1005,8 @@ public class StoreAndLoadTest {
         actionOBlock = new ActionOBlock(digitalActionManager.getAutoSystemName(), null);
         actionOBlock.setComment("Direct / LocalVariable");
 
-        actionOBlock.setAddressing(NamedBeanAddressing.Direct);
-        actionOBlock.setOBlock("OB99");
+        actionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionOBlock.getSelectNamedBean().setNamedBean("OB99");
 
         actionOBlock.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionOBlock.setOperationLocalVariable("index2");
@@ -1019,8 +1019,8 @@ public class StoreAndLoadTest {
         actionOBlock = new ActionOBlock(digitalActionManager.getAutoSystemName(), null);
         actionOBlock.setComment("LocalVariable / Formula");
 
-        actionOBlock.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionOBlock.setLocalVariable("index");
+        actionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionOBlock.getSelectNamedBean().setLocalVariable("index");
 
         actionOBlock.setOperationAddressing(NamedBeanAddressing.Formula);
         actionOBlock.setOperationFormula("\"IT\"+index2");
@@ -1033,8 +1033,8 @@ public class StoreAndLoadTest {
         actionOBlock = new ActionOBlock(digitalActionManager.getAutoSystemName(), null);
         actionOBlock.setComment("Formula / Reference");
 
-        actionOBlock.setAddressing(NamedBeanAddressing.Formula);
-        actionOBlock.setFormula("\"IT\"+index");
+        actionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionOBlock.getSelectNamedBean().setFormula("\"IT\"+index");
 
         actionOBlock.setOperationAddressing(NamedBeanAddressing.Reference);
         actionOBlock.setOperationReference("{IM2}");
@@ -1047,8 +1047,8 @@ public class StoreAndLoadTest {
         actionOBlock = new ActionOBlock(digitalActionManager.getAutoSystemName(), null);
         actionOBlock.setComment("Reference / Direct :: SetOutOfService");
 
-        actionOBlock.setAddressing(NamedBeanAddressing.Reference);
-        actionOBlock.setReference("{IM1}");
+        actionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionOBlock.getSelectNamedBean().setReference("{IM1}");
 
         actionOBlock.setOperationAddressing(NamedBeanAddressing.Direct);
         actionOBlock.setOperationDirect(ActionOBlock.DirectOperation.SetOutOfService);
@@ -1145,12 +1145,12 @@ public class StoreAndLoadTest {
 
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
-        actionSensor.setSensor(sensor1);
+        actionSensor.getSelectNamedBean().setNamedBean(sensor1);
         actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
-        actionSensor.setAddressing(NamedBeanAddressing.Direct);
-        actionSensor.setFormula("\"IT\"+index");
-        actionSensor.setLocalVariable("index");
-        actionSensor.setReference("{IM1}");
+        actionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSensor.getSelectNamedBean().setLocalVariable("index");
+        actionSensor.getSelectNamedBean().setReference("{IM1}");
         actionSensor.setStateAddressing(NamedBeanAddressing.LocalVariable);
         actionSensor.setStateFormula("\"IT\"+index2");
         actionSensor.setStateLocalVariable("index2");
@@ -1160,12 +1160,12 @@ public class StoreAndLoadTest {
 
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
-        actionSensor.setSensor(sensor1);
+        actionSensor.getSelectNamedBean().setNamedBean(sensor1);
         actionSensor.setBeanState(ActionSensor.SensorState.Active);
-        actionSensor.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionSensor.setFormula("\"IT\"+index");
-        actionSensor.setLocalVariable("index");
-        actionSensor.setReference("{IM1}");
+        actionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSensor.getSelectNamedBean().setLocalVariable("index");
+        actionSensor.getSelectNamedBean().setReference("{IM1}");
         actionSensor.setStateAddressing(NamedBeanAddressing.Formula);
         actionSensor.setStateFormula("\"IT\"+index2");
         actionSensor.setStateLocalVariable("index2");
@@ -1175,12 +1175,12 @@ public class StoreAndLoadTest {
 
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
-        actionSensor.setSensor(sensor1);
+        actionSensor.getSelectNamedBean().setNamedBean(sensor1);
         actionSensor.setBeanState(ActionSensor.SensorState.Toggle);
-        actionSensor.setAddressing(NamedBeanAddressing.Formula);
-        actionSensor.setFormula("\"IT\"+index");
-        actionSensor.setLocalVariable("index");
-        actionSensor.setReference("{IM1}");
+        actionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSensor.getSelectNamedBean().setLocalVariable("index");
+        actionSensor.getSelectNamedBean().setReference("{IM1}");
         actionSensor.setStateAddressing(NamedBeanAddressing.Reference);
         actionSensor.setStateFormula("\"IT\"+index2");
         actionSensor.setStateLocalVariable("index2");
@@ -1190,12 +1190,12 @@ public class StoreAndLoadTest {
 
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
-        actionSensor.setSensor(sensor1);
+        actionSensor.getSelectNamedBean().setNamedBean(sensor1);
         actionSensor.setBeanState(ActionSensor.SensorState.Unknown);
-        actionSensor.setAddressing(NamedBeanAddressing.Reference);
-        actionSensor.setFormula("\"IT\"+index");
-        actionSensor.setLocalVariable("index");
-        actionSensor.setReference("{IM1}");
+        actionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSensor.getSelectNamedBean().setLocalVariable("index");
+        actionSensor.getSelectNamedBean().setReference("{IM1}");
         actionSensor.setStateAddressing(NamedBeanAddressing.Direct);
         actionSensor.setStateFormula("\"IT\"+index2");
         actionSensor.setStateLocalVariable("index2");
@@ -1204,7 +1204,7 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
-        actionSensor.setSensor(sensor1);
+        actionSensor.getSelectNamedBean().setNamedBean(sensor1);
         actionSensor.setBeanState(ActionSensor.SensorState.Inconsistent);
         maleSocket = digitalActionManager.registerAction(actionSensor);
         maleSocket.setEnabled(false);
@@ -1701,8 +1701,8 @@ public class StoreAndLoadTest {
         actionWarrant = new ActionWarrant(digitalActionManager.getAutoSystemName(), null);
         actionWarrant.setComment("Direct / Direct / Direct :: SetTrainName");
 
-        actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("IW99");
+        actionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionWarrant.getSelectNamedBean().setNamedBean("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Direct);
         actionWarrant.setOperationDirect(ActionWarrant.DirectOperation.SetTrainName);
@@ -1718,8 +1718,8 @@ public class StoreAndLoadTest {
         actionWarrant = new ActionWarrant(digitalActionManager.getAutoSystemName(), null);
         actionWarrant.setComment("Direct / Direct / Direct :: ControlAutoTrain - Resume");
 
-        actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("IW99");
+        actionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionWarrant.getSelectNamedBean().setNamedBean("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Direct);
         actionWarrant.setOperationDirect(ActionWarrant.DirectOperation.ControlAutoTrain);
@@ -1735,8 +1735,8 @@ public class StoreAndLoadTest {
         actionWarrant = new ActionWarrant(digitalActionManager.getAutoSystemName(), null);
         actionWarrant.setComment("Direct / Direct :: AllocateWarrantRoute");
 
-        actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("IW99");
+        actionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionWarrant.getSelectNamedBean().setNamedBean("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Direct);
         actionWarrant.setOperationDirect(ActionWarrant.DirectOperation.AllocateWarrantRoute);
@@ -1749,8 +1749,8 @@ public class StoreAndLoadTest {
         actionWarrant = new ActionWarrant(digitalActionManager.getAutoSystemName(), null);
         actionWarrant.setComment("Direct / LocalVariable");
 
-        actionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setWarrant("IW99");
+        actionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionWarrant.getSelectNamedBean().setNamedBean("IW99");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionWarrant.setOperationLocalVariable("index2");
@@ -1763,8 +1763,8 @@ public class StoreAndLoadTest {
         actionWarrant = new ActionWarrant(digitalActionManager.getAutoSystemName(), null);
         actionWarrant.setComment("LocalVariable / Formula");
 
-        actionWarrant.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionWarrant.setLocalVariable("index");
+        actionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionWarrant.getSelectNamedBean().setLocalVariable("index");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Formula);
         actionWarrant.setOperationFormula("\"IT\"+index2");
@@ -1777,8 +1777,8 @@ public class StoreAndLoadTest {
         actionWarrant = new ActionWarrant(digitalActionManager.getAutoSystemName(), null);
         actionWarrant.setComment("Formula / Reference");
 
-        actionWarrant.setAddressing(NamedBeanAddressing.Formula);
-        actionWarrant.setFormula("\"IT\"+index");
+        actionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionWarrant.getSelectNamedBean().setFormula("\"IT\"+index");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Reference);
         actionWarrant.setOperationReference("{IM2}");
@@ -1791,8 +1791,8 @@ public class StoreAndLoadTest {
         actionWarrant = new ActionWarrant(digitalActionManager.getAutoSystemName(), null);
         actionWarrant.setComment("Reference / Direct :: DeallocateWarrant");
 
-        actionWarrant.setAddressing(NamedBeanAddressing.Reference);
-        actionWarrant.setReference("{IM1}");
+        actionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionWarrant.getSelectNamedBean().setReference("{IM1}");
 
         actionWarrant.setOperationAddressing(NamedBeanAddressing.Direct);
         actionWarrant.setOperationDirect(ActionWarrant.DirectOperation.DeallocateWarrant);
@@ -1864,12 +1864,12 @@ public class StoreAndLoadTest {
 
         enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
         enableLogix.setComment("A comment");
-        enableLogix.setLogix(logixIX1);
+        enableLogix.getSelectNamedBean().setNamedBean(logixIX1);
         enableLogix.setOperationDirect(EnableLogix.Operation.Enable);
-        enableLogix.setAddressing(NamedBeanAddressing.Direct);
-        enableLogix.setFormula("\"IT\"+index");
-        enableLogix.setLocalVariable("index");
-        enableLogix.setReference("{IM1}");
+        enableLogix.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        enableLogix.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogix.getSelectNamedBean().setLocalVariable("index");
+        enableLogix.getSelectNamedBean().setReference("{IM1}");
         enableLogix.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         enableLogix.setOperationFormula("\"IT\"+index2");
         enableLogix.setOperationLocalVariable("index2");
@@ -1879,12 +1879,12 @@ public class StoreAndLoadTest {
 
         enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
         enableLogix.setComment("A comment");
-        enableLogix.setLogix(logixIX1);
+        enableLogix.getSelectNamedBean().setNamedBean(logixIX1);
         enableLogix.setOperationDirect(EnableLogix.Operation.Disable);
-        enableLogix.setAddressing(NamedBeanAddressing.LocalVariable);
-        enableLogix.setFormula("\"IT\"+index");
-        enableLogix.setLocalVariable("index");
-        enableLogix.setReference("{IM1}");
+        enableLogix.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        enableLogix.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogix.getSelectNamedBean().setLocalVariable("index");
+        enableLogix.getSelectNamedBean().setReference("{IM1}");
         enableLogix.setOperationAddressing(NamedBeanAddressing.Formula);
         enableLogix.setOperationFormula("\"IT\"+index2");
         enableLogix.setOperationLocalVariable("index2");
@@ -1894,12 +1894,12 @@ public class StoreAndLoadTest {
 
         enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
         enableLogix.setComment("A comment");
-        enableLogix.setLogix(logixIX1);
+        enableLogix.getSelectNamedBean().setNamedBean(logixIX1);
         enableLogix.setOperationDirect(EnableLogix.Operation.Enable);
-        enableLogix.setAddressing(NamedBeanAddressing.Formula);
-        enableLogix.setFormula("\"IT\"+index");
-        enableLogix.setLocalVariable("index");
-        enableLogix.setReference("{IM1}");
+        enableLogix.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        enableLogix.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogix.getSelectNamedBean().setLocalVariable("index");
+        enableLogix.getSelectNamedBean().setReference("{IM1}");
         enableLogix.setOperationAddressing(NamedBeanAddressing.Reference);
         enableLogix.setOperationFormula("\"IT\"+index2");
         enableLogix.setOperationLocalVariable("index2");
@@ -1909,12 +1909,12 @@ public class StoreAndLoadTest {
 
         enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
         enableLogix.setComment("A comment");
-        enableLogix.setLogix(logixIX1);
+        enableLogix.getSelectNamedBean().setNamedBean(logixIX1);
         enableLogix.setOperationDirect(EnableLogix.Operation.Enable);
-        enableLogix.setAddressing(NamedBeanAddressing.Reference);
-        enableLogix.setFormula("\"IT\"+index");
-        enableLogix.setLocalVariable("index");
-        enableLogix.setReference("{IM1}");
+        enableLogix.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        enableLogix.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogix.getSelectNamedBean().setLocalVariable("index");
+        enableLogix.getSelectNamedBean().setReference("{IM1}");
         enableLogix.setOperationAddressing(NamedBeanAddressing.Direct);
         enableLogix.setOperationFormula("\"IT\"+index2");
         enableLogix.setOperationLocalVariable("index2");
@@ -1931,10 +1931,10 @@ public class StoreAndLoadTest {
         entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
         entryExit.setComment("A comment");
         entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairDisabled);
-        entryExit.setAddressing(NamedBeanAddressing.Direct);
-        entryExit.setFormula("\"IT\"+index");
-        entryExit.setLocalVariable("index");
-        entryExit.setReference("{IM1}");
+        entryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        entryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        entryExit.getSelectNamedBean().setLocalVariable("index");
+        entryExit.getSelectNamedBean().setReference("{IM1}");
         entryExit.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         entryExit.setOperationFormula("\"IT\"+index2");
         entryExit.setOperationLocalVariable("index2");
@@ -1945,10 +1945,10 @@ public class StoreAndLoadTest {
         entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
         entryExit.setComment("A comment");
         entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairEnabled);
-        entryExit.setAddressing(NamedBeanAddressing.LocalVariable);
-        entryExit.setFormula("\"IT\"+index");
-        entryExit.setLocalVariable("index");
-        entryExit.setReference("{IM1}");
+        entryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        entryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        entryExit.getSelectNamedBean().setLocalVariable("index");
+        entryExit.getSelectNamedBean().setReference("{IM1}");
         entryExit.setOperationAddressing(NamedBeanAddressing.Formula);
         entryExit.setOperationFormula("\"IT\"+index2");
         entryExit.setOperationLocalVariable("index2");
@@ -1959,10 +1959,10 @@ public class StoreAndLoadTest {
         entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
         entryExit.setComment("A comment");
         entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairSegment);
-        entryExit.setAddressing(NamedBeanAddressing.Formula);
-        entryExit.setFormula("\"IT\"+index");
-        entryExit.setLocalVariable("index");
-        entryExit.setReference("{IM1}");
+        entryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        entryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        entryExit.getSelectNamedBean().setLocalVariable("index");
+        entryExit.getSelectNamedBean().setReference("{IM1}");
         entryExit.setOperationAddressing(NamedBeanAddressing.Reference);
         entryExit.setOperationFormula("\"IT\"+index2");
         entryExit.setOperationLocalVariable("index2");
@@ -1973,10 +1973,10 @@ public class StoreAndLoadTest {
         entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
         entryExit.setComment("A comment");
         entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairDisabled);
-        entryExit.setAddressing(NamedBeanAddressing.Reference);
-        entryExit.setFormula("\"IT\"+index");
-        entryExit.setLocalVariable("index");
-        entryExit.setReference("{IM1}");
+        entryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        entryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        entryExit.getSelectNamedBean().setLocalVariable("index");
+        entryExit.getSelectNamedBean().setReference("{IM1}");
         entryExit.setOperationAddressing(NamedBeanAddressing.Direct);
         entryExit.setOperationFormula("\"IT\"+index2");
         entryExit.setOperationLocalVariable("index2");
@@ -2326,7 +2326,7 @@ public class StoreAndLoadTest {
         tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
-        tableForEach.setTable(csvTable);
+        tableForEach.getSelectNamedBean().setNamedBean(csvTable);
         tableForEach.setRowOrColumn(TableRowOrColumn.Row);
         tableForEach.setRowOrColumnName("North yard");
         maleSocket = digitalActionManager.registerAction(tableForEach);
@@ -2339,10 +2339,10 @@ public class StoreAndLoadTest {
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
         tableForEach.setRowOrColumn(TableRowOrColumn.Column);
-        tableForEach.setTable(csvTable);
-        tableForEach.setTableReference("{MyTableRef}");
-        tableForEach.setTableLocalVariable("MyTableVar");
-        tableForEach.setTableFormula("MyTableFormula");
+        tableForEach.getSelectNamedBean().setNamedBean(csvTable);
+        tableForEach.getSelectNamedBean().setReference("{MyTableRef}");
+        tableForEach.getSelectNamedBean().setLocalVariable("MyTableVar");
+        tableForEach.getSelectNamedBean().setFormula("MyTableFormula");
         tableForEach.setRowOrColumnName("Second turnout");
         tableForEach.setRowOrColumnReference("{MyRowOrColumnRef}");
         tableForEach.setRowOrColumnLocalVariable("MyRowOrColumnVar");
@@ -3658,7 +3658,7 @@ public class StoreAndLoadTest {
 
         analogActionMemory = new AnalogActionMemory(analogActionManager.getAutoSystemName(), null);
         analogActionMemory.setComment("A comment");
-        analogActionMemory.setMemory(memory2);
+        analogActionMemory.getSelectNamedBean().setNamedBean(memory2);
         analogActionMemory.setValue(10.22);
         maleSocket = analogActionManager.registerAction(analogActionMemory);
         doAnalogAction.getChild(1).connect(maleSocket);
@@ -3775,7 +3775,7 @@ public class StoreAndLoadTest {
 
         stringActionMemory = new StringActionMemory(stringActionManager.getAutoSystemName(), null);
         stringActionMemory.setComment("A comment");
-        stringActionMemory.setMemory(memory2);
+        stringActionMemory.getSelectNamedBean().setNamedBean(memory2);
         stringActionMemory.setValue("Hello");
         maleSocket = stringActionManager.registerAction(stringActionMemory);
         doStringAction.getChild(1).connect(maleSocket);
