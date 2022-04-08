@@ -528,23 +528,41 @@ public class CbusMessageTest {
     }
 
     @Test
+    public void testgetBootDevId() {
+        CanMessage m = CbusMessage.getBootDevId(0x12);
+        Assert.assertEquals("getBootDevid","[4] 00 00 00 00 0D 05 00 00",m.toString());
+    }
+
+    @Test
+    public void testgetBootId() {
+        CanMessage m = CbusMessage.getBootId(0x12);
+        Assert.assertEquals("getBootBootid","[4] 00 00 00 00 0D 06 00 00",m.toString());
+    }
+
+    @Test
+    public void testgetBootEnables() {
+        CanMessage m = CbusMessage.getBootEnables(0x3, 0x12);
+        Assert.assertEquals("getBootEnables","[4] 00 00 00 00 0D 07 03 00",m.toString());
+    }
+
+    @Test
     public void testgetBootWriteData() {
         CanMessage m = CbusMessage.getBootWriteData( new int[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
         Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
         m = CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
-        JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
+        Assert.assertEquals("getBootWriteData","[5] 01 02",m.toString());
         
         m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
         Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
         m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
-        JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
+        Assert.assertEquals("getBootWriteData","[5] 01 02",m.toString());
     }
 
     @Test
     public void testisBootError() {
-        CanReply r = new CanReply(0x14);
+        CanReply r = new CanReply(1);
         r.setExtended(false);
         r.setElement(0,7);
         Assert.assertEquals("isBootError fff",false,CbusMessage.isBootError(r)); // false false false
@@ -565,8 +583,30 @@ public class CbusMessageTest {
     }
 
     @Test
+    public void testisBootDataError() {
+        CanReply r = new CanReply(1);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataError fff",false,CbusMessage.isBootDataError(r)); // false false false
+        r.setElement(0,0);
+        Assert.assertEquals("isBootDataError ffp",false,CbusMessage.isBootDataError(r)); // ffp
+        r.setHeader(0x10000005);
+        Assert.assertEquals("isBootDataError fpp",false,CbusMessage.isBootDataError(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataError fpf",false,CbusMessage.isBootDataError(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootDataError ppf",false,CbusMessage.isBootDataError(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootDataError pff",false,CbusMessage.isBootDataError(r)); // pff
+        r.setHeader(0x10000005);
+        r.setElement(0,0);
+        Assert.assertEquals("isBootDataError ppp",true,CbusMessage.isBootDataError(r)); // ppp
+
+    }
+
+    @Test
     public void testisBootOK() {
-        CanReply r = new CanReply(0x14);
+        CanReply r = new CanReply(1);
         r.setExtended(false);
         r.setElement(0,7);
         Assert.assertEquals("isBootOK fff",false,CbusMessage.isBootOK(r)); // false false false
@@ -586,11 +626,77 @@ public class CbusMessageTest {
 
     }
 
+    @Test
+    public void testisBootDataOK() {
+        CanReply r = new CanReply(1);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataOK fff",false,CbusMessage.isBootDataOK(r)); // false false false
+        r.setElement(0,1);
+        Assert.assertEquals("isBootDataOK ffp",false,CbusMessage.isBootDataOK(r)); // ffp
+        r.setHeader(0x10000005);
+        Assert.assertEquals("isBootDataOK fpp",false,CbusMessage.isBootDataOK(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataOK fpf",false,CbusMessage.isBootDataOK(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootDataOK ppf",false,CbusMessage.isBootDataOK(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootDataOK pff",false,CbusMessage.isBootDataOK(r)); // pff
+        r.setHeader(0x10000005);
+        r.setElement(0,1);
+        Assert.assertEquals("isBootDataOK ppp",true,CbusMessage.isBootDataOK(r)); // ppp
+
+    }
+
+    @Test
+    public void testisBootOutOfRange() {
+        CanReply r = new CanReply(1);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootOutOfRange fff",false,CbusMessage.isBootOutOfRange(r)); // false false false
+        r.setElement(0,1);
+        Assert.assertEquals("isBootOutOfRange ffp",false,CbusMessage.isBootOutOfRange(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootOutOfRange fpp",false,CbusMessage.isBootOutOfRange(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootOutOfRange fpf",false,CbusMessage.isBootOutOfRange(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootOutOfRange ppf",false,CbusMessage.isBootOutOfRange(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootOutOfRange pff",false,CbusMessage.isBootOutOfRange(r)); // pff
+        r.setHeader(0x10000004);
+        r.setElement(0,3);
+        Assert.assertEquals("isBootOutOfRange ppp",true,CbusMessage.isBootOutOfRange(r)); // ppp
+
+    }
+
+    @Test
+    public void testisBootDataOutOfRange() {
+        CanReply r = new CanReply(1);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataOutOfRange fff",false,CbusMessage.isBootDataOutOfRange(r)); // false false false
+        r.setElement(0,1);
+        Assert.assertEquals("isBootDataOutOfRange ffp",false,CbusMessage.isBootDataOutOfRange(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootDataOutOfRange fpp",false,CbusMessage.isBootDataOutOfRange(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDataOutOfRange fpf",false,CbusMessage.isBootDataOutOfRange(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootDataOutOfRange ppf",false,CbusMessage.isBootDataOutOfRange(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootDataOutOfRange pff",false,CbusMessage.isBootDataOutOfRange(r)); // pff
+        r.setHeader(0x10000005);
+        r.setElement(0,3);
+        Assert.assertEquals("isBootDataOutOfRange ppp",true,CbusMessage.isBootDataOutOfRange(r)); // ppp
+
+    }
+
 
 
     @Test
     public void testisBootConfirm() {
-        CanReply r = new CanReply(0x14);
+        CanReply r = new CanReply(1);
         r.setExtended(false);
         r.setElement(0,7);
         Assert.assertEquals("isBootConfirm fff",false,CbusMessage.isBootConfirm(r)); // false false false
@@ -607,6 +713,52 @@ public class CbusMessageTest {
         r.setHeader(0x10000004);
         r.setElement(0,2);
         Assert.assertEquals("isBootConfirm ppp",true,CbusMessage.isBootConfirm(r)); // ppp
+
+    }
+    
+    
+    @Test
+    public void testisBootDevId() {
+        CanReply r = new CanReply(7);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDevId fff",false,CbusMessage.isBootDevId(r)); // false false false
+        r.setElement(0,2);
+        Assert.assertEquals("isBootDevId ffp",false,CbusMessage.isBootDevId(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootDevId fpp",false,CbusMessage.isBootDevId(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootDevId fpf",false,CbusMessage.isBootDevId(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootDevId ppf",false,CbusMessage.isBootDevId(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootDevId pff",false,CbusMessage.isBootDevId(r)); // pff
+        r.setHeader(0x10000004);
+        r.setElement(0,5);
+        Assert.assertEquals("isBootDevId ppp",true,CbusMessage.isBootDevId(r)); // ppp
+
+    }
+    
+    
+    @Test
+    public void testisBootBootId() {
+        CanReply r = new CanReply(5);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootBootId fff",false,CbusMessage.isBootId(r)); // false false false
+        r.setElement(0,2);
+        Assert.assertEquals("isBootBootId ffp",false,CbusMessage.isBootId(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootBootId fpp",false,CbusMessage.isBootId(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootBootId fpf",false,CbusMessage.isBootId(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootBootId ppf",false,CbusMessage.isBootId(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootBootId pff",false,CbusMessage.isBootId(r)); // pff
+        r.setHeader(0x10000004);
+        r.setElement(0,6);
+        Assert.assertEquals("isBootBootId ppp",true,CbusMessage.isBootId(r)); // ppp
 
     }
     
