@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.basic.BasicToolBarUI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,7 @@ import jmri.jmrit.roster.RosterIconFactory;
 public class AutoEngineerMicro extends AbstractAutoTrainControl {
 
     private static int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
-    
+
     private static NamedIcon iconForward = null;
     private static NamedIcon iconReverse = null;
     private static NamedIcon iconEngineerAuto = null;
@@ -110,21 +109,18 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
                                 "resources/icons/AutoTrainsFrame/ThrottleEight.png"));
     }
 
+    private int currentStep = 0;
+    private float currentThrottleSetting = 0;
+    private float currentThrottlePerHour = 0;
+
     public AutoEngineerMicro(AutoActiveTrain autoActiveTrain) {
         super(autoActiveTrain);
     }
 
-    //private AutoActiveTrain autoActiveTrain = null;
-    //private java.beans.PropertyChangeListener activeTrainListener = null;
-    //private java.beans.PropertyChangeListener throttleListener = null;
-    //private jmri.Throttle throttle = null;
-    //private ActiveTrain activeTrain = null;
-
-    
     @Override
     protected void activeTrainNewModeDispatched() {
     }
-    
+
     @Override
     protected void activeTrainNewModeAutomatic(){
         if (throttle != null) {
@@ -147,10 +143,6 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
     protected void activeTrainNewStatusDone() {
         btnNewBbtnStartStop.setIcon(iconRestartIcon);
     }
-
-    private int currentStep = 0;
-    private float currentThrottleSetting = 0;
-    private float currentThrottlePerHour = 0;
 
     public void forwardReverseTrain() {
         if (activeTrain.getMode() == ActiveTrain.MANUAL) {
@@ -186,7 +178,7 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
         }
 
     }
-    
+
     @Override
     protected void updateSpeedChange(PropertyChangeEvent e) {
         /* Convert throttle stop seven speed steps */
@@ -209,7 +201,7 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
         btnThrottle.setIcon(iconSpeeds.get(currentStep));
 
     }
-    
+
     private void updatePgEnd() {
         lblPageEndSpeed.setText(String.format("%3.0f", currentThrottlePerHour));
         lblPageEndThrottle.setText(String.format("%3.0f%%", currentThrottleSetting * 100));
@@ -269,7 +261,7 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
     private JLabel lblPageEndDCC;
     private JLabel lblPageEndThrottle;
     private JLabel lblPageEndSpeed;
-    
+
     private jmri.jmrit.dispatcher.AutoEngineerJButton btnNewBbtnStartStop;
     private AutoEngineerJButton btnReverser ;
     private AutoEngineerJButton btnManualAuto;
@@ -281,17 +273,15 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
     @Override
     protected void drawComponent() {
 
-        //componentBase = new JPanel();
-        //componentBase.setLayout(new BorderLayout());
-        //componentBase.setBorder(BorderFactory.createLineBorder(Color.black));
-        
+        currentStep = 0;   // to stop spotbug message.....
+
         componentJPanel = new JToolBar();
-        
+
         componentJPanel.setLayout(new BorderLayout());
         componentJPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        
+
         componentJPanel.setFloatable(true);
-        
+
         ImageIcon iconRosterEntry = null;
         if (rosterEntry != null) {
             iconRosterEntry = jmri.InstanceManager.getDefault(RosterIconFactory.class).getIcon(rosterEntry);

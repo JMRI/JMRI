@@ -344,6 +344,6 @@ public class AutoTrainControlDefault extends AbstractAutoTrainControl  {
                 log.warn("unexpected slider change on line {}", at.getTrainName());
             }
         }
-        private final static Logger log = LoggerFactory.getLogger(AutoEngineerMicro.class);
+        private final static Logger log = LoggerFactory.getLogger(AutoTrainControlDefault.class);
     }
 

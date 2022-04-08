@@ -173,6 +173,6 @@ abstract  class AbstractAutoTrainControl extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(AbstractAutoTrainControl.class);
 
 }
