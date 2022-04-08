@@ -158,7 +158,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         //if (defaultInstanceType) {
         //    return null;
         //}
-        return (InternalConsistManager) classObjectMap.computeIfAbsent((ConsistManager.class), (Class c) -> {
+        return (InternalConsistManager) classObjectMap.computeIfAbsent((ConsistManager.class), (Class<?> c) -> {
             log.debug("Create InternalConsistManager by request");
             ConsistManager consistManager = new InternalConsistManager();
             InstanceManager.store(consistManager, jmri.ConsistManager.class);

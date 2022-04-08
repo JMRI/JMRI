@@ -1,38 +1,27 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JSlider;
 import java.beans.PropertyChangeEvent;
 
-import javax.swing.JToolBar;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.plaf.basic.BasicToolBarUI;
 
-import jmri.Throttle;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.pi4j.component.ComponentListener;
 
 /**
  * AutoTrainsFrame provides a user interface to trains that are running
@@ -53,7 +42,7 @@ import com.pi4j.component.ComponentListener;
  *
  * @author Dave Duchamp Copyright (C) 2010
  */
-public class AutoTrainsFrame extends jmri.util.JmriJFrame implements ComponentListener {
+public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
     public AutoTrainsFrame(DispatcherFrame disp) {
         super(false, true);
@@ -141,9 +130,10 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame implements ComponentLi
         }
     }
 
+    @Override
     public void componentResized(ComponentEvent ce) {
         pack();
-    };
+    }
 
     // variables for AutoTrains window
     protected JmriJFrame autoTrainsFrame = null;
