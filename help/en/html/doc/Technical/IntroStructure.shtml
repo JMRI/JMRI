@@ -85,9 +85,9 @@
 
       <p>For interfaces in the <code>jmri</code> package, which might be implemented by lots of
       different layout hardware types,
-      <a href="https://www.jmri.org/JavaDoc/doc/jmri//InstanceManager.html">jmri.InstanceManager</a>
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/InstanceManager.html">jmri.InstanceManager</a>
       satisfies requests for implemented objects by providing access to a hardware-specific
-      <a href="https://www.jmri.org/JavaDoc/doc/jmri//Manager.html">Manager</a>,
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/Manager.html">Manager</a>,
       from which you can get the
       hardware-specific items that represent what you want to access on the layout.</p>
       <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png"
