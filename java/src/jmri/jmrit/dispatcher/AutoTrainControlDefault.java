@@ -330,7 +330,7 @@ public class AutoTrainControlDefault extends AbstractAutoTrainControl  {
             if (at.getMode() == ActiveTrain.MANUAL) {
                 autoActiveTrain.setForward(forwardButton.isSelected());
             } else {
-                log.warn("unexpected direction button change on line {}", at.getTrainName());
+                log.debug("unexpected direction button change on line {}", at.getTrainName());
             }
         }
 
@@ -341,7 +341,7 @@ public class AutoTrainControlDefault extends AbstractAutoTrainControl  {
                 speedValue = speedValue * 0.01f;
                 autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
             } else {
-                log.warn("unexpected slider change on line {}", at.getTrainName());
+                log.debug("unexpected slider change on line {}", at.getTrainName());
             }
         }
         private final static Logger log = LoggerFactory.getLogger(AutoTrainControlDefault.class);

@@ -148,9 +148,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private void initializeAutoTrainsWindow() {
 
         prefMan = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        frameHasScrollBars.setSelected(prefMan.getSimplePreferenceState(hasScrollBars));
-        trainsCanBeFloated.setSelected(prefMan.getSimplePreferenceState(canFloat));
-        useClassicControl.setSelected(prefMan.getSimplePreferenceState(classicControl));
+        frameHasScrollBars.setSelected(prefMan.getCheckboxPreferenceState(hasScrollBars,false));
+        trainsCanBeFloated.setSelected(prefMan.getCheckboxPreferenceState(canFloat,false));
+        useClassicControl.setSelected(prefMan.getCheckboxPreferenceState(classicControl,true));
         autoTrainsFrame = this;
         autoTrainsFrame.setTitle(Bundle.getMessage("TitleAutoTrains"));
         trainsPanel = new JPanel();
