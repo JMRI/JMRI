@@ -8,6 +8,7 @@
   <name xml:lang="fr">Avancé</name>
   <name xml:lang="it">Avanzato</name>
   <name xml:lang="nl">Uitgebreid</name>
+  <name xml:lang="es">Avanzado</name>
   <column>
     <display item="Advanced Ack" tooltip="Enable advanced acknowledgment">
       <tooltip xml:lang="ca">Habilita Reconeixement Avançat</tooltip>
@@ -16,6 +17,7 @@
       <tooltip xml:lang="fr">Activer Accusé Réception avancé</tooltip>
       <tooltip xml:lang="it">Abilita Riconoscimento Avanzato</tooltip>
       <tooltip xml:lang="nl">Uitgebreide bevestiging inschakelen</tooltip>
+      <tooltip xml:lang="es">Habilitar reconocimiento avanzado</tooltip>
     </display>
     <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it">
       <tooltip xml:lang="ca">El temps màxim que el descodificador mantindrà la velocitat sense rebre un paquet vàlid</tooltip>
@@ -24,6 +26,7 @@
       <tooltip xml:lang="fr">&lt;html&gt;Période de temps maximum durant laquelle le décodeur maintiendra sa vitesse&lt;br&gt; en l'absence de réception d'un paquet valide qui lui est adressé.&lt;br&gt;</tooltip>
       <tooltip xml:lang="it">Il tempo massimo che il Decoder mantiene la sua velocità senza ricevere un pacchetto dati valido indirizzato a lui</tooltip>
       <tooltip xml:lang="nl">Max. periode dat de Decoder de snelheid aanhoudt zonder ontvangst van een geldige instructie op zijn adres</tooltip>
+      <tooltip xml:lang="es">Período de tiempo máximo que el decodificador mantendrá su velocidad sin recibir un paquete válido dirigido a él</tooltip>
     </display>
   </column>
   <column>

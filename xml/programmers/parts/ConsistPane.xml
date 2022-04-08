@@ -8,6 +8,7 @@
   <name xml:lang="fr">Multi-Traction</name>
   <name xml:lang="it">Consist (Multi-Trazione)</name>
   <name xml:lang="nl">Multi-tractie</name>
+  <name xml:lang="es">Consist</name>
   <column>
     <row>
       <column>
@@ -17,6 +18,7 @@
           <tooltip xml:lang="de">Adresse für Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Régle l'adresse de l'Unité Multiple (UM)</tooltip>
           <tooltip xml:lang="it">Imposta Indirizzi per Unità Multiple</tooltip>
+          <tooltip xml:lang="es">Establese la dirección del consist</tooltip>
         </display>
         <display item="Consist Direction" tooltip="Sets the relative direction of the loco when consist is told to move forward">
           <tooltip xml:lang="ca">Estableix el sentit de la locomotora quan la Multi-Tracció es mou endavant</tooltip>
@@ -24,6 +26,7 @@
           <tooltip xml:lang="de">Richtung für die Mehrfachtraktion bei Fahrtrichtung "Vorwärts"</tooltip>
           <tooltip xml:lang="fr">Régle le sens relatif de l'Unité Multiple (UM) en marche avant</tooltip>
           <tooltip xml:lang="it">Imposta Direzione relativa della Loco quando il gruppo di loco va in Avanti</tooltip>
+          <tooltip xml:lang="es">Establece el sentido relativo de la locomotora cuando está en un consist</tooltip>
         </display>
       </column>
       <column>
@@ -38,6 +41,7 @@
           <tooltip xml:lang="de">Zusätzliche Einstellung für die Beschleunigungsrate</tooltip>
           <tooltip xml:lang="fr">Contient la valeur du taux d'accélération additionnel de l'UM</tooltip>
           <tooltip xml:lang="it">Imposta informazioni addizionali per l'accellerazione</tooltip>
+          <tooltip xml:lang="es">Establece información adicional sobre la tasa de aceleración</tooltip>
         </display>
         <display item="Consist Acceleration Adjustment Sign" tooltip="Determines whether value is added to or subtracted from loco base acceleration rate">
           <tooltip xml:lang="ca">Estableix el valor que es posa des de la locomotora base per a acceleració</tooltip>
@@ -45,6 +49,7 @@
           <tooltip xml:lang="de">Wert wird zur Beschleunigungsrate addiert oder davon subtrahiert</tooltip>
           <tooltip xml:lang="fr">Détermine si la valeur est additionnée ou soustraite du taux d'accélération de base</tooltip>
           <tooltip xml:lang="it">Imposta se sommare o sottrarre valori dalla curva di accellerazione della loco</tooltip>
+          <tooltip xml:lang="es">Determina si el valor se suma o se resta de la tasa de aceleración base de la locomotora</tooltip>
         </display>
         <display item="Consist Deceleration Adjustment" tooltip="Sets additional deceleration rate information">
           <tooltip xml:lang="ca">Estableix informació adicional per a la desacceleració</tooltip>
@@ -52,6 +57,7 @@
           <tooltip xml:lang="de">Zusätzliche Einstellung für die Verzögerungsrate</tooltip>
           <tooltip xml:lang="fr">Contient la valeur du taux de décélération additionnel de l'UM</tooltip>
           <tooltip xml:lang="it">Imposta informazioni addizionali per la decellerazione</tooltip>
+          <tooltip xml:lang="es">Establece información adicional sobre la tasa de desaceleración</tooltip>
         </display>
         <display item="Consist Deceleration Adjustment Sign" tooltip="Determines whether value is added to or subtracted from loco base deceleration rate">
           <tooltip xml:lang="ca">Estableix el valor que es posa des de la locomotora base per a desacceleració</tooltip>
@@ -59,6 +65,7 @@
           <tooltip xml:lang="de">Wert wird zur Verzögerungsrate addiert oder davon subtrahiert</tooltip>
           <tooltip xml:lang="fr">Détermine si la valeur est additionnée ou soustraite du taux de décélération de base</tooltip>
           <tooltip xml:lang="it">Imposta se sommare o sottrarre valori dalla curva di decellerazione della loco</tooltip>
+          <tooltip xml:lang="es">Determina si el valor se suma o se resta de la tasa de desaceleración base de la locomotora</tooltip>
         </display>
         <display item="Consist Adjustments Active" tooltip="Enables the consist adjustments">
           <tooltip xml:lang="ca">Habilita ajustaments de la Multi-Tracció</tooltip>
@@ -66,18 +73,21 @@
           <tooltip xml:lang="de">Einstellungen für die Mehrfachtraktion aktivieren</tooltip>
           <tooltip xml:lang="fr">Active la configuration de la Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Abilita aggiustamenti del gruppo Consist</tooltip>
+          <tooltip xml:lang="es">Habilita los ajustes del consist</tooltip>
         </display>
         <display item="Consist Option 1">
           <tooltip xml:lang="ca">Opció de Multi-Tracció 1</tooltip>
           <tooltip xml:lang="fr">Option de Multi-Traction 1</tooltip>
           <tooltip xml:lang="it">Opzione Consist 1</tooltip>
           <tooltip xml:lang="de">Zusätsl. für Mehrfachtraktion 1</tooltip>
+          <tooltip xml:lang="es">Opción de consist 1</tooltip>
         </display>
         <display item="Consist Option 2">
           <tooltip xml:lang="ca">Opció de Multi-Tracció 2</tooltip>
           <tooltip xml:lang="fr">Option de Multi-Traction 2</tooltip>
           <tooltip xml:lang="it">Opzione Consist 2</tooltip>
           <tooltip xml:lang="de">Zusätsl. für Mehrfachtraktion 2</tooltip>
+          <tooltip xml:lang="es">Opción de consist 2</tooltip>
         </display>
       </column>
     </row>
@@ -96,6 +106,7 @@
       <text xml:lang="fr">Le décodeur répondra-t-il aux commandes de fonctions à l'adresse de Multi-Traction (UM)?</text>
       <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
       <text xml:lang="nl">Reageert de decoder op functiecommando's aan het Multitractie-adres?</text>
+      <text xml:lang="es">¿Las funciones del decodificador responderán a la dirección del consist?</text>
     </label>
     <label>
       <text> </text>
@@ -106,6 +117,7 @@
       <tooltip xml:lang="de">Funktionen werden von der Adresse für die Mehrfachtraktione oder normal geschaltet</tooltip>
       <tooltip xml:lang="fr">Choisit si les fonctions sont commandées avec l'adresse de base ou celle de l'UM</tooltip>
       <tooltip xml:lang="it">Imposta se comandi Funzioni seguono Indirizzo di Base o Indirizzo Consist</tooltip>
+      <tooltip xml:lang="es">Establese si las funciones siguen la dirección base o del consist</tooltip>
     </display>
     <display item="Consist Function Mode" tooltip="Lighting mode for consist">
       <tooltip xml:lang="ca">Mode de Llums per a la Multi-Tracció</tooltip>
@@ -113,6 +125,7 @@
       <tooltip xml:lang="de">Licht für die Mehrfachtraktion</tooltip>
       <tooltip xml:lang="fr">Mode de fonctionnement des lumières en Multi-Traction (UM)</tooltip>
       <tooltip xml:lang="it">Modalità Luci per il Consist</tooltip>
+      <tooltip xml:lang="es">Modo de iluminación para el consist</tooltip>
     </display>
     <label>
       <text> </text>
@@ -125,6 +138,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction FL en marche Avant répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione Luci frontali in Avanti risponde all'indirizzo Multi-trazione</tooltip>
+          <tooltip xml:lang="es">Determina si FL (hacia adelante) responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For FL in Reverse" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció de Llum Frontal Enrere respon a l'adreça de la Multi-Tracció</tooltip>
@@ -132,6 +146,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction FL en marche Arrière répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione Luci Frontali in Indietro risponde all'indirizzo Multi-trazione</tooltip>
+          <tooltip xml:lang="es">Determina si FL (en reversa) responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F0" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F0 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -139,6 +154,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F0 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F0 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F0 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F1" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F1 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -146,6 +162,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F1 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F1 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F1 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F2" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F2 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -153,6 +170,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F2 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F2 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F2 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F3" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F3 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -160,6 +178,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F3 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F3 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F3 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F4" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F4 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -167,6 +186,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F4 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F4 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F4 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F5" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F5 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -174,6 +194,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F5 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F5 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F5 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F6" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F6 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -181,6 +202,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F6 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F6 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F6 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F7" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F7 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -188,6 +210,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F7 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F7 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F7 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F8" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F8 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -195,6 +218,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F8 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F8 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F8 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F9" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F9 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -202,6 +226,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F9 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione F9 risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F9 responderá a la dirección del consist</tooltip>
         </display>
         <!-- the next two are special for certain sound decoders, generally wont appear -->
         <display item="Consist Address Active For F9 in Forward" tooltip="Determines whether the function will respond to the consist address">
@@ -210,6 +235,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F9 en marche Avant répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F9 (hacia adelante) responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F9 in Reverse" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F9 Endarrere respon a l'adreça de la Multi-Tracció</tooltip>
@@ -217,6 +243,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F9 en marche Arrière répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F9 (en reversa) responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F10" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F10 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -224,6 +251,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F10 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F10 responderá a la dirección del consist</tooltip>
         </display>
         <!-- the next two are special for certain sound decoders, generally wont appear -->
         <display item="Consist Address Active For F10 in Forward" tooltip="Determines whether the function will respond to the consist address">
@@ -232,6 +260,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F10 en marche Avant répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F10 (hacia adelante) responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F10 in Reverse" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F10 Endarrere respon a l'adreça de la Multi-Tracció</tooltip>
@@ -239,6 +268,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F10 en marche Arrière répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F10 (en reversa) responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F11" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F11 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -246,6 +276,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F11 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F11 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F12" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F12 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -253,6 +284,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F12 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F12 responderá a la dirección del consist</tooltip>
         </display>
       </column>
     <label>
@@ -274,6 +306,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F13 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F13 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F14" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F14 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -281,6 +314,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F14 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F14 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F15" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F15 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -288,6 +322,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F15 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F15 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F16" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F16 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -295,6 +330,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F16 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F16 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F17" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F17 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -302,6 +338,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F17 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F17 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F18" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F18 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -309,6 +346,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F18 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F18 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F19" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F19 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -316,6 +354,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F19 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F19 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F20" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F20 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -323,6 +362,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F20 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F20 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F21" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F21 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -330,6 +370,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F21 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F21 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F22" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F22 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -337,6 +378,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F22 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F22 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F23" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F23 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -344,6 +386,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F23 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F23 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F24" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F24 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -351,6 +394,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F24 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F24 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F25" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F25 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -358,6 +402,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F25 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F25 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F26" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F26 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -365,6 +410,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F26 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F26 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F27" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F27 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -372,6 +418,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F27 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F27 responderá a la dirección del consist</tooltip>
         </display>
         <display item="Consist Address Active For F28" tooltip="Determines whether the function will respond to the consist address">
           <tooltip xml:lang="ca">Estableix si la Funció F28 respon a l'adreça de la Multi-Tracció</tooltip>
@@ -379,6 +426,7 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
           <tooltip xml:lang="fr">Détermine si la fonction F28 répond à l'adresse de Multi-Traction (UM)</tooltip>
           <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+          <tooltip xml:lang="es">Determina si F28 responderá a la dirección del consist</tooltip>
         </display>
       </column>
     <label>
@@ -396,18 +444,23 @@
       <column>
         <display item="Consist Automatic Effects - FWDD" tooltip="Sets the status of automatic effects when moving in forward direction">
            <tooltip xml:lang="fr">Régle le statut des effets automatiques lors de la marche avant</tooltip>
+           <tooltip xml:lang="es">Establece el estado de los efectos automáticos cuando se mueve hacia adelante</tooltip>
         </display>
         <display item="Consist Automatic Effects - REVD" tooltip="Sets the status of automatic effects when moving in reverse direction">
            <tooltip xml:lang="fr">Régle le statut des effets automatiques lors de la marche arrière</tooltip>
+           <tooltip xml:lang="es">Establece el estado de los efectos automáticos cuando se mueve en reversa</tooltip>
         </display>
         <display item="Consist Automatic Effects - FWDS" tooltip="Sets the status of automatic effects when stopped in forward direction">
            <tooltip xml:lang="fr">Régle le statut des effets automatiques lors de l'arrêt en marche avant</tooltip>
+           <tooltip xml:lang="es">Establece el estado de los efectos automáticos cuando se detiene hacia adelante</tooltip>
         </display>
         <display item="Consist Automatic Effects - REVS" tooltip="Sets the status of automatic effects when stopped in reverse direction">
            <tooltip xml:lang="fr">Régle le statut des effets automatiques lors de l'arrêt en marche arrière</tooltip>
+           <tooltip xml:lang="es">Establece el estado de los efectos automáticos cuando se detiene en reversa</tooltip>
         </display>
         <display item="Consist Automatic Effects - ESTP" tooltip="Sets the status of automatic effects when in emergency stop">
            <tooltip xml:lang="fr">Régle le statut des effets automatiques lors d'un arrêt d'urgence</tooltip>
+           <tooltip xml:lang="es">Establece el estado de los efectos automáticos en parada de emergencia</tooltip>
         </display>
       </column>
     </row>
