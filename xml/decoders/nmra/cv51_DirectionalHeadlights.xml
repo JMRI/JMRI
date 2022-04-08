@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -58,6 +58,7 @@
         <choice xml:lang="fr">Feux directionnels; fonctionnent automatiquement</choice>
         <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
         <choice xml:lang="nl">Koplampen zijn richting afhankelijk en werken automatisch</choice>
+        <choice xml:lang="es">Farolas direccionales automáticamente</choice>
         <choice xml:lang="cs">Světla jsou směrová a pracují automaticky</choice>
       </enumChoice>
       <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
@@ -66,6 +67,7 @@
         <choice xml:lang="fr">Feux contrôlés indépendamment (F0-Avant, F1-Arrière)</choice>
         <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F1-Retro)</choice>
         <choice xml:lang="nl">De koplampen zijn onafhankelijk gestuurd (F0-voorzijde, F1-achter)</choice>
+        <choice xml:lang="es">Regla 17, Farolas independientes (F0-delanteras, F1-traseras)</choice>
         <choice xml:lang="cs">Pravidlo 17, Světla jsou nezávisle žízená (F0-Přední, F1-Zadní)</choice>
       </enumChoice>
     </enumVal>
@@ -75,17 +77,20 @@
     <label xml:lang="fr">Feux directionnels</label>
     <label xml:lang="it">Luci di testa direzionali</label>
     <label xml:lang="nl">Directionele koplampen</label>
+    <label xml:lang="es">Farolas direccionales</label>
     <comment>output A</comment>
     <comment xml:lang="cs">Výstup A</comment>
     <comment xml:lang="de">Ausgang A</comment>
     <comment xml:lang="it">Uscita A</comment>
     <comment xml:lang="nl">Uitgang A</comment>
+    <comment xml:lang="es">Salida A</comment>
     <tooltip>Enables Rule 17 for headlights (independent control)</tooltip>
     <tooltip xml:lang="cs">Zpřístupní pravidlo 17 pro světla (nezávislé ovládání)</tooltip>
     <tooltip xml:lang="de">Aktiviert Regel 17 für Scheinwerfer (unabhängige Steuerung)</tooltip>
     <tooltip xml:lang="fr">Active la 'Règle 17' pour les feux (contrôle indépendant)</tooltip>
     <tooltip xml:lang="it">Abilita Regola 17 per luci frontali (controllo independentel)</tooltip>
     <tooltip xml:lang="nl">Activeert regel 17 voor koplampen (onafhankelijke controle)</tooltip>
+    <tooltip xml:lang="es">Habilita regla 17 para farolas independientes</tooltip>
     <tooltip xml:lang="cs">Povolit Pravidlo 17 pro světla (nezávislé řízení)</tooltip>
   </variable>
 </variables>

@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The consist tool is now available for the Pi-SPROG 3v2 in command station mode, the SPROG 3 Plus and the MERG CANCMD.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -71,12 +71,13 @@
 
         <h4>KPF-Zeller</h4>
             <ul>
-                <li></li>
+                <li>Improved the speed calibration</li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Configuration - Permit disabling of interrogate messages.</li>
+                <li>Slotmonitor - better guess the column widths</li>
             </ul>
 
         <h4>Maple</h4>
@@ -91,7 +92,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>The consist tool is now available for CBUS.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -157,7 +158,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>The consist tool is now available for the Pi-SPROG 3v2 in command station mode and for the SPROG 3 Plus.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -187,7 +188,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>Parts of the decoder definitions have been translated into Spanish.</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -614,5 +615,12 @@
             has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
             JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
             <li>Improve Block tracking in the case of a broken train being rejoined.
+            <li>Multiple updates to the Bachrus/KPF-Zeller speedometer support:
+                <ul>
+                <li>Improved GUI
+                <li>Now handles programming on main without needing to go to service track first
+                <li>Improved speed matching algorithm
+                <li>Updated docs
+                </ul>
         </ul>
 

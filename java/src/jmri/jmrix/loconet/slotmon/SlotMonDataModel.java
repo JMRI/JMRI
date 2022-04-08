@@ -455,6 +455,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
             case DIRCOLUMN:
+                // the length of an empty JTextField works on more GUIs
                 int m = Math.max(Bundle.getMessage("DirColForward").length(), Bundle.getMessage("DirColReverse").length());
                 m = Math.max(m, Bundle.getMessage("DirectionCol").length());
                 return new JTextField(m).getPreferredSize().width;
@@ -491,7 +492,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F26COLUMN:
             case F27COLUMN:
             case F28COLUMN:
-                return Math.max(new JCheckBox().getPreferredSize().width, new JTextField("F99").getPreferredSize().width); // to show checkboxes
+                // to show checkboxes and Text
+                return Math.max(new JCheckBox().getPreferredSize().width, new JTextField("F99").getPreferredSize().width);
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
