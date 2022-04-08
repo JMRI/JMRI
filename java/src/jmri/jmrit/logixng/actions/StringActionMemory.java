@@ -107,6 +107,6 @@ public class StringActionMemory extends AbstractStringAction {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemory.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemory.class);
 
 }

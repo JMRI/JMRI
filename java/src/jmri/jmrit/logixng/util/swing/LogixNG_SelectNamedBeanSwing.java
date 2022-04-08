@@ -189,7 +189,7 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         _selectTableSwing.updateObject(selectNamedBean.getSelectTable());
     }
 
-    public BeanSelectPanel getBeanSelectPanel() {
+    public BeanSelectPanel<E> getBeanSelectPanel() {
         return _namedBeanPanel;
     }
 
