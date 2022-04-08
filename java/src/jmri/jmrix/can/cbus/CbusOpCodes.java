@@ -197,47 +197,105 @@ public class CbusOpCodes {
     public static final String decodeExtended(CanFrame msg) {
         StringBuilder sb = new StringBuilder(Bundle.getMessage("decodeBootloader"));
         switch (msg.getHeader()) {
-            case 4: // outgoing Bootload Command
+            case 4: // outgoing Bootload Command are always 8 data
+                int newAddress;
                 int newChecksum;
-                switch (msg.getElement(5)) { // data payload of bootloader control frames
-                    case CbusConstants.CBUS_BOOT_NOP: // 0
-                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_NOP"));
+                if (msg.getNumDataElements() == 8) {
+                    switch (msg.getElement(5)) { // data payload of bootloader control frames
+                        case CbusConstants.CBUS_BOOT_NOP: // 0
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_NOP"));
+                            break;
+                        case CbusConstants.CBUS_BOOT_RESET: // 1
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_RESET"));
+                            break;
+                        case CbusConstants.CBUS_BOOT_INIT: // 2
+                            newAddress = ( msg.getElement(2)*65536+msg.getElement(1)*256+msg.getElement(0)  );
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_INIT",newAddress));
+                            break;
+                        case CbusConstants.CBUS_BOOT_CHECK: // 3
+                            newChecksum = ( msg.getElement(7)*256+msg.getElement(6)  );
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_CHECK",newChecksum));
+                            break;
+                        case CbusConstants.CBUS_BOOT_TEST: // 4
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_TEST"));
+                            break;
+                        case CbusConstants.CBUS_BOOT_DEVID: // 5
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_DEVID"));
+                            break;
+                        case CbusConstants.CBUS_BOOT_BOOTID: // 6
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_BOOTID"));
+                            break;
+                        case CbusConstants.CBUS_BOOT_ENABLES: // 7
+                            sb.append(Bundle.getMessage("decodeCBUS_BOOT_ENABLES"));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 5: // outgoing pure data frames are always 8 data
+                if (msg.getNumDataElements() == 8) {
+                    sb.append( Bundle.getMessage("OPC_DA")).append(" :");
+                    msg.appendHexElements(sb);
+                }
+                break;
+            case 0x10000004: // incoming Bootload Reply with variable data
+                switch (msg.getNumDataElements()) {
+                    case 1:     // 1 data
+                        switch (msg.getElement(0)) { // data payload of bootloader control frames
+                            case CbusConstants.CBUS_EXT_BOOT_ERROR: // 0
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_ERROR"));
+                                break;
+                            case CbusConstants.CBUS_EXT_BOOT_OK: // 1
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_OK"));
+                                break;
+                            case CbusConstants.CBUS_EXT_BOOTC: // 2
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTC"));
+                                break;
+                            case CbusConstants.CBUS_EXT_BOOT_OUT_OF_RANGE: // 3
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_OUT_OF_RANGE"));
+                                break;
+                            default:
+                                break;
+                        }
                         break;
-                    case CbusConstants.CBUS_BOOT_RESET: // 1
-                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_RESET"));
+                    case 5:     // 5 data
+                        switch (msg.getElement(0)) { // data payload of bootloader control frames
+                            case CbusConstants.CBUS_EXT_BOOTID: // 6
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTID"));
+                                break;
+                            default:
+                                break;
+                        }
                         break;
-                    case CbusConstants.CBUS_BOOT_INIT: // 2
-                        newChecksum = ( msg.getElement(2)*65536+msg.getElement(1)*256+msg.getElement(0)  );
-                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_INIT",newChecksum));
+                    case 7:     // 7 data
+                        switch (msg.getElement(0)) { // data payload of bootloader control frames
+                            case CbusConstants.CBUS_EXT_DEVID: // 5
+                                sb.append(Bundle.getMessage("decodeCBUS_EXT_DEVID"));
+                                break;
+                            default:
+                                break;
+                        }
                         break;
-                    case CbusConstants.CBUS_BOOT_CHECK: // 3
-                        newChecksum = ( msg.getElement(7)*256+msg.getElement(6)  );
-                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_CHECK",newChecksum));
-                        break;
-                    case CbusConstants.CBUS_BOOT_TEST: // 4
-                        sb.append(Bundle.getMessage("decodeCBUS_BOOT_TEST"));
-                        break;
-                    default:
+                    default:    // All other data - not used
                         break;
                 }
                 break;
-            case 5: // outgoing pure data frame
-                sb.append( Bundle.getMessage("OPC_DA")).append(" :");
-                msg.appendHexElements(sb);
-                break;
-            case 0x10000004: // incoming Bootload Info
-                switch (msg.getElement(0)) { // data payload of bootloader control frames
-                    case CbusConstants.CBUS_EXT_BOOT_ERROR: // 0
-                        sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_ERROR"));
-                        break;
-                    case CbusConstants.CBUS_EXT_BOOT_OK: // 1
-                        sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_OK"));
-                        break;
-                    case CbusConstants.CBUS_EXT_BOOTC: // 2
-                        sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOTC"));
-                        break;
-                    default:
-                        break;
+            case 0x10000005: // incoming Bootload Data reply are always 1 data
+                if (msg.getNumDataElements() == 1) {
+                    switch (msg.getElement(0)) { // data payload of bootloader control frames
+                        case CbusConstants.CBUS_EXT_BOOT_ERROR: // 0
+                            sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_DATA_ERROR"));
+                            break;
+                        case CbusConstants.CBUS_EXT_BOOT_OK: // 1
+                            sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_DATA_OK"));
+                            break;
+                        case CbusConstants.CBUS_EXT_BOOT_OUT_OF_RANGE: // 3
+                            sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_OUT_OF_RANGE"));
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
             default:

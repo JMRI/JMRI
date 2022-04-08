@@ -317,6 +317,9 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         return moveList;
     }
 
+    /**
+     * Sets move count to 0 for all tracks
+     */
     public void resetMoves() {
         List<Location> locations = getList();
         for (Location loc : locations) {
@@ -325,7 +328,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     }
 
     /**
-     *
+     * Returns a JComboBox with locations sorted alphabetically.
      * @return locations for this railroad
      */
     public JComboBox<Location> getComboBox() {
@@ -334,6 +337,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         return box;
     }
 
+    /**
+     * Updates JComboBox alphabetically with a list of locations.
+     * @param box The JComboBox to update.
+     */
     public void updateComboBox(JComboBox<Location> box) {
         box.removeAllItems();
         box.addItem(null);
@@ -452,6 +459,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         log.info("Max location and track name ({}) length {}", maxLocationAndTrackName, _maxLocationAndTrackNameLength);
     }
 
+    /**
+     * Load the locations from a xml file.
+     * @param root xml file
+     */
     public void load(Element root) {
         if (root.getChild(Xml.LOCATIONS) != null) {
             List<Element> locs = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);

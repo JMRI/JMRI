@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -64,11 +64,13 @@
         <label xml:lang="it">Indirizzo valido per le Funzioni</label>
         <label xml:lang="de">Funktionen reagieren auf Adresse</label>
         <label xml:lang="nl">Functies reageren op adres</label>
+        <label xml:lang="es">Dirección a la que responden las funciones</label>
         <tooltip>Selects the address accessory functions will respond to</tooltip>
         <tooltip xml:lang="cs">Vyberte adresu na které bude reagovat funkce</tooltip>
         <tooltip xml:lang="fr">Sélectionne l'adresse à laquelle les fonctions répondront</tooltip>
         <tooltip xml:lang="it">Seleziona l'indirizzo a cui rispondono le Funzioni</tooltip>
         <tooltip xml:lang="de">Wählt die Adresse, wo auf die Funktionen reagieren.</tooltip>
         <tooltip xml:lang="nl">Hiermee selecteert u het accessoire adres waar de functies op reageren zal</tooltip>
+        <tooltip xml:lang="es">Seleccione la dirección a la que responderán las funciones</tooltip>
       </variable>
 </variables>
