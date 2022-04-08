@@ -8,6 +8,7 @@
   <name xml:lang="fr">Carte des Fonctions</name>
   <name xml:lang="it">Mappa Funzioni</name>
   <name xml:lang="nl">Funktietoewijzing</name>
+  <name xml:lang="es">Mapeo de funciones</name>
   <column>
     <row>
       <column>
@@ -19,6 +20,7 @@
           <text xml:lang="fr">Utiliser cette feuille pour déterminer quelles fonctions contrôlent quelles entrées</text>
           <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
           <text xml:lang="nl">Stel per uitgang de aanstuurfunctie in</text>
+          <text xml:lang="es">Use esta hoja para determinar qué botón de función controlará la función</text>
         </label>
         <label>
           <text> </text>
