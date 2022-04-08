@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">DecoderPro® Main Window</h1>
+      <h1 id="Top">DecoderPro&reg; Main Window</h1>
 
       <h2>Main Window Overview</h2>
 
@@ -35,7 +35,7 @@
       <hr>
 
       <p>When you start DecoderPro, the DecoderPro window is displayed. All of the JMRI functions
-      can be accessed via the menu bar on the DecoderPro® window, additional menus are added when
+      can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when
       functions are selected, example below with added operations menu(selected on operations setup
       window), which is also in the tools menu.</p>
 
@@ -57,7 +57,7 @@
 
       <p>Contains the menus that allows you to access all the features and tools in JMRI</p>
 
-      <p>DecoderPro® icon and DecoderPro version information is displayed. The version of Java
+      <p>DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java
       installed and in use is also shown</p>
 
       <p><strong><input name="button" id="button" value=
@@ -72,7 +72,7 @@
       confirmation dialog.</p>
 
       <p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup
-      in your <strong>preference</strong> to open each time you start DecoderPro®. The following
+      in your <strong>preference</strong> to open each time you start DecoderPro&reg;. The following
       are samples that could be set in your preferences. (Shown are for a Digitrax LocoNet
       system)</p>
 

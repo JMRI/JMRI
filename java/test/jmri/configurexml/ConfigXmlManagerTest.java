@@ -26,11 +26,7 @@ public class ConfigXmlManagerTest {
 
     @Test
     public void testRegisterOK() {
-        ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
-            @SuppressWarnings("unused")
-            void locateFailed(Throwable ex, String adapterName, Object o) {
-            }
-        };
+        ConfigXmlManager configxmlmanager = new ConfigXmlManager();
 
         Object o1 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
         configxmlmanager.registerConfig(o1);
@@ -64,12 +60,7 @@ public class ConfigXmlManagerTest {
 
     @Test
     public void testFind() throws ClassNotFoundException {
-        ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
-            @SuppressWarnings("unused")
-            void locateFailed(Throwable ex, String adapterName, Object o) {
-                innerFlag = true;
-            }
-        };
+        ConfigXmlManager configxmlmanager = new ConfigXmlManager();
         Object o1 = new jmri.implementation.TripleTurnoutSignalHead("SH1", "", null, null, null);
         Object o2 = new jmri.implementation.TripleTurnoutSignalHead("SH2", "", null, null, null);
         Object o3 = new jmri.implementation.TripleTurnoutSignalHead("SH3", "", null, null, null);

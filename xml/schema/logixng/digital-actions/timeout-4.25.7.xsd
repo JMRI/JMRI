@@ -59,13 +59,16 @@
                 </xs:complexType>
               </xs:element>
 
-              <xs:element name="delayAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+			  <xs:element name="timeToDelay" type="LogixNG_SelectIntegerType" minOccurs="0" maxOccurs="1" />
+			  <xs:element name="timerUnit" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 4.99.4 -->
+			  <xs:element name="delayAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="delay" type="xs:int" minOccurs="0" maxOccurs="1"/>
               <xs:element name="delayReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="delayLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="delayFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
-
-              <xs:element name="unit" minOccurs="1" maxOccurs="1">
+              <xs:element name="unit" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="MilliSeconds"/>
@@ -75,6 +78,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <!-- These are for backwards compability up until JMRI 4.99.4 -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

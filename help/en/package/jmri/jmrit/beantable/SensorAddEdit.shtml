@@ -227,7 +227,7 @@
       <p><a href="../../../../html/hardware/XPressNet/XNetAddressing.shtml">More on XPressNet
       sensor naming</a>.</p>
 
-      <h3>CBUS® to JMRI Sensor Mapping</h3>
+      <h3>CBUS&reg; to JMRI Sensor Mapping</h3>
 
       <p>Short event 18 on and off : "+18".</p>
 
@@ -320,7 +320,7 @@
 
       <p>Back to the <a href="SensorTable.shtml">Sensor Table help page</a>.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

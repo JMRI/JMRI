@@ -43,7 +43,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         re = r;
         initGUI();
     }
-    
+
     private void initGUI() {
         maxfunction = re.getMAXFNNUM();
         GridBagLayout gbLayout = new GridBagLayout();
@@ -382,7 +382,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             w.writeBorders();
             w.write(s, 0, s.length());
         } catch (IOException e) {
-            log.warn("error during printing: {}", e);
+            log.warn("error during printing", e);
         }
 
     }

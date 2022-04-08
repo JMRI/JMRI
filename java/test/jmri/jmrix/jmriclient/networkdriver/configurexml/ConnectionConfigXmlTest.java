@@ -26,9 +26,9 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 }

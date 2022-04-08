@@ -67,6 +67,7 @@ public class LearnSpeedPanel extends JInternalFrame implements java.beans.Proper
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());
         }
+        setSpeed(0);
     }
 
     /**

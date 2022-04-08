@@ -3,7 +3,11 @@ package jmri.jmrix.can.cbus.node;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.CopyOnWriteArraySet;
 // import javax.annotation.Nonnull;
+
+import javax.annotation.CheckForNull;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusSend;
 
 import org.slf4j.Logger;
@@ -34,10 +38,10 @@ public class CbusBasicNode {
      * @param connmemo The CAN Connection to use
      * @param nodenumber The Node Number
      */
-    public CbusBasicNode ( CanSystemConnectionMemo connmemo, int nodenumber ){
+    public CbusBasicNode ( @CheckForNull CanSystemConnectionMemo connmemo, int nodenumber ){
         _memo = connmemo;
         _nodeNumber = nodenumber;
-        _canId = -1;
+        _canId = 1;
         _inSetupMode = false;
         _inlearnMode = false;
         _inFLiMMode = true;
@@ -128,9 +132,24 @@ public class CbusBasicNode {
     }
     
     /**
+     * Set CAN ID by System Connection.
+     * <p>
+     * Leaves unchanged if no System Connection or Traffic Controller.
+     * @param memo System Connection of the Node.
+     */
+    public final void setCanId( CanSystemConnectionMemo  memo ) {
+        if ( memo != null ) {
+            TrafficController tc = memo.getTrafficController();
+            if ( tc != null ) {
+                setCanId(tc.getCanid());
+            }
+        }
+    }
+
+    /**
      * Get the Node CAN ID.
      * min 1 , ( max 128? )
-     * @return CAN ID of the node, -1 if unset
+     * @return CAN ID of the node, default 1.
      */
     public int getNodeCanId() {
         return _canId;
@@ -202,6 +221,10 @@ public class CbusBasicNode {
      */
     public boolean getNodeInFLiMMode() {
         return _inFLiMMode;
+    }
+    
+    public CanSystemConnectionMemo getMemo() {
+        return _memo;
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusBasicNode.class);

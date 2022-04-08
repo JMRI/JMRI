@@ -41,11 +41,11 @@ public class ProgModePane extends ProgModeSelector {
         if (log.isDebugEnabled()) {
             log.debug("AddressedProgrammerManager:");
             InstanceManager.getList(AddressedProgrammerManager.class).forEach((p) -> {
-                log.debug("   {}", p.toString());
+                log.debug("  item: {}", p.toString());
             });
             log.debug("GlobalProgrammerManager:");
             InstanceManager.getList(GlobalProgrammerManager.class).forEach((p) -> {
-                log.debug("   {}", p.toString());
+                log.debug("  item: {}", p.toString());
             });
         }
 

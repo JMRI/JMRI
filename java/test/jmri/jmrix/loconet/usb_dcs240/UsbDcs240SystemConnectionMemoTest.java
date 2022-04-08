@@ -20,7 +20,7 @@ public class UsbDcs240SystemConnectionMemoTest extends LnSystemConnectionMemoTes
         scm = new UsbDcs240SystemConnectionMemo();
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(scm);
         scm.setLnTrafficController(lnis);
-        scm.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        scm.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
         scm.configureManagers();
     }
 

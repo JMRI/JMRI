@@ -46,9 +46,9 @@
           Warrant parameters.
         </li>
 
-        <li>Next, open the Occupancy Block Tables by choosing the <strong>Tools ⇒ Tables ⇒
+        <li>Next, open the Occupancy Block Tables by choosing the <strong>Tools &rArr; Tables &rArr;
         Occupancy Blocks</strong> menu item from the main PanelPro menu bar, or the <strong>Add
-        Items ⇒ Occupancy Blocks</strong> menu item from within Control Panel Editor.</li>
+        Items &rArr; Occupancy Blocks</strong> menu item from within Control Panel Editor.</li>
 
         <li>Create your OBlocks, Portals and OPaths using these tables, as described in <a href=
         "OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths</a>.
@@ -177,13 +177,13 @@
         <li>A <strong>Recorded Script Warrant</strong>, where throttle commands are recorded from a
         throttle you use to drive a train over preselected route. The Warrant then replicates all
         the commands when played back. To create a Recorded Script Warrant, select the
-        <strong>Warrants ⇒ Tables ⇒ Create New Warrant</strong> menu item and select 'Prototypical'
+        <strong>Warrants &rArr; Tables &rArr; Create New Warrant</strong> menu item and select 'Prototypical'
         or 'Add Speeds' as Warrant type.</li>
 
         <li>An <strong>NX Warrant</strong> (eNtry/eXit), where throttle commands are generated
         automatically to move a train between Blocks chosen by you "on the fly". A dialog allows
         you to choose start and destination distances and to set the maximum Throttle settings. To
-        create an NX Warrant, select the <strong>Warrants ⇒ Tables ⇒ Create NX Warrant</strong>
+        create an NX Warrant, select the <strong>Warrants &rArr; Tables &rArr; Create NX Warrant</strong>
         menu item. More on <a href="NXWarrant.shtml">NX Warrants</a>
         </li>
 
@@ -191,7 +191,7 @@
         rules, but reacts to signals when entering their approach block with an immediate speed
         change. The throttle settings are a fixed proportion of the Aspect Speed Names in Warrant
         Preferences. This type of warrant is better suited to smaller layouts. To create this type
-        of Warrant, select the <strong>Warrants ⇒ Tables ⇒ Create New Warrant</strong> menu item
+        of Warrant, select the <strong>Warrants &rArr; Tables &rArr; Create New Warrant</strong> menu item
         and select 'Fast Reacting' as Warrant type. More on <a href="SCWarrant.shtml">Fast Reacting
         Warrants</a>
         </li>

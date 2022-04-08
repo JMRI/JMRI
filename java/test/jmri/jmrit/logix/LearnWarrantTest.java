@@ -107,7 +107,7 @@ public class LearnWarrantTest {
         // warrant has been recorded using engine 99
 
         List<ThrottleSetting> list = frame.getThrottleCommands();
-        assertThat(list.size()).withFailMessage("12 ThrottleCommands").isEqualTo(12);
+        assertThat(list.size()).withFailMessage("12 ThrottleCommands was "+list.size()).isEqualTo(12);
 
         // now playback using engine 111
         NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE,
@@ -189,7 +189,7 @@ public class LearnWarrantTest {
         Sensor sensor = block.getSensor();
         for (int i=1; i<route.length; i++) {
             // Need to have some time elapse between commands. - Especially the last
-            JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
+            JUnitUtil.waitFor(200);     // waitEmpty(100) causes a lot of failures on Travis GUI
 //            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             if (i<3) {
                 speed += 0.1f;

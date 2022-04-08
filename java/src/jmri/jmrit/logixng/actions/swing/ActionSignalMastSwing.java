@@ -325,9 +325,9 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
     private void setAspectComboBox(ActionSignalMast action) {
         SignalMast sm;
         if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
-            sm = (SignalMast) _signalMastBeanPanel.getBeanCombo().getSelectedItem();
+            sm = _signalMastBeanPanel.getBeanCombo().getSelectedItem();
         } else {
-            sm = (SignalMast) _exampleSignalMastBeanPanel.getBeanCombo().getSelectedItem();
+            sm = _exampleSignalMastBeanPanel.getBeanCombo().getSelectedItem();
         }
 
         if (sm != null) {
@@ -382,6 +382,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             }
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
+            return false;
         }
         return true;
     }

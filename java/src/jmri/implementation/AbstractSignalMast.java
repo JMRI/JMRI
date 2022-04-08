@@ -140,7 +140,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         return true;
     }
 
-    DefaultSignalAppearanceMap map;
+    protected DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
 
     boolean disablePermissiveSignalMastLogic = false;
@@ -179,7 +179,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         return map;
     }
 
-    ArrayList<String> disabledAspects = new ArrayList<>(1);
+    protected ArrayList<String> disabledAspects = new ArrayList<>(1);
 
     @Override
     @Nonnull

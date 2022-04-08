@@ -32,7 +32,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         mLongAddr = pLongAddr;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Forward a write request to an ops-mode write operation
@@ -57,7 +57,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
 
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -70,7 +70,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -82,7 +82,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         throw new ProgrammerException();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     // add 200mSec between commands, so NCE command station queue doesn't get overrun
@@ -94,12 +94,12 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         try {
             wait(200);
         } catch (InterruptedException e) {
-            log.debug("unexpected exception {}", e);
+            log.debug("unexpected exception", e);
         }
         super.notifyProgListenerEnd(value, status);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -110,7 +110,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Can this ops-mode programmer read back values? For now, no, but maybe
@@ -123,7 +123,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         return false;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -131,7 +131,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         return mLongAddr;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -139,7 +139,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         return mAddress;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -147,7 +147,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Ops-mode programming doesn't put the command station in programming mode,

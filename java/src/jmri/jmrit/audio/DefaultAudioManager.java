@@ -43,7 +43,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Reference to the currently active AudioFactory. 
+     * Reference to the currently active AudioFactory.
      * Because of underlying (external to Java) implementation details,
      * JMRI only ever has one AudioFactory, so we make this static.
      */
@@ -114,20 +114,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
         }
 
         return a;
-    }
-
-    @Override
-    @Deprecated
-    @Nonnull
-    public List<String> getSystemNameList(char subType) {
-        Set<Audio> tempSet = getNamedBeanSet();
-        List<String> out = new ArrayList<>();
-        tempSet.stream().forEach((audio) -> {
-            if (audio.getSubType() == subType) {
-                out.add(audio.getSystemName());
-            }
-        });
-        return out;
     }
 
     /** {@inheritDoc} */
@@ -226,7 +212,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 Audio s = createNewAudio("IAL$", "Default Audio Listener");
                 register(s);
             } catch (AudioException ex) {
-                log.error("Error creating Default Audio Listener: {}", ex);
+                log.error("Error creating Default Audio Listener", ex);
             }
 
             // Register a shutdown task to ensure clean exit
@@ -304,19 +290,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     public AudioFactory getActiveAudioFactory() {
         return activeAudioFactory;
-    }
-
-    /**
-     * Get the current instance of this object.
-     * <p>
-     * If not existing, create a new instance.
-     *
-     * @return reference to currently active AudioManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static DefaultAudioManager instance() {
-        return InstanceManager.getDefault(DefaultAudioManager.class);
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);

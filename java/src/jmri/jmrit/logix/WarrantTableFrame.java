@@ -476,19 +476,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     void setStatusText(String msg, Color c, boolean save) {
-        /*      if (WarrantTableModel.myGold.equals(c)) {
-            _status.setBackground(Color.lightGray);
-        } else if (Color.red.equals(c)) {
-            _status.setBackground(Color.white);
-        } else {
-            _status.setBackground(Color.white);
-        }*/
         _status.setForeground(c);
         _status.setText(msg);
         if (save && msg != null && msg.length() > 0) {
-            if (WarrantPreferences.getDefault().getTrace()) {
-                log.info(msg);
-            }
             _statusHistory.add(msg);
             WarrantTableAction.getDefault().writetoLog(msg);
             while (_statusHistory.size() > _maxHistorySize) {

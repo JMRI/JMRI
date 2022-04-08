@@ -66,7 +66,7 @@ public final class XNetConstants {
      in a Double Header */
 
     public static final int CS_DH_ERROR_NONZERO_SPD = 0x86; /* One or both units
-     has a non-zero 
+     has a non-zero
      speed setting */
 
     /* Service mode and Informational responses from the command station */
@@ -80,7 +80,7 @@ public final class XNetConstants {
      paged mode response */
 
     public static final int CS_SOFTWARE_VERSION = 0x21; /*software version
-     is included with 
+     is included with
      the 0x63 group.*/
 
     /* informational request response */
@@ -94,6 +94,7 @@ public final class XNetConstants {
     public static final int CS_TYPE_LH200 = 0x01;  // Lenz LH200
     public static final int CS_TYPE_COMPACT = 0x02; // Lenz Compact/Atlas Commander
     public static final int CS_TYPE_LOKMAUSII = 0x04; // Roco LokMaus II
+    public static final int CS_TYPE_LDH35 = 0x07;   // LDH
     public static final int CS_TYPE_MULTIMAUS = 0x10; // Roco multiMAUS
     public static final int CS_TYPE_Z21 = 0x12; // Roco z21
 
@@ -103,11 +104,11 @@ public final class XNetConstants {
     public static final int BC_EVERYTHING_STOP = 0x00;   /* broadcast of
      emergency stop */
 
-    /* Feedback - this is basically a bitmask.  The second nibble Indicates 
+    /* Feedback - this is basically a bitmask.  The second nibble Indicates
      how many address byte/data byte pairs follow the command */
     public static final int BC_FEEDBACK = 0x40;
 
-    /* Accessory information response 
+    /* Accessory information response
      * NOTE: This is identical to the feedback {@link BC_FEEDBACK} when
      * there is only one address byte/data byte pair
      */
@@ -122,7 +123,7 @@ public final class XNetConstants {
 
     public static final int LOCO_NOT_AVAILABLE_V2 = 0xA4; /* for XNet V2 */
 
-    /* Locomotive Information for V3 
+    /* Locomotive Information for V3
      NOTE: for version 3.6, 0xE4 and 0xE3 are used to send information
      about functions 13-28 */
     public static final int LOCO_INFO_NORMAL_UNIT = 0xE4;
@@ -173,11 +174,11 @@ public final class XNetConstants {
     public static final int CS_VERSION = 0x21;
     public static final int CS_STATUS = 0x24;
 
-    /* the following sets the Command station Power up mode, it's 
+    /* the following sets the Command station Power up mode, it's
      used as the first two bytes of the command */
     public static final int CS_SET_POWERMODE = 0x22;
 
-    /* the third byte of the Power up mode is set for either Auto or Manual 
+    /* the third byte of the Power up mode is set for either Auto or Manual
      startup */
     public static final int CS_POWERMODE_AUTO = 0x04;
     public static final int CS_POWERMODE_MANUAL = 0x00;
@@ -187,7 +188,7 @@ public final class XNetConstants {
     public static final int ALL_ESTOP = 0x80;
 
     /* this is for a single locomotive.  With version 3 of expressnet, this is
-     followed with a two byte address.  For version 2, this should be followed 
+     followed with a two byte address.  For version 2, this should be followed
      by a 1 byte address */
     public static final int EMERGENCY_STOP_XNETV1V2 = 0x91;
     public static final int EMERGENCY_STOP = 0x92;
@@ -221,8 +222,8 @@ public final class XNetConstants {
      Follow imediatly with address*/
 
     public static final int LOCO_INFO_REQ_V2 = 0xA2; /* for version 1 or 2 of
-     XNet. 
-     folow with address and 
+     XNet.
+     folow with address and
      Mode Selection bytes */
     /* V3 Status requests */
 
@@ -236,11 +237,11 @@ public final class XNetConstants {
      function status request */
 
     public static final int LOCO_INFO_REQ_FUNC_HI_ON = 0x09; /* ON/OFF
-     function status request 
+     function status request
      for Functions 13-28*/
 
     public static final int LOCO_INFO_REQ_FUNC_HI_MOM = 0x08; /* momentary/constatant
-     function status request 
+     function status request
      for Functions 13-28*/
 
     public static final int LOCO_STACK_SEARCH_FWD = 0x05; /* search forward in
@@ -294,18 +295,18 @@ public final class XNetConstants {
 
     public static final int LOCO_SET_FUNC_Group5 = 0x2C; /* set functions F21-F28*/
 
-    /* add a unit to a multi-unit set opcode requires addition of the 
-     direction relative to the lead unit as the least significant bit 
-     This is followed by the 2 byte unit address of the unit, and the 1 
+    /* add a unit to a multi-unit set opcode requires addition of the
+     direction relative to the lead unit as the least significant bit
+     This is followed by the 2 byte unit address of the unit, and the 1
      byte consist address */
     public static final int LOCO_ADD_MULTI_UNIT_REQ = 0x40;
 
-    /* remove a unit from a multi-unit set This is followed by the 2 
+    /* remove a unit from a multi-unit set This is followed by the 2
      byte unit address of the unit, and the 1 byte consist address */
     public static final int LOCO_REM_MULTI_UNIT_REQ = 0x42;
 
-    /* find out if a unit is part of a specifc multi-unit set These are 
-     followed by the 1 byte consist address, and the 2 byte consist 
+    /* find out if a unit is part of a specifc multi-unit set These are
+     followed by the 1 byte consist address, and the 2 byte consist
      address (Forward and Backward refer to search direction) */
     public static final int LOCO_IN_MULTI_UNIT_SEARCH_REQ = 0xE4; //This is the opcode
 
@@ -321,7 +322,7 @@ public final class XNetConstants {
 
     /* double headers for XNet V3.  In V3, there is only one command.
      The third and 4th bytes are the locomotive address of the lead unit,
-     the locomotive to add to the consist is the 5th and 6th byte.  To 
+     the locomotive to add to the consist is the 5th and 6th byte.  To
      Disolve the double header, use 00 for both bytes of the second address */
     public static final int LOCO_DOUBLEHEAD = 0xE5;
     public static final int LOCO_DOUBLEHEAD_BYTE2 = 0x43;
@@ -332,8 +333,8 @@ public final class XNetConstants {
     /* Write requests (second byte for above) */
     public static final int OPS_MODE_PROG_WRITE_REQ = 0x30;
 
-    /* Address inquiry Multi Unit Request 
-     this is used to find the next Multi Unit address known to the 
+    /* Address inquiry Multi Unit Request
+     this is used to find the next Multi Unit address known to the
      command station.  FWD and BKWD refer to search direction */
     public static final int CS_MULTI_UNIT_REQ = 0xE2;  // This is the OpCode
 /* These are byte 2 of the message */
@@ -352,7 +353,7 @@ public final class XNetConstants {
     public static final int LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR = 0x03;
     /* Now, we have a response indicating what was sent was OK */
     public static final int LI_MESSAGE_RESPONSE_SEND_SUCCESS = 0x04;
-    /* and a message indicating the LI10x doesn't have a timeslot on the 
+    /* and a message indicating the LI10x doesn't have a timeslot on the
      XpressNet (possibly too many devices connected) */
     public static final int LI_MESSAGE_RESPONSE_TIMESLOT_ERROR = 0x05;
     /* Last, there is an error for an LI10x buffer overflow */
@@ -365,7 +366,7 @@ public final class XNetConstants {
 
     /* request to the LI101 */
     public static final int LI101_REQUEST = 0xF2;
-    /* The following are the two possible values for the second byte of a 
+    /* The following are the two possible values for the second byte of a
      request to the LI101 */
     public static final int LI101_REQUEST_ADDRESS = 0x01;
     public static final int LI101_REQUEST_BAUD = 0x02;

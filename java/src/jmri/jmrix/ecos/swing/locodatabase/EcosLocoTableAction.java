@@ -86,7 +86,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
     protected EcosLocoAddressManager locoManager;
 
     @Override
-    public void setManager(Manager man) {
+    public void setManager(Manager<NamedBean> man) {
         if (!(man instanceof EcosLocoAddressManager)) {
             throw new IllegalArgumentException("Manager is not an EcosLocoAddressManager");
         }

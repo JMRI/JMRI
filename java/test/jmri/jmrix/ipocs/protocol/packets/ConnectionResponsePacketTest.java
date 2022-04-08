@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class ConnectionResponsePacketTest {
   private final byte[] testPacket = { 0x01, 0x23 };
@@ -28,4 +30,14 @@ public class ConnectionResponsePacketTest {
     pkt.setProtocolVersion((short)0x0123);
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

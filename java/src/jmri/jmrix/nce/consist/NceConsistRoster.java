@@ -46,17 +46,8 @@ import org.slf4j.LoggerFactory;
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
-    
-    public NceConsistRoster() {
-    }
 
-    /**
-     * @return The NCE consist roster object
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    public static synchronized NceConsistRoster instance() {
-        return InstanceManager.getDefault(NceConsistRoster.class);
+    public NceConsistRoster() {
     }
 
     /**
@@ -503,7 +494,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
 
         firePropertyChange("change", null, r);
     }
-    
+
     @Override
     public void initialize() {
         if (checkFile(defaultNceConsistRosterFilename())) {
@@ -514,7 +505,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
             }
         }
     }
-    
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 

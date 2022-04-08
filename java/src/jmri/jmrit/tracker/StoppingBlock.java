@@ -165,7 +165,7 @@ public class StoppingBlock {
             t.setF1(f1);
             t.setF2(f2);
         } catch (ClassCastException e) {
-            log.error("Block {} did not contain object of Throttle type: {}", block.getSystemName(), e);
+            log.error("Block {} did not contain object of Throttle type", block.getSystemName(), e);
         }
     }
 

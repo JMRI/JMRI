@@ -71,6 +71,7 @@
         <label xml:lang="fr">Période totale MLI (Fréquence de contrôle du Moteur)</label>
         <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
         <label xml:lang="ca">Període PWM (Freqüència de Control del Motor)</label>
+        <label xml:lang="cs">Perioda PWM (Frekvence řadiče motoru)</label>
       </variable>
       <variable item="EMF Feedback Cutout" CV="10">
         <decVal/>
@@ -78,6 +79,7 @@
         <label xml:lang="fr">Limitation du retour EMF</label>
         <label xml:lang="it">Limitazione Retroazione EMF</label>
         <label xml:lang="ca">Limitació de retroacció de EMF</label>
+        <label xml:lang="cs">Limit zpětné vazby EMF</label>
       </variable>
       <variable item="Packet Time-out Value" CV="11">
         <decVal/>
@@ -85,6 +87,7 @@
         <label xml:lang="fr">Valeur du Time-out de paquet</label>
         <label xml:lang="it">Valore Time-out Packet</label>
          <label xml:lang="ca">Valor del Time-Out del Paquet</label>
+         <label xml:lang="cs">Hodnota Time-out Paketu</label>
       </variable>
       <variable item="Analog Power Conversion" CV="12" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -92,6 +95,7 @@
         <label xml:lang="fr">Conversion Alimentation Analogique</label>
         <label xml:lang="it">Conversione Alimentazione Analogica</label>
          <label xml:lang="ca">Converció Alimentació Analògica</label>
+         <label xml:lang="cs">Konverze Analogové napájení</label>
       </variable>
       <variable item="Radio Power Conversion" CV="12" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -99,6 +103,7 @@
         <label xml:lang="fr">Conversion Alimentation Radio</label>
         <label xml:lang="it">Conversione Alimentazione Radio</label>
          <label xml:lang="ca">Conversió Alimentació Ràdio</label>
+        <label xml:lang="cs">Konverze Rádiové napájení</label>
       </variable>
       <variable item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -106,6 +111,7 @@
         <label xml:lang="fr">Conversion Alimentation Zero-1</label>
         <label xml:lang="it">Zero-1 Conversione Alimentazione</label>
          <label xml:lang="ca">Conversió Alimentació Zero-1 </label>
+         <label xml:lang="cs">Konverze Zero-1 napájení</label>
       </variable>
       <variable item="Trix Power Conversion" CV="12" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -113,6 +119,7 @@
         <label xml:lang="fr">Conversion Alimentation Trix</label>
         <label xml:lang="it">Trix Conversione Alimentazione</label>
          <label xml:lang="ca">Conversió Alimentació Trix</label>
+        <label xml:lang="cs">Konverze Trix napájení</label>
       </variable>
       <variable item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -120,6 +127,7 @@
         <label xml:lang="fr">Conversion Alimentation CTC/Railcommand</label>
         <label xml:lang="it">CTC/Railcommand Conversione Alimentazione</label>
          <label xml:lang="ca">Conversió Alimetnació CTC/Railcommand</label>
+        <label xml:lang="cs">Konverze CTC/Railcommand napájení</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
@@ -133,6 +141,7 @@
         <label xml:lang="fr">Tableau de Vitesse/Pas de Vitesse à mi-Course</label>
         <label xml:lang="it">Tabella Velocità/Comando Palmare intermedio</label>
          <label xml:lang="ca">Taula Velocitat / Comandament Regulador Intermig</label>
+        <label xml:lang="cs">Rychlostní tabulka/Střední rozsah Cab rychlostního kroku</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>

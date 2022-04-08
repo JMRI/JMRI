@@ -124,7 +124,7 @@ public class TimeTableImport {
                 row++;
             }
         } catch (IOException e) {
-            log.error("Error reading file: {}", e);  // NOI18N
+            log.error("Error reading file", e);  // NOI18N
         } finally {
             if(bufferedReader != null) {
                bufferedReader.close();

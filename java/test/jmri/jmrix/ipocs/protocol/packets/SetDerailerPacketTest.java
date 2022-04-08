@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
-
 import jmri.jmrix.ipocs.protocol.enums.RqDerailerCommand;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class SetDerailerPacketTest {
   private final byte[] testPacket = { RqDerailerCommand.Passable.value };
@@ -30,4 +31,15 @@ public class SetDerailerPacketTest {
     pkt.setCommand(RqDerailerCommand.Passable);
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

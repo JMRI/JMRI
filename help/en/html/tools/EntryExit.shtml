@@ -51,12 +51,12 @@
         <li>Full Interlocking</li>
       </ul>
 
-      <p><strong>Turnout Only</strong> — With turnout only, the NX Pair will only set the turnouts
+      <p><strong>Turnout Only</strong> &mdash; With turnout only, the NX Pair will only set the turnouts
       to the correct state for that route. If a block is already showing as occupied or reserved
       within that route, and an alternative one is available then the alternative route will be
       set, otherwise the route will not be set.</p>
 
-      <p><strong>Turnout and SignalMast Logic</strong> — This option includes what is covered by
+      <p><strong>Turnout and SignalMast Logic</strong> &mdash; This option includes what is covered by
       "Turnout Only" and will also generate the SignalMast Logic for that route. The logic will
       include the turnout states and the blocks that are within that route. For this to work,
       SignalMasts must also be placed at the same boundary points as the sensors working in the
@@ -64,7 +64,7 @@
       however it is not saved and will be re-created the next time the panel is opened. When there
       is no route set then the SignalMast will be placed in a held state.</p>
 
-      <p><strong>Full Interlocking</strong> — This covers the same things as the other two items
+      <p><strong>Full Interlocking</strong> &mdash; This covers the same things as the other two items
       above. In addition, it will also "reserve" or "lock out" each block in the route so that no
       other conflicting route can be set. If block occupancy detection is being used the route will
       automatically be cleared down. If no block occupancy is being used, then it is possible to
@@ -230,7 +230,7 @@
       <strong>Note:</strong> If an extended route is cleared or cancelled, each segment will need
       to be cancelled or cleared by responding to the prompt.</p>
 
-      <h3>Route Stacking — Following</h3>
+      <h3>Route Stacking &mdash; Following</h3>
 
       <p>When using the Full Interlock NX type, re-selecting the entry and exit sensors will
       display a dialog box:</p>
@@ -242,19 +242,19 @@
       <p>Options:</p>
 
       <ul>
-        <li>Cancel — Cancel the route. The block reservations will be released and the track
+        <li>Cancel &mdash; Cancel the route. The block reservations will be released and the track
         components will be set to the normal color.</li>
 
-        <li>Clear Down — The blocks will be set occupied and then not occupied in sequence as if a
+        <li>Clear Down &mdash; The blocks will be set occupied and then not occupied in sequence as if a
         train had traversed the route. The last block in the route will be left occupied. This can
         be useful for simulating train movements or for layouts that don't have block
         detection.</li>
 
-        <li>Stack — Add this route to a pending list of routes. When the first route completes, the
+        <li>Stack &mdash; Add this route to a pending list of routes. When the first route completes, the
         next route in the list will be activated. For multiple segment routes, one segment at a
         time will be added to the list.</li>
 
-        <li>Exit — Do nothing, close the window.</li>
+        <li>Exit &mdash; Do nothing, close the window.</li>
       </ul>
 
       <p>Pending route list:</p>
@@ -268,7 +268,7 @@
       the order which they were stacked. An NX route cannot be stacked more than once. To cancel an
       NX route, select it in the table and click on the "Cancel" button at the bottom.</p>
 
-      <h3>Route Stacking — Conflicts</h3>
+      <h3>Route Stacking &mdash; Conflicts</h3>
 
       <p>If a selected route tries to cross a block that is occupied or reserved and there is not
       an alternate route available, the <strong>Route Not Clear</strong> dialog box is
@@ -287,21 +287,21 @@
       <ul>
         <li>Variables
           <ul>
-            <li>NX Pair Active — Check if a segment for the selected NX Pair is Active.</li>
+            <li>NX Pair Active &mdash; Check if a segment for the selected NX Pair is Active.</li>
 
-            <li>NX Pair Inactive — Check if a segment for the selected NX Pair is Inactive.</li>
+            <li>NX Pair Inactive &mdash; Check if a segment for the selected NX Pair is Inactive.</li>
           </ul>
         </li>
 
         <li>Actions<span class="since">since 4.11.1</span>
           <ul>
-            <li>Set NX Pair Enabled — Enable an NX Pair. When enabled, it can used to create a
+            <li>Set NX Pair Enabled &mdash; Enable an NX Pair. When enabled, it can used to create a
             route.</li>
 
-            <li>Set NX Pair Disabled — Disable an NX Pair. This will prevent the use of the pair to
+            <li>Set NX Pair Disabled &mdash; Disable an NX Pair. This will prevent the use of the pair to
             create a route.</li>
 
-            <li>Set NX Pair Segment Active / Inactive — If the route is not active, create the
+            <li>Set NX Pair Segment Active / Inactive &mdash; If the route is not active, create the
             route, otherwise clear down, cancel or stack the route depending on the default actions
             or user response.</li>
           </ul>

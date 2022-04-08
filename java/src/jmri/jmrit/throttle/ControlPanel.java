@@ -34,6 +34,9 @@ import org.w3c.dom.Document;
  * @author Lionel Jeanson 2009-2021
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, AddressListener {
+
+    private final ThrottleManager throttleManager;
+
     private DccThrottle throttle;
 
     private JSlider speedSlider;
@@ -128,6 +131,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Constructor.
      */
     public ControlPanel() {
+        this(InstanceManager.getDefault(ThrottleManager.class));
+    }
+
+    /**
+     * Constructor.
+     * @param tm the throttle manager
+     */
+    public ControlPanel(ThrottleManager tm) {
+        throttleManager = tm;
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
@@ -723,7 +735,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "giveUpFocus");
         speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "giveUpFocus");
 
-        EnumSet<SpeedStepMode> speedStepModes = InstanceManager.throttleManagerInstance().supportedSpeedModes();
+        EnumSet<SpeedStepMode> speedStepModes = throttleManager.supportedSpeedModes();
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
 
         forwardButton = new JRadioButton();
@@ -1148,6 +1160,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             float speed = ((Float) e.getNewValue());
+            log.debug("Throttle panel speed updated to {} increment {}", speed,
+                    throttle.getSpeedIncrement());
             setSpeedValues( throttle.getSpeedIncrement(), speed);
         } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
@@ -1294,7 +1308,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: {}", ex);
+            log.error("DataConverstionException in setXml", ex);
             // in this case, recover by displaying the speed slider.
             this.setSpeedController(SLIDERDISPLAY);
         }

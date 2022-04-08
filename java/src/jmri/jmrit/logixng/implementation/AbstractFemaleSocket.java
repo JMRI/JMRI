@@ -135,17 +135,17 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     public final boolean validateName(String name, boolean ignoreDuplicateErrors) {
         // Empty name is not allowed
         if (name.isEmpty()) return false;
-        
+
         // The name must start with a letter
         if (!Character.isLetter(name.charAt(0))) return false;
-        
+
         // The name must consist of letters, digits or underscore
         for (int i=0; i < name.length(); i++) {
             if (!Character.isLetterOrDigit(name.charAt(i)) && (name.charAt(i) != '_')) {
                 return false;
             }
         }
-        
+
         if (!ignoreDuplicateErrors && (_parent != null)) {
             // Check that no other female socket of the parent has the same name
             for (int i=0; i < _parent.getChildCount(); i++) {
@@ -153,7 +153,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
                 if ((child != this) && name.equals(child.getName())) return false;
             }
         }
-        
+
         // The name is valid
         return true;
     }
@@ -320,7 +320,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             PrintWriter writer,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         if (settings._printLineNumbers) {
             writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
         }
@@ -336,7 +336,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -348,7 +348,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -361,7 +361,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             String indent,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         if (isConnected()) {
@@ -379,6 +379,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getLongDescription());
         level++;

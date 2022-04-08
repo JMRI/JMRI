@@ -167,9 +167,7 @@ public class GridConnectReply extends AbstractMRReply {
      */
     public void setData(int[] d) {
         int len = (d.length <= MAXLEN) ? d.length : MAXLEN;
-        for (int i = 0; i < len; i++) {
-            _dataChars[i] = d[i];
-        }
+        System.arraycopy(d, 0, _dataChars, 0, len);
     }
 
     // pointer to the N or R character
@@ -229,8 +227,7 @@ public class GridConnectReply extends AbstractMRReply {
 
     // Get a single hex digit. returns 0 if digit is invalid
     private int getHexDigit(int index) {
-        int b = 0;
-        b = _dataChars[index];
+        int b = _dataChars[index];
         if ((b >= '0') && (b <= '9')) {
             b = b - '0';
         } else if ((b >= 'A') && (b <= 'F')) {

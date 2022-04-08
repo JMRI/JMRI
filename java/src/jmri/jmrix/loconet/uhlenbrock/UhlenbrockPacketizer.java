@@ -39,8 +39,8 @@ public class UhlenbrockPacketizer extends LnPacketizer {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
-    public UhlenbrockPacketizer() {
-        super(new LocoNetSystemConnectionMemo());
+    public UhlenbrockPacketizer(LocoNetSystemConnectionMemo m) {
+        super(m);
         log.debug("UhlenbrockPacketizer instantiated");
     }
 
@@ -234,7 +234,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     log.debug("EOFException, is LocoNet serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFile: {}", e);
+                    log.debug("IOException, should only happen with HexFile", e);
                     log.debug("End of file");
                     disconnectPort(controller);
                     return;
@@ -345,7 +345,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandler();
         }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet Uhlenbrock transmit handler");
+        xmtThread = new Thread(xmtHandler, "LocoNet Uhlenbrock transmit handler");
         log.debug("Xmt thread starts at priority {}", xmtpriority);
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -355,7 +355,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet Uhlenbrock receive handler");
+        rcvThread = new Thread(rcvHandler, "LocoNet Uhlenbrock receive handler");
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

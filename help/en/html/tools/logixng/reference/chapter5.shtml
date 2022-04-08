@@ -352,14 +352,24 @@
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected local variable.</li>
 
-        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
-        the data that will be copied to the selected local variable. For example,
-        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
-        the table reference is OK, such as when using the
-        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
-        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
-        for details about tables.</li>
+        <li><strong>Block:</strong> Select the <strong>Block</strong> tab and select the block
+        which will provide the value for the selected local variable.</li>
+
+        <li><strong>Reporter:</strong> Select the <strong>Reporter</strong> tab and select the
+        reporter which will provide the <em>current report</em> for the selected local variable.</li>
+
+        <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
+        variable name which will provide the value for the selected local variable.</li>
+
+        <li><strong>Table:</strong> See <a href="chapter11.shtml#tableCellSelection">Simplified
+        Table Cell Reference</a>.  The rest of chapter 11 has all of the details on tables.</li>
+
+        <li><strong>Formula:</strong> Select the <strong>Formula</strong> tab and set the selected
+        local variable to the result of a formula calculation.</li>
       </ul>
+
+      <p>Note: The Memory, Block and Reporter tabs have an option to listen to changes to their
+      value.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -377,13 +387,15 @@
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected memory.</li>
 
-        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
-        the data that will be copied to the selected memory variable. For example,
-        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
-        the table reference is OK, such as when using the
-        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
-        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
-        for details about tables.</li>
+        <li><strong>Table:</strong> See <a href="chapter11.shtml#tableCellSelection">Simplified
+        Table Cell Reference</a>.  The rest of chapter 11 has all of the details on tables.</li>
+
+        <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
+        variable name which will provide the value for the selected memory.</li>
+
+        <li><strong>Formula:</strong> Select the <strong>Formula</strong> tab and set the selected
+        memory to the result of a formula calculation.</li>
+
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -539,11 +551,35 @@
 
       <h4>Throttle</h4>
 
-      <p>The Throttle action controls a throttle. It has child expressions for loco address, loco
-      speed and loco direction. For now, an analog memory expression or an analog constant
-      expression can be used to control the loco address and the loco speed, but once JMRI has
-      support for AnalogIO devices, an AnalogIO may be used to control loco address and/or loco
-      speed.</p>
+      <p>The Throttle action controls a throttle.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
+        alt="Chapter 5 throttle action" width="500" height="300"></a>
+      </div>
+
+      <dl>
+        <dt>Address &mdash; Analog Expression</dt>
+        <dd>Value between 1 and 9999.</dd>
+
+        <dt>Speed &mdash; Analog Expression</dt>
+        <dd>Value between 0.0 and 1.0.</dd>
+
+        <dt>Direction &mdash; Digital Expression</dt>
+        <dd>True for forward.</dd>
+
+        <dt>Function &mdash; Analog Expression</dt>
+        <dd>Value between 0 and 28.</dd>
+
+        <dt>FunctionOnOff &mdash; Digital Expression</dt>
+        <dd>True for function on</dd>
+      </dl>
+
+      <p>The analog expressions can be an analog memory expression or an analog constant
+      expression. In the future, AnalogIO will also be available.</p>
+
+      <p>The digital expressions are either <strong>Always true</strong> or <strong>Always false
+      </strong>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -661,11 +697,17 @@
       used with any action, such as signals. The time delay units are milliseconds, seconds,
       minutes and hours.</p>
 
+      <p>The default mode is that once a timer starts, subsequent requests will be ignored. If
+      <strong>Restart timer if already started</strong> is selected and a timer is already running,
+      it will be canceled and started again.  The subsequent action will be delayed until the timer
+      finishes.  If <strong>Use individual timers</strong> is selected, each request will be
+      independent.</p>
+
       <p>See <a href="#timeout">Timeout</a> for a conditional delayed execution.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/execute_delay.png"><img src="images/chapter5/execute_delay.png"
-        alt="Chapter 5 execute_delay" width="535" height="329"></a>
+        alt="Chapter 5 execute_delay" width="531" height="352"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -896,9 +938,9 @@
       <p>Select either or both Log options</p>
 
       <ul>
-        <li><strong>Log to the log:</strong> Help ⇒ System Console.</li>
+        <li><strong>Log to the log:</strong> Help &rArr; System Console.</li>
 
-        <li><strong>Log to the Script Output:</strong> Scripting ⇒ Script Output.</li>
+        <li><strong>Log to the Script Output:</strong> Scripting &rArr; Script Output.</li>
       </ul>
 
       <div style="margin-left: 2em">
@@ -983,25 +1025,64 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/show_dialog_dialog.png"><img src=
-        "images/chapter5/show_dialog_dialog.png" alt="Chapter 5 show dialog"
-        width="596" height="615"></a>
+        "images/chapter5/show_dialog_dialog.png" alt="Chapter 5 show dialog dialog"
+        width="600" height="475"></a  >
       </div>
 
-      <p>One or more buttons can be included in the dialog.  At least one button must be selected.</p>
+      <p>Additional Features:</p>
 
-      <p>A dialog can be <strong>modal</strong> or non-modal.  Modal means that the dialog window
-      remains above any other window until it is closed.</p>
+      <dl>
+        <dt>Buttons</dt>
+        <dd>One or more buttons can be included in the dialog.  At least one button must be selected.</dd>
 
-      <p>The multiline option enables the ability to have multiple lines displayed by the dialog.</p>
+        <dt>Modal</dt>
+        <dd>A dialog can be <strong>modal</strong> or non-modal.  Modal means that the dialog window
+        remains above any other window and the user cannot do anything in any other JMRI window
+        until it is closed.</dd>
 
-      <p>If a predefined local variable is supplied, the selected button number is copied to the
-      local variable.  The button numbers are shown next to the button text in the button selection
-      section.</p>
+        <dt>Multiline</dt>
+        <dd>The multiline option enables the ability to have multiple lines displayed by the dialog.
+        To get a new line, use the HTML <strong>&lt;br&gt;</strong> tag.</dd>
+
+        <dt>Selected button</dt>
+        <dd>If a predefined local variable is supplied, the selected button number is copied to the
+        local variable.  The button numbers are shown next to the button text in the button
+        selection section.</dd>
+
+        <dt>Input string<span class="since">since 4.99.1</span></dt>
+        <dd>If a predefined local variable is supplied, a text input field is included. The current
+        value of the variable will be displayed in the text input field.  When the dialog is closed
+        using one of the buttons, the value in the input field will be copied to the local
+        variable.</dd>
+      </dl>
 
       <p class="noted">Note:  When the dialog is displayed, the rest of the conditional continues
       to run.  In the first example, the A3 action will execute while the dialog is displayed.</p>
 
-      <p>Sample dialogs:</p>
+      <p>After the dialog action has been created, two new rows are added.  These are both optional
+      and can be left empty.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/show_dialog_validate_execute.png"><img src=
+        "images/chapter5/show_dialog_validate_execute.png" alt="Chapter 5 show dialog validate execute"
+        width="280" height="86"></a>
+      </div>
+
+      <dl>
+        <dt>Validate</dt>
+        <dd>The <strong>Validate</strong> expression can be used to check for valid input when using
+        an input local variable.  If the expression is false, the dialog will remain open until the
+        expression is true.  The close button on the window can be used to bypass validation and
+        execution.  If the expression is true or no expression was defined, the Execute action will
+        run.</dd>
+
+        <dt>Execute</dt>
+        <dd>The <strong>Execute</strong> action is run when the validation expression is true or if
+        one was not defined.  A common use is handling a multiple button dialog that has the
+        selected button local variable.</dd>
+      </dl>
+
+      <h5>Sample dialog with button checking</h5>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/show_dialog_yes_no.png"><img src=
@@ -1015,6 +1096,8 @@
         width="581" height="380"></a>
       </div>
 
+      <h5>Sample multiline dialog with string.format</h5>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/show_dialog_multiline.png"><img src=
         "images/chapter5/show_dialog_multiline.png" alt="Chapter 5 show dialog multiline"
@@ -1025,6 +1108,20 @@
         <a href="images/chapter5/show_dialog_ml_sample"><img src=
         "images/chapter5/show_dialog_ml_sample.png" alt="Chapter 5 show dialog multiline sample"
         width="500" height="300"></a>
+      </div>
+
+      <h5>Sample input dialog with validation using a digital formula</h5>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/show_dialog_input_sample.png"><img src=
+        "images/chapter5/show_dialog_input_sample.png" alt="Chapter 5 show dialog input sample"
+        width="323" height="129"></a>
+      </div>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/show_dialog_input_code"><img src=
+        "images/chapter5/show_dialog_input_code.png" alt="Chapter 5 show dialog iniput code"
+        width="596" height="300"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->

@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">DecoderPro®3 Main Window</h1>
+      <h1 id="Top">DecoderPro&reg;3 Main Window</h1>
 
       <h2>LocoNet Menu</h2>
 
@@ -333,7 +333,7 @@
       <h4 id="LocoIOProgrammer">Configure LocoIO window</h4>
 
       <p style="text-align: center;">Note: The LocoNet Configure LocoIO tool is no longer
-      supported; you're advised to use DecoderPro® to program a LocoIO board as a decoder, see the
+      supported; you're advised to use DecoderPro&reg; to program a LocoIO board as a decoder, see the
       <a href="../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO page</a>.<br>
       <br>
       <img src="images/Main_Loconet04.png" alt="LocoNet IO programmer" height="518" width=

@@ -197,7 +197,7 @@ locate all of them and display them to the user.
       preference:resources/etc paths. If all aspects of your new signal definition are working on
       your panel/layout and you plan to submit your new signal system as a patch to JMRI, use full
       URL paths like https://jmri.org/resources/icons/etc in the XML files so that they'll work
-      with both the local JMRI program and for people viewing them on the JMRI web site.</p>
+      with both the local JMRI program and for people viewing them on the JMRI website.</p>
 
       <h4>Specific Appearances</h4>
       There are four specific appearances that JMRI will and can refer to, as the appearance names
@@ -271,7 +271,7 @@ entered, the corresponding <code>&lt;aspect&gt;</code> entry must be a valid
 
       <p>You can use the "Validate XML File" tools under the JMRI "Debug" window to check your
       files. (Note that you have to be connected to the internet to do this, as the files refer to
-      some checking resources that live on the JMRI web site.) First, it checks the basic format:
+      some checking resources that live on the JMRI website.) First, it checks the basic format:
       Are all the &lt; and &gt; characters in the right place? Etc. Then it makes sure that the
       right elements are in the right places, checks some of the contents, etc.</p>
 

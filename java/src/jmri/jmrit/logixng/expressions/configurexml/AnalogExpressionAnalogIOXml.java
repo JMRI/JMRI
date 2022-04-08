@@ -17,7 +17,7 @@ public class AnalogExpressionAnalogIOXml extends jmri.managers.configurexml.Abst
 
     public AnalogExpressionAnalogIOXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -34,14 +34,14 @@ public class AnalogExpressionAnalogIOXml extends jmri.managers.configurexml.Abst
 
         storeCommon(p, element);
 
-        NamedBeanHandle analogIO = p.getAnalogIO();
+        var analogIO = p.getAnalogIO();
         if (analogIO != null) {
             element.addContent(new Element("analogIO").addContent(analogIO.getName()));
         }
-        
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
@@ -61,6 +61,6 @@ public class AnalogExpressionAnalogIOXml extends jmri.managers.configurexml.Abst
         InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionAnalogIOXml.class);
 }

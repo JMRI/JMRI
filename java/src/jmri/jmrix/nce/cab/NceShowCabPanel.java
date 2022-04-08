@@ -360,6 +360,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void purgeCab(int cab) {
         if (cab < minCabNum || cab > maxCabNum) {
             log.error("{}{}", Bundle.getMessage("ErrorValueRange"), cab);
@@ -368,7 +370,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         // if id is active
         int act = cabFlag1Array[cab] & NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE;
         if (act != NceCmdStationMemory.FLAGS1_CABISACTIVE) {
-            log.error("{}{}", Bundle.getMessage("ErrorCabNotActive"), cab);
+            log.error("purgeCab: {}{}", Bundle.getMessage("ErrorCabNotActive"), cab);
         }
         // clear bit for active and cab type details
         cabFlag1Array[cab] = 0;

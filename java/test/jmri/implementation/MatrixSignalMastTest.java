@@ -25,7 +25,6 @@ public class MatrixSignalMastTest {
     }
 
     @Test
-    @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testCtor1() {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
@@ -91,7 +90,6 @@ public class MatrixSignalMastTest {
     }
 
     @Test
-    @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testLit() {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
@@ -120,7 +118,6 @@ public class MatrixSignalMastTest {
     }
 
     @Test
-    @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testAspects() {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
@@ -210,7 +207,7 @@ public class MatrixSignalMastTest {
     @AfterEach
     public void tearDown() {
         // has dumpd a bunch of stuff to AWT thread
-        JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.waitFor(20);
 
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.tearDown();

@@ -380,9 +380,9 @@
 
         <li>Model Railroad Control Systems (MRCS) CPMEGA</li>
       </ul>
-      
-      <p>Note: Some C/MRI output boards can be configured in whole or in part as either ‘current sinking’
-      or ‘current sourcing’, and you will have to keep track of that to successfully use the outputs. Note
+
+      <p>Note: Some C/MRI output boards can be configured in whole or in part as either &lsquo;current sinking&rsquo;
+      or &lsquo;current sourcing&rsquo;, and you will have to keep track of that to successfully use the outputs. Note
       also that Current Sinking Outputs are not compatible with the inputs, and will thus cause errors in the
       CMRI wraparound test available in JMRI.
       </p>
@@ -507,9 +507,9 @@
       window, either by</p>
 
       <ul>
-        <li><strong>Edit⇒Preferences⇒Connections</strong>, or</li>
+        <li><strong>Edit &rArr; Preferences &rArr; Connections</strong>, or</li>
 
-        <li><strong>C/MRI⇒Configure Nodes</strong> (using the appropriate C/MRI menu for each
+        <li><strong>C/MRI &rArr; Configure Nodes</strong> (using the appropriate C/MRI menu for each
         connection)</li>
       </ul>
 
@@ -529,21 +529,21 @@
 
       <p>To open the Node Configuration Manager window from the PanelPro Main menu, select the name
       of the specific C/MRI connection to get the pulldown. If there is only a single C/MRI
-      connection, that will be <strong>C/MRI⇒Configure Nodes</strong>. You may also click on the
+      connection, that will be <strong>C/MRI&rArr;Configure Nodes</strong>. You may also click on the
       "Configure CMRInet nodes" button in the Preferences window for the specific C/MRI
       connection.</p>
 
       <p>Any existing C/MRI nodes will be displayed by node address. The serial connection name is
       displayed with additional configuration information for the node. Clicking on any of the
       column titles will sort the rows in alphanumeric order.</p>
-      
+
       <p>JMRI assigns numbers sequentially beginning at 1 to input lines and separately to output lines.
-      It does not matter how many input or output "cards" any node has, how many bits are on each card, 
+      It does not matter how many input or output "cards" any node has, how many bits are on each card,
       or whether you have attached sensors to every input line or turnouts or lights to every output line
       - if the configuration says there are 24 input lines and 48 output lines, that's how many JMRI
       will assume when it sends a transmission to or receives a transmission from your C/MRI node (in this
-      example, it will send C/MRI messages with 6 bytes of data and expect to receive 3 bytes of data).  
-      See <a href="L391">below</a> for how to assign and name JMRI sensors, lights, and turnouts to use 
+      example, it will send C/MRI messages with 6 bytes of data and expect to receive 3 bytes of data).
+      See <a href="L391">below</a> for how to assign and name JMRI sensors, lights, and turnouts to use
       the desired C/MRI bit.
       </p>
 
@@ -573,7 +573,7 @@
       <h3 id="L296">Creating an SMINI Node Definition</h3>
 
       <p>Open the Node Configuration Window from either the Preferences window or from the PanelPro
-      main menu, select <strong>CMRI⇒Configure Nodes</strong>.</p>
+      main menu, select <strong>CMRI&rArr;Configure Nodes</strong>.</p>
 
       <p><img alt="" src="images/addnodesmini.png" width="654" height="780">
       </p>
@@ -613,7 +613,7 @@
       <h3 id="L323">Creating a USIC/SUSIC Node Definition</h3>
 
       <p>Open the Node Configuration Window from either the Preferences window or from the PanelPro
-      main menu, select <strong>C/MRI⇒Configure Nodes</strong>.</p>
+      main menu, select <strong>C/MRI&rArr;Configure Nodes</strong>.</p>
 
       <p><img alt="" src="images/addnodeusicsusic.png" width="654" height="780">
       </p>
@@ -660,7 +660,7 @@
       <h3 id="L352">Creating a CPNODE Node Definition</h3>
 
       <p>Open the Node Configuration Window from either the Preferences window or from the PanelPro
-      main menu, select <strong>C/MRI⇒Configure Nodes</strong>.</p>
+      main menu, select <strong>C/MRI&rArr;Configure Nodes</strong>.</p>
 
       <p><img alt="Add CPNODE" src="images/addnodecpnode.png" width="654" height="780">
       </p>
@@ -759,7 +759,7 @@
       <p>JMRI refers to C/MRI Input bits as <strong>Sensors</strong> and Output bits as
       <strong>Turnouts</strong> or <strong>Lights</strong>. The definition of Sensors, Turnouts,
       and Lights is done by adding entries into the appropriate data table. Tables are accessed by
-      selecting from the PanelPro main screen <strong>Tools⇒Tables⇒{table name}</strong></p>
+      selecting from the PanelPro main screen <strong>Tools&rArr;Tables&rArr;{table name}</strong></p>
 
       <p>A specific input or output bit may be assigned to only one object at a time. If the
       requested C/MRI bit has already been assigned, JMRI will refuse to associate a new object
@@ -917,7 +917,7 @@
       <h3 id="L459">Creating a Sensor Input</h3>
 
       <p>To create a sensor input, open the Sensor table by selecting
-      <strong>Tools⇒Tables⇒Sensors</strong> in the main PanelPro menu. Select "Add" and Select the
+      <strong>Tools&rArr;Tables&rArr;Sensors</strong> in the main PanelPro menu. Select "Add" and Select the
       name of the C/MRI connection from the pulldown list. [See also <a href=
       "../../tools/Sensors.shtml">the Sensors Documentation</a>.]</p>
 
@@ -947,7 +947,7 @@
       control Turnouts (track switches) and for C/MRI outputs used to operate signals.</p>
 
       <p>To create a turnout output, open the Turnout table by selecting
-      <strong>Tools⇒Tables⇒Turnouts</strong> in the main PanelPro menu. Select "Add" and Select the
+      <strong>Tools&rArr;Tables&rArr;Turnouts</strong> in the main PanelPro menu. Select "Add" and Select the
       name of the C/MRI connection from the pulldown list. [See also <a href=
       "../../tools/Turnouts.shtml">the Turnout Documentation</a>.]</p>
 
@@ -1091,8 +1091,8 @@
 
       <h3 id="L547">Creating a Light Output</h3>
 
-      <p>To create a Lights output, open the Light table by selecting <strong>Tools⇒
-      Tables⇒Lights</strong> in the main PanelPro menu. Select "Add" and Select the name of the
+      <p>To create a Lights output, open the Light table by selecting <strong>Tools&rArr;
+      Tables&rArr;Lights</strong> in the main PanelPro menu. Select "Add" and Select the name of the
       C/MRI connection from the pulldown list. [See also <a href="../../tools/Lights.shtml">the
       Lights Documentation</a>.]</p>
 
@@ -1394,8 +1394,8 @@
       <p>For each node, you can view a summary list of C/MRI bits that are in use and those that
       are available.</p>
 
-      <p>From the PanelPro main menu, select <strong>C/MRI⇒List Assignments</strong>, or
-      <strong>C/MRI⇒Configure Nodes</strong> and then <strong>Select⇒Bit Assignments</strong> for
+      <p>From the PanelPro main menu, select <strong>C/MRI&rArr;List Assignments</strong>, or
+      <strong>C/MRI&rArr;Configure Nodes</strong> and then <strong>Select&rArr;Bit Assignments</strong> for
       each node, to bring up the Bit Assignments window. Click "Show Input Bits" or "Show Output
       Bits" depending on which you are interested in.</p>
 
@@ -1691,7 +1691,7 @@
         </li>
 
         <li>
-          <a href="http://www.jlcenterprises.net/">JLC Enterprises web site</a>
+          <a href="http://www.jlcenterprises.net/">JLC Enterprises website</a>
         </li>
 
         <li>

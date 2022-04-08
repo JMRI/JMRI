@@ -18,10 +18,10 @@
       <img src="../../../../../resources/SoundPro.gif" class="floatRight" height="100" width="100"
       alt="">
       <p>The SoundPro app provides an alternate PanelPro splash screen that includes a button that
-      provides a shortcut to the <strong>Audio</strong> table. The normal path is <strong>Tools ⇒
-      Tables ⇒ Audio</strong>.</p>
+      provides a shortcut to the <strong>Audio</strong> table. The normal path is <strong>Tools &rArr;
+      Tables &rArr; Audio</strong>.</p>
 
-      <p>The main help page is at <a href="../../tools/Audio.shtml">Audio</a> 
+      <p>The main help page is at <a href="../../tools/Audio.shtml">Audio</a>
       <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>

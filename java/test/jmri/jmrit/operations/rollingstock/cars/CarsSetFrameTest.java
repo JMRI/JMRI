@@ -155,10 +155,6 @@ public class CarsSetFrameTest extends OperationsTestCase {
         load.setName("car set frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonOK"));
 
         try {
@@ -188,6 +184,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class);

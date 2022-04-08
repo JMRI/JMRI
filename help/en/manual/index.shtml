@@ -11,7 +11,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">JMRI® Manuals</h1>
+      <h1 id="Top">JMRI&reg; Manuals</h1>
 
       <table>
         <tbody>
@@ -23,7 +23,7 @@
           </tr>
 
           <tr>
-            <td><span style="font-weight: bold;">JMRI® current</span>
+            <td><span style="font-weight: bold;">JMRI&reg; current</span>
             </td>
             <td style="font-weight: bold;">
               <a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.x</a>
@@ -36,7 +36,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../html/apps/PanelPro/index.shtml">PanelPro™ v4.x</a>
+              <a href="../html/apps/PanelPro/index.shtml">PanelPro&trade; v4.x</a>
             </td>
             <td>
             </td>
@@ -46,7 +46,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro™ v4.x</a>
+              <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a>
             </td>
             <td>
             </td>
@@ -56,7 +56,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro™ v4.x</a>
+              <a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade; v4.x</a>
             </td>
             <td>
             </td>
@@ -73,7 +73,7 @@
           </tr>
 
           <tr>
-            <td><span style="font-weight: bold;">JMRI® v3.10</span>
+            <td><span style="font-weight: bold;">JMRI&reg; v3.10</span>
             </td>
             <td style="font-weight: bold;">
               <a href="DecoderPro3/index.shtml">DecoderPro3 v3.6</a>
@@ -86,7 +86,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="DecoderPro/index.shtml">DecoderPro® v3.6</a>
+              <a href="DecoderPro/index.shtml">DecoderPro&reg; v3.6</a>
             </td>
             <td>
             </td>
@@ -96,14 +96,14 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro™ v3.6-3.10</a>
+              <a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro&trade; v3.6-3.10</a>
             </td>
             <td>
             </td>
           </tr>
 
           <tr>
-            <td><strong>JMRI® v2.14</strong>
+            <td><strong>JMRI&reg; v2.14</strong>
             </td>
             <td>
             </td>
@@ -114,7 +114,7 @@
           <tr>
             <td>
             </td>
-            <td><strong><a href="https://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI®
+            <td><strong><a href="https://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg;
             v2.14.1</a></strong>
             </td>
             <td>
@@ -134,7 +134,7 @@
         </tbody>
       </table>
 
-      <h2>JMRI® Applications</h2>
+      <h2>JMRI&reg; Applications</h2>
 
       <p><strong>JMRI is a Java-based cross-platform program suite for model
       railroaders.</strong><br>
@@ -142,24 +142,24 @@
 
       <ul>
         <li>Programming of Digital Command Control (DCC) decoders (<a href=
-        "../html/apps/DecoderPro/index.shtml">DecoderPro®</a>)
+        "../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)
         </li>
 
         <li>Drawing computer based panels for depicting a model railroad layout (<a href=
-        "../html/apps/PanelPro/index.shtml">PanelPro™</a> and <a href=
+        "../html/apps/PanelPro/index.shtml">PanelPro&trade;</a> and <a href=
         "../html/apps/PanelPro/index.shtml#le">Layout Editor</a>)
         </li>
 
         <li>Controlling the layout (All modules)</li>
 
         <li>Creating train manifests for duplicating railroad operations (<a href=
-        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro™</a>)
+        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)
         </li>
 
         <li>Controlling the signals on the layout (All modules)</li>
 
         <li>Controlling lighting and sound in the room, and so forth (<a href=
-        "../html/tools/Audio.shtml">SoundPro™</a>)
+        "../html/tools/Audio.shtml">SoundPro&trade;</a>)
         </li>
       </ul>
 
@@ -189,7 +189,7 @@
       Gradually build on you foundation concepts of the program and pick up elements of interest by
       following some of the links at the bottom of the left sidebar on the JMRI web Help.</p>
 
-      <p>If this is your first visit to our manual, we suggest that you take the DecoderPro® tour
+      <p>If this is your first visit to our manual, we suggest that you take the DecoderPro&reg; tour
       at <a href=
       "https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
 
@@ -197,7 +197,7 @@
 
       <h2>System Requirements</h2>
 
-      <p>JMRI® requires that Java be installed, whether your computer is <a href=
+      <p>JMRI&reg; requires that Java be installed, whether your computer is <a href=
       "https://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
       "https://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href=
       "https://jmri.org/install/Linux.shtml">Linux</a> based.</p>

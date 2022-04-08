@@ -24,9 +24,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     @Override
-    @SuppressWarnings("deprecation") // until DCC4PC is migrated to multiple systems
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        adapter = new SerialDriverAdapter();
     }
 
     @Override

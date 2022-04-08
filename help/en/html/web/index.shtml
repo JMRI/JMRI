@@ -21,14 +21,14 @@
       JMRI application is working. Check that you can properly communicate with and operate your
       layout.</p>
 
-      <p>Start web access by selecting <strong>Tools ⇒ Servers ⇒ Start JMRI Web
+      <p>Start web access by selecting <strong>Tools &rArr; Servers &rArr; Start JMRI Web
       Server</strong>.</p>
 
       <p>Test the connection:</p>
 
       <ul>
         <li>If you're using a Bonjour/Zeroconf-enabled web browser like Safari you should see a "My
-        JMRI Railroad" web site in the "Bonjour" tab.</li>
+        JMRI Railroad" website in the "Bonjour" tab.</li>
 
         <li>Otherwise, enter the starting URL, which will be something like
         "http://192.168.1.7:12080" (or if you're browsing on the same computer right now,
@@ -48,7 +48,7 @@
       <p>Open the <a href="../../package/apps/TabbedPreferences.shtml">Preferences Window</a> to
       configure JMRI to start the server each time you start the program.</p>
 
-      <p>Select the "Start Up" tab, click "Add ▾", and select "Perform action...". In the new
+      <p>Select the "Start Up" tab, click "Add &#9662;", and select "Perform action...". In the new
       selection box that appears, select "Start JMRI Web Server". Don't forget to save your
       changes!</p>
 
@@ -70,7 +70,7 @@
             <dt>Disable power control in menus</dt>
 
             <dd>The menus on many of the JMRI web pages include a layout power button. You can
-            disable this button to ensure that users of the web site can see the power status, but
+            disable this button to ensure that users of the website can see the power status, but
             cannot turn off or turn on layout power.</dd>
 
             <dt>Start automatically with application</dt>

@@ -118,7 +118,7 @@ public class SerialAddressTest {
         jmri.Turnout t2 = tMgr.newTurnout("KT32", "userT32");
         // check that turnout was created correctly
         Assert.assertEquals("create KT32 check 1", "KT32", t2.getSystemName());
-        // create two new lights  
+        // create two new lights
         jmri.LightManager lMgr = memo.getLightManager();
         jmri.Light lgt1 = lMgr.newLight("KL36", "userL36");
         jmri.Light lgt2 = lMgr.newLight("KL037", "userL37");
@@ -205,11 +205,7 @@ public class SerialAddressTest {
         new SerialNode(99, 0,tc);
         new SerialNode(18, 0,tc);
 
-        SerialTurnoutManager l = new SerialTurnoutManager(memo) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        SerialTurnoutManager l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
 
         memo.setTurnoutManager(l);

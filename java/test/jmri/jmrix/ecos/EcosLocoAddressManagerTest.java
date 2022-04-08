@@ -1,12 +1,10 @@
 package jmri.jmrix.ecos;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -14,9 +12,9 @@ import org.junit.Assume;
  */
 public class EcosLocoAddressManagerTest {
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc){
            @Override
@@ -31,6 +29,9 @@ public class EcosLocoAddressManagerTest {
         };
         EcosLocoAddressManager t = new EcosLocoAddressManager(memo);
         Assert.assertNotNull("exists",t);
+
+        t.dispose();
+        tc.terminateThreads();
     }
 
     @Test

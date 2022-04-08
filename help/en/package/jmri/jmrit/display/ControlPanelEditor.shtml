@@ -114,7 +114,7 @@
       layout</strong> will permanently set all panel items and restoration cannot be done.</p>
 
       <p>The menu also has items for setting <strong>Panel Scrollbars</strong> and to <strong>Show
-      Tooltips</strong>.</p>
+      Tooltips</strong>.  See <a href="Tooltips.shtml">Tooltips</a> for more information.</p>
 
       <h3>Zoom Menu</h3>
       The <strong>Zoom(percentage)...</strong> item will enlarge or reduce the panel size.

@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The consist tool is now available for the Pi-SPROG 3v2 in command station mode, the SPROG 3 Plus and the MERG CANCMD.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -69,9 +69,15 @@
                 <li></li>
             </ul>
 
+        <h4>KPF-Zeller</h4>
+            <ul>
+                <li>Improved the speed calibration</li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Configuration - Permit disabling of interrogate messages.</li>
+                <li>Slotmonitor - better guess the column widths</li>
             </ul>
 
         <h4>Maple</h4>
@@ -86,7 +92,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>The consist tool is now available for CBUS.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -111,7 +117,28 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li><b>Throttle support.</b> JMRI Throttles can now operate
+                OpenLCB locomotives on OpenLCB / LCC Command Stations via the
+                Traction Protocol draft.</li>
+                <li><b>Monitor Log updates.</b> Decodes and prints the Traction
+                Protocol messages in the Monitor Log window.</li>
+                <li><b>Accessibility changes.</b> The network browser / tree is
+                now navigable using keyboard shortcuts. On the Configuration
+                Editor panel the keys F6 and Shift+F6 can be used to navigate
+                between subsequent sections of the configuration and the bar of
+                buttons at the bottom.</li>
+                <li><b>Test Event button.</b> In the Configuration Editor the
+                Event panels have a new button More... which opens a
+                dropdown. In the dropdown there is a Trigger button which sends
+                the given event. This is useful for testing. In the same
+                dropdown there is a Create Sensor button which for JMRI will
+                create a single-event sensor.</li>
+                <li><b>Bug fixes.</b> Fixes memory leak when opening many
+                different nodes' Configuration Editor windows. The CAN
+                Interface engine now correctly supports sending a message to a
+                Destination Node ID for which there is no currently registered
+                Alias in the Alias Map. The outgoing message will be enqueued
+                and an alias lookup interaction is triggered.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -131,7 +158,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>The consist tool is now available for the Pi-SPROG 3v2 in command station mode and for the SPROG 3 Plus.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -161,7 +188,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>Parts of the decoder definitions have been translated into Spanish.</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -289,7 +316,12 @@
                 <li></li>
             </ul>
 
-        <h4>TAMS</h4>
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>QuadLN_S - added support for new firmware version 3.1 features</li>
+            </ul>
+
+       <h4>TAMS</h4>
             <ul>
                 <li></li>
             </ul>
@@ -336,7 +368,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>added new decoder definitions for Firmware v40.x</li>
+                <li>Fixed the coding for CV155 Half Speed Settings</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -359,7 +391,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fixed bouncing speed slider in manual mode.</li>
+             <li>Size AutoTrainsWindow correctly when going between auto and manual with use scroll bars off.</li>
+             <li>Enabled disaplay scale speed for running with speed profiles.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -388,16 +422,13 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li>A single Logix can now be exported to LogixNG.
-		  Open Tools -> Tables -> Logix and select <i>Export
-		  to LogixNG</i> for the Logix you want to export.</li>
+          <li></li>
         </ul>
 
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A single Logix can be imported to LogixNG. Se
-		  the section <i>Logix</i> for more information.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -519,7 +550,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Add capability to display/print throttle files in easy-to-read browser format (using XSL transform)</li>
+            <li>If there are at least two connections that have support for throttles, a
+            <a href="https://github.com/JMRI/JMRI/pull/10697#issuecomment-1038477488">new menu</a>
+            appears that lets you open a throttle for a particular connection.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -567,12 +601,26 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added a new version of "advanced location following". This is now based
+            on a LayoutEditor panel and hence much easier to setup. See the
+            <a href="https://www.jmri.org/help/en/manual/DecoderPro/VSD_LocationsMgr.shtml#advanced_location_following">
+			documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Add a search feature to the JmriHelp local web page.</li>
+            <li>The method JUnitUtil.releaseThread(this) and JUnitUtil.releaseThread(this, delay)
+            has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
+            JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
+            <li>Improve Block tracking in the case of a broken train being rejoined.
+            <li>Multiple updates to the Bachrus/KPF-Zeller speedometer support:
+                <ul>
+                <li>Improved GUI
+                <li>Now handles programming on main without needing to go to service track first
+                <li>Improved speed matching algorithm
+                <li>Updated docs
+                </ul>
         </ul>
 

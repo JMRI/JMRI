@@ -111,7 +111,7 @@ public class SearchBar extends javax.swing.JPanel {
         JRootPane rootPane = frame.getRootPane();
 
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "openSearch");
+            KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "openSearch");
 
         rootPane.getActionMap().put("openSearch", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -130,7 +130,7 @@ public class SearchBar extends javax.swing.JPanel {
         });
 
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()|java.awt.event.InputEvent.SHIFT_DOWN_MASK), "forwardSearch");
+            KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()|java.awt.event.InputEvent.SHIFT_DOWN_MASK), "forwardSearch");
 
         rootPane.getActionMap().put("forwardSearch", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -141,7 +141,7 @@ public class SearchBar extends javax.swing.JPanel {
         });
 
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "backwardSearch");
+            KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "backwardSearch");
 
         rootPane.getActionMap().put("backwardSearch", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {

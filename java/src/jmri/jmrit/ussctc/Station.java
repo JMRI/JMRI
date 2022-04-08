@@ -24,7 +24,7 @@ import java.util.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
-public class Station {
+public class Station<To extends Enum<To>, From extends Enum<From>> {
 
     public Station(String name, CodeLine codeline, CodeButton button) {
         this.name = name;
@@ -42,7 +42,7 @@ public class Station {
      * @param section next Section subclass that makes up part of this Station
      * @return this Station to allow chaining
      */
-    public Station add(Section section) {
+    public Station<To, From> add(Section<To, From> section) {
         sections.add(section);
         return this;
     }
@@ -65,7 +65,7 @@ public class Station {
 
         if (sentValues == null) retval.append(" (null)");
         else {
-            for (Enum e : sentValues)  {
+            for (Enum<?> e : sentValues)  {
                 retval.append(" ");
                 retval.append(e);
             }
@@ -74,7 +74,7 @@ public class Station {
         retval.append("\n  indicationValues:");
         if (indicationValues == null) retval = retval.append(" (null)");
         else {
-            for (Enum e : sentValues)  {
+            for (Enum<?> e : sentValues)  {
                 retval.append(" ");
                 retval.append(e);
             }
@@ -115,7 +115,6 @@ public class Station {
     /**
      * Tell the sections that code information has arrived in the field
      */
-    @SuppressWarnings("unchecked") // we store multiple enum types for codeValueDelivered
     public void codeValueDelivered() {
         log.debug("Station - start codeValueDelivered");
         // clear the code light
@@ -156,7 +155,6 @@ public class Station {
      * Gather layout status and turn on code lamp.
      *  Rest of action is on indicationComplete
      */
-    @SuppressWarnings("unchecked") // we store multiple enum types for codeValueDelivered
     public void indicationComplete() {
         log.debug("Station - start indicationComplete");
 
@@ -170,9 +168,9 @@ public class Station {
         log.debug("Station - end indicationComplete");
     }
 
-    ArrayList<Section> sections = new ArrayList<>();
-    ArrayList<Enum> sentValues;         // type is constrained in generic arguments to Section
-    ArrayList<Enum> indicationValues;   // type is constrained in generic arguments to Section
+    ArrayList<Section<To, From>> sections = new ArrayList<>();
+    ArrayList<To> sentValues;
+    ArrayList<From> indicationValues;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class);
 }

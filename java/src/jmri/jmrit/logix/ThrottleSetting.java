@@ -298,7 +298,7 @@ public class ThrottleSetting {
         return command;
     }
 
-    private CommandValue getValueFromString(Command command, String valueStr) throws JmriException {
+    static protected CommandValue getValueFromString(Command command, String valueStr) throws JmriException {
         if (command == null) {
             throw new jmri.JmriException(Bundle.getMessage("badCommand", "Command missing "+valueStr));
         }
@@ -498,6 +498,13 @@ public class ThrottleSetting {
     // _namedHandle may be of 3 different types
     public NamedBeanHandle<? extends NamedBean> getNamedBeanHandle() {
         return _namedHandle;
+    }
+
+    public NamedBean getBean() {
+        if (_namedHandle == null) {
+            return null;
+        }
+        return _namedHandle.getBean();
     }
 
     public String getBeanDisplayName() {

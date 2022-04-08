@@ -23,19 +23,19 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">JMRI® DecoderPro® Manual</h1>
+      <h1 id="Top">JMRI&reg; DecoderPro&reg; Manual</h1>
 
       <p class="important">This Manual deals with DP version 3.6.<br>
-      Online Help for the current version of JMRI® DecoderPro® is <a href=
+      Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href=
       "../../html/apps/DecoderPro/index.shtml">here</a>.</p>
 
       <p><strong>JMRI</strong> is a Java-based cross-platform application for model railroaders.
       JMRI contains applications for:</p>
 
       <ul>
-        <li>The programming of Digital Command Control (DCC) decoders (DecoderPro®)</li>
+        <li>The programming of Digital Command Control (DCC) decoders (DecoderPro&reg;)</li>
 
-        <li>Drawing computer based panels for depicting a model railroad layout (PanelPro™)</li>
+        <li>Drawing computer based panels for depicting a model railroad layout (PanelPro&trade;)</li>
 
         <li>Controlling the layout (Layout Editor)</li>
 
@@ -43,13 +43,13 @@
 
         <li>Controlling the signals on the layout</li>
 
-        <li>Controlling lighting and sound in the room, and so forth (SoundPro™)</li>
+        <li>Controlling lighting and sound in the room, and so forth (SoundPro&trade;)</li>
       </ul>
 
       <p>All this capability is contained in one program (JMRI) which has several "start-up"
       screens for the various applications.</p>
 
-      <p>If this is your first visit to our manual we suggest that you take the DecoderPro® tour at
+      <p>If this is your first visit to our manual we suggest that you take the DecoderPro&reg; tour at
       <a target="_blank" href=
       "https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
 
@@ -62,22 +62,22 @@
         mode) connected to Digitrax Super Chief Radio Command Station. Most of the decoders in
         locomotive samples will be Digitrax, except for sound examples.</li>
 
-        <li>This entire manual has been updated to correspond to JMRI® v3.6 DecoderPro only, and
+        <li>This entire manual has been updated to correspond to JMRI&reg; v3.6 DecoderPro only, and
         the SHTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you
         probably need to update your browser.</li>
       </ol>
 
       <h2>Table of Contents</h2>
 
-      <h4 id="Installing">Installing JMRI®</h4>
+      <h4 id="Installing">Installing JMRI&reg;</h4>
 
       <ul>
         <li>
-          <a href="Installing_JMRI.shtml">Preparing to Install JMRI®</a>
+          <a href="Installing_JMRI.shtml">Preparing to Install JMRI&reg;</a>
         </li>
 
         <li>
-          <a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI® Software</a>
+          <a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI&reg; Software</a>
         </li>
       </ul>
 
@@ -89,7 +89,7 @@
         </li>
 
         <li>
-          <a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro® work with?</a>
+          <a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a>
         </li>
 
         <li>
@@ -105,7 +105,7 @@
         </li>
       </ul>
 
-      <h4 id="Setting_Up">Using DecoderPro®</h4>
+      <h4 id="Setting_Up">Using DecoderPro&reg;</h4>
 
       <ul>
         <li>
@@ -117,7 +117,7 @@
         </li>
       </ul>
 
-      <h4>DecoderPro® Programming Modes</h4>
+      <h4>DecoderPro&reg; Programming Modes</h4>
 
       <ul>
         <li>
@@ -305,7 +305,7 @@
         </li>
       </ul>
 
-      <h4 id="Main">DecoderPro® Main Window</h4>
+      <h4 id="Main">DecoderPro&reg; Main Window</h4>
 
       <ul>
         <li>
@@ -556,7 +556,7 @@
           </ul>
         </li>
 
-        <li>Operations<img src="images/arrow.gif" alt="arrow" height="9" width="20"> (see the JMRI®
+        <li>Operations<img src="images/arrow.gif" alt="arrow" height="9" width="20"> (see the JMRI&reg;
         <a href="../JMRI_OPS_UsersGuide/index.shtml">OperationsPro User's Guide</a>)
           <ul>
             <li>Settings</li>
@@ -764,7 +764,7 @@
         </li>
       </ul>
 
-      <h4 id="Operations">JMRI® OperationsPro Program</h4>
+      <h4 id="Operations">JMRI&reg; OperationsPro Program</h4>
 
       <h4 id="DecoderDefinition">Creating a Decoder Definition</h4>
 
@@ -879,21 +879,21 @@
             <td>3.2</td>
             <td>1/20/2013</td>
             <td>Dale A. Tripp</td>
-            <td>Updated from JMRI® 3.0 and separated Operations to separate User's Guide</td>
+            <td>Updated from JMRI&reg; 3.0 and separated Operations to separate User's Guide</td>
           </tr>
 
           <tr>
             <td>3.4</td>
             <td>8/29/2013</td>
             <td>Dale A. Tripp</td>
-            <td>Updated from JMRI® 3.2</td>
+            <td>Updated from JMRI&reg; 3.2</td>
           </tr>
 
           <tr>
             <td>3.6</td>
             <td>3/1/2014</td>
             <td>Dale A. Tripp</td>
-            <td>Updated from JMRI® 3.4</td>
+            <td>Updated from JMRI&reg; 3.4</td>
           </tr>
 
           <tr>

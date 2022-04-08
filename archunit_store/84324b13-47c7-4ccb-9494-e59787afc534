@@ -29,7 +29,6 @@ Method <jmri.Section.checkDualDirection(jmri.jmrit.display.layoutEditor.LayoutBl
 Method <jmri.Section.checkLists(java.util.List, java.util.List, jmri.jmrit.display.layoutEditor.LayoutBlock)> calls method <jmri.jmrit.display.layoutEditor.LayoutBlock.getBlock()> in (Section.java:1510)
 Method <jmri.Section.checkLists(java.util.List, java.util.List, jmri.jmrit.display.layoutEditor.LayoutBlock)> calls method <jmri.jmrit.display.layoutEditor.LayoutBlock.getBlock()> in (Section.java:1515)
 Method <jmri.Section.checkLists(java.util.List, java.util.List, jmri.jmrit.display.layoutEditor.LayoutBlock)> has parameter of type <jmri.jmrit.display.layoutEditor.LayoutBlock> in (Section.java:0)
-Method <jmri.Section.checkSignals(jmri.util.JmriJFrame, jmri.jmrit.display.layoutEditor.LayoutEditor)> has parameter of type <jmri.jmrit.display.layoutEditor.LayoutEditor> in (Section.java:0)
 Method <jmri.Section.getDirectionForBlocks(jmri.jmrit.display.layoutEditor.LayoutBlock, jmri.jmrit.display.layoutEditor.LayoutBlock)> calls method <jmri.jmrit.display.layoutEditor.LayoutBlock.getBlock()> in (Section.java:1547)
 Method <jmri.Section.getDirectionForBlocks(jmri.jmrit.display.layoutEditor.LayoutBlock, jmri.jmrit.display.layoutEditor.LayoutBlock)> calls method <jmri.jmrit.display.layoutEditor.LayoutBlock.getBlock()> in (Section.java:1549)
 Method <jmri.Section.getDirectionForBlocks(jmri.jmrit.display.layoutEditor.LayoutBlock, jmri.jmrit.display.layoutEditor.LayoutBlock)> calls method <jmri.jmrit.display.layoutEditor.LayoutBlock.getBlock()> in (Section.java:1557)
@@ -500,5 +499,3 @@ Method <jmri.SignalMastLogic.removeConflictingLogic(jmri.SignalMast, jmri.jmrit.
 Method <jmri.SignalMastLogic.setConflictingLogic(jmri.SignalMast, jmri.jmrit.display.layoutEditor.LevelXing)> has parameter of type <jmri.jmrit.display.layoutEditor.LevelXing> in (SignalMastLogic.java:0)
 Method <jmri.SignalMastLogic.setFacingBlock(jmri.jmrit.display.layoutEditor.LayoutBlock)> has parameter of type <jmri.jmrit.display.layoutEditor.LayoutBlock> in (SignalMastLogic.java:0)
 Method <jmri.SignalMastLogicManager.discoverSignallingDest(jmri.SignalMast, jmri.jmrit.display.layoutEditor.LayoutEditor)> has parameter of type <jmri.jmrit.display.layoutEditor.LayoutEditor> in (SignalMastLogicManager.java:0)
-Method <jmri.Transit.checkSignals(jmri.jmrit.display.layoutEditor.LayoutEditor)> has parameter of type <jmri.jmrit.display.layoutEditor.LayoutEditor> in (Transit.java:0)
-Method <jmri.Transit.validateConnectivity(jmri.jmrit.display.layoutEditor.LayoutEditor)> has parameter of type <jmri.jmrit.display.layoutEditor.LayoutEditor> in (Transit.java:0)

@@ -394,36 +394,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
     }
 
     /**
-     * Transition support for the standard {@link jmri.UserPreferencesManager}
-     * instance (a {@link jmri.managers.JmriUserPreferencesManager}) so it does not
-     * need to maintain separate knowledge of table column state.
-     *
-     * @param table  the table name
-     * @param column the column name
-     * @param order  order of the column
-     * @param width  column preferredWidth
-     * @param sort   how the column is sorted
-     * @param hidden true if column is hidden
-     * @throws NullPointerException if either name is null
-     * @deprecated since 4.5.2; not to be removed; used by
-     *             {@link jmri.managers.configurexml.DefaultUserMessagePreferencesXml}
-     *             to allow tabled preferences from JMRI 4.4 and earlier to be read
-     *             when a user is upgrading to a newer version; not to be used
-     *             elsewhere
-     */
-    @Deprecated
-    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort,
-            boolean hidden) {
-        Objects.requireNonNull(table, "table name must be nonnull");
-        if (sort != SortOrder.UNSORTED) {
-            List<SortKey> keys = new ArrayList<>();
-            keys.add(new SortKey(order, sort));
-            this.sortKeys.put(table, keys);
-        }
-        this.setPersistedState(table, column, order, width, sort, hidden);
-    }
-
-    /**
      * Set the persisted state for the given column in the given table. The
      * persisted state is not saved until
      * {@link #savePreferences(jmri.profile.Profile)} is called.

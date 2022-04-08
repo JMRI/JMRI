@@ -227,11 +227,11 @@ public final class ImportLogixFrame extends JmriJFrame {
                 try {
                     ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), false);
                     importLogix.doImport();
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("LogixsAreImported"), Bundle.getMessage("TitleLogixsImportSuccess"), JOptionPane.INFORMATION_MESSAGE);
                 } catch (JmriException e) {
                     throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
                 }
             }
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("LogixsAreImported"), Bundle.getMessage("TitleLogixsImportSuccess"), JOptionPane.INFORMATION_MESSAGE);
         } else {
             errorMessage.append("</table></html>");
             JOptionPane.showMessageDialog(this, errorMessage.toString(), Bundle.getMessage("TitleLogixImportError"), JOptionPane.ERROR_MESSAGE);

@@ -16,7 +16,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:docbook="http://docbook.org/ns/docbook">
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
@@ -29,7 +29,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -37,7 +37,7 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 
 <xsl:template match='decoder-config'>
 
@@ -57,7 +57,7 @@
         <br/><xsl:value-of select="."/>
       </xsl:for-each>
 <!-- display author info from old version tags -->
-    
+
     <xsl:for-each select="version">
         <br/><span style="font-weight:bold;color:white">
         Author: <xsl:value-of select="@author"/>
@@ -65,19 +65,19 @@
         Updated: <xsl:value-of select="@lastUpdated"/>
         </span>
     </xsl:for-each>
-    
+
 <!-- display author info from new elements -->
-    <xsl:for-each select="docbook:authorgroup/docbook:author/docbook:personname">   
+    <xsl:for-each select="docbook:authorgroup/docbook:author/docbook:personname">
         <br/><span style="font-weight:bold;color:white">
-        Author: <xsl:value-of select="docbook:firstname"/> 
+        Author: <xsl:value-of select="docbook:firstname"/>
                 <xsl:value-of select="docbook:surname"/>
         </span>
     </xsl:for-each>
     <xsl:for-each select="docbook:revhistory/docbook:revision">
         <br/><span style="font-weight:bold;color:white">
-        Revision <xsl:value-of select="docbook:revnumber"/>: <xsl:value-of select="docbook:date"/> 
+        Revision <xsl:value-of select="docbook:revnumber"/>: <xsl:value-of select="docbook:date"/>
             (<xsl:value-of select="docbook:authorinitials"/>)
-            <xsl:value-of select="docbook:revremark"/> 
+            <xsl:value-of select="docbook:revremark"/>
         </span>
     </xsl:for-each>
 
@@ -88,17 +88,17 @@
 JMRI software, including this file, is distributed under license. That
 license defines the terms under which you can use, modify and/or distribute
 it. Please see our
-<a href="http://jmri.org/Copyright.html">licensing page</a> 
+<a href="http://jmri.org/Copyright.html">licensing page</a>
 for more information.
 </p>
 <hr/>
-    
+
     Family version number low:
       <xsl:value-of select="decoder/family[last()]/@lowVersionID"/>
-    
+
     high:
       <xsl:value-of select="decoder/family[last()]/@highVersionID"/>
-      
+
   <!-- display model info -->
 <xsl:for-each select="decoder/family/model">
 <hr/>
@@ -138,7 +138,7 @@ for more information.
         expires:
         <xsl:value-of select="@nmraWarrantEnd"/>
         <br/>
-        
+
         Outputs<br/>
             <xsl:for-each select="output">
                 <span style="margin: 80px;">
@@ -154,7 +154,7 @@ for more information.
             </xsl:for-each>
     </div>
 </xsl:for-each> <!-- end processing each model element-->
-    
+
 
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.

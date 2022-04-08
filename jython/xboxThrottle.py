@@ -1,4 +1,4 @@
-# Use an Xbox (original) controller as throttle(s)                                  
+# Use an Xbox (original) controller as throttle(s)
 #
 # Author: Andrew Berridge, 2010 - Based on USBThrottle.py, Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
@@ -13,14 +13,14 @@
 # 4. Some support for toggling functions though this may not be required (use standard throttle function
 #    locking?
 # 5. Each controller will open its own throttle window
-# 6. Selection of locos using the "hat" four-way switch. Start selects a loco, Back dispatches 
-#    current loco. Using up and down on the hat switch will move between locos in the roster 
+# 6. Selection of locos using the "hat" four-way switch. Start selects a loco, Back dispatches
+#    current loco. Using up and down on the hat switch will move between locos in the roster
 #    (as long as the last loco has been "dispatched"
-# 7. Using left and right on the hat switch will select between throttle panels... Click the 
+# 7. Using left and right on the hat switch will select between throttle panels... Click the
 #    plus (+) button on the throttle window to add another panel
 # 8. Emergency stop! Push the left stick down to trigger its button. This will
 # e-stop the current throttle
-# 
+#
 # Future development ideas:
 # 1. Support right-hand joystick to control a second throttle
 # 2. Finish implementation of function buttons
@@ -35,12 +35,12 @@
 # Requires:
 # XBCD Xbox Controller Driver (from http://www.redcl0ud.com/xbcd.html)
 # Original Xbox (not 360) controller
-# 
+#
 # Currently tested on Windows only
 #
 # IMPORTANT Warnings:
 # 1. Make sure you set a "Dead zone" for each of the analogue sticks (in the
-# Windows Control planel)! If you don't there will be too many events triggered 
+# Windows Control planel)! If you don't there will be too many events triggered
 # and everything will slow right down....
 
 import jmri
@@ -98,25 +98,25 @@ try:
   # and the number of controllers used
   numControllers = 0
 
-  def isNaN(num): 
-      return num != num 
+  def isNaN(num):
+      return num != num
 
 
   # add listener for USB events
   class TreeListener(java.beans.PropertyChangeListener):
-   
+
     locked = False
     F1isOn = False
     F2isOn = False
     F0isOn = False
     #hash code is unique instance of controller
-    controllerHashCode = 0 
+    controllerHashCode = 0
     throttleWindow = None
     controlPanel = None
     functionPanel = None
     addressPanel = None
     activeThrottleFrame = None
-     
+
     def __init__(self, controllerHashCode):
       global numThrottles
       global numControllers
@@ -134,7 +134,7 @@ try:
       self.addressPanel = self.activeThrottleFrame.getAddressPanel()
       self.throttleWindow.addPropertyChangeListener(self)
       self.activeThrottleFrame.addPropertyChangeListener(self)
-    
+
     def propertyChange(self, event):
       if (event.propertyName == "ancestor"):
           #print "ancestor property change - closing throttle window"
@@ -150,13 +150,13 @@ try:
           # Now remove this propertyChangeListener from the model
           global model
           model.removePropertyChangeListener(self)
-          
+
       if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
           #print "Throttle Frame changed"
           self.addressPanel = event.newValue.getAddressPanel()
           self.controlPanel = event.newValue.getControlPanel()
           self.functionPanel = event.newValue.getFunctionPanel()
-              
+
       if (event.propertyName == "Value") :
           # event.oldValue is the UsbNode
           #
@@ -166,18 +166,18 @@ try:
           #print event.oldValue.getController().hashCode()
           #
           # Select just the device (controller) we want
-          if (event.oldValue.getController().toString() == desiredControllerName 
+          if (event.oldValue.getController().toString() == desiredControllerName
           and event.oldValue.getController().hashCode() == self.controllerHashCode) :
               # event.newValue is the value, e.g. 1.0
               # Check for desired component and act
               component = event.oldValue.getComponent().toString()
               value = event.newValue
-              # 
+              #
               # uncomment the following to see the entries
               # print component, value
-              
-              #print "addr: " + self.addressPanel.getCurrentAddress().toString() 
-              
+
+              #print "addr: " + self.addressPanel.getCurrentAddress().toString()
+
               #Hat switch switches between locos and throttles in a window
               if (component == hatSwitch):
                   #self.addressPanel.showRosterSelectorPopup()
@@ -194,15 +194,15 @@ try:
                           # go to previous throttle frame
                           self.throttleWindow.previousThrottleFrame()
                   return
-                      
+
               if (component == componentStart and value > 0.5):
                   self.addressPanel.selectRosterEntry()
                   return
-                  
+
               if (component == componentBack and value > 0.5):
                   self.addressPanel.dispatchAddress()
                   return
-              
+
               # "Lock" the throttle
               if (component == componentALock and value > 0.0) :
                   if self.locked:
@@ -212,7 +212,7 @@ try:
                   else:
                       self.locked = True
                   return
-                          
+
               # absolute throttle component
               if (component == componentASlider) :
                   if not self.locked:
@@ -222,13 +222,13 @@ try:
                           if isfwd :
                               self.controlPanel.setForwardDirection(False)
                               forward = False
-                         
+
                       else :
                           if not isfwd:
                               self.controlPanel.setForwardDirection(True)
                               forward = True
                           value = - value
-                      
+
                       # handle speed setting input
                       # limit range
                       if (value < sliderAMin) :
@@ -264,14 +264,14 @@ try:
                   fNum = 7
               elif component == componentF8:
                   fNum = 8
-              
+
               button = self.functionPanel.getFunctionButtons()[fNum]
               if button.getIsLockable() :
                   if value > 0.5 :
                       state = button.getState()
-                      button.changeState(not state)
+                      button.setSelected(not state)
               else :
-                  button.changeState(value > 0.5)
+                  button.setSelected(value > 0.5)
 
               return
 
@@ -285,8 +285,8 @@ try:
           model.addPropertyChangeListener(TreeListener(hashCode))
 except:
   import javax.swing.JOptionPane as JOptionPane
-  import javax.swing.JFrame as JFrame  
-  JOptionPane.showMessageDialog(JFrame(), 
+  import javax.swing.JFrame as JFrame
+  JOptionPane.showMessageDialog(JFrame(),
 """This code is no longer maintained.
 
 Please use Jynstrument jython/Jynstrument/ThrottleWindowToolBar/USBThrottle.jyn instead

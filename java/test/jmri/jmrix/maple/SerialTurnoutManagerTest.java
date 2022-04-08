@@ -65,11 +65,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         t.registerNode(new SerialNode(t));
         memo = new MapleSystemConnectionMemo("K", "Maple");
         // create and register the turnout manager object
-        l = new SerialTurnoutManager(memo) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

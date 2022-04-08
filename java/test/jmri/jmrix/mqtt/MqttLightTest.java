@@ -18,11 +18,11 @@ public class MqttLightTest extends AbstractLightTestBase {
     MqttAdapter a;
     String saveTopic;
     byte[] savePayload;
-    
+
     @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         // prepare an interface
         saveTopic = null;
@@ -39,6 +39,11 @@ public class MqttLightTest extends AbstractLightTestBase {
         JUnitAppender.assertWarnMessage("Trying to subscribe before connect/configure is done");
     }
 
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
     @Override
     public int numListeners() {
         // return tcis.numListeners();
@@ -47,24 +52,24 @@ public class MqttLightTest extends AbstractLightTestBase {
 
     @Test
     public void testParserUpdate() {
-       
+
         t.setCommandedState(Light.ON);
-        
+
         JUnitUtil.waitFor( ()->{
             return "track/light/2".equals(saveTopic);
         }, "topic check");
         Assert.assertEquals("topic", "ON", new String(savePayload));
-        
+
         saveTopic = null;
         savePayload = null;
 
         t.setCommandedState(Light.OFF);
-        
+
         JUnitUtil.waitFor( ()->{
             return "track/light/2".equals(saveTopic);
         }, "topic check");
         Assert.assertEquals("topic", "OFF", new String(savePayload));
-        
+
     }
 
     @Test
@@ -76,7 +81,7 @@ public class MqttLightTest extends AbstractLightTestBase {
         ((MqttLight)t).notifyMqttMessage("track/light/2/foo", "UNKNOWN");
         Assert.assertEquals("state", Light.UNKNOWN, t.getKnownState());
     }
-    
+
     @Override
     public void checkOnMsgSent() {
         JUnitUtil.waitFor( ()->{

@@ -110,3 +110,4 @@ log4j.category.org.jdom2.transform=SEVERE
 
 #log4j.category.jmri.jmrit.display.layoutEditor=DEBUG
 #log4j.category.jmri.jmrit.display.layoutEditor.LayoutBlock=DEBUG
+#log4j.category.jmri.jmrit.operations=DEBUG

@@ -123,7 +123,7 @@ public class SerialDriverAdapter extends MrcPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e);// NOI18N
+            log.error("getOutputStream exception", e);// NOI18N
         }
         return null;
     }

@@ -55,7 +55,7 @@
 
       <p>Since the <strong>YetAnotherAutoTrain.py</strong> script needs to be modified, the script
       should be copied from the JMRI install location to the user files location. See <strong>Help
-      ⇒ Locations</strong>.</p>
+      &rArr; Locations</strong>.</p>
 
       <h3>Global Settings</h3>
 
@@ -63,7 +63,7 @@
         <dt>logLevel</dt>
 
         <dd>YAAT sends logging information to either the JMRI system console or the script monitor
-        located at <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>⇒
+        located at <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>&rArr;
         Script Output</strong>. Zero is no logging, 4 provides the maximum detail.</dd>
 
         <dt>statusSensor</dt>
@@ -122,9 +122,9 @@
       <p>The following descriptions used the following formatting:</p>
 
       <ul>
-        <li>&lt;?? | ??&gt; — List of choices</li>
+        <li>&lt;?? | ??&gt; &mdash; List of choices</li>
 
-        <li>&lt;????&gt; — Required values, usually names or numbers</li>
+        <li>&lt;????&gt; &mdash; Required values, usually names or numbers</li>
 
         <li>Brackets, [], are optional phrases</li>
 

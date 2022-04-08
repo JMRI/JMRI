@@ -238,7 +238,7 @@ public class RosterSpeedProfile {
     }
 
     /**
-     * Merge raw throttleSetting value with an existing profile SpeedStep if 
+     * Merge raw throttleSetting value with an existing profile SpeedStep if
      * key for the throttleSetting is within the speedIncrement of the SpeedStep.
      * @param throttleSetting raw throttle setting value
      * @param speed track speed
@@ -289,7 +289,7 @@ public class RosterSpeedProfile {
     }
 
     /**
-     * Merge raw throttleSetting value with an existing profile SpeedStep if 
+     * Merge raw throttleSetting value with an existing profile SpeedStep if
      * key for the throttleSetting is within the speedIncrement of the SpeedStep.
      * @param throttleSetting raw throttle setting value
      * @param speed track speed
@@ -846,8 +846,7 @@ public class RosterSpeedProfile {
         if (_throttle.getIsForward()) {
             float extraAsDouble = (getOverRunTimeForward() + extraDelay) / 1000;
             if (log.isDebugEnabled()) {
-                log.debug("Over run time to remove (Forward) {}", getOverRunTimeForward());
-                log.debug("{}", extraAsDouble);
+                log.debug("Over run time to remove (Forward) {} {}", getOverRunTimeForward(), extraAsDouble);
             }
             float olddistance = getDistanceTravelled(true, _throttle.getSpeedSetting(), extraAsDouble);
             distance = distance - olddistance;
@@ -856,8 +855,7 @@ public class RosterSpeedProfile {
         } else {
             float extraAsDouble = (getOverRunTimeReverse() + extraDelay) / 1000;
             if (log.isDebugEnabled()) {
-                log.debug("Over run time to remove (Reverse) {}", getOverRunTimeReverse());
-                log.debug("{}", extraAsDouble);
+                log.debug("Over run time to remove (Reverse) {} {}", getOverRunTimeReverse(), extraAsDouble);
             }
             float olddistance = getDistanceTravelled(false, _throttle.getSpeedSetting(), extraAsDouble);
             distance = distance - olddistance;

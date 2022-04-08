@@ -263,9 +263,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         
         resetNewNvs();
         nodeOfInterest.addPropertyChangeListener(this);
-        ThreadingUtil.runOnGUIEventually( ()->{ 
-            fireTableDataChanged();
-        });
+        fireTableDataChanged();
         
     }
     

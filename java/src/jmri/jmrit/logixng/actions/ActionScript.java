@@ -276,7 +276,7 @@ public class ActionScript extends AbstractDigitalAction {
                     try (InputStreamReader reader = new InputStreamReader(
                             new FileInputStream(jmri.util.FileUtil.getExternalFilename(script)),
                             StandardCharsets.UTF_8)) {
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
+                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
                                 .eval(reader, bindings);
                     } catch (IOException | ScriptException e) {
                         log.warn("cannot execute script \"{}\"", script, e);
@@ -286,7 +286,7 @@ public class ActionScript extends AbstractDigitalAction {
                 case JythonCommand:
                     try {
                         String theScript = String.format("import jmri%n") + script;
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
+                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
                                 .eval(theScript, bindings);
                     } catch (ScriptException e) {
                         log.warn("cannot execute script", e);

@@ -57,11 +57,7 @@ public class SerialAddressTwoSystemTest {
         k10 = new SerialNode(10, SerialNode.SMINI, stcs2);
         k20 = new SerialNode(20, SerialNode.SMINI, stcs2);
         // create and register the 1st manager objects
-        jmri.TurnoutManager l2 = new SerialTurnoutManager(memo2) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.TurnoutManager l2 = new SerialTurnoutManager(memo2);
         jmri.InstanceManager.setTurnoutManager(l2);
         jmri.LightManager lgt2 = new SerialLightManager(memo2);
         jmri.InstanceManager.setLightManager(lgt2);

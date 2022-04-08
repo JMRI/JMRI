@@ -64,14 +64,6 @@ public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     /**
-     * Configure the programming manager and "command station" objects
-     * @deprecated since 4.21.1
-     */
-    @Deprecated
-    public void configureCommandStation() {
-    }
-
-    /**
      * Configure the common managers for Qsi connections. This puts the common
      * manager config in one place.
      */
@@ -84,7 +76,7 @@ public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     public DefaultProgrammerManager getProgrammerManager() {
-        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class c) -> new DefaultProgrammerManager(new QsiProgrammer(this),this));
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class<?> c) -> new DefaultProgrammerManager(new QsiProgrammer(this),this));
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {

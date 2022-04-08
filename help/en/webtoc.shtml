@@ -1322,6 +1322,11 @@
                             </li>
                                
                             <li>
+                                <a href="html/tools/scripting/Python3.shtml">Python 3 Introduction</a>
+                                <ul></ul>
+                            </li>
+                               
+                            <li>
                                 <a href="html/tools/scripting/AppleScript.shtml">Open Scripting Arch (Apple) </a>
                                 <ul></ul>
                             </li>

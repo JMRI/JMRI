@@ -77,9 +77,9 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
         } catch (TimeoutException te) {
-            log.error("Timeout during communication with Local XBee on communication start up. Error was {} cause {} ",te,te.getCause());
+            log.error("Timeout during communication with Local XBee on communication start up. Error was {} ",te.getCause(), te);
         } catch (XBeeException xbe ) {
-            log.error("Exception during XBee communication start up. Error was {} cause {} ",xbe,xbe.getCause());
+            log.error("Exception during XBee communication start up. Error was {} ",xbe.getCause(), xbe);
         }
     }
 
@@ -106,7 +106,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         try {
             xbee.sendPacketAsync(((XBeeMessage) m).getXBeeRequest());
         } catch (XBeeException xbe) {
-            log.error("Error Sending message to XBee: {}", xbe);
+            log.error("Error Sending message to XBee", xbe);
         }
     }
 
@@ -116,7 +116,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * should just sleep.
      */
     @Override
-    @SuppressWarnings("deprecation") // until there's a replacement for getPreferedTransmitAddress()
     protected AbstractMRMessage pollMessage() {
         if (numNodes <= 0) {
             return null;

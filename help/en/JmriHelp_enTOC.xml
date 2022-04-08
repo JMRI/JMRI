@@ -492,6 +492,8 @@
 
    <tocitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps"/>
 
+   <tocitem text="Python 3 Introduction" target="html.tools.scripting.Python3"/>
+
    <tocitem text="Open Scripting Arch (Apple) " target="html.tools.scripting.AppleScript"/>
 
   </tocitem>

@@ -1,9 +1,7 @@
 package jmri.util;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ReflectionUtilScaffold.
@@ -25,7 +23,7 @@ public class ReflectionUtilScaffoldTest {
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -33,7 +31,7 @@ public class ReflectionUtilScaffoldTest {
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -29,6 +29,7 @@
   <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
 
   <xs:element name="timetable-data" type="timetable-dataType"/>
+
   <xs:complexType name="layoutType">
     <xs:sequence>
       <xs:element type="xs:integer" name="layout_id"/>
@@ -39,11 +40,13 @@
       <xs:element type="yesNoType" name="metric"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="layoutsType">
     <xs:sequence>
       <xs:element type="layoutType" name="layout" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="train_typeType">
     <xs:sequence>
       <xs:element type="xs:integer" name="type_id"/>
@@ -52,11 +55,13 @@
       <xs:element type="xs:string" name="type_color"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="train_typesType">
     <xs:sequence>
       <xs:element type="train_typeType" name="train_type" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="segmentType">
     <xs:sequence>
       <xs:element type="xs:integer" name="segment_id"/>
@@ -64,11 +69,13 @@
       <xs:element type="xs:string" name="segment_name"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="segmentsType">
     <xs:sequence>
       <xs:element type="segmentType" name="segment" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="stationType">
     <xs:choice maxOccurs="unbounded" minOccurs="0">
       <xs:element type="xs:integer" name="station_id"/>
@@ -80,25 +87,30 @@
       <xs:element type="xs:integer" name="staging"/>
     </xs:choice>
   </xs:complexType>
+
   <xs:complexType name="stationsType">
     <xs:sequence>
       <xs:element type="stationType" name="station" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="scheduleType">
     <xs:sequence>
       <xs:element type="xs:integer" name="schedule_id"/>
       <xs:element type="xs:integer" name="layout_id"/>
+      <xs:element type="xs:string" name="schedule_name"/>
       <xs:element type="xs:string" name="eff_date"/>
       <xs:element type="xs:integer" name="start_hour"/>
       <xs:element type="xs:integer" name="duration"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="schedulesType">
     <xs:sequence>
       <xs:element type="scheduleType" name="schedule" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="trainType">
     <xs:sequence>
       <xs:element type="xs:integer" name="train_id"/>
@@ -113,11 +125,13 @@
       <xs:element type="xs:string" name="train_notes"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="trainsType">
     <xs:sequence>
       <xs:element type="trainType" name="train" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="stopType">
     <xs:sequence>
       <xs:element type="xs:integer" name="stop_id"/>
@@ -132,11 +146,13 @@
       <xs:element type="xs:string" name="stop_notes"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="stopsType">
     <xs:sequence>
       <xs:element type="stopType" name="stop" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="timetable-dataType">
     <xs:sequence>
       <xs:element type="layoutsType" name="layouts" maxOccurs="unbounded" minOccurs="0"/>
