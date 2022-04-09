@@ -14483,9 +14483,9 @@
       <otherMemoryNamedBean>
         <addressing>Direct</addressing>
         <name>IM3</name>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference />
+        <localVariable />
+        <formula />
       </otherMemoryNamedBean>
       <memoryOperation>CalculateFormula</memoryOperation>
       <otherConstant>Some string</otherConstant>
@@ -14581,11 +14581,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <otherMemoryNamedBean>
-        <addressing>Formula</addressing>
+        <addressing>Direct</addressing>
         <name>IM3</name>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference />
+        <localVariable />
+        <formula />
       </otherMemoryNamedBean>
       <memoryOperation>CopyMemoryToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
@@ -14681,11 +14681,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <otherMemoryNamedBean>
-        <addressing>LocalVariable</addressing>
+        <addressing>Direct</addressing>
         <name>IM3</name>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference />
+        <localVariable />
+        <formula />
       </otherMemoryNamedBean>
       <memoryOperation>CopyVariableToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
@@ -14782,11 +14782,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <otherMemoryNamedBean>
-        <addressing>LocalVariable</addressing>
+        <addressing>Direct</addressing>
         <name>IM3</name>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference />
+        <localVariable />
+        <formula />
       </otherMemoryNamedBean>
       <memoryOperation>CopyTableCellToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
@@ -14883,11 +14883,11 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <otherMemoryNamedBean>
-        <addressing>Reference</addressing>
+        <addressing>Direct</addressing>
         <name>IM3</name>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference />
+        <localVariable />
+        <formula />
       </otherMemoryNamedBean>
       <memoryOperation>SetToNull</memoryOperation>
       <otherConstant>Some string</otherConstant>
@@ -14986,9 +14986,9 @@
       <otherMemoryNamedBean>
         <addressing>Direct</addressing>
         <name>IM3</name>
-        <reference>{IM1}</reference>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
+        <reference />
+        <localVariable />
+        <formula />
       </otherMemoryNamedBean>
       <memoryOperation>SetToString</memoryOperation>
       <otherConstant>Some string</otherConstant>
@@ -27814,14 +27814,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Apr 09 15:57:31 CEST 2022</date>
+      <date>Sat Apr 09 19:14:11 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.5.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Apr 09 15:57:31 CEST 2022</date>
+      <date>Sat Apr 09 19:14:11 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.4plus+daniel+2022-04-09T13:56:58Z+R616f14e on Sat Apr 09 15:57:31 CEST 2022-->
+  <!--Written by JMRI version 4.99.4plus+daniel+2022-04-09T17:13:40Z+Re097eec on Sat Apr 09 19:14:11 CEST 2022-->
 </layout-config>
