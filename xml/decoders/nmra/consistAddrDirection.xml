@@ -60,7 +60,7 @@
   </revhistory>
 
   <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
-  
+
   <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Locomotive Direction In Consist</label>
@@ -69,7 +69,7 @@
     <label xml:lang="de">Verbund-Richtung</label>
     <label xml:lang="cs">Směr lokomotivy v soupravě</label>
     <label xml:lang="nl">Rijrichting Multitractie</label>
-    <label xml:lang="es">Dirección de la locomotora en el consist</label>
+    <label xml:lang="es">Sentido de la locomotora en el consist</label>
     <tooltip>This loco runs Normal(default) or Reversed(address+128) when in the consist</tooltip>
     <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro (indirizzo+128)</tooltip>
     <tooltip xml:lang="de">Diese Lok fährt im Verbundbetrieb vorwärts (Default) oder rückwärts (Adresse + 128).</tooltip>

@@ -7,6 +7,7 @@
   <name xml:lang="fr">Basique</name>
   <name xml:lang="it">Basic</name>
   <name xml:lang="nl">Basis</name>
+  <name xml:lang="es">Básico</name>
   <column>
     <dccaddress/>
     <label>
@@ -19,6 +20,7 @@
       <tooltip xml:lang="fr">Adresse Courte</tooltip>
       <tooltip xml:lang="it">Indirizzo Corto</tooltip>
       <tooltip xml:lang="nl">Bepaalt het Korte Adres</tooltip>
+      <tooltip xml:lang="es">Establece la dirección primaria (corta)</tooltip>
     </display>
     <display item="Long Address" tooltip="Sets the extended (long) address">
       <tooltip xml:lang="ca">Establir adreça llarga</tooltip>
@@ -27,6 +29,7 @@
       <tooltip xml:lang="fr">Adresse Longue (étendue)</tooltip>
       <tooltip xml:lang="it">Imposta l'indirizzo esteso</tooltip>
       <tooltip xml:lang="nl">Bepaalt het Lang Adres</tooltip>
+      <tooltip xml:lang="es">Establece la dirección extendida (larga)</tooltip>
     </display>
     <display item="Address Format" tooltip="Determines whether loco will use short or long address">
       <tooltip xml:lang="ca">Estableix si es fa servir adreça curta o llarga</tooltip>
@@ -35,6 +38,7 @@
       <tooltip xml:lang="fr">Détermine si la loco utilise l'Adresse Courte ou Longue</tooltip>
       <tooltip xml:lang="it">Determina se la Loco usa l'indirizzo corto o quello esteso</tooltip>
       <tooltip xml:lang="nl">Bepaalt of Loc het lange of het korte adres gebruikt</tooltip>
+      <tooltip xml:lang="es">Determina si la locomotora utilizará una dirección corta o larga</tooltip>
     </display>
     <label>
       <text> </text>
@@ -46,6 +50,7 @@
       <tooltip xml:lang="fr">Régle le sens de mouvement de la loco en marche avant</tooltip>
       <tooltip xml:lang="it">Imposta la Direzione di movimento della Loco per Comando Avanti</tooltip>
       <tooltip xml:lang="nl">Bepaalt de rijrichting van de Loc voor "Vooruit"</tooltip>
+      <tooltip xml:lang="es">Establece la dirección relativa de la locomotora cuando se le indica que avance</tooltip>
     </display>
     <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
       <tooltip xml:lang="ca">Estableix els passos de velocitat per al control de llums</tooltip>
@@ -54,6 +59,7 @@
       <tooltip xml:lang="fr">Régle le mode de Pas de Vitesse, pour le contrôle des feux</tooltip>
       <tooltip xml:lang="it">Imposta gli Step Velocità di default per Comando Luci</tooltip>
       <tooltip xml:lang="nl">Bepaalt het aantal snelheidsstappen</tooltip>
+      <tooltip xml:lang="es">Establece el modo de paso de velocidad para el control de las farolas</tooltip>
     </display>
     <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
       <tooltip xml:lang="ca">Estableix que la locomotora pot circular en analògic [CC] (analògica)</tooltip>
@@ -62,6 +68,7 @@
       <tooltip xml:lang="fr">Détermine si la loco peut fonctionner sur un réseau conventionnel en courant continu</tooltip>
       <tooltip xml:lang="it">Determina se la Loco può operare in DC (analogica)</tooltip>
       <tooltip xml:lang="nl">Bepaalt of de Loc ook analoog (DC) kan rijden</tooltip>
+      <tooltip xml:lang="es">Determina si la locomotora puede funcionar con corriente continua convencional (habilita la conversión de fuente de alimentación)</tooltip>
     </display>
   </column>
   <column>
@@ -75,8 +82,9 @@
       <tooltip xml:lang="ca">adicional númeromero usuari</tooltip>
       <tooltip xml:lang="cs">Nastaví hodnoty přizpůsobení pro uživatele ID nebo číslo</tooltip>
 	  <tooltip xml:lang="de">Benutzerspezifischen Wert einstellen</tooltip>
-      <tooltip xml:lang="fr">Régle le supplément ID - ou numéro - utilisateur</tooltip>	  
+      <tooltip xml:lang="fr">Régle le supplément ID - ou numéro - utilisateur</tooltip>
 	  <tooltip xml:lang="it">Imposta un ID extra o un Codice</tooltip>
+      <tooltip xml:lang="es">Establece una ID o número de usuario adicional (si se usa)</tooltip>
     </display>
 	<display item="User Id #1" tooltip="Sets first custom user ID or number">
       <tooltip xml:lang="ca">1r númeromero usuari</tooltip>
@@ -85,6 +93,7 @@
       <tooltip xml:lang="fr">Régle le premier ID - ou numéro - utilisateur</tooltip>
       <tooltip xml:lang="it">Imposta un ID Utente o un Codice</tooltip>
       <tooltip xml:lang="nl">Legt 1e gebruikers-ID of -nummer vast</tooltip>
+      <tooltip xml:lang="es">Establece el primer ID o número de usuario personalizado</tooltip>
     </display>
     <display item="User Id #2" tooltip="Sets second custom user ID or number">
       <tooltip xml:lang="ca">2r númeromero usuari</tooltip>
@@ -93,6 +102,7 @@
       <tooltip xml:lang="fr">Régle le deuxième ID - ou numéro - utilisateur</tooltip>
       <tooltip xml:lang="it">Imposta un ID Utente o un Codice</tooltip>
       <tooltip xml:lang="nl">Legt 2e gebruikers-ID of -nummer vast</tooltip>
+      <tooltip xml:lang="es">Establece un segundo ID o número de usuario personalizado</tooltip>
     </display>
     <label>
       <text> </text>
@@ -108,6 +118,7 @@
       <tooltip xml:lang="fr">ID constructeur (lecture seule)</tooltip>
       <tooltip xml:lang="it">ID Costruttore (sola lettura)</tooltip>
       <tooltip xml:lang="nl">ID decoderfabrikant (alleen lezen)</tooltip>
+      <tooltip xml:lang="es">Número de ID del fabricante (solo lectura)</tooltip>
     </display>
     <display item="Decoder Version" tooltip="The decoder version number (read only)">
       <tooltip xml:lang="ca">Número de versió del descodificador (noméss lectura)</tooltip>
@@ -116,6 +127,7 @@
       <tooltip xml:lang="fr">Version de décodeur (lecture seule)</tooltip>
       <tooltip xml:lang="it">Numero versione del Decoder (sola lettura)</tooltip>
       <tooltip xml:lang="nl">Decoderversienummer (alleen lezen)</tooltip>
+      <tooltip xml:lang="es">Número de versión del decodificador (solo lectura)</tooltip>
     </display>
     <display item="Product Number" tooltip="The decoder product number (if used) (read only)">
       <tooltip xml:lang="ca">La referència del descodificador (només si es fa servir) (només lectura)</tooltip>
@@ -124,6 +136,7 @@
       <tooltip xml:lang="fr">Numéro de Produit (lecture seule)</tooltip>
       <tooltip xml:lang="it">Codice di prodotto del Decoder (se usato) (sola lettura)</tooltip>
       <tooltip xml:lang="nl">Softwareversie van decoder (alleen lezen)</tooltip>
+      <tooltip xml:lang="es">Número de producto del decodificador (si se usa) (solo lectura)</tooltip>
     </display>
   </column>
 </pane>
