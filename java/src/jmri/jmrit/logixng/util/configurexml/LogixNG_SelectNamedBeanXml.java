@@ -130,18 +130,18 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         }
 
         try {
-            Element elem = shared.getChild("addressing");
+            Element elem = shared.getChild(addressingElementName);
             if (elem != null) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
 
-            elem = shared.getChild("reference");
+            elem = shared.getChild(referenceElementName);
             if (elem != null) selectNamedBean.setReference(elem.getTextTrim());
 
-            elem = shared.getChild("localVariable");
+            elem = shared.getChild(localVariableElementName);
             if (elem != null) selectNamedBean.setLocalVariable(elem.getTextTrim());
 
-            elem = shared.getChild("formula");
+            elem = shared.getChild(formulaElementName);
             if (elem != null) selectNamedBean.setFormula(elem.getTextTrim());
 
         } catch (ParserException e) {
