@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>25</minor>
-    <test>10</test>
-    <modifier>ish</modifier>
+    <minor>99</minor>
+    <test>4</test>
+    <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -218,11 +218,19 @@
     </ActionLocalVariable>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0004</systemName>
-      <memory>MyMemory</memory>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>MyMemory</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>CopyTableCellToMemory</memoryOperation>
       <otherConstant />
       <otherVariable />
@@ -403,14 +411,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Feb 12 02:18:50 CET 2022</date>
+      <date>Sat Apr 09 15:52:39 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Feb 12 02:18:50 CET 2022</date>
+      <date>Sat Apr 09 15:52:39 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.10ish+daniel+2022-02-12T01:18:23Z+R62d39d4 on Sat Feb 12 02:18:50 CET 2022-->
+  <!--Written by JMRI version 4.99.4plus+daniel+2022-04-09T13:52:11Z+R616f14e on Sat Apr 09 15:52:39 CEST 2022-->
 </layout-config>
