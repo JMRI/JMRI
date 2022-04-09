@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.99.3plus+jake+20220313T1932Z+R3dcc416358 on Sun Mar 13 15:32:50 EDT 2022-->
-  <decoderIndex version="3">
+  <!--Written by JMRI version 4.99.4plus+jake+20220408T2317Z+R14447c1495 on Fri Apr 08 19:17:59 EDT 2022-->
+  <decoderIndex version="5">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -180,15 +180,19 @@
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="1" label="White" connection="plug">
             <label xml:lang="cs">Bílý</label>
+            <label xml:lang="es">Blanco</label>
           </output>
           <output name="2" label="Yellow" connection="plug">
             <label xml:lang="cs">Žlutý</label>
+            <label xml:lang="es">Amarillo</label>
           </output>
           <output name="3" label="Green" connection="wire">
             <label xml:lang="cs">Zelený</label>
+            <label xml:lang="es">Verde</label>
           </output>
           <output name="4" label="Violet" connection="wire">
             <label xml:lang="cs">Fialový</label>
+            <label xml:lang="es">Violeta</label>
           </output>
         </outputs>
         <model model="NMRA standard CV definitions" />
@@ -2749,15 +2753,19 @@
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="1" label="White" connection="plug">
             <label xml:lang="cs">Bílý</label>
+            <label xml:lang="es">Blanco</label>
           </output>
           <output name="2" label="Yellow" connection="plug">
             <label xml:lang="cs">Žlutý</label>
+            <label xml:lang="es">Amarillo</label>
           </output>
           <output name="3" label="Green" connection="wire">
             <label xml:lang="cs">Zelený</label>
+            <label xml:lang="es">Verde</label>
           </output>
           <output name="4" label="Violet" connection="wire">
             <label xml:lang="cs">Fialový</label>
+            <label xml:lang="es">Violeta</label>
           </output>
         </outputs>
         <functionlabels>
@@ -13496,15 +13504,19 @@
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="1" label="White" connection="plug">
             <label xml:lang="cs">Bílý</label>
+            <label xml:lang="es">Blanco</label>
           </output>
           <output name="2" label="Yellow" connection="plug">
             <label xml:lang="cs">Žlutý</label>
+            <label xml:lang="es">Amarillo</label>
           </output>
           <output name="3" label="Green" connection="wire">
             <label xml:lang="cs">Zelený</label>
+            <label xml:lang="es">Verde</label>
           </output>
           <output name="4" label="Violet" connection="wire">
             <label xml:lang="cs">Fialový</label>
+            <label xml:lang="es">Violeta</label>
           </output>
         </outputs>
       </family>
