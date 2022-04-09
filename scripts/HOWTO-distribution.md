@@ -314,7 +314,7 @@ If you're developing any additional (post-4.99.5) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 4.99.5 release name at the top. Enter the 4.99.2 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 4.99.5 release name at the top. Enter the 4.99.4 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -466,9 +466,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.5+R1d78b88a65.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.5/JMRI.4.99.5+R1d78b88a65.dmg) | c3a2ca989ea556bc25b83cceb1311b5fe5f8487011f982aadb39f4dea68d1707
-[JMRI.4.99.5+R1d78b88a65.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.5/JMRI.4.99.5+R1d78b88a65.exe) | f34c0bba53aed75d0e93d201442cafba29924c08ac33c8c545cc905334eacc5a
-[JMRI.4.99.5+R1d78b88a65.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.5/JMRI.4.99.5+R1d78b88a65.tgz) | 7120a7a47ab000439646f2accc747e1dda7311879b101dc1df9d771fb6d14d2a
+[JMRI.4.99.5+R3bcc0f1bcb.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.5/JMRI.4.99.5+R3bcc0f1bcb.dmg) | a609ec9ee4b55618ee47056efc270c200f8efb649a9d5d42ca90e94907b9b21f
+[JMRI.4.99.5+R3bcc0f1bcb.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.5/JMRI.4.99.5+R3bcc0f1bcb.exe) | 1e496a4a5e5b97d1e3468da19f78bf35ee319af764161ad6dd78291314761637
+[JMRI.4.99.5+R3bcc0f1bcb.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.5/JMRI.4.99.5+R3bcc0f1bcb.tgz) | f32239380c0fe499fe1d45644bf3f337b224ffbd279c8e42a211a7b51d46b294
 
 ```
 
