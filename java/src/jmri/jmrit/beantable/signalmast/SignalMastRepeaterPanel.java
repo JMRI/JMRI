@@ -32,6 +32,7 @@ import jmri.managers.DefaultSignalMastManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriPanel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -58,7 +59,7 @@ public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChange
         dsmm = (DefaultSignalMastManager) InstanceManager.getDefault(SignalMastManager.class);
         init();
     }
-    
+
     final void init() {
         dsmm.addPropertyChangeListener(this);
 
@@ -93,8 +94,10 @@ public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChange
         _MasterBox.addActionListener((ActionEvent e) -> {
             setSlaveBoxLists();
         });
+        JComboBoxUtil.setupComboBoxMaxRows(_MasterBox);
 
         _SlaveBox = new NamedBeanComboBox<>(dsmm);
+        JComboBoxUtil.setupComboBoxMaxRows(_SlaveBox);
         _SlaveBox.setEnabled(false);
         footer.add(new JLabel(Bundle.getMessage("Master") + " : "));
         footer.add(_MasterBox);
@@ -175,7 +178,7 @@ public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChange
             super();
             init();
         }
-        
+
         final void init(){
             dsmm.addPropertyChangeListener(this);
         }

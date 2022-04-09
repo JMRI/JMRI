@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -60,7 +60,7 @@
   </revhistory>
 
   <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
-  
+
   <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Locomotive Direction In Consist</label>
@@ -69,10 +69,12 @@
     <label xml:lang="de">Verbund-Richtung</label>
     <label xml:lang="cs">Směr lokomotivy v soupravě</label>
     <label xml:lang="nl">Rijrichting Multitractie</label>
+    <label xml:lang="es">Sentido de la locomotora en el consist</label>
     <tooltip>This loco runs Normal(default) or Reversed(address+128) when in the consist</tooltip>
     <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro (indirizzo+128)</tooltip>
     <tooltip xml:lang="de">Diese Lok fährt im Verbundbetrieb vorwärts (Default) oder rückwärts (Adresse + 128).</tooltip>
     <tooltip xml:lang="cs">Pokud je tato lokomotiva v soupravě tak jede normálně (výchozí hodnota) nebo opačně (adresa + 128).</tooltip>
     <tooltip xml:lang="nl">Deze loc rijd in Multitractie voorwaarts (standaard) of achterwaarts (adres + 128).</tooltip>
+    <tooltip xml:lang="es">ésta locomotora corre en el consist - Normal(predeterminado) o en reversa (dirección+128)</tooltip>
   </variable>
 </variables>

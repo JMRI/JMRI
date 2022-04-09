@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -72,10 +72,12 @@
     <label xml:lang="de">Verbundadresse</label>
     <label xml:lang="cs">Adresa soupravy</label>
     <label xml:lang="nl">Multitractie-adres</label>
+    <label xml:lang="es">Dirección de consist avanzado</label>
     <tooltip>Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
     <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127 (direzione nel bit 7)</tooltip>
     <tooltip xml:lang="de">Enthält die Verbundadresse. Grenzwerte 0-127. (Fahrtrichtung wird in Bit 7 gesetzt)</tooltip>
     <tooltip xml:lang="cs">Obsahuje adresu soupravy. Meze 0-127 (směr je uložen v bitu 7)</tooltip>
     <tooltip xml:lang="nl">Bevat het Multitractie-adres. Grenswaarden 0-127. (Rijrichting wordt gezet in bit 7)</tooltip>
+    <tooltip xml:lang="es">Dirección de consist. Valores 0-127 (dirección establecida en el bit 7)</tooltip>
   </variable>
 </variables>

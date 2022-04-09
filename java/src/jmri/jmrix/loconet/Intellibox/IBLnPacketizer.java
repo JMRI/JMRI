@@ -263,7 +263,7 @@ public class IBLnPacketizer extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandler();
         }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet Intellibox transmit handler");
+        xmtThread = new Thread(xmtHandler, "LocoNet Intellibox transmit handler");
         log.debug("Xmt thread starts at priority {}", xmtpriority);
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -273,7 +273,7 @@ public class IBLnPacketizer extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet Intellibox receive handler");
+        rcvThread = new Thread(rcvHandler, "LocoNet Intellibox receive handler");
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
