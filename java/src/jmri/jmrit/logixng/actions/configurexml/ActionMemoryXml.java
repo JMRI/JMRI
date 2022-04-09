@@ -77,7 +77,7 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
 
         var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
         selectOtherMemoryNamedBeanXml.load(shared.getChild("otherMemoryNamedBean"), h.getSelectOtherMemoryNamedBean());
-        selectOtherMemoryNamedBeanXml.loadLegacy(shared, h.getSelectOtherMemoryNamedBean(), "otherMemory");
+        selectOtherMemoryNamedBeanXml.loadLegacy(shared, h.getSelectOtherMemoryNamedBean(), "otherMemory", null, null, null, null);
 
         Element queryType = shared.getChild("memoryOperation");
         if (queryType != null) {

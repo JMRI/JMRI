@@ -130,19 +130,29 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         }
 
         try {
-            Element elem = shared.getChild(addressingElementName);
-            if (elem != null) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            Element elem;
+
+            if (addressingElementName != null) {
+                elem = shared.getChild(addressingElementName);
+                if (elem != null) {
+                    selectNamedBean.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
             }
 
-            elem = shared.getChild(referenceElementName);
-            if (elem != null) selectNamedBean.setReference(elem.getTextTrim());
+            if (referenceElementName != null) {
+                elem = shared.getChild(referenceElementName);
+                if (elem != null) selectNamedBean.setReference(elem.getTextTrim());
+            }
 
-            elem = shared.getChild(localVariableElementName);
-            if (elem != null) selectNamedBean.setLocalVariable(elem.getTextTrim());
+            if (localVariableElementName != null) {
+                elem = shared.getChild(localVariableElementName);
+                if (elem != null) selectNamedBean.setLocalVariable(elem.getTextTrim());
+            }
 
-            elem = shared.getChild(formulaElementName);
-            if (elem != null) selectNamedBean.setFormula(elem.getTextTrim());
+            if (formulaElementName != null) {
+                elem = shared.getChild(formulaElementName);
+                if (elem != null) selectNamedBean.setFormula(elem.getTextTrim());
+            }
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
