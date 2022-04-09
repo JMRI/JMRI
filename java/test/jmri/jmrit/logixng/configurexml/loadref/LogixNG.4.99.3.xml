@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>99</minor>
-    <test>3</test>
+    <test>4</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -9808,10 +9808,12 @@
     </DigitalMany>
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0002</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <audioState>Play</audioState>
       <stateReference />
@@ -9877,10 +9879,12 @@
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0003</systemName>
       <comment>A comment</comment>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>LocalVariable</stateAddressing>
       <audioState>Play</audioState>
       <stateReference>{IM2}</stateReference>
@@ -9946,10 +9950,12 @@
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0004</systemName>
       <comment>A comment</comment>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Formula</stateAddressing>
       <audioState>PlayToggle</audioState>
       <stateReference>{IM2}</stateReference>
@@ -10015,10 +10021,12 @@
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0005</systemName>
       <comment>A comment</comment>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Reference</stateAddressing>
       <audioState>Pause</audioState>
       <stateReference>{IM2}</stateReference>
@@ -10084,10 +10092,12 @@
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0006</systemName>
       <comment>A comment</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <audioState>PauseToggle</audioState>
       <stateReference>{IM2}</stateReference>
@@ -10152,10 +10162,12 @@
     </ActionAudio>
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0012</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetOccupied</operationDirect>
       <operationReference />
@@ -10225,10 +10237,12 @@
     </ActionBlock>
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0013</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetOccupied</operationDirect>
       <operationReference />
@@ -10298,10 +10312,12 @@
     </ActionBlock>
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0014</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetOccupied</operationDirect>
       <operationReference />
@@ -10372,11 +10388,13 @@
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0015</systemName>
       <comment>Direct / Direct / Direct :: SetValue</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetValue</operationDirect>
       <operationReference />
@@ -10447,11 +10465,13 @@
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0016</systemName>
       <comment>Direct / Direct :: SetOccupied</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetOccupied</operationDirect>
       <operationReference />
@@ -10522,11 +10542,13 @@
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0017</systemName>
       <comment>Direct / LocalVariable</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>LocalVariable</operationAddressing>
       <operationDirect>SetOccupied</operationDirect>
       <operationReference />
@@ -10597,10 +10619,12 @@
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0018</systemName>
       <comment>LocalVariable / Formula</comment>
-      <addressing>LocalVariable</addressing>
-      <reference />
-      <localVariable>index</localVariable>
-      <formula />
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference />
+        <localVariable>index</localVariable>
+        <formula />
+      </namedBean>
       <operationAddressing>Formula</operationAddressing>
       <operationDirect>SetOccupied</operationDirect>
       <operationReference />
@@ -10671,10 +10695,12 @@
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0019</systemName>
       <comment>Formula / Reference</comment>
-      <addressing>Formula</addressing>
-      <reference />
-      <localVariable />
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference />
+        <localVariable />
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Reference</operationAddressing>
       <operationDirect>SetOccupied</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -10745,10 +10771,12 @@
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0020</systemName>
       <comment>Reference / Direct :: SetAltColorOn</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetNullValue</operationDirect>
       <operationReference />
@@ -11063,10 +11091,12 @@
     </ActionClock>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0025</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <lightState>On</lightState>
       <stateReference />
@@ -11135,10 +11165,12 @@
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0026</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <lightState>On</lightState>
       <stateReference />
@@ -11208,11 +11240,13 @@
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0027</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>LocalVariable</stateAddressing>
       <lightState>Off</lightState>
       <stateReference>{IM2}</stateReference>
@@ -11282,11 +11316,13 @@
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0028</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Formula</stateAddressing>
       <lightState>On</lightState>
       <stateReference>{IM2}</stateReference>
@@ -11356,11 +11392,13 @@
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0029</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Reference</stateAddressing>
       <lightState>Toggle</lightState>
       <stateReference>{IM2}</stateReference>
@@ -11430,11 +11468,13 @@
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0030</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <lightState>Intensity</lightState>
       <stateReference>{IM2}</stateReference>
@@ -11503,11 +11543,13 @@
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0031</systemName>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <lightState>Interval</lightState>
       <stateReference />
@@ -11576,11 +11618,13 @@
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0032</systemName>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <lightState>Unknown</lightState>
       <stateReference />
@@ -11649,11 +11693,13 @@
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0033</systemName>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <lightState>Inconsistent</lightState>
       <stateReference />
@@ -11722,10 +11768,12 @@
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0034</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <lightState>On</lightState>
       <stateReference />
@@ -11794,10 +11842,12 @@
     </ActionLight>
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0035</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <IntensitySocket>
         <socketName>lwch5r5x9z</socketName>
       </IntensitySocket>
@@ -11860,10 +11910,12 @@
     </ActionLightIntensity>
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0036</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <IntensitySocket>
         <socketName>a9nebpam2x</socketName>
       </IntensitySocket>
@@ -11927,11 +11979,13 @@
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0037</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>a7ojx9h6td</socketName>
       </IntensitySocket>
@@ -11995,11 +12049,13 @@
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0038</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>qgknx3y54l</socketName>
       </IntensitySocket>
@@ -12063,11 +12119,13 @@
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0039</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>rsqu1tmpdh</socketName>
       </IntensitySocket>
@@ -12131,11 +12189,13 @@
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0040</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>fpi5hehznd</socketName>
       </IntensitySocket>
@@ -14001,10 +14061,18 @@
     </ActionLocalVariable>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0065</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>SetToString</memoryOperation>
       <otherConstant />
       <otherVariable />
@@ -14091,12 +14159,20 @@
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0066</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>CalculateFormula</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -14183,12 +14259,20 @@
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0067</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>CopyMemoryToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -14275,12 +14359,20 @@
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0068</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>CopyVariableToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -14367,12 +14459,20 @@
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0069</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>CopyTableCellToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -14460,12 +14560,20 @@
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0070</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>SetToNull</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -14552,12 +14660,20 @@
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0071</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </otherMemoryNamedBean>
       <memoryOperation>SetToString</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -14643,10 +14759,12 @@
     </ActionMemory>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0072</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>Deallocate</operationDirect>
       <operationReference />
@@ -14716,10 +14834,12 @@
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0073</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>Deallocate</operationDirect>
       <operationReference />
@@ -14789,10 +14909,12 @@
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0074</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>Deallocate</operationDirect>
       <operationReference />
@@ -14863,11 +14985,13 @@
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0075</systemName>
       <comment>Direct / Direct / Direct :: SetValue</comment>
-      <oblock>OB99</oblock>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>OB99</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetValue</operationDirect>
       <operationReference />
@@ -14938,11 +15062,13 @@
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0076</systemName>
       <comment>Direct / Direct :: ClearError</comment>
-      <oblock>OB99</oblock>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>OB99</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>ClearError</operationDirect>
       <operationReference />
@@ -15013,11 +15139,13 @@
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0077</systemName>
       <comment>Direct / LocalVariable</comment>
-      <oblock>OB99</oblock>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>OB99</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>LocalVariable</operationAddressing>
       <operationDirect>Deallocate</operationDirect>
       <operationReference />
@@ -15088,10 +15216,12 @@
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0078</systemName>
       <comment>LocalVariable / Formula</comment>
-      <addressing>LocalVariable</addressing>
-      <reference />
-      <localVariable>index</localVariable>
-      <formula />
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference />
+        <localVariable>index</localVariable>
+        <formula />
+      </namedBean>
       <operationAddressing>Formula</operationAddressing>
       <operationDirect>Deallocate</operationDirect>
       <operationReference />
@@ -15162,10 +15292,12 @@
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0079</systemName>
       <comment>Formula / Reference</comment>
-      <addressing>Formula</addressing>
-      <reference />
-      <localVariable />
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference />
+        <localVariable />
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Reference</operationAddressing>
       <operationDirect>Deallocate</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -15236,10 +15368,12 @@
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0080</systemName>
       <comment>Reference / Direct :: SetOutOfService</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetOutOfService</operationDirect>
       <operationReference />
@@ -15843,10 +15977,12 @@
     </ActionScript>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0089</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <sensorState>Active</sensorState>
       <stateReference />
@@ -15912,11 +16048,13 @@
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0090</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>LocalVariable</stateAddressing>
       <sensorState>Inactive</sensorState>
       <stateReference>{IM2}</stateReference>
@@ -15982,11 +16120,13 @@
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0091</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Formula</stateAddressing>
       <sensorState>Active</sensorState>
       <stateReference>{IM2}</stateReference>
@@ -16052,11 +16192,13 @@
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0092</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Reference</stateAddressing>
       <sensorState>Toggle</sensorState>
       <stateReference>{IM2}</stateReference>
@@ -16122,11 +16264,13 @@
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0093</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <sensorState>Unknown</sensorState>
       <stateReference>{IM2}</stateReference>
@@ -16191,11 +16335,13 @@
     </ActionSensor>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0094</systemName>
-      <sensor>IS1</sensor>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IS1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <stateAddressing>Direct</stateAddressing>
       <sensorState>Inconsistent</sensorState>
       <stateReference />
@@ -18313,10 +18459,12 @@
     </ActionTurnout>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0123</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>AllocateWarrantRoute</operationDirect>
       <operationReference />
@@ -18387,10 +18535,12 @@
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0124</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>AllocateWarrantRoute</operationDirect>
       <operationReference />
@@ -18461,10 +18611,12 @@
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0125</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>AllocateWarrantRoute</operationDirect>
       <operationReference />
@@ -18536,11 +18688,13 @@
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0126</systemName>
       <comment>Direct / Direct / Direct :: SetTrainName</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetTrainName</operationDirect>
       <operationReference />
@@ -18612,11 +18766,13 @@
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0127</systemName>
       <comment>Direct / Direct / Direct :: ControlAutoTrain - Resume</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>ControlAutoTrain</operationDirect>
       <operationReference />
@@ -18688,11 +18844,13 @@
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0128</systemName>
       <comment>Direct / Direct :: AllocateWarrantRoute</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>AllocateWarrantRoute</operationDirect>
       <operationReference />
@@ -18764,11 +18922,13 @@
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0129</systemName>
       <comment>Direct / LocalVariable</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>LocalVariable</operationAddressing>
       <operationDirect>AllocateWarrantRoute</operationDirect>
       <operationReference />
@@ -18840,10 +19000,12 @@
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0130</systemName>
       <comment>LocalVariable / Formula</comment>
-      <addressing>LocalVariable</addressing>
-      <reference />
-      <localVariable>index</localVariable>
-      <formula />
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference />
+        <localVariable>index</localVariable>
+        <formula />
+      </namedBean>
       <operationAddressing>Formula</operationAddressing>
       <operationDirect>AllocateWarrantRoute</operationDirect>
       <operationReference />
@@ -18915,10 +19077,12 @@
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0131</systemName>
       <comment>Formula / Reference</comment>
-      <addressing>Formula</addressing>
-      <reference />
-      <localVariable />
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference />
+        <localVariable />
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Reference</operationAddressing>
       <operationDirect>AllocateWarrantRoute</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -18990,10 +19154,12 @@
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0132</systemName>
       <comment>Reference / Direct :: DeallocateWarrant</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>DeallocateWarrant</operationDirect>
       <operationReference />
@@ -19636,10 +19802,12 @@
     </DoStringAction>
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0141</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>Disable</operationDirect>
       <operationReference />
@@ -19705,11 +19873,13 @@
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0142</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>LocalVariable</operationAddressing>
       <operationDirect>Enable</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -19775,11 +19945,13 @@
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0143</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Formula</operationAddressing>
       <operationDirect>Disable</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -19845,11 +20017,13 @@
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0144</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Reference</operationAddressing>
       <operationDirect>Enable</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -19915,11 +20089,13 @@
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0145</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>Enable</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -19984,10 +20160,12 @@
     </EnableLogix>
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0146</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetNXPairEnabled</operationDirect>
       <operationReference />
@@ -20053,10 +20231,12 @@
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0147</systemName>
       <comment>A comment</comment>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>LocalVariable</operationAddressing>
       <operationDirect>SetNXPairDisabled</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -20122,10 +20302,12 @@
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0148</systemName>
       <comment>A comment</comment>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Formula</operationAddressing>
       <operationDirect>SetNXPairEnabled</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -20191,10 +20373,12 @@
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0149</systemName>
       <comment>A comment</comment>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Reference</operationAddressing>
       <operationDirect>SetNXPairSegment</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -20260,10 +20444,12 @@
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0150</systemName>
       <comment>A comment</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>SetNXPairDisabled</operationDirect>
       <operationReference>{IM2}</operationReference>
@@ -22846,10 +23032,12 @@
     <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
       <systemName>IQDA:AUTO:0187</systemName>
       <localVariable />
-      <tableAddressing>Direct</tableAddressing>
-      <tableReference />
-      <tableLocalVariable />
-      <tableFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName />
       <rowOrColumnReference />
@@ -22920,11 +23108,13 @@
       <systemName>IQDA:AUTO:0188</systemName>
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
-      <table>IQT1</table>
-      <tableAddressing>Direct</tableAddressing>
-      <tableReference />
-      <tableLocalVariable />
-      <tableFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IQT1</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName>North yard</rowOrColumnName>
       <rowOrColumnReference />
@@ -23060,11 +23250,13 @@
       <systemName>IQDA:AUTO:0190</systemName>
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
-      <table>IQT1</table>
-      <tableAddressing>Direct</tableAddressing>
-      <tableReference>{MyTableRef}</tableReference>
-      <tableLocalVariable>MyTableVar</tableLocalVariable>
-      <tableFormula>MyTableFormula</tableFormula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IQT1</name>
+        <reference>{MyTableRef}</reference>
+        <localVariable>MyTableVar</localVariable>
+        <formula>MyTableFormula</formula>
+      </namedBean>
       <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName>Second turnout</rowOrColumnName>
       <rowOrColumnReference>{MyRowOrColumnRef}</rowOrColumnReference>
@@ -23677,10 +23869,12 @@
     </Timeout>
     <TriggerRoute class="jmri.jmrit.logixng.actions.configurexml.TriggerRouteXml">
       <systemName>IQDA:AUTO:0198</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>TriggerRoute</operationDirect>
       <operationReference />
@@ -23746,10 +23940,12 @@
     <TriggerRoute class="jmri.jmrit.logixng.actions.configurexml.TriggerRouteXml">
       <systemName>IQDA:AUTO:0199</systemName>
       <comment>A comment</comment>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <operationAddressing>Direct</operationAddressing>
       <operationDirect>TriggerRoute</operationDirect>
       <operationReference />
@@ -25758,6 +25954,12 @@
   <LogixNGAnalogActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXml">
     <AnalogActionMemory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
       <systemName>IQAA:AUTO:0001</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
@@ -25818,7 +26020,13 @@
     <AnalogActionMemory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
       <systemName>IQAA:AUTO:0002</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
@@ -26383,6 +26591,12 @@
   <LogixNGStringActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultStringActionManagerXml">
     <StringActionMemory class="jmri.jmrit.logixng.actions.configurexml.StringActionMemoryXml">
       <systemName>IQSA:AUTO:0001</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
@@ -26443,7 +26657,13 @@
     <StringActionMemory class="jmri.jmrit.logixng.actions.configurexml.StringActionMemoryXml">
       <systemName>IQSA:AUTO:0002</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <reference />
+        <localVariable />
+        <formula />
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
@@ -26634,14 +26854,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Fri Feb 25 00:52:59 CET 2022</date>
+      <date>Sat Apr 09 19:14:08 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Feb 25 00:52:59 CET 2022</date>
+      <date>Sat Apr 09 19:14:08 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.3plus+daniel+2022-02-24T23:52:35Z+R33b934f on Fri Feb 25 00:52:59 CET 2022-->
+  <!--Written by JMRI version 4.99.4plus+daniel+2022-04-09T17:13:40Z+Re097eec on Sat Apr 09 19:14:08 CEST 2022-->
 </layout-config>
