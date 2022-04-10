@@ -321,7 +321,7 @@ public class StoreAndLoadTest {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
-        maleSocket.setSystem(true);
+//        maleSocket.setSystem(true);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // Direct / Direct / Direct :: SetValue
@@ -3945,6 +3945,62 @@ public class StoreAndLoadTest {
 
             // Add the header comment to the xml file
             addHeader(firstFile, secondFile);
+
+
+
+            //**********************************
+            // Test deep copy of all the LogixNGs since that we have
+            // almost all actions and expressions with lots of data.
+            //**********************************
+
+            var systemNames = new HashMap<String, String>();
+            var userNames = new HashMap<String, String>();
+
+            PrintTreeSettings otherPrintTreeSettings = new PrintTreeSettings();
+            otherPrintTreeSettings._printDisplayName = false;
+            otherPrintTreeSettings._hideUserName = true;
+
+            java.util.Set<LogixNG> newLogixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
+            for (LogixNG aLogixNG : newLogixNG_Set) {
+                for (int i=0; i < aLogixNG.getNumConditionalNGs(); i++) {
+                    FemaleSocket originSocket = aLogixNG.getConditionalNG(i).getFemaleSocket();
+
+                    if (originSocket.isConnected()) {
+                        Base origin = originSocket.getConnectedSocket();
+
+                        Base copy = origin.getDeepCopy(systemNames, userNames);
+
+                        stringWriter = new StringWriter();
+                        printWriter = new PrintWriter(stringWriter);
+                        origin.printTree(
+                                otherPrintTreeSettings,
+                                Locale.ENGLISH,
+                                printWriter,
+                                treeIndent,
+                                new MutableInt(0));
+
+                        String originStr = stringWriter.toString();
+
+                        stringWriter = new StringWriter();
+                        printWriter = new PrintWriter(stringWriter);
+                        copy.printTree(
+                                otherPrintTreeSettings,
+                                Locale.ENGLISH,
+                                printWriter,
+                                treeIndent,
+                                new MutableInt(0));
+
+                        String copyStr = stringWriter.toString();
+//                        String copyStr = stringWriter.toString() + "\nDaniel";
+
+//                        System.out.format("%n%n%n------------------------------------%n%n%s%n%n------------------------------------%n%n%n", originStr);
+//                        System.out.format("%n%n%n------------------------------------%n%n%s%n%n------------------------------------%n%n%n", copyStr);
+
+                        Assert.assertEquals(originStr, copyStr);
+                    }
+                }
+            }
+
 
 
             //**********************************

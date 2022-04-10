@@ -237,7 +237,7 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Set the parent for all the children.
-     * 
+     *
      * @param errors a list of potential errors
      * @return true if success, false otherwise
      */
@@ -573,6 +573,7 @@ public interface Base extends PropertyChangeProvider {
     public static class PrintTreeSettings {
         public boolean _printLineNumbers = false;
         public boolean _printDisplayName = false;
+        public boolean _hideUserName = false;           // Used for tests
         public boolean _printErrorHandling = true;
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;

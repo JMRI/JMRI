@@ -54,7 +54,15 @@ public class ExpressionConditional extends AbstractDigitalExpression
         copy.set_Is_IsNot(_is_IsNot);
 //        if (_conditional != null) copy.setConditional(_conditional);
         if (_conditionalHandle != null) copy.setConditional(_conditionalHandle);
+        copy.setAddressing(_addressing);
+        copy.setReference(_reference);
+        copy.setLocalVariable(_localVariable);
+        copy.setFormula(_formula);
         copy.setConditionalState(_conditionalState);
+        copy.setStateAddressing(_stateAddressing);
+        copy.setStateReference(_stateReference);
+        copy.setStateLocalVariable(_stateLocalVariable);
+        copy.setStateFormula(_stateFormula);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
