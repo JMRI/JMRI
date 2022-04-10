@@ -48,7 +48,7 @@ public class TestClassMainMethod {
 
     // Main entry point
     static public void main(String[] args) {
-        String className = args[0];
+        String className = args[args.length-1];  // last argument is class name
 
         // as a convenience, allow file names and paths
         className = className.replace("//","/");
