@@ -3991,7 +3991,6 @@ public class StoreAndLoadTest {
                                 new MutableInt(0));
 
                         String copyStr = stringWriter.toString();
-//                        String copyStr = stringWriter.toString() + "\nDaniel";
 
 //                        System.out.format("%n%n%n------------------------------------%n%n%s%n%n------------------------------------%n%n%n", originStr);
 //                        System.out.format("%n%n%n------------------------------------%n%n%s%n%n------------------------------------%n%n%n", copyStr);
