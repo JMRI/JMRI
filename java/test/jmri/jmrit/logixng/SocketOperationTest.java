@@ -27,23 +27,32 @@ public class SocketOperationTest {
         java.util.Set<LogixNG> newLogixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
         for (LogixNG aLogixNG : newLogixNG_Set) {
             for (int i=0; i < aLogixNG.getNumConditionalNGs(); i++) {
-                FemaleSocket originSocket = aLogixNG.getConditionalNG(i).getFemaleSocket();
 
-                if (originSocket.isConnected()) {
-                    Base origin = originSocket.getConnectedSocket();
+                aLogixNG.getConditionalNG(i).forEntireTree((b) -> {
 
-                    for (int count=0; i < 100; i++) {
+                    if (b instanceof FemaleSocket) {
 
-                        FemaleSocket child = origin.getChild(random(origin.getChildCount()));
+                        FemaleSocket originSocket = (FemaleSocket)b;
+                        if (originSocket.isConnected()) {
 
-                        FemaleSocketOperation fso = FemaleSocketOperation.values()[
-                                random(FemaleSocketOperation.values().length)];
+                            Base socket = originSocket.getConnectedSocket();
 
-                        if (child.isSocketOperationAllowed(fso)) {
-                            child.doSocketOperation(fso);
+                            for (int count=0; count < 100; count++) {
+
+                                if (socket.getChildCount() > 0) {
+                                    FemaleSocket child = socket.getChild(random(socket.getChildCount()));
+
+                                    FemaleSocketOperation fso = FemaleSocketOperation.values()[
+                                            random(FemaleSocketOperation.values().length)];
+
+                                    if (child.isSocketOperationAllowed(fso)) {
+                                        child.doSocketOperation(fso);
+                                    }
+                                }
+                            }
                         }
                     }
-                }
+                });
             }
         }
     }

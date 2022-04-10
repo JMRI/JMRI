@@ -245,16 +245,17 @@ public class Sequence extends AbstractDigitalAction
                         && !getChild(index).isConnected()
                         && !getChild(index+1).isConnected();
             case InsertBefore:
-                // Possible if not the three static sockets
+                // Possible if not the first three static sockets
                 return index >= 0;
             case InsertAfter:
                 // Possible if not the static sockets, except the last one
                 return index >= -1;
             case MoveUp:
-                return index >= 2;   // Possible if not the three static sockets and the first two sockets after that
+                // Possible, except for the the three static sockets, the first two sockets after that, and the last socket
+                return (index >= 2) && ((index+NUM_STATIC_EXPRESSIONS) < (getChildCount()-1));
             case MoveDown:
-                // Possible if not the static sockets and if not last three sockets
-                return (index >= 0) && (index < getChildCount());
+                // Possible if not the static sockets and if not the last three sockets
+                return (index >= 0) && ((index+NUM_STATIC_EXPRESSIONS) < (getChildCount()-3));
             default:
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
@@ -288,7 +289,7 @@ public class Sequence extends AbstractDigitalAction
 
     private void removeSocket(int index) {
         int actionIndex = index >> 1;
-        int expressionIndex = index-NUM_STATIC_EXPRESSIONS >> 1;
+        int expressionIndex = index >> 1;
 
         List<FemaleSocket> removeList = new ArrayList<>();
         removeList.add(_actionEntries.remove(actionIndex)._socket);
