@@ -94,7 +94,6 @@ public class Sequence extends AbstractDigitalAction
 
         // Ensure the copy has as many childs as myself
         while (copy.getChildCount() < this.getChildCount()) {
-//            copy.insertNewSocket(copy.getChildCount()-1);
             copy.doSocketOperation(copy.getChildCount()-1, FemaleSocketOperation.InsertAfter);
         }
 
