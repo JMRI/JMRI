@@ -230,34 +230,7 @@ public class Sequence extends AbstractDigitalAction
     public int getChildCount() {
         return NUM_STATIC_EXPRESSIONS + _expressionEntries.size() + _actionEntries.size();
     }
-/*
-    private void checkFreeSocket() {
-        boolean hasFreeSocket = false;
 
-        for (ActionEntry entry : _actionEntries) {
-            hasFreeSocket |= !entry._socket.isConnected();
-        }
-        for (ExpressionEntry entry : _expressionEntries) {
-            hasFreeSocket |= !entry._socket.isConnected();
-        }
-        if (!hasFreeSocket) {
-            FemaleDigitalActionSocket actionSocket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .createFemaleSocket(this, this, getNewActionSocketName());
-            _actionEntries.add(new ActionEntry(actionSocket));
-
-            FemaleDigitalExpressionSocket exprSocket =
-                    InstanceManager.getDefault(DigitalExpressionManager.class)
-                            .createFemaleSocket(this, this, getNewExpressionSocketName());
-            _expressionEntries.add(new ExpressionEntry(exprSocket));
-
-            List<FemaleSocket> list = new ArrayList<>();
-            list.add(actionSocket);
-            list.add(exprSocket);
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
-        }
-    }
-*/
     /** {@inheritDoc} */
     @Override
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
