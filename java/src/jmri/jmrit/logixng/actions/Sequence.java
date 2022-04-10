@@ -236,14 +236,17 @@ public class Sequence extends AbstractDigitalAction
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
         index -= NUM_STATIC_EXPRESSIONS;
 
+        // Num children except the static expressions
+        int numChilds = getChildCount() - NUM_STATIC_EXPRESSIONS;
+
         switch (oper) {
             case Remove:
                 // Possible if not the three static sockets,
                 // the socket is not connected and the next socket is not connected
                 return (index >= 0)
-                        && (index+1 < getChildCount())
-                        && !getChild(index).isConnected()
-                        && !getChild(index+1).isConnected();
+                        && (index+1 < numChilds)
+                        && !getChild(index+NUM_STATIC_EXPRESSIONS).isConnected()
+                        && !getChild(index+NUM_STATIC_EXPRESSIONS+1).isConnected();
             case InsertBefore:
                 // Possible if not the first three static sockets
                 return index >= 0;
@@ -252,10 +255,10 @@ public class Sequence extends AbstractDigitalAction
                 return index >= -1;
             case MoveUp:
                 // Possible, except for the the three static sockets, the first two sockets after that, and the last socket
-                return (index >= 2) && ((index+NUM_STATIC_EXPRESSIONS) < (getChildCount()-1));
+                return (index >= 2) && (index < numChilds-1);
             case MoveDown:
                 // Possible if not the static sockets and if not the last three sockets
-                return (index >= 0) && ((index+NUM_STATIC_EXPRESSIONS) < (getChildCount()-3));
+                return (index >= 0) && (index < numChilds-3);
             default:
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
@@ -291,6 +294,11 @@ public class Sequence extends AbstractDigitalAction
         int actionIndex = index >> 1;
         int expressionIndex = index >> 1;
 
+        // Does index points to an expression socket instead of an action socket?
+        if ((index % 2) != 0) {
+            actionIndex = (index >> 1) + 1;
+        }
+
         List<FemaleSocket> removeList = new ArrayList<>();
         removeList.add(_actionEntries.remove(actionIndex)._socket);
         removeList.add(_expressionEntries.remove(expressionIndex)._socket);
@@ -303,7 +311,6 @@ public class Sequence extends AbstractDigitalAction
 
         // Does index points to an expression socket instead of an action socket?
         if ((index % 2) != 0) {
-            expressionIndex = index >> 1;
             actionIndex = (index >> 1) + 1;
         }
 
@@ -330,9 +337,9 @@ public class Sequence extends AbstractDigitalAction
 
         switch (oper) {
             case Remove:
-                if (index+1 >= getChildCount()) throw new UnsupportedOperationException("Cannot remove only the last socket");
-                if (getChild(index).isConnected()) throw new UnsupportedOperationException("Socket is connected");
-                if (getChild(index+1).isConnected()) throw new UnsupportedOperationException("Socket below is connected");
+                if (index+NUM_STATIC_EXPRESSIONS+1 >= getChildCount()) throw new UnsupportedOperationException("Cannot remove only the last socket");
+                if (getChild(index+NUM_STATIC_EXPRESSIONS).isConnected()) throw new UnsupportedOperationException("Socket is connected");
+                if (getChild(index+NUM_STATIC_EXPRESSIONS+1).isConnected()) throw new UnsupportedOperationException("Socket below is connected");
                 removeSocket(index);
                 break;
             case InsertBefore:
