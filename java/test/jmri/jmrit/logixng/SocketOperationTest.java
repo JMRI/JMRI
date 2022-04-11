@@ -36,9 +36,10 @@ public class SocketOperationTest {
         runTest(true, true);
     }
 
-    int countIterations = 0;
-    final int total = 873;
+//    int countIterations = 0;
+//    final int total = 873;
     Set<Base> listOfSockets = new HashSet<>();
+    Map<Class<? extends Base>, SwingConfiguratorInterface> sciSet = new HashMap<>();
 
     public void runTest(boolean addRemoveChildren, boolean testSocketOperations)
             throws PropertyVetoException, Exception {
@@ -54,7 +55,7 @@ public class SocketOperationTest {
 
                 aLogixNG.getConditionalNG(i).forEntireTreeWithException((b) -> {
 
-                    System.out.format("Count: %3d / %3d, Percent: %2d%n", ++countIterations, total, (int)(100.0*countIterations/total));
+//                    System.out.format("Count: %3d / %3d, Percent: %2d%n", ++countIterations, total, (int)(100.0*countIterations/total));
 
                     if (b instanceof FemaleSocket) {
 
@@ -137,10 +138,13 @@ public class SocketOperationTest {
 
         Class<? extends Base> clazz = categoryList.get(random(categoryList.size()));
 
-        SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
-
-        sci.setJDialog(new javax.swing.JDialog());
-        sci.getConfigPanel(new javax.swing.JPanel());
+        SwingConfiguratorInterface sci = sciSet.get(clazz);
+        if (sci == null) {
+            sci = SwingTools.getSwingConfiguratorForClass(clazz);
+            sci.setJDialog(new javax.swing.JDialog());
+            sci.getConfigPanel(new javax.swing.JPanel());
+            sciSet.put(clazz, sci);
+        }
 
         MaleSocket maleSocket = sci.createNewObject(sci.getAutoSystemName(), null);
         child.connect(maleSocket);
