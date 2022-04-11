@@ -191,6 +191,7 @@ public class SocketOperationTest {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
