@@ -386,8 +386,6 @@ public class Sequence extends AbstractDigitalAction
                 }
             }
         }
-
-//        checkFreeSocket();
     }
 
     @Override
@@ -477,32 +475,7 @@ public class Sequence extends AbstractDigitalAction
     public int getNumActions() {
         return _actionEntries.size();
     }
-/*
-    public void setNumActions(int num) {
-        List<FemaleSocket> addList = new ArrayList<>();
-        List<FemaleSocket> removeList = new ArrayList<>();
 
-        // Is there too many children?
-        while (_actionEntries.size() > num) {
-            ActionEntry ae = _actionEntries.get(num);
-            if (ae._socket.isConnected()) {
-                throw new IllegalArgumentException("Cannot remove sockets that are connected");
-            }
-            removeList.add(_actionEntries.get(_actionEntries.size()-1)._socket);
-            _actionEntries.remove(_actionEntries.size()-1);
-        }
-
-        // Is there not enough children?
-        while (_actionEntries.size() < num) {
-            FemaleDigitalActionSocket socket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .createFemaleSocket(this, this, getNewSocketName());
-            _actionEntries.add(new ActionEntry(socket));
-            addList.add(socket);
-        }
-        firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, addList);
-    }
-*/
     public FemaleDigitalActionSocket getActionSocket(int socket) {
         return _actionEntries.get(socket)._socket;
     }

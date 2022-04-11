@@ -560,9 +560,26 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
+    /**
+     * Do something on every item in the sub tree of this item.
+     * @param r the action to do on all items.
+     * @throws Exception if an exception occurs
+     */
+    public default void forEntireTreeWithException(RunnableWithBaseThrowException r) throws Exception {
+        r.run(this);
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).forEntireTreeWithException(r);
+        }
+    }
+
 
     public interface RunnableWithBase {
         public void run(@Nonnull Base b);
+    }
+
+
+    public interface RunnableWithBaseThrowException {
+        public void run(@Nonnull Base b) throws Exception;
     }
 
 
