@@ -575,6 +575,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Fixed an issue where ZSH-using developers might not be able to use ./runtest.csh</li>
             <li></li>
         </ul>
 
