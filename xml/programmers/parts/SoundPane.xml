@@ -8,6 +8,7 @@
   <name xml:lang="fr">Sons</name>
   <name xml:lang="it">Suoni</name>
   <name xml:lang="nl">Geluid</name>
+  <name xml:lang="es">Sonidos</name>
   <column>
     <display item="Sound Option 1"/>
     <display item="Sound Option 2"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -55,6 +55,7 @@
     <label xml:lang="fr">Accelération</label>
     <label xml:lang="de">Anfahrverzögerung</label>
     <label xml:lang="nl">Versnelling</label>
+    <label xml:lang="es">Aceleración</label>
     <comment>Range 0-254</comment>
 	<comment xml:lang="da">Værdi 0-254</comment>
     <comment xml:lang="it">Valori 0-254</comment>
@@ -62,6 +63,7 @@
     <comment xml:lang="fr">Valeur 0-254</comment>
     <comment xml:lang="de">Wert 0-254</comment>
     <comment xml:lang="nl">Waarde van 0-254</comment>
+    <comment xml:lang="es">Valores 0-254</comment>
   </variable>
   <variable CV="4" item="Decel" default="0" comment="Range 0-254">
     <decVal max="254"/>
@@ -72,6 +74,7 @@
     <label xml:lang="fr">Décélération</label>
     <label xml:lang="de">Bremszeit</label>
     <label xml:lang="nl">Remvertraging</label>
+    <label xml:lang="es">Desaceleración</label>
     <comment>Range 0-254</comment>
 	<comment xml:lang="da">Værdi 0-254</comment>
     <comment xml:lang="it">Valori 0-254</comment>
@@ -79,5 +82,6 @@
     <comment xml:lang="fr">Valeur 0-254</comment>
     <comment xml:lang="de">Wert 0-254</comment>
     <comment xml:lang="nl">Waarde van 0-254</comment>
+    <comment xml:lang="es">Valores 0-254</comment>
   </variable>
 </variables>

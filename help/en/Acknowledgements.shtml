@@ -805,6 +805,9 @@
         products, helped fix a problem with overrunning LocoNet command stations, and provided
         example web pages for layout control via the mini-webserver.</li>
 
+        <li>Rodrigo Rodriguez, <!-- RodrigoFXE  -->
+        who translated the decoder definitions into Spanish.
+
         <li>Mark Rogerson, who provided the RXTX (Java communications library) for Mac OS X
         machines with Intel processors</li>
 

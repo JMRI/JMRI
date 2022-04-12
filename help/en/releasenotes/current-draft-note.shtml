@@ -116,28 +116,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li><b>Throttle support.</b> JMRI Throttles can now operate
-                OpenLCB locomotives on OpenLCB / LCC Command Stations via the
-                Traction Protocol draft.</li>
-                <li><b>Monitor Log updates.</b> Decodes and prints the Traction
-                Protocol messages in the Monitor Log window.</li>
-                <li><b>Accessibility changes.</b> The network browser / tree is
-                now navigable using keyboard shortcuts. On the Configuration
-                Editor panel the keys F6 and Shift+F6 can be used to navigate
-                between subsequent sections of the configuration and the bar of
-                buttons at the bottom.</li>
-                <li><b>Test Event button.</b> In the Configuration Editor the
-                Event panels have a new button More... which opens a
-                dropdown. In the dropdown there is a Trigger button which sends
-                the given event. This is useful for testing. In the same
-                dropdown there is a Create Sensor button which for JMRI will
-                create a single-event sensor.</li>
-                <li><b>Bug fixes.</b> Fixes memory leak when opening many
-                different nodes' Configuration Editor windows. The CAN
-                Interface engine now correctly supports sending a message to a
-                Destination Node ID for which there is no currently registered
-                Alias in the Alias Map. The outgoing message will be enqueued
-                and an alias lookup interaction is triggered.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -315,12 +294,7 @@
                 <li></li>
             </ul>
 
-        <h4>Tam Valley Depot</h4>
-            <ul>
-                <li>QuadLN_S - added support for new firmware version 3.1 features</li>
-            </ul>
-            
-       <h4>TAMS</h4>
+        <h4>TAMS</h4>
             <ul>
                 <li></li>
             </ul>
@@ -390,9 +364,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Fixed bouncing speed slider in manual mode.</li>
-             <li>Size AutoTrainsWindow correctly when going between auto and manual with use scroll bars off.</li>
-             <li>Enabled disaplay scale speed for running with speed profiles.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -427,7 +399,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Several severe errors have been fixed when doing a copy of a LogixNG action or expression.</li>
+          <li>If a female socket of the action Sequence is removed, the socket after it is also removed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -549,10 +522,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Add capability to display/print throttle files in easy-to-read browser format (using XSL transform)</li>
-            <li>If there are at least two connections that have support for throttles, a
-            <a href="https://github.com/JMRI/JMRI/pull/10697#issuecomment-1038477488">new menu</a>
-            appears that lets you open a throttle for a particular connection.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -600,19 +570,13 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added a new version of "advanced location following". This is now based
-            on a LayoutEditor panel and hence much easier to setup. See the
-            <a href="https://www.jmri.org/help/en/manual/DecoderPro/VSD_LocationsMgr.shtml#advanced_location_following">
-			documentation</a> for details.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add a search feature to the JmriHelp local web page.</li>
-            <li>The method JUnitUtil.releaseThread(this) and JUnitUtil.releaseThread(this, delay)
-            has been removed. Use JUnitUtil.waitFor(int time) instead. Replace the call
-            JUnitUtil.releaseThread(this) with JUnitUtil.waitFor(JUnitUtil.DEFAULT_RELEASETHREAD_DELAY);</li>
-            <li>Improve Block tracking in the case of a broken train being rejoined.
+            <li>Fixed an issue where ZSH-using developers might not be able to use ./runtest.csh</li>
+            <li></li>
         </ul>
 

@@ -922,7 +922,7 @@
       <a href="#Cars">cars</a> window and the <a href="#CarsEdit">add car</a> window will allow you
       to enter cars into your operations database. Be sure to place the cars on a track using the
       "Location and Track" field found in either the <a href="#CarsEdit">add / edit car</a> or
-      <a href="#CarsSet">set car</a> window. The program works best if you keep at least 50% of
+      <a href="#CarsSet">set car</a> window. The program works best if you keep at least 20% of
       your tracks empty, so don't place too many cars on tracks until you understand how the
       program builds trains.</p>
 
@@ -1345,7 +1345,7 @@
 
       <p>When building trains in aggressive mode, you can control the number of passes the program
       performs. Two passes is the default, and for most users is the correct value. The program
-      works best when less than 50% of your tracks are full, and two passes should provide good car
+      works best when there's space for cars on the layout, and two passes should provide good car
       movement. If your layout is more towards the full side of the equation, increasing the number
       of passes could increase car movement. In most cases, three passes is more than adequate, and
       if your layout is jammed with cars, four passes might provide you with good car movement. The

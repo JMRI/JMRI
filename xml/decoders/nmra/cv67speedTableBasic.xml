@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -39,6 +39,7 @@
     <label xml:lang="fr">Tableau de Vitesse</label>
     <label xml:lang="it">Tabella Velocità</label>
     <label xml:lang="nl">Snelheidsgrafiek</label>
+    <label xml:lang="es">Tabla de velocidad</label>
     <label xml:lang="cs">Rychlostní tabulka</label>
     <label xml:lang="ca">Taula de Velocitats</label>
   </variable>

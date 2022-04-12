@@ -122,7 +122,7 @@ public class CbusOpCodesTest {
     
     @Test
     public void testextendedFrameTranslation(){
-    
+        // Outgoing control messages
         CanMessage m = new CanMessage( new int[]{5,1,2,3,0x0d,0,6,7},0x04  );
         m.setExtended(true);
         Assert.assertEquals("extended 4  0","Bootloader: Do nothing",CbusOpCodes.decode(m));
@@ -131,7 +131,7 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 4  1","Bootloader: Issue soft reset, leave boot mode",CbusOpCodes.decode(m));
         
         m.setElement(5, 2);
-        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum to 131,333 and verify",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum and set address to 131,333",CbusOpCodes.decode(m));
         
         m.setElement(5, 3);
         Assert.assertEquals("extended 4  3","Bootloader: Boot Check with checksum 1,798",CbusOpCodes.decode(m));
@@ -140,24 +140,62 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 4  4","Bootloader: Verify boot mode",CbusOpCodes.decode(m));
     
         m.setElement(5, 5);
-        Assert.assertEquals("extended 4  5","Unknown Extended Frame",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 4  5","Bootloader: Request device ID",CbusOpCodes.decode(m));
         
+        m.setElement(5, 6);
+        Assert.assertEquals("extended 4  6","Bootloader: Request bootloader ID",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 7);
+        Assert.assertEquals("extended 4  7","Bootloader: Memory write enables",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 8);
+        Assert.assertEquals("extended 4  8","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        // Outgoing dat amessages
         m.setHeader(5);
-        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 05 06 07",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 08 06 07",CbusOpCodes.decode(m));
         
-        
+        // Incoming control replies
         m = new CanMessage( new int[]{0},0x10000004 );
         m.setExtended(true);
-        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Error",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Command Error",CbusOpCodes.decode(m));
         
         m.setElement(0, 1);
-        Assert.assertEquals("extended 10000004 1","Bootloader: Boot OK",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Command OK",CbusOpCodes.decode(m));
         
         m.setElement(0, 2);
-        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 2","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
         
         m.setElement(0, 3);
-        Assert.assertEquals("extended 10000004 1","Unknown Extended Frame",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 4);
+        Assert.assertEquals("extended 10000004 4","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        m = new CanMessage( new int[]{5,4,3,2,1,0,0},0x10000004  );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000004 5","Bootloader: Device ID",CbusOpCodes.decode(m));
+
+        m = new CanMessage( new int[]{6,5,4,3,2},0x10000004  );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000004 6","Bootloader: Bootloader ID",CbusOpCodes.decode(m));
+
+        // Incoming data replies
+        m = new CanMessage( new int[]{0},0x10000005 );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000005 0","Bootloader: Boot Data Error",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 1);
+        Assert.assertEquals("extended 10000005 1","Bootloader: Boot Data OK",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 2);
+        Assert.assertEquals("extended 10000005 2","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 3);
+        Assert.assertEquals("extended 10000005 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 4);
+        Assert.assertEquals("extended 10000005 4","Unknown Extended Frame",CbusOpCodes.decode(m));
         
     }
     

@@ -40,7 +40,14 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         copy.setNamedBeanType(_namedBeanType);
         copy.setTable(_tableHandle);
         copy.setTableRowOrColumn(_tableRowOrColumn);
+        copy.setRowOrColumnName(_rowOrColumnName);
         copy.setIncludeCellsWithoutHeader(_includeCellsWithoutHeader);
+
+        for (var entry : _namedBeansEntries) {
+            copy._namedBeansEntries.add(
+                    new HashMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+        }
+
         return manager.registerAction(copy);
     }
 
