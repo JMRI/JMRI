@@ -257,6 +257,18 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     /**
      * Add a {@link java.beans.PropertyChangeListener} for a specific property.
      *
+     * @param listener The PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(
+            @CheckForNull PropertyChangeListener listener) {
+        if ((_addressing == NamedBeanAddressing.Direct) && (_handle != null)) {
+            _handle.getBean().addPropertyChangeListener(listener);
+        }
+    }
+
+    /**
+     * Add a {@link java.beans.PropertyChangeListener} for a specific property.
+     *
      * @param propertyName The name of the property to listen on.
      * @param listener     The PropertyChangeListener to be added
      */
@@ -265,6 +277,19 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
             @CheckForNull PropertyChangeListener listener) {
         if ((_addressing == NamedBeanAddressing.Direct) && (_handle != null)) {
             _handle.getBean().addPropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    /**
+     * Remove the specified listener of the specified property from this object.
+     *
+     * @param listener The {@link java.beans.PropertyChangeListener} to
+     *                 remove.
+     */
+    public void removePropertyChangeListener(
+            @CheckForNull PropertyChangeListener listener) {
+        if (_handle != null) {
+            _handle.getBean().removePropertyChangeListener(listener);
         }
     }
 

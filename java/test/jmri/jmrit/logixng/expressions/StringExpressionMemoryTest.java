@@ -98,13 +98,13 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertEquals("String matches", "Get memory none as string value", expression2.getLongDescription());
 
         expression2 = new StringExpressionMemory("IQSE11", null);
-        expression2.setMemory(_memory);
+        expression2.getSelectNamedBean().setNamedBean(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
         Assert.assertEquals("String matches", "Get memory IM1 as string value", expression2.getLongDescription());
 
         expression2 = new StringExpressionMemory("IQSE11", "My memory");
-        expression2.setMemory(_memory);
+        expression2.getSelectNamedBean().setNamedBean(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
         Assert.assertEquals("String matches", "Get memory IM1 as string value", expression2.getLongDescription());
@@ -138,7 +138,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertEquals("Evaluate matches", "", expression.evaluate());
         _memory.setValue("Other");
         Assert.assertEquals("Evaluate matches", "Other", expression.evaluate());
-        expression.removeMemory();
+        expression.getSelectNamedBean().removeNamedBean();
         Assert.assertEquals("Evaluate matches", "", expression.evaluate());
     }
 
@@ -187,7 +187,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
 
         // Test register listeners when there is no memory.
-        stringExpressionMemory.removeMemory();
+        stringExpressionMemory.getSelectNamedBean().removeNamedBean();
         stringExpressionMemory.registerListeners();
     }
 
@@ -197,62 +197,62 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         conditionalNG.setEnabled(false);
 
         StringExpressionMemory expressionMemory = (StringExpressionMemory)_base;
-        expressionMemory.removeMemory();
-        Assert.assertNull("Memory is null", expressionMemory.getMemory());
-        expressionMemory.setMemory(_memory);
-        Assert.assertTrue("Memory matches", _memory == expressionMemory.getMemory().getBean());
+        expressionMemory.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("Memory is null", expressionMemory.getSelectNamedBean().getNamedBean());
+        expressionMemory.getSelectNamedBean().setNamedBean(_memory);
+        Assert.assertTrue("Memory matches", _memory == expressionMemory.getSelectNamedBean().getNamedBean().getBean());
 
-        expressionMemory.removeMemory();
-        Assert.assertNull("Memory is null", expressionMemory.getMemory());
+        expressionMemory.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("Memory is null", expressionMemory.getSelectNamedBean().getNamedBean());
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         Assert.assertNotNull("memory is not null", otherMemory);
         NamedBeanHandle<Memory> memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-        expressionMemory.setMemory(memoryHandle);
-        Assert.assertTrue("Memory matches", memoryHandle == expressionMemory.getMemory());
-        Assert.assertTrue("Memory matches", otherMemory == expressionMemory.getMemory().getBean());
+        expressionMemory.getSelectNamedBean().setNamedBean(memoryHandle);
+        Assert.assertTrue("Memory matches", memoryHandle == expressionMemory.getSelectNamedBean().getNamedBean());
+        Assert.assertTrue("Memory matches", otherMemory == expressionMemory.getSelectNamedBean().getNamedBean().getBean());
 
-        expressionMemory.removeMemory();
-        Assert.assertNull("Memory is null", expressionMemory.getMemory());
-        expressionMemory.setMemory(memoryHandle.getName());
-        Assert.assertTrue("Memory matches", memoryHandle == expressionMemory.getMemory());
+        expressionMemory.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("Memory is null", expressionMemory.getSelectNamedBean().getNamedBean());
+        expressionMemory.getSelectNamedBean().setNamedBean(memoryHandle.getName());
+        Assert.assertTrue("Memory matches", memoryHandle == expressionMemory.getSelectNamedBean().getNamedBean());
 
-        // Test setMemory with a memory name that doesn't exists
-        expressionMemory.setMemory("Non existent memory");
-        Assert.assertNull("Memory is null", expressionMemory.getMemory());
+        // Test getSelectNamedBean().setNamedBean with a memory name that doesn't exists
+        expressionMemory.getSelectNamedBean().setNamedBean("Non existent memory");
+        Assert.assertNull("Memory is null", expressionMemory.getSelectNamedBean().getNamedBean());
         JUnitAppender.assertErrorMessage("memory \"Non existent memory\" is not found");
 
-        // Test setMemory() when listeners are registered
-        expressionMemory.setMemory(_memory);
-        Assert.assertNotNull("Memory is null", expressionMemory.getMemory());
+        // Test getSelectNamedBean().setNamedBean() when listeners are registered
+        expressionMemory.getSelectNamedBean().setNamedBean(_memory);
+        Assert.assertNotNull("Memory is null", expressionMemory.getSelectNamedBean().getNamedBean());
         // Enable the conditionalNG. This will register the listeners
         conditionalNG.setEnabled(true);
         boolean thrown = false;
         try {
-            expressionMemory.setMemory(otherMemory);
+            expressionMemory.getSelectNamedBean().setNamedBean(otherMemory);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("getSelectNamedBean().setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
-            expressionMemory.removeMemory();
+            expressionMemory.getSelectNamedBean().removeNamedBean();
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("getSelectNamedBean().setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
-            expressionMemory.removeMemory();
+            expressionMemory.getSelectNamedBean().removeNamedBean();
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("getSelectNamedBean().setNamedBean must not be called when listeners are registered");
     }
 
     @Test
@@ -260,7 +260,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         StringExpressionMemory expressionString = (StringExpressionMemory)_base;
         // Test registerListeners() when the ExpressionLight has no light
         conditionalNG.setEnabled(false);
-        expressionString.removeMemory();
+        expressionString.getSelectNamedBean().removeNamedBean();
         conditionalNG.setEnabled(true);
     }
 
@@ -276,24 +276,24 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
 
         // Get the stringExpressionMemory and set the memory
         StringExpressionMemory expression = (StringExpressionMemory)_base;
-        expression.setMemory(_memory);
-        Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
+        expression.getSelectNamedBean().setNamedBean(_memory);
+        Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for some other propery
         expression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
+        Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for a string
         expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
+        Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
         expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
+        Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for another memory
         expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherMemory, null));
-        Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
+        Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
         expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherMemory, null));
-        Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
+        Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for its own memory
         boolean thrown = false;
@@ -304,9 +304,9 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
-        Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
+        Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
         expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", _memory, null));
-        Assert.assertNull("Memory is null", expression.getMemory());
+        Assert.assertNull("Memory is null", expression.getSelectNamedBean().getNamedBean());
     }
 
     @Test
@@ -366,7 +366,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         MaleSocket maleSocketStringExpressionMemory =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpressionMemory);
         doStringAction.getChild(0).connect(maleSocketStringExpressionMemory);
-        stringExpressionMemory.setMemory(_memory);
+        stringExpressionMemory.getSelectNamedBean().setNamedBean(_memory);
         _base = stringExpressionMemory;
         _baseMaleSocket = maleSocketStringExpressionMemory;
 

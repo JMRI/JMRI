@@ -122,11 +122,11 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
 
 
         if (expression != null) {
-            if (expression.getReporter() != null) {
-                _reporterBeanPanel.setDefaultNamedBean(expression.getReporter().getBean());
+            if (expression.getSelectNamedBean().getNamedBean() != null) {
+                _reporterBeanPanel.setDefaultNamedBean(expression.getSelectNamedBean().getNamedBean().getBean());
             }
-            if (expression.getMemory() != null) {
-                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
+            if (expression.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getSelectMemoryNamedBean().getNamedBean().getBean());
             }
             switch (expression.getCompareTo()) {
                 case RegEx:
@@ -188,9 +188,9 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
             NamedBeanHandle<Reporter> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
                             .getNamedBeanHandle(reporter.getDisplayName(), reporter);
-            expression.setReporter(handle);
+            expression.getSelectNamedBean().setNamedBean(handle);
         } else {
-            expression.removeReporter();
+            expression.getSelectNamedBean().removeNamedBean();
         }
 
         expression.setReporterValue(_reporterValueComboBox.getItemAt(_reporterValueComboBox.getSelectedIndex()));
@@ -206,12 +206,12 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(memory.getDisplayName(), memory);
-                expression.setMemory(handle);
+                expression.getSelectMemoryNamedBean().setNamedBean(handle);
             } else {
-                expression.removeMemory();
+                expression.getSelectMemoryNamedBean().removeNamedBean();
             }
         } else {
-            expression.removeMemory();
+            expression.getSelectMemoryNamedBean().removeNamedBean();
         }
 
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {

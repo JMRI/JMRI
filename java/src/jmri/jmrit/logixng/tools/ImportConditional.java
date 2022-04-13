@@ -76,37 +76,7 @@ public class ImportConditional {
     }
 
     public void doImport() throws SocketAlreadyConnectedException, JmriException {
-/*
-        // This is only to remember to test everything Logix and Conditional supports
-        String systemName = "";
-        jmri.Logix l = null;
 
-        java.beans.PropertyChangeEvent evt = null;
-        jmri.Conditional c = null;
-
-        l.getConditional(systemName);
-        l.getConditionalByNumberOrder(0);
-        l.getEnabled();
-
-        c.cancelSensorTimer(systemName);
-        c.cancelTurnoutTimer(systemName);
-        c.getAntecedentExpression();        // Tested
-        c.getCopyOfActions();
-        c.getCopyOfStateVariables();
-        c.getLogicType();                   // Tested
-        c.getTriggerOnChange();             // Tested
-*/
-
-
-
-
-
-
-
-//        boolean triggerOnChange = _conditional.getTriggerOnChange();
-//        IfThenElse.Type type = triggerOnChange ? IfThenElse.Type.TRIGGER_ACTION : IfThenElse.Type.CONTINOUS_ACTION;
-
-//        IfThenElse ifThen = new IfThenElse(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null, type);
         Logix logix = new Logix(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 
         logix.setExecuteOnChange(_conditional.getTriggerOnChange());
@@ -394,7 +364,7 @@ public class ImportConditional {
 
 //        System.err.format("Sensor: %s%n", sn == null ? null : sn.getSystemName());
 
-        expression.setSensor(sn);
+        expression.getSelectNamedBean().setNamedBean(sn);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -427,7 +397,7 @@ public class ImportConditional {
                 new ExpressionTurnout(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setTurnout(tn);
+        expression.getSelectNamedBean().setNamedBean(tn);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -458,7 +428,7 @@ public class ImportConditional {
                 new ExpressionMemory(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setMemory(my);
+        expression.getSelectNamedBean().setNamedBean(my);
 
         switch (cv.getNum1()) {
             case ConditionalVariable.EQUAL:
@@ -496,21 +466,21 @@ public class ImportConditional {
             case MEMORY_COMPARE:
                 expression.setCompareTo(ExpressionMemory.CompareTo.Memory);
                 expression.setCaseInsensitive(false);
-                expression.setOtherMemory(cv.getDataString());
+                expression.getSelectOtherMemoryNamedBean().setNamedBean(cv.getDataString());
                 memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());
                 if (memory == null) {   // Logix allows the memory name in cv.getDataString() to be a system name without system prefix
                     memory = InstanceManager.getDefault(MemoryManager.class).provide(cv.getDataString());
-                    expression.setOtherMemory(memory.getSystemName());
+                    expression.getSelectOtherMemoryNamedBean().setNamedBean(memory.getSystemName());
                 }
                 break;
             case MEMORY_COMPARE_INSENSITIVE:
                 expression.setCompareTo(ExpressionMemory.CompareTo.Memory);
                 expression.setCaseInsensitive(true);
-                expression.setOtherMemory(cv.getDataString());
+                expression.getSelectOtherMemoryNamedBean().setNamedBean(cv.getDataString());
                 memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());
                 if (memory == null) {   // Logix allows the memory name in cv.getDataString() to be a system name without system prefix
                     memory = InstanceManager.getDefault(MemoryManager.class).provide(cv.getDataString());
-                    expression.setOtherMemory(memory.getSystemName());
+                    expression.getSelectOtherMemoryNamedBean().setNamedBean(memory.getSystemName());
                 }
                 break;
             default:
@@ -534,7 +504,7 @@ public class ImportConditional {
                 new ExpressionLight(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setLight(ln);
+        expression.getSelectNamedBean().setNamedBean(ln);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -675,7 +645,7 @@ public class ImportConditional {
                 new ExpressionEntryExit(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setDestinationPoints(dp);
+        expression.getSelectNamedBean().setNamedBean(dp);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -708,7 +678,7 @@ public class ImportConditional {
                 new ExpressionConditional(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setConditional(cn);
+        expression.getSelectNamedBean().setNamedBean(cn);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -768,7 +738,7 @@ public class ImportConditional {
                 new ExpressionWarrant(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setWarrant(w);
+        expression.getSelectNamedBean().setNamedBean(w);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -822,7 +792,7 @@ public class ImportConditional {
                     Bundle.getMessage("ConditionalBadOBlockDataString", cv.getDataString()));
         }
 
-        expression.setOBlock(b);
+        expression.getSelectNamedBean().setNamedBean(b);
         expression.setBeanState(oblockStatus);
 
         return expression;
@@ -914,14 +884,8 @@ public class ImportConditional {
 
 
     private DigitalActionBean getTurnoutAction(@Nonnull ConditionalAction ca, Turnout tn, String reference) throws JmriException {
-//        System.err.format("Turnout: %s%n", tn == null ? null : tn.getSystemName());
 
         ActionTurnout action;
-
-//        cv.getDataString();     // SignalMast, Memory, OBlock
-//        cv.getNamedBeanData();  // Only for memory
-//        cv.getNum1();   // Clock, Memory
-//        cv.getNum2();   // Clock, Memory
 
         switch (ca.getType()) {
             case SET_TURNOUT:
