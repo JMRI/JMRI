@@ -56,6 +56,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
         copy.setVariableOperation(_variableOperation);
         copy.setConstantValue(_constantValue);
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        if (_blockHandle != null) copy.setBlock(_blockHandle);
+        if (_reporterHandle != null) copy.setReporter(_reporterHandle);
         copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);

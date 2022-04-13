@@ -58,6 +58,8 @@ public class ExpressionMemory extends AbstractDigitalExpression
         copy.setCaseInsensitive(_caseInsensitive);
         copy.setConstantValue(_constantValue);
         if (_otherMemoryHandle != null) copy.setOtherMemory(_otherMemoryHandle);
+        copy.setLocalVariable(_localVariable);
+        copy.setRegEx(_regEx);
         copy.setListenToOtherMemory(_listenToOtherMemory);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
