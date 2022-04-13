@@ -4118,12 +4118,16 @@
       greater than 50% to reduce the move count by one, and 100% if you wanted the move count to be
       reduced by 2.</p>
 
-      <p>If you want to delay the departure of the train from a location or increase the train's
-      travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
-      specify the train's departure time from a location by selecting the "Departure Time" radio
-      button in the lower right hand corner of the <a href="#EditRoute">Edit Route</a> window.</p>
+   <p>
+    The "Switch Time" and "Travel Time" found on the <a href="#Settings">Settings</a> page
+    determines the time it takes for your train to service a location and travel to the next. If you
+    want to delay the departure of the train from a location or increase the train's travel time,
+    enter the number of minutes desired in the "Wait" cell. Another choice is to specify the train's
+    departure time from a location by selecting the "Departure Time" radio button in the lower right
+    hand corner of the <a href="#AddRoute">Edit Route</a> window.
+   </p>
 
-      <p>You can also adjust the <a href="#MaximumTrainLength">maximum train length</a> using
+   <p>You can also adjust the <a href="#MaximumTrainLength">maximum train length</a> using
       <a href="#UnitOfLength">(feet or meters)</a> that can depart each location. For example, if
       you limited the train's departure length to 500 feet, then approximately 10 cars would depart
       in the train from that location. When first starting out, it is recommended that you leave

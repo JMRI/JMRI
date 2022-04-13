@@ -40,7 +40,14 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         copy.setNamedBeanType(_namedBeanType);
         copy.setTable(_tableHandle);
         copy.setTableRowOrColumn(_tableRowOrColumn);
+        copy.setRowOrColumnName(_rowOrColumnName);
         copy.setIncludeCellsWithoutHeader(_includeCellsWithoutHeader);
+
+        for (var entry : _namedBeansEntries) {
+            copy._namedBeansEntries.add(
+                    new HashMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+        }
+
         return manager.registerAction(copy);
     }
 
@@ -51,7 +58,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public NamedBeanType getNamedBeanType() {
         return _namedBeanType;
     }
-    
+
     /**
      * Set the type of the named beans
      * @param namedBeanType the type of the named beans
@@ -60,7 +67,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         if (namedBeanType == null) throw new RuntimeException("Daniel");
         _namedBeanType = namedBeanType;
     }
-    
+
     public void setTable(@Nonnull String tableName) {
         assertListenersAreNotRegistered(log, "setTable");
         NamedTable table = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(tableName);
@@ -71,19 +78,19 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
             log.error("table \"{}\" is not found", tableName);
         }
     }
-    
+
     public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
         assertListenersAreNotRegistered(log, "setTable");
         _tableHandle = handle;
         InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
     }
-    
+
     public void setTable(@Nonnull NamedTable table) {
         assertListenersAreNotRegistered(log, "setTable");
         setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(table.getDisplayName(), table));
     }
-    
+
     public void removeTable() {
         assertListenersAreNotRegistered(log, "setTable");
         if (_tableHandle != null) {
@@ -91,11 +98,11 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
             _tableHandle = null;
         }
     }
-    
+
     public NamedBeanHandle<NamedTable> getTable() {
         return _tableHandle;
     }
-    
+
     /**
      * Get tableRowOrColumn.
      * @return tableRowOrColumn
@@ -103,7 +110,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public TableRowOrColumn getTableRowOrColumn() {
         return _tableRowOrColumn;
     }
-    
+
     /**
      * Set tableRowOrColumn.
      * @param tableRowOrColumn tableRowOrColumn
@@ -111,7 +118,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public void setTableRowOrColumn(@Nonnull TableRowOrColumn tableRowOrColumn) {
         _tableRowOrColumn = tableRowOrColumn;
     }
-    
+
     /**
      * Get name of row or column
      * @return name of row or column
@@ -119,7 +126,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public String getRowOrColumnName() {
         return _rowOrColumnName;
     }
-    
+
     /**
      * Set name of row or column
      * @param rowOrColumnName name of row or column
@@ -136,7 +143,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public void setListenOnAllProperties(boolean listenOnAllProperties) {
         _listenOnAllProperties = listenOnAllProperties;
     }
-    
+
     /**
      * Set whenever to include cells that doesn't have a header.
      * Cells without headers can be used to use some cells in the table
@@ -146,7 +153,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public boolean getIncludeCellsWithoutHeader() {
         return _includeCellsWithoutHeader;
     }
-    
+
     /**
      * Set whenever to include cells that doesn't have a header.
      * Cells without headers can be used to use some cells in the table
@@ -157,7 +164,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     public void setIncludeCellsWithoutHeader(boolean includeCellsWithoutHeader) {
         _includeCellsWithoutHeader = includeCellsWithoutHeader;
     }
-    
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -223,7 +230,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
 
     public List<String> getItems() {
         List<String> items = new ArrayList<>();
-        
+
         if (_tableHandle == null) {
             log.error("tableHandle is null");
             return items;   // The list is empty
@@ -232,9 +239,9 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
             log.error("rowOrColumnName is empty string");
             return items;   // The list is empty
         }
-        
+
         NamedTable table = _tableHandle.getBean();
-        
+
         if (_tableRowOrColumn == TableRowOrColumn.Row) {
             int row = table.getRowNumber(_rowOrColumnName);
             for (int column=1; column <= table.numColumns(); column++) {
@@ -271,10 +278,10 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         if (_listenersAreRegistered) return;
 
         List<String> items = getItems();
-        
+
         for (String item : items) {
             NamedBean namedBean = _namedBeanType.getManager().getNamedBean(item);
-            
+
             if (namedBean != null) {
                 Map.Entry<NamedBean, String> namedBeanEntry =
                         new HashMap.SimpleEntry<>(namedBean, _namedBeanType.getPropertyName());
@@ -326,7 +333,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-/*        
+/*
         log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
