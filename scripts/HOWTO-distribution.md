@@ -5,8 +5,7 @@ Our release procedure is, in outline, creates a branch at some instant labeled w
 
 #### Note on release numbers and file names
 
-Our released filenames are generated with [semantic versioning](http://semver.org) format in which the `+R202c9ee` indicates build meta-data, specifically the hash for the tag point.  Originally, the GitHub binary-file release system changed the '+' to a '.', so our scripts below did that too.  That was fixed at the start of 2018, so we no longer do it, but there are some old releases with that filename format.
-
+Our released filenames are generated with [semantic versioning](http://semver.org) format in which the `+R202c9ee` indicates build meta-data, specifically the hash for the tag point.  Originally, the GitHub binary-file release system changed the '+' to a '.', so our scripts below did that too.  That was fixed at the start of 2018, so we no longer do it, though there are some old releases with that filename format.
 
 ### Issues
 
@@ -15,9 +14,9 @@ Our released filenames are generated with [semantic versioning](http://semver.or
 
 # Detailed Instructions
 
-The Ant task that handles the Git operations (see below) invokes Git via direct command line execution. This means that you need to have a working command-line git tool installed and configured.  Try "git status" to check.
-
 People building releases for distribution need permission to directly operate with the JMRI/JMRI GitHub repository.
+
+See the image at the bottom for how Git is used during this process.
 
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
@@ -264,20 +263,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 
 - Remove the 4.99.6 milestone on [unmerged PRs or [click here]](https://github.com/JMRI/JMRI/pulls?q=is%3Aopen+is%3Apr+milestone%3A4.99.6)
 
-- Create a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom)
+- Check that `release.properties` on `master` is showing 4.99.6
 
+- Create a `release-4.99.6` branch on GitHub
 ```
-        ant make-test-release-branch
+        git checkout -b release-4.99.6
+        git push
 ```
-
-- Update the &lt;version> element in pom.xml to say the next release:
-```
-        sed -i .bak s/4.99.6-SNAPSHOT/4.99.7-SNAPSHOT/g pom.xml
-        git commit -m"for next release 4.99.7" pom.xml
-        git push github
-```
-
-- Check that `release.properties` on `master` is showing 4.99.7
 
 - Put the following comment in the [release GitHub item](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.6%22) saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
@@ -288,6 +280,7 @@ Maintainers, please set the 4.99.7 milestone on pulls from now on, as that will 
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/4.99.6/)
 ```
+
 
 FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
 
@@ -300,6 +293,7 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 
 If you're developing any additional (post-4.99.6) changes that you want in the JMRI 4.26 production release, please start from this branch, i.e. do `git checkout -b release-4.99.7` to start your work.
 ```
+
 
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
 
@@ -314,7 +308,7 @@ If you're developing any additional (post-4.99.6) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 4.99.6 release name at the top. Enter the 4.99.4 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 4.99.6 release name at the top. Enter the 4.99.5 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -341,8 +335,9 @@ If you're developing any additional (post-4.99.6) changes that you want in the J
         ant headlesstest
 ```
 
+connect jconsole to the test class when it appears.
 
-and connect jconsole to the test class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 4.99.6](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.6%22)" Github issue so that historical resource usage info is available.
+- When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 4.99.6](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.6%22)" Github issue so that historical resource usage info is available.
 
 ================================================================================
 ## Put Files Out For Checking
@@ -350,6 +345,7 @@ and connect jconsole to the test class when it appears. When that's done, put a 
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/website/job/website-repository/) button). Confirm visible on web.
 
 - Announce the file set via [email to jmri@jmri-developers.groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%204.99.6%20files%20available) with a subject line
+
 
 ```
 "First 4.99.6 files available":
@@ -369,7 +365,7 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 ================================================================================
 ## Further Changes to Contents Before Release
 
-These instructions result in the initial release-4.99.6 branch label being attached to the master branch sequence.  To put it another way, release-4.99.6 is a parent of master.  If somebody commits to master after that, master will move along with additional contents. Once that happens, if you want to add something to release-4.99.6 and _not_ include other additions to master, you have to branch the contents of release-4.99.6 away from master.  This section describes how to do that.
+These instructions result in the initial release-4.99.6 branch label being attached to the master branch sequence.  If somebody commits to master after that, master will move along with additional contents. Once that happens, if you want to add something to release-4.99.6 and _not_ include other additions to master, you have to branch the contents of release-4.99.6 away from master.  This section describes how to do that.
 
 - Ideally, start the work on either the release-4.99.6 branch (if working after that was started) or on a branch-from-master that's _before_ the release-4.99.6 branch was created.  That way, the change can be cleanly included in the release branch, and also directly onto master.
 
@@ -387,7 +383,7 @@ These instructions result in the initial release-4.99.6 branch label being attac
 
 - If somebody has merged their change into master (or it's branched from master later than the release tag), you have two choices:
 
-   - Merge master into the release-4.99.6 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
+   - Merge master into the release-4.99.6 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.
 
    - `git cherrypick` just the changes you want onto the release-4.99.6 branch. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
@@ -401,6 +397,8 @@ These instructions result in the initial release-4.99.6 branch label being attac
 
 ====================================================================================
 ## Create zipped .properties
+
+Once you have acceptable files available, you can proceed.
 
 The following will take several minutes, so be patient:
 
@@ -482,8 +480,6 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 
 - Wait for completion, which might be a while with big uploads
 
-- Reenable the [Jenkins Packages job](https://builds.jmri.org/jenkins/job/development/job/packages/) to restart creation of development releases
-
 
 ====================================================================================
 ## Check for Unmerged Changes
@@ -519,6 +515,26 @@ If there are any changes in other files, do both of:
    - Figure out what went wrong and fix it in these instructions
 
 - You can delete that temp-master local branch now
+
+====================================================================================
+## Update Development Release Number
+
+This step changes release numbering so that builds will be labeled 4.99.7-dev until the 4.99.7 release is created
+
+- Update the &lt;version> element in `pom.xml` to this release:
+```
+        sed -i .bak s/4.99.5-SNAPSHOT/4.99.6-SNAPSHOT/g pom.xml
+        git commit -m"4.99.6 until next release 4.99.7" pom.xml
+```
+
+- Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field of 4.99.6 and 4.99.7)
+```
+        sed -i .bak s/release.build=6/release.build=7/g release.properties
+        git commit -m"4.99.6 until next release 4.99.7" release.properties
+        git push github
+```
+
+- Reenable the [Jenkins Packages job](https://builds.jmri.org/jenkins/job/development/job/packages/) to restart creation of development releases
 
 ====================================================================================
 ## Update GitHub Status items
@@ -752,5 +768,10 @@ Note that `4` in the above will have to be changed to the build number.
 
 It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins
 
+================================================================================
+
+Git Usage During the Development and Release Process
+
+![git usage](Release_Git_Flow.png "Git Usage During the Development and Release Process")
 
 
