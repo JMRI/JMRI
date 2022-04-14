@@ -212,7 +212,7 @@ public class CbusOpCodes {
      * @return localised Forward or Reverse String.
      */
     public static String getDirectionFromByte( int speed ) {
-        return Bundle.getMessage(( speed << ~7 < 0 ? "FWD" : "REV"));
+        return Bundle.getMessage( ( speed >> 7 ) == 1 ? "FWD" : "REV");
     }
 
     /**
