@@ -37,6 +37,13 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
     private JTextField _turnoutStateFormulaTextField;
 
 
+    public ExpressionTurnoutSwing() {
+    }
+
+    public ExpressionTurnoutSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionTurnout expression = (ExpressionTurnout)object;

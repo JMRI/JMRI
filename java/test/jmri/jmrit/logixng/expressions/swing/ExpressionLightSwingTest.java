@@ -42,7 +42,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
 
         JDialog dialog = new JDialog();
 
-        ExpressionLightSwing t = new ExpressionLightSwing();
+        ExpressionLightSwing t = new ExpressionLightSwing(dialog);
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
@@ -85,10 +85,12 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JDialog dialog = new JDialog();
+
         Assert.assertTrue("panel is not null",
-            null != new ExpressionLightSwing().getConfigPanel(new JPanel()));
+            null != new ExpressionLightSwing(dialog).getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ExpressionLightSwing().getConfigPanel(new ExpressionLight("IQDE1", null), new JPanel()));
+            null != new ExpressionLightSwing(dialog).getConfigPanel(new ExpressionLight("IQDE1", null), new JPanel()));
     }
 
     // The minimal setup for log4J

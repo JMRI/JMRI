@@ -37,6 +37,13 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
     private JTextField _lightStateFormulaTextField;
 
 
+    public ExpressionLightSwing() {
+    }
+
+    public ExpressionLightSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionLight expression = (ExpressionLight)object;

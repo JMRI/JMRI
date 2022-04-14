@@ -37,6 +37,13 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
     private JTextField _sensorStateFormulaTextField;
 
 
+    public ExpressionSensorSwing() {
+    }
+
+    public ExpressionSensorSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionSensor expression = (ExpressionSensor)object;
