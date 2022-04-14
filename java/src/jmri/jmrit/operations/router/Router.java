@@ -746,6 +746,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             log.debug("Using 5 trains to route car to ({}) was unsuccessful", car.getFinalDestinationName());
             foundRoute = routeUsing6Trains(car);
         }
+        if (!foundRoute) {
+            log.debug("Using 6 trains to route car to ({}) was unsuccessful", car.getFinalDestinationName());
+            foundRoute = routeUsing7Trains(car);
+        }
         return foundRoute;
     }
 
@@ -933,7 +937,74 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         return foundRoute;
     }
-
+    
+    private boolean routeUsing7Trains(Car car) {
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNTrains"),
+                new Object[]{"7", car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
+        Car testCar = clone(car); // reload
+        boolean foundRoute = false;
+        for (Track nlt : _nextLocationTracks) {
+            otherloop: for (Track mlt1 : _otherLocationTracks) {
+                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1);
+                if (middleTrain2 == null) {
+                    continue;
+                }
+                for (Track mlt2 : _otherLocationTracks) {
+                    if (mlt2 == mlt1) {
+                        continue;
+                    }
+                    Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2);
+                    if (middleTrain3 == null) {
+                        continue;
+                    }
+                    for (Track mlt3 : _otherLocationTracks) {
+                        if (mlt3 == mlt1 || mlt3 == mlt2) {
+                            continue;
+                        }
+                        Train middleTrain4 = getTrainForCar(testCar, mlt2, mlt3);
+                        if (middleTrain4 == null) {
+                            continue;
+                        }
+                        for (Track mlt4 : _otherLocationTracks) {
+                            if (mlt4 == mlt1 || mlt4 == mlt2 || mlt4 == mlt3) {
+                                continue;
+                            }
+                            Train middleTrain5 = getTrainForCar(testCar, mlt3, mlt4);
+                            if (middleTrain5 == null) {
+                                continue;
+                            }
+                            for (Track llt : _lastLocationTracks) {
+                                Train middleTrain6 = getTrainForCar(testCar, mlt4, llt);
+                                if (middleTrain6 == null) {
+                                    continue;
+                                }
+                                log.debug("Found 7 train route, setting car destination ({}, {})",
+                                        nlt.getLocation().getName(), nlt.getName());
+                                foundRoute = true;
+                                // show the car's route by building an ordered
+                                // list of trains and tracks
+                                List<Train> trains = new ArrayList<>(
+                                        Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)),
+                                                middleTrain2, middleTrain3, middleTrain4, middleTrain5, middleTrain6,
+                                                _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
+                                List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, mlt3, mlt4, llt));
+                                showRoute(car, trains, tracks);
+                                // only set car's destination if specified train
+                                // can service car
+                                if (finshSettingRouteFor(car, nlt)) {
+                                    return true; // done 7 train routing
+                                }
+                                break otherloop; // there was an issue with the
+                                                 // first stop in the route
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return foundRoute;
+    }
+    
     private Train getTrainForCar(Car testCar, Track from, Track to) {
         testCar.setTrack(from); // set car to this location and track
         testCar.setDestinationTrack(to); // set car to this destination and
@@ -980,7 +1051,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
                     new Object[]{_train.getName(), car.toString(), track.getLocation().getName(), track.getName()}));
             _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{_train.getName()});
-            return true;
+            return false;
         } else if (specified.equals(NOT_NOW)) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
@@ -1021,12 +1092,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         clone.setTrack(car.getTrack());
         clone.setFinalDestination(car.getFinalDestination());
         // don't set the clone's final destination track, that will record the
-        // car as
-        // being inbound
+        // car as being inbound
         // next two items is where the clone is different
-        clone.setDestination(car.getFinalDestination()); // note that final
-                                                         // destination track
-                                                         // can be null
+        clone.setDestination(car.getFinalDestination()); 
+        // note that final destination track can be null
         clone.setDestinationTrack(car.getFinalDestinationTrack());
         return clone;
     }
