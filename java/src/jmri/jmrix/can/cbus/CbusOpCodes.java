@@ -58,6 +58,9 @@ public class CbusOpCodes {
             else if (fields[i].startsWith("^2")) { // replace with loco id from 2 bytes
                 fields[i] = locoFromBytes(msg.getElement(idx++), msg.getElement(idx++) );
             }
+            else if (fields[i].startsWith("^S")) { // replace with speed string from 1 byte
+                fields[i] = speedDirFromByte(msg.getElement(idx++) );
+            }
             else if (fields[i].startsWith("$4")) { // replace the 4 bytes with event / node name ( if possible )
                 int nn = (256*msg.getElement(idx++))+(msg.getElement(idx++));
                 int en = (256*msg.getElement(idx++))+(msg.getElement(idx++));
@@ -166,6 +169,50 @@ public class CbusOpCodes {
     public static final String locoFromBytes(int byteA, int byteB ) {
         return new jmri.DccLocoAddress(((byteA & 0x3f) * 256 + byteB ),
             ((byteA & 0xc0) != 0)).toString();
+    }
+
+    /**
+     * Get text string of speed / direction.
+     * @param byteA the Speed / Direction byte value.
+     * @return translated String.
+     */
+    @Nonnull
+    public static final String speedDirFromByte(int byteA) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" ");
+        sb.append(Bundle.getMessage("SpeedCol"));
+        sb.append(" ");
+        sb.append(getSpeedFromByte(byteA));
+        sb.append(" ");
+        sb.append(getDirectionFromByte(byteA));
+        sb.append(" ");
+        return sb.toString();
+    }
+
+        /**
+     * Get loco speed from byte value.
+     * @param speed byte value 0-255 of speed containing direction flag.
+     * @return interpreted String, maybe with EStop localised text.
+     */
+    public static String getSpeedFromByte( int speed ) {
+        int noDirectionSpeed = speed & ~(1 << 7);
+        switch (noDirectionSpeed){
+            case 0:
+                return "0";
+            case 1:
+                return "0 " + Bundle.getMessage("EStop");
+            default:
+                return String.valueOf(noDirectionSpeed-1);
+        }
+    }
+
+    /**
+     * Get localised direction from speed byte.
+     * @param speed 0-255, 0-127 Reverse, else Forwards.
+     * @return localised Forward or Reverse String.
+     */
+    public static String getDirectionFromByte( int speed ) {
+        return Bundle.getMessage(( speed << ~7 < 0 ? "FWD" : "REV"));
     }
 
     /**
@@ -477,7 +524,7 @@ public class CbusOpCodes {
     private static final Map<Integer, CbusOpc> MAP = createMainMap();
 
     private static Map<Integer, CbusOpc> createMainMap()  {
-        Map<Integer, CbusOpc> result = new HashMap<>();
+        Map<Integer, CbusOpc> result = new HashMap<>(150); // 134 as of April 2022
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
