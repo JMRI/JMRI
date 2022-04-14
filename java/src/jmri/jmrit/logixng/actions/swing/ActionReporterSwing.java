@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.actions.swing;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -25,11 +26,6 @@ import jmri.util.swing.JComboBoxUtil;
 public class ActionReporterSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectNamedBeanSwing<Reporter> _selectNamedBeanSwing;
-
-    private JTextField _beanReferenceTextField;
-    private JTextField _beanLocalVariableTextField;
-    private JTextField _beanFormulaTextField;
-
 
     private JPanel _panelReporterValue;
     private JComboBox<ReporterValue> _reporterValueComboBox;
@@ -229,6 +225,19 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
     }
 
     @Override
+    public void setDefaultValues() {
+        if (_memorySelectPanel.getNamedBean() == null) {
+            SortedSet<Memory> set = InstanceManager.getDefault(MemoryManager.class).getNamedBeanSet();
+            if (!set.isEmpty()) {
+                Memory m = set.first();
+                _memorySelectPanel.setDefaultNamedBean(m);
+            } else {
+                log.error("Memory manager has no memories. Can't set default values");
+            }
+        }
+    }
+
+    @Override
     public void dispose() {
         if (_memorySelectPanel != null) {
             _memorySelectPanel.dispose();
@@ -236,6 +245,6 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
     }
 
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionReporterSwing.class);
+     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionReporterSwing.class);
 
 }

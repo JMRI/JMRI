@@ -13,7 +13,6 @@ import jmri.jmrit.logixng.actions.ActionDispatcher.DirectOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -447,6 +446,13 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     @Override
     public String toString() {
         return Bundle.getMessage("ActionDispatcher_Short");
+    }
+
+    @Override
+    public void setDefaultValues() {
+        if (_stateComboBox.getSelectedIndex() < 1) {
+            _stateComboBox.setSelectedIndex(1);
+        }
     }
 
     @Override

@@ -52,7 +52,7 @@ public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        AnalogActionMemory action = new AnalogActionMemory("IQDA1", null);
+        AnalogActionMemory action = new AnalogActionMemory("IQAA1", null);
         updateObject(action);
         return errorMessages.isEmpty();
     }

@@ -8,8 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.StringIO;
 import jmri.StringIOManager;
 import jmri.jmrit.logixng.Base;
@@ -17,7 +15,6 @@ import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.StringActionStringIO;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
-import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Configures an StringActionStringIO object with a Swing JPanel.
@@ -52,7 +49,7 @@ public class StringActionStringIOSwing extends AbstractStringActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        StringActionStringIO action = new StringActionStringIO("IQDA1", null);
+        StringActionStringIO action = new StringActionStringIO("IQSA1", null);
         _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
         return errorMessages.isEmpty();
     }

@@ -53,7 +53,7 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        StringActionMemory action = new StringActionMemory("IQDA1", null);
+        StringActionMemory action = new StringActionMemory("IQSA1", null);
         _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
         return errorMessages.isEmpty();
     }
