@@ -1440,7 +1440,7 @@
    destination fields. The car routing algorithm will search for the most efficient route for the
    car to travel. The router will attempt to use classification/interchange tracks and then yards to
    move cars. If you don't want the router to use yards, you can deselect the "Enable Car Routing
-   via Yards" checkbox. The program will try and find a route using a maximum of six trains to
+   via Yards" checkbox. The program will try and find a route using a maximum of seven trains to
    complete the car move. Note that the program never gives up trying to route a car. If a car has
    been assigned a
    <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the program
@@ -5394,7 +5394,7 @@
       <p>The routing method also uses the car's move count to determine which cars to look at
       first. A car needs to be <a href="#CarRouting">routed</a> when it has a <a href="#FinalDestination">final
       destination</a> (think ship to address). The program will try and route the car to its final
-      destination using up to six trains. If the car has a custom load and no final destination,
+      destination using up to seven trains. If the car has a custom load and no final destination,
       the program will search for a spur with a schedule that is demanding that car's load, and
       then will then give the car a final destination that is the spur, and then route the car to
       that spur.</p>
@@ -5472,7 +5472,7 @@
 
       <p>If a car has a <a href="#EditCarLoads">custom load</a> without a destination, the program
       will search for a spur with a schedule demanding that car type and load, the program will
-      then <a href="#CarRouting">route</a> the car to that destination. The program will use up to six trains to route a
+      then <a href="#CarRouting">route</a> the car to that destination. The program will use up to seven trains to route a
       car to a destination. The program when determining how many cars an industry can serve
       considers the length of the spur serving the industry, and the length of the alternate track
       if one is specified. If the car is departing staging with a custom load, the "Percentage of

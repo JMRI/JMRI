@@ -36,16 +36,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected int layout_snd;
     protected int layout_stat1 = 0;
 
-    // with extendedslots the slot may not have been updated by the time a direction change happens
-    // which causes the speed to be resent
-    // so we must use our last send spd.
-    protected int throt_spd;
-
-    // members to record the last known spd/dirf/snd bytes AS READ FROM THE LAYOUT!!
+    // with extendedslots the slots may not have been updated by the echo 
+    // before the next message needs sending.So we must save and send what
+    // we believe to be the correct speed and direction.
+    // remember in expanded mode 2 throttle cannot be in control of a loco
     protected int throttle_spd;
-    protected int throttle_dirf;
-    protected int throttle_snd;
-    protected int throttle_stat1 = 0;
+    protected boolean throttle_isFwd;
 
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
@@ -75,7 +71,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // save the last sent values for speed and direction
         // in the new digitrax protocol, the throttle, with the right ID, is the authority, not the command station
         // speed and direction are sent in a single message, so you must sent the same direction or speed as was done last time
-        throt_spd = slot.snd();
+        throttle_spd = slot.speed();
 
         // cache settings
         synchronized(this) {
@@ -397,14 +393,16 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Send the expanded slot command for speed and direction.
+     * Note we send our stored values as slot is updated via an echo
+     * and may not have been updated yet when sending rapid commands
      */
     protected void sendExpSpeedAndDirection() {
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-        msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isForward ? 0x00 : 0x08));
+        msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (throttle_isFwd ? 0x00 : 0x08));
         msg.setElement(2, slot.getSlot() & 0x7f);
         msg.setElement(3, (slot.id() & 0x7f));
-        msg.setElement(4, throt_spd);   // last sent speed. Cannot use slot as it may not be uptodate.
+        msg.setElement(4, throttle_spd);   // last sent speed. Cannot use slot as it may not be uptodate.
         network.sendLocoNetMessage(msg);
     }
     /**
@@ -468,10 +466,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // decide whether to send a new LocoNet message
         boolean sendLoconetMessage = false;
-        if (new_spd != layout_spd || new_spd != throt_spd) {
+        if (new_spd != layout_spd || new_spd != throttle_spd) {
             // the new speed is different - send a message
             sendLoconetMessage = true;
-            throt_spd = new_spd;       // save for a direction change before slot updated.
+            throttle_spd = new_spd;       // save for a direction change before slot updated.
         } else if (allowDuplicates) {
             // calling method wants a new message sent regardless
             sendLoconetMessage = true;
@@ -490,14 +488,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 msg.setElement(2, new_spd);
                 network.sendLocoNetMessage(msg);
             } else {
-                LocoNetMessage msg = new LocoNetMessage(6);
-                msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-                // We cannot use the slot for direction, the slot may not yet be updated
-                msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isForward ? 0x00 : 0x08));
-                msg.setElement(2, slot.getSlot() & 0x7f);
-                msg.setElement(3, (slot.id() & 0x7f));
-                msg.setElement(4, new_spd);
-                network.sendLocoNetMessage(msg);
+                sendExpSpeedAndDirection();
             }
 
             // reset timeout - but only if something sent on net
@@ -533,6 +524,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
             sendFunctionGroup1();
         } else {
+            throttle_isFwd = forward;
             sendExpSpeedAndDirection();
         }
         firePropertyChange(ISFORWARD, old, this.isForward);
