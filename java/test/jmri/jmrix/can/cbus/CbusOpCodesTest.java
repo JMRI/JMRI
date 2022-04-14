@@ -482,6 +482,18 @@ public class CbusOpCodesTest {
     }
 
     @Test
+    public void testGetDirectionFromByte() {
+        Assert.assertTrue("0 rev",CbusOpCodes.getDirectionFromByte(0).contains("Rev"));
+        Assert.assertTrue("1 rev",CbusOpCodes.getDirectionFromByte(1).contains("Rev"));
+        Assert.assertTrue("77 rev",CbusOpCodes.getDirectionFromByte(77).contains("Rev"));
+        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(127).contains("Rev"));
+        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(128).contains("For"));
+        Assert.assertTrue("129 rev",CbusOpCodes.getDirectionFromByte(129).contains("For"));
+        Assert.assertTrue("211 rev",CbusOpCodes.getDirectionFromByte(211).contains("For"));
+        Assert.assertTrue("255 rev",CbusOpCodes.getDirectionFromByte(255).contains("For"));
+    }
+
+    @Test
     public void testSpeedDirFromByte() {
         Assert.assertEquals("speed 0"," Speed 0 Reverse ",CbusOpCodes.speedDirFromByte(0) );
         Assert.assertEquals("speed 131"," Speed 2 Forward ",CbusOpCodes.speedDirFromByte(131) );
