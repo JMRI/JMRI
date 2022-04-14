@@ -226,9 +226,8 @@ public class CbusSlotMonitorDataModelTest {
         Assert.assertFalse("Not Long", (boolean) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_LONG_COLUMN) );
         Assert.assertEquals("No consist",0, (int) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_CONSIST_COLUMN) );
         Assert.assertEquals("Flags","", t.getValueAt(0,CbusSlotMonitorDataModel.FLAGS_COLUMN) );
-        Assert.assertEquals("speed 38","38",
-            (String) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN) );
-        
+        Assert.assertEquals("speed 38","38", t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN) );
+
         t.setValueAt("do button Click",0,CbusSlotMonitorDataModel.ESTOP_COLUMN);
         Assert.assertEquals("table sends estop session 1", "[5f8] 47 01 81",
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
@@ -241,9 +240,8 @@ public class CbusSlotMonitorDataModelTest {
         r.setElement(2, 77); // integer speed 77
         t.reply(r);
         
-        Assert.assertEquals("speed 76","76",
-            (String) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN) );
-        
+        Assert.assertEquals("speed 76","76", t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN) );
+
         String dirb = (String) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_DIRECTION_COLUMN);
         Assert.assertEquals("dir rev",Bundle.getMessage("REV"),dirb );
         
@@ -423,7 +421,7 @@ public class CbusSlotMonitorDataModelTest {
     
         Assert.assertEquals("loco 777",777,(int) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_COLUMN) );
         Assert.assertEquals("Long",true, (boolean) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_LONG_COLUMN) );
-        Assert.assertEquals("speed 0","0", (String) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN) );
+        Assert.assertEquals("speed 0","0", t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN) );
         Assert.assertEquals("speed step 128","128",t.getValueAt(0,CbusSlotMonitorDataModel.SPEED_STEP_COLUMN) );
         
         r = new CanReply();
