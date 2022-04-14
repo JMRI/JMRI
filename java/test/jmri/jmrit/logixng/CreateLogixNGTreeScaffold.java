@@ -2499,8 +2499,8 @@ public class CreateLogixNGTreeScaffold {
         expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionBlock.setComment("Direct / Direct / Direct :: ValueMatches");
 
-        expressionBlock.setAddressing(NamedBeanAddressing.Direct);
-        expressionBlock.setBlock(block1);
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectNamedBean().setNamedBean(block1);
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
@@ -2517,8 +2517,8 @@ public class CreateLogixNGTreeScaffold {
         expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionBlock.setComment("Direct / Direct :: Occupied");
 
-        expressionBlock.setAddressing(NamedBeanAddressing.Direct);
-        expressionBlock.setBlock(block1);
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectNamedBean().setNamedBean(block1);
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
@@ -2532,8 +2532,8 @@ public class CreateLogixNGTreeScaffold {
         expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionBlock.setComment("Direct / LocalVariable");
 
-        expressionBlock.setAddressing(NamedBeanAddressing.Direct);
-        expressionBlock.setBlock(block1);
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectNamedBean().setNamedBean(block1);
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
 
@@ -2547,8 +2547,8 @@ public class CreateLogixNGTreeScaffold {
         expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionBlock.setComment("LocalVariable / Formula");
 
-        expressionBlock.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionBlock.setLocalVariable("index");
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionBlock.getSelectNamedBean().setLocalVariable("index");
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
@@ -2562,8 +2562,8 @@ public class CreateLogixNGTreeScaffold {
         expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionBlock.setComment("Formula / Reference");
 
-        expressionBlock.setAddressing(NamedBeanAddressing.Formula);
-        expressionBlock.setFormula("\"IT\"+index");
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionBlock.getSelectNamedBean().setFormula("\"IT\"+index");
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
 
@@ -2577,8 +2577,8 @@ public class CreateLogixNGTreeScaffold {
         expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionBlock.setComment("Reference / Direct :: Allocated");
 
-        expressionBlock.setAddressing(NamedBeanAddressing.Reference);
-        expressionBlock.setReference("{IM1}");
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionBlock.getSelectNamedBean().setReference("{IM1}");
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
@@ -2612,12 +2612,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
         expressionConditional.setComment("A comment");
-        expressionConditional.setConditional("IX1C1");
+        expressionConditional.getSelectNamedBean().setNamedBean("IX1C1");
         expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.False);
-        expressionConditional.setAddressing(NamedBeanAddressing.Direct);
-        expressionConditional.setFormula("\"IT\"+index");
-        expressionConditional.setLocalVariable("index");
-        expressionConditional.setReference("{IM1}");
+        expressionConditional.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionConditional.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionConditional.getSelectNamedBean().setLocalVariable("index");
+        expressionConditional.getSelectNamedBean().setReference("{IM1}");
         expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionConditional.setStateAddressing(NamedBeanAddressing.LocalVariable);
         expressionConditional.setStateFormula("\"IT\"+index2");
@@ -2628,12 +2628,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
         expressionConditional.setComment("A comment");
-        expressionConditional.setConditional("IX1C1");
+        expressionConditional.getSelectNamedBean().setNamedBean("IX1C1");
         expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.True);
-        expressionConditional.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionConditional.setFormula("\"IT\"+index");
-        expressionConditional.setLocalVariable("index");
-        expressionConditional.setReference("{IM1}");
+        expressionConditional.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionConditional.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionConditional.getSelectNamedBean().setLocalVariable("index");
+        expressionConditional.getSelectNamedBean().setReference("{IM1}");
         expressionConditional.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionConditional.setStateAddressing(NamedBeanAddressing.Formula);
         expressionConditional.setStateFormula("\"IT\"+index2");
@@ -2644,12 +2644,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
         expressionConditional.setComment("A comment");
-        expressionConditional.setConditional("IX1C1");
+        expressionConditional.getSelectNamedBean().setNamedBean("IX1C1");
         expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.Other);
-        expressionConditional.setAddressing(NamedBeanAddressing.Formula);
-        expressionConditional.setFormula("\"IT\"+index");
-        expressionConditional.setLocalVariable("index");
-        expressionConditional.setReference("{IM1}");
+        expressionConditional.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionConditional.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionConditional.getSelectNamedBean().setLocalVariable("index");
+        expressionConditional.getSelectNamedBean().setReference("{IM1}");
         expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionConditional.setStateAddressing(NamedBeanAddressing.Reference);
         expressionConditional.setStateFormula("\"IT\"+index2");
@@ -2660,12 +2660,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
         expressionConditional.setComment("A comment");
-        expressionConditional.setConditional("IX1C1");
+        expressionConditional.getSelectNamedBean().setNamedBean("IX1C1");
         expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.False);
-        expressionConditional.setAddressing(NamedBeanAddressing.Reference);
-        expressionConditional.setFormula("\"IT\"+index");
-        expressionConditional.setLocalVariable("index");
-        expressionConditional.setReference("{IM1}");
+        expressionConditional.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionConditional.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionConditional.getSelectNamedBean().setLocalVariable("index");
+        expressionConditional.getSelectNamedBean().setReference("{IM1}");
         expressionConditional.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionConditional.setStateAddressing(NamedBeanAddressing.Direct);
         expressionConditional.setStateFormula("\"IT\"+index2");
@@ -2683,10 +2683,10 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
-        expressionEntryExit.setAddressing(NamedBeanAddressing.Direct);
-        expressionEntryExit.setFormula("\"IT\"+index");
-        expressionEntryExit.setLocalVariable("index");
-        expressionEntryExit.setReference("{IM1}");
+        expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
+        expressionEntryExit.getSelectNamedBean().setReference("{IM1}");
         expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionEntryExit.setStateAddressing(NamedBeanAddressing.LocalVariable);
         expressionEntryExit.setStateFormula("\"IT\"+index2");
@@ -2698,10 +2698,10 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
-        expressionEntryExit.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionEntryExit.setFormula("\"IT\"+index");
-        expressionEntryExit.setLocalVariable("index");
-        expressionEntryExit.setReference("{IM1}");
+        expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
+        expressionEntryExit.getSelectNamedBean().setReference("{IM1}");
         expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionEntryExit.setStateAddressing(NamedBeanAddressing.Formula);
         expressionEntryExit.setStateFormula("\"IT\"+index2");
@@ -2713,10 +2713,10 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
-        expressionEntryExit.setAddressing(NamedBeanAddressing.Formula);
-        expressionEntryExit.setFormula("\"IT\"+index");
-        expressionEntryExit.setLocalVariable("index");
-        expressionEntryExit.setReference("{IM1}");
+        expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
+        expressionEntryExit.getSelectNamedBean().setReference("{IM1}");
         expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionEntryExit.setStateAddressing(NamedBeanAddressing.Reference);
         expressionEntryExit.setStateFormula("\"IT\"+index2");
@@ -2728,10 +2728,10 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
-        expressionEntryExit.setAddressing(NamedBeanAddressing.Reference);
-        expressionEntryExit.setFormula("\"IT\"+index");
-        expressionEntryExit.setLocalVariable("index");
-        expressionEntryExit.setReference("{IM1}");
+        expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
+        expressionEntryExit.getSelectNamedBean().setReference("{IM1}");
         expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionEntryExit.setStateAddressing(NamedBeanAddressing.Direct);
         expressionEntryExit.setStateFormula("\"IT\"+index2");
@@ -2748,12 +2748,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
-        expressionLight.setLight(light1);
+        expressionLight.getSelectNamedBean().setNamedBean(light1);
         expressionLight.setBeanState(ExpressionLight.LightState.Off);
-        expressionLight.setAddressing(NamedBeanAddressing.Direct);
-        expressionLight.setFormula("\"IT\"+index");
-        expressionLight.setLocalVariable("index");
-        expressionLight.setReference("{IM1}");
+        expressionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionLight.getSelectNamedBean().setLocalVariable("index");
+        expressionLight.getSelectNamedBean().setReference("{IM1}");
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionLight.setStateAddressing(NamedBeanAddressing.LocalVariable);
         expressionLight.setStateFormula("\"IT\"+index2");
@@ -2764,12 +2764,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
-        expressionLight.setLight(light1);
+        expressionLight.getSelectNamedBean().setNamedBean(light1);
         expressionLight.setBeanState(ExpressionLight.LightState.On);
-        expressionLight.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionLight.setFormula("\"IT\"+index");
-        expressionLight.setLocalVariable("index");
-        expressionLight.setReference("{IM1}");
+        expressionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionLight.getSelectNamedBean().setLocalVariable("index");
+        expressionLight.getSelectNamedBean().setReference("{IM1}");
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionLight.setStateAddressing(NamedBeanAddressing.Formula);
         expressionLight.setStateFormula("\"IT\"+index2");
@@ -2780,12 +2780,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
-        expressionLight.setLight(light1);
+        expressionLight.getSelectNamedBean().setNamedBean(light1);
         expressionLight.setBeanState(ExpressionLight.LightState.Other);
-        expressionLight.setAddressing(NamedBeanAddressing.Formula);
-        expressionLight.setFormula("\"IT\"+index");
-        expressionLight.setLocalVariable("index");
-        expressionLight.setReference("{IM1}");
+        expressionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionLight.getSelectNamedBean().setLocalVariable("index");
+        expressionLight.getSelectNamedBean().setReference("{IM1}");
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionLight.setStateAddressing(NamedBeanAddressing.Reference);
         expressionLight.setStateFormula("\"IT\"+index2");
@@ -2796,12 +2796,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
-        expressionLight.setLight(light1);
+        expressionLight.getSelectNamedBean().setNamedBean(light1);
         expressionLight.setBeanState(ExpressionLight.LightState.Off);
-        expressionLight.setAddressing(NamedBeanAddressing.Reference);
-        expressionLight.setFormula("\"IT\"+index");
-        expressionLight.setLocalVariable("index");
-        expressionLight.setReference("{IM1}");
+        expressionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionLight.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionLight.getSelectNamedBean().setLocalVariable("index");
+        expressionLight.getSelectNamedBean().setReference("{IM1}");
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionLight.setStateAddressing(NamedBeanAddressing.Direct);
         expressionLight.setStateFormula("\"IT\"+index2");
@@ -2828,7 +2828,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
         expressionLocalVariable.setLocalVariable("MyVar");
-        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Memory);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
@@ -2839,7 +2839,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
         expressionLocalVariable.setLocalVariable("MyVar");
-        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.LocalVariable);
@@ -2851,7 +2851,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
         expressionLocalVariable.setLocalVariable("MyVar");
-        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
@@ -2863,7 +2863,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
         expressionLocalVariable.setLocalVariable("MyVar");
-        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
@@ -2875,7 +2875,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
         expressionLocalVariable.setLocalVariable("MyVar");
-        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
@@ -2887,7 +2887,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
         expressionLocalVariable.setLocalVariable("MyVar");
-        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Table);
@@ -2900,7 +2900,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable.setComment("A comment");
         expressionLocalVariable.setLocalVariable("MyVar");
         expressionLocalVariable.setRegEx("/^Test$/");
-        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.RegEx);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
@@ -2918,7 +2918,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
-        expressionMemory.setMemory(memory1);
+        expressionMemory.getSelectNamedBean().setNamedBean(memory1);
         expressionMemory.setConstantValue("10");
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
@@ -2927,8 +2927,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
-        expressionMemory.setMemory(memory2);
-        expressionMemory.setOtherMemory(memory3);
+        expressionMemory.getSelectNamedBean().setNamedBean(memory2);
+        expressionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
         set_LogixNG_SelectTable_Data(csvTable, expressionMemory.getSelectTable(), NamedBeanAddressing.Reference);
@@ -2937,8 +2937,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
-        expressionMemory.setMemory(memory2);
-        expressionMemory.setOtherMemory(memory3);
+        expressionMemory.getSelectNamedBean().setNamedBean(memory2);
+        expressionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Table);
         set_LogixNG_SelectTable_Data(csvTable, expressionMemory.getSelectTable(), NamedBeanAddressing.Direct);
@@ -2947,8 +2947,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
-        expressionMemory.setMemory(memory2);
-        expressionMemory.setOtherMemory(memory3);
+        expressionMemory.getSelectNamedBean().setNamedBean(memory2);
+        expressionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         expressionMemory.setLocalVariable("MyVar");
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.LocalVariable);
@@ -2958,8 +2958,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
-        expressionMemory.setMemory(memory2);
-        expressionMemory.setOtherMemory(memory3);
+        expressionMemory.getSelectNamedBean().setNamedBean(memory2);
+        expressionMemory.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
         expressionMemory.setRegEx("/^Hello$/");
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.RegEx);
@@ -2975,12 +2975,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
-        expressionOBlock.setOBlock("OB99");
+        expressionOBlock.getSelectNamedBean().setNamedBean("OB99");
         expressionOBlock.setBeanState(OBlock.OBlockStatus.Dark);
-        expressionOBlock.setAddressing(NamedBeanAddressing.Direct);
-        expressionOBlock.setFormula("\"IT\"+index");
-        expressionOBlock.setLocalVariable("index");
-        expressionOBlock.setReference("{IM1}");
+        expressionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionOBlock.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionOBlock.getSelectNamedBean().setLocalVariable("index");
+        expressionOBlock.getSelectNamedBean().setReference("{IM1}");
         expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionOBlock.setStateAddressing(NamedBeanAddressing.LocalVariable);
         expressionOBlock.setStateFormula("\"IT\"+index2");
@@ -2991,12 +2991,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
-        expressionOBlock.setOBlock("OB99");
+        expressionOBlock.getSelectNamedBean().setNamedBean("OB99");
         expressionOBlock.setBeanState(OBlock.OBlockStatus.Allocated);
-        expressionOBlock.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionOBlock.setFormula("\"IT\"+index");
-        expressionOBlock.setLocalVariable("index");
-        expressionOBlock.setReference("{IM1}");
+        expressionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionOBlock.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionOBlock.getSelectNamedBean().setLocalVariable("index");
+        expressionOBlock.getSelectNamedBean().setReference("{IM1}");
         expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionOBlock.setStateAddressing(NamedBeanAddressing.Formula);
         expressionOBlock.setStateFormula("\"IT\"+index2");
@@ -3007,12 +3007,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
-        expressionOBlock.setOBlock("OB99");
+        expressionOBlock.getSelectNamedBean().setNamedBean("OB99");
         expressionOBlock.setBeanState(OBlock.OBlockStatus.Occupied);
-        expressionOBlock.setAddressing(NamedBeanAddressing.Formula);
-        expressionOBlock.setFormula("\"IT\"+index");
-        expressionOBlock.setLocalVariable("index");
-        expressionOBlock.setReference("{IM1}");
+        expressionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionOBlock.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionOBlock.getSelectNamedBean().setLocalVariable("index");
+        expressionOBlock.getSelectNamedBean().setReference("{IM1}");
         expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionOBlock.setStateAddressing(NamedBeanAddressing.Reference);
         expressionOBlock.setStateFormula("\"IT\"+index2");
@@ -3023,12 +3023,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
-        expressionOBlock.setOBlock("OB99");
+        expressionOBlock.getSelectNamedBean().setNamedBean("OB99");
         expressionOBlock.setBeanState(OBlock.OBlockStatus.OutOfService);
-        expressionOBlock.setAddressing(NamedBeanAddressing.Reference);
-        expressionOBlock.setFormula("\"IT\"+index");
-        expressionOBlock.setLocalVariable("index");
-        expressionOBlock.setReference("{IM1}");
+        expressionOBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionOBlock.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionOBlock.getSelectNamedBean().setLocalVariable("index");
+        expressionOBlock.getSelectNamedBean().setReference("{IM1}");
         expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionOBlock.setStateAddressing(NamedBeanAddressing.Direct);
         expressionOBlock.setStateFormula("\"IT\"+index2");
@@ -3102,12 +3102,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
-        expressionSensor.setSensor(sensor1);
+        expressionSensor.getSelectNamedBean().setNamedBean(sensor1);
         expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
-        expressionSensor.setAddressing(NamedBeanAddressing.Direct);
-        expressionSensor.setFormula("\"IT\"+index");
-        expressionSensor.setLocalVariable("index");
-        expressionSensor.setReference("{IM1}");
+        expressionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensor.getSelectNamedBean().setLocalVariable("index");
+        expressionSensor.getSelectNamedBean().setReference("{IM1}");
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionSensor.setStateAddressing(NamedBeanAddressing.LocalVariable);
         expressionSensor.setStateFormula("\"IT\"+index2");
@@ -3118,12 +3118,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
-        expressionSensor.setSensor(sensor1);
+        expressionSensor.getSelectNamedBean().setNamedBean(sensor1);
         expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
-        expressionSensor.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionSensor.setFormula("\"IT\"+index");
-        expressionSensor.setLocalVariable("index");
-        expressionSensor.setReference("{IM1}");
+        expressionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensor.getSelectNamedBean().setLocalVariable("index");
+        expressionSensor.getSelectNamedBean().setReference("{IM1}");
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionSensor.setStateAddressing(NamedBeanAddressing.Formula);
         expressionSensor.setStateFormula("\"IT\"+index2");
@@ -3134,12 +3134,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
-        expressionSensor.setSensor(sensor1);
+        expressionSensor.getSelectNamedBean().setNamedBean(sensor1);
         expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
-        expressionSensor.setAddressing(NamedBeanAddressing.Formula);
-        expressionSensor.setFormula("\"IT\"+index");
-        expressionSensor.setLocalVariable("index");
-        expressionSensor.setReference("{IM1}");
+        expressionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensor.getSelectNamedBean().setLocalVariable("index");
+        expressionSensor.getSelectNamedBean().setReference("{IM1}");
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionSensor.setStateAddressing(NamedBeanAddressing.Reference);
         expressionSensor.setStateFormula("\"IT\"+index2");
@@ -3150,12 +3150,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
-        expressionSensor.setSensor(sensor1);
+        expressionSensor.getSelectNamedBean().setNamedBean(sensor1);
         expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
-        expressionSensor.setAddressing(NamedBeanAddressing.Reference);
-        expressionSensor.setFormula("\"IT\"+index");
-        expressionSensor.setLocalVariable("index");
-        expressionSensor.setReference("{IM1}");
+        expressionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionSensor.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensor.getSelectNamedBean().setLocalVariable("index");
+        expressionSensor.getSelectNamedBean().setReference("{IM1}");
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionSensor.setStateAddressing(NamedBeanAddressing.Direct);
         expressionSensor.setStateFormula("\"IT\"+index2");
@@ -3338,12 +3338,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
-        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout1);
         expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Closed);
-        expressionTurnout.setAddressing(NamedBeanAddressing.Direct);
-        expressionTurnout.setFormula("\"IT\"+index");
-        expressionTurnout.setLocalVariable("index");
-        expressionTurnout.setReference("{IM1}");
+        expressionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionTurnout.getSelectNamedBean().setLocalVariable("index");
+        expressionTurnout.getSelectNamedBean().setReference("{IM1}");
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionTurnout.setStateAddressing(NamedBeanAddressing.LocalVariable);
         expressionTurnout.setStateFormula("\"IT\"+index2");
@@ -3354,12 +3354,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
-        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout1);
         expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
-        expressionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionTurnout.setFormula("\"IT\"+index");
-        expressionTurnout.setLocalVariable("index");
-        expressionTurnout.setReference("{IM1}");
+        expressionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionTurnout.getSelectNamedBean().setLocalVariable("index");
+        expressionTurnout.getSelectNamedBean().setReference("{IM1}");
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionTurnout.setStateAddressing(NamedBeanAddressing.Formula);
         expressionTurnout.setStateFormula("\"IT\"+index2");
@@ -3370,12 +3370,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
-        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout1);
         expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Other);
-        expressionTurnout.setAddressing(NamedBeanAddressing.Formula);
-        expressionTurnout.setFormula("\"IT\"+index");
-        expressionTurnout.setLocalVariable("index");
-        expressionTurnout.setReference("{IM1}");
+        expressionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionTurnout.getSelectNamedBean().setLocalVariable("index");
+        expressionTurnout.getSelectNamedBean().setReference("{IM1}");
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
         expressionTurnout.setStateFormula("\"IT\"+index2");
@@ -3386,12 +3386,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
-        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout1);
         expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Closed);
-        expressionTurnout.setAddressing(NamedBeanAddressing.Reference);
-        expressionTurnout.setFormula("\"IT\"+index");
-        expressionTurnout.setLocalVariable("index");
-        expressionTurnout.setReference("{IM1}");
+        expressionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionTurnout.getSelectNamedBean().setLocalVariable("index");
+        expressionTurnout.getSelectNamedBean().setReference("{IM1}");
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionTurnout.setStateAddressing(NamedBeanAddressing.Direct);
         expressionTurnout.setStateFormula("\"IT\"+index2");
@@ -3408,12 +3408,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("IW99");
+        expressionWarrant.getSelectNamedBean().setNamedBean("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteAllocated);
-        expressionWarrant.setAddressing(NamedBeanAddressing.Direct);
-        expressionWarrant.setFormula("\"IT\"+index");
-        expressionWarrant.setLocalVariable("index");
-        expressionWarrant.setReference("{IM1}");
+        expressionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionWarrant.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionWarrant.getSelectNamedBean().setLocalVariable("index");
+        expressionWarrant.getSelectNamedBean().setReference("{IM1}");
         expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionWarrant.setStateAddressing(NamedBeanAddressing.LocalVariable);
         expressionWarrant.setStateFormula("\"IT\"+index2");
@@ -3424,12 +3424,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("IW99");
+        expressionWarrant.getSelectNamedBean().setNamedBean("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteFree);
-        expressionWarrant.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionWarrant.setFormula("\"IT\"+index");
-        expressionWarrant.setLocalVariable("index");
-        expressionWarrant.setReference("{IM1}");
+        expressionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionWarrant.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionWarrant.getSelectNamedBean().setLocalVariable("index");
+        expressionWarrant.getSelectNamedBean().setReference("{IM1}");
         expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionWarrant.setStateAddressing(NamedBeanAddressing.Formula);
         expressionWarrant.setStateFormula("\"IT\"+index2");
@@ -3440,12 +3440,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("IW99");
+        expressionWarrant.getSelectNamedBean().setNamedBean("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteOccupied);
-        expressionWarrant.setAddressing(NamedBeanAddressing.Formula);
-        expressionWarrant.setFormula("\"IT\"+index");
-        expressionWarrant.setLocalVariable("index");
-        expressionWarrant.setReference("{IM1}");
+        expressionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionWarrant.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionWarrant.getSelectNamedBean().setLocalVariable("index");
+        expressionWarrant.getSelectNamedBean().setReference("{IM1}");
         expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionWarrant.setStateAddressing(NamedBeanAddressing.Reference);
         expressionWarrant.setStateFormula("\"IT\"+index2");
@@ -3456,12 +3456,12 @@ public class CreateLogixNGTreeScaffold {
 
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
-        expressionWarrant.setWarrant("IW99");
+        expressionWarrant.getSelectNamedBean().setNamedBean("IW99");
         expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteSet);
-        expressionWarrant.setAddressing(NamedBeanAddressing.Reference);
-        expressionWarrant.setFormula("\"IT\"+index");
-        expressionWarrant.setLocalVariable("index");
-        expressionWarrant.setReference("{IM1}");
+        expressionWarrant.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionWarrant.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionWarrant.getSelectNamedBean().setLocalVariable("index");
+        expressionWarrant.getSelectNamedBean().setReference("{IM1}");
         expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionWarrant.setStateAddressing(NamedBeanAddressing.Direct);
         expressionWarrant.setStateFormula("\"IT\"+index2");
@@ -3673,7 +3673,7 @@ public class CreateLogixNGTreeScaffold {
 
         analogExpressionMemory = new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null);
         analogExpressionMemory.setComment("A comment");
-        analogExpressionMemory.setMemory(memory1);
+        analogExpressionMemory.getSelectNamedBean().setNamedBean(memory1);
         maleSocket = analogExpressionManager.registerExpression(analogExpressionMemory);
         doAnalogAction.getChild(0).connect(maleSocket);
 
@@ -3790,7 +3790,7 @@ public class CreateLogixNGTreeScaffold {
 
         stringExpressionMemory = new StringExpressionMemory(stringExpressionManager.getAutoSystemName(), null);
         stringExpressionMemory.setComment("A comment");
-        stringExpressionMemory.setMemory(memory1);
+        stringExpressionMemory.getSelectNamedBean().setNamedBean(memory1);
         maleSocket = stringExpressionManager.registerExpression(stringExpressionMemory);
         doStringAction.getChild(0).connect(maleSocket);
 

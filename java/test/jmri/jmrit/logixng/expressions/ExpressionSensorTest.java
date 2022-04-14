@@ -291,7 +291,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
 
         expressionSensor.getSelectNamedBean().setNamedBean("A non existent sensor");
         Assert.assertNull("sensor handle is null", expressionSensor.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertErrorMessage("sensor \"A non existent sensor\" is not found");
+        JUnitAppender.assertErrorMessage("Sensor \"A non existent sensor\" is not found");
 
         expressionSensor.getSelectNamedBean().setNamedBean(sensor13.getSystemName());
         Assert.assertTrue("sensor is correct", sensor13 == expressionSensor.getSelectNamedBean().getNamedBean().getBean());
@@ -314,7 +314,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setSensor must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -326,7 +326,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setSensor must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -335,7 +335,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setSensor must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
@@ -379,14 +379,14 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         // Test vetoableChange() for its own sensor
         boolean thrown = false;
         try {
-            expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanDelete", sensor, null));
+            expressionSensor.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", sensor, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
         Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSelectNamedBean().getNamedBean().getBean());
-        expressionSensor.vetoableChange(new PropertyChangeEvent(this, "DoDelete", sensor, null));
+        expressionSensor.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", sensor, null));
         Assert.assertNull("Sensor is null", expressionSensor.getSelectNamedBean().getNamedBean());
     }
 

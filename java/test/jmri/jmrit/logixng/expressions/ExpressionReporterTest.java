@@ -564,7 +564,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
 
         expressionReporter.getSelectNamedBean().setNamedBean("A non existent reporter");
         Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertWarnMessage("reporter \"A non existent reporter\" is not found");
+        JUnitAppender.assertWarnMessage("Reporter \"A non existent reporter\" is not found");
 
         expressionReporter.getSelectNamedBean().setNamedBean(reporter13.getSystemName());
         Assert.assertTrue("reporter is correct", reporter13 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
@@ -588,7 +588,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -600,7 +600,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -609,7 +609,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
@@ -644,14 +644,14 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Test vetoableChange() for its own memory
         boolean thrown = false;
         try {
-            expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanDelete", reporter, null));
+            expressionReporter.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", reporter, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
         Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
-        expressionReporter.vetoableChange(new PropertyChangeEvent(this, "DoDelete", reporter, null));
+        expressionReporter.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", reporter, null));
         Assert.assertNull("Reporter is null", expressionReporter.getSelectNamedBean().getNamedBean());
     }
 

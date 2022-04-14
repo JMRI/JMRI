@@ -291,7 +291,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
 
         expressionTurnout.getSelectNamedBean().setNamedBean("A non existent turnout");
         Assert.assertNull("turnout handle is null", expressionTurnout.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertErrorMessage("turnout \"A non existent turnout\" is not found");
+        JUnitAppender.assertErrorMessage("Turnout \"A non existent turnout\" is not found");
 
         expressionTurnout.getSelectNamedBean().setNamedBean(turnout13.getSystemName());
         Assert.assertTrue("turnout is correct", turnout13 == expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
@@ -314,7 +314,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -326,7 +326,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -335,7 +335,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
@@ -379,14 +379,14 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         // Test vetoableChange() for its own turnout
         boolean thrown = false;
         try {
-            expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
+            expressionTurnout.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
         Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
-        expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
+        expressionTurnout.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
         Assert.assertNull("Turnout is null", expressionTurnout.getSelectNamedBean().getNamedBean());
     }
 

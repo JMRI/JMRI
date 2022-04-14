@@ -286,7 +286,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
 
         expressionLight.getSelectNamedBean().setNamedBean("A non existent light");
         Assert.assertNull("light handle is null", expressionLight.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertErrorMessage("light \"A non existent light\" is not found");
+        JUnitAppender.assertErrorMessage("Light \"A non existent light\" is not found");
 
         expressionLight.getSelectNamedBean().setNamedBean(light13.getSystemName());
         Assert.assertTrue("light is correct", light13 == expressionLight.getSelectNamedBean().getNamedBean().getBean());
@@ -310,7 +310,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setLight must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -322,7 +322,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setLight must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -331,7 +331,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setLight must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
@@ -374,14 +374,14 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         // Test vetoableChange() for its own light
         boolean thrown = false;
         try {
-            expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
+            expressionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
         Assert.assertEquals("Light matches", light, expressionLight.getSelectNamedBean().getNamedBean().getBean());
-        expressionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
+        expressionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
         Assert.assertNull("Light is null", expressionLight.getSelectNamedBean().getNamedBean());
     }
 

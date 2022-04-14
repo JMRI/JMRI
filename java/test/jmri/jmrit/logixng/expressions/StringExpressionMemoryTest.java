@@ -4,17 +4,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.actions.StringActionMemory;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -90,12 +84,12 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         expression2 = new StringExpressionMemory("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertEquals("String matches", "Get memory none as string value", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Get memory '' as string value", expression2.getLongDescription());
 
         expression2 = new StringExpressionMemory("IQSE11", "My memory");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertEquals("String matches", "Get memory none as string value", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Get memory '' as string value", expression2.getLongDescription());
 
         expression2 = new StringExpressionMemory("IQSE11", null);
         expression2.getSelectNamedBean().setNamedBean(_memory);
@@ -129,7 +123,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     }
 
     @Test
-    public void testEvaluate() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+    public void testEvaluate() throws JmriException, SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
 
@@ -220,7 +214,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         // Test getSelectNamedBean().setNamedBean with a memory name that doesn't exists
         expressionMemory.getSelectNamedBean().setNamedBean("Non existent memory");
         Assert.assertNull("Memory is null", expressionMemory.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertErrorMessage("memory \"Non existent memory\" is not found");
+        JUnitAppender.assertErrorMessage("Memory \"Non existent memory\" is not found");
 
         // Test getSelectNamedBean().setNamedBean() when listeners are registered
         expressionMemory.getSelectNamedBean().setNamedBean(_memory);
@@ -234,7 +228,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("getSelectNamedBean().setNamedBean must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -243,7 +237,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("getSelectNamedBean().setNamedBean must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
@@ -252,7 +246,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("getSelectNamedBean().setNamedBean must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
@@ -298,14 +292,14 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         // Test vetoableChange() for its own memory
         boolean thrown = false;
         try {
-            expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", _memory, null));
+            expression.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", _memory, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
         Assert.assertEquals("Memory matches", _memory, expression.getSelectNamedBean().getNamedBean().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", _memory, null));
+        expression.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", _memory, null));
         Assert.assertNull("Memory is null", expression.getSelectNamedBean().getNamedBean());
     }
 

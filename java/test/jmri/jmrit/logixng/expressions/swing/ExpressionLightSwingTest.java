@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
@@ -38,6 +39,8 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
     @Test
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JDialog dialog = new JDialog();
 
         ExpressionLightSwing t = new ExpressionLightSwing();
         JPanel panel = t.getConfigPanel(new JPanel());
