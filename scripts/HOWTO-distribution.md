@@ -268,8 +268,10 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 - Create a `release-4.99.6` branch on GitHub
 ```
         git checkout -b release-4.99.6
-        git push
+        git push github
 ```
+
+- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
 
 - Put the following comment in the [release GitHub item](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.6%22) saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
@@ -282,22 +284,20 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 ```
 
 
-FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
+- For the last test release before a production release:
 
 ```
 The release-4.99.6 branch has been created.
 
-Maintainers, please set the (next series) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the (next series, i.e. 5.1.1) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/4.99.6/)
 
-If you're developing any additional (post-4.99.6) changes that you want in the JMRI 4.26 production release, please start from this branch, i.e. do `git checkout -b release-4.99.7` to start your work.
+If you're developing any additional (post-4.99.6) changes that you want in the JMRI 5.0 production release, please start from this branch, i.e. do `git fetch; git checkout release-4.99.6; git checkout -b myBranchName` to start your work.
 ```
 
 
-- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
-
-- Pull back to make sure your repository is fully up to date
+- Fetch back to make sure your repository is fully up to date but stay on the release-4.99.6 branch
 
 ================================================================================
 ## Build Files with Jenkins
@@ -327,7 +327,7 @@ If you're developing any additional (post-4.99.6) changes that you want in the J
 ================================================================================
 ## Capture A Profile
 
-- On your local machine, open jconsole. (If you have multiple displays, you may have to disconnect them) Do
+- On your local machine, start `jconsole`. Do
 
 ```
         ant realclean tests
@@ -335,7 +335,7 @@ If you're developing any additional (post-4.99.6) changes that you want in the J
         ant headlesstest
 ```
 
-connect jconsole to the test class when it appears.
+- Connect `jconsole` to the test class when it appears.
 
 - When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 4.99.6](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+4.99.6%22)" Github issue so that historical resource usage info is available.
 
@@ -428,7 +428,7 @@ Run a script to download the created files, create checksums and create text for
 ```
 ./scripts/releasesummary 4.99.6
 ```
-(This attempts a very large download.  If it fails, [download the files](https://builds.jmri.org/jenkins/job/testreleases/job/4.99.6/) individually and put them in a release/ directory in your working directory, then repeat the command)
+(This attempts a very large download.  If it fails, [download the files](https://builds.jmri.org/jenkins/job/testreleases/job/4.99.6/) individually and put them in a `release/` directory in your working directory, then repeat the command)
 
 This will print a bunch of text in several sections. Edit that into the website/releaselist, release note files and GitHub info below in this file.
 
@@ -464,9 +464,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.6+R3bcc0f1bcb.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.6/JMRI.4.99.6+R3bcc0f1bcb.dmg) | a609ec9ee4b55618ee47056efc270c200f8efb649a9d5d42ca90e94907b9b21f
-[JMRI.4.99.6+R3bcc0f1bcb.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.6/JMRI.4.99.6+R3bcc0f1bcb.exe) | 1e496a4a5e5b97d1e3468da19f78bf35ee319af764161ad6dd78291314761637
-[JMRI.4.99.6+R3bcc0f1bcb.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.6/JMRI.4.99.6+R3bcc0f1bcb.tgz) | f32239380c0fe499fe1d45644bf3f337b224ffbd279c8e42a211a7b51d46b294
+[JMRI.4.99.6+R7578dc0c9b.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.6/JMRI.4.99.6+R7578dc0c9b.dmg) | ebbad81179ee8a7cc1961d0333328b49c93e8bcef37f17a714a47af358bf8995
+[JMRI.4.99.6+R7578dc0c9b.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.6/JMRI.4.99.6+R7578dc0c9b.exe) | e4b490436d61a057c19ec10f9aca8577be29bbdd2eb7036c2a7682f1b19d7323
+[JMRI.4.99.6+R7578dc0c9b.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.6/JMRI.4.99.6+R7578dc0c9b.tgz) | 0cd11c5eb20684e99fe3fc8cd29390bff159875441a3203ace6ba1c0caa79cf1
 
 ```
 
@@ -517,20 +517,22 @@ If there are any changes in other files, do both of:
 - You can delete that temp-master local branch now
 
 ====================================================================================
-## Update Development Release Number
+## Update Development Release Number on Master Branch
 
 This step changes release numbering so that builds will be labeled 4.99.7-dev until the 4.99.7 release is created
 
 - Update the &lt;version> element in `pom.xml` to this release:
 ```
-        sed -i .bak s/4.99.5-SNAPSHOT/4.99.6-SNAPSHOT/g pom.xml
-        git commit -m"4.99.6 until next release 4.99.7" pom.xml
+        git checkout master
+        git pull
+        sed -i .bak s/4.99.6-SNAPSHOT/4.99.7-SNAPSHOT/g pom.xml
+        git commit -m"4.99.7 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field of 4.99.6 and 4.99.7)
 ```
         sed -i .bak s/release.build=6/release.build=7/g release.properties
-        git commit -m"4.99.6 until next release 4.99.7" release.properties
+        git commit -m"4.99.7 until next release" release.properties
         git push github
 ```
 
