@@ -886,14 +886,8 @@ public class TrainBuilder extends TrainBuilderBase {
     private void placeCars(int pass, boolean normal) throws BuildFailedException {
         addLine(_buildReport, THREE, BLANK_LINE);
         if (!normal) {
-            if (pass == 1) {
-                addLine(_buildReport, THREE, Bundle.getMessage("buildFirstPass"));
-            } else if (pass == Setup.getNumberPasses()) {
-                addLine(_buildReport, THREE, Bundle.getMessage("buildFinalPass"));
-            } else {
-                addLine(_buildReport, THREE,
-                        MessageFormat.format(Bundle.getMessage("buildMultiplePass"), new Object[]{pass}));
-            }
+            addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildMultiplePass"),
+                    new Object[]{pass, Setup.getNumberPasses()}));
         }
         // now go through each location starting at departure and place cars as
         // requested
