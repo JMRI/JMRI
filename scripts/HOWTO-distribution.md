@@ -639,6 +639,12 @@ You might want to edit it, i.e. to add
 
 - Take a break!
 
+====================================================================================
+
+## Git Usage During the Development and Release Process
+
+![git usage](Release_Git_Flow.png "Git Usage During the Development and Release Process")
+
 
 ====================================================================================
 ====================================================================================
@@ -755,7 +761,7 @@ Some of the operations that are performed will still generate files with CRLF li
 
 ================================================================================
 
-Possibilities for automating GitHub release creation:
+## Possibilities for automating GitHub release creation:
 
 
 Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
@@ -769,11 +775,5 @@ github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.99.7 -n "JMRI.4.9
 Note that `4` in the above will have to be changed to the build number.
 
 It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins
-
-================================================================================
-
-Git Usage During the Development and Release Process
-
-![git usage](Release_Git_Flow.png "Git Usage During the Development and Release Process")
 
 
