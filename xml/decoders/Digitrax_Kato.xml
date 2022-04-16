@@ -14,10 +14,11 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20220416"/>
   <!-- Created from version 1.5 of the Digitrax_01x6 file -->
-  <!-- Version 1 - Add N Scale Intermountain Board Replacement DN166I0, DN166I1A, DN166I1B, DN166I1C, DN166I1D, DN166I2 -->
+  <!-- Version 1 - Add Kato EM13 with Digitrax manufacturer code -->
   <decoder>
-    <family name="Kato" mfg="Digitrax" lowVersionID="51" highVersionID="64">
-      <model model="EM13" numOuts="0" numFns="10" formFactor="N" connector="other" comment="Kato Motor Decoder EM13 made by Digitrax">
+    <family name="Kato" mfg="Digitrax" lowVersionID="51" highVersionID="51">
+      <model model="EM13" numOuts="0" numFns="10" formFactor="N" connector="DropIn"  productID="EM13" comment="Kato Motor Decoder EM13 made by Digitrax">
+        <size length="27" width="14" height="4" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
