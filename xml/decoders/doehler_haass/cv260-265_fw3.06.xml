@@ -102,7 +102,7 @@
             <enumChoice choice="FH18A" value ="170"/>
             <enumChoice choice="FH22A" value ="192"/>
             <enumChoice choice="PD05A" value ="131"/>
-            <enumChoice choice="PD12A" value ="130"/>
+            <enumChoice choice="PD10MU/PD12A" value ="130"/>
             <enumChoice choice="SD05A" value ="205"/>
             <enumChoice choice="SD10A" value ="210"/>
             <enumChoice choice="SD16A" value ="216"/>
@@ -142,6 +142,6 @@
         <label>Date</label>
         <label xml:lang="de">Datum</label>
         <label xml:lang="ca">Data</label>
-        <label xml:lang="nl">Datum</label> 
+        <label xml:lang="nl">Datum</label>
     </variable>
 </variables>
