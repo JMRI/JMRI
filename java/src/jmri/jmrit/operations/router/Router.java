@@ -710,20 +710,25 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     new Object[]{car.getLocationName()}));
             return false;
         }
-
+        
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTwoTrainsFailed"),
+                new Object[]{car}));
+        
+        // tracks that could be the very next destination for the car
+        for (Track t : _nextLocationTracks) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNextTrack"),
+                    new Object[]{t.getTrackTypeName(), t.getLocation().getName(),
+                            t.getName(), car, car.getLocationName(), car.getTrackName(),
+                            _nextLocationTrains.get(_nextLocationTracks.indexOf(t))}));
+        }
+        // tracks that could be the next to last destination for the car
+        for (Track t : _lastLocationTracks) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterLastTrack"),
+                    new Object[]{t.getTrackTypeName(), t.getLocation().getName(),
+                            t.getName(), car, car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
+                            _lastLocationTrains.get(_lastLocationTracks.indexOf(t))}));
+        }
         if (_addtoReport) {
-            // tracks that could be the very next destination for the car
-            for (Track t : _nextLocationTracks) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNextTrack"),
-                        new Object[]{t.getTrackTypeName(), t.getLocation().getName(),
-                                t.getName(), car, _nextLocationTrains.get(_nextLocationTracks.indexOf(t))}));
-            }
-            // tracks that could be the next to last destination for the car
-            for (Track t : _lastLocationTracks) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterLastTrack"),
-                        new Object[]{t.getTrackTypeName(), t.getLocation().getName(),
-                                t.getName(), car, _lastLocationTrains.get(_lastLocationTracks.indexOf(t))}));
-            }
             // tracks that are not the next or the last list
             for (Track t : _otherLocationTracks) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterOtherTrack"),
