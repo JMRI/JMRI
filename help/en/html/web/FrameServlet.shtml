@@ -1,58 +1,45 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2008 -->
 
-  <title>JMRI: Frame Servlet</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Frame Servlet</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI: Frame Servlet</h1>
-      <p>The JMRI Frame Servlet provides web access to JMRI windows.
-      Its base url is "/frame/", which by itself will return a page listing available frames.
 
-      <p>It uses the facilities of the
-      <code>jmri.util.JmriJFrame</code> class to locate windows and
-      create an image of their current appearance. The window does
-      not have to be maximized, but it does have to be open; it's
-      OK for the window to have been minimized.</p>
+      <p>The JMRI Frame Servlet provides web access to JMRI windows. Its base url is "/frame/",
+      which by itself will return a page listing available frames.</p>
 
-      <p>The <a href="index.shtml#Configure">Web Server
-      Preferences</a> can be used to adjust the default delay after
-      a click and adjust the periodic refresh between clicks. You
-      can also enter a list of frames which are not to be allowed,
-      and enable ajax refresh (recommended) or use the older
-      meta-refresh.</p>
+      <p>It uses the facilities of the <code>jmri.util.JmriJFrame</code> class to locate windows
+      and create an image of their current appearance. The window does not have to be maximized,
+      but it does have to be open; it's OK for the window to have been minimized.</p>
 
-      <p>You can override the defaults for individual pages by
-      adding the following yes/no parameters to your URL:</p>
+      <p>The <a href="index.shtml#Configure">Web Server Preferences</a> can be used to adjust the
+      default delay after a click and adjust the periodic refresh between clicks. You can also
+      enter a list of frames which are not to be allowed, and enable ajax refresh (recommended) or
+      use the older meta-refresh.</p>
+
+      <p>You can override the defaults for individual pages by adding the following yes/no
+      parameters to your URL:</p>
 
       <ul>
-        <li><b>plain</b> (hide the footer links)</li>
+        <li><strong>plain</strong> (hide the footer links)</li>
 
-        <li><b>protect</b> (protect the frame from user clicks,
-        i.e. read-only image, but with refresh)</li>
+        <li><strong>protect</strong> (protect the frame from user clicks, i.e. read-only image, but
+        with refresh)</li>
 
-        <li><b>ajax</b> (use ajax for updates)</li>
-      </ul>To display any <em>already open</em> JMRI window as a
-      <b>clickable</b> image that periodically refreshes, use a URL
-      like: <code><a href=
+        <li><strong>ajax</strong> (use ajax for updates)</li>
+      </ul>
+      To display any <em>already open</em> JMRI window as a <strong>clickable</strong> image that
+      periodically refreshes, use a URL like: <code><a href=
       "http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a></code><br>
 
       <code><a href=
@@ -60,40 +47,35 @@
 
       <code><a href=
       "http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a></code>
-
-      <p>Note the frame title in the URL, followed by ".html".
-      Replace any spaces in the title with "%20".</p>For current,
-      dynamically-generated list of available windows, use this
-      URL: <code><a href=
+      <p>Note the frame title in the URL, followed by ".html". Replace any spaces in the title with
+      "%20".</p>
+      For current, dynamically-generated list of available windows, use this URL: <code><a href=
       "http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></code>
-
-      <p><em>Note:</em> Adjust defaults such as refresh timing,
-      disallowed frames and ajax usage in Web Server
-      Preferences.</p>You can override the defaults for individual
-      pages by using the following parameters in your URL:
-
+      <p><em>Note:</em> Adjust defaults such as refresh timing, disallowed frames and ajax usage in
+      Web Server Preferences.</p>
+      You can override the defaults for individual pages by using the following parameters in your
+      URL:
       <ul>
-        <li><b>plain</b> (hide the footer links)</li>
+        <li><strong>plain</strong> (hide the footer links)</li>
 
-        <li><b>protect</b> (protect the frame from user clicks,
-        i.e. read-only image, but with refresh)</li>
+        <li><strong>protect</strong> (protect the frame from user clicks, i.e. read-only image, but
+        with refresh)</li>
 
-        <li><b>ajax</b> (use ajax for updates)</li>
-      </ul>Example, showing no links, protected, using ajax to
-      refresh every 12 seconds:<br>
+        <li><strong>ajax</strong> (use ajax for updates)</li>
+      </ul>
+      Example, showing no links, protected, using ajax to refresh every 12 seconds:<br>
       <code><a href=
       "http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&amp;plain=true&amp;protect=true&amp;retry=12">
       http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&amp;plain=true&amp;protect=true&amp;retry=12</a></code>
-
-      <p>The
-      <code>jmri/web/servlet/frameimage/JmriJFrameServlet.properties</code>
-      <a href=
+      <p>The <code>jmri/web/servlet/frameimage/JmriJFrameServlet.properties</code> <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties">
-      properties file</a> can be used to configure the HTML that's
-      returned when a frame is requested.</p>
-
+      properties file</a> can be used to configure the HTML that's returned when a frame is
+      requested.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

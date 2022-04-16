@@ -41,9 +41,9 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
         setStoreElementClass(actions);
         AnalogActionManager tm = (AnalogActionManager) o;
         if (tm != null) {
+            if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleAnalogActionSocket action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
-//                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
@@ -55,7 +55,6 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());
                     if (e != null) {
                         for (Element ee : elements) e.addContent(ee);
-//                        e.addContent(storeMaleSocket(a));
                         actions.addContent(e);
                     } else {
                         throw new RuntimeException("Cannot load xml configurator for " + a.getObject().getClass().getName());

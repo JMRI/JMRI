@@ -32,6 +32,9 @@ public class LayoutEditorWindowTest {
         // It's up at this point, and can be manipulated
         // Ask to close window
         to.closeFrameWithConfirmations();
+
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+
     }
 
     // Setup for log4J

@@ -112,12 +112,12 @@ public class CbusLight extends AbstractLight implements CanListener, CbusEventIn
 
     /** {@inheritDoc} */
     @Override
-    public void reply(CanReply f) {
-        if ( f.extendedOrRtr() ) {
+    public void reply(CanReply origf) {
+        if ( origf.extendedOrRtr() ) {
             return;
         }
         // convert response events to normal
-        f = CbusMessage.opcRangeToStl(f);
+        CanReply f = CbusMessage.opcRangeToStl(origf);
         if (addrOn.match(f)) {
             notifyStateChange(getState(), ON);
         } else if (addrOff.match(f)) {

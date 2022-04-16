@@ -1,52 +1,32 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LocoNet Slot Monitor</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help loconet slot monitor">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>LocoNet Slot Monitor</h1>
-      <a href=
-      "SlotMonitorScreenShot.bmp"><img src="SlotMonitorScreenShot.bmp"
-      width="365" height="263" alt="Command Station Slot Monitor"
-      align="right"></a>
-      <p>The Slot Monitor tool displays a table of the "command
-      station slots'" contents. Slots are used to control
-      individual locomotives and consists. The display includes the
-      decoder's speed step format, current speed and function
-      settings, consist information and status. You can choose to
-      show either all slots or just the ones being actively used.</p>
+      <a href="SlotMonitorScreenShot.bmp"><img src="SlotMonitorScreenShot.bmp" width="365" height=
+      "263" alt="Command Station Slot Monitor" class="floatRight"></a>
+      <p>The Slot Monitor tool displays a table of the "command station slots'" contents. Slots are
+      used to control individual locomotives and consists. The display includes the decoder's speed
+      step format, current speed and function settings, consist information and status. You can
+      choose to show either all slots or just the ones being actively used.</p>
 
-      <p>The checkboxes at the top allow you to show just the
-      active (in use) slots, or all locomotive slots. You can also
-      choose whether to show the "system" slots which don't carry
+      <p>The checkboxes at the top allow you to show just the active (in use) slots, or all
+      locomotive slots. You can also choose whether to show the "system" slots which don't carry
       locomotive information.<br>
-      The "Estop All" button sets the speed of all the locomotives
-      to "Emergency Stop" in one action.<br>
-      The "Release all unused slots" button (not visible in this
-      screen shot) will reclaim extra slots in the Command Station.
-      </p>
+      The "Estop All" button sets the speed of all the locomotives to "Emergency Stop" in one
+      action.<br>
+      The "Release all unused slots" button (not visible in this screen shot) will reclaim extra
+      slots in the Command Station.</p>
 
       <p>The columns are:</p>
 
@@ -57,8 +37,7 @@
 
         <dt>E Stop</dt>
 
-        <dd>Click this button to set the speed of the decoder to
-        emergency stop</dd>
+        <dd>Click this button to set the speed of the decoder to emergency stop</dd>
 
         <dt>Address</dt>
 
@@ -66,36 +45,31 @@
 
         <dt>Speed</dt>
 
-        <dd>For unconsisted locomotives and addresses that are the
-        top of a consist, this is the current speed setting. It's
-        an internal value for consisted slots.</dd>
+        <dd>For unconsisted locomotives and addresses that are the top of a consist, this is the
+        current speed setting. It's an internal value for consisted slots.</dd>
 
         <dt>Status</dt>
 
-        <dd>The format of the commands being sent to the decoder,
-        typically either 128 step, 28 step, or 14 step, though
-        other values are possible.</dd>
+        <dd>The format of the commands being sent to the decoder, typically either 128 step, 28
+        step, or 14 step, though other values are possible.</dd>
 
         <dt>Use</dt>
 
         <dd>
           Displays one of four possible states:
-
           <dl>
             <dt>Free</dt>
 
-            <dd>Not reserved for any particular use, no
-            contents</dd>
+            <dd>Not reserved for any particular use, no contents</dd>
 
             <dt>Idle</dt>
 
-            <dd>Not reserved for any particular use, no
-            contents</dd>
+            <dd>Not reserved for any particular use, no contents</dd>
 
             <dt>Common</dt>
 
-            <dd>Not in use at the moment, but still contains valid
-            data for the last decoder to use it.</dd>
+            <dd>Not in use at the moment, but still contains valid data for the last decoder to use
+            it.</dd>
 
             <dt>In Use</dt>
 
@@ -105,34 +79,30 @@
 
         <dt>Free</dt>
 
-        <dd>Click this button to free the slot, so it can be reused
-        for another locomotive.</dd>
+        <dd>Click this button to free the slot, so it can be reused for another locomotive.</dd>
 
         <dt>Consisted</dt>
 
-        <dd>Displays the consist status of the slot, whether it's
-        not consisted, the top of a consist, included in a consist,
-        etc.</dd>
+        <dd>Displays the consist status of the slot, whether it's not consisted, the top of a
+        consist, included in a consist, etc.</dd>
 
         <dt>Throttle ID</dt>
 
-        <dd>The ID of the throttle using this slot. It's displayed
-        as two hexadecimal bytes. The second pair can be configured
-        into the throttle, see the Digitrax instructions.</dd>
+        <dd>The ID of the throttle using this slot. It's displayed as two hexadecimal bytes. The
+        second pair can be configured into the throttle, see the Digitrax instructions.</dd>
 
         <dt>Direction</dt>
 
-        <dd>Whether the decoder is currently being commanded to go
-        Forward or Reverse.</dd>
+        <dd>Whether the decoder is currently being commanded to go Forward or Reverse.</dd>
 
         <dt>F0-F8</dt>
 
-        <dd>The current function settings. A check mark indicates
-        a function is On.</dd>
-
+        <dd>The current function settings. A check mark indicates a function is On.</dd>
       </dl>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

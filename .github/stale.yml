@@ -7,7 +7,7 @@ daysUntilStale: 45
 daysUntilClose: 15
 
 # Issues with these labels will never be considered stale. Set to `[]` to disable
-exemptLabels: []
+exemptLabels: ["Bug"]
 
 # exemptLabels:
 #  - "status: accepted"
@@ -16,6 +16,10 @@ exemptLabels: []
 
 # Label to use when marking an issue as stale
 staleLabel: "Pending closure"
+
+# Label to use when an issue has been closed
+close-issue-label: "Closed due to inactivity"
+close-pr-label: "Closed due to inactivity"
 
 # Comment to post when marking an issue as stale. Set to `false` to disable
 markComment: >

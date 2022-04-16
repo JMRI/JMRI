@@ -1,298 +1,274 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="generator"
-	content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-<title>JMRI: WiFi Throttle</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css"
-	media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: WiFi Throttle</title><!--#include virtual="/Style.shtml" -->
 </head>
-
-
 <!-- Page needs to be split into (1) WiFi Throttles page including intro and table and section on remote use (file location in repository TBD), and (2) section on WiThrottle and its UI (the original intent of this page based on the name of the file and where this file resides in the JMRI repository). @jerryg2003 01/12/2020 -->
 
-
-
 <body>
-	<!--#include virtual="/Header.shtml" -->
-	<div class="nomenu" id="mBody">
-		<div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-			<h1>JMRI: WiFi Connected Throttle</h1>
-			The WiThrottle window controls the connection between WiFi throttles,
-			e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: WiFi Connected Throttle</h1>
+      The WiThrottle window controls the connection between WiFi throttles, e.g. an iPhone, iPod
+      Touch, or Android Phone, and JMRI.
+      <p>It can be set to start automatically with the "<a href=
+      "../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>" section in the "<a href=
+      "../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>".</p>
 
-			<p>
-				It can be set to start automatically with the "<a
-					href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>"
-				section in the "<a href="../../../apps/TabbedPreferences.shtml">JMRI
-					Preferences</a>".
-			</p>
+      <p><a href="../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a> for the WiFi
+      throttles can be found in the JMRI Preferences under the heading WiThrottle.</p>
 
-			<p>
-				<a href="../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
-				for the WiFi throttles can be found in the JMRI Preferences under
-				the heading WiThrottle.
-			</p>
+      <p>This utility broadcasts its connection information across all local networks, so it can be
+      picked up by any device looking for the service. This eliminates having to enter connection
+      information into the device. If the computer running JMRI is protected by a software
+      firewall, you may need to add an exception for JMRI or disable the firewall to allow the WiFi
+      throttle to connect.</p>
 
-			<p>This utility broadcasts its connection information across all
-				local networks, so it can be picked up by any device looking for the
-				service. This eliminates having to enter connection information into
-				the device. If the computer running JMRI is protected by a software
-				firewall, you may need to add an exception for JMRI or disable the
-				firewall to allow the WiFi throttle to connect.</p>
+      <p>When using a WiFi throttle, if the computer enters sleep mode, control will be lost.
+      System preferences may need to be adjusted to prevent the computer from putting itself to
+      sleep when it is inactive.</p>
 
-			<p>When using a WiFi throttle, if the computer enters sleep mode,
-				control will be lost. System preferences may need to be adjusted to
-				prevent the computer from putting itself to sleep when it is
-				inactive.</p>
+      <p>You can use any of these devices via the same or a different (remote) network than the one
+      that your JMRI computer is running on. See <a href="#remote">below</a> for more information
+      on <a href="#remote">remote use of mobile devices</a>.</p>
 
-			<p>
-				You can use any of these devices via the same or a different
-				(remote) network than the one that your JMRI computer is running on.
-				See <a href="#remote">below</a> for more information on <a
-					href="#remote">remote use of mobile devices</a>.
-			</p>
+      <p>The <a href="Protocol.shtml">WiThrottle protocol</a> is described on a <a href=
+      "Protocol.shtml">separate page</a>. For more on JMRI networking, see the <a href=
+      "../../../../html/doc/Technical/Networking.shtml">networking technical page</a>.</p>
 
-			<p>
-				The <a href="Protocol.shtml">WiThrottle protocol</a> is described on a 
-					<a href="Protocol.shtml">separate page</a>. For more on JMRI networking, 
-					see the <a href="../../../../html/doc/Technical/Networking.shtml">networking
-					technical page</a>.
-			</p>
+      <h3>Available Apps</h3>
 
-			<h3>Available Apps</h3>
-			<table class="data" style="max-width: 1200px; float: left;">
-				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Apple</th>
-					<th>Android</th>
-					<th>Windows</th>
-					<th>Web</th>
-				</tr>
-				<tr>
-					<td><a target="_blank" href="https://withrottle.com">WiThrottle</a></td>
-					<td>An easy-to-use interface to allow iPhone, iPad, and iPod
-						touch users to link to JMRI roster and tables and also web pages.
-						Will download function key labels stored in JMRI.
-						Available in a free version (control a 
-						single locomotive) and a purchased version (control up to four locomotives at once).
-					</td>
-					<td><a target="_blank" href="https://withrottle.com"><img
-							src="images/WiT125x250.png" height="125"
-							alt="WiThrottle for Apple devices"
-							title="WiThrottle for Apple devices"></a></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><a target="_blank" href="https://enginedriver.mstevetodd.com">EngineDriver</a></td>
-					<td>This free application can control your locomotives and
-						your entire model railroad. Speed, direction, and up to 29 DCC
-						functions are supported for one to six locomotives or consists.
-						You can create and edit consists (software-defined). You can also
-						control layout power, turnouts, routes, and access JMRI web panels
-						and windows.</td>
-					<td></td>
-					<td><a target="_blank" href="https://enginedriver.mstevetodd.com"><img
-							src="images/EngineDriverScreen.png" height="125" 
-							alt="EngineDriver for Android devices"
-							title="EngineDriver for Android devices"></a></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><a target="_blank" href="https://digitrainspro.hu">DigiTrainsPro</a></td>
-					<td>NOTE: THIS WIFI THROTTLE DOES NOT USE JMRI's WiThrottle server, but rather
-					    communicates via JMRI's Web Server.  YOU MUST START Web Server before using this app.
-						You can then select the locomotive you want to
-						control from the JMRI roster and other objects such as turnouts from JMRI tables. You can also use its builtin
-						Dispatcher game and play station speaker announcements. With the Model Time function,
-						trains can run on schedule!</td>
-					<td><a target="_blank" href="https://digitrainspro.hu"> <img
-							src="images/DigiTrainsPro_screenshot.png"
-							height="125" alt="DigiTrainsPro for Apple devices"
-							title="DigiTrainsPro for Apple devices"></a></td>
-					<td><a target="_blank" href="https://digitrainspro.hu"> <img
-							src="images/DigiTrainsPro_screenshot.png"
-							height="125" alt="DigiTrainsPro for Android devices"
-							title="DigiTrainsPro for Android devices"></a></td>
-					<td><a target="_blank" href="https://digitrainspro.hu"> <img
-							src="images/DigiTrainsPro_screenshot.png"
-							height="125" alt="DigiTrainsPro for Windows"
-							title="DigiTrainsPro for Windows"></a></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><a target="_blank"
-						href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j">Train
-							Throttle</a></td>
-					<td>Train Throttle is a client for the JMRI WiThrottle server,
-						which allows you to control your DCC equipped model trains. The
-						current version of the software lets you control a single
-						throttle, functions 0-28, as well as add multiple engines to the
-						throttle, on the fly.</td>
-					<td></td>
-					<td></td>
-					<td><a target="_blank"
-						href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j">
-							<img src="images/TrainThrottleLogo.png" height="100"
-							alt="Train Throttle App for Windows devices"
-							title="Train Throttle App for Windows devices">
-					</a></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><a target="_blank" href="https://locontrol.flycricket.io/?t=1587818832">Locontrol</a></td>
-					<td>An elegant controller for iOS.
-					</td>
-					<td><a target="_blank" href="https://locontrol.flycricket.io/?t=1587818832"><img
-							src="https://is3-ssl.mzstatic.com/image/thumb/Purple113/v4/c0/96/c6/c096c6e1-3c67-5d22-43aa-aba2a1bb1b36/pr_source.jpg/230x0w.jpg"
-							alt="Locontrol for Apple devices" height="125"
-							title="Locontrol for Apple devices"></a></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><a target="_blank"
-						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a></td>
-					<td>
-					NOTE: This WiFI Throttle uses JMRI's Web Server.  YOU MUST START Web Server before using this app.
-					Web control for locos, panels, turnouts and routes.
-						Included in JMRI, nothing to install!</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td><a target="_blank"
-						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">
-							<img src="/resources/logo.gif" height="100" 
-							alt="WebThrottle for browsers" title="WebThrottle for browsers">
-					</a></td>
-				</tr>
-			</table>
-			<div style="clear: both;"></div>
+      <table class="data" style="max-width: 1200px; float: left;">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Apple</th>
+          <th>Android</th>
+          <th>Windows</th>
+          <th>Web</th>
+        </tr>
 
-			<h3>Function Labels</h3>
-			Function labels can be customized for each roster entry through JMRI,
-			using the Labels &amp; Media button. These labels will then be
-			displayed in place of the generic F1, F2... on the screen of the
-			mobile device. The labels can be added when a new roster entry is
-			created, or by editing an existing roster entry under the Function
-			Labels tab.
+        <tr>
+          <td>
+            <a target="_blank" href="https://withrottle.com">WiThrottle</a>
+          </td>
+          <td>An easy-to-use interface to allow iPhone, iPad, and iPod touch users to link to JMRI
+          roster and tables and also web pages. Will download function key labels stored in JMRI.
+          Available in a free version (control a single locomotive) and a purchased version
+          (control up to four locomotives at once).</td>
+          <td>
+            <a target="_blank" href="https://withrottle.com"><img src="images/WiT125x250.png"
+            height="125" alt="WiThrottle for Apple devices" title=
+            "WiThrottle for Apple devices"></a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
 
-			<h3>Routes &amp; Turnouts</h3>
-			The app can control any turnouts (and routes) that JMRI can
-			control.Additionally, you can limit what turnouts appear. In JMRI,
-			with the WiThrottle window active, there is a menu named WiThrottle.
-			It has an item titled "Routes and Turnouts" that will let you pick
-			which items to display or hide.
+        <tr>
+          <td>
+            <a target="_blank" href="https://enginedriver.mstevetodd.com">EngineDriver</a>
+          </td>
+          <td>This free application can control your locomotives and your entire model railroad.
+          Speed, direction, and up to 29 DCC functions are supported for one to six locomotives or
+          consists. You can create and edit consists (software-defined). You can also control
+          layout power, turnouts, routes, and access JMRI web panels and windows.</td>
+          <td>
+          </td>
+          <td>
+            <a target="_blank" href="https://enginedriver.mstevetodd.com"><img src=
+            "images/EngineDriverScreen.png" height="125" alt="EngineDriver for Android devices"
+            title="EngineDriver for Android devices"></a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
 
-			<h3>Advanced Consisting</h3>
-			There are now two options for how Advanced (or Decoder Assisted)
-			Consisting is handled. This can be selected from the <a
-				href="../../../apps/TabbedPreferences.shtml#WiThrottle">WiThrottle</a>
-			portion of JMRI Preferences.
+        <tr>
+          <td>
+            <a target="_blank" href="https://digitrainspro.hu">DigiTrainsPro</a>
+          </td>
+          <td>NOTE: THIS WIFI THROTTLE DOES NOT USE JMRI's WiThrottle server, but rather
+          communicates via JMRI's Web Server. YOU MUST START Web Server before using this app. You
+          can then select the locomotive you want to control from the JMRI roster and other objects
+          such as turnouts from JMRI tables. You can also use its builtin Dispatcher game and play
+          station speaker announcements. With the Model Time function, trains can run on
+          schedule!</td>
+          <td>
+            <a target="_blank" href="https://digitrainspro.hu"><img src=
+            "images/DigiTrainsPro_screenshot.png" height="125" alt=
+            "DigiTrainsPro for Apple devices" title="DigiTrainsPro for Apple devices"></a>
+          </td>
+          <td>
+            <a target="_blank" href="https://digitrainspro.hu"><img src=
+            "images/DigiTrainsPro_screenshot.png" height="125" alt=
+            "DigiTrainsPro for Android devices" title="DigiTrainsPro for Android devices"></a>
+          </td>
+          <td>
+            <a target="_blank" href="https://digitrainspro.hu"><img src=
+            "images/DigiTrainsPro_screenshot.png" height="125" alt="DigiTrainsPro for Windows"
+            title="DigiTrainsPro for Windows"></a>
+          </td>
+          <td>
+          </td>
+        </tr>
 
-			<p>
-				The default is <b>NMRA Format</b>. This will build a consist using
-				NMRA consisting commands. It does not use any techniques specific to
-				the connected DCC system. This allows WiFi throttles to work in a
-				DCC manufacturer independent way. These consists may perform better
-				for building and controlling with WiFi devices.
-			</p>
+        <tr>
+          <td>
+            <a target="_blank" href=
+            "https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j">Train Throttle</a>
+          </td>
+          <td>Train Throttle is a client for the JMRI WiThrottle server, which allows you to
+          control your DCC equipped model trains. The current version of the software lets you
+          control a single throttle, functions 0-28, as well as add multiple engines to the
+          throttle, on the fly.</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+            <a target="_blank" href=
+            "https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j"><img src=
+            "images/TrainThrottleLogo.png" height="100" alt=
+            "Train Throttle App for Windows devices" title=
+            "Train Throttle App for Windows devices"></a>
+          </td>
+          <td>
+          </td>
+        </tr>
 
-			<p>
-				The second option is <b>DCC Brand-Specific</b> which will build
-				consists in a manner where they will function as though built using
-				a throttle from the DCC manufacturer. This will follow manufacturer
-				specific features as to how consists are built and controlled. These
-				consists should perform better when built with a WiFi device, but
-				controlled by a throttle from the DCC manufacturer of your system.
-			</p>
+        <tr>
+          <td>
+            <a target="_blank" href="https://locontrol.flycricket.io/?t=1587818832">Locontrol</a>
+          </td>
+          <td>An elegant controller for iOS.</td>
+          <td>
+            <a target="_blank" href="https://locontrol.flycricket.io/?t=1587818832"><img src=
+            "https://is3-ssl.mzstatic.com/image/thumb/Purple113/v4/c0/96/c6/c096c6e1-3c67-5d22-43aa-aba2a1bb1b36/pr_source.jpg/230x0w.jpg"
+            alt="Locontrol for Apple devices" height="125" title="Locontrol for Apple devices"></a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
 
-			<h2>
-				<a name="remote"></a>Using A Remote Mobile Device Throttle
-			</h2>
+        <tr>
+          <td>
+            <a target="_blank" href=
+            "/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a>
+          </td>
+          <td>NOTE: This WiFI Throttle uses JMRI's Web Server. YOU MUST START Web Server before
+          using this app. Web control for locos, panels, turnouts and routes. Included in JMRI,
+          nothing to install!</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+            <a target="_blank" href=
+            "/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml"><img src=
+            "/resources/logo.gif" height="100" alt="WebThrottle for browsers" title=
+            "WebThrottle for browsers"></a>
+          </td>
+        </tr>
+      </table>
 
-			<p>Typically, people using smartphones or tablets as throttles
-				are physically in the same room as the layout they are controlling.
-				Mobile device throttles, however, can be operated from anywhere in
-				the world, significantly adding to the fun of model railroading by
-				making it possible to share control of a layout with family or
-				friends many miles away.</p>
+      <div style="clear: both;">
+      </div>
 
-			<p>Setting up a mobile device throttle is straighforward, as
-				discussed above. Apps such as the similarly named WiThrottle (for
-				IOS devices) and EngineDriver (for Android devices) will either
-				recognize that JMRI WiThrottle Server is transmitting or ask you to
-				connect to the server manually by entering its IP address and port.
-				The WiThrottle Server displays its broadcast IP address and port in
-				the top section of the WiThrottle window. If you are using a typical
-				home router, this will begin with 192 or 10 and consist of four
-				parts, for example 192.168.0.103. This "internal" IP address will
-				only be recognized by other devices connecting to the same local
-				network.</p>
+      <h3>Function Labels</h3>
+      Function labels can be customized for each roster entry through JMRI, using the Labels &
+      Media button. These labels will then be displayed in place of the generic F1, F2... on the
+      screen of the mobile device. The labels can be added when a new roster entry is created, or
+      by editing an existing roster entry under the Function Labels tab.
+      <h3>Routes & Turnouts</h3>
+      The app can control any turnouts (and routes) that JMRI can control.Additionally, you can
+      limit what turnouts appear. In JMRI, with the WiThrottle window active, there is a menu named
+      WiThrottle. It has an item titled "Routes and Turnouts" that will let you pick which items to
+      display or hide.
+      <h3>Advanced Consisting</h3>
+      There are now two options for how Advanced (or Decoder Assisted) Consisting is handled. This
+      can be selected from the <a href=
+      "../../../apps/TabbedPreferences.shtml#WiThrottle">WiThrottle</a> portion of JMRI
+      Preferences.
+      <p>The default is <strong>NMRA Format</strong>. This will build a consist using NMRA
+      consisting commands. It does not use any techniques specific to the connected DCC system.
+      This allows WiFi throttles to work in a DCC manufacturer independent way. These consists may
+      perform better for building and controlling with WiFi devices.</p>
 
-			<p>
-				Setting up for a remote mobile device throttle requires some
-				additional steps. If the mobile device you are going to use as a
-				throttle is connecting to a different network than your local
-				network (as, for example, is obviously the case if the remote
-				operator is in another city), that mobile device will have to be
-				told the "external" or "public" address of your JMRI computer and a
-				port number that will allow it to connect remotely to your JMRI
-				computer. You can look up the public IP address for your local
-				router either by logging into the router's administrative portal or
-				using a browser on your JMRI computer to go to the web site <a
-					href="https://whatismypublicip.com">WhatIsMyPublicIP.com</a> or
-				similar. You then have to create a link between that IP address and
-				a port number to the internal IP address and port number of the JMRI
-				WiThrottle Server. This is called "port forwarding" and needs to be
-				set up on your local router. Setting up port forwarding varies with
-				the model of router so we won't attempt to give specific
-				instructions on how to do that. However, detailed instructions can
-				usually be found on the internet and the topic has been addressed in
-				the JMRI online forum as well.
-			</p>
+      <p>The second option is <strong>DCC Brand-Specific</strong> which will build consists in a
+      manner where they will function as though built using a throttle from the DCC manufacturer.
+      This will follow manufacturer specific features as to how consists are built and controlled.
+      These consists should perform better when built with a WiFi device, but controlled by a
+      throttle from the DCC manufacturer of your system.</p>
 
-			<p>Once you have determined the public address of your JMRI
-				computer and set up port forwarding to the WiThrottle Server, you
-				enter this information into the throttle app on your mobile device.
-				You will know you have been successful when your mobile device's
-				name appears in the WiThrottle Server window and your engine roster
-				appears on your app.
-			<p>TROUBLESHOOTING: if you get an error or your mobile device app
-				doesn't appear to connect, check that you have the correct internal
-				and public IP addresses (which may change from day to day due to the
-				way your network router and internet service provider assign
-				addresses), correct port number, and that you saved the port
-				forwarding information to your router's memory.</p>
+      <h2 id="remote">Using A Remote Mobile Device Throttle</h2>
 
-			<p>Now all you have to do is provide a way for the remote
-				engineer to talk with you and see your layout while he or she takes
-				control of your JMRI-enabled layout via a mobile device throttle
-				from anywhere in the world! [FYI: use FaceTime or Skype or some
-				other video system that provides realtime communication for this
-				purpose. It is generally not recommended to use remote monitoring
-				cameras such as are used for baby monitoring or security cameras as
-				most introduce a several second delay -- something that could lead
-				to some very interesting railroad accidents!]</p>
+      <p>Typically, people using smartphones or tablets as throttles are physically in the same
+      room as the layout they are controlling. Mobile device throttles, however, can be operated
+      from anywhere in the world, significantly adding to the fun of model railroading by making it
+      possible to share control of a layout with family or friends many miles away.</p>
 
-			<!--#include virtual="/Footer.shtml" -->
-		</div>
-	</div>
+      <p>Setting up a mobile device throttle is straighforward, as discussed above. Apps such as
+      the similarly named WiThrottle (for IOS devices) and EngineDriver (for Android devices) will
+      either recognize that JMRI WiThrottle Server is transmitting or ask you to connect to the
+      server manually by entering its IP address and port. The WiThrottle Server displays its
+      broadcast IP address and port in the top section of the WiThrottle window. If you are using a
+      typical home router, this will begin with 192 or 10 and consist of four parts, for example
+      192.168.0.103. This "internal" IP address will only be recognized by other devices connecting
+      to the same local network.</p>
+
+      <p>Setting up for a remote mobile device throttle requires some additional steps. If the
+      mobile device you are going to use as a throttle is connecting to a different network than
+      your local network (as, for example, is obviously the case if the remote operator is in
+      another city), that mobile device will have to be told the "external" or "public" address of
+      your JMRI computer and a port number that will allow it to connect remotely to your JMRI
+      computer. You can look up the public IP address for your local router either by logging into
+      the router's administrative portal or using a browser on your JMRI computer to go to the web
+      site <a href="https://whatismypublicip.com">WhatIsMyPublicIP.com</a> or similar. You then
+      have to create a link between that IP address and a port number to the internal IP address
+      and port number of the JMRI WiThrottle Server. This is called "port forwarding" and needs to
+      be set up on your local router. Setting up port forwarding varies with the model of router so
+      we won't attempt to give specific instructions on how to do that. However, detailed
+      instructions can usually be found on the internet and the topic has been addressed in the
+      JMRI online forum as well.</p>
+
+      <p>Once you have determined the public address of your JMRI computer and set up port
+      forwarding to the WiThrottle Server, you enter this information into the throttle app on your
+      mobile device. You will know you have been successful when your mobile device's name appears
+      in the WiThrottle Server window and your engine roster appears on your app.</p>
+
+      <p>TROUBLESHOOTING: if you get an error or your mobile device app doesn't appear to connect,
+      check that you have the correct internal and public IP addresses (which may change from day
+      to day due to the way your network router and internet service provider assign addresses),
+      correct port number, and that you saved the port forwarding information to your router's
+      memory.</p>
+
+      <p>Now all you have to do is provide a way for the remote engineer to talk with you and see
+      your layout while he or she takes control of your JMRI-enabled layout via a mobile device
+      throttle from anywhere in the world! [FYI: use FaceTime or Skype or some other video system
+      that provides realtime communication for this purpose. It is generally not recommended to use
+      remote monitoring cameras such as are used for baby monitoring or security cameras as most
+      introduce a several second delay -- something that could lead to some very interesting
+      railroad accidents!]</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

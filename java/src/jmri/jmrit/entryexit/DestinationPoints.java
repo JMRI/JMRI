@@ -243,7 +243,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             if (log.isDebugEnabled()) {
                 log.debug("Route details contents {}", routeDetails);  // NOI18N
                 for (int i = 0; i < routeDetails.size(); i++) {
-                    log.debug("      {}", routeDetails.get(i).getDisplayName());
+                    log.debug("    name: {}", routeDetails.get(i).getDisplayName());
                 }
             }
             if ((routeDetails.size() == 1) && (routeDetails.contains(destination))) {
@@ -523,15 +523,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     }
 
                     if (at != null) {
-                        jmri.Section sec = null;
+                        Section sec;
                         if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
                             sec = sml.getAssociatedSection((SignalMast) getSignal());
                         } else {
-                            sec = InstanceManager.getDefault(jmri.SectionManager.class).createNewSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                            String secUserName = src.getPoint().getDisplayName() + ":" + point.getDisplayName();
+                            sec = InstanceManager.getDefault(SectionManager.class).getSection(secUserName);
                             if (sec == null) {
-                                //A Section already exists, lets grab it and check that it is one used with the Interlocking, if so carry on using that.
-                                sec = InstanceManager.getDefault(jmri.SectionManager.class).getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
-                            } else {
+                                sec = InstanceManager.getDefault(SectionManager.class).createNewSection(secUserName);
                                 sec.setSectionType(jmri.Section.DYNAMICADHOC);
                             }
                             if (sec.getSectionType() == jmri.Section.DYNAMICADHOC) {
@@ -824,7 +823,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             return;
         }
 
+        // The block list for an interlocking NX still has the facing block if there are no signals.
+        boolean facing = getSource().getSourceSignal() == null ? true : false;
         for (LayoutBlock blk : routeDetails) {
+            if (facing) {
+                // skip facing Block
+                facing = false;
+                continue;
+            }
             if ((getEntryExitType() == EntryExitPairs.FULLINTERLOCK)) {
                 blk.setUseExtraColor(false);
             }
@@ -856,9 +862,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         src.getStart().getBlock().goingInactive();
                     }
                 } catch (java.lang.NullPointerException e) {
-                    log.error("error in clear route A {}", e);  // NOI18N
+                    log.error("error in clear route A", e);  // NOI18N
                 } catch (JmriException e) {
-                    log.error("error in clear route A {}", e);  // NOI18N
+                    log.error("error in clear route A", e);  // NOI18N
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("{}  Going to clear routeDetails down {}", getUserName(), routeDetails.size());  // NOI18N
@@ -913,11 +919,11 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             routeDetails.get(routeDetails.size() - 2).getBlock().goingInactive();
                         }
                     } catch (java.lang.NullPointerException e) {
-                        log.error("error in clear route c {}", e);  // NOI18N
+                        log.error("error in clear route c", e);  // NOI18N
                     } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                        log.error("error in clear route c {}", e);  // NOI18N
+                        log.error("error in clear route c", e);  // NOI18N
                     } catch (JmriException e) {
-                        log.error("error in clear route c {}", e);  // NOI18N
+                        log.error("error in clear route c", e);  // NOI18N
                     }
                 }
             }
@@ -1174,7 +1180,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 if (log.isDebugEnabled()) {
                     log.debug("Route details:");
                     for (LayoutBlock blk : routeDetails) {
-                        log.debug("  {}", blk.getDisplayName());
+                        log.debug(" block {}", blk.getDisplayName());
                     }
                 }
 
@@ -1250,6 +1256,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             lastSeenActiveBlockObject = null;
         }
         disposed = true;
+        super.dispose();
     }
 
     @Override

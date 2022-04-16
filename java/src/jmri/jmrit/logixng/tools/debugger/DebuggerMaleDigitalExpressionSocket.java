@@ -95,14 +95,4 @@ public class DebuggerMaleDigitalExpressionSocket extends AbstractDebuggerMaleSoc
         return ((MaleDigitalExpressionSocket)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
 
-    @Override
-    public void setTriggerOnChange(boolean triggerOnChange) {
-        ((MaleDigitalExpressionSocket)getObject()).setTriggerOnChange(triggerOnChange);
-    }
-
-    @Override
-    public boolean getTriggerOnChange() {
-        return ((MaleDigitalExpressionSocket)getObject()).getTriggerOnChange();
-    }
-    
 }

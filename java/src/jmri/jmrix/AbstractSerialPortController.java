@@ -116,7 +116,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
         // (Jan 2018) PJC seems to mix termios and ioctl access, so it's not clear
         // what's preserved and what's not. Experimentally, it seems necessary
-        // to write the control leads, set flow control, and then write the control 
+        // to write the control leads, set flow control, and then write the control
         // leads again.
         serialPort.setRTS(rts);
         serialPort.setDTR(dtr);
@@ -406,29 +406,29 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (java.util.TooManyListenersException ex) {
             log.warn("cannot set listener for SerialPortEvents; was one already set?");
         }
-        
+
         try {
             port.notifyOnFramingError(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnFramingError: {}", e); // NOI18N
+            log.debug("Could not notifyOnFramingError", e); // NOI18N
         }
 
         try {
             port.notifyOnBreakInterrupt(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnBreakInterrupt: {}", e); // NOI18N
+            log.debug("Could not notifyOnBreakInterrupt", e); // NOI18N
         }
 
         try {
             port.notifyOnParityError(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnParityError: {}", e); // NOI18N
+            log.debug("Could not notifyOnParityError", e); // NOI18N
         }
 
         try {
             port.notifyOnOverrunError(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnOverrunError: {}", e); // NOI18N
+            log.debug("Could not notifyOnOverrunError", e); // NOI18N
         }
 
         port.notifyOnCarrierDetect(true);
@@ -474,7 +474,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     protected void resetupConnection(){}
-    
+
     /**
      * {@inheritDoc}
      * Attempts a re-connection to the serial port from the main reconnect
@@ -501,7 +501,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             }
         } catch (RuntimeException e) {
             log.warn(Bundle.getMessage("ReconnectFail",(mPort == null ? "null" : mPort)));
-            
+
         }
     }
 

@@ -57,8 +57,6 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
         }
 
         assertThat(InstanceManager.getDefault(EngineManager.class).getNumEntries()).withFailMessage("Number of engines").isEqualTo(0);
-        
-
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class);

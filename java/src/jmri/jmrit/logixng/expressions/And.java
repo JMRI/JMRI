@@ -71,12 +71,6 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         boolean result = true;
         for (ExpressionEntry e : _expressionEntries) {

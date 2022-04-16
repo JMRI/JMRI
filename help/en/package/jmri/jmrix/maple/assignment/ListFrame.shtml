@@ -1,70 +1,48 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Maple Input and Output Assignments</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Maple Input and Output Assignments</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h2>JMRI: Maple Input and Output Assignments</h2>
 
-      <p>This tool lets you display Sensor, Turnout and Light
-      assignments for your Maple Panels and match them to Maple HMI
-      Panel addresses.</p>
+      <p>This tool lets you display Sensor, Turnout and Light assignments for your Maple Panels and
+      match them to Maple HMI Panel addresses.</p>
 
-      <p>On Maple, the coil bits in the Maple HMI's are used to
-      communicate with JMRI. The first 1000 coil bits are reserved
-      for Sensors--these are referred to as "Input Bits" and are
-      used to set JMRI Sensors. Sensors pass information from the
-      HMI panels to JMRI. The next 8000 bits are reserved for
-      "Output Bits" and are used to send the current settings of
-      Turnouts and Lights to the Maple Panels.</p>
+      <p>On Maple, the coil bits in the Maple HMI's are used to communicate with JMRI. The first
+      1000 coil bits are reserved for Sensors--these are referred to as "Input Bits" and are used
+      to set JMRI Sensors. Sensors pass information from the HMI panels to JMRI. The next 8000 bits
+      are reserved for "Output Bits" and are used to send the current settings of Turnouts and
+      Lights to the Maple Panels.</p>
 
-      <p>The <b>Node</b> popup menu at the top of the display
-      allows the user to see the HMI Station Address of all Maple
-      panels that are currently configured. Since all panels use
-      the same addresses, selecting a specific panel does not
-      change the information displayed. The number of configured
-      input and output bits is also displayed.</p>
+      <p>The <strong>Node</strong> popup menu at the top of the display allows the user to see the
+      HMI Station Address of all Maple panels that are currently configured. Since all panels use
+      the same addresses, selecting a specific panel does not change the information displayed. The
+      number of configured input and output bits is also displayed.</p>
 
-      <p>Choose between displaying input or output bits by
-      selecting either <b>Show Input Bits</b> or <b>Show Output
-      Bits</b> at the top of the display. JMRI bit number and the
-      corresponding Maple HMI coil bit address are displayed for
-      each configured bit. The JMRI System Name and the JMRI User
-      Name is displayed if the bit has a JMRI assignment. Bits that
-      do not display a JMRI System Name are configured and are
-      available for assignment.</p>
+      <p>Choose between displaying input or output bits by selecting either <strong>Show Input
+      Bits</strong> or <strong>Show Output Bits</strong> at the top of the display. JMRI bit number
+      and the corresponding Maple HMI coil bit address are displayed for each configured bit. The
+      JMRI System Name and the JMRI User Name is displayed if the bit has a JMRI assignment. Bits
+      that do not display a JMRI System Name are configured and are available for assignment.</p>
 
-      <p><b>Background Information:</b> In this Maple to JMRI
-      implementation, all panels have exactly the same input and
-      output bit assignments. Output bits are sent in "Broadcast
-      Mode" so all panels can see the settings. Each panel is
-      polled separately, and the results of the polls are ORed
-      together to set Sensors. Therefore if a Sensor is ACTIVE
-      (Maple "1") in any panel, it is set ACTIVE. If a Sensor is
-      INACTIVE (Maple "0") in all configured panels, then it is set
-      INACTIVE.</p><!--#include virtual="/Footer.shtml" -->
+      <p><strong>Background Information:</strong> In this Maple to JMRI implementation, all panels
+      have exactly the same input and output bit assignments. Output bits are sent in "Broadcast
+      Mode" so all panels can see the settings. Each panel is polled separately, and the results of
+      the polls are ORed together to set Sensors. Therefore if a Sensor is ACTIVE (Maple "1") in
+      any panel, it is set ACTIVE. If a Sensor is INACTIVE (Maple "0") in all configured panels,
+      then it is set INACTIVE.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

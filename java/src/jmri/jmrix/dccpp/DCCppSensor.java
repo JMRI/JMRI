@@ -120,12 +120,10 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
             log.debug("Sensor Def Reply received: '{}'", l);
             if (l.getSensorDefNumInt() == address) {
                 log.debug("Def Message for sensor {} (Pin {})", systemName, address);
-                pin = l.getSensorDefPinInt();
-                pullup = l.getSensorDefPullupBool();
                 setOwnState(Sensor.UNKNOWN);
-                // For reference set NamedBean properties for the pin # and pullup
-                setProperty("Pin", pin);
-                setProperty("Pullup", pullup);
+                l.getProperties().forEach((key, value) -> {
+                    this.setProperty(key, value); //copy the defining properties from message to sensor
+                });
             }
         } else if (l.isSensorReply() && (l.getSensorNumInt() == address)) {
                 log.debug("Message for sensor {} (Pin {})", systemName, address);

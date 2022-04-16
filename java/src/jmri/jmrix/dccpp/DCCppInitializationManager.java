@@ -28,12 +28,7 @@ public class DCCppInitializationManager {
         log.debug("Starting DCC++ Initialization Process");
 
         DCCppCommandStation cs = systemMemo.getDCCppTrafficController().getCommandStation();
-
-        jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-        log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
-
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
-
         systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
@@ -49,6 +44,8 @@ public class DCCppInitializationManager {
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
         systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo));
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
+        jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
+        log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
         predefinedMeters = new DCCppPredefinedMeters(systemMemo);
 
         systemMemo.register();

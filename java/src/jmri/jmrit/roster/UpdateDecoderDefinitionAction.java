@@ -304,7 +304,7 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         try {
             Roster.getDefault().writeFile(Roster.getDefault().getRosterIndexPath());
         } catch (IOException ex) {
-            log.error("Exception while writing the new roster file, may not be complete: {}", ex);
+            log.error("Exception while writing the new roster file, may not be complete", ex);
         }
         // use the new one
 
@@ -685,8 +685,8 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
      * <li>
      * A {@link #versionMatchList versionMatchList} that is the subset of
      * {@link #replacementList replacementList} that also matches both a
-     * manufacturerID (from 
-     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder} mfgID) 
+     * manufacturerID (from
+     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder} mfgID)
      * stored in CV8 and a versionID (from
      * {@link jmri.jmrit.decoderdefn.IdentifyDecoder} modelID)  stored
      * in CV7.

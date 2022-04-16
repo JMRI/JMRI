@@ -46,8 +46,7 @@ public class CarsSetFrame extends CarSetFrame {
 
         setTitle(Bundle.getMessage("TitleSetCars"));
         addHelpMenu("package.jmri.jmrit.operations.Operations_SetCars", true); // NOI18N
-        // modify Save button text to "Change";
-        // as the changes entered in the panel is directly applied, use ButtonApply
+        // modify Save button text to "Apply";
         saveButton.setText(Bundle.getMessage("ButtonApply"));
         // disable edit load button if no cars selected
         editLoadButton.setEnabled(false);

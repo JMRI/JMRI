@@ -1,9 +1,12 @@
 package jmri.jmrit.display.panelEditor;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
+import jmri.util.JmriJFrame;
 
 /**
  * Start a PanelEditor.
@@ -23,9 +26,9 @@ public class PanelEditorAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String name = Bundle.getMessage("PanelDefaultName", ""); // "Panel"
+        String name = Bundle.getMessage("PanelDefaultName", "").trim(); // "Panel"
         for (int i = 2; i < 100; i++) {
-            if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
+            if (JmriJFrame.getFrame(name) != null) {
                 name = Bundle.getMessage("PanelDefaultName", i);
             }
         }

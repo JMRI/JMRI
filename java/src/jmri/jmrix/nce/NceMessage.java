@@ -1,6 +1,7 @@
 package jmri.jmrix.nce;
 
 import java.util.Arrays;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -89,6 +90,31 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static final int USB_MEM_WRITE_CMD = 0xB4;   // NCE write memory, NCE-USB >= 1.65
     public static final int USB_MEM_READ_CMD = 0xB5;    // NCE read memory, NCE-USB >= 1.65
 
+    // NCE Command 0xA2 sends speed or function packets to a locomotive
+    // 0xA2 sub commands speed and functions
+    public static final byte LOCO_CMD_SELECT_LOCO = 0x00;  // select loco
+    public static final byte LOCO_CMD_REV_28SPEED = 0x01;  // set loco speed 28 steps reverse
+    public static final byte LOCO_CMD_FWD_28SPEED = 0x02;  // set loco speed 28 steps forward
+    public static final byte LOCO_CMD_REV_128SPEED = 0x03; // set loco speed 128 steps reverse
+    public static final byte LOCO_CMD_FWD_128SPEED = 0x04; // set loco speed 128 steps forward
+    public static final byte LOCO_CMD_REV_ESTOP = 0x05;    // emergency stop reverse
+    public static final byte LOCO_CMD_FWD_ESTOP = 0x06;    // emergency stop forward
+    public static final byte LOCO_CMD_FG1 = 0x07;          // function group 1
+    public static final byte LOCO_CMD_FG2 = 0x08;          // function group 2
+    public static final byte LOCO_CMD_FG3 = 0x09;          // function group 3
+    public static final byte LOCO_CMD_FG4 = 0x15;          // function group 4
+    public static final byte LOCO_CMD_FG5 = 0x16;          // function group 5
+
+    // OxA2 sub commands consist
+    public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;    // reverse consist address for lead loco
+    public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;    // forward consist address for lead loco 
+    public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;    // reverse consist address for rear loco 
+    public static final byte LOCO_CMD_FWD_CONSIST_REAR = 0x0D;    // forward consist address for rear loco
+    public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;     // reverse consist address for additional loco 
+    public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;     // forward consist address for additional loco 
+    public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10; // Delete loco from consist
+    public static final byte LOCO_CMD_KILL_CONSIST = 0x11;        // Kill consist
+    
     // The following commands are not supported by the NCE USB  
     public static final int ENABLE_MAIN_CMD = 0x89; //NCE enable main track, kill programming command
     public static final int KILL_MAIN_CMD = 0x8B; //NCE kill main track, enable programming command
@@ -101,9 +127,12 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     protected static final int SHORT_TIMEOUT = 10000; // worst case is when loading the first panel
 
     public static final int REPLY_1 = 1; // reply length of 1 byte
-    public static final int REPLY_2 = 2; // reply length of 2 byte
-    public static final int REPLY_4 = 4; // reply length of 4 byte
+    public static final int REPLY_2 = 2; // reply length of 2 bytes
+    public static final int REPLY_3 = 3; // reply length of 3 bytes
+    public static final int REPLY_4 = 4; // reply length of 4 bytes
     public static final int REPLY_16 = 16; // reply length of 16 bytes 
+    
+    public static char NCE_OKAY = '!';
 
     public NceMessage() {
         super();
@@ -454,6 +483,18 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setTimeout(NCE_DIRECT_CV_TIMEOUT);
         return m;
     }
+    
+    public static NceMessage getEpromVersion(NceTrafficController tc) {
+        byte[] bl = NceBinaryCommand.getNceEpromRev();
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_3);
+        return m;
+    }
+    
+    public static NceMessage sendLocoCmd(NceTrafficController tc, int locoAddr, byte locoSubCmd, byte locoData) {
+        byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr, locoSubCmd, locoData);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
+        return m;
+    }
 
     public static NceMessage sendPacketMessage(NceTrafficController tc, byte[] bytes) {
         NceMessage m = sendPacketMessage(tc, bytes, 2);
@@ -504,20 +545,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static NceMessage createBinaryMessage(NceTrafficController tc, byte[] bytes) {
-        if (tc.getCommandOptions() < NceTrafficController.OPTION_2004) {
-            log.error("Attempt to send NCE command to EPROM built before 2004");
-        }
-        if (bytes.length < 1 || bytes.length > 20) {
-            log.error("NCE command message length error:{}", bytes.length);
-        }
-        NceMessage m = new NceMessage(bytes.length);
-        m.setBinary(true);
-        m.setReplyLen(REPLY_1);
-        m.setTimeout(SHORT_TIMEOUT);
-        for (int j = 0; j < bytes.length; j++) {
-            m.setElement(j, bytes[j] & 0xFF);
-        }
-        return m;
+        return createBinaryMessage(tc, bytes, REPLY_1);
     }
 
     public static NceMessage createBinaryMessage(NceTrafficController tc, byte[] bytes, int replyLen) {

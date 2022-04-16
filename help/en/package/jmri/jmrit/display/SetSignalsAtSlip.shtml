@@ -1,205 +1,147 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Set Signals at Throat-to-Throat Turnouts
-  Help</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Set Signals at Throat-to-Throat Turnouts Help</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI help Layout Editor panel">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Set Signals at A Single/Double Slip</h1>
 
       <h2>Introduction</h2>
 
-      <p>This tool provides an automated procedure for assigning
-      signals at Single or double slip.</p><a href=
-      "./images/Slip.png"><img src="./images/Slip.png" width="229"
-      height="104" hspace="0" vspace="0"></a>
+      <p>This tool provides an automated procedure for assigning signals at Single or double
+      slip.</p>
+      <a href="./images/Slip.png"><img src="./images/Slip.png" width="229" height="104" alt=
+      "set signals at slip"></a>
+      <p>If requested, this tool will place signal icons on the panel at the four entrances, to the
+      slip and will set up control logic for specified signal heads. Either one or two signal heads
+      may be placed at each leg of the slip. The continuing leg is the direct path through the slip
+      from either direction, while the diverging leg is the path that deviates from the direct
+      path.</p>
 
-      <p>If requested, this tool will place signal icons on the
-      panel at the four entrances, to the slip and will set up
-      control logic for specified signal heads. Either one or two
-      signal heads may be placed at each leg of the slip. The
-      continuing leg is the direct path through the slip from
-      either direction, while the diverging leg is the path that
-      deviates from the direct path.</p>
+      <p>Prior to selecting this tool, the slip must be on the panel with two turnouts assigned and
+      configured correct for each path, the required signal heads must also be in the Signal Head
+      Table. The control logic created by this tool only works correctly if each of the track
+      segments connected to the slip legs is assigned to a different block. it works best if the
+      track segment assigned to the slip is in a fifth different block, but this is not
+      required.</p>
 
-      <p>Prior to selecting this tool, the slip must be on the
-      panel with two turnouts assigned and configured correct for
-      each path, the required signal heads must also be in the
-      Signal Head Table. The control logic created by this tool
-      only works correctly if each of the track segments connected
-      to the slip legs is assigned to a different block. it works
-      best if the track segment assigned to the slip is in a fifth
-      different block, but this is not required.</p>
-
-      <p>When this item is selected, a dialog is shown with a combo
-      box to select the slip that is on the current panel and the
-      names (system or user) of six to eight signal heads to be
+      <p>When this item is selected, a dialog is shown with a combo box to select the slip that is
+      on the current panel and the names (system or user) of six to eight signal heads to be
       assigned to the two turnouts.</p>
 
-      <p>For each signal head, check boxes are available for
-      selecting whether an icon is to be placed on the panel, and
-      whether control logic is to be created for the signal head.
-      Regardless of whether icons are placed or logic is created,
-      Layout Editor will record that the entered signal heads are
-      assigned to the slip.</p>
+      <p>For each signal head, check boxes are available for selecting whether an icon is to be
+      placed on the panel, and whether control logic is to be created for the signal head.
+      Regardless of whether icons are placed or logic is created, Layout Editor will record that
+      the entered signal heads are assigned to the slip.</p>
 
       <h3>The Set Signals at Slip Dialog</h3>
 
-      <p>In the drop down list select the Slip that is located on
-      the panel that you wish to configure, the name populated in
-      the drop down box is made up of the turnout names used to
-      create the slip. On selecting the slip, if signals have
-      already been assigned then this information will
-      automatically be populated.</p>
+      <p>In the drop down list select the Slip that is located on the panel that you wish to
+      configure, the name populated in the drop down box is made up of the turnout names used to
+      create the slip. On selecting the slip, if signals have already been assigned then this
+      information will automatically be populated.</p>
 
-      <p>The tool provides for entry of one or two signals at each
-      leg of the slip, depending upon the slip type and the leg
-      selected.<br>
-      These signal heads show the status for moving through the
-      direct or sliped path through the slip. First the signal
-      heads located at <b>Turnout 1 - continuing track</b> are
-      entered. The <b>continuing track</b> signal head is required,
-      but the <b>diverging track</b> entry is optional. If only the
-      <b>continuing track</b> signal head is entered, the tool
-      assumes that head is signaling both tracks of the other
-      turnout, similar to when only one signal head is placed at
-      the throat of a single turnout.</p>
+      <p>The tool provides for entry of one or two signals at each leg of the slip, depending upon
+      the slip type and the leg selected.<br>
+      These signal heads show the status for moving through the direct or sliped path through the
+      slip. First the signal heads located at <strong>Turnout 1 - continuing track</strong> are
+      entered. The <strong>continuing track</strong> signal head is required, but the
+      <strong>diverging track</strong> entry is optional. If only the <strong>continuing
+      track</strong> signal head is entered, the tool assumes that head is signaling both tracks of
+      the other turnout, similar to when only one signal head is placed at the throat of a single
+      turnout.</p>
 
-      <p>Next the signal heads located at <b>Turnout 1 - diverging
-      track</b> are entered. Remember this is for when the path
-      through the slip is set to be slipped. When two heads are
-      entered, the head closest to the slip signals the status of
-      the direct path.<br>
-      Similarly, the signal heads located at <b>Turnout 2 -
-      continuing track</b> and <b>Turnout 2 - diverging track</b>
-      are entered.</p>
+      <p>Next the signal heads located at <strong>Turnout 1 - diverging track</strong> are entered.
+      Remember this is for when the path through the slip is set to be slipped. When two heads are
+      entered, the head closest to the slip signals the status of the direct path.<br>
+      Similarly, the signal heads located at <strong>Turnout 2 - continuing track</strong> and
+      <strong>Turnout 2 - diverging track</strong> are entered.</p>
 
-      <p>If there was a signal head previously assigned to any
-      position, and you enter a <i>different</i> signal head in the
-      same place, the new signal head will replace the previous
-      signal head, and the icon of the previous signal head (if
-      there was one) will be deleted from the panel. Similarly, if
-      you replace a previously assigned <b>Diverging</b> signal
-      head with a blank entry (no signal head), the previous entry
-      is deleted, and there will not be any signal head at that
-      position. <b>If a signal head is changed, you must redo any
-      logic that involves it.</b> In particular, if you delete a
-      diverging signal head, you must redo the logic for the
-      continuing signal head located on the same track.</p>
+      <p>If there was a signal head previously assigned to any position, and you enter a
+      <em>different</em> signal head in the same place, the new signal head will replace the
+      previous signal head, and the icon of the previous signal head (if there was one) will be
+      deleted from the panel. Similarly, if you replace a previously assigned
+      <strong>Diverging</strong> signal head with a blank entry (no signal head), the previous
+      entry is deleted, and there will not be any signal head at that position. <strong>If a signal
+      head is changed, you must redo any logic that involves it.</strong> In particular, if you
+      delete a diverging signal head, you must redo the logic for the continuing signal head
+      located on the same track.</p>
 
-      <p>Check <b>Add Signal Icon to Panel</b> to request that an
-      icon for a signal head be placed on the panel at the turnout
-      position indicated.</p>
+      <p>Check <strong>Add Signal Icon to Panel</strong> to request that an icon for a signal head
+      be placed on the panel at the turnout position indicated.</p>
 
-      <p>Check <b>Set up Logic</b> to request that the tool set up
-      signal control logic for a signal head. For each of these
-      signal heads, the tool creates a Simple Signal Logic for that
-      head, and in addition creates a Logix that ensures that the
-      turnout the signal is placed on is not thrown against the leg
-      the signal is placed on. The tool will attempt to setup the
-      logic and automatically fill in entries from the information
-      available. If the tool does not have enough information
-      available to set up the logic, a message results, and you
-      will have to return later after more blocks (with occupancy
-      sensors) and/or signals have been assigned to turnouts and
-      block boundaries on the panel.</p>
+      <p>Check <strong>Set up Logic</strong> to request that the tool set up signal control logic
+      for a signal head. For each of these signal heads, the tool creates a Simple Signal Logic for
+      that head, and in addition creates a Logix that ensures that the turnout the signal is placed
+      on is not thrown against the leg the signal is placed on. The tool will attempt to setup the
+      logic and automatically fill in entries from the information available. If the tool does not
+      have enough information available to set up the logic, a message results, and you will have
+      to return later after more blocks (with occupancy sensors) and/or signals have been assigned
+      to turnouts and block boundaries on the panel.</p>
 
       <h3>Notes</h3>
 
-      <p>The tool will set up the Simple Signal Logic to set all
-      signals red if the slip is occupied. If this is not what you
-      want, you should edit the Simple Signal Logic by removing the
-      occupancy sensor of that block.</p>
+      <p>The tool will set up the Simple Signal Logic to set all signals red if the slip is
+      occupied. If this is not what you want, you should edit the Simple Signal Logic by removing
+      the occupancy sensor of that block.</p>
 
-      <p>When setting up logic, this tool will follow track within
-      a block until it finds a signal at the end of the block away
-      from the turnout being signaled. If your layout contains
-      sections that are signaled and sections that are not, to get
-      this tool to set up logic correctly, you may have to create
-      and assign a virtual signal (a signal that does not
-      correspond to an actual signal on the layout) at the
-      unsignaled end of the block that connects track that is
-      signaled with track that is not signaled. (You do not need to
-      add an icon for the virtual signal to your panel, but it must
-      exist in your signal head table, and must be assigned to a
-      turnout or block boundary using a Set Signals ... tool.) If a
-      block ends with an end bumper, no virtual signal is required
-      at the end bumper end.</p>
+      <p>When setting up logic, this tool will follow track within a block until it finds a signal
+      at the end of the block away from the turnout being signaled. If your layout contains
+      sections that are signaled and sections that are not, to get this tool to set up logic
+      correctly, you may have to create and assign a virtual signal (a signal that does not
+      correspond to an actual signal on the layout) at the unsignaled end of the block that
+      connects track that is signaled with track that is not signaled. (You do not need to add an
+      icon for the virtual signal to your panel, but it must exist in your signal head table, and
+      must be assigned to a turnout or block boundary using a Set Signals ... tool.) If a block
+      ends with an end bumper, no virtual signal is required at the end bumper end.</p>
 
-      <p>If a block has an internal turnout (the turnout, and the
-      track segments at its throat and continuing legs are within
-      the block), the program will expect signals at that turnout
-      even if it's not at the end of the block. However, at times
-      the user may not want to signal a seldom used turnout within
-      a block. When following track through a block, the program
-      will skip over unsignaled internal turnouts if <b>Skip
-      Unsignaled Internal Turnouts</b> is checked in the Layout
-      Editor <b>Tools</b> menu. It will always, however, warn that
-      it is doing so. <b>Use this option with caution.</b> There is
-      no signal protecting against a skipped turnout being set
-      incorrectly, so if an unsignaled internal turnout is not set
-      correctly, derailed trains could result.</p>
+      <p>If a block has an internal turnout (the turnout, and the track segments at its throat and
+      continuing legs are within the block), the program will expect signals at that turnout even
+      if it's not at the end of the block. However, at times the user may not want to signal a
+      seldom used turnout within a block. When following track through a block, the program will
+      skip over unsignaled internal turnouts if <strong>Skip Unsignaled Internal Turnouts</strong>
+      is checked in the Layout Editor <strong>Tools</strong> menu. It will always, however, warn
+      that it is doing so. <strong>Use this option with caution.</strong> There is no signal
+      protecting against a skipped turnout being set incorrectly, so if an unsignaled internal
+      turnout is not set correctly, derailed trains could result.</p>
 
-      <p>When setting up the Logix used in the control logic, the
-      tool creates an internal sensor to communicate with the
-      Simple Signal Logic. The Logix will appear in your Logix
-      table, and the internal sensor will appear in your sensor
-      table. The system names of the Logix and internal sensor will
-      be, IX or IS followed by TTT_HHH, where TTT is the system
-      name of the turnout where the signal head is located and HHH
-      is the system name of the signal head. The purpose of this
-      Logix is to ensure that the aspect of the signal head will be
-      red if the turnout where the signal head is located is
-      switched against the track the signal is on.</p>
+      <p>When setting up the Logix used in the control logic, the tool creates an internal sensor
+      to communicate with the Simple Signal Logic. The Logix will appear in your Logix table, and
+      the internal sensor will appear in your sensor table. The system names of the Logix and
+      internal sensor will be, IX or IS followed by TTT_HHH, where TTT is the system name of the
+      turnout where the signal head is located and HHH is the system name of the signal head. The
+      purpose of this Logix is to ensure that the aspect of the signal head will be red if the
+      turnout where the signal head is located is switched against the track the signal is on.</p>
 
-      <p>This tool sets up three-aspect signaling. When a signal
-      head is showing the status when moving to a diverging route,
-      the tool will set up for limited speed (the least restrictive
-      aspect is not green, but yellow), and the signal will show
-      yellow when it otherwise would show green. You can change
-      this with a simple edit (see below).</p>
+      <p>This tool sets up three-aspect signaling. When a signal head is showing the status when
+      moving to a diverging route, the tool will set up for limited speed (the least restrictive
+      aspect is not green, but yellow), and the signal will show yellow when it otherwise would
+      show green. You can change this with a simple edit (see below).</p>
 
-      <p>If you have a special situation at a signal, you may have
-      to edit the information entered by this tool into the Simple
-      Signal Logic. If you would like four-aspect signaling, you
-      can easily manually edit the logic to achieve this.
-      Similarly, by simple hand edits of the logic, you can add
-      approach lighting. If you don't want yellow when moving to
-      the diverging route, but prefer green, open the Simple Signal
-      Logic for the head you want to change and uncheck <b>Limited
-      Speed</b>. The Simple Signal Logic dialog can be accessed
-      from the popup menu of each signal icon. If your special
-      situation cannot be handled by Simple Signal Logic, you
-      should refer to Logix to tailor the signal logic to your
-      needs.</p>
+      <p>If you have a special situation at a signal, you may have to edit the information entered
+      by this tool into the Simple Signal Logic. If you would like four-aspect signaling, you can
+      easily manually edit the logic to achieve this. Similarly, by simple hand edits of the logic,
+      you can add approach lighting. If you don't want yellow when moving to the diverging route,
+      but prefer green, open the Simple Signal Logic for the head you want to change and uncheck
+      <strong>Limited Speed</strong>. The Simple Signal Logic dialog can be accessed from the popup
+      menu of each signal icon. If your special situation cannot be handled by Simple Signal Logic,
+      you should refer to Logix to tailor the signal logic to your needs.</p>
 
-      <p><b>Please remember to save your panel after using this
-      tool.</b></p>
-
+      <p><strong>Please remember to save your panel after using this tool.</strong>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

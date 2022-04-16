@@ -1,117 +1,100 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Route Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Route Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Route Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Route Table</h1>
 
-      <p>A Route consists of one or more Turnouts or Sensors that
-      you would like to control. Before creating a Route, you
-      should first add some Turnouts or Sensors by using either the
-      Turnout Table or Sensor Table. These tables can be found
-      under the main menu "Tools -&gt; Tables".</p>
+      <p>A Route consists of one or more Turnouts or Sensors that you would like to control. Before
+      creating a Route, you should first add some Turnouts or Sensors by using either the Turnout
+      Table or Sensor Table. These tables can be found under the main menu "Tools -&gt;
+      Tables".</p>
 
-      <p>Once you have some Turnouts or Sensors set up, use the
-      "Add..." button in the lower left hand corner of the Route
-      Table pane to create a new Route.</p>
+      <p>Once you have some Turnouts or Sensors set up, use the "Add..." button in the lower left
+      hand corner of the Route Table pane to create a new Route.</p>
 
       <h2>Route Table Columns</h2>
-      (You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to a column title)
+      (You may change the order of the columns by dragging their titles, and sort the rows by
+      clicking one of the sort triangles next to a column title)
       <dl>
         <dt>System Name</dt>
 
-        <dd>The System Name cannot be changed once entered into the
-        table. The "Add..." button located in the lower left corner
-        of the pane allows you to add a new Route to the
+        <dd>The System Name cannot be changed once entered into the table. The "Add..." button
+        located in the lower left corner of the pane allows you to add a new Route to the
         table.</dd>
 
         <dt>User Name</dt>
 
-        <dd>You can directly enter or change the User Name for an
-        existing Route.</dd>
+        <dd>You can directly enter or change the User Name for an existing Route.</dd>
 
         <dt>Set</dt>
 
-        <dd>Pushing the "Set" button will trigger an existing
-        Route.</dd>
+        <dd>Pushing the "Set" button will trigger an existing Route.</dd>
 
         <dt>Delete</dt>
 
         <dd>
-          Pushing the "Delete" button will remove the route from
-          the table.
-
-          <p>Note that this doesn't remove the Route from any files
-          you've saved that contain it. If you load one of those
-          files, perhaps when you restart the program, the Route
-          will reappear. You should use one of the "Store to file"
-          options in the "File" menu to save new versions of any
-          files that contain this route.</p>
+          Pushing the "Delete" button will remove the route from the table.
+          <p>Note that this doesn't remove the Route from any files you've saved that contain it.
+          If you load one of those files, perhaps when you restart the program, the Route will
+          reappear. You should use one of the "Store to file" options in the "File" menu to save
+          new versions of any files that contain this route.</p>
         </dd>
 
         <dt>Enabled</dt>
 
-        <dd>To disable a Route from triggering, uncheck the
-        "Enabled" box for the Route. Enabled is not saved and will
-        be restored when a Panel is loaded at startup.</dd>
+        <dd>To disable a Route from triggering, uncheck the "Enabled" box for the Route. Enabled is
+        not saved and will be restored when a Panel is loaded at startup.</dd>
 
         <dt>Locked</dt>
 
-        <dd>When checked the Route is locked. This means that
-        Turnouts included in the Route that can be locked by JMRI
-        will not respond to commands from cabs or pushbuttons to
-        change. For more information see the <a href=
-        "TurnoutTable.shtml#Lock%20Mode">Lock Mode section</a> on
-        the <a href="TurnoutTable.shtml">Turnout Table help
-        page</a> and the Route Add/Edit <a href=
-        "RouteAddEdit.shtml#Turnout%20lock%20feature">Turnout Lock
-        feature</a>.</dd>
+        <dd>
+          When checked the Route is locked. This means that Turnouts included in the Route that can
+          be locked by JMRI will not respond to commands from cabs or pushbuttons to change. For
+          more information see the <a href="TurnoutTable.shtml#Lock%20Mode">Lock Mode section</a>
+          on the <a href="TurnoutTable.shtml">Turnout Table help page</a> and the Route Add/Edit
+          <a href="RouteAddEdit.shtml#Turnout%20lock%20feature">Turnout Lock feature</a>.
+        </dd>
 
         <dt>Edit</dt>
 
-        <dd>Push one of these buttons to edit that Route. For more
-        information see <a href="RouteAddEdit.shtml">Adding/Editing
-        Routes</a>.</dd>
+        <dd>
+          Push one of these buttons to edit that Route. For more information see <a href=
+          "RouteAddEdit.shtml">Adding/Editing Routes</a>.
+        </dd>
       </dl>
 
-      <h2>Route Table Controls</h2>There is a button at the bottom
-      of the Route Table:
-
+      <h2>Route Table Controls</h2>
+      There is a button at the bottom of the Route Table:
       <dl>
         <dt>Add...</dt>
 
-        <dd>Push this button to add a new route. For more
-        information see <a href="RouteAddEdit.shtml">Adding/Editing
-        Routes</a>.</dd>
+        <dd>
+          Push this button to add a new route. For more information see <a href=
+          "RouteAddEdit.shtml">Adding/Editing Routes</a>.
+        </dd>
       </dl>
 
-      <h2><a name="Turnout_lock_feature">Turnout Lock</a></h2>
+      <h2 id="Turnout_lock_feature">Turnout Lock</h2>
 
-      <p>See the <a href=
-      "RouteAddEdit.shtml#Turnout_lock_feature">Route Add/Edit
-      help page</a>.</p>
+      <p>See the <a href="RouteAddEdit.shtml#Turnout_lock_feature">Route Add/Edit help
+      page</a>.</p>
 
       <p>For more information on Routes, see the <a href=
       "../../../../html/tools/Routes.shtml">Routes help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

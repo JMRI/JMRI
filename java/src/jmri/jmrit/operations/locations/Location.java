@@ -3,10 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -19,7 +16,6 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -31,6 +27,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.PhysicalLocation;
 
 /**
@@ -114,6 +111,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "locationTrackBlockingOrder";// NOI18N
     public static final String LOCATION_REPORTER_PROPERTY = "locationReporterChange"; // NOI18N
+    public static final String LOCATION_DIVISION_PROPERTY = "homeDivisionChange"; // NOI18N
 
     public Location(String id, String name) {
         log.debug("New location ({}) id: {}", name, id);
@@ -162,9 +160,9 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @param newLocation the location to copy to
      */
     public void copyLocation(Location newLocation) {
-        newLocation.setComment(getComment());
+        newLocation.setComment(getCommentWithColor());
         newLocation.setDefaultPrinterName(getDefaultPrinterName());
-        newLocation.setSwitchListComment(getSwitchListComment());
+        newLocation.setSwitchListComment(getSwitchListCommentWithColor());
         newLocation.setSwitchListEnabled(isSwitchListEnabled());
         newLocation.setTrainDirections(getTrainDirections());
         // TODO should we set the train icon coordinates?
@@ -648,7 +646,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Division old = _division;
         _division = division;
         if (old != _division) {
-            setDirtyAndFirePropertyChange("homeDivisionChange", old, division);
+            setDirtyAndFirePropertyChange(LOCATION_DIVISION_PROPERTY, old, division);
         }
     }
 
@@ -677,8 +675,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             setDirtyAndFirePropertyChange("locationComment", old, comment); // NOI18N
         }
     }
-
+    
     public String getComment() {
+        return TrainCommon.getTextColorString(getCommentWithColor());
+    }
+
+    public String getCommentWithColor() {
         return _comment;
     }
 
@@ -689,8 +691,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             setDirtyAndFirePropertyChange(SWITCHLIST_COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
-
+    
     public String getSwitchListComment() {
+        return TrainCommon.getTextColorString(getSwitchListCommentWithColor());
+    }
+
+    public String getSwitchListCommentWithColor() {
         return _switchListComment;
     }
 
@@ -699,12 +705,11 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     private void setTypeNames(String[] types) {
-        if (types.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(types);
-        for (String type : types) {
-            _listTypes.add(type);
+        if (types.length > 0) {
+            Arrays.sort(types);
+            for (String type : types) {
+                _listTypes.add(type);
+            }
         }
     }
 
@@ -827,18 +832,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return list of track ids for this location
      */
     public List<String> getTrackIdsByIdList() {
-        String[] arr = new String[_trackHashTable.size()];
         List<String> out = new ArrayList<>();
         Enumeration<String> en = _trackHashTable.keys();
-        int i = 0;
         while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
+            out.add(en.nextElement());
         }
-        java.util.Arrays.sort(arr);
-        for (i = 0; i < arr.length; i++) {
-            out.add(arr[i]);
-        }
+        Collections.sort(out);
         return out;
     }
 
@@ -1251,7 +1250,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * Used to determine if there are any track destination restrictions at this
      * location.
      *
-     * @return True if there are road restrictions
+     * @return True if there are destination restrictions
      */
     public boolean hasDestinationRestrictions() {
         List<Track> tracks = getTracksList();
@@ -1288,6 +1287,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             }
         }
         return false;
+    }
+
+    public boolean hasWork() {
+        return (getDropRS() != 0 || getPickupRS() != 0);
     }
 
     public boolean hasReporters() {
@@ -1353,7 +1356,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      *
      * @param e Consist XML element
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Location(Element e) {
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -1365,6 +1367,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             _name = a.getValue();
         }
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+        }
+        // TODO remove the following 3 lines in 2022
+        if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.DIR)) != null) {
@@ -1423,7 +1429,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
 
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
 
         if ((a = e.getAttribute(Xml.SWITCH_LIST_COMMENT)) != null) {
@@ -1557,8 +1563,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             e.setAttribute(Xml.PHYSICAL_LOCATION, getPhysicalLocation().toString());
         }
 
-        e.setAttribute(Xml.COMMENT, getComment());
-        e.setAttribute(Xml.SWITCH_LIST_COMMENT, getSwitchListComment());
+        e.setAttribute(Xml.COMMENT, getCommentWithColor());
+        e.setAttribute(Xml.SWITCH_LIST_COMMENT, getSwitchListCommentWithColor());
 
         List<Track> tracks = getTracksByIdList();
         for (Track track : tracks) {

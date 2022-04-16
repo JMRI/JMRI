@@ -6,7 +6,7 @@
 	    <div style="text-align: center">Code documentation</div>
 	    <dl>
 
-		<dt><h3>LogixNG</h3></dt>
+		<dt class="dtheader">LogixNG</dt>
 		<dd>
 			<ul>
 			<li><a href="LogixNG.shtml">LogixNG overview</a>
@@ -19,7 +19,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3>Development tools</h3></dt>
+		<dt class="dtheader">Development tools</dt>
 		<dd>
 			<ul>
 			<li><a href="../getgitcode.shtml">Getting the code via Git</a>
@@ -36,7 +36,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3>Code Structure</h3></dt>
+		<dt class="dtheader">Code Structure</dt>
 		<dd>
 			<ul>
 			<li><a href="../IntroStructure.shtml">Introduction</a>
@@ -53,7 +53,7 @@
 			    <li><a href="../XmlView.shtml">XSLT Formatting</a>
 			    </ul>
 			<li><a href="../WebSite.shtml">Web Site</a>
-			
+
 			<li><a href="/JavaDoc/doc">Javadocs</a><ul>
 				<li><a href="/JavaDoc/doc/index-files/index-1.html">Name Index</a>
 				<li><A HREF="/JavaDoc/doc/index.html">Packages</A>
@@ -62,7 +62,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3>Techniques and Standards</h3></dt>
+		<dt class="dtheader">Techniques and Standards</dt>
 		<dd>
 			<ul>
 			<li><a href="../RP.shtml">Recommended Practices</a>
@@ -78,7 +78,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3>How To</h3></dt>
+		<dt class="dtheader">How To</dt>
 		<dd>
 			<ul>
 			<li><a href="../plugins.shtml">Extend JMRI</a>
@@ -87,7 +87,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3>Functional Info</h3></dt>
+		<dt class="dtheader">Functional Info</dt>
 		<dd>
 			<ul>
 			<li><a href="../TurnoutFeedback.shtml">Turnout Feedback</a>
@@ -97,7 +97,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3>Background Info</h3></dt>
+		<dt class="dtheader">Background Info</dt>
 		<dd>
 			<ul>
 			<li><a href="../TechRoadMap.shtml">Technology Roadmap</a>
@@ -106,6 +106,6 @@
 			</ul>
 		</dd>
 </dl>
-	    
+
 </div> <!-- closes #side -->
 <!-- /Sidebar -->

@@ -1,11 +1,11 @@
 <!-- SidebarHardwareLocalPart.shtml for rps -->
 
-<dt><h3 style="padding-left: 1em;"><a href="index.shtml">NAC Services RPS</a></h3></dt>
+<dt><a href="index.shtml">NAC Services RPS</a></dt>
 		<dd>
 		   <ul>
 			<li><a href="sensors.shtml">Sensors</a></li>
 		   </ul>
-				
+
 		</dd>
-    
+
     <!-- /SidebarHardwareLocalPart.shtml -->

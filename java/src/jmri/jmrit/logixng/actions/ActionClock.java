@@ -75,15 +75,9 @@ public class ActionClock extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         ClockState theState = _clockState;
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch(theState) {
                 case SetClock:
                     Calendar cal = Calendar.getInstance();

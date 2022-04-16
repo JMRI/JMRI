@@ -22,7 +22,7 @@ public class ClientActionsTest {
         NodeID nodeID = new NodeID("02.01.0D.00.00.01");
         CanInterface canInterface = OlcbConfigurationManager.createOlcbCanInterface(nodeID, tc);
         OlcbInterface iface = canInterface.getInterface();
-        ClientActions t = new ClientActions(iface);
+        ClientActions t = new ClientActions(iface, null);
         Assert.assertNotNull("exists",t);
         // terminate the canInterface (and terminate thread)
         canInterface.dispose();

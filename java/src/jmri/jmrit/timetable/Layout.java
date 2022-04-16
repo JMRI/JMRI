@@ -43,7 +43,7 @@ public class Layout implements VetoableChangeListener {
     TimeTableDataManager _dm = TimeTableDataManager.getDataManager();
 
     private final int _layoutId;
-    private String _layoutName = "New Layout";  // NOI18N
+    private String _layoutName = Bundle.getMessage("NewLayoutName");  // NOI18N
     private Scale _scale = ScaleManager.getScale("HO");  // NOI18N
     private int _fastClock = 4;
     private int _throttles = 0;

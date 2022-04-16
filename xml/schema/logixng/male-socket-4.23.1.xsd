@@ -72,6 +72,8 @@
                           <xs:enumeration value="Integer"/>
                           <xs:enumeration value="FloatingNumber"/>
                           <xs:enumeration value="String"/>
+                          <xs:enumeration value="Array"/>
+                          <xs:enumeration value="Map"/>
                           <xs:enumeration value="LocalVariable"/>
                           <xs:enumeration value="Memory"/>
                           <xs:enumeration value="Reference"/>
@@ -100,6 +102,8 @@
 
 
               <xs:attribute name="enabled" type="yesNoType" />
+              <xs:attribute name="locked" type="yesNoType" />
+              <xs:attribute name="system" type="yesNoType" />
               <xs:attribute name="class" type="classType" use="required"/>
             </xs:complexType>
           </xs:element>

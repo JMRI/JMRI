@@ -69,18 +69,10 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
     
     /** {@inheritDoc} */
     @Override
-    public void register(MaleSocket maleSocket) {
-        if (!(maleSocket instanceof MaleAnalogActionSocket)) {
-            throw new IllegalArgumentException("maleSocket is not a MaleAnalogActionSocket");
-        }
-        register((MaleAnalogActionSocket)maleSocket);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void register(MaleAnalogActionSocket maleSocket) {
-        super.register(maleSocket);
+    public MaleAnalogActionSocket registerBean(MaleAnalogActionSocket maleSocket) {
+        MaleAnalogActionSocket bean = super.registerBean(maleSocket);
         _lastRegisteredBean = maleSocket;
+        return bean;
     }
     
     /**
@@ -107,8 +99,7 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
         updateAutoNumber(action.getSystemName());
         
         MaleAnalogActionSocket maleSocket = createMaleActionSocket(action);
-        register(maleSocket);
-        return maleSocket;
+        return registerBean(maleSocket);
     }
     
     @Override

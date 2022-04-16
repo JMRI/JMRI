@@ -231,12 +231,6 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
         return CategoryDisplay.DISPLAY;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
     private String getNewState() throws JmriException {
         
         switch (_stateAddressing) {

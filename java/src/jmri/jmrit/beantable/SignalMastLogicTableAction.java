@@ -1,30 +1,20 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
-import jmri.InstanceManager;
-import jmri.SignalMast;
-import jmri.SignalMastLogic;
-import jmri.SignalMastLogicManager;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.managers.DefaultSignalMastLogicManager;
+import jmri.util.ThreadingUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -74,7 +64,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
      */
     @Override
     public void setMenuBar(BeanTableFrame<SignalMastLogic> f) {
-        final jmri.util.JmriJFrame finalF = f;   // needed for anonymous ActionListener class
+        final JmriJFrame finalF = f;   // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
         int offset = 1;
@@ -90,39 +80,30 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         menuBar.add(pathMenu, pos + offset);
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemAutoGen"));
         pathMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                autoCreatePairs(finalF);
-            }
+        item.addActionListener((ActionEvent e) -> {
+            autoCreatePairs(finalF);
         });
         item = new JMenuItem(Bundle.getMessage("MenuItemAutoGenSections"));
         pathMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
-                InstanceManager.getDefault(jmri.SectionManager.class).generateBlockSections();
-                JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
-            }
+        item.addActionListener((ActionEvent e) -> {
+            ((DefaultSignalMastLogicManager) InstanceManager.getDefault(SignalMastLogicManager.class)).generateSection();
+            InstanceManager.getDefault(SectionManager.class).generateBlockSections();
+            JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
         });
         JMenuItem setSMLDirSensors = new JMenuItem(Bundle.getMessage("MenuItemAddDirectionSensors"));
         pathMenu.add(setSMLDirSensors);
-        setSMLDirSensors.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int n = InstanceManager.getDefault(SignalMastLogicManager.class).setupSignalMastsDirectionSensors();
-                if (n > 0) {
-                    JOptionPane.showMessageDialog(finalF, java.text.MessageFormat.format(
-                            Bundle.getMessage("MenuItemAddDirectionSensorsErrorCount"), n),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                }
+        setSMLDirSensors.addActionListener((ActionEvent e) -> {
+            int n = InstanceManager.getDefault(SignalMastLogicManager.class).setupSignalMastsDirectionSensors();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(finalF, java.text.MessageFormat.format(
+                        Bundle.getMessage("MenuItemAddDirectionSensorsErrorCount"), n),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         });
 
     }
 
-    List<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
+    private List<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
 
     @Override
     protected void createModel() {
@@ -141,10 +122,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             //We have to set a manager first off, but this gets replaced.
             @Override
             protected SignalMastLogicManager getManager() {
-                return InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+                return InstanceManager.getDefault(SignalMastLogicManager.class);
             }
 
-            /*public EcosLocoAddress getByDccAddress(int address) {return getManager().getByDccAddress(address);}*/
             @Override
             public String getValue(String s) {
                 return "Set";
@@ -216,8 +196,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                             }
                         }
                     }
-                } else if (e.getSource() instanceof jmri.SignalMast) {
-                    jmri.SignalMast sigMast = (jmri.SignalMast) e.getSource();
+                } else if (e.getSource() instanceof SignalMast) {
+                    SignalMast sigMast = (SignalMast) e.getSource();
                     for (int i = 0; i < signalMastLogicList.size(); i++) {
                         Hashtable<SignalMastLogic, SignalMast> b = signalMastLogicList.get(i);
                         Enumeration<SignalMastLogic> en = b.keys();
@@ -251,37 +231,36 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
             @Override
             public void setValueAt(Object value, int row, int col) {
-                if (col == COMCOL) {
-                    SignalMastLogic rowLogic = getLogicFromRow(row);
-                    assert rowLogic != null;
-                    rowLogic.setComment((String) value, getDestMastFromRow(row));
-                } else if (col == EDITLOGICCOL) {
-                    class WindowMaker implements Runnable {
-
-                        final int row;
-
-                        WindowMaker(int r) {
-                            row = r;
-                        }
-
-                        @Override
-                        public void run() {
+                SignalMastLogic rowLogic = getLogicFromRow(row);
+                if ( rowLogic == null ){
+                    return;
+                }
+                switch (col) {
+                    case COMCOL:
+                        rowLogic.setComment((String) value, getDestMastFromRow(row));
+                        break;
+                    case EDITLOGICCOL:
+                        SwingUtilities.invokeLater(() -> {
                             editLogic(row);
+                        });
+                        break;
+                    case DELCOL:
+                        // button fired, delete Bean
+                        deleteLogic(row);
+                        break;
+                    case ENABLECOL:
+                        SignalMast destMast = getDestMastFromRow(row);
+                        if (destMast==null){
+                            break;
                         }
-                    }
-                    WindowMaker t = new WindowMaker(row);
-                    javax.swing.SwingUtilities.invokeLater(t);
-
-                } else if (col == DELCOL) {
-                    // button fired, delete Bean
-                    deleteLogic(row);
-                } else if (col == ENABLECOL) {
-                    boolean enable = ((Boolean) value);
-                    if (enable) {
-                        Objects.requireNonNull(getLogicFromRow(row)).setEnabled(getDestMastFromRow(row));
-                    } else {
-                        Objects.requireNonNull(getLogicFromRow(row)).setDisabled(getDestMastFromRow(row));
-                    }
+                        if ((Boolean) value) {
+                            rowLogic.setEnabled(destMast);
+                        } else {
+                            rowLogic.setDisabled(destMast);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -346,15 +325,23 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             }
 
             void editLogic(int row) {
-                sigLog.setMast(Objects.requireNonNull(getLogicFromRow(row)).getSourceMast(), getDestMastFromRow(row));
-                sigLog.actionPerformed(null);
+                SignalMastLogic sml = getLogicFromRow(row);
+                if ( sml != null ) {
+                    sigLog.setMast(sml.getSourceMast(), getDestMastFromRow(row));
+                    sigLog.actionPerformed(null);
+                }
             }
 
             void deleteLogic(int row) {
                 //This needs to be looked at
-                InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(Objects.requireNonNull(getLogicFromRow(row)), Objects.requireNonNull(getDestMastFromRow(row)));
+                SignalMastLogic sml = getLogicFromRow(row);
+                SignalMast destMast = getDestMastFromRow(row);
+                if ( sml != null && destMast !=null ) {
+                    InstanceManager.getDefault(SignalMastLogicManager.class).removeSignalMastLogic(sml, destMast);
+                }
             }
 
+            @CheckForNull
             public SignalMast getDestMastFromRow(int row) {
                 // if object has been deleted, it's not here; ignore it
                 Hashtable<SignalMastLogic, SignalMast> b = signalMastLogicList.get(row);
@@ -365,6 +352,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 return null;
             }
 
+            @CheckForNull
             public SignalMastLogic getLogicFromRow(int row) {
                 Hashtable<SignalMastLogic, SignalMast> b = signalMastLogicList.get(row);
                 Enumeration<SignalMastLogic> en = b.keys();
@@ -452,26 +440,32 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     return null;
                 }
                 SignalMastLogic b = getLogicFromRow(row);
+                if (b==null){
+                    return null;
+                }
+                SignalMast destMast;
                 switch (col) {
                     case SOURCECOL:
-                        return Objects.requireNonNull(getLogicFromRow(row)).getSourceMast().getDisplayName();
+                        return b.getSourceMast().getDisplayName();
                     case DESTCOL:  // return user name
                         // sometimes, the TableSorter invokes this on rows that no longer exist, so we check
-                        return (b != null) ? Objects.requireNonNull(getDestMastFromRow(row)).getDisplayName() : null;
+                        destMast = getDestMastFromRow(row);
+                        return ( destMast != null ? destMast.getDisplayName() : null);
                     case SOURCEAPPCOL:  //
-                        return (b != null) ? b.getSourceMast().getAspect() : null;
+                        return b.getSourceMast().getAspect();
                     case DESTAPPCOL:  //
-                        return (b != null) ? Objects.requireNonNull(getDestMastFromRow(row)).getAspect() : null;
+                        destMast = getDestMastFromRow(row);
+                        return ( destMast != null ? destMast.getAspect() : null);
                     case COMCOL:
-                        return (b != null) ? b.getComment(getDestMastFromRow(row)) : null;
+                        return b.getComment(getDestMastFromRow(row));
                     case DELCOL:
                         return Bundle.getMessage("ButtonDelete");
                     case EDITLOGICCOL:
                         return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
-                        return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;
+                        return b.isEnabled(getDestMastFromRow(row));
                     case MAXSPEEDCOL:
-                        return  (b != null) ? b.getMaximumSpeed(getDestMastFromRow(row)) : null;
+                        return b.getMaximumSpeed(getDestMastFromRow(row));
                     default:
                         //log.error("internal state inconsistent with table requst for "+row+" "+col);
                         return null;
@@ -543,12 +537,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         sigLog.actionPerformed(e);
     }
 
-    JPanel update;
-    boolean suppressUpdate = false;
+    boolean suppressUpdate = false; // does not update table model changelistener during auto create pairs
     JmriJFrame signalMastLogicFrame = null;
     JLabel sourceLabel = new JLabel();
 
-    void autoCreatePairs(jmri.util.JmriJFrame f) {
+    void autoCreatePairs(JmriJFrame f) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             int response = JOptionPane.showConfirmDialog(f, Bundle.getMessage("EnableLayoutBlockRouting"),
                     Bundle.getMessage("TitleBlockRouting"), JOptionPane.YES_NO_OPTION);
@@ -575,49 +568,46 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 JOptionPane.YES_NO_OPTION);
 
         if (retval == 0) {
-            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(propertyGenerateListener);
+            InstanceManager.getDefault(SignalMastLogicManager.class).addPropertyChangeListener(propertyGenerateListener);
             // This process can take some time, so we do split it off then return to Swing/AWT
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    //While the global discovery is taking place we remove the listener as this can result in a race condition.
-                    suppressUpdate = true;
+            Runnable r = () -> {
+                //While the global discovery is taking place we remove the listener as this can result in a race condition.
+                suppressUpdate = true;
+                try {
+                    InstanceManager.getDefault(SignalMastLogicManager.class).automaticallyDiscoverSignallingPairs();
+                } catch (JmriException e) {
+                    // Notify of problem
                     try {
-                        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).automaticallyDiscoverSignallingPairs();
-                    } catch (jmri.JmriException e) {
-                        // Notify of problem
-                        try {
-                            javax.swing.SwingUtilities.invokeAndWait(() -> {
-                                InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(propertyGenerateListener);
-                                JOptionPane.showMessageDialog(null, e.toString());
-                                signalMastLogicFrame.setVisible(false);
-                            });
-                        } catch (java.lang.reflect.InvocationTargetException ex) {
-                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex);
-                        } catch (InterruptedException ex) {
-                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex);
-                        }
-                    }
-
-                    // process complete, update GUI
-                    try {
-                        javax.swing.SwingUtilities.invokeAndWait(() -> {
-                            m.updateNameList();
-                            suppressUpdate = false;
-                            m.fireTableDataChanged();
-                            if (genSect.isSelected()) {
-                                ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
-                                InstanceManager.getDefault(jmri.SectionManager.class).generateBlockSections();                              
-                            }
+                        SwingUtilities.invokeAndWait(() -> {
+                            InstanceManager.getDefault(SignalMastLogicManager.class).removePropertyChangeListener(propertyGenerateListener);
+                            JOptionPane.showMessageDialog(null, e.toString());
+                            signalMastLogicFrame.setVisible(false);
                         });
                     } catch (java.lang.reflect.InvocationTargetException ex) {
-                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex);
+                        log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex);
                     } catch (InterruptedException ex) {
-                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex);
+                        log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex);
                     }
                 }
+                
+                // process complete, update GUI
+                try {
+                    SwingUtilities.invokeAndWait(() -> {
+                        m.updateNameList();
+                        suppressUpdate = false;
+                        m.fireTableDataChanged();
+                        if (genSect.isSelected()) {
+                            ((DefaultSignalMastLogicManager) InstanceManager.getDefault(SignalMastLogicManager.class)).generateSection();
+                            InstanceManager.getDefault(SectionManager.class).generateBlockSections();
+                        }
+                    });
+                } catch (java.lang.reflect.InvocationTargetException ex) {
+                    log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex);
+                } catch (InterruptedException ex) {
+                    log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex);
+                }
             };
-            Thread thr = jmri.util.ThreadingUtil.newThread(r, "Discover Signal Mast Logic");  // NOI18N
+            Thread thr = ThreadingUtil.newThread(r, "Discover Signal Mast Logic");  // NOI18N
             thr.start();
 
         } else {
@@ -632,7 +622,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 if (signalMastLogicFrame != null) {
                     signalMastLogicFrame.setVisible(false);
                 }
-                InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
+                InstanceManager.getDefault(SignalMastLogicManager.class).removePropertyChangeListener(this);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastPairGenerationComplete"));
             } else if (evt.getPropertyName().equals("autoGenerateUpdate")) {// NOI18N
                 sourceLabel.setText((String) evt.getNewValue());
@@ -642,7 +632,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         }
     };
 
-    jmri.jmrit.signalling.SignallingAction sigLog = new jmri.jmrit.signalling.SignallingAction();
+    private final jmri.jmrit.signalling.SignallingAction sigLog = new jmri.jmrit.signalling.SignallingAction();
 
     @Override
     protected String getClassName() {

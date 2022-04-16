@@ -4,8 +4,9 @@ import jmri.NamedBean;
 
 /**
  * LogixNG.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Sand        Copyright 2021
  */
 public interface LogixNG extends Base, NamedBean {
 
@@ -14,33 +15,33 @@ public interface LogixNG extends Base, NamedBean {
      * <P>
      * This method must call registerListeners() / unregisterListeners() and
      * also call execute() if enable is true.
-     * 
+     *
      * @param enable true if this LogixNG should be enabled, false otherwise
      */
     public void setEnabled(boolean enable);
-    
+
     /**
      * Determines whether this LogixNG is enabled.
-     * 
+     *
      * @return true if the LogixNG is enabled, false otherwise
      */
     @Override
     public boolean isEnabled();
-    
+
     /**
      * Set the system name for the conditionalNG at the specified position in this list
      * @param index index of the element to set the system name
      * @return the system name
      */
     public String getConditionalNG_SystemName(int index);
-    
+
     /**
      * Set the system name for the conditionalNG at the specified position in this list
      * @param index index of the element to set the system name
      * @param systemName the new system name
      */
     public void setConditionalNG_SystemName(int index, String systemName);
-    
+
     /**
      * Get number of ConditionalNGs for this LogixNG.
      *
@@ -70,6 +71,11 @@ public interface LogixNG extends Base, NamedBean {
 
     /**
      * Add a child ConditionalNG to the parent LogixNG.
+     * <p>
+     * The first part handles adding conditionalNGs to the LogixNG list
+     * during file loading.
+     * <p>
+     * The second part handles normal additions using the GUI, Logix imports or tests.
      *
      * @param conditionalNG The ConditionalNG object.
      * @return true if the ConditionalNG was added, false otherwise.
@@ -109,5 +115,11 @@ public interface LogixNG extends Base, NamedBean {
      * Execute all ConditionalNGs if the LogixNG is enabled and activated.
      */
     public void execute();
+
+    /**
+     * Execute all ConditionalNGs if the LogixNG is enabled and activated.
+     * @param allowRunDelayed true if it's ok to run delayed, false otherwise
+     */
+    public void execute(boolean allowRunDelayed);
 
 }

@@ -57,7 +57,11 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
             currentConditionalNG.getSymbolTable().createSymbols(_localVariables);
             result = ((StringExpressionBean)getObject()).evaluate();
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
+            if (e.getErrors() != null) {
+                handleError(this, Bundle.getMessage("ExceptionEvaluateMulti"), e.getErrors(), e, log);
+            } else {
+                handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
+            }
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
         }
@@ -200,6 +204,14 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
         
         // The result if the result is forced.
         public String _result = "";
+        
+        @Override
+        public DebugConfig getCopy() {
+            StringExpressionDebugConfig config = new StringExpressionDebugConfig();
+            config._forceResult = _forceResult;
+            config._result = _result;
+            return config;
+        }
         
     }
     

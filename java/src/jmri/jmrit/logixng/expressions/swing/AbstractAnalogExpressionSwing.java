@@ -2,10 +2,12 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
@@ -16,6 +18,42 @@ import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 public abstract class AbstractAnalogExpressionSwing extends AbstractSwingConfigurator {
 
     protected JPanel panel;
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getExecuteEvaluateMenuText() {
+        return Bundle.getMessage("MenuText_ExecuteEvaluate");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void executeEvaluate(@Nonnull Base object) {
+        ConditionalNG conditionalNG = object.getConditionalNG();
+        if (conditionalNG == null) throw new RuntimeException("Not supported yet");
+        
+        SymbolTable symbolTable = new DefaultSymbolTable();
+        getAllSymbols(object, symbolTable);
+        
+        conditionalNG.getCurrentThread().runOnLogixNGEventually(() -> {
+            SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
+            
+            try {
+                conditionalNG.setSymbolTable(symbolTable);
+                double result = ((AnalogExpression)object).evaluate();
+                jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("ExecuteEvaluate_EvaluationCompleted", result),
+                            Bundle.getMessage("ExecuteEvaluate_Title"),
+                            JOptionPane.PLAIN_MESSAGE);
+                });
+            } catch (JmriException | RuntimeException e) {
+                log.warn("ConditionalNG {} got an exception during execute: {}",
+                        conditionalNG.getSystemName(), e, e);
+            }
+            
+            conditionalNG.setSymbolTable(oldSymbolTable);
+        });
+    }
     
     /** {@inheritDoc} */
     @Override
@@ -50,5 +88,8 @@ public abstract class AbstractAnalogExpressionSwing extends AbstractSwingConfigu
     public String getAutoSystemName() {
         return InstanceManager.getDefault(AnalogExpressionManager.class).getAutoSystemName();
     }
+    
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAnalogExpressionSwing.class);
     
 }

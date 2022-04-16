@@ -1,85 +1,65 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - XpressNet LZV100 Configuration
-  Tool</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - XpressNet LZV100 Configuration Tool</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>XpressNet LZV100 Configuration Tool</h1>
+      <img src="images/LZV100ConfigurationUtility.jpg" alt="LZV100 Configuration Tool Image">
+      <p>The LZV100 Configuration tool is used to configure the LZV100 through an LI100 or LI101
+      Computer interface.</p>
 
-      <h1>XpressNet LZV100 Configuration Tool</h1><img src=
-      "images/LZV100ConfigurationUtility.jpg" alt=
-      "LZV100 Configuration Tool Image">
-
-      <p>The LZV100 Configuration tool is used to configure the
-      LZV100 through an LI100 or LI101 Computer interface.</p>
-
-      <p>Starting at the top, we have configuration information for
-      the Power Station portion of the LZV100.<br>
+      <p>Starting at the top, we have configuration information for the Power Station portion of
+      the LZV100.<br>
       The drop down box selects the track voltage.</p>
 
-      <p>The second drop down box indicates if the "E-Line" should
-      be Active or Inactive. When active, Power Stations use this
-      interface to shut the layout down when there is a short
+      <p>The second drop down box indicates if the "E-Line" should be Active or Inactive. When
+      active, Power Stations use this interface to shut the layout down when there is a short
       circuit, or as an emergency stop mechanism.</p>
 
       <h4>Buttons</h4>
 
-      <p>Starting on the left side of the screen in the first row
-      of buttons, the button labeled "Write to LZV100", will write
-      the settings above this line to the LZV100.</p>
+      <p>Starting on the left side of the screen in the first row of buttons, the button labeled
+      "Write to LZV100", will write the settings above this line to the LZV100.</p>
 
-      <p>The button labeled "Reset to Factory Defaults" will reset
-      the <b>screen</b> to factory defaults. This does not send a
-      reset instruction to the LZV100 at this point in time.</p>
+      <p>The button labeled "Reset to Factory Defaults" will reset the <strong>screen</strong> to
+      factory defaults. This does not send a reset instruction to the LZV100 at this point in
+      time.</p>
 
-      <p>The last button, labeled "Close" will close the screen,
-      without sending any (more) information to the LI101F.</p>
+      <p>The last button, labeled "Close" will close the screen, without sending any (more)
+      information to the LI101F.</p>
 
-      <p>The second row of buttons is options for the Command
-      Station.<br>
-      <strong>These options will work with the LV100 as
-      well.</strong></p>
+      <p>The second row of buttons is options for the Command Station.<br>
+      <strong>These options will work with the LV100 as well.</strong></p>
 
-      <p>The button labeled "Reset Command Station" sends the
-      locomotive address 0 function instructions indicated in the
-      LZV100 Manual for a command station reset. This will reset
-      the command station to factory defaults. See the LZV100
-      manual for more information as to exactly what this does.</p>
+      <p>The button labeled "Reset Command Station" sends the locomotive address 0 function
+      instructions indicated in the LZV100 Manual for a command station reset. This will reset the
+      command station to factory defaults. See the LZV100 manual for more information as to exactly
+      what this does.</p>
 
-      <p>The button labeled "Auto/Manual mode toggle" sends the
-      locomotive address 0 function instructions indicated in the
-      LZV100 Manual to toggle between manual and automatic startup
-      mode. In Manual mode, the LZV100 will turn on all Locomotive
-      functions that were on the last time the LZV100 was powered
-      on. In Automatic Mode, the Locomotives will also resume the
+      <p>The button labeled "Auto/Manual mode toggle" sends the locomotive address 0 function
+      instructions indicated in the LZV100 Manual to toggle between manual and automatic startup
+      mode. In Manual mode, the LZV100 will turn on all Locomotive functions that were on the last
+      time the LZV100 was powered on. In Automatic Mode, the Locomotives will also resume the
       previous speed and direction settings.</p>
 
-      <p>Back to the <a href="index.shtml">XpressNet Help</a>
-      page</p>
+      <p>Back to the <a href="index.shtml">XpressNet Help</a> page</p>
+
       <hr>
       Paul Bender<br>
-      paul.bender@acm.org
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      paul.bender@acm.org <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

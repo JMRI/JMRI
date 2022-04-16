@@ -1,7 +1,7 @@
 <!-- SidebarAppLocalPart.shtml -->
 <!-- This is the local part sidebar definition for html/apps/SoundPro pages -->
 
-<dt><h3>SoundPro&trade; Info</h3></dt>
+<dt class="dtheader">SoundPro&trade; Info</dt>
 <dd>
 	<ul>
 	<li><a href="../../tools/Audio.shtml">Audio package detail</a></li>

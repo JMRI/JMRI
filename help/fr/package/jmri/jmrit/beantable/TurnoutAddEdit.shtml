@@ -1,59 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Herv&#233; Blorec 2013-10-13-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Ajout/&Eacute;dition Aiguillages</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Ajout/Édition Aiguillages</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Turnout Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Turnout Add Edit"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Ajout/Édition Aiguillages</h1>
 
-      <h1>Ajout/&Eacute;dition Aiguillages</h1>
+      <p>Lorsque vous ajoutez un Aiguillage, vous sélectionnez dans la liste déroulante le système
+      auquel l' aiguillage est rattaché.</p>
+      <img src="AddTurnout.png" alt="">
+      <p>Entrez une adresse valide pour l'Aiguillage et, si désiré entrer un nom utilisateur.</p>
 
-      <p>Lorsque vous ajoutez un Aiguillage, vous
-      s&eacute;lectionnez dans la liste d&eacute;roulante le
-      syst&egrave;me auquel l' aiguillage est
-      rattach&eacute;.</p><img src="AddTurnout.png">
+      <h2>Création d'un Nombre d'Aiguillage</h2>
 
-      <p>Entrez une adresse valide pour l'Aiguillage et, si
-      d&eacute;sir&eacute; entrer un nom utilisateur.</p>
-
-      <h2>Cr&eacute;ation d'un Nombre d'Aiguillage</h2>
-
-      <p>Il est &eacute;galement possible de cr&eacute;er un
-      certain nombre d'Aiguillage.<br>
-      La case "Ajouter une plage" sera activ&eacute;e.</p><img src=
-      "AddTurnoutNumber.png">
-
-      <p>Apr&egrave;s l'activation de la boite "Ajouter Plage", il
-      faudra ensuite activer le champ "nombre &agrave; ajouter".
-      Ici entrez Le nombre d'Aiguillages que vous souhaitez
-      ajouter, ce qui cr&eacute;era ensuite un nombre d'aiguillages
-      s&eacute;quentiel.</p>Si un nom utilisateur a
-      &eacute;t&eacute; entr&eacute; un num&eacute;ro sera
-      ajout&eacute; &agrave; la fin du nom pour garder chaque nom
-      utilisateur unique.<br>
-      Voir aide g&eacute;n&eacute;rale pour plus d'informations"sur
-      les <a href=
+      <p>Il est également possible de créer un certain nombre d'Aiguillage.<br>
+      La case "Ajouter une plage" sera activée.</p>
+      <img src="AddTurnoutNumber.png" alt="">
+      <p>Après l'activation de la boite "Ajouter Plage", il faudra ensuite activer le champ "nombre
+      à ajouter". Ici entrez Le nombre d'Aiguillages que vous souhaitez ajouter, ce qui créera
+      ensuite un nombre d'aiguillages séquentiel.</p>
+      Si un nom utilisateur a été entré un numéro sera ajouté à la fin du nom pour garder chaque
+      nom utilisateur unique.<br>
+      Voir aide générale pour plus d'informations"sur les <a href=
       "../../../../html/doc/Technical/Names.shtml">Noms</a>". 
       <!--#include virtual="/Footer.shtml" -->
     </div>

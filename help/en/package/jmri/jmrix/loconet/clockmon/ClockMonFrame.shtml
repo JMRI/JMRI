@@ -1,41 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LocoNet Fast Clock Control</title>
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help loconet fast clock monitor">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help loconet fast clock monitor">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>LocoNet Fast Clock Control</h1>
 
-      <p>See the <a href=
-      "../../../../../html/tools/fastclock/LocoNetClock.shtml">LocoNet
-      Clock Help</a></p>This is the
-      help/jmri/jmrix/loconet/clockmon/ClockMonFrame help page
-
+      <p>See the <a href="../../../../../html/tools/fastclock/LocoNetClock.shtml">LocoNet Clock
+      Help</a></p>
+      This is the help/jmri/jmrix/loconet/clockmon/ClockMonFrame help page 
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

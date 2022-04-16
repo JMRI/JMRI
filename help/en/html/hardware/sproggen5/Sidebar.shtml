@@ -6,16 +6,16 @@
     <div style="text-align: center">JMRI&reg; connects to...</div>
     <dl>
 
-        <dt><h3 style="padding-left: 1em;"><a href="../index.shtml">SPROG DCC Generation 5</a></h3></dt>
+        <dt><a href="../index.shtml">SPROG DCC Generation 5</a></dt>
         <dd>
             <ul>
                 <li><a href="index.shtml">SPROG DCC Hardware;</a></li>
                 <li><a href="Details.shtml">Hardware Connection Details</a></li>
                 <li><a href="../can/cbus/index.shtml">CBUS&reg; help topic</a></li>
             </ul>
-        </dd>      
+        </dd>
 
-        <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" --> 
+        <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
 
         <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
@@ -27,6 +27,7 @@
 
     <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
 
-</div> <!-- closes #side -->
-
+  </div> <!-- closes #side -->
+  <!-- button is in /Header -->
+  <script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

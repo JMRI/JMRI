@@ -1,284 +1,544 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- Translated by Blorec Herv&#233; le 2016-09-19-->
-<title>JMRI: Signaling introduction</title>
-<meta name="Author" content="Bob Jacobsen">
-<meta name="Author" content="Egbert Broerse">
-<meta name="Date.Modified" content="20151214"/>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Translated by Blorec Herv&#233; le 2016-09-19-->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Signaling introduction</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="Author" content="Egbert Broerse">
+  <meta name="Date.Modified" content="20151214"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
-<h1>JMRI: Signalisation</h1>
+      <!-- Page Body -->
 
-<p>Cette page introduit la Signalisation, liste les outils Signalisation JMRI et pointe vers les m&#233;thodes plus avanc&#233;es.</p>
-<p>La mod&#233;lisation de la Signalisation ferroviaire sur un r&#233;seau peut &#234;tre fait de diff&#233;rentes fa&#231;ons, 
-allant du simple "feu rouge" pour terminer par l'&#233;mulation d'un prototype particulier de 
-	signalisation logique. JMRI fournit une combinaison d'outils pour mettre en &#339;uvre La Signalisation. JMRI supporte la <a href="AspectSignaling.shtml">signalisation r&#233;aliste</a> bas&#233;e sur les <a href="#aspect">Aspects</a> et les <a href="#appearance">Apparences</a> du signal, ainsi que la r&#233;partition et le verrouillage du CCT, sans que l'utilisateur ait &#224; &#233;crire un script ou du code Java.</p> 
+      <h1>JMRI: Signalisation</h1>
 
-		<ul> 
-		<li><a href="#terms">Vocabulaire de Signalisation</a></li> 
-		<li><a href="#signaling">Signalisation R&#233;aliste de Chemin de Fer</a></li>
-	<li><a href="#tools">Outils de Signalisation JMRI</a></li>
-<li><a href="#advanced">Signalisation Avanc&#233;e</a></li>
-</ul>
+      <p>Cette page introduit la Signalisation, liste les outils Signalisation JMRI et pointe vers
+      les méthodes plus avancées.</p>
 
-<a name="terms"></a><h2>Vocabulaire de Signalisation</h2>
+      <p>La modélisation de la Signalisation ferroviaire sur un réseau peut être fait de
+      différentes façons, allant du simple "feu rouge" pour terminer par l'émulation d'un prototype
+      particulier de signalisation logique. JMRI fournit une combinaison d'outils pour mettre en
+      œuvre La Signalisation. JMRI supporte la <a href="AspectSignaling.shtml">signalisation
+      réaliste</a> basée sur les <a href="#aspect">Aspects</a> et les <a href=
+      "#appearance">Apparences</a> du signal, ainsi que la répartition et le verrouillage du CCT,
+      sans que l'utilisateur ait à écrire un script ou du code Java.</p>
 
-<h3>Termes de Mod&#232;le r&#233;el de Signalisation Ferroviaire:</h3>
-<a href="https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg" width="132" height="240" align="right"></a>
-<!-- With some very useful information from the JMRI developers structure site -->
+      <ul>
+        <li><a href="#terms">Vocabulaire de Signalisation</a>
+        </li>
 
-	<ul>
-		<li><a name="head"><b>Feu de Signalisation</b></a> ou <b>Bras de Signalisation</b> Chaque unit&#233; individuelle de signal sur un M&#226;t de Signalisation s&#233;maphore ou lumineux. Il montre exactement une Apparence, g&#233;n&#233;ralement une couleur ( Mais pas toujours, exemple: s&#233;maphores ).</li>
-		<li><b>Lumi&#232;re</b> La lampe individuelle dans un signal. Une lampe peut indiqu&#233;e de multiples <a href="#aspect">Aspects</a> si elle change de couleur comme un signal SearchLight*, ou elle peut prendre multiples lumi&#232;res pour indiquer un simple <a href="#aspect">Aspect</a>, par exemple Signaux de Position Lumineux.</li>
-		<li><b>Marqueurs</b> Un Feu de Signalisation ou un Bras qui ne change pas de couleur ou de position.</li>
-		<li><b>Signal</b> L'objet qui transmet une indication par l'interm&#233;diaire d'un mod&#232;le sp&#233;cifique de ses parties visibles. Il peut &#234;tre aussi simple comme un signe, disant: "d&#233;part CTC"; qui transmet une indication particuli&#232;re et invoque une r&#232;gle. Habituellement, nous sous r&#233;f&#233;rons &#224; des Signaux allum&#233;s ou mobiles, bien que, qu'ils puissent pr&#233;sent&#233;s plus d'une Indication. Le Signal peut avoir une lampe et utiliser plusieurs couleurs pour transmette diff&#233;rentes Indications, ou il a besoin de plus d'un jeu de lampes pour afficher un large &#233;ventail d'Aspects pour adapter l'emplacement.</li>
-		<li><b>M&#226;t de Signalisation</b> Le poteau sur lequel sont mont&#233;s un ou plusieurs Feux de Signalisation ou Bras et qui (g&#233;n&#233;ralement) contr&#244;le une voie individuelle. Utilis&#233; aussi pour se r&#233;f&#233;rer &#224; un signal entier fait de un ou plusieurs Feux de Signalisation. les Signaux Nains sont aussi consid&#233;r&#233;s comme des M&#226;ts de Signalisation.</li>
-		<li><a name="appearance"><b>Apparence</b></a> Une d'une s&#233;rie d'options autoris&#233;es pour un <a href="#head">Feu de Signalisation</a> ou un Signal M&#233;canique exemple: Rouge, Vert, Relev&#233;.
-		<li><a name="aspect"><b>Aspect</b></a> Une d'une s&#233;rie d'options autoris&#233;es pour un mod&#232;le visuel d'un M&#226;t de Signalisation utilisant un ou plusieurs Feux de Signalisation ou Bras M&#233;caniques pour transmettre une <a href="#indication">Indication</a> de vitesse ou d'itin&#233;raire. Diff&#233;rents types de M&#226;ts de Signalisation peuvent utiliser diff&#233;rents Aspects pour une indication sp&#233;cifique, mais un type de M&#226;t de Signalisation particulier transmettra toujours une Indication particuli&#232;re par un seul Aspect. Par exemple, pour transmettre "Vous pouvez roulez &#224; pleine vitesse" - une Indication (R&#232;gle 281, "Libre"v-un signal doit afficher une simple lampe verte, un autre peut montrer un vert au-dessus d'une rouge, et un troisi&#232;me peut avoir un s&#233;maphore ouvert. Ils ont tous des aspects diff&#233;rents montrant la m&#234;me Indication. Comme &#224; tous ces diff&#233;rents Aspects sont affect&#233;s le m&#234;me nom descriptif, exemple: "Approche", quand vous pensez &#224; ces Aspects, "Approche sur un signal searchlight" et "Approche sur un simple s&#233;maphore", la diff&#233;rence est &#233;vidente.
-		<li><a name="indication"><b>Indication</b></a> Pour les (la plupart) des chemins de fer de l'Ouest am&#233;ricain, "Indication" se r&#233;f&#232;re au message envoy&#233; par un Signal. Il a g&#233;n&#233;ralement un nom, comme "Libre" ou Approche, mais officielement c'est &#224; un r&#232;glement de chemin de fer (comme 281 ou 285) auquel le train doit ob&#233;ir quand il est gouvern&#233; par ce Signal. Alors l'Indication est  la <em>signification</em> qu'un signal transmet au conducteur, elle indique l'instruction compl&#232;te pour un Aspect du Signal, exemple: "Ex&#233;cutez la pr&#233;paration &#224; l'arr&#234;t au prochain signal". Le train d&#233;passant la vitesse moyenne doit la r&#233;duire pour cette vitesse. ( pour l'Aspect "Approche" selon le Recueil de R&#233;glement AAR 1946).</li>
-		<li><b>Signal Distant</b> Le signal que vous commandez est appel&#233; Signal Distant s'il est programm&#233; pour montr&#233; le m&#234;me Aspect ou un plus restrictif que le signal suivant dans la direction et itin&#233;raire du voyage.</li>
-		<li><b>Territoire &#201;teint</b> Section de voie de circulation non contr&#244;l&#233;e par des Signaux. Le<a href="https://en.wikipedia.org/wiki/Dark_territory"> Territoire &#201;teint</a> est gouvern&#233; par d'autres m&#233;thodes comme des Exploitation par Horaires et Ordre de Train ( TT &amp; TO ), Contr&#244;le Direct du Trafic ou Bulletin de Voie.</li>
-	</ul>
+        <li><a href="#signaling">Signalisation Réaliste de Chemin de Fer</a>
+        </li>
 
-	<p>Diff&#233;rentes compagnies ont des R&#232;glements diff&#233;rents pour agir sur le trafic, utilisant des termes diff&#233;rents. Dans leurs Recueils de R&#232;glement respectifs, Ils utilisent diff&#233;rents Aspects pour des r&#232;gles qui ont le m&#234;me nom. Et certains auront diff&#233;rentes Apparences pour faire ces Aspects ( exemple: s&#233;maphore contre lampe simple contre position d'un signal de couleur contre position d'une lampe de signalisation contre un signal de cabine contre...)</br>
-   		Image sur la droite: un M&#226;t de Signalisation CSX Searchlight* avec deux Feux de Signalisation , montrant un Aspect "rouge au dessus de rouge", signifie l'Indication "Arr&#234;t".</p>
-  
-	<h3>JMRI termes sp&#233;cifiques de Signalisation:</h3>
-<ul>
-<li><b>Virtuel</b> Les signaux Virtuels sont des signaux JMRI internes qui n(ont pas de signaux mat&#233;riels de reli&#233;s.
-Les signaux Virtuels peuvent repr&#233;senter des Aspects th&#233;orique comme des buttoirs ou dans des coulisse qui sont utilis&#233;es par des signaux pr&#233;c&#233;dents 
-<li><b>Capteur Prot&#233;g&#233;</b> Le prochain capteur d'occupation du canton suivant le signal que vous contr&#244;l&#233; dans la 
-direction et l'itin&#233;raire du voyage. La "protection" est pour pr&#233;venir la p&#233;n&#233;tration d'un train 
-dans un canton occup&#233; sans avoir &#233;t&#233; averti</li>
-<li><b>Signal Prot&#233;g&#233;</b> Le signal suivant  celui que vous contr&#244;l&#233; dans la 
-direction et l'itin&#233;raire du voyage. La "protection" est pour pr&#233;venir l'approche d'un train d'un signal d'arr&#234;t sans avoir d'avertissement suffisant pour lui permettre d'&#234;tre arr&#234;t&#233; avant d'atteindre le signal "prot&#233;g&#233;".</li>
-<li><b>Syst&#232;me de Signalisation</b> un ensemble d'ic&#244;nes, de fichier de d&#233;finitions et des r&#232;gles suivant soit un Recueil de R&#232;glement ou un ensemble de simplifi&#233; de r&#232;gles ( voir <a href="AspectSignaling.shtml#systems">cette liste</a>).</li> 
-<li><b>Nom Syst&#232;me</b> Le nom des objets JMRI identifiant soit des pi&#232;ces virtuelles ( internes ) ou physiques de mat&#233;riel utilis&#233;, exemple: une une sortie sur un d&#233;codeur pour commander un signal. Le Nom Syst&#232;me doit suivre certaines <a href="../../doc/Technical/Names.shtml">R&#233;gles de D&#233;nomination</a> pour &#234;tre correctement interpr&#233;t&#233; par JMRI, et le nom varie suivant votre mat&#233;riel car il doit correspondre &#224; votre syst&#232;me DCC.</li>
-</ul>
+        <li><a href="#tools">Outils de Signalisation JMRI</a>
+        </li>
 
-<h2><a name="signaling">Signalisation R&#233;aliste Ferroviaire</a></h2>
-<p>
-&#192; travers le monde, les chemins de fer ont d&#233;velopp&#233; une large gamme de mat"riel de signalisation tels que Drapeaux ( non support&#233;s dans JMRI, S&#233;maphores, Signaux &#224; position de lumi&#232;re, Signaux Lampes de Couleur. Diff&#233;rents signaux physiques peuvent montrer la m&#234;me "Indication" en utilisant diff&#233;rentes combinaisons de lumi&#232;res, de positions de s&#233;maphore, et/ou de Panneaux; ces mod&#232;les de lumi&#232;res sont appel&#233;s "Aspects". Par exemple l'Aspect "Arr&#234;t" peut &#234;tre une simple lampe rouge sur un m&#226;t de Signalisation avec seulement une lampe, rouge au-dessus de rouge sur un m&#226;t de signalisation avec deux lampes, etc. Pour apprendre les r&#232;gles du chemin de fer, votre mod&#232;le fait partie du jeu mais JMRI vous aide en fournissant plus de 20 syst&#232;mes de signalisation r&#233;aliste de diff&#233;rents pays. Pourtant, c'est au conducteur d'interpr&#233;ter les Aspects des Signaux affich&#233;s et ajuster le r&#233;gulateur...
+        <li><a href="#advanced">Signalisation Avancée</a>
+        </li>
+      </ul>
+      <a name="terms" id="terms"></a>
+      <h2>Vocabulaire de Signalisation</h2>
 
-<p>Beaucoup de <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Bloc Automatique Lumineux</a> (ABS au USA et BAL en France) basiques peut se r&#233;sumer &#224; un signal devient rouge quand un train
-ne peut pas entrer en toute s&#233;curit&#233; dans le canton qu'il prot&#232;ge; il devient jaune lorsque le canton suivant 
-le canton prot&#233;g&#233; ne peut &#234;tre occup&#233;. Bien que ce soit une simplification, il peut servir 
-comme un bon point de d&#233;part pour comprendre la logique de la signalisation. Les syst&#232;me de signalisation modernes sont <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Bloc &#224; Permissivit&#233; Absolue</a> (APB) Signalisation utilis&#233; par beaucoup de r&#233;seaux de l'Ouest des US et <a href="https://en.wikipedia.org/wiki/Centralized_traffic_control">Contr&#244;le Centralis&#233; du Trafic</a> ( CTC ) command&#233; &#224; distance &#224; partir de grands tableaux.
+      <h3>Termes de Modèle réel de Signalisation Ferroviaire:</h3>
+      <a href="https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src=
+      "images/132px-CSX_River_Sub_Kingston_CP_90.jpg" width="132" height="240" align="right" alt=
+      ""></a> <!-- With some very useful information from the JMRI developers structure site -->
 
-<h3>Nomenclature Standard CTC</h3>
+      <ul>
+        <li><a name="head" id="head"><strong>Feu de Signalisation</strong></a> ou <strong>Bras de
+        Signalisation</strong> Chaque unité individuelle de signal sur un Mât de Signalisation
+        sémaphore ou lumineux. Il montre exactement une Apparence, généralement une couleur ( Mais
+        pas toujours, exemple: sémaphores ).</li>
 
-<h4>Union Switch &amp; Signal Company (US&amp;S)</h4>
-<ul>
-<li>Les Signaux sont identifi&#233;s par des nombres PAIRS avec la direction du mouvement d&#233;crit sur le panneau ( R - droit, L - gauche )</li>
-<li>Les Aiguillages sont identifi&#233;s par des Nombres IMPAIRS</li>
-</ul>
+        <li><strong>Lumière</strong> La lampe individuelle dans un signal. Une lampe peut indiquée
+        de multiples <a href="#aspect">Aspects</a> si elle change de couleur comme un signal
+        SearchLight*, ou elle peut prendre multiples lumières pour indiquer un simple <a href=
+        "#aspect">Aspect</a>, par exemple Signaux de Position Lumineux.</li>
 
-<p>Exemple #1: Les signaux &#224; un aiguillage command&#233; avec une voie d'approche par la gauche et deux voies vers la droite -2R ( face &#224; la pointe ), 2L ( voie directe ), 2LA ( voie d&#233;vi&#233;e ). 2LA devrait &#234;ttre montr&#233;e comme 2L sur le panneau pour correspondre avec le Signal Levier 2. La direction cardinale doit aussi &#234;tre utilis&#233;e( N,S, E, W ) &#224; un croisement pour l'itin&#233;raire oppos&#233;. Les Aiguillage sont N  (normal ) ou R ( inverse ).<br>
-Exemple #2: Les signaux CTC de Dennis Drury obtiennent un nombre pair avec un modificateur directionnel tel que E 50 W ou E 52 W. Les signaux du canton interm&#233;diaire peuvent &#234;tre num&#233;rot&#233;s par une position kilom&#233;tique de l'emplacement tel que 322.2 et 322.3.</p>
- 
-<h4>General Railroad Signal (GRS)</h4>   
-<ul>
-<li>Les Signaux ont des mum&#233;ros IMPAIRS</li>
-<li>Les Aiguillages ont des num&#233;ros PAIRS (en opposition &#224; US&amp;S!)</li>
-<li>Le m&#234;me sch&#233;ma R - droit, L - gauche </li>
-</ul>
-<p>Merci &#224; Jim Duncan, qui ajoute: Il y a toujours des exceptions! Tous les libell&#233;s doivent &#234;tre coh&#233;rents, facile &#224; comprendre, et n'avoir absolument aucune possibilit&#233; d'&#234;tre confondu avec un autre signal, aiguillages ou leviers.</p>
- 
-	<h3>Lectures compl&#233;mentaires</h3>
-	<p>Il y a beaucoup d'excellentes sources d'information sur	La signalisation r&#233;aliste, incluant:
-<ul>
-  <li>La <a href="https://en.wikipedia.org/wiki/Railway_signal">Page Wikipedia sur la Signalisation</a></li>
-  <li>La <a href="https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France">Page Wikipedia sur la Signalisation SNCF</a></li>	
-  <li><a href="http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signalisation simplement expliqu&#233;e</a> by A.A. Krug</li>	
-  <li><a href="http://www.lundsten.dk/us_signaling/">Signalisation Nord Am&#233;ricaine</a> est un website complet by Carsten S. Lundsten</li>
-  <li>Le <a href="http://www.railway-technical.com/sigind.shtml">chapitre Index Technique de Signalisation Ferroviaire </a> fournit beaucoupd'informations du monde entier.</li>
-  <li><a href="http://catalog.hathitrust.org/Record/002567896">Exploitation Chemin de Fer et Signalisation</a> by Edmund J. Phillips, Jr., Simmons-Boardman Publ., 1942</li>
-  <li>John Armstrong's book <em>Le Chemin de Fer: Quel est-il, Que fait-il, </em>, Simmons-Boardman Books Inc., 1990</li>
-  <li>Dr. Bruce Chubb's <em>Computer/Model Railroad Interface (C/MRI) User Manual rev 3.0</em> a des informations sur la signalisation au chapitre 12.</li>
-  <li>US prototype AAR rules section 2 (<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">http://www.rrsignalpix.com/AAR_2_sec.pdf</a>) fournit un point de d&#233;part pour comprendre les r&#232;gles de signalisation US.</li>
-  <li><a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit Nomenclature</a> aide dans la d&#233;nomination r&#233;aliste des parties du syst&#232;me de signalisation.</li>
-</ul>
+        <li><strong>Marqueurs</strong> Un Feu de Signalisation ou un Bras qui ne change pas de
+        couleur ou de position.</li>
 
-<a name="tools"></a><h2>JMRI Outils Signalisation</h2>
-<p>Il est vraiment simple d'utiliser l'Aspect de Signalisation, sp&#233;cialement si le mat&#233;riel de signal appropri&#233; est d&#233;j&#224; configur&#233; dans JMRI ou vous voulez utiliser des M&#226;ts de Signalisation avec plus d'un Feu de Signalisation.
-	L'aspect de Signalisation dans JMRI utilise une s&#233;rie de fichiers de d&#233;finitions d'Aspect qui sont fournis avec JMRI depuis la version 2.9. De plus pour puiser dans un des plus r&#233;aliste parmi 20 <a href="AspectSignaling.shtml#systems">Syst&#232;mes de Signalisation</a> fournit avec JMRI, vous pouvez en bidouiller un en fonction de votre mat&#233;riel et des op&#233;rations ou d&#233;finir votre propre syst&#232;me et le partager dans le cadre d'une prochaine version de JMRI.<br>
-	JMRI les principaux outils de signalisation suivants, disponibles depuis le menu<b>Outils --> Tableau --> Signal </b> menu:</p>
+        <li><strong>Signal</strong> L'objet qui transmet une indication par l'intermédiaire d'un
+        modèle spécifique de ses parties visibles. Il peut être aussi simple comme un signe,
+        disant: "départ CTC"; qui transmet une indication particulière et invoque une règle.
+        Habituellement, nous sous référons à des Signaux allumés ou mobiles, bien que, qu'ils
+        puissent présentés plus d'une Indication. Le Signal peut avoir une lampe et utiliser
+        plusieurs couleurs pour transmette différentes Indications, ou il a besoin de plus d'un jeu
+        de lampes pour afficher un large éventail d'Aspects pour adapter l'emplacement.</li>
 
-	<p>1. Les objets <b><a href="SignalHeads.shtml">Feu de Signalisation</a></b> repr&#233;sentants les lampes individuelles d'un signal et pouvant &#234;tre cr&#233;&#233;s, chang&#233;s, enlev&#233;s et configur&#233;s pour des apparences ( couleurs ) sp&#233;cifiques dans le <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Tableau Feu de Signalisation</a>Un ou plusieurs Feux de Signalisation habituellement sont une partie d'un M&#226;t de Signalisation. Pour les d&#233;codeurs de signalisation, qui acceptent directement des Aspects multiples, il peut ne pas &#234;tre n&#233;cessaire de cr&#233;er des Feux de Signalisation  individuels, avnt la cr&#233;ation des objets M&#226;t de Signalisation.</p>
+        <li><strong>Mât de Signalisation</strong> Le poteau sur lequel sont montés un ou plusieurs
+        Feux de Signalisation ou Bras et qui (généralement) contrôle une voie individuelle. Utilisé
+        aussi pour se référer à un signal entier fait de un ou plusieurs Feux de Signalisation. les
+        Signaux Nains sont aussi considérés comme des Mâts de Signalisation.</li>
 
-	<p>2. Les objets <b><a href="SignalMasts.shtml">M&#226;t de Signalisation</a></b> repr&#233;sente le signal entier avec un ou plusieurs Feux de Signalisation. L'utilisation des objets M&#226;t de Signalisation vous permet de d'afficher des Aspects r&#233;alistes sur les signaux. Vous sp&#233;cifiez quelle sorte de <a href="AspectSignaling.shtml#systems">Syst&#232;me de Signalisation</a> va &#234;tre utilis&#233;,
-	le M&#226;t de signalisation sp&#233;cifique type "searchlight* double" ou "simple feu nain" et quels Feux de Signalisation ou aspect mat&#233;riel courant ce M&#226;t de Signalisation va piloter.
-	Quand l'<a href="#aspect">Aspect</a> d'un M&#226;t de Signalisation est configur&#233; pour "Approche M&#233;dium", JMRI g&#232;re la communication n&#233;cessaire avec le r&#233;seau pour que le signal sur le r&#233;seau affiche les les bonnes couleurs. </br>
-	<a href="../../../package/jmri/jmrit/beantable/SignalMasts.png">
-	<img src="../../../package/jmri/jmrit/beantable/SignalMasts.png" 
-	width="338" height="86" align="right">
-	</a>
-Les M&#226;ts de Signalisation sont configur&#233;s par le
-	<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau M&#226;t de Signalisation</a>. Depuis le Tableau M&#226;t de Signalisation, vous pouvez cr&#233;er et modifier les M&#226;ts de Signalisation et configurer individuellement les M&#226;ts de Signalisation pour tous les Aspects qu'ils sont capable d'afficher en cliquant dans la colonne "Aspect.
-   <br>
-	Vous pouvez ajouter une ic&#244;ne M&#226;t de Signalisation dans l'&#201;diteur de Panneau par la m&#233;thode habituelle. L'ic&#244;ne M&#226;t de Signalisation affichera l'image depuis la d&#233;finition Apparence de ce type particulier de M&#226;t de Signalisation et de Syst&#232;me de Signal. </p>
-	<p>3. Les <b><a href="SignalGroups.shtml">Groupes Signaux</a></b> sont utilis&#233;s pour d&#233;finir un nombre de Feux de Signalisation, o&#249; seul un Feu de Signalisation peut &#234;tre allum&#233; &#224; un moment donn&#233;, d&#233;pendant de l'Apparence ( &#201;tat ) du M&#226;t de Signalisation associ&#233; et d'un ensemble de conditions. 
-	Les Groupes Signaux seront utilis&#233;s l&#224; o&#249; des indicateurs suppl&#233;mentaires seront install&#233;s pour compl&#233;ter le M&#226;t de Signalisation principal, tel que l'affichage de Bifurcation, Itin&#233;raire, Vitesse. Ces indicateurs fournissent une information additionnelle au conducteur qui n'est pas donn&#233;e par le M&#226;t de Signalisation principal. De tels indicateurs sont vus fr&#233;quement en signalisation Europ&#233;enne et en GB.</p>
- 
-	<p>4. L'outil <b><a href="SignalMastLogic.shtml">Logique M&#226;t de Signalisation</a></b> permet &#224; la Logique de Signalisation d'&#234;tre construite sous forme de paire de conditions entre les M&#226;ts de Signalisation sur le R&#233;seau.
-Chaque Logique M&#226;t de Signalisation utilise les &#233;tats des Cantons, des Aiguillages, des Capteurs et autre 
-M&#226;t de Signalisation pour d&#233;terminer quel Aspect un M&#226;t de Signalisation Particulier devrait afficher.<br>
-Si le r&#233;seau a &#233;t&#233; dessin&#233; avec l'&#201;diteur de R&#233;seau et que les M&#226;ts de Signalisation ont 
-&#233;t&#233; plac&#233;s sur le panneau en utilisant les outils vari&#233;s, alors il est possible de construire dynamiquement toutes les Logiques M&#226;t de Signalisation, avec un minimum d'intervention utilisateur. Pour les panneaux cr&#233;&#233;s avec l'&#201;diteur de Panneau de Commande, beaucoup de ces informations doivent &#234;tre entr&#233;es &#224; la main.</p>
- 
-<p>Toutes les informations dans les Tableaux sont sauvegard&#233;es avec la configuration dans un fichier XML, en 
-m&#234;me temps que la configuration du tableau de commande, les Logix, les Itin&#233;raires et choses similaires. Pour plus d'information
-sur la cr&#233;ation et l'affichage des panneaux, incluant comment montrer les signaux 
-sur vos panneaux, voir la 
-	<a href="../../apps/PanelPro/Panels.shtml">page d'aide Panneaux</a>.</p>
+        <li><a name="appearance" id="appearance"><strong>Apparence</strong></a> Une d'une série
+        d'options autorisées pour un <a href="#head">Feu de Signalisation</a> ou un Signal
+        Mécanique exemple: Rouge, Vert, Relevé.</li>
 
-	<p>Et Apr&#232;s?</p>
-<ul>
-	<li>Plus d'information sur l'Aspect de la Signalisation et les options disponibles dans JMRI peuvent &#234;tre trouv&#233;es dans la  <a href="AspectSignaling.shtml">page d'aide Aspect Signalisation</a>.</li>	
-	<li>Suzie Tall et Jim Duncan ont &#233;crit des instructions  <a href="SignalingSetup.shtml">D&#233;marrage Rapide Signalisation</a>.</li>  
-	<li>Elmer McKay fournit un apercu g&#233;n&#233;ral <a href="IntroToSignalingYourMRR.html">Comment d&#233;marr&#233;</a> avec les signaux sur votre r&#233;seau.</li>
-</ul>
-	
-<a name="advanced"></a><h2>La Signalisation Avanc&#233;e</h2>
-	
-<ul>
-	<li><a href="interlock/index.shtml">Verrouillage Entr&#233;e/Sortie</a></li>
-	<li><a href="#logix">Logix</a>: Logique basiqe pour commander des parties du r&#233;seau</li>
-	<li><a href="#scripting">Script</a>: personnalisation JMRI incluant les interactions utilisateur</li>
-	<li><a href="#automat">Classes Automatisation</a></li>
-	<li><a href="#widgets">Boite &#224; Outils</a> pour les utilisateurs exp&#233;riment&#233;s pour faire toutes sortes d'automatisme sur le r&#233;seau en &#233;crivant un nouveau programme</li>
-</ul>
+        <li><a name="aspect" id="aspect"><strong>Aspect</strong></a> Une d'une série d'options
+        autorisées pour un modèle visuel d'un Mât de Signalisation utilisant un ou plusieurs Feux
+        de Signalisation ou Bras Mécaniques pour transmettre une <a href=
+        "#indication">Indication</a> de vitesse ou d'itinéraire. Différents types de Mâts de
+        Signalisation peuvent utiliser différents Aspects pour une indication spécifique, mais un
+        type de Mât de Signalisation particulier transmettra toujours une Indication particulière
+        par un seul Aspect. Par exemple, pour transmettre "Vous pouvez roulez à pleine vitesse" -
+        une Indication (Règle 281, "Libre"v-un signal doit afficher une simple lampe verte, un
+        autre peut montrer un vert au-dessus d'une rouge, et un troisième peut avoir un sémaphore
+        ouvert. Ils ont tous des aspects différents montrant la même Indication. Comme à tous ces
+        différents Aspects sont affectés le même nom descriptif, exemple: "Approche", quand vous
+        pensez à ces Aspects, "Approche sur un signal searchlight" et "Approche sur un simple
+        sémaphore", la différence est évidente.</li>
 
-<a name="logix"></a><h3>Signalisation avec Logix</h3>
-<p>Un <a href="../Logix.shtml">Logix</a> JMRI fournit la logique et les capacit&#233;s de commande pour les objets JMRI, incluant
-M&#226;ts et Feux de Signalisation. Logix peut &#234;tre utilis&#233; pour configurer une signalisation logique personnalis&#233;e en remplissant des formulaires sans &#233;crire de code. Un utilisateur d&#233;finit la logique "Conditionnelle" et les "Actions"
-qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections suivantes montrent comment Logix peut examiner et commander les Signaux.</p>
- 	
-	<h4><a name="variable">Variables d'&#201;tat Signal dans Logix</a></h4>
-	
-	<p>Les variables d'&#233;tat li&#233;es aux Feux et M&#226;ts de Signalisation actuellement disponibles pour une utilisation dans les 
-	Conditionnels Logix
-	sont &#233;num&#233;r&#233;s ci-dessous, en m&#234;me temps que les informations sur chacun d'eux. Les variables d'&#233;tat 
-	doivent toujours &#234;tre &#233;valu&#233;es soit True ( Vrai ) ou False ( Faux ). La condition r&#233;sultante 
-	pour True est donn&#233;e pour chacune. Si la condition n'est pas remplie, la variable d'&#233;tat 
-	&#233;value &#224; False. Quand un Logix est actif, l'&#233;tat des entit&#233;s sp&#233;cifi&#233;es ( Capteur, 
-	Aiguillage, M&#226;t de Signalisation, etc. ) dans les variables d'&#233;tat dans ses Conditionnels sont 
-	surveill&#233;s. Un calcul de tous les Conditionnels dans le Logix est d&#233;clench&#233;
-	quand un des &#233;tats surveill&#233;s change comme not&#233; ci-dessous. <i>Note:</i> Tous les Conditionnels Logix ne sont pas list&#233;s ici.
-	</p>
+        <li><a name="indication" id="indication"><strong>Indication</strong></a> Pour les (la
+        plupart) des chemins de fer de l'Ouest américain, "Indication" se réfère au message envoyé
+        par un Signal. Il a généralement un nom, comme "Libre" ou Approche, mais officielement
+        c'est à un règlement de chemin de fer (comme 281 ou 285) auquel le train doit obéir quand
+        il est gouverné par ce Signal. Alors l'Indication est la <em>signification</em> qu'un
+        signal transmet au conducteur, elle indique l'instruction complète pour un Aspect du
+        Signal, exemple: "Exécutez la préparation à l'arrêt au prochain signal". Le train dépassant
+        la vitesse moyenne doit la réduire pour cette vitesse. ( pour l'Aspect "Approche" selon le
+        Recueil de Réglement AAR 1946).</li>
 
-	<a href="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png">
-    <img src="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png"
-    width="423" height="92" align="right"></a>
+        <li><strong>Signal Distant</strong> Le signal que vous commandez est appelé Signal Distant
+        s'il est programmé pour montré le même Aspect ou un plus restrictif que le signal suivant
+        dans la direction et itinéraire du voyage.</li>
 
-	<p>Conditionnels pour la Variable Type "Feu de Signalisation":</p>
-	<ul>
-	<li><b>Apparence Feu de Signalisation &#201;gale</b>: &#201;value &#224; Vrai si l'Apparence du Feu de Signalisation correspond &#224; l'Apparence sp&#233;cifi&#233;e dans l'"&#201;tat" de la variable. Le calcul est d&#233;clench&#233; quand l'Apparence du Feu de Signalisation change.
- 	<li><b>Apparence Feu de Signalisation Allum&#233;</b>: &#201;value &#224; Vrai si le Feu de Signalisation sp&#233;cifi&#233; est allum&#233;.
-	<li><b>Apparence Feu de Signalisation Maintenu</b>: &#201;value &#224; Vrai si le Feu de Signalisation est maintenu.</li>
-	</ul>
+        <li><strong>Territoire Éteint</strong> Section de voie de circulation non contrôlée par des
+        Signaux. Le <a href="https://en.wikipedia.org/wiki/Dark_territory">Territoire Éteint</a>
+        est gouverné par d'autres méthodes comme des Exploitation par Horaires et Ordre de Train (
+        TT &amp; TO ), Contrôle Direct du Trafic ou Bulletin de Voie.</li>
+      </ul>
 
-	<p>Conditionnels pour la Variable Type "M&#226;t de Signalisation":</p>
-	<ul>
-	<li><b>Apparence M&#226;t de Signalisation &#201;gale</b>: &#201;value &#224; Vrai si l'Apparence du M&#226;t de Signalisation correspond &#224; l'Apparence sp&#233;cifi&#233;e dans l'"&#201;tat" de la variable. Le calcul est d&#233;clench&#233; quand l'Apparence du Feu de Signalisation change.
- 	<li><b>Apparence M&#226;t de Signalisation Allum&#233;</b>: &#201;value &#224; Vrai si le M&#226;t de Signalisation sp&#233;cifi&#233; est allum&#233;.
-	<li><b>Apparence M&#226;t de Signalisation Maintenu</b>: &#201;value &#224; Vrai si le M&#226;t de Signalisation est maintenu.</li>
-	</ul>
+      <p>Différentes compagnies ont des Règlements différents pour agir sur le trafic, utilisant
+      des termes différents. Dans leurs Recueils de Règlement respectifs, Ils utilisent différents
+      Aspects pour des règles qui ont le même nom. Et certains auront différentes Apparences pour
+      faire ces Aspects ( exemple: sémaphore contre lampe simple contre position d'un signal de
+      couleur contre position d'une lampe de signalisation contre un signal de cabine
+      contre...)<br>
+      Image sur la droite: un Mât de Signalisation CSX Searchlight* avec deux Feux de Signalisation
+      , montrant un Aspect "rouge au dessus de rouge", signifie l'Indication "Arrêt".</p>
 
-	<a name="action"></a><h4>Actions Signal en Logix</h4>
+      <h3>JMRI termes spécifiques de Signalisation:</h3>
 
-	<p>Les Actions li&#233;es aux Feux et M&#226;ts de Signalisation actuellement disponibles pour un usage dans les conditionnels Logix sont list&#233;es  
-	ci-dessous en m&#234;me temps que les informations sur chacune. <i>Note:</i> Toutes les actions Logix ne sont pas r&#233;pertori&#233;es ici.</p>
-	<ul>
- 	<li><b>D&#233;finir Apparence Feu de Signalisation</b>: Configurer le Feu de Signalisation pour l'Apparence choisie. Sp&#233;cifier le Feu de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. Sp&#233;cifier l'Apparence &#224; configurer en choisissant dans le menu contextuel qui appara&#236;t apr&#232;s que vous ayez entr&#233; un Nom Syst&#232;me de Feu de Signalisation ( ou s&#233;lectionn&#233; dans une Liste de Choix ). 
- 	</li><li><b>D&#233;finir Feu de Signalisation Maintenu</b>: Configurer le Feu de Signalisation &#224; Maintenu. Sp&#233;cifier le Feu de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>Effacer Maintenu Feu de Signalisation</b>: Effacer Maintenu sur le Feu de Signalisation sp&#233;cifi&#233;. Sp&#233;cifier le Feu de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>D&#233;finir Feu de Signalisation &#201;teint</b>: Configurer le Feu de Signalisation pour ne pas &#234;tre Allum&#233;. Sp&#233;cifier le Feu de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>D&#233;finir Feu de Signalisation Allum&#233;</b>: Configurer le Feu de Signalisation &#224; Allumer. Sp&#233;cifier le Feu de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>D&#233;finir Aspect M&#226;t de Signalisation</b>: Configurer le M&#226;t de Signalisation pour l'Aspect choisi. Sp&#233;cifier le M&#226;t de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. Sp&#233;cifier l'Aspect &#224; configurer en choisissant dans le menu contextuel. 
- 	</li><li><b>D&#233;finir M&#226;t de Signalisation Maintenu</b>: Configurer le M&#226;t de Signalisation &#224; Maintenu. Sp&#233;cifier le M&#226;t de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>Effacer M&#226;t de Signalisation Maintenu</b>: Configurer le M&#226;t de Signalisation pour ne pas &#234;tre Allum&#233;. Sp&#233;cifier le M&#226;t de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>D&#233;finir M&#226;t de Signalisation &#201;teint</b>: Configurer le M&#226;t de Signalisation pour ne pas &#234;tre Allum&#233;. Sp&#233;cifier le M&#226;t de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>Effacer M&#226;t de Signalisation &#201;teint</b>: Configurer le M&#226;t de Signalisation &#224; Allumer. Sp&#233;cifier le M&#226;t de Signalisation &#224; configurer en entrant son Nom Syst&#232;me ou Nom Utilisateur. 
-	</li><li><b>Jouer un Fichier Son</b>Jouer le fichier son sp&#233;cifi&#233; ( par exemple clics de relais CTC )
-	</li><li><b>Ex&#233;cuter un Script</b>: Lancer le Script sp&#233;cifi&#233;.
-	</li>
-</ul>
-<p>Pour plus d'information voir les <a href="../Logix.shtml">pages d'aides Logix</a>.</p>
+      <ul>
+        <li><strong>Virtuel</strong> Les signaux Virtuels sont des signaux JMRI internes qui n(ont
+        pas de signaux matériels de reliés. Les signaux Virtuels peuvent représenter des Aspects
+        théorique comme des buttoirs ou dans des coulisse qui sont utilisées par des signaux
+        précédents</li>
 
-<a name="scripting"></a><h3>Script</h3>
+        <li><strong>Capteur Protégé</strong> Le prochain capteur d'occupation du canton suivant le
+        signal que vous contrôlé dans la direction et l'itinéraire du voyage. La "protection" est
+        pour prévenir la pénétration d'un train dans un canton occupé sans avoir été averti</li>
 
-	<a href="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png">
-   <img src="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
-	   width="250" height="136" align="right"></a>
+        <li><strong>Signal Protégé</strong> Le signal suivant celui que vous contrôlé dans la
+        direction et l'itinéraire du voyage. La "protection" est pour prévenir l'approche d'un
+        train d'un signal d'arrêt sans avoir d'avertissement suffisant pour lui permettre d'être
+        arrêté avant d'atteindre le signal "protégé".</li>
 
-	<p>Comme d'autres objets dans JMRI, vous pouvez configurer et lire des Feux de Signalisation, des M&#226;ts de Signalisation et la Logique de M&#226;t de Signalisation via des Scripts. Au lieu de d&#233;finir notre propre langage pour accomplir ceci,
-	 <a href="../scripting/index.shtml">les Script JMRI </a> utilisent le langage "Python" qui est commun&#233;ment utilis&#233; en d&#233;veloppement web.
-	<br>
-	<p>Plusieurs m&#233;thodes du fichier jmri_default.py peuvent &#234;tre utilis&#233;es pour travailler avec la signalisation. Les m&#233;thodes qui peuvent &#234;tre utilis&#233;es dans un script Python pour interagir avec les M&#226;ts Signalisation incluent: getAspect(), getSignalSystem(), getValidAspects() et setAspect(Stop). Voir ces <a href="AspectSignaling.shtml#mastscripting">Exemples</a>.<br>
- 	Pour le script d'un Feu de Signalisation la m&#233;thode "getSignalHead" peut &#234;tre utilis&#233;e. Puis, "setAppearance" est une m&#233;thode de l'objet retourn&#233; SignalHead. Exemple:  
-	<pre>signals.getSignalHead("IH1").setAppearance(YELLOW)</pre>
+        <li><strong>Système de Signalisation</strong> un ensemble d'icônes, de fichier de
+        définitions et des règles suivant soit un Recueil de Règlement ou un ensemble de simplifié
+        de règles ( voir <a href="AspectSignaling.shtml#systems">cette liste</a>).</li>
 
-<p><a href="../../../../../jython/SigletExample.py">SigletExample.py</a><br>
-Un exemple de script pour un "Siglet" JMRI dans 
-Python. Il &#233;coute les modifications apport&#233;es &#224; deux capteurs et un aiguillage, puis
-recalcule l'Apparence du Feu de Signalisation bas&#233;es sur les valeurs.
+        <li><strong>Nom Système</strong> Le nom des objets JMRI identifiant soit des pièces
+        virtuelles ( internes ) ou physiques de matériel utilisé, exemple: une une sortie sur un
+        décodeur pour commander un signal. Le Nom Système doit suivre certaines <a href=
+        "../../doc/Technical/Names.shtml">Régles de Dénomination</a> pour être correctement
+        interprété par JMRI, et le nom varie suivant votre matériel car il doit correspondre à
+        votre système DCC.</li>
+      </ul>
 
-Pour plus d'information voir la <a href="../scripting/index.shtml">page d'aide Scrpit JMRI </a>.
+      <h2><a name="signaling" id="signaling">Signalisation Réaliste Ferroviaire</a>
+      </h2>
 
-<a name="automat"></a><h3>Classes d'Automatisation</h3>
+      <p>À travers le monde, les chemins de fer ont développé une large gamme de mat"riel de
+      signalisation tels que Drapeaux ( non supportés dans JMRI, Sémaphores, Signaux à position de
+      lumière, Signaux Lampes de Couleur. Différents signaux physiques peuvent montrer la même
+      "Indication" en utilisant différentes combinaisons de lumières, de positions de sémaphore,
+      et/ou de Panneaux; ces modèles de lumières sont appelés "Aspects". Par exemple l'Aspect
+      "Arrêt" peut être une simple lampe rouge sur un mât de Signalisation avec seulement une
+      lampe, rouge au-dessus de rouge sur un mât de signalisation avec deux lampes, etc. Pour
+      apprendre les règles du chemin de fer, votre modèle fait partie du jeu mais JMRI vous aide en
+      fournissant plus de 20 systèmes de signalisation réaliste de différents pays. Pourtant, c'est
+      au conducteur d'interpréter les Aspects des Signaux affichés et ajuster le régulateur...</p>
 
-JMRI fournit des classes pour vous aider &#224; &#233;crire du code Java pour contr&#244;ler votre r&#233;seau. Les plus puissants d'entre eux sont destin&#233;s
-&#224; l'automatisation en g&#233;n&#233;ral et rend facile &#224; coder votre propre logique de signalisation dans le programme; voir la <a href="../automation/viaJava.shtml"> page web automatisation</a>.
-La
-<a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</a>
-et s'est "kin" sont cens&#233;s rendre
-facile l'&#233;criture d'une logique de signalisation complexe personnalis&#233;e; une variante de ceux-ci a &#233;t&#233; utilis&#233;e
-par Nick Kulp's pour l'automatisation de la signalisation sur son  <a href="https://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">R&#233;seau Cornwall</a>..
-<p>
-Bien que les Classes d'Automatisation n&#233;cessitent l'&#233;criture de code, au lieu de simplement remplir
-un formulaire GUI, le programme g&#232;re tous les d&#233;tails de la lecture des
- changements d'&#233;tat du r&#233;seau, l'&#233;criture des modifications d'aspect d&#233;sir&#233;.
-en retour au r&#233;seau, et m&#234;me les d&#233;tails de "quelle sorties dois-je
-mettre pour obtenir que le signal de l'Evitement Est soit montrer Jaune?". Vous pouvez
-vous concentrer uniquement sur la logique du signal dans le code que vous &#233;crivez.
+      <p>Beaucoup de <a href=
+      "https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Bloc
+      Automatique Lumineux</a> (ABS au USA et BAL en France) basiques peut se résumer à un signal
+      devient rouge quand un train ne peut pas entrer en toute sécurité dans le canton qu'il
+      protège; il devient jaune lorsque le canton suivant le canton protégé ne peut être occupé.
+      Bien que ce soit une simplification, il peut servir comme un bon point de départ pour
+      comprendre la logique de la signalisation. Les système de signalisation modernes sont
+      <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Bloc
+      à Permissivité Absolue</a> (APB) Signalisation utilisé par beaucoup de réseaux de l'Ouest des
+      US et <a href="https://en.wikipedia.org/wiki/Centralized_traffic_control">Contrôle Centralisé
+      du Trafic</a> ( CTC ) commandé à distance à partir de grands tableaux.</p>
 
-<A name="widgets"></a><h3>Boite &#224; Outils</h3>
+      <h3>Nomenclature Standard CTC</h3>
 
-L'ensemble de la
-<a href="../../doc/Technical/index.shtml"> boite &#224; Outils JMRI</a>
-est disponible pour une utilisation si vous voulez vraiment faire d&#233;velopper de nouveaux outils, commandant tous les d&#233;tails. La programmation avec la Bo&#236;te &#224; Outils JMRI fournit les commandes pour les syst&#232;mes C/MRI et la plupart des syst&#232;mes DCC.
-avec des outils tr&#232;s utiles pour manipuler les aiguillages, les capteurs, les signaux, les locomotives,etc,
-ausi bien que des outils puissants pout travailler sur l'&#233;cran utilisateur.
+      <h4>Union Switch &amp; Signal Company (US&amp;S)</h4>
 
-<h2>Outils h&#233;rit&#233;s</h2> 
-<ul>
- 	<li>L'outil <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Logique Signal Simple</a> fournit
-	 la premi&#232;re version basique de la signalisation ABS ( BAL SNCF ) et Enclenchements utilisant de simples M&#226;ts avec Feu de signalisation. L'outil Logique Signal Simple est toujours disponible dans le menu Outils. Cependant, pour pr&#233;venir les conflits logiqueset les Aspects &#233;tranges des Feux, ne pas essayer de combiner l'usage de l'outil SSL les outils Logique M&#226;ts de Signalisation pour les m&#234;mes signaaux.
-</ul>
+      <ul>
+        <li>Les Signaux sont identifiés par des nombres PAIRS avec la direction du mouvement décrit
+        sur le panneau ( R - droit, L - gauche )</li>
 
-<p><b>*SearchLight:</b> Feu avec une seule lampe devant laquelle pivote un secteur ayant des &#233;crans color&#233;s.</p>
+        <li>Les Aiguillages sont identifiés par des Nombres IMPAIRS</li>
+      </ul>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Exemple #1: Les signaux à un aiguillage commandé avec une voie d'approche par la gauche et
+      deux voies vers la droite -2R ( face à la pointe ), 2L ( voie directe ), 2LA ( voie déviée ).
+      2LA devrait êttre montrée comme 2L sur le panneau pour correspondre avec le Signal Levier 2.
+      La direction cardinale doit aussi être utilisée( N,S, E, W ) à un croisement pour
+      l'itinéraire opposé. Les Aiguillage sont N (normal ) ou R ( inverse ).<br>
+      Exemple #2: Les signaux CTC de Dennis Drury obtiennent un nombre pair avec un modificateur
+      directionnel tel que E 50 W ou E 52 W. Les signaux du canton intermédiaire peuvent être
+      numérotés par une position kilométique de l'emplacement tel que 322.2 et 322.3.</p>
+
+      <h4>General Railroad Signal (GRS)</h4>
+
+      <ul>
+        <li>Les Signaux ont des muméros IMPAIRS</li>
+
+        <li>Les Aiguillages ont des numéros PAIRS (en opposition à US&amp;S!)</li>
+
+        <li>Le même schéma R - droit, L - gauche</li>
+      </ul>
+
+      <p>Merci à Jim Duncan, qui ajoute: Il y a toujours des exceptions! Tous les libellés doivent
+      être cohérents, facile à comprendre, et n'avoir absolument aucune possibilité d'être confondu
+      avec un autre signal, aiguillages ou leviers.</p>
+
+      <h3>Lectures complémentaires</h3>
+
+      <p>Il y a beaucoup d'excellentes sources d'information sur La signalisation réaliste,
+      incluant:</p>
+
+      <ul>
+        <li>La <a href="https://en.wikipedia.org/wiki/Railway_signal">Page Wikipedia sur la
+        Signalisation</a></li>
+
+        <li>La <a href="https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France">Page
+        Wikipedia sur la Signalisation SNCF</a></li>
+
+        <li><a href="http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signalisation
+        simplement expliquée</a> by A.A. Krug</li>
+
+        <li><a href="http://www.lundsten.dk/us_signaling/">Signalisation Nord Américaine</a> est un
+        website complet by Carsten S. Lundsten</li>
+
+        <li>Le <a href="http://www.railway-technical.com/sigind.shtml">chapitre Index Technique de
+        Signalisation Ferroviaire</a> fournit beaucoupd'informations du monde entier.</li>
+
+        <li><a href="http://catalog.hathitrust.org/Record/002567896">Exploitation Chemin de Fer et
+        Signalisation</a> by Edmund J. Phillips, Jr., Simmons-Boardman Publ., 1942</li>
+
+        <li>John Armstrong's book <em>Le Chemin de Fer: Quel est-il, Que fait-il,</em> ,
+        Simmons-Boardman Books Inc., 1990</li>
+
+        <li>Dr. Bruce Chubb's <em>Computer/Model Railroad Interface (C/MRI) User Manual rev
+        3.0</em> a des informations sur la signalisation au chapitre 12.</li>
+
+        <li>US prototype AAR rules section 2 (<a href=
+        "http://www.rrsignalpix.com/AAR_2_sec.pdf">http://www.rrsignalpix.com/AAR_2_sec.pdf</a>)
+        fournit un point de départ pour comprendre les règles de signalisation US.</li>
+
+        <li><a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit
+        Nomenclature</a> aide dans la dénomination réaliste des parties du système de
+        signalisation.</li>
+      </ul>
+      <a name="tools" id="tools"></a>
+      <h2>JMRI Outils Signalisation</h2>
+
+      <p>Il est vraiment simple d'utiliser l'Aspect de Signalisation, spécialement si le matériel
+      de signal approprié est déjà configuré dans JMRI ou vous voulez utiliser des Mâts de
+      Signalisation avec plus d'un Feu de Signalisation. L'aspect de Signalisation dans JMRI
+      utilise une série de fichiers de définitions d'Aspect qui sont fournis avec JMRI depuis la
+      version 2.9. De plus pour puiser dans un des plus réaliste parmi 20 <a href=
+      "AspectSignaling.shtml#systems">Systèmes de Signalisation</a> fournit avec JMRI, vous pouvez
+      en bidouiller un en fonction de votre matériel et des opérations ou définir votre propre
+      système et le partager dans le cadre d'une prochaine version de JMRI.<br>
+      JMRI les principaux outils de signalisation suivants, disponibles depuis le
+      menu<strong>Outils --&gt; Tableau --&gt; Signal</strong> menu:</p>
+
+      <p>1. Les objets <strong><a href="SignalHeads.shtml">Feu de Signalisation</a></strong>
+      représentants les lampes individuelles d'un signal et pouvant être créés, changés, enlevés et
+      configurés pour des apparences ( couleurs ) spécifiques dans le <a href=
+      "../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Tableau Feu de
+      Signalisation</a>Un ou plusieurs Feux de Signalisation habituellement sont une partie d'un
+      Mât de Signalisation. Pour les décodeurs de signalisation, qui acceptent directement des
+      Aspects multiples, il peut ne pas être nécessaire de créer des Feux de Signalisation
+      individuels, avnt la création des objets Mât de Signalisation.</p>
+
+      <p>2. Les objets <strong><a href="SignalMasts.shtml">Mât de Signalisation</a></strong>
+      représente le signal entier avec un ou plusieurs Feux de Signalisation. L'utilisation des
+      objets Mât de Signalisation vous permet de d'afficher des Aspects réalistes sur les signaux.
+      Vous spécifiez quelle sorte de <a href="AspectSignaling.shtml#systems">Système de
+      Signalisation</a> va être utilisé, le Mât de signalisation spécifique type "searchlight*
+      double" ou "simple feu nain" et quels Feux de Signalisation ou aspect matériel courant ce Mât
+      de Signalisation va piloter. Quand l'<a href="#aspect">Aspect</a> d'un Mât de Signalisation
+      est configuré pour "Approche Médium", JMRI gère la communication nécessaire avec le réseau
+      pour que le signal sur le réseau affiche les les bonnes couleurs.<br>
+      <a href="../../../package/jmri/jmrit/beantable/SignalMasts.png"><img src=
+      "../../../package/jmri/jmrit/beantable/SignalMasts.png" width="338" height="86" alt="" align=
+      "right"></a> Les Mâts de Signalisation sont configurés par le <a href=
+      "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau Mât de
+      Signalisation</a>. Depuis le Tableau Mât de Signalisation, vous pouvez créer et modifier les
+      Mâts de Signalisation et configurer individuellement les Mâts de Signalisation pour tous les
+      Aspects qu'ils sont capable d'afficher en cliquant dans la colonne "Aspect.<br>
+      Vous pouvez ajouter une icône Mât de Signalisation dans l'Éditeur de Panneau par la méthode
+      habituelle. L'icône Mât de Signalisation affichera l'image depuis la définition Apparence de
+      ce type particulier de Mât de Signalisation et de Système de Signal.</p>
+
+      <p>3. Les <strong><a href="SignalGroups.shtml">Groupes Signaux</a></strong> sont utilisés
+      pour définir un nombre de Feux de Signalisation, où seul un Feu de Signalisation peut être
+      allumé à un moment donné, dépendant de l'Apparence ( État ) du Mât de Signalisation associé
+      et d'un ensemble de conditions. Les Groupes Signaux seront utilisés là où des indicateurs
+      supplémentaires seront installés pour compléter le Mât de Signalisation principal, tel que
+      l'affichage de Bifurcation, Itinéraire, Vitesse. Ces indicateurs fournissent une information
+      additionnelle au conducteur qui n'est pas donnée par le Mât de Signalisation principal. De
+      tels indicateurs sont vus fréquement en signalisation Européenne et en GB.</p>
+
+      <p>4. L'outil <strong><a href="SignalMastLogic.shtml">Logique Mât de
+      Signalisation</a></strong> permet à la Logique de Signalisation d'être construite sous forme
+      de paire de conditions entre les Mâts de Signalisation sur le Réseau. Chaque Logique Mât de
+      Signalisation utilise les états des Cantons, des Aiguillages, des Capteurs et autre Mât de
+      Signalisation pour déterminer quel Aspect un Mât de Signalisation Particulier devrait
+      afficher.<br>
+      Si le réseau a été dessiné avec l'Éditeur de Réseau et que les Mâts de Signalisation ont été
+      placés sur le panneau en utilisant les outils variés, alors il est possible de construire
+      dynamiquement toutes les Logiques Mât de Signalisation, avec un minimum d'intervention
+      utilisateur. Pour les panneaux créés avec l'Éditeur de Panneau de Commande, beaucoup de ces
+      informations doivent être entrées à la main.</p>
+
+      <p>Toutes les informations dans les Tableaux sont sauvegardées avec la configuration dans un
+      fichier XML, en même temps que la configuration du tableau de commande, les Logix, les
+      Itinéraires et choses similaires. Pour plus d'information sur la création et l'affichage des
+      panneaux, incluant comment montrer les signaux sur vos panneaux, voir la <a href=
+      "../../apps/PanelPro/Panels.shtml">page d'aide Panneaux</a>.</p>
+
+      <p>Et Après?</p>
+
+      <ul>
+        <li>Plus d'information sur l'Aspect de la Signalisation et les options disponibles dans
+        JMRI peuvent être trouvées dans la <a href="AspectSignaling.shtml">page d'aide Aspect
+        Signalisation</a>.</li>
+
+        <li>Suzie Tall et Jim Duncan ont écrit des instructions <a href=
+        "SignalingSetup.shtml">Démarrage Rapide Signalisation</a>.</li>
+
+        <li>Elmer McKay fournit un apercu général <a href="IntroToSignalingYourMRR.html">Comment
+        démarré</a> avec les signaux sur votre réseau.</li>
+      </ul>
+      <a name="advanced" id="advanced"></a>
+      <h2>La Signalisation Avancée</h2>
+
+      <ul>
+        <li><a href="interlock/index.shtml">Verrouillage Entrée/Sortie</a>
+        </li>
+
+        <li><a href="#logix">Logix</a>: Logique basiqe pour commander des parties du réseau</li>
+
+        <li><a href="#scripting">Script</a>: personnalisation JMRI incluant les interactions
+        utilisateur</li>
+
+        <li><a href="#automat">Classes Automatisation</a>
+        </li>
+
+        <li><a href="#widgets">Boite à Outils</a> pour les utilisateurs expérimentés pour faire
+        toutes sortes d'automatisme sur le réseau en écrivant un nouveau programme</li>
+      </ul>
+      <a name="logix" id="logix"></a>
+      <h3>Signalisation avec Logix</h3>
+
+      <p>Un <a href="../Logix.shtml">Logix</a> JMRI fournit la logique et les capacités de commande
+      pour les objets JMRI, incluant Mâts et Feux de Signalisation. Logix peut être utilisé pour
+      configurer une signalisation logique personnalisée en remplissant des formulaires sans écrire
+      de code. Un utilisateur définit la logique "Conditionnelle" et les "Actions" qui prennent
+      place en fonction de l'état de la logique. Les sous-sections suivantes montrent comment Logix
+      peut examiner et commander les Signaux.</p>
+
+      <h4><a name="variable" id="variable">Variables d'État Signal dans Logix</a>
+      </h4>
+
+      <p>Les variables d'état liées aux Feux et Mâts de Signalisation actuellement disponibles pour
+      une utilisation dans les Conditionnels Logix sont énumérés ci-dessous, en même temps que les
+      informations sur chacun d'eux. Les variables d'état doivent toujours être évaluées soit True
+      ( Vrai ) ou False ( Faux ). La condition résultante pour True est donnée pour chacune. Si la
+      condition n'est pas remplie, la variable d'état évalue à False. Quand un Logix est actif,
+      l'état des entités spécifiées ( Capteur, Aiguillage, Mât de Signalisation, etc. ) dans les
+      variables d'état dans ses Conditionnels sont surveillés. Un calcul de tous les Conditionnels
+      dans le Logix est déclenché quand un des états surveillés change comme noté ci-dessous.
+      <em>Note:</em> Tous les Conditionnels Logix ne sont pas listés ici.</p>
+      <a href="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png"><img src=
+      "../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png" width="423" alt=""
+      height="92" align="right"></a>
+      <p>Conditionnels pour la Variable Type "Feu de Signalisation":</p>
+
+      <ul>
+        <li><strong>Apparence Feu de Signalisation Égale</strong>: Évalue à Vrai si l'Apparence du
+        Feu de Signalisation correspond à l'Apparence spécifiée dans l'"État" de la variable. Le
+        calcul est déclenché quand l'Apparence du Feu de Signalisation change.</li>
+
+        <li><strong>Apparence Feu de Signalisation Allumé</strong>: Évalue à Vrai si le Feu de
+        Signalisation spécifié est allumé.</li>
+
+        <li><strong>Apparence Feu de Signalisation Maintenu</strong>: Évalue à Vrai si le Feu de
+        Signalisation est maintenu.</li>
+      </ul>
+
+      <p>Conditionnels pour la Variable Type "Mât de Signalisation":</p>
+
+      <ul>
+        <li><strong>Apparence Mât de Signalisation Égale</strong>: Évalue à Vrai si l'Apparence du
+        Mât de Signalisation correspond à l'Apparence spécifiée dans l'"État" de la variable. Le
+        calcul est déclenché quand l'Apparence du Feu de Signalisation change.</li>
+
+        <li><strong>Apparence Mât de Signalisation Allumé</strong>: Évalue à Vrai si le Mât de
+        Signalisation spécifié est allumé.</li>
+
+        <li><strong>Apparence Mât de Signalisation Maintenu</strong>: Évalue à Vrai si le Mât de
+        Signalisation est maintenu.</li>
+      </ul>
+      <a name="action" id="action"></a>
+      <h4>Actions Signal en Logix</h4>
+
+      <p>Les Actions liées aux Feux et Mâts de Signalisation actuellement disponibles pour un usage
+      dans les conditionnels Logix sont listées ci-dessous en même temps que les informations sur
+      chacune. <em>Note:</em> Toutes les actions Logix ne sont pas répertoriées ici.</p>
+
+      <ul>
+        <li><strong>Définir Apparence Feu de Signalisation</strong>: Configurer le Feu de
+        Signalisation pour l'Apparence choisie. Spécifier le Feu de Signalisation à configurer en
+        entrant son Nom Système ou Nom Utilisateur. Spécifier l'Apparence à configurer en
+        choisissant dans le menu contextuel qui apparaìt après que vous ayez entré un Nom Système
+        de Feu de Signalisation ( ou sélectionné dans une Liste de Choix ).</li>
+
+        <li><strong>Définir Feu de Signalisation Maintenu</strong>: Configurer le Feu de
+        Signalisation à Maintenu. Spécifier le Feu de Signalisation à configurer en entrant son Nom
+        Système ou Nom Utilisateur.</li>
+
+        <li><strong>Effacer Maintenu Feu de Signalisation</strong>: Effacer Maintenu sur le Feu de
+        Signalisation spécifié. Spécifier le Feu de Signalisation à configurer en entrant son Nom
+        Système ou Nom Utilisateur.</li>
+
+        <li><strong>Définir Feu de Signalisation Éteint</strong>: Configurer le Feu de
+        Signalisation pour ne pas être Allumé. Spécifier le Feu de Signalisation à configurer en
+        entrant son Nom Système ou Nom Utilisateur.</li>
+
+        <li><strong>Définir Feu de Signalisation Allumé</strong>: Configurer le Feu de
+        Signalisation à Allumer. Spécifier le Feu de Signalisation à configurer en entrant son Nom
+        Système ou Nom Utilisateur.</li>
+
+        <li><strong>Définir Aspect Mât de Signalisation</strong>: Configurer le Mât de
+        Signalisation pour l'Aspect choisi. Spécifier le Mât de Signalisation à configurer en
+        entrant son Nom Système ou Nom Utilisateur. Spécifier l'Aspect à configurer en choisissant
+        dans le menu contextuel.</li>
+
+        <li><strong>Définir Mât de Signalisation Maintenu</strong>: Configurer le Mât de
+        Signalisation à Maintenu. Spécifier le Mât de Signalisation à configurer en entrant son Nom
+        Système ou Nom Utilisateur.</li>
+
+        <li><strong>Effacer Mât de Signalisation Maintenu</strong>: Configurer le Mât de
+        Signalisation pour ne pas être Allumé. Spécifier le Mât de Signalisation à configurer en
+        entrant son Nom Système ou Nom Utilisateur.</li>
+
+        <li><strong>Définir Mât de Signalisation Éteint</strong>: Configurer le Mât de
+        Signalisation pour ne pas être Allumé. Spécifier le Mât de Signalisation à configurer en
+        entrant son Nom Système ou Nom Utilisateur.</li>
+
+        <li><strong>Effacer Mât de Signalisation Éteint</strong>: Configurer le Mât de
+        Signalisation à Allumer. Spécifier le Mât de Signalisation à configurer en entrant son Nom
+        Système ou Nom Utilisateur.</li>
+
+        <li><strong>Jouer un Fichier Son</strong>Jouer le fichier son spécifié ( par exemple clics
+        de relais CTC )</li>
+
+        <li><strong>Exécuter un Script</strong>: Lancer le Script spécifié.</li>
+      </ul>
+
+      <p>Pour plus d'information voir les <a href="../Logix.shtml">pages d'aides Logix</a>.</p>
+      <a name="scripting" id="scripting"></a>
+      <h3>Script</h3>
+      <a href="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"><img src=
+      "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png" width="250" height="136"
+      align="right" alt=""></a>
+      <p>Comme d'autres objets dans JMRI, vous pouvez configurer et lire des Feux de Signalisation,
+      des Mâts de Signalisation et la Logique de Mât de Signalisation via des Scripts. Au lieu de
+      définir notre propre langage pour accomplir ceci, <a href="../scripting/index.shtml">les
+      Script JMRI</a> utilisent le langage "Python" qui est communément utilisé en développement
+      web.<br></p>
+
+      <p>Plusieurs méthodes du fichier jmri_default.py peuvent être utilisées pour travailler avec
+      la signalisation. Les méthodes qui peuvent être utilisées dans un script Python pour
+      interagir avec les Mâts Signalisation incluent: getAspect(), getSignalSystem(),
+      getValidAspects() et setAspect(Stop). Voir ces <a href=
+      "AspectSignaling.shtml#mastscripting">Exemples</a>.<br>
+      Pour le script d'un Feu de Signalisation la méthode "getSignalHead" peut être utilisée. Puis,
+      "setAppearance" est une méthode de l'objet retourné SignalHead. Exemple:</p>
+
+      <pre>signals.getSignalHead("IH1").setAppearance(YELLOW)</pre>
+      <p><a href="../../../../../jython/SigletExample.py">SigletExample.py</a><br>
+      Un exemple de script pour un "Siglet" JMRI dans Python. Il écoute les modifications apportées
+      à deux capteurs et un aiguillage, puis recalcule l'Apparence du Feu de Signalisation basées
+      sur les valeurs. Pour plus d'information voir la <a href="../scripting/index.shtml">page
+      d'aide Scrpit JMRI</a> . <a name="automat" id="automat"></a></p>
+
+      <h3>Classes d'Automatisation</h3>
+      JMRI fournit des classes pour vous aider à écrire du code Java pour contrôler votre réseau.
+      Les plus puissants d'entre eux sont destinés à l'automatisation en général et rend facile à
+      coder votre propre logique de signalisation dans le programme; voir la <a href=
+      "../automation/viaJava.shtml">page web automatisation</a>. La <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">classe "Siglet"</a> et s'est
+      "kin" sont censés rendre facile l'écriture d'une logique de signalisation complexe
+      personnalisée; une variante de ceux-ci a été utilisée par Nick Kulp's pour l'automatisation
+      de la signalisation sur son <a href=
+      "https://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">Réseau
+      Cornwall</a>..
+      <p>Bien que les Classes d'Automatisation nécessitent l'écriture de code, au lieu de
+      simplement remplir un formulaire GUI, le programme gère tous les détails de la lecture des
+      changements d'état du réseau, l'écriture des modifications d'aspect désiré. en retour au
+      réseau, et même les détails de "quelle sorties dois-je mettre pour obtenir que le signal de
+      l'Evitement Est soit montrer Jaune?". Vous pouvez vous concentrer uniquement sur la logique
+      du signal dans le code que vous écrivez. <a name="widgets" id="widgets"></a></p>
+
+      <h3>Boite à Outils</h3>
+      L'ensemble de la <a href="../../doc/Technical/index.shtml">boite à Outils JMRI</a> est
+      disponible pour une utilisation si vous voulez vraiment faire développer de nouveaux outils,
+      commandant tous les détails. La programmation avec la Boìte à Outils JMRI fournit les
+      commandes pour les systèmes C/MRI et la plupart des systèmes DCC. avec des outils très utiles
+      pour manipuler les aiguillages, les capteurs, les signaux, les locomotives,etc, ausi bien que
+      des outils puissants pout travailler sur l'écran utilisateur.
+      <h2>Outils hérités</h2>
+
+      <ul>
+        <li>L'outil <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Logique
+        Signal Simple</a> fournit la première version basique de la signalisation ABS ( BAL SNCF )
+        et Enclenchements utilisant de simples Mâts avec Feu de signalisation. L'outil Logique
+        Signal Simple est toujours disponible dans le menu Outils. Cependant, pour prévenir les
+        conflits logiqueset les Aspects étranges des Feux, ne pas essayer de combiner l'usage de
+        l'outil SSL les outils Logique Mâts de Signalisation pour les mêmes signaaux.</li>
+      </ul>
+
+      <p><strong>*SearchLight:</strong> Feu avec une seule lampe devant laquelle pivote un secteur
+      ayant des écrans colorés.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

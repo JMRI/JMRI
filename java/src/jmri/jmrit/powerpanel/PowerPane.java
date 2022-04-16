@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,10 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     JButton offButton = new JButton(Bundle.getMessage("ButtonOff"));
     JButton idleButton = new JButton(Bundle.getMessage("ButtonIdle"));
 
+    NamedIcon onIcon = new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png") ;
+    NamedIcon offIcon = new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png") ;
+    NamedIcon unknownIcon = new NamedIcon("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png") ;
+
     jmri.swing.PowerManagerMenu selectMenu;
 
     /**
@@ -54,7 +59,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     public PowerPane() {
         init();
     }
-    
+
     private void init() {
         selectMenu = new jmri.swing.PowerManagerMenu() {
             @Override
@@ -67,7 +72,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         onButton.addActionListener(e -> onButtonPushed());
         offButton.addActionListener(e -> offButtonPushed());
         idleButton.addActionListener(e -> idleButtonPushed());
-        
+
         if ((selectMenu != null) && (selectMenu.getManager() != null)) {
             idleButton.setVisible(selectMenu.getManager().implementsIdle());
         } else {
@@ -99,18 +104,23 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             switch (listening.getPower()) {
                 case PowerManager.ON:
                     onOffStatus.setText(Bundle.getMessage("StatusOn"));
+                    onOffStatus.setIcon(onIcon);
                     break;
                 case PowerManager.OFF:
                     onOffStatus.setText(Bundle.getMessage("StatusOff"));
+                    onOffStatus.setIcon(offIcon);
                     break;
                 case PowerManager.IDLE:
                     onOffStatus.setText(Bundle.getMessage("StatusIdle"));
+                    onOffStatus.setIcon(unknownIcon);
                     break;
                 case PowerManager.UNKNOWN:
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
+                    onOffStatus.setIcon(unknownIcon);
                     break;
                 default:
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
+                    onOffStatus.setIcon(unknownIcon);
                     log.error("Unexpected state value: {}", selectMenu.getManager().getPower());
                     break;
             }
@@ -155,7 +165,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.ON);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power on {}", e);
+                log.error("Exception trying to turn power on", e);
             }
         }
     }
@@ -168,7 +178,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.OFF);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power off {}", e);
+                log.error("Exception trying to turn power off", e);
             }
         }
     }
@@ -184,7 +194,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.IDLE);
             } catch (JmriException e) {
-                log.error("Exception trying to set power to idle {}", e);
+                log.error("Exception trying to set power to idle", e);
             }
         }
     }
@@ -195,18 +205,23 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         switch (listening.getPower()) {
             case PowerManager.ON:
                 onOffStatus.setText(Bundle.getMessage("StatusOn"));
+                onOffStatus.setIcon(onIcon);
                 break;
             case PowerManager.OFF:
                 onOffStatus.setText(Bundle.getMessage("StatusOff"));
+                onOffStatus.setIcon(offIcon);
                 break;
             case PowerManager.IDLE:
                 onOffStatus.setText(Bundle.getMessage("StatusIdle"));
+                onOffStatus.setIcon(unknownIcon);
                 break;
             case PowerManager.UNKNOWN:
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
+                onOffStatus.setIcon(unknownIcon);
                 break;
             default:
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
+                onOffStatus.setIcon(unknownIcon);
                 log.error("Unexpected state value: {}", listening.getPower());
                 break;
         }

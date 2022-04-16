@@ -106,6 +106,9 @@ public class InstallTest extends Apps {
     // Main entry point
     public static void main(String args[]) {
 
+        // Set up system properties that needs to be loaded early
+        jmri.util.EarlyInitializationPreferences.getInstance().loadAndSetPreferences();
+
         // show splash screen early
         splash(true);
 

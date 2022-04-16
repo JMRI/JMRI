@@ -34,6 +34,7 @@ public class WarrantTableModelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

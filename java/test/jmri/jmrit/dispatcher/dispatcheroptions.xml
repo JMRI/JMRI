@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/dispatcheroptions.xsl"?>
-<!DOCTYPE dispatcheroptions SYSTEM "dispatcher-options.dtd">
-
+<?xml-stylesheet href="/xml/XSLT/dispatcheroptions.xsl" type="text/xsl"?>
+<!DOCTYPE dispatcheroptions SYSTEM "/xml/DTD/dispatcher-options.dtd">
 <dispatcheroptions>
-    <!--Written by JMRI version 2.9.5+dev on Sun Apr 25 11:20:40 EDT 2010 $Id$-->
-    <options useconnectivity="no" trainsfromroster="yes" trainsfromtrains="no" trainsfromuser="no" autoallocate="no" autoturnouts="yes" hasoccupancydetection="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="no" nameinallocatedblock="no" layoutscale="G" usescalemeters="yes" stoppingspeedname="Restricted"/>
+  <!--Written by JMRI version 4.23.5-master-202101291243+R8ff8652 on Sat May 08 13:20:25 EDT 2021-->
+  <options useconnectivity="no" trainsfrom="TRAINSFROMROSTER" autoallocate="no" autorelease="no" autoturnouts="yes" trustknownturnouts="no" minthrottleinterval="100" fullramptime="10000" hasoccupancydetection="yes" sslcheckdirectionsensors="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="no" nameinallocatedblock="no" supportvsdecoder="no" layoutscale="G" usescalemeters="yes" userosterentryinblock="no" stoppingspeedname="Restricted" usesignaltype="signalmast" />
 </dispatcheroptions>
-

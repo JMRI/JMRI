@@ -1,139 +1,145 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>JMRI: XML Error Handler Help</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-        <meta name="keywords" content="JMRI help XML panel error handler">
-        <!-- Style -->
-        <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-        <link rel="icon" href="/images/jmri.ico" type="image/png">
-        <link rel="home" title="Home" href="/">
-        <!-- /Style -->
-        <!-- nice tables -->
-        <script src="/web/js/sorttable.js" type="text/javascript"></script>
-        <style type="text/css">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: XML Error Handler Help</title>
+  <meta name="keywords" content="JMRI help XML panel error handler">
+  <!--#include virtual="/Style.shtml" -->
+  <!-- nice tables -->
+
+  <script src="/web/js/sorttable.js" type="text/javascript"></script>
+  <style type="text/css">
             table.sortable th {
                 background-color: #EEECF6;
                 color: #383DB3;
                 font-weight: bold;
                 cursor: default;
             }
-            tr:nth-of-type(odd) {
-                background-color:#eee;
-            }
-        </style>
-    </head>
+  </style>
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
 
-    <body>
-        <!--#include virtual="/Header.shtml" -->
-        <div class="nomenu" id="mBody">
-            <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>XML Error Handling</h1>
 
-                <h1>XML Error Handling</h1>
-                <p>JMRI will sometimes encounter errors loading XML files including layout
-                    and control panels. Some of these errors occur when loading a file
-                    created in an older version of JMRI that contains data in a format no
-                    longer supported or recognized by newer versions of JMRI.</p>
-                <p><strong>Note</strong> It is likely that the first error encountered in
-                    an XML document will prevent further errors from being reported. The
-                    XML file should probably be reviewed for all errors listed below.</p>
+      <p>JMRI will sometimes encounter errors loading XML files including layout and control
+      panels. Some of these errors occur when loading a file created in an older version of JMRI
+      that contains data in a format no longer supported or recognized by newer versions of
+      JMRI.</p>
 
-                <h2>Fixing Errors</h2>
-                <p>Generally these errors can be fixed by opening the XML file in text
-                    editor. You can use the text editor included in your operating system,
-                    which is often very basic, or another one downloaded from elsewhere.
-                    <a href="https://atom.io">Atom</a> is an XML format aware editor for
-                    Windows, macOS, and Linux with that can be used if needed.</p>
-                <p>Most remediation recommendation in the errors list below assume an
-                    ability to edit the file directly.</p>
+      <p><strong>Note</strong> It is likely that the first error encountered in an XML document
+      will prevent further errors from being reported. The XML file should probably be reviewed for
+      all errors listed below.</p>
 
-                <h2>Errors</h2>
-                <p>These errors are in alphabetical order and contain the start of the
-                    complete message.</p>
-                <dl>
-                    <dt>ClassNotFoundException</dt>
-                    <dd>The XML file is attempting load an object for which the code
-                        required to create that object (its <em>class</em>) does not
-                        exist. There are three possible reasons for this, in order of
-                        likelihood:
-                        <ol>
-                            <li>The class was removed from JMRI. We sometimes remove
-                                classes that were replaced by other classes, generally
-                                years after the replacement was implemented. The following
-                                table is a partial list of these classes with the
-                                replacement class and recommended remediation:
-                                <table>
-                                    <tr>
-                                        <th>Removed Class</th>
-                                        <th>Replacement Class</th>
-                                        <th>Remediation</th>
-                                    </tr>
-                                    <tr>
-                                        <td>jmri.configurexml.AbstractSignalHeadManagerXml</td>
-                                        <td>jmri.managers.configurexml.AbstractSignalHeadManagerXml</td>
-                                        <td>Replace instances of removed class with replacement class in file.</td>
-                                    </tr>
-                                </table>
-                            </li>
-                            <li>The file was generated in a newer version of JMRI than
-                                the one being used. The recommended remediation for this
-                                is to continue to use the newer version. If that is not
-                                possible, seek assistance on the JMRI User's Group.
-                            </li>
-                            <li>The class was in a plugin developed by a third party. The
-                                plugin will need to be reinstalled, or the contents
-                                causing issues will need to be removed. Seek assistance
-                                from the developer of that plugin or on the JMRI User's
-                                Group.
-                            </li>
-                        </ol>
-                    </dd>
-                    <dt>jmri.NamedBean$BadSystemNameException</dt>
-                    <dd>A NamedBean (i.e. Turnout, Sensor, Logix, Conditional, etc) has an invalid
-                        system name.  You can often figure out which one it was from the traceback
-                        just below the message, which will show the type of "manager" that failed,
-                        i.e. a reference to jmri.managers.DefaultSensorManager means that problem
-                        was while loading a Sensor.  (Problems with Conditionals are often blamed on
-                        DefaultLogixManager).  Messages right after the traceback will also sometimes
-                        show the problematic name.
-                    <dt>Parse error</dt>
-                    <dd>The XML file is not readable for some reason. This can be for one
-                        of two reasons:
-                        <ol>
-                            <li>The file is not valid XML. This could be the result of
-                                editing the file to fix another error, or it's being
-                                truncated by another process. Seek assistance on the
-                                JMRI User's Group.</li>
-                            <li>The file does not conform to the XML schema JMRI
-                                requires file to conform to. Specific schema validations
-                                and the recommended remediation are:
-                                <table>
-                                    <tr>
-                                        <th>Error</th>
-                                        <th>Remediation</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Attribute "error" must be declared for element type "sensoricon"</td>
-                                        <td><ol>
-                                                <li>Remove the text <code>&lt;!DOCTYPE layout-config SYSTEM "layout-config.dtd"&gt;</code></li>
-                                                <li>Replace <code>&lt;layout-config&gt;</code> with <code>&lt;layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd"&gt;</code>.
-                                                </li>
-                                            </ol>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>cvc-pattern-valid: Value 'resource:<em>something</em>' is not facet-valid with respect to pattern '(program:|preference:|settings:|home:|profile:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*' for type 'urlType'.</td>
-                                        <td>Replace all instances of <code>resource:</code> in the XML file with <code>program:</code></td>
-                                    </tr>
-                                </table>
-                        </ol>
+      <h2>Fixing Errors</h2>
 
-                    </dd>
-                </dl>
-                <!--#include virtual="/Footer.shtml" -->
-            </div>
-        </div>
-    </body>
+      <p>Generally these errors can be fixed by opening the XML file in text editor. You can use
+      the text editor included in your operating system, which is often very basic, or another one
+      downloaded from elsewhere. <a href="https://atom.io">Atom</a> is an XML format aware editor
+      for Windows, macOS, and Linux with that can be used if needed.</p>
+
+      <p>Most remediation recommendation in the errors list below assume an ability to edit the
+      file directly.</p>
+
+      <h2>Errors</h2>
+
+      <p>These errors are in alphabetical order and contain the start of the complete message.</p>
+
+      <dl>
+        <dt>ClassNotFoundException</dt>
+
+        <dd>
+          The XML file is attempting load an object for which the code required to create that
+          object (its <em>class</em>) does not exist. There are three possible reasons for this, in
+          order of likelihood:
+          <ol>
+            <li>The class was removed from JMRI. We sometimes remove classes that were replaced by
+            other classes, generally years after the replacement was implemented. The following
+            table is a partial list of these classes with the replacement class and recommended
+            remediation:
+              <table>
+                <tr>
+                  <th>Removed Class</th>
+                  <th>Replacement Class</th>
+                  <th>Remediation</th>
+                </tr>
+
+                <tr>
+                  <td>jmri.configurexml.AbstractSignalHeadManagerXml</td>
+                  <td>jmri.managers.configurexml.AbstractSignalHeadManagerXml</td>
+                  <td>Replace instances of removed class with replacement class in file.</td>
+                </tr>
+              </table>
+            </li>
+
+            <li>The file was generated in a newer version of JMRI than the one being used. The
+            recommended remediation for this is to continue to use the newer version. If that is
+            not possible, seek assistance on the JMRI User's Group.</li>
+
+            <li>The class was in a plugin developed by a third party. The plugin will need to be
+            reinstalled, or the contents causing issues will need to be removed. Seek assistance
+            from the developer of that plugin or on the JMRI User's Group.</li>
+          </ol>
+        </dd>
+
+        <dt>jmri.NamedBean$BadSystemNameException</dt>
+
+        <dd>A NamedBean (i.e. Turnout, Sensor, Logix, Conditional, etc) has an invalid system name.
+        You can often figure out which one it was from the traceback just below the message, which
+        will show the type of "manager" that failed, i.e. a reference to
+        jmri.managers.DefaultSensorManager means that problem was while loading a Sensor. (Problems
+        with Conditionals are often blamed on DefaultLogixManager). Messages right after the
+        traceback will also sometimes show the problematic name.</dd>
+
+        <dt>Parse error</dt>
+
+        <dd>
+          The XML file is not readable for some reason. This can be for one of two reasons:
+          <ol>
+            <li>The file is not valid XML. This could be the result of editing the file to fix
+            another error, or it's being truncated by another process. Seek assistance on the JMRI
+            User's Group.</li>
+
+            <li>The file does not conform to the XML schema JMRI requires file to conform to.
+            Specific schema validations and the recommended remediation are:
+              <table>
+                <tr>
+                  <th>Error</th>
+                  <th>Remediation</th>
+                </tr>
+
+                <tr>
+                  <td>Attribute "error" must be declared for element type "sensoricon"</td>
+                  <td>
+                    <ol>
+                      <li>Remove the text <code>&lt;!DOCTYPE layout-config SYSTEM
+                      "layout-config.dtd"&gt;</code></li>
+
+                      <li>Replace <code>&lt;layout-config&gt;</code> with <code>&lt;layout-config
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd"&gt;</code>.</li>
+                    </ol>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>cvc-pattern-valid: Value 'resource:<em>something</em>' is not facet-valid
+                  with respect to pattern
+                  '(program:|preference:|settings:|home:|profile:|file:|http:|[a-zA-Z]:)[a-z
+                  A-Z0-9/\-_\.]*' for type 'urlType'.</td>
+                  <td>Replace all instances of <code>resource:</code> in the XML file with
+                  <code>program:</code></td>
+                </tr>
+              </table>
+            </li>
+          </ol>
+        </dd>
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
+</body>
 </html>

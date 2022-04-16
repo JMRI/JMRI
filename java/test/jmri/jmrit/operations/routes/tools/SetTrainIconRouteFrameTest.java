@@ -3,8 +3,8 @@ package jmri.jmrit.operations.routes.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 import jmri.InstanceManager;
@@ -50,42 +50,40 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Southbound Main Route");
         Assert.assertNotNull(route);
-        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
-        Assert.assertNotNull("exists",t);
+        SetTrainIconRouteFrame f = new SetTrainIconRouteFrame(route);
+        Assert.assertNotNull("exists",f);
         
-        JemmyUtil.enterClickAndLeave(t.placeButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.placeButton);
         // error dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+        
         // confirm default
         RouteLocation rl = route.getDepartsRouteLocation();
         Assert.assertEquals("icon position", 25, rl.getTrainIconX());
         
         // modify spinner and update
-        JSpinnerOperator so = new JSpinnerOperator(t.spinTrainIconX);
+        JSpinnerOperator so = new JSpinnerOperator(f.spinTrainIconX);
         so.setValue(345);
-        JemmyUtil.enterClickAndLeave(t.applyButton);
-        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.applyButton);    
         // confirmation dialog should appear      
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantThisRoute"), Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("DoYouWantThisRoute"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         Assert.assertEquals("icon position", 345, rl.getTrainIconX());
         
         // Save changes
-        JemmyUtil.enterClickAndLeave(t.saveButton);
-        
-        JemmyUtil.enterClickAndLeave(t.nextButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.nextButton);
         
         // confirm next route location has been loaded
-        Assert.assertEquals("spinner value for ", 75, t.spinTrainIconX.getValue());
+        Assert.assertEquals("spinner value for ", 75, f.spinTrainIconX.getValue());
         
-        JemmyUtil.enterClickAndLeave(t.previousButton);
+        JemmyUtil.enterClickAndLeave(f.previousButton);
         
         // confirm previous route location has been loaded
-        Assert.assertEquals("spinner value for ", 345, t.spinTrainIconX.getValue());
+        Assert.assertEquals("spinner value for ", 345, f.spinTrainIconX.getValue());
         
-        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(f);
 
     }
 

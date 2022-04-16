@@ -7,7 +7,7 @@ import jmri.util.JUnitAppender;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * This is an abstract base class for testing bean table data models.
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2021
  */
-public abstract class AbstractBeanTableDataModelBase<B extends jmri.NamedBean> {
+public abstract class AbstractBeanTableDataModelBase<B extends NamedBean> {
 
     /**
      * The Bean Table Model under test.
@@ -34,15 +34,18 @@ public abstract class AbstractBeanTableDataModelBase<B extends jmri.NamedBean> {
     
     /**
      * Create a NamedBean to use in the Table.
+     * @return the NamedBean, hardware address normally 1, e.g. IS1.
      */
-    protected void createBean(){
+    protected NamedBean createBean(){
         Manager<?> mgr = t.getManager(); // Internal Proxy Bean<?> Manager
         Assert.assertNotNull("Table Bean Manager exists",mgr);
         if (mgr instanceof ProvidingManager){
             NamedBean b = ((ProvidingManager<?>) mgr).provide(mgr.getSystemNamePrefix()+"1");
             Assert.assertNotNull("Bean created",b);
+            return b;
         } else {
             Assert.fail("Manager is not a providing manager, this test should be overridden to create a bean");
+            return null;
         }
     }
     
@@ -153,6 +156,18 @@ public abstract class AbstractBeanTableDataModelBase<B extends jmri.NamedBean> {
         // col 2 could be graphic of current bean state or button to cange state
         assertEquals("Col 3 User Comment",String.class,t.getColumnClass(3) );
         assertEquals("Col 4 Delete Button",javax.swing.JButton.class,t.getColumnClass(4) );
+    }
+    
+    @Test
+    public void testNBFromUserSystemNames(){
+        assertNull("UserName empty not found",t.getByUserName(""));
+        assertNull("UserName not found",t.getByUserName("NOT A USER NAME"));
+        assertNull("SystemName not found",t.getBySystemName("NOT A SYSTEM NAME"));
+        
+        NamedBean nb = createBean();
+        nb.setUserName("NB UserName");
+        assertEquals("NB Not Found via getByUserName",nb,t.getByUserName("NB UserName"));
+        assertEquals("NB Not Found via getBySystemName",nb,t.getBySystemName(nb.getSystemName()));
     }
 
     /**

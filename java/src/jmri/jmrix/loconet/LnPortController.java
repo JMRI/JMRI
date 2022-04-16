@@ -50,13 +50,14 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
-
+    protected boolean mInterrogateAtStart = true;
     protected boolean mTranspondingAvailable = false;
 
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
         LnCommandStationType.COMMAND_STATION_DCS240,
         LnCommandStationType.COMMAND_STATION_DCS210,
+        LnCommandStationType.COMMAND_STATION_DCS210PLUS,
         LnCommandStationType.COMMAND_STATION_DCS200,
         LnCommandStationType.COMMAND_STATION_DCS050,
         LnCommandStationType.COMMAND_STATION_DCS051,
@@ -118,6 +119,12 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
     }
     
+    public void setInterrogateOnStart(String value) {
+        // default (most common state) is on, so just check for No
+        mInterrogateAtStart = !(value.equals("No") || value.equals(Bundle.getMessage("ButtonNo")));
+        log.debug("tInterrogate on Start: {}", mInterrogateAtStart); // NOI18N
+    }
+
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();

@@ -41,6 +41,27 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
+              <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="operationType" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="RunScript"/>
+                    <xs:enumeration value="JythonCommand"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="scriptAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="script" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="scriptReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="scriptLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="scriptFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

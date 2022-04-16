@@ -147,6 +147,7 @@ public class DefaultConditionalAction implements ConditionalAction {
      *
      */
     private NamedBean getActionBean(String devName) {
+        if (devName == null) return null;
         NamedBean bean = null;
         try {
             switch (_type.getItemType()) {
@@ -306,7 +307,9 @@ public class DefaultConditionalAction implements ConditionalAction {
     @Override
     public NamedBean getBean() {
         if (_namedBean != null) {
-            return getNamedBean().getBean();
+            NamedBeanHandle<?> handle = getNamedBean();
+            if (handle == null) return null;
+            return handle.getBean();
         }
         setDeviceName(_deviceName); //ReApply name as that will create namedBean, save replicating it here
         if (_namedBean != null) {
@@ -392,7 +395,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             _timer.start();
             _timerActive = true;
         } else {
-            log.error("timer is null for {] of type {}", _deviceName, getTypeString());
+            log.error("timer is null for {} of type {}", _deviceName, getTypeString());
         }
     }
 

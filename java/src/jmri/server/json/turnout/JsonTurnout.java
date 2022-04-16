@@ -1,7 +1,7 @@
 package jmri.server.json.turnout;
 
 /**
- * Tokens used by the JMRI JSON Sensor service.
+ * Tokens used by the JMRI JSON Turnout service.
  *
  * @author Randall Wood (C) 2020
  * @since 4.19.4

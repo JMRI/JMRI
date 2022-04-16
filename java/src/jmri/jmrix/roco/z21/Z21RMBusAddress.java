@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 
 /**
- * Utility Class supporting parsing and testing of addresses for Z21 RMBus  
+ * Utility Class supporting parsing and testing of addresses for Z21 RMBus
  * <p>
  * One address format are supported:
  * <ul>
- * <li> 
- * ZSxxxx where: 'S' for sensors, 
+ * <li>
+ * ZSxxxx where: 'S' for sensors,
  * </li>
  * </ul>
  *
@@ -71,7 +71,7 @@ public class Z21RMBusAddress {
      * @see jmri.Manager#validateSystemNameFormat(java.lang.String,
      * java.util.Locale)
      */
-    public static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+    public static String validateSystemNameFormat(String name, Manager<?> manager, Locale locale) {
         try {
             return manager.validateIntegerSystemNameFormat(name, 1, 160, locale);
         } catch (NumberFormatException ex) {
@@ -93,7 +93,7 @@ public class Z21RMBusAddress {
     public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
@@ -127,7 +127,7 @@ public class Z21RMBusAddress {
             } else {
                 return ("");
             }
-        } 
+        }
         // not any known sensor
         return ("");
     }

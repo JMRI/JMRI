@@ -32,7 +32,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         super(s);
         // disable ourself if there is no primary Route manager available
         if (InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
-            setEnabled(false);
+            super.setEnabled(false);
         }
     }
 

@@ -216,7 +216,7 @@ public class AllocatedSection {
     /**
      * Methods
      */
-    protected void setStoppingSensors() {
+    final protected void setStoppingSensors() {
         if (mSection.getState() == Section.FORWARD) {
             mForwardStoppingSensor = mSection.getForwardStoppingSensor();
             mReverseStoppingSensor = mSection.getReverseStoppingSensor();
@@ -271,7 +271,7 @@ public class AllocatedSection {
         InstanceManager.getDefault(DispatcherFrame.class).sectionOccupancyChanged();
     }
 
-    public synchronized void initializeMonitorBlockOccupancy() {
+    public synchronized final void initializeMonitorBlockOccupancy() {
         if (mBlockList != null) {
             return;
         }

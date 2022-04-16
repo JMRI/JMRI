@@ -30,30 +30,31 @@ public class DefaultNamedTableManagerXml extends AbstractManagerXml {
     }
 
     /**
-     * Default implementation for storing the contents of a LogixManager
+     * Default implementation for storing the contents of a NamedTableManager
      *
      * @param o Object to store, of type LogixManager
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        Element expressions = new Element("LogixNGTables");
-        setStoreElementClass(expressions);
+        Element tables = new Element("LogixNGTables");
+        setStoreElementClass(tables);
         DefaultNamedTableManager tm = (DefaultNamedTableManager) o;
         if (tm != null) {
-            for (NamedTable table:  tm.getNamedBeanSet()) {
-                log.debug("expression system name is " + table.getSystemName());  // NOI18N
+            if (tm.getNamedBeanSet().isEmpty()) return null;
+            for (NamedTable table : tm.getNamedBeanSet()) {
+                log.debug("table system name is " + table.getSystemName());  // NOI18N
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(table);
                     if (e != null) {
-                        expressions.addContent(e);
+                        tables.addContent(e);
                     }
                 } catch (RuntimeException e) {
-                    log.error("Error storing action: {}", e, e);
+                    log.error("Error storing table: {}", e, e);
                 }
             }
         }
-        return (expressions);
+        return (tables);
     }
 
     /**

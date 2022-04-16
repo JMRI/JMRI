@@ -9,6 +9,8 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.jmrix.internal.InternalAnalogIOManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Implementation of a AnalogIOManager that can serve as a proxy for multiple
@@ -21,13 +23,21 @@ import jmri.*;
 public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
         implements AnalogIOManager {
     
+    private final InternalAnalogIOManager internalAnalogIOManager;
     private boolean muteUpdates = false;
     private final List<Class<? extends AnalogIO>> registerBeans = new ArrayList<>();
     private final List<Manager<? extends NamedBean>> registerBeanManagers = new ArrayList<>();
 
+    public ProxyAnalogIOManager() {
+        internalAnalogIOManager = new InternalAnalogIOManager(InstanceManager.getDefault(
+                InternalSystemConnectionMemo.class));
+        addManager(internalAnalogIOManager);
+    }
+
     @Nonnull
     public ProxyAnalogIOManager init() {
         // Note that not all lights in LightManager are VariableLight.
+        addBeanType(Meter.class, InstanceManager.getDefault(MeterManager.class));
         addBeanType(VariableLight.class, InstanceManager.getDefault(LightManager.class));
         return this;
     }
@@ -39,7 +49,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
 
     @Override
     protected AbstractManager<AnalogIO> makeInternalManager() {
-        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getAnalogIOManager();
+        return internalAnalogIOManager;
     }
 
     @Override
@@ -129,6 +139,14 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     public void addBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
         registerBeans.add(clazz);
         manager.addPropertyChangeListener("beans", this);
+        
+        // Add all the existing beans to the manager
+        Manager<AnalogIO> internalManager = initInternal();
+        muteUpdates = true;
+        for (NamedBean bean : manager.getNamedBeanSet()) {
+            internalManager.register((AnalogIO) bean);
+        }
+        muteUpdates = false;
     }
 
     /**

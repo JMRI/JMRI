@@ -215,14 +215,18 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionConditional but is a: "+object.getClass().getName());
         }
         ExpressionConditional expression = (ExpressionConditional)object;
-        if (!_conditionalBeanPanel.isEmpty() && (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect)) {
+        if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect) {
             Conditional conditional = _conditionalBeanPanel.getNamedBean();
             if (conditional != null) {
                 NamedBeanHandle<Conditional> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(conditional.getDisplayName(), conditional);
                 expression.setConditional(handle);
+            } else {
+                expression.removeConditional();
             }
+        } else {
+            expression.removeConditional();
         }
         try {
             if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect) {

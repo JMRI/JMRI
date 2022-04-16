@@ -231,11 +231,11 @@ public class ProgCheckAction extends AbstractAction {
         return matcher.matches();
     }
     static final String numericRegex = "^F(\\d++) controls output (\\d++)$";
-    static Pattern numericPattern;
+    static volatile Pattern numericPattern;
     static final String ffRegex = "^FL\\(f\\) controls output (\\d++)$";
-    static Pattern ffPattern;
+    static volatile Pattern ffPattern;
     static final String frRegex = "^FL\\(r\\) controls output (\\d++)$";
-    static Pattern frPattern;
+    static volatile Pattern frPattern;
 
     /**
      * Ask SAX to read and verify a file

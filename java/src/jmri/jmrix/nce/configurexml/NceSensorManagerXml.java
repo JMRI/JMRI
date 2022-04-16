@@ -1,9 +1,8 @@
 package jmri.jmrix.nce.configurexml;
 
-import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.configurexml.JmriConfigureXmlException;
 
 /**
  * Provides load and store functionality for configuring NceSensorManagers.

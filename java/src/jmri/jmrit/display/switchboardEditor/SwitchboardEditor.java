@@ -94,9 +94,9 @@ public class SwitchboardEditor extends Editor {
     final static int KEY = 2;
     final static int SYMBOL = 3;
     //final static int ICON = 4;
-    ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
-    ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
-    ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
     protected TurnoutManager turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
     protected SensorManager sensorManager = InstanceManager.getDefault(SensorManager.class);
     protected LightManager lightManager = InstanceManager.getDefault(LightManager.class);
@@ -120,6 +120,7 @@ public class SwitchboardEditor extends Editor {
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
     private int _iconSquare = 75;
+    private int _showUserName = 1;
     // tmp @GuardedBy("this")
     private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
@@ -139,7 +140,10 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
     //tmp @GuardedBy("this")
     private final JCheckBoxMenuItem autoRowsBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoRows"));
-    private final JCheckBoxMenuItem showUserNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxUserName"));
+    private final JMenu labelNamesMenu = new JMenu(Bundle.getMessage("SwitchNameDisplayMenu"));
+    private final JCheckBoxMenuItem systemNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxSystemName"));
+    private final JCheckBoxMenuItem bothNamesBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxBothNames"));
+    private final JCheckBoxMenuItem displayNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxDisplayName"));
     private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
     private final JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
     private final JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
@@ -181,7 +185,7 @@ public class SwitchboardEditor extends Editor {
      * @param name the title of the switchboard content frame
      */
     @Override
-    protected void init(String name) {
+    protected final void init(String name) {
         //memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName("Internal");
         // always available (?) and supports all types, not required now, will be set by listener
 
@@ -325,7 +329,7 @@ public class SwitchboardEditor extends Editor {
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(_hideUnconnected); // also (un)check the box on the menu
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!_hideUnconnected && (!switchesOnBoard.isEmpty())); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
@@ -349,7 +353,7 @@ public class SwitchboardEditor extends Editor {
         _iconSquare = SIZE_INIT;
         sizeDefault.setSelected(true);
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
         if (cm != null) {
             cm.registerUser(this);
         }
@@ -529,8 +533,8 @@ public class SwitchboardEditor extends Editor {
             switchboardLayeredPane.add(bs);
         }
         ready = true; // reset flag
-        help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
-        help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
+        help3.setVisible(switchesOnBoard.isEmpty()); // show/hide help3 warning
+        help2.setVisible(!switchesOnBoard.isEmpty()); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         // update the title at the bottom of the switchboard to match (no) layout control
         if (beanTypeList.getSelectedIndex() >= 0) {
             border.setTitle(memoName + " " +
@@ -581,29 +585,29 @@ public class SwitchboardEditor extends Editor {
                 case 0:
                     try {
                         name = ((TurnoutManager)memo.get(TurnoutManager.class)).createSystemName(i + "", prefix);
-                    } catch (jmri.JmriException ex) {
+                    } catch (JmriException ex) {
                         log.error("Error creating range at turnout {}", i);
                         return;
                     }
-                    nb = jmri.InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
+                    nb = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
                     break;
                 case 1:
                     try { // was: InstanceManager.getDefault(SensorManager.class)
                         name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
-                    } catch (jmri.JmriException | NullPointerException ex) {
+                    } catch (JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
                         return;
                     }
-                    nb = jmri.InstanceManager.getDefault(SensorManager.class).getSensor(name);
+                    nb = InstanceManager.getDefault(SensorManager.class).getSensor(name);
                     break;
                 case 2:
                     try {
                         name = ((LightManager)memo.get(LightManager.class)).createSystemName(i + "", prefix);
-                    } catch (jmri.JmriException ex) {
+                    } catch (JmriException ex) {
                         log.error("Error creating range at light {}", i);
                         return;
                     }
-                    nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
+                    nb = InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:
                     log.error("addSwitchRange: cannot parse bean name. Prefix = {}; i = {}; type={}", prefix, i, beanType);
@@ -824,21 +828,30 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(showToolTipBox);
         showToolTipBox.addActionListener((ActionEvent e) -> setAllShowToolTip(showToolTipBox.isSelected()));
         showToolTipBox.setSelected(showToolTip());
-        // show user name on switches item
-        _optionMenu.add(showUserNameBox);
-        showUserNameBox.addActionListener((ActionEvent e) -> updatePressed());
-        showUserNameBox.setSelected(true); // default on
-
         // hideUnconnected item
         _optionMenu.add(hideUnconnectedBox);
         hideUnconnectedBox.setSelected(_hideUnconnected);
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
             hideUnconnected.setSelected(_hideUnconnected); // also (un)check the box on the editor
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!_hideUnconnected && (!switchesOnBoard.isEmpty())); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
+        // switch label options
+        _optionMenu.add(labelNamesMenu);
+        // only system name
+        labelNamesMenu.add(systemNameBox);
+        systemNameBox.setSelected(false); // default off
+        systemNameBox.addActionListener((ActionEvent e) -> setLabel(0));
+        // both names (when set)
+        labelNamesMenu.add(bothNamesBox);
+        bothNamesBox.setSelected(true); // default on
+        bothNamesBox.addActionListener((ActionEvent e) -> setLabel(1));
+        // only user name (when set), aka display name
+        labelNamesMenu.add(displayNameBox);
+        displayNameBox.setSelected(false); // default off
+        displayNameBox.addActionListener((ActionEvent e) -> setLabel(2));
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -1016,15 +1029,6 @@ public class SwitchboardEditor extends Editor {
         border.setTitleColor(color);
     }
 
-    /**
-     * @param color the string containing a color settable using {@link jmri.util.ColorUtil#stringToColor(String)}
-     * @deprecated since 4.15.7; use {@link #setDefaultTextColor(Color)} instead
-     */
-    @Deprecated
-    public void setDefaultTextColor(String color) {
-        setDefaultTextColor(ColorUtil.stringToColor(color));
-    }
-
     public String getDefaultTextColor() {
         return ColorUtil.colorToColorName(defaultTextColor);
     }
@@ -1070,6 +1074,29 @@ public class SwitchboardEditor extends Editor {
      */
     public Color getDefaultBackgroundColor() {
         return defaultBackgroundColor;
+    }
+
+    public void setLabel(int label) {
+        _showUserName = label;
+        switch (label) {
+            case 0 :
+                //deselect box 2 and 3
+                bothNamesBox.setSelected(false);
+                displayNameBox.setSelected(false);
+                break;
+            case 2 :
+                //deselect box 1 and 2
+                systemNameBox.setSelected(false);
+                bothNamesBox.setSelected(false);
+                break;
+            case 1 :
+            default:
+                //deselect box 1 and 3
+                systemNameBox.setSelected(false);
+                displayNameBox.setSelected(false);
+                break;
+        }
+        updatePressed();
     }
 
     // *********************** end Menus ************************
@@ -1366,6 +1393,10 @@ public class SwitchboardEditor extends Editor {
     public void setSwitchManu(String manuPrefix) {
         try {
             memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(manuPrefix);
+            if (memo == null) {
+                log.error("No default SystemConnectionMemo defined for prefix {}", manuPrefix);
+                return;
+            }
             if (memo.get(TurnoutManager.class) != null) { // just for initial view
                 turnoutManComboBox.setSelectedItem(memo.get(TurnoutManager.class));
                 log.debug("turnoutManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
@@ -1380,7 +1411,7 @@ public class SwitchboardEditor extends Editor {
                 log.debug("lightManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
             }
         } catch (IllegalArgumentException e) {
-            log.error("invalid connection [{}] in Switchboard", manuPrefix);
+            log.error("invalid connection [{}] in Switchboard, {}", manuPrefix, e.getMessage());
         } catch (NullPointerException e) {
             log.error("NPE setting prefix to [{}] in Switchboard", manuPrefix);
         }
@@ -1468,24 +1499,6 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * @return the number of switches displayed per row
-     * @deprecated since 4.21.2, replaced by {@link #getRows()} because that is what it holds
-     */
-    @Deprecated
-    public int getColumns() {
-        return getRows();
-    }
-
-    /**
-     * @param rws the number of switches to display per row
-     * @deprecated since 4.21.2, replaced by {@link #setRows(int)} because that is what it holds
-     */
-    @Deprecated
-    public void setColumns(int rws) {
-        setRows(rws);
-    }
-
-    /**
      * Store total number of switches displayed (unconnected/hidden excluded).
      *
      * @return the total number of switches displayed
@@ -1499,12 +1512,57 @@ public class SwitchboardEditor extends Editor {
         log.debug("loadComplete");
     }
 
+    // used for xml persistent storage and web display
     public String showUserName() {
-        return (showUserNameBox.isSelected() ? "yes" : "no");
+        switch (_showUserName) {
+            case 0 :
+                return "no";
+            case 2 :
+                return "displayname";
+            case 1 :
+            default :
+                return "yes";
+        }
+        // xml type="labelType", see xml/schema/types/switchboardeditor.xsd and panel.js
     }
 
+    /**
+     * Get the label type.
+     * @return system + user name = 1, only system name = 0 or only username (if set) = 2
+     */
+    public int nameDisplay() {
+        return _showUserName;
+    }
+
+    /**
+     * Initial, simple boolean label option
+     * @param on true to show both system and user name on the switch label
+     */
+    @Deprecated
     public void setShowUserName(Boolean on) {
-        showUserNameBox.setSelected(on);
+        setShowUserName(on ? 1 : 0);
+    }
+
+    public void setShowUserName(int label) {
+        _showUserName = label;
+        switch (label) {
+            case 1:
+                systemNameBox.setSelected(false);
+                bothNamesBox.setSelected(true);
+                displayNameBox.setSelected(false);
+                break;
+            case 2:
+                systemNameBox.setSelected(false);
+                bothNamesBox.setSelected(false);
+                displayNameBox.setSelected(true);
+                break;
+            case 0:
+            default:
+                systemNameBox.setSelected(true);
+                bothNamesBox.setSelected(false);
+                displayNameBox.setSelected(false);
+                break;
+        }
     }
 
     /**

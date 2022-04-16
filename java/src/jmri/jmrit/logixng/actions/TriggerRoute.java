@@ -230,12 +230,6 @@ public class TriggerRoute extends AbstractDigitalAction implements VetoableChang
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewLock() throws JmriException {
 
         switch (_operationAddressing) {
@@ -319,7 +313,7 @@ public class TriggerRoute extends AbstractDigitalAction implements VetoableChang
         // Variables used in lambda must be effectively final
         Operation theOper = oper;
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (theOper == Operation.TriggerRoute) {
                 route.setRoute();
             } else {

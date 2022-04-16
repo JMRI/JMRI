@@ -1,83 +1,67 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Configure Digitrax PM4</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet PM4">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <a href="PM4xConfigTool.png">
-    <img src="PM4xConfigTool.png" style="float:right; margin: 5px;" 
-         alt="PM4x Configuration Tool Screen Capture"></a>
-      
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <a href="PM4xConfigTool.png"><img src="PM4xConfigTool.png" style="float:right; margin: 5px;"
+      alt="PM4x Configuration Tool Screen Capture"></a>
       <h1>Configure Digitrax PM4x</h1>
 
-      <p>The JMRI PM4x programming tool lets you configure the
-      internal options of a PM4 or PM42 directly from your
-      computer.</p>
+      <p>The JMRI PM4x programming tool lets you configure the internal options of a PM4 or PM42
+      directly from your computer.</p>
 
-      <p>To open this tool from the JMRI start page select the
-      LocoNet tab then find the tool on the drop down list.</p>
+      <p>To open this tool from the JMRI start page select the LocoNet tab then find the tool on
+      the drop down list.</p>
 
-      <p>To use it, you put the address of a PM4x board in the text
-      field and click "Read from PM4x". The tool will read back the
-      current state of the various options, and set the check boxes
-      to correspond to their current values.</p>
+      <p>To use it, you put the address of a PM4x board in the text field and click "Read from
+      PM4x". The tool will read back the current state of the various options, and set the check
+      boxes to correspond to their current values.</p>
 
-      <p>You can then, if you wish, change the checkboxes and click
-      "Write to PM4x" to make your changes permanent.</p>
-      
-      <p>The tool relies upon each PM4x board to have a unique "Board ID" (Board
-      Address) in order to configure each device individually.  While it is 
-      possible to change the Board ID number using JMRI, it cannot be done using 
-      this tool due to limitations of the PM4x design.  Instead, 
-      follow the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-      here</a>, but you must consult the appropriate PM4x manual and modify the 
-      JMRI-based process to suit the PM4x device's buttons, button press time, 
-      and lamp flashes.</p>
+      <p>You can then, if you wish, change the checkboxes and click "Write to PM4x" to make your
+      changes permanent.</p>
+
+      <p>The tool relies upon each PM4x board to have a unique "Board ID" (Board Address) in order
+      to configure each device individually. While it is possible to change the Board ID number
+      using JMRI, it cannot be done using this tool due to limitations of the PM4x design. Instead,
+      follow the instructions found <a href=
+      "../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">here</a>, but you must
+      consult the appropriate PM4x manual and modify the JMRI-based process to suit the PM4x
+      device's buttons, button press time, and lamp flashes.</p>
 
       <h2>Limitations</h2>
 
       <ul>
-        <li>This tool is able to access PM4x boards with addresses
-        between 1 and 256. Users are advised to avoid using the
-        factory default board address (board address 1) as it will
-        be difficult to program new boards with unique data if any
-        in-service board is using the factory default board
-        address.</li>
+        <li>This tool is able to access PM4x boards with addresses between 1 and 256. Users are
+        advised to avoid using the factory default board address (board address 1) as it will be
+        difficult to program new boards with unique data if any in-service board is using the
+        factory default board address.</li>
 
-        <li>Because of the way the PM4x board works, this tool
-        can't change the basic address of the unit. The PM4x
-        documentation describes how to change the board
-        address.  It is possible to change the Board ID number using JMRI by 
-        following the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-        here</a>. Note that it is necessary to consult the appropriate PM4x 
-        manual and modify the JMRI-based process shown at the link above to suit 
-        the PM4x's buttons, button press time, and lamp flashes.</li>
+        <li>Because of the way the PM4x board works, this tool can't change the basic address of
+        the unit. The PM4x documentation describes how to change the board address. It is possible
+        to change the Board ID number using JMRI by following the instructions found <a href=
+        "../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">here</a>. Note that it
+        is necessary to consult the appropriate PM4x manual and modify the JMRI-based process shown
+        at the link above to suit the PM4x's buttons, button press time, and lamp flashes.
+        </li>
       </ul>
 
       <h2>See Also</h2>
 
-      <p>Documentation for the PM4 and PM42 can be found at the
-      <a href="http://www.digitrax.com">Digitrax Web Site.</a></p>
+      <p>Documentation for the PM4 and PM42 can be found at the <a href=
+      "http://www.digitrax.com">Digitrax Web Site.</a></p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer.shtml" -->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -17,7 +17,6 @@ import javax.swing.JPopupMenu;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
 
-import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +78,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             }
         }
     }
-    
+
     /**
      * Add a "open system file browser to path" menu item to the contextual menu
      *
@@ -102,7 +101,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         myMouseAdapter.addMenuItem(mi);
         return mi;
     }
-     
+
     /**
      * Remove a given menu item from the contextual menu
      *
@@ -124,7 +123,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
         public MyMouseAdapter(ResizableImagePanel resizableImagePanel) {
             popUpMenu = new JPopupMenu();
-            removeMenuItem = new JMenuItem("Remove");
+            removeMenuItem = new JMenuItem(Bundle.getMessage("Remove"));
             removeMenuItem.addActionListener((ActionEvent e) -> {
                 resizableImagePanel.setImagePath(null);
             });
@@ -136,7 +135,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                 popUpMenu.add(item);
             }
         }
-        
+
         public void removeMenuItem(JMenuItem item) {
             if (item != null) {
                 popUpMenu.remove(item);
@@ -172,7 +171,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             }
         }
     }
-    
+
     public void setDropFolder(String s) {
         dropFolder = s;
     }
@@ -195,13 +194,13 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             return;
         }
         if (uris[0].getPath() == null) {
-            log.error("URIsDropped: not a valid URI path: ",uris[0]);
+            log.error("URIsDropped: not a valid URI path: {}",uris[0]);
             return;
-        }        
+        }
         File src = new File(uris[0].getPath());
         File dest = new File(uris[0].getPath());
         if (dropFolder != null) {
-            dest = new File(dropFolder + File.separatorChar + src.getName());          
+            dest = new File(dropFolder + File.separatorChar + src.getName());
             if (src.getParent().compareTo(dest.getParent()) != 0) {
                 // else case would be droping from dropFolder, so no copy
                 BufferedInputStream in = null;
@@ -210,7 +209,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                 try {
                     // prepare source reader
                     boolean srcIsFile;
-                    FileUtil.createDirectory(dest.getParentFile().getPath());                    
+                    FileUtil.createDirectory(dest.getParentFile().getPath());
                     if (uris[0].getScheme() != null && (uris[0].getScheme().equals("content") || uris[0].getScheme().equals("file"))) {
                         in = new BufferedInputStream(uris[0].toURL().openStream());
                         srcIsFile = true;
@@ -220,34 +219,38 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                         in = new BufferedInputStream(httpcon.getInputStream());
                         srcIsFile = false;
                     }
-                    // maybe we don't need to copy?
-                    boolean shouldCopy = true;
-                    if ( dest.exists() && (srcIsFile) && (dest.length() == src.length()) ) {
-                        out = new BufferedInputStream( dest.toURI().toURL().openStream() );
-                        byte dataBufferIn[] = new byte[4096];
-                        byte dataBufferOut[] = new byte[4096];
-                        int bytesReadIn;
-                        int bytesReadOut;
-                        shouldCopy = false;
-                        // file comparison loop
-                        while ((bytesReadIn = in.read(dataBufferIn, 0, 4096)) != -1) {
-                            bytesReadOut = out.read(dataBufferOut, 0, 4096);
-                            if ( (bytesReadIn != bytesReadOut) || ( ! Arrays.equals(dataBufferIn, dataBufferOut) ) ) {
-                                shouldCopy = true;
-                                break;
+                    // guess destination name and check if does not already exist
+                    int i = 0;
+                    while (dest.exists()) {
+                        // is it already there?
+                        boolean alreadyThere = false;
+                        if ( (srcIsFile) && (dest.length() == src.length()) ) {
+                            out = new BufferedInputStream( dest.toURI().toURL().openStream() );
+                            byte dataBufferIn[] = new byte[4096];
+                            byte dataBufferOut[] = new byte[4096];
+                            int bytesReadIn;
+                            int bytesReadOut;
+                            alreadyThere = true;
+                            // file comparison loop
+                            while ((bytesReadIn = in.read(dataBufferIn, 0, 4096)) != -1) {
+                                bytesReadOut = out.read(dataBufferOut, 0, 4096);
+                                if ( (bytesReadIn != bytesReadOut) || ( ! Arrays.equals(dataBufferIn, dataBufferOut) ) ) {
+                                    alreadyThere = false;
+                                    break;
+                                }
                             }
+                            out.close();
                         }
-                        out.close();
-                    } 
-                    if (shouldCopy) {
-                        // avoid overwrite
-                        int i = 0;
-                        while (dest.exists()) {
-                            i++;
-                            dest = new File(dropFolder + File.separatorChar + i+"-"+src.getName());
+                        if (alreadyThere) {
+                            break;
                         }
-                        // finally create file and copy data
-                        fileOutputStream = new FileOutputStream(dest);                    
+                        // else try next one
+                        i++;
+                        dest = new File(dropFolder + File.separatorChar + i+"-"+src.getName());
+                    }
+                    // finally, if needed, create file and copy data
+                    if ( ! dest.exists()) {
+                        fileOutputStream = new FileOutputStream(dest);
                         byte dataBuffer[] = new byte[4096];
                         int bytesRead;
                         // file copy loop
@@ -264,29 +267,29 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                     try {
                         if (fileOutputStream != null) {
                             fileOutputStream.close();
-                        }                     
+                        }
                     } catch (IOException ex) {
-                        log.error("URIsDropped: error while closing copy destination file : ", ex.getMessage());
+                        log.error("URIsDropped: error while closing copy destination file : {}", ex.getMessage());
                     }
                     try {
                         if (in != null) {
-                            in.close(); 
+                            in.close();
                         }
                     } catch (IOException ex) {
-                        log.error("URIsDropped: error while closing copy source file : ", ex.getMessage());
+                        log.error("URIsDropped: error while closing copy source file : {}", ex.getMessage());
                     }
-                    try {                    
+                    try {
                         if (out != null) {
                             out.close();
                         }
                     } catch (IOException ex) {
-                        log.error("URIsDropped: error while closing duplicate check file : ", ex.getMessage());
-                    }                                            
+                        log.error("URIsDropped: error while closing duplicate check file : {}", ex.getMessage());
+                    }
                 }
-            }        
+            }
         }
         setImagePath(dest.getPath());
-    }    
+    }
 
     private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class);
 }

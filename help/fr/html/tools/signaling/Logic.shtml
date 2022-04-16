@@ -310,7 +310,8 @@ if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appear
 </pre>
       </div>
 
-    </div><!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
   </div>
 </body>
 </html>

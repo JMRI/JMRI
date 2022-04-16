@@ -58,6 +58,7 @@ public class CbusNodeNVManager {
         for (int i = 0; i < newnvs.length; i++) {
             setNV(i,newnvs[i]);
         }
+        
         _node.notifyPropertyChangeListener("ALLNVUPDATE", null, null);
     }
     
@@ -264,6 +265,14 @@ public class CbusNodeNVManager {
         } else {
             return jmri.util.StringUtil.hexStringFromInts(getNvArray()).replaceAll("\\s","").substring(2);
         }
+    }
+    
+    /**
+     * @return descriptive string
+     */
+    @Override
+    public String toString() {
+        return "Node Variables";
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusNodeNVManager.class);

@@ -29,12 +29,11 @@ public abstract class AbstractSystemConnectionAction<M extends SystemConnectionM
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws IllegalArgumentException if the memo is not assignable from any
      *                                  class listed in
      *                                  {@link #getSystemConnectionMemoClasses()}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void setSystemConnectionMemo(M memo) {
         if (getSystemConnectionMemoClasses().stream().anyMatch(memo.getClass()::isAssignableFrom)) {

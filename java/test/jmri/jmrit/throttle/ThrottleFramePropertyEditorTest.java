@@ -37,6 +37,7 @@ public class ThrottleFramePropertyEditorTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

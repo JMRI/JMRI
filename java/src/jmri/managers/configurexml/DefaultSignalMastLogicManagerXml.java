@@ -42,7 +42,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
             java.util.Comparator<SignalMast> comparator = new jmri.util.NamedBeanComparator<>();
             java.util.Collections.sort(destinations, comparator);
 
-            if (destinations.size() == 0) {
+            if (destinations.isEmpty()) {
                 log.warn("Empty SML for source mast {} skipped", sml.getSourceMast().getDisplayName());
                 continue;
             }
@@ -283,7 +283,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (turnoutElem != null) {
                             List<Element> turnoutList = turnoutElem.getChildren("turnout");
                             if (turnoutList.size() > 0) {
-                                Hashtable<NamedBeanHandle<Turnout>, Integer> list = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
+                                Hashtable<NamedBeanHandle<Turnout>, Integer> list = new Hashtable<>();
                                 for (Element t : turnoutList) {
                                     String turnout = t.getChild("turnoutName").getText();
                                     String state = t.getChild("turnoutState").getText();
@@ -305,7 +305,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (sensorElem != null) {
                             List<Element> sensorList = sensorElem.getChildren("sensor");
                             if (sensorList.size() > 0) {
-                                Hashtable<NamedBeanHandle<Sensor>, Integer> list = new Hashtable<NamedBeanHandle<Sensor>, Integer>();
+                                Hashtable<NamedBeanHandle<Sensor>, Integer> list = new Hashtable<>();
                                 for (Element sl : sensorList) {
                                     String sensorName = sl.getChild("sensorName").getText();
                                     String state = sl.getChild("sensorState").getText();
@@ -328,7 +328,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (blockElem != null) {
                             List<Element> blockList = blockElem.getChildren("block");
                             if (blockList.size() > 0) {
-                                Hashtable<Block, Integer> list = new Hashtable<Block, Integer>();
+                                Hashtable<Block, Integer> list = new Hashtable<>();
                                 for (Element b : blockList) {
                                     String block = b.getChild("blockName").getText();
                                     String state = b.getChild("blockState").getText();
@@ -352,7 +352,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         if (mastElem != null) {
                             List<Element> mastList = mastElem.getChildren("mast");
                             if (mastList.size() > 0) {
-                                Hashtable<SignalMast, String> list = new Hashtable<SignalMast, String>();
+                                Hashtable<SignalMast, String> list = new Hashtable<>();
                                 for (Element m : mastList) {
                                     String mast = m.getChild("mastName").getText();
                                     String state = m.getChild("mastState").getText();

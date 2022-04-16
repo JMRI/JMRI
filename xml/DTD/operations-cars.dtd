@@ -59,6 +59,8 @@
 <!ATTLIST car previousNextDestTrackId	CDATA #IMPLIED> 
 <!ATTLIST car rweDestId				CDATA #IMPLIED> 
 <!ATTLIST car rweDestTrackId		CDATA #IMPLIED>
+<!ATTLIST car rwlDestId				CDATA #IMPLIED> 
+<!ATTLIST car rwlDestTrackId		CDATA #IMPLIED>
 <!ATTLIST car scheduleId			CDATA #IMPLIED> 
 <!ATTLIST car previousScheduleId	CDATA #IMPLIED> 
 <!ATTLIST car leadKernel			(true | false ) "false"> 
@@ -82,9 +84,11 @@
 <!ATTLIST car date					CDATA #IMPLIED>
 <!ATTLIST car selected				(true | false ) "false">
 <!ATTLIST car rweLoad				CDATA #IMPLIED>
+<!ATTLIST car rwlLoad				CDATA #IMPLIED>
 <!ATTLIST car blocking				CDATA #IMPLIED>
 <!ATTLIST car pickupId				CDATA #IMPLIED>
 <!ATTLIST car nextPickupId			CDATA #IMPLIED>
+<!ATTLIST car divisionId			CDATA #IMPLIED>
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>

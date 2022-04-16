@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>WPRR-1971</name>
+  <date>1971</date>
+  <reference>Signal definitions corresponding to pages 132-135 from the 1971 "Western Pacific Railroad Company - Operating Rules" binder.  NOTE: Only aspects commonly used by WP in 1970's are listed.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Jim</firstname>
+        <surname>Moomaw</surname>
+      </personname>
+      <email>jam_pub@pobox.com</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Jim</firstname>
+        <surname>Atkins</surname>
+      </personname>
+      <email></email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2021-08-26</date>
+      <authorinitials>JAM</authorinitials>
+      <revremark>Initial version;  dccAspect fields may not be correct.</revremark>
+    </revision>
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Dark</name>
+      <rule>(not found)</rule>
+      <indication>Stop; regard dark signal as displaying its most restrictive indication.</indication>
+      <reference>(Page not found)</reference>
+      <comment>Previous year operating rules had a specific rule covering dark signals, but that couldn't be found in the 1971 book.</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed.</indication>
+      <reference>Page 132</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed, approaching next signal at medium speed.</indication>
+      <reference>Page 132</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed on diverging route. Observe prescribed speed through turnout.</indication>
+      <reference>Page 132</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+	  <dccAspect>3</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed, approaching next signal at prescribed turnout speed. Trains exceeding medium speed must at once reduce to that speed.</indication>
+      <reference>Page 132</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>4</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed, preparing to stop at next signal. Trains exceeding medium speed must at once reduce to that speed.</indication>
+      <reference>Page 132</reference>
+      <speed>Medium</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed on diverging route, approaching next signal prepared to stop. Observe prescribed speed through turnout.</indication>
+      <reference>Page 134</reference>
+      <speed>Medium</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Restricting</name>
+      <rule>Rule 287</rule>
+      <indication>Proceed on diverging route at restricted speed, except observe Rule 105 where applicable. Observe prescribed speed through turnout.</indication>
+      <reference>Page 134</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed at yard speed in accordance with specific timetable instructions.</indication>
+      <reference>Page 134</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Restricting Diverging</name>
+      <rule>Rule 288-A</rule>
+      <indication>Proceed on diverging route at yard speed not exceeding 20mph, expecting tracks to be occupied.  Observe prescribed speed through turnout.  Speeds on sidings or auxiliary tracks will be governed by timetable instructions.</indication>
+      <reference>Page 134</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Stop And Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop; Then proceed at restricted speed.</indication>
+      <reference>Page 134</reference>
+      <speed>Stop</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 292</rule>
+      <indication>Stop.</indication>
+      <reference>Page 134</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-WP71-SL-1-high-A.xml"/>
+    <appearancefile href="appearance-WP71-SL-2-high-A.xml"/>
+    <appearancefile href="appearance-WP71-SL-1-low-A.xml"/>
+    <appearancefile href="appearance-WP71-SL-1-high-P.xml"/>
+    <appearancefile href="appearance-WP71-SL-1-with-Yel-marker-high-P.xml"/>
+  </appearancefiles>
+</aspecttable>

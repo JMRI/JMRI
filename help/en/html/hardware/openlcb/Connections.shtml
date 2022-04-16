@@ -1,69 +1,49 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - OpenLCB Connections</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - OpenLCB Connections</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: OpenLCB - Connections</h1>
 
       <p>This page discusses how JMRI can connect to OpenLCB.</p>
 
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2>
-
-      <a href="images/OpenLCBConnection.png"><img src=
-      "images/OpenLCBConnection.png" alt=
-      "OpenLCB Connections Preference Pane" width="305" height=
-      "147"></a>
-
+      <h2 id="connecting">Connecting</h2>
+      <a href="images/OpenLCBConnection.png"><img src="images/OpenLCBConnection.png" alt=
+      "OpenLCB Connections Preference Pane" width="305" height="147"></a>
       <h3>Via a TCH Tech CAN=USB Connector</h3>
       (no longer supported)
-
       <h3>Via a GridConnect Adapter</h3>
 
       <h3>Via a GridConnect Network Interface</h3>
 
       <h3>Via a Lawcell CAN USB</h3>
 
-      <h3>Via a <a href="../can/index.shtml">MERG
-      CAN-RS/-USB</a></h3>
+      <h3>Via a <a href="../can/index.shtml">MERG CAN-RS/-USB</a></h3>
 
-      <p>You can simulate a remote OpenLCB connection, e.g. to
-      debug things, on many computers using the "nc" command:</p>
+      <p>You can simulate a remote OpenLCB connection, e.g. to debug things, on many computers
+      using the "nc" command:</p>
+
       <pre>
 nc -l 12022
 </pre>
-      <a name="documentation" id="documentation"></a>
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
 
-      <p>Back to the <a href="index.shtml">main OpenLCB Help
-      page</a></p>
-
+      <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

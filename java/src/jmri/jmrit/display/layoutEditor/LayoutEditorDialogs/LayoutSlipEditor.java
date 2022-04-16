@@ -22,7 +22,7 @@ import jmri.util.MathUtil;
  * MVC Editor component for LayoutSlip objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LayoutSlipEditor extends LayoutTurnoutEditor {
 
@@ -195,7 +195,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         showSensorMessage();
     }   // editLayoutSlip
 
-    /* 
+    /*
      * draw the current state (STATE_AC, STATE_BD  et al)
      * with fixed geometry
      */
@@ -223,15 +223,15 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
             drawSlipStatePart1A(g2,state, A,B,C,D);
-             
+
         } else {
             g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
         }
 
         drawSlipStatePart2A(g2,state, A,B,C,D);
-    }  
-    
+    }
+
     protected void drawSlipStatePart1A(Graphics2D g2, int state, Point2D A, Point2D B, Point2D C, Point2D D) {
     }
 
@@ -257,6 +257,9 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         } else if (state == LayoutTurnout.STATE_BD) {
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double(B, D));
+        } else if (state == LayoutTurnout.STATE_BC) {
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(B, C));
         } else {
             g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
@@ -476,7 +479,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
             editLayoutSlipNeedsRedraw = false;
         }
     }
-    
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditor.class);
 }

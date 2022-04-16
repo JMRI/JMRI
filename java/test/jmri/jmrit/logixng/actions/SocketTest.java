@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  * Test FemaleSocket
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class SocketTest {
@@ -31,13 +31,15 @@ public class SocketTest {
 //                throw new UnsupportedOperationException("Not supported yet.");
             }
         };
-        
+
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("An empty conditionalNG");
+                .createConditionalNG(logixNG, "An empty conditionalNG");
         DefaultFemaleDigitalActionSocket b = new DefaultFemaleDigitalActionSocket(conditionalNG, listener, "A1");
         Assert.assertNotNull("exists", b);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -55,5 +57,5 @@ public class SocketTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

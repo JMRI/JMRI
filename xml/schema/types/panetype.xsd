@@ -378,6 +378,7 @@
         </xs:simpleType>
     </xs:attribute>
     <xs:attribute name="tooltip" type="xs:string"/>
+    <xs:attribute name="viewOnly" type="yesNoType" default="no" />
   </xs:complexType>
 
   <xs:element name="pane" type="PaneType">

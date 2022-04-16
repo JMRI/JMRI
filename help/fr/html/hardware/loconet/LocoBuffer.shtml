@@ -106,7 +106,9 @@ et 8 (sans traces). Soyez prudent &#224; ne pas court-circuiter avec la broche 7
 est d&#233;j&#224; connect&#233;e
  
 <p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer.shtml" -->
+  </div>
 </body>
 </html>

@@ -1,15 +1,16 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
-import org.junit.*;
-import org.junit.rules.Timeout;
+import jmri.util.swing.JemmyUtil;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -20,42 +21,29 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  *
  * @author George Warner Copyright (C) 2019
  */
+@Timeout(10)
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class ScaleTrackDiagramDialogTest {
 
-    private static LayoutEditor layoutEditor = null;
-    private static ScaleTrackDiagramDialog scaleTrackDiagramDialog = null;
+    private LayoutEditor layoutEditor = null;
+    private ScaleTrackDiagramDialog scaleTrackDiagramDialog = null;
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule    // allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
-
-    /*
-     * This is called before each tests
-     */
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            layoutEditor = new LayoutEditor();
-            layoutEditor.setVisible(true);
-            layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
-            scaleTrackDiagramDialog = new ScaleTrackDiagramDialog(layoutEditor);
-        }
+        layoutEditor = new LayoutEditor();
+        layoutEditor.setVisible(true);
+        layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
+        scaleTrackDiagramDialog = new ScaleTrackDiagramDialog(layoutEditor);
     }
 
-    /*
-     * This is called after each tests
-     */
-    @After
+    @AfterEach
     public void tearDown() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
-            efo.closeFrameWithConfirmations();
-            layoutEditor = null;
-            scaleTrackDiagramDialog = null;
-        }
+        EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+        efo.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+        layoutEditor = null;
+        scaleTrackDiagramDialog = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
@@ -63,14 +51,12 @@ public class ScaleTrackDiagramDialogTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("layoutEditor exists", layoutEditor);
-        Assert.assertNotNull("scaleTrackDiagramDialog exists", scaleTrackDiagramDialog);
+        Assertions.assertNotNull( layoutEditor, "layoutEditor exists");
+        Assertions.assertNotNull( scaleTrackDiagramDialog, "scaleTrackDiagramDialog exists");
     }
 
     @Test
     public void testScaleTrackDiagramCanceled() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         scaleTrackDiagramDialog.scaleTrackDiagram();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("ScaleTrackDiagram"));
@@ -81,7 +67,6 @@ public class ScaleTrackDiagramDialogTest {
 
     @Test
     public void testScaleTrackDiagram() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         scaleTrackDiagramDialog.scaleTrackDiagram();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("ScaleTrackDiagram"));
@@ -96,7 +81,7 @@ public class ScaleTrackDiagramDialogTest {
                 (JTextField) xTranslateLabelOperator.getLabelFor());
         horizontalTranslationTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ErrorTitle"),
+        Thread misc1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         scaleTranslateButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -112,7 +97,7 @@ public class ScaleTrackDiagramDialogTest {
                 (JTextField) yTranslateLabelOperator.getLabelFor());
         verticalTranslationTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc2 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ErrorTitle"),
+        Thread misc2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         scaleTranslateButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -128,7 +113,7 @@ public class ScaleTrackDiagramDialogTest {
                 (JTextField) xFactorLabelLabelOperator.getLabelFor());
         horizontalScaleFactorTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc3 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc3 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         scaleTranslateButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -144,7 +129,7 @@ public class ScaleTrackDiagramDialogTest {
                 (JTextField) yFactorLabelLabelOperator.getLabelFor());
         verticalScaleFactorTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc4 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc4 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         scaleTranslateButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {

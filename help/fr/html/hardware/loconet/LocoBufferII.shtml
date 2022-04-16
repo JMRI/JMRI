@@ -109,7 +109,9 @@ ce qui les provoquent et ils seront beaucoup plus facile &#224; diagnostiquer
 Pour configurer LocoBufferII pour "Local Power", emlevezla connexion d'alimentation et r&#233;glez les switches 7 et 8 &#224; ON (vers le bas, vers l'illustration du commutateur).
 
 <p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer.shtml" -->
+  </div>
 </body>
 </html>

@@ -61,9 +61,12 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         return newNamedBean(systemName, userName);
     }
 
-    // null implementation to satisfy the SensorManager interface
+    /**
+     * Triggers #updateAll on all SensorManagers.
+     */
     @Override
     public void updateAll() {
+        getManagerList().forEach(m -> ((SensorManager) m).updateAll());
     }
 
     @Override
@@ -71,12 +74,6 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         return ((SensorManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
-    @SuppressWarnings("deprecation") // user warned by actual manager class
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, typeLetter());
-    }
-    
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
         return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());

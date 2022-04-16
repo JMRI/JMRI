@@ -96,7 +96,6 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Enumeration<TreeNode> children() { // for JDK 9 typing
         return super.children();
     }

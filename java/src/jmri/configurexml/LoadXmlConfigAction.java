@@ -1,9 +1,12 @@
 package jmri.configurexml;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -71,7 +74,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                        
+
                         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
                         logixNG_Manager.setupAllLogixNGs();
@@ -81,7 +84,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                     }
                 }
             } catch (JmriException e) {
-                log.error("Unhandled problem in loadFile: {}", e);  // NOI18N
+                log.error("Unhandled problem in loadFile", e);  // NOI18N
             }
         } else {
             results = true;   // We assume that as the file is null then the user has clicked cancel.

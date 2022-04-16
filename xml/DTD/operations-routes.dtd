@@ -34,6 +34,7 @@
 <!ATTLIST location departTime		CDATA #IMPLIED> 
 <!ATTLIST location wait				CDATA #IMPLIED>
 <!ATTLIST location grade			CDATA #IMPLIED> 
+<!ATTLIST location order			CDATA #IMPLIED> 
 <!ATTLIST location trainIconX		CDATA #IMPLIED> 
 <!ATTLIST location trainIconY		CDATA #IMPLIED> 
 <!ATTLIST location comment			CDATA #IMPLIED>

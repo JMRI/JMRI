@@ -25,7 +25,7 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
         // load details MAY produce an error message if no ports are found.
         jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
         Element e = xmlAdapter.store(cc);
-        Assert.assertNotNull("XML Element Produced", e); 
+        Assert.assertNotNull("XML Element Produced", e);
         if(e.getAttribute("class")!=null){
            Assert.assertEquals("class", xmlAdapter.getClass().getName(), e.getAttribute("class").getValue());
         }
@@ -34,7 +34,6 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
     }
 
     @Test
-    @Timeout(5000)
     @Override
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);

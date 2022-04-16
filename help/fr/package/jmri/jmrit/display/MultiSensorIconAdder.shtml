@@ -1,74 +1,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-11-01-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: MultiSensor Icon Editor Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 </head>
-
 <body>
   charset=iso-8859-1"&gt; <!-- Style -->
    <!-- /Style -->
    <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>L'Éditeurd'Icône Multicapteurs</h1>
 
-      <h1>L'&Eacute;diteurd'Ic&ocirc;ne Multicapteurs</h1>
+      <p>La façon dont les icônes sont modifiées dans l'Édteur d'Icône Multicapteurs est la même
+      que celles qui les modifie dans les autres Éditeurs d'Icône. Le bouton <strong>Changer
+      l'Icône...</strong> et le Catalogue de fonction sont identiques avec les autre Éditeurs
+      d'Icône. Le Menu <strong>Trouver des Icônes</strong> et ses éléments sont également
+      identiques.</p>
 
-      <p>La fa&ccedil;on dont les ic&ocirc;nes sont
-      modifi&eacute;es dans l'&Eacute;dteur d'Ic&ocirc;ne
-      Multicapteurs est la m&ecirc;me que celles qui les modifie
-      dans les autres &Eacute;diteurs d'Ic&ocirc;ne. Le bouton
-      <b>Changer l'Ic&ocirc;ne...</b> et le Catalogue de fonction
-      sont identiques avec les autre &Eacute;diteurs d'Ic&ocirc;ne.
-      Le Menu <b>Trouver des Ic&ocirc;nes</b> et ses
-      &eacute;l&eacute;ments sont &eacute;galement identiques.</p>
+      <p>Voir la <a href="IconAdder.shtml">pages Éditeurs d'Icône</a> et l'image <a href=
+      "../catalog/ImageIndex.shtml">Page Éditeur d'index</a> pour plus de détails sur leur
+      utilisation.</p>
 
-      <p>Voir la <a href="IconAdder.shtml">pages &Eacute;diteurs
-      d'Ic&ocirc;ne</a> et l'image <a href=
-      "../catalog/ImageIndex.shtml">Page &Eacute;diteur d'index</a>
-      pour plus de d&eacute;tails sur leur utilisation.</p>
+      <h2>Contenu de l'Éditeur d'Icône Multicapteurs</h2>
+      <img src="MultiSensorIcon.png" align="right" alt="">
+      <p>Les icônes de l'Éditeur d'Icône Multicapteurs ne diffèrent que par l'existence de
+      plusieurs icônes "actives". Chacune correspond à un commutateur ou à la position d'un levier.
+      Dans le Panneau, les positions s'enchaînent dans l'ordre. Une position peut être supprimée en
+      appuyant sur la touche <strong>Supprimer</strong> sous l'icône. D'autres positions peuvent
+      être ajoutées en appuyant sur le bouton <strong>Ajouter</strong> une autre icône.</p>
 
-      <h2>Contenu de l'&Eacute;diteur d'Ic&ocirc;ne
-      Multicapteurs</h2><img src="MultiSensorIcon.png" align=
-      "right">
+      <p>Chaque icône active doit avoir un capteur qui lui est associé. Pour attribuer un capteur à
+      une position de l'icône, faites glisser une ligne du Tableau Capteur à l'endroit dans
+      l'onglet icône à un emplacement intitulé "indéfini". Lorsque la ligne du capteur est tombé
+      sur l'étiquette, il affiche le nom du capteur.</p>
 
-      <p>Les ic&ocirc;nes de l'&Eacute;diteur d'Ic&ocirc;ne
-      Multicapteurs ne diff&egrave;rent que par l'existence de
-      plusieurs ic&ocirc;nes "actives". Chacune correspond &agrave;
-      un commutateur ou &agrave; la position d'un levier. Dans le
-      Panneau, les positions s'encha&icirc;nent dans l'ordre. Une
-      position peut &ecirc;tre supprim&eacute;e en appuyant sur la
-      touche <b>Supprimer</b> sous l'ic&ocirc;ne. D'autres
-      positions peuvent &ecirc;tre ajout&eacute;es en appuyant sur
-      le bouton <b>Ajouter</b> une autre ic&ocirc;ne.</p>
-
-      <p>Chaque ic&ocirc;ne active doit avoir un capteur qui lui
-      est associ&eacute;. Pour attribuer un capteur &agrave; une
-      position de l'ic&ocirc;ne, faites glisser une ligne du
-      Tableau Capteur &agrave; l'endroit dans l'onglet ic&ocirc;ne
-      &agrave; un emplacement intitul&eacute; "ind&eacute;fini".
-      Lorsque la ligne du capteur est tomb&eacute; sur
-      l'&eacute;tiquette, il affiche le nom du capteur.</p>
-
-      <p>Lorsque toutes les ic&ocirc;nes actives sont
-      affect&eacute;es" aux capteurs, le bouton <b>Ajouter au
-      Panneau</b> devient actif et il peut &ecirc;tre appuy&eacute;
-      pour installer le multicapteurs dans le panneau.</p>
+      <p>Lorsque toutes les icônes actives sont affectées" aux capteurs, le bouton <strong>Ajouter
+      au Panneau</strong> devient actif et il peut être appuyé pour installer le multicapteurs dans
+      le panneau.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

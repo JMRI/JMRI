@@ -77,7 +77,11 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             result = internalEvaluate();
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
+            if (e.getErrors() != null) {
+                handleError(this, Bundle.getMessage("ExceptionEvaluateMulti"), e.getErrors(), e, log);
+            } else {
+                handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
+            }
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
         }
@@ -220,6 +224,14 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         
         // The result if the result is forced.
         public double _result = 0.0f;
+        
+        @Override
+        public DebugConfig getCopy() {
+            AnalogExpressionDebugConfig config = new AnalogExpressionDebugConfig();
+            config._forceResult = _forceResult;
+            config._result = _result;
+            return config;
+        }
         
     }
     

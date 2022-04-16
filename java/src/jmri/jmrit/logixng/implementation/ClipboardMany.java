@@ -97,12 +97,6 @@ public class ClipboardMany extends AbstractBase
         return Category.COMMON;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _itemEntries.get(index)._socket;
@@ -189,16 +183,6 @@ public class ClipboardMany extends AbstractBase
     @Override
     public void setParent(Base parent) {
         _parent = parent;
-    }
-
-    @Override
-    public Lock getLock() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setLock(Lock lock) {
-        throw new UnsupportedOperationException("Not supported");
     }
 
     @Override

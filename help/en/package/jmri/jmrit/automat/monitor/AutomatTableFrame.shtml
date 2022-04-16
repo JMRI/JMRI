@@ -1,56 +1,41 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Automat Table Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Automat Thread Table">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Automat (Thread) Table</h1>
-      
-      The Thread Table lets you see the threads used by
-      scripts that are implementing the "AbstractAutomat" class.
-      <p>
-      Each time the class execute's it's "handle" routine,
-      the count will be incremented.  You can stop the thread
-      with the button.
-      
-      <p>
-      Note that the name column won't be particularly 
-      useful unless your script sets a distinct name:
-<pre><code>
+      The Thread Table lets you see the threads used by scripts that are implementing the
+      "AbstractAutomat" class.
+      <p>Each time the class execute's it's "handle" routine, the count will be incremented. You
+      can stop the thread with the button.</p>
+
+      <p>Note that the name column won't be particularly useful unless your script sets a distinct
+      name:</p>
+
+      <pre><code>
 # create one of these
 a = AutomatExample()
 
 # set the name
 a.setName("Automat example script")
 </code></pre>
-      <p>
-      See the 
-      <a href="../../../../../html/tools/automation/viaJava.shtml">scripting pages</a>
-      for more information on writing scripts.
-      
-      <p>This is the
-      help/jmri/jmrit/automat/monitor/AutomatTable help page 
-      <!--#include virtual="/Footer.shtml" -->
+      <p>See the <a href="../../../../../html/tools/automation/viaJava.shtml">scripting pages</a>
+      for more information on writing scripts.</p>
+
+      <p>This is the help/jmri/jmrit/automat/monitor/AutomatTable help page 
+      <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

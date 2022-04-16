@@ -61,7 +61,22 @@ public interface FemaleSocket extends Base {
      * @param name the name
      * @return true if the name is valid, false otherwise
      */
-    public boolean validateName(String name);
+    public default boolean validateName(String name) {
+        return validateName(name, false);
+    }
+    
+    /**
+     * Validates a name for a FemaleSocket.
+     * <P>
+     * The name must have at least one character and only alphanumeric
+     * characters. The first character must not be a digit.
+     * 
+     * @param name the name
+     * @param ignoreDuplicateErrors true if duplicate names should be ignored,
+     *                              false otherwise
+     * @return true if the name is valid, false otherwise
+     */
+    public boolean validateName(String name, boolean ignoreDuplicateErrors);
     
     /**
      * Set the name of this socket.
@@ -71,7 +86,21 @@ public interface FemaleSocket extends Base {
      * 
      * @param name the name
      */
-    public void setName(String name);
+    public default void setName(String name) {
+        setName(name, false);
+    }
+    
+    /**
+     * Set the name of this socket.
+     * <P>
+     * The name must have at least one character and only alphanumeric
+     * characters. The first character must not be a digit.
+     * 
+     * @param name the name
+     * @param ignoreDuplicateErrors true if duplicate names should be ignored,
+     *                              false otherwise
+     */
+    public void setName(String name, boolean ignoreDuplicateErrors);
     
     /**
      * Get the name of this socket.

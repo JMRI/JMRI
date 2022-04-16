@@ -17,7 +17,6 @@ public abstract class AbstractAnalogAction extends AbstractBase
         implements AnalogActionBean {
 
     private Base _parent = null;
-    private Lock _lock = Lock.NONE;
     private int _state = AnalogActionBean.UNKNOWN;
 
 
@@ -59,19 +58,6 @@ public abstract class AbstractAnalogAction extends AbstractBase
     public int getState() {
         log.warn("Unexpected call to getState in AbstractAnalogAction.");  // NOI18N
         return _state;
-    }
-    
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
     }
     
     public String getNewSocketName() {

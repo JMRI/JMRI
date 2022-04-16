@@ -13,4 +13,4 @@ mvn javadoc:javadoc -U --batch-mode --file=pom.xml
 mvn exec:exec -P travis-scanhelp --file=pom.xml
 
 #run Architecture tests
-mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsTest test --file=pom.xml
+mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsCheck test --file=pom.xml

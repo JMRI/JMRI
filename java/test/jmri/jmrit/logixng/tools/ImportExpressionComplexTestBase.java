@@ -176,7 +176,8 @@ public abstract class ImportExpressionComplexTestBase {
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
         importLogix.getLogixNG().setEnabled(true);
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
         
         check.runTest("LogixNG is activated. Enum: "+e.name(), true);
         
@@ -247,7 +248,8 @@ public abstract class ImportExpressionComplexTestBase {
         actions.add(ca);
         conditional.setAction(actions);
         
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
     }
 
 //    @After

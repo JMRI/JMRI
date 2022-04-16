@@ -176,7 +176,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         JSplitPane variableSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                            actionExpressionInfoScrollPane, variableScrollPane);
         variableSplitPane.setOneTouchExpandable(true);
-        variableSplitPane.setDividerLocation(150);
+        variableSplitPane.setDividerLocation(50);
         
         
         JPanel watchPanel = new JPanel();
@@ -188,7 +188,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         watchSplitPane.setDividerLocation(150);
         
         // Provide minimum sizes for the two components in the split pane
-        Dimension minimumWatchSize = new Dimension(100, 50);
+        Dimension minimumWatchSize = new Dimension(100, 150);
         variableScrollPane.setMinimumSize(minimumWatchSize);
         watchScrollPane.setMinimumSize(minimumWatchSize);
         

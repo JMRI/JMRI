@@ -43,18 +43,6 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
 
     /** {@inheritDoc} */
     @Override
-    public boolean getTriggerOnChange() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setTriggerOnChange(boolean triggerOnChange) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "DefaultFemaleDigitalExpressionSocket_Short");
     }

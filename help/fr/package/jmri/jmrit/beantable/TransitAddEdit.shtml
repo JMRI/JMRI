@@ -1,244 +1,163 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Herv&#233; Blorec 2013-10-12-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Ajouter/&Eacute;diter Transits</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Ajouter/Éditer Transits</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Transit Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Transit Add Edit"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h1>Ajouter/&Eacute;diter Transits</h1><a name="addTransit"
-      id="addTransit"></a>
-
-      <h2>Ajout d'un nouveau Transit</h2>Pour ajouter un nouveau
-      Transit, suivez cette proc&eacute;dure:
-
+      <h1>Ajouter/Éditer Transits</h1>
+      <a name="addTransit" id="addTransit"></a>
+      <h2>Ajout d'un nouveau Transit</h2>
+      Pour ajouter un nouveau Transit, suivez cette procédure:
       <ol>
         <li>
-          <p>Cliquez <b><a href=
-          "TransitTable.shtml">Transits</a></b> dans le sous-menu
-          <b>Tableaux</b> du menu <b>Outils</b>pour faire
-          appara&icirc;tre le Tableau Transit, et cliquez sur le
-          bouton <b>Ajouter ...</b> au bas du tableau pour ouvrir
-          la fen&ecirc;tre Ajouter/Modifier Transit.</p><img src=
-          "TransitAddFrame.png" height="550" width="850">
+          <p>Cliquez <strong><a href="TransitTable.shtml">Transits</a></strong> dans le sous-menu
+          <strong>Tableaux</strong> du menu <strong>Outils</strong>pour faire apparaître le Tableau
+          Transit, et cliquez sur le bouton <strong>Ajouter ...</strong> au bas du tableau pour
+          ouvrir la fenêtre Ajouter/Modifier Transit.</p>
+          <img src="TransitAddFrame.png" height="550" width="850" alt="">
         </li>
 
-        <li>Entrez un <b>Nom Syst&egrave;me</b>, selon la
-        convention JMRI. Puisque les Transits sont des objets
-        internes, la premi&egrave;re lettre doit &ecirc;tre "I"
-        (pour interne). La seconde lettre devrait &ecirc;tre "Z"
-        pour indiquer un transit. Ceci est
-        g&eacute;n&eacute;ralement suivi par un nombre, mais le
-        programme accepte tous les caract&egrave;res
-        Alphanum&eacute;riques. Le Nom Syst&egrave;me doit
-        &ecirc;tre diff&eacute;rent du nom syst&egrave;me des
-        autres Transits.</li>
+        <li>Entrez un <strong>Nom Système</strong>, selon la convention JMRI. Puisque les Transits
+        sont des objets internes, la première lettre doit être "I" (pour interne). La seconde
+        lettre devrait être "Z" pour indiquer un transit. Ceci est généralement suivi par un
+        nombre, mais le programme accepte tous les caractères Alphanumériques. Le Nom Système doit
+        être différent du nom système des autres Transits.</li>
 
-        <li>Entrez un <b>Nom Utilisateur</b>. Toute cha&icirc;ne de
-        caract&egrave;res qui est diff&eacute;rente du Nom
-        Utilisateur des autres Transits seront accept&eacute;es,
-        mais il est sage d'utiliser une cha&icirc;ne qui
-        d&eacute;crit l'utilisation pr&eacute;vue du Transit.</li>
+        <li>Entrez un <strong>Nom Utilisateur</strong>. Toute chaîne de caractères qui est
+        différente du Nom Utilisateur des autres Transits seront acceptées, mais il est sage
+        d'utiliser une chaîne qui décrit l'utilisation prévue du Transit.</li>
 
-        <li>Ensuite, ajoutez des <b>Sections</b> pour le Transit.
-        Chaque Transit doit avoir au moins deux sections, mais la
-        plupart en ont beaucoup plus. Deux Sections "Primaires"sont
-        n&eacute;cessaires pour d&eacute;finir la direction du
-        transit. Les Sections doivent &ecirc;tre connect&eacute;es,
-        et &ecirc;tre inscrites dans l'ordre. S&eacute;lectionnez
-        la Section par o&ugrave; vous souhaitez commencer le
-        Transit dans le menu contextuel sup&eacute;rieure. A tout
-        moment pendant pendant l'ajout d'une Section, ce menu
-        contextuel liste seulement les Sections qui sont
-        &eacute;ligibles pour l'addition. Cliquez <b>Ajouter la
-        Section suivante</b> pour ajouter la premi&egrave;re
-        Section du Transit.</li>
+        <li>Ensuite, ajoutez des <strong>Sections</strong> pour le Transit. Chaque Transit doit
+        avoir au moins deux sections, mais la plupart en ont beaucoup plus. Deux Sections
+        "Primaires"sont nécessaires pour définir la direction du transit. Les Sections doivent être
+        connectées, et être inscrites dans l'ordre. Sélectionnez la Section par où vous souhaitez
+        commencer le Transit dans le menu contextuel supérieure. A tout moment pendant pendant
+        l'ajout d'une Section, ce menu contextuel liste seulement les Sections qui sont éligibles
+        pour l'addition. Cliquez <strong>Ajouter la Section suivante</strong> pour ajouter la
+        première Section du Transit.</li>
 
-        <li>Ajouter plus de Sections primaire de la m&ecirc;me
-        mani&egrave;re. S&eacute;lectionnez la Section &agrave;
-        ajouter dans le menu contextuel, puis cliquez sur
-        <b>Ajouter Section Suivante</b>.</li>
+        <li>Ajouter plus de Sections primaire de la même manière. Sélectionnez la Section à ajouter
+        dans le menu contextuel, puis cliquez sur <strong>Ajouter Section Suivante</strong>.</li>
 
-        <li>Imm&eacute;diatement apr&egrave;s la saisie d'une
-        Section en utilisant <b>Ajouter Section Suivante</b>, si
-        vous souhaitez ajouter une <b>Autre</b> Section &agrave;
-        celle qui vient d'&ecirc;tre entr&eacute;e,
-        s&eacute;lectionnez une Section de remplacement &agrave;
-        partir du menu contextuel &agrave; gauche du bouton
-        <b>Ajouter Section Alternative</b>. S'il n' y a pas de
-        Section Alternative valide, le menu contextuel sera vide.
-        Souvent, le menu contextuel contient des Sections
-        Alternatives possibles qui ne sont pas vraiment des
-        Sections Alternatives pour la section primaire. Pour qu'une
-        Section alternative list&eacute;e soit <i>valide</i> comme
-        Section Alternative, elle doit se connecter &ecirc; la
-        Section primaire suivante. <b>Il est de votre
-        responsabilit&eacute; de d&eacute;terminer si une Section
-        list&eacute;e dans le menu contextuel est une section de
-        substitution valide</b>, c'est &agrave; dire qu'elle va se
-        connecter &agrave; la section primaire suivante. Pour plus
-        d'informations sur le remplacement des Sections et leur
-        utilisation, consultez le <a href=
-        "TransitTable.shtml">fichier d'aide Tableau
-        Transit</a>.</li>
+        <li>Immédiatement après la saisie d'une Section en utilisant <strong>Ajouter Section
+        Suivante</strong>, si vous souhaitez ajouter une <strong>Autre</strong> Section à celle qui
+        vient d'être entrée, sélectionnez une Section de remplacement à partir du menu contextuel à
+        gauche du bouton <strong>Ajouter Section Alternative</strong>. S'il n' y a pas de Section
+        Alternative valide, le menu contextuel sera vide. Souvent, le menu contextuel contient des
+        Sections Alternatives possibles qui ne sont pas vraiment des Sections Alternatives pour la
+        section primaire. Pour qu'une Section alternative listée soit <em>valide</em> comme Section
+        Alternative, elle doit se connecter ê la Section primaire suivante. <strong>Il est de votre
+        responsabilité de déterminer si une Section listée dans le menu contextuel est une section
+        de substitution valide</strong>, c'est à dire qu'elle va se connecter à la section primaire
+        suivante. Pour plus d'informations sur le remplacement des Sections et leur utilisation,
+        consultez le <a href="TransitTable.shtml">fichier d'aide Tableau Transit</a>.</li>
 
-        <li>Si vous d&eacute;cidez que vous devez ajouter une
-        Section au d&eacute;but du transit, s&eacute;lectionner en
-        une dans le menu contextuel &agrave; gauche du bouton
-        <b>Insertion Comme premi&egrave;re Section</b> , puis
-        appuyez sur le bouton <b>Ins&eacute;rer Comme
-        premi&egrave;re section</b>. La Section
-        s&eacute;lectionn&eacute;e deviendra la premi&egrave;re
-        Section dans le Transit, avec comme num&eacute;ro de
-        commande "1", et l'ordre des num&eacute;ros de toutes les
-        autres Sections sera incr&eacute;ment&eacute;. Le menu
-        contextuel sera vide si il n'y a pas de sections possible
-        &agrave; ajouter au d&eacute;but du transit.</li>
+        <li>Si vous décidez que vous devez ajouter une Section au début du transit, sélectionner en
+        une dans le menu contextuel à gauche du bouton <strong>Insertion Comme première
+        Section</strong> , puis appuyez sur le bouton <strong>Insérer Comme première
+        section</strong>. La Section sélectionnée deviendra la première Section dans le Transit,
+        avec comme numéro de commande "1", et l'ordre des numéros de toutes les autres Sections
+        sera incrémenté. Le menu contextuel sera vide si il n'y a pas de sections possible à
+        ajouter au début du transit.</li>
 
-        <li>La prochaine s&eacute;rie de boutons offrent des
-        options pour faciliter la mise en place ou &agrave;
-        l'&eacute;dition de Transit.
-
+        <li>La prochaine série de boutons offrent des options pour faciliter la mise en place ou à
+        l'édition de Transit.
           <div style="margin-left: 2em">
-            <p>Si &agrave; tout moment vous d&eacute;cidez que vous
-            voulez recommencer, cliquez sur <b>Supprimer toutes les
-            Sections</b> pour effacer le tableau des Sections, et
-            revenir &agrave; l'&eacute;tape 4 ci-dessus.</p>
+            <p>Si à tout moment vous décidez que vous voulez recommencer, cliquez sur
+            <strong>Supprimer toutes les Sections</strong> pour effacer le tableau des Sections, et
+            revenir à l'étape 4 ci-dessus.</p>
 
-            <p>Les boutons <b>Retirer Derni&egrave;re Section</b>
-            et <b>Retirer Premi&egrave;re Section</b> supprime une
-            Section &agrave; la fin ou au d&eacute;but du Transit,
-            et ajuste l'ordre des num&eacute;ros des sections
-            restantes. Les Sections primaires au milieu du transit
-            ne peuvent pas &ecirc;tre supprim&eacute;es car cela
-            briserait la connectivit&eacute; des Sections au sein
+            <p>Les boutons <strong>Retirer Dernière Section</strong> et <strong>Retirer Première
+            Section</strong> supprime une Section à la fin ou au début du Transit, et ajuste
+            l'ordre des numéros des sections restantes. Les Sections primaires au milieu du transit
+            ne peuvent pas être supprimées car cela briserait la connectivité des Sections au sein
             du Transit.</p>
 
-            <p>Les trois autres boutons &eacute;dition
-            pr&eacute;voient de remplacer une Section primaire et
-            Supprimer ou Ajouter une Section de remplacement dans
-            le milieu du Transit. Pour utiliser ces boutons, entrez
-            le num&eacute;ro d'ordre de la section &agrave;
-            &eacute;diter, puis appuyez sur l'un des boutons -
-            <b>Remplacer Primaire Par Ordre</b>, <b>Supprimer
-            Alternative par Ordre</b>, ou <b>Ajouter Alternative
-            par Ordre</b>. Si aucune section r&eacute;pondant aux
-            crit&egrave;res n'est disponible , un message
-            appara&icirc;tra, et aucun changement ne sera
-            effectu&eacute;. Si une seule Section satisfait aux
-            exigences, la modification est effectu&eacute;e
-            imm&eacute;diatement. Si plus d'un article satisfait
-            aux exigences, une bo&icirc;te de dialogue est
-            pr&eacute;sent&eacute;e de mani&egrave;re &agrave;
-            proposer le choix des Sections qui peut &ecirc;tre
-            fait. Quand une Section primaire est remplac&eacute;e,
-            ses Actions (voir ci-dessous) sont
-            pr&eacute;serv&eacute;es.</p>
+            <p>Les trois autres boutons édition prévoient de remplacer une Section primaire et
+            Supprimer ou Ajouter une Section de remplacement dans le milieu du Transit. Pour
+            utiliser ces boutons, entrez le numéro d'ordre de la section à éditer, puis appuyez sur
+            l'un des boutons - <strong>Remplacer Primaire Par Ordre</strong>, <strong>Supprimer
+            Alternative par Ordre</strong>, ou <strong>Ajouter Alternative par Ordre</strong>. Si
+            aucune section répondant aux critères n'est disponible , un message apparaîtra, et
+            aucun changement ne sera effectué. Si une seule Section satisfait aux exigences, la
+            modification est effectuée immédiatement. Si plus d'un article satisfait aux exigences,
+            une boîte de dialogue est présentée de manière à proposer le choix des Sections qui
+            peut être fait. Quand une Section primaire est remplacée, ses Actions (voir ci-dessous)
+            sont préservées.</p>
           </div>
         </li>
 
-        <li>Si vous utilisez ce transit pour ex&eacute;cuter un
-        train automatique, cliquez sur le bouton
-        <b>Voir/Ajouter/&eacute;diter Actions</b> pour mettre en
-        place toute les <b>Actions</b> n&eacute;cessaires &agrave;
-        r&eacute;aliser quand un train est dans la section
-        sp&eacute;cifi&eacute;e. Vous pouvez ajouter des Actions
-        maintenant, ou Vous pouvez &eacute;diter ce Transit plus
-        tard, pour mettre en place des Actions. Plus d'informations
-        sont fournies dans <a href="ViewSpecialActions.shtml">le
-        fichier d'aide Afficher Actions</a> . Il est habituellement
-        pr&eacute;f&eacute;rable de mettre en place toutes les
-        Sections avant d'ajouter des Actions, parce que quand une
-        Section est supprim&eacute;e du Transit, ses actions sont
-        &eacute;galement supprim&eacute;es.</li>
+        <li>Si vous utilisez ce transit pour exécuter un train automatique, cliquez sur le bouton
+        <strong>Voir/Ajouter/éditer Actions</strong> pour mettre en place toute les
+        <strong>Actions</strong> nécessaires à réaliser quand un train est dans la section
+        spécifiée. Vous pouvez ajouter des Actions maintenant, ou Vous pouvez éditer ce Transit
+        plus tard, pour mettre en place des Actions. Plus d'informations sont fournies dans
+        <a href="ViewSpecialActions.shtml">le fichier d'aide Afficher Actions</a> . Il est
+        habituellement préférable de mettre en place toutes les Sections avant d'ajouter des
+        Actions, parce que quand une Section est supprimée du Transit, ses actions sont également
+        supprimées.</li>
 
         <li style="list-style: none">
-          <p>Cliquez sur le bouton <b>Cr&eacute;er</b> situ&eacute;
-          au bas de la fen&ecirc;tre. Si tout va bien, la
-          fen&ecirc;tre se ferme et un nouveau Transit
-          appara&icirc;tra dans le Tableau Transit. S'il y a des
-          probl&egrave;mes avec quoi que ce soit, un message
-          s'affichera, indiquant l'erreur et ce que vous devriez
-          faire pour la r&eacute;parer. Corrigez l'erreur et
-          cliquez &agrave; nouveau sur <b>Cr&eacute;er</b>.</p>
+          <p>Cliquez sur le bouton <strong>Créer</strong> situé au bas de la fenêtre. Si tout va
+          bien, la fenêtre se ferme et un nouveau Transit apparaîtra dans le Tableau Transit. S'il
+          y a des problèmes avec quoi que ce soit, un message s'affichera, indiquant l'erreur et ce
+          que vous devriez faire pour la réparer. Corrigez l'erreur et cliquez à nouveau sur
+          <strong>Créer</strong>.</p>
         </li>
       </ol>
 
-      <p>Note: Les colonnes <b>Direction</b> et <b>Alternative</b>
-      dans Ajouter/&eacute;diter Tableau Transit sont l&ecirc; pour
-      information seulement. Elles sont d&eacute;finies
-      automatiquement lorsque vous construisez le Transit. La
-      colonne Direction indique la direction du d&eacute;placement
-      dans la la Section, et la colonne Alternative indique si la
-      section est la Section <i>principale</i> pour ce
-      num&eacute;ro de commande ou une Section<i>alternative</i>
-      .</p>
+      <p>Note: Les colonnes <strong>Direction</strong> et <strong>Alternative</strong> dans
+      Ajouter/éditer Tableau Transit sont lê pour information seulement. Elles sont définies
+      automatiquement lorsque vous construisez le Transit. La colonne Direction indique la
+      direction du déplacement dans la la Section, et la colonne Alternative indique si la section
+      est la Section <em>principale</em> pour ce numéro de commande ou une
+      Section<em>alternative</em> .</p>
 
-      <h2>Modification d'un Transit existants</h2>Pour modifier un
-      Transit existants, suivez cette proc&eacute;dure:
-
+      <h2>Modification d'un Transit existants</h2>
+      Pour modifier un Transit existants, suivez cette procédure:
       <ol>
-        <li>Cliquez sur le bouton<b>Modifier</b> d'un Transit dans
-        le <a href="TransitTable.shtml">tableau Transit</a> pour
-        faire appara&icirc;tre la fen&ecirc;tre Ajouter/Modifier
-        Transit. La fen&ecirc;tre est la m&ecirc;me que celle
-        indiqu&eacute;e ci-dessus, sauf le nom syst&egrave;me qui
-        sera d&eacute;termin&eacute;, et <b>Cr&eacute;er</b> qui
-        sera remplac&eacute; par une <b>Mise &agrave;
-        Jour</b>.<img src="TransitEditFrame.jpg" height="550"
-        width="770"></li>
+        <li>Cliquez sur le bouton<strong>Modifier</strong> d'un Transit dans le <a href=
+        "TransitTable.shtml">tableau Transit</a> pour faire apparaître la fenêtre Ajouter/Modifier
+        Transit. La fenêtre est la même que celle indiquée ci-dessus, sauf le nom système qui sera
+        déterminé, et <strong>Créer</strong> qui sera remplacé par une <strong>Mise à
+        Jour</strong>.<img src="TransitEditFrame.jpg" height="550" width="770" alt=""></li>
 
-        <li>Effectuez les modifications ou les ajouts que vous
-        devez &agrave; l'information dans la fen&ecirc;tre. Notez
-        que le nom syst&egrave;me de Transit de l'&eacute;dition ne
-        peut &ecirc;tre chang&eacute;, mais le nom utilisateur peut
-        &ecirc;tre chang&eacute;. Les &eacute;l&eacute;ments qui
-        peuvent &ecirc;tre &eacute;dit&eacute;s sont d&eacute;crits
-        <a href="#addTransit">ci-dessus</a> dans les &eacute;tapes
-        3 &agrave; 9 dans la proc&eacute;dure d'ajout d'un nouveau
+        <li>Effectuez les modifications ou les ajouts que vous devez à l'information dans la
+        fenêtre. Notez que le nom système de Transit de l'édition ne peut être changé, mais le nom
+        utilisateur peut être changé. Les éléments qui peuvent être édités sont décrits <a href=
+        "#addTransit">ci-dessus</a> dans les étapes 3 à 9 dans la procédure d'ajout d'un nouveau
         Transit.</li>
 
         <li style="list-style: none">
-          <p>Apr&egrave;s avoir modifi&eacute; les informations de
-          Transit, cliquez sur <b>Mise &agrave; Jour</b> pour
-          changer le Transit s&eacute;lectionn&eacute;. Si tout va
-          bien, la fen&ecirc;tre se ferme. S'il y a un
-          probl&egrave;me, un message s'affiche indiquant l'erreur
-          et ce que vous devriez faire pour la r&eacute;parer.
-          Corrigez l'erreur et cliquez sur <b>Mise &agrave;
-          jour</b> &agrave; nouveau.</p>
+          <p>Après avoir modifié les informations de Transit, cliquez sur <strong>Mise à
+          Jour</strong> pour changer le Transit sélectionné. Si tout va bien, la fenêtre se ferme.
+          S'il y a un problème, un message s'affiche indiquant l'erreur et ce que vous devriez
+          faire pour la réparer. Corrigez l'erreur et cliquez sur <strong>Mise à jour</strong> à
+          nouveau.</p>
         </li>
 
         <li style="list-style: none">Cliquez</li>
 
-        <li><b>Annuler</b> pour sortir sans changer le Transit
-        s&eacute;lectionn&eacute;. Si la fen&ecirc;tre
-        Ajouter/&eacute;diter Transit se ferme pendant
-        l'&eacute;dition, <b>Annuler</b> est automatiquement
-        s&eacute;lectionn&eacute;, et aucune modification ne sera
-        apport&eacute;e au Transit s&eacute;lectionn&eacute;</li>
-      </ol><!--#include virtual="/Footer.shtml" -->
+        <li><strong>Annuler</strong> pour sortir sans changer le Transit sélectionné. Si la fenêtre
+        Ajouter/éditer Transit se ferme pendant l'édition, <strong>Annuler</strong> est
+        automatiquement sélectionné, et aucune modification ne sera apportée au Transit
+        sélectionné</li>
+      </ol>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

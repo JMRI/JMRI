@@ -38,7 +38,7 @@ public class HelpMenuProvider implements HelpUtil.MenuProvider {
         List<JMenuItem> items = new ArrayList<>();
 
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemHelp"));
-        HelpUtil.getGlobalHelpBroker().enableHelpOnButton(item, "index", null);
+        HelpUtil.enableHelpOnButton(item, "index");
         items.add(item);
 
         JMenuItem license = new JMenuItem(Bundle.getMessage("MenuItemLicense"));

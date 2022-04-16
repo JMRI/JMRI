@@ -1,74 +1,54 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Powerline Controllers</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Powerline Controllers</h1>
 
-      <p>This page describes how to configure JMRI to talk to
-      Powerline controllers, e.g. X10, Insteon.</p>
+      <p>This page describes how to configure JMRI to talk to Powerline controllers, e.g. X10,
+      Insteon.</p>
 
-      <a name="hardware" id="hardware"></a>
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
-      <p>The <a href="Compatibility.shtml">Powerline compatibility
-      page</a> shows which Adapters are supported by
-      JMRI.</p><a name="connecting" id="connecting"></a>
+      <p>The <a href="Compatibility.shtml">Powerline compatibility page</a> shows which Adapters
+      are supported by JMRI.</p>
 
-      <h2>Connecting</h2>
+      <h2 id="connecting">Connecting</h2>
 
-      <p>JMRI Lights work intuitively with Powerline devices. When
-      a JMRI Light is set "ON", a command is sent to the remote
-      device to set it "ON". Ditto for "OFF".</p>
+      <p>JMRI Lights work intuitively with Powerline devices. When a JMRI Light is set "ON", a
+      command is sent to the remote device to set it "ON". Ditto for "OFF".</p>
 
-      <p>There's also limited support for dimming (variable
-      brightness) Lights. See the JMRI <a href=
-      "../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">
-      "Light Control" page</a> for more information on this.</p>
+      <p>There's also limited support for dimming (variable brightness) Lights. See the JMRI
+      <a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">"Light Control"
+      page</a> for more information on this.</p>
 
-      <p>JMRI Turnouts are available for X10. When the JMRI Turnout
-      is set to "THROWN", a command is sent to the remote device to
-      set it to "BRIGHT". This is an immediate, full-power on.<br>
-      When the Turnout is set to "CLOSED", the remote device is
-      sent a command to go "OFF". Depending on the X10 hardware,
-      this may be either an immediate off, or be slowly
-      dimmed.</p>
+      <p>JMRI Turnouts are available for X10. When the JMRI Turnout is set to "THROWN", a command
+      is sent to the remote device to set it to "BRIGHT". This is an immediate, full-power on.<br>
+      When the Turnout is set to "CLOSED", the remote device is sent a command to go "OFF".
+      Depending on the X10 hardware, this may be either an immediate off, or be slowly dimmed.</p>
 
-      <a name="tools" id="tools"></a>
-      <h2>JMRI Tools</h2>
+      <h2 id="tools">JMRI Tools</h2>
       N/A
-
-      <a name="documentation" id="documentation"></a>
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
 
-      <p>For information on how to address your equipment via JMRI
-      see the <a href="Names.shtml">Powerline Names Help page</a>
-      for X10.</p>
-
+      <p>For information on how to address your equipment via JMRI see the <a href=
+      "Names.shtml">Powerline Names Help page</a> for X10.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

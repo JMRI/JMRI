@@ -36,6 +36,7 @@ public class TieToolFrameTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

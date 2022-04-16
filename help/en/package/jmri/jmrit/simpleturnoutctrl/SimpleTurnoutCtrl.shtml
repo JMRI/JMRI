@@ -1,86 +1,57 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Turnout Control</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Route Add Edit">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Turnout Control</h1>Enter the accessory number or turnout
-      system name for the accessory or turnout you wish to control
-      in the box to right of "turnout:". For example, entering 678
-      and by pressing either the Thrown or Closed button, you
-      should be able to change the state of accessory number 678 on
-      the layout. Another example, a valid turnout system name for
-      NCE could be NT456. Then by pressing either the Thrown or
-      Closed button, you should be able to change the state of
-      turnout or accessory number 456 on the layout. Another
-      example, a valid turnout system name could be IT123 which is
-      internal turnout number 123. Pressing Thrown or Closed will
-      only change the state of the internal turnout and will not
-      change a turnout on the layout. See "<a href=
-      "../../../../html/doc/Technical/Names.shtml">Names</a>" under
-      general help for more information.
-
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Turnout Control</h1>
+      Enter the accessory number or turnout system name for the accessory or turnout you wish to
+      control in the box to right of "turnout:". For example, entering 678 and by pressing either
+      the Thrown or Closed button, you should be able to change the state of accessory number 678
+      on the layout. Another example, a valid turnout system name for NCE could be NT456. Then by
+      pressing either the Thrown or Closed button, you should be able to change the state of
+      turnout or accessory number 456 on the layout. Another example, a valid turnout system name
+      could be IT123 which is internal turnout number 123. Pressing Thrown or Closed will only
+      change the state of the internal turnout and will not change a turnout on the layout. See
+      "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>" under general help for more
+      information.
       <p>For more information on JMRI Turnouts, see the <a href=
-      "../../../../html/tools/Turnouts.shtml">Turnout help
-      page</a>.</p>
+      "../../../../html/tools/Turnouts.shtml">Turnout help page</a>.</p>
 
       <h2>Turnout Control Buttons and Status</h2>
 
       <dl>
         <dt>current state:</dt>
 
-        <dd>Shows the current known state of the turnout. A turnout
-        can have four states: unknown, inconsistent, thrown, and
-        closed. The unknown state is when JMRI doesn't know if the
-        turnout is thrown or closed. The inconsistent state is when
-        a turnout on the layout is commanded to throw or close but
-        the feedback from the layout hasn't been received. Also
-        note that the inconsistent state can only occur if a
-        turnout has feedback. The thrown and closed states are what
-        the JMRI program knows or believes is the state of the
-        turnout.</dd>
+        <dd>Shows the current known state of the turnout. A turnout can have four states: unknown,
+        inconsistent, thrown, and closed. The unknown state is when JMRI doesn't know if the
+        turnout is thrown or closed. The inconsistent state is when a turnout on the layout is
+        commanded to throw or close but the feedback from the layout hasn't been received. Also
+        note that the inconsistent state can only occur if a turnout has feedback. The thrown and
+        closed states are what the JMRI program knows or believes is the state of the turnout.</dd>
 
         <dt>feedback mode:</dt>
 
-        <dd>Shows the turnout's feedback mode. Some of the
-        available <a href="#Feedback">feedback</a> modes are:
-        DIRECT, DELAYED, ONE SENSOR, TWO SENSOR, and MONITORING. A turnout
-        using DIRECT mode doesn't have feedback from the layout.
-        When a close or throw command is executed the JMRI program
-        assumes that the command always completes immediately.
-        DELAYED simulates the turnout operation taking a few seconds
-        to complete.
-        ONE SENSOR uses
-        one sensor on the layout to provide feedback on the state
-        of the turnout. TWO SENSOR uses two sensors for feedback,
-        one for closed and one for thrown. MONITORING gets feedback
-        from the system by either listening to cab commands on the
-        layout or polling the system for turnout status. See the
-        <a href=
-        "../../../../html/doc/Technical/TurnoutFeedback.shtml">turnout
-        feedback page</a> for more information.</dd>
+        <dd>
+          Shows the turnout's feedback mode. Some of the available <a href="#Feedback">feedback</a>
+          modes are: DIRECT, DELAYED, ONE SENSOR, TWO SENSOR, and MONITORING. A turnout using
+          DIRECT mode doesn't have feedback from the layout. When a close or throw command is
+          executed the JMRI program assumes that the command always completes immediately. DELAYED
+          simulates the turnout operation taking a few seconds to complete. ONE SENSOR uses one
+          sensor on the layout to provide feedback on the state of the turnout. TWO SENSOR uses two
+          sensors for feedback, one for closed and one for thrown. MONITORING gets feedback from
+          the system by either listening to cab commands on the layout or polling the system for
+          turnout status. See the <a href=
+          "../../../../html/doc/Technical/TurnoutFeedback.shtml">turnout feedback page</a> for more
+          information.
+        </dd>
 
         <dt>Thrown</dt>
 
@@ -92,31 +63,28 @@
 
         <dt>Cab operation:</dt>
 
-        <dd>Some turnouts can be locked. If the control button is
-        grayed out, the lock feature isn't available. See the
-        <a href="#NCETurnoutLockFeature">NCE Turnout lock
-        feature</a> below.</dd>
+        <dd>
+          Some turnouts can be locked. If the control button is grayed out, the lock feature isn't
+          available. See the <a href="#NCETurnoutLockFeature">NCE Turnout lock feature</a> below.
+        </dd>
       </dl>
 
-      <h3><a name="NCETurnoutLockFeature" id=
-      "NCETurnoutLockFeature"></a>NCE Turnout lock feature</h3>
+      <h3 id="NCETurnoutLockFeature">NCE Turnout lock feature</h3>
 
-      <p>The turnout lock feature allows you to selectively disable
-      accessory (turnouts) commands from cabs. By locking a
-      turnout, the JMRI program will monitor the turnout's
-      accessory address and if it detects a change command from a
-      cab, will cancel the command immediately by sending out the
-      opposite command to the turnout.</p>
+      <p>The turnout lock feature allows you to selectively disable accessory (turnouts) commands
+      from cabs. By locking a turnout, the JMRI program will monitor the turnout's accessory
+      address and if it detects a change command from a cab, will cancel the command immediately by
+      sending out the opposite command to the turnout.</p>
 
-      <p>To use this feature you must select MONITORING as the
-      feedback mode for the turnout and the NCE command station
-      must have the 2007 or newer EPROM.</p>
+      <p>To use this feature you must select MONITORING as the feedback mode for the turnout and
+      the NCE command station must have the 2007 or newer EPROM.</p>
 
-      <p>To help you select a set of turnouts to lock, a route can
-      be locked. All turnouts that are being monitored by the JMRI
-      program and are included in the route will be locked.</p>
+      <p>To help you select a set of turnouts to lock, a route can be locked. All turnouts that are
+      being monitored by the JMRI program and are included in the route will be locked.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

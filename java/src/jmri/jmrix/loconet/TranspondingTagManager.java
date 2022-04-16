@@ -17,35 +17,41 @@ import org.slf4j.LoggerFactory;
  */
 public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
-    @SuppressWarnings("deprecation")
     public TranspondingTagManager() {
-        super(new jmri.jmrix.ConflictingSystemConnectionMemo("L", "LocoNet")); // NOI18N
+        super(new jmri.jmrix.CaptiveSystemConnectionMemo("L", "LocoNet")); // NOI18N
+        storeInstance();
+    }
+
+    final void storeInstance(){
         InstanceManager.store(this, TranspondingTagManager.class);
     }
 
     @Override
-    protected TranspondingTag createNewIdTag(String systemName, String userName) {
+    @Nonnull
+    protected TranspondingTag createNewIdTag(String systemName, String userName) throws IllegalArgumentException {
         if (!systemName.startsWith(getSystemPrefix() + typeLetter() )) {
             systemName = getSystemPrefix() + typeLetter() + systemName;
         }
         return new TranspondingTag(systemName, userName);
     }
-    
+
     @Override
     @Nonnull
-    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new IdTag:{};{}", (systemName == null) ? "null" : systemName, (userName == null) ? "null" : userName);
-        }
+    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
+        log.debug("new IdTag:{};{}", systemName, (userName == null) ? "null" : userName);
         // return existing if there is one
         TranspondingTag s;
-        if ((userName != null) && ((s = (TranspondingTag)getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+        if (userName != null) {
+            s = (TranspondingTag)getByUserName(userName);
+            if (s != null) {
+                if (getBySystemName(systemName) != s) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+                }
+                return s;
             }
-            return s;
         }
-        if ((s = (TranspondingTag) getBySystemName(systemName)) != null) {
+        s = (TranspondingTag) getBySystemName(systemName);
+        if (s != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
@@ -59,11 +65,6 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
         // save in the maps
         register(s);
-
-        // if that failed, blame it on the input arguments
-        if (s == null) {
-            throw new IllegalArgumentException();
-        }
 
         return s;
     }

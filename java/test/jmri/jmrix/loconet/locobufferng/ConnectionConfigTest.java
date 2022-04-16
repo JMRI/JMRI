@@ -1,0 +1,30 @@
+package jmri.jmrix.loconet.locobufferng;
+
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+
+/**
+ * Tests for ConnectionConfig class.
+ *
+ * @author Paul Bender Copyright (C) 2016, 2021
+ **/
+public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
+
+   @BeforeEach
+   @Override
+   public void setUp() {
+        JUnitUtil.setUp();
+
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new ConnectionConfig();
+   }
+
+   @AfterEach
+   @Override
+   public void tearDown(){
+        cc = null;
+        JUnitUtil.tearDown();
+   }
+
+}

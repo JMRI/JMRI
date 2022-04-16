@@ -14,6 +14,7 @@ import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  * Test functioning of SwitchboardEditor.
@@ -25,7 +26,7 @@ import jmri.util.JUnitUtil;
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
     // SwitchboardEditor e is already present in super
-    EditorFrameOperator jfo;
+    private EditorFrameOperator jfo;
 
     @Override
     @Disabled("ChangeView is not applicable to SwitchBoards")
@@ -131,7 +132,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assertions.assertEquals(0, e.getRows(), "Default Rows 0"); // autoRows on
         e.setRows(10); // will turn off autoRows checkboxmenu
         Assertions.assertEquals(10, e.getRows(), "Rows should now be be 10");
-        e.setShowUserName(false);
+        e.setShowUserName(0);
         Assertions.assertEquals("no", e.showUserName(), "Show User Name is No");
         e.setSwitchShape("symbol");
         Assertions.assertEquals("symbol", e.getSwitchShape(), "Switch shape set to 'symbol'");
@@ -155,7 +156,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assertions.assertNotNull(sm.getSensor("IS20"));
         Objects.requireNonNull(sm.getSensor("IS20")).setUserName("twenty"); // make it harder to fetch label
         e.updatePressed(); // recreate to connect switch "IS20" to Sensor sensor20
-        Assertions.assertEquals(24, e.getSwitches().size(), "24 (connected) item displayed");
+        Assertions.assertEquals(24, e.getSwitches().size(), "24 (connected) items displayed");
         Assertions.assertEquals(Sensor.UNKNOWN, sensor20.getState(), "sensor20 state is Unknown");
         Assertions.assertNotNull(e.getSwitch("IS20"));
         Assertions.assertEquals("IS20: ?", e.getSwitch("IS20").getIconLabel(), "IS20 displays Unknown");
@@ -190,7 +191,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         e.getSwitch("IL1").doMouseClicked(null); // no result, so nothing to test
         Assertions.assertNull(e.getSwitch("IL1").getLight(), "Click on unconnected switch");
         Light light1 = ((LightManager) e.getManager('L')).provideLight("IL1");
-        Assertions.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));
+        Assertions.assertNotNull(InstanceManager.lightManagerInstance().getLight("IL1"));
         e.updatePressed(); // connect switch IL1 to Light IL1
         Assertions.assertEquals(Light.OFF, light1.getState(), "IL1 is Off");
 
@@ -229,6 +230,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
         e = new SwitchboardEditor("Switchboard Editor Test");
         e.setVisible(true);
+        JemmyUtil.waitFor(e);
         jfo = new EditorFrameOperator(e);
     }
 
@@ -240,6 +242,8 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
             jfo.deleteViaFileMenuWithConfirmations();
             e = null;
         }
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();

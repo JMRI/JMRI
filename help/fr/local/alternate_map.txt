@@ -1,0 +1,2 @@
+html.tools.scripting.ex_set_turnouts = html/tools/scripting/ex_set_turnouts.shtml
+package.jmri.jmrit.vsdecoder.VSDecoderFrame_1 = package/jmri/jmrit/vsdecoder/VSDecoderFrame_1.shtml

@@ -1,6 +1,12 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import org.jdom2.Element;
+
+/**
+ * Superclass for all VSD trigger types.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -13,12 +19,8 @@ package jmri.jmrit.vsdecoder;
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import org.jdom2.Element;
-
 abstract public class Trigger implements PropertyChangeListener {
 
     static public enum TriggerType {
@@ -42,10 +44,10 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     String trigger_name; // Name for the trigger object
-    String event_name;  // event to respond to
-    String target_name; // target to act on
+    String event_name;   // event to respond to
+    String target_name;  // target to act on
 
-    VSDSound target;    // sound to work on
+    VSDSound target;     // sound to work on
     private TargetAction target_action; // action to take
     private TriggerType trigger_type;
     TriggerListener callback;
@@ -67,7 +69,7 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     public String getName() {
-        return (trigger_name);
+        return trigger_name;
     }
 
     public void setEventName(String en) {
@@ -75,7 +77,7 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     public String getEventName() {
-        return (event_name);
+        return event_name;
     }
 
     public void setTarget(VSDSound tgt) {
@@ -83,7 +85,7 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     public VSDSound getTarget() {
-        return (target);
+        return target;
     }
 
     public void setTargetName(String tn) {
@@ -91,7 +93,7 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     public String getTargetName() {
-        return (target_name);
+        return target_name;
     }
 
     public void setTargetAction(Trigger.TargetAction ta) {
@@ -99,7 +101,7 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     public Trigger.TargetAction getTargetAction() {
-        return (target_action);
+        return target_action;
     }
 
     public void setTriggerType(Trigger.TriggerType ta) {
@@ -107,7 +109,7 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     public Trigger.TriggerType getTriggerType() {
-        return (trigger_type);
+        return trigger_type;
     }
 
     public void setCallback(TriggerListener cb) {
@@ -115,7 +117,7 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     public TriggerListener getCallback() {
-        return (callback);
+        return callback;
     }
 
     public Element getXml() {
@@ -123,7 +125,7 @@ abstract public class Trigger implements PropertyChangeListener {
         me.setAttribute("name", trigger_name);
         me.setAttribute("type", "empty");
         // do something, eventually...
-        return (me);
+        return me;
     }
 
     public void setXml(Element e) {
@@ -141,4 +143,5 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     //private static final Logger log = LoggerFactory.getLogger(Trigger.class);
+
 }

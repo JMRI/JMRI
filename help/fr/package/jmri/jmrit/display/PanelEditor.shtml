@@ -1,462 +1,293 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: L'&Eacute;diteur de Panneaux</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: L'Éditeur de Panneaux</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Panel Editor"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>L'Éditeur de Panneaux</h1>
+      <img src="PanelEditor.png" align="right" alt="">
+      <p>Un panneau est un ensemble d'icônes représentant les différentes composantes d'un réseau.
+      Certaines des icônes disponibles dans JMRI comprennent les aiguillages, signaux, et capteurs.
+      Vous pouvez inclure une icône de fond pour votre panneau et ajouter le contenu de la mémoire
+      et/ou variables rapport.</p>
 
-      <h1>L'&Eacute;diteur de Panneaux</h1><img src=
-      "PanelEditor.png" align="right">
+      <p>Les contrôles sur le panneau lui-même comme décrits sur un <a href=
+      "PanelTarget.shtml">page d'aide séparée</a> .</p>
 
-      <p>Un panneau est un ensemble d'ic&ocirc;nes
-      repr&eacute;sentant les diff&eacute;rentes composantes d'un
-      r&eacute;seau. Certaines des ic&ocirc;nes disponibles dans
-      JMRI comprennent les aiguillages, signaux, et capteurs. Vous
-      pouvez inclure une ic&ocirc;ne de fond pour votre panneau et
-      ajouter le contenu de la m&eacute;moire et/ou variables
-      rapport.</p>
-
-      <p>Les contr&ocirc;les sur le panneau lui-m&ecirc;me comme
-      d&eacute;crits sur un <a href="PanelTarget.shtml">page d'aide
-      s&eacute;par&eacute;e</a> .</p>
-
-      <p>Les panneaux sont cr&eacute;&eacute;s avec
-      l'&Eacute;diteur de Panneaux, ce qui vous permet de placer
-      des images pour repr&eacute;senter les aiguillages, les
-      t&ecirc;tes de signal, capteurs, m&acirc;ts de signaux,
+      <p>Les panneaux sont créés avec l'Éditeur de Panneaux, ce qui vous permet de placer des
+      images pour représenter les aiguillages, les têtes de signal, capteurs, mâts de signaux,
       travaux de voie, etc</p>
 
-      <p>Si vous voulez voir des tutoriels qui montrent comment
-      chacune de ces choses sont r&eacute;ellement faites sur
-      l'&eacute;cran d'ordinateur, s'il vous pla&icirc;t voir le <a href=
-      "https://jmri.org/community/clinics/">Page JMRI Clinics</a>.
-      </p>
+      <p>Si vous voulez voir des tutoriels qui montrent comment chacune de ces choses sont
+      réellement faites sur l'écran d'ordinateur, s'il vous plaît voir le <a href=
+      "https://jmri.org/community/clinics/">Page JMRI Clinics</a>.</p>
 
-      <h2>Contenu de l'&Eacute;diteur de Panneaux</h2>
+      <h2>Contenu de l'Éditeur de Panneaux</h2>
 
-      <p>L'&eacute;diteur de panneau se compose des
-      &eacute;l&eacute;ments suivants:</p>
+      <p>L'éditeur de panneau se compose des éléments suivants:</p>
 
       <ul>
-        <li>Deux champs texte, <b>x:</b> et <b>y:</b> , en
-        pr&eacute;cisant o&ugrave; seront ins&eacute;r&eacute;s (en
-        pixels) de nouveaux composants sur le panneau. Vous pouvez
-        g&eacute;n&eacute;ralement ignorer ces derniers, car une
-        fois que les composants ont &eacute;t&eacute;
-        ins&eacute;r&eacute;s, vous pouvez les glisser en tenant la
-        m&eacute;ta (Apple, commande; Linux &amp; Windows, le
-        bouton de droite) touche enfonc&eacute;e</li>
+        <li>Deux champs texte, <strong>x:</strong> et <strong>y:</strong> , en précisant où seront
+        insérés (en pixels) de nouveaux composants sur le panneau. Vous pouvez généralement ignorer
+        ces derniers, car une fois que les composants ont été insérés, vous pouvez les glisser en
+        tenant la méta (Apple, commande; Linux &amp; Windows, le bouton de droite) touche
+        enfoncée</li>
 
-        <li>Un bouton pour d&eacute;finir le titre du panneau que
-        vous &eacute;ditez. Appuyez sur le bouton et vous serez
-        invit&eacute; &agrave; saisir le texte.</li>
+        <li>Un bouton pour définir le titre du panneau que vous éditez. Appuyez sur le bouton et
+        vous serez invité à saisir le texte.</li>
 
-        <li>Un bouton pour ajouter une &eacute;tiquette de texte.
-        Mettre le texte souhait&eacute; dans le champ et cliquez
-        sur le bouton. Vous pouvez faire glisser l'&eacute;tiquette
-        autour apr&egrave;s l'avoir ins&eacute;rer, mais vous ne
-        pouvez pas actuellement modifier le texte
-        ult&eacute;rieurement.</li>
+        <li>Un bouton pour ajouter une étiquette de texte. Mettre le texte souhaité dans le champ
+        et cliquez sur le bouton. Vous pouvez faire glisser l'étiquette autour après l'avoir
+        insérer, mais vous ne pouvez pas actuellement modifier le texte ultérieurement.</li>
 
-        <li style="list-style: none"><img src="PanelEditor2.png"
-        align="right"></li>
+        <li style="list-style: none"><img src="PanelEditor2.png" align="right" alt="">
+        </li>
 
-        <li>Un menu d&eacute;roulant o&ugrave; vous pouvez choisir
-        le type d'ic&ocirc;ne ou de donn&eacute;es que vous pouvez
+        <li>Un menu déroulant où vous pouvez choisir le type d'icône ou de données que vous pouvez
         mettre dans la panneau.
-
           <ul>
-            <li>Ajouter Ic&ocirc;ne Aiguillage Droit</li>
+            <li>Ajouter Icône Aiguillage Droit</li>
 
-            <li>Ajouter Ic&ocirc;ne Aiguillage gauche</li>
+            <li>Ajouter Icône Aiguillage gauche</li>
 
-            <li>Ajouter Ic&ocirc;ne Capteur</li>
+            <li>Ajouter Icône Capteur</li>
 
-            <li>Ajouter Ic&ocirc;ne T&ecirc;te de Signal</li>
+            <li>Ajouter Icône Tête de Signal</li>
 
-            <li>Ajouter Ic&ocirc;ne M&acirc;t de Signal</li>
+            <li>Ajouter Icône Mât de Signal</li>
 
-            <li>Ajouter Valeur M&eacute;moire</li>
+            <li>Ajouter Valeur Mémoire</li>
 
             <li>Ajouter Valeur Journal</li>
 
             <li>Ajouter image de fond</li>
 
-            <li>Ajouter Ic&ocirc;nes Multicapteurs (exemples:
-            leviers et interrupteurs)</li>
+            <li>Ajouter Icônes Multicapteurs (exemples: leviers et interrupteurs)</li>
 
-            <li>Ajouter Ic&ocirc;ne Journal RPS</li>
+            <li>Ajouter Icône Journal RPS</li>
 
             <li>Ajouter Horloge Rapide</li>
 
-            <li>Ajouter Ic&ocirc;ne (non associ&eacute;s &agrave;
-            tout appareil JMRI)</li>
-          </ul>Dans la plupart des cas, la s&eacute;lection de ces
-          &eacute;l&eacute;ments va ouvrir une fen&ecirc;tre
-          &agrave; partir de laquelle les ic&ocirc;nes ou les
-          valeurs peuvent &ecirc;tre choisies. Pour les articles se
-          r&eacute;f&eacute;rant &agrave; un dispositif de JMRI
-          (par exemple, un aiguillage, un capteur, etc) une liste
-          de s&eacute;lection des p&eacute;riph&eacute;riques
-          disponibles s'affiche. De l&agrave;, vous
-          s&eacute;lectionnez l'appareil et l'ic&ocirc;ne pour le
-          repr&eacute;senter dans la panneau. Exceptions faites des
-          M&eacute;moire et articles Rapport o&ugrave; la
-          s&eacute;lection met la la valeur de
-          l'&eacute;l&eacute;ment dans la panneau.
-          L'&eacute;l&eacute;ment de fond fournit des images pour
-          le fond du panneau. De plus amples d&eacute;tails sur
-          l'utilisation de ces fen&ecirc;tres sont d&eacute;crites
-          sur la page de <a href=
-          "IconAdder.shtml">Ic&ocirc;nes</a>.<br>
-          Les deux choix pour les ic&ocirc;nes qui n'ouvrent pas
-          les fen&ecirc;tres sont le Journal RPS et l'Horloge
-          Rapide. Ces &eacute;l&eacute;ments installent eux -
-          m&ecirc;mes leurs ic&ocirc;nes directement dans le
+            <li>Ajouter Icône (non associés à tout appareil JMRI)</li>
+          </ul>
+          Dans la plupart des cas, la sélection de ces éléments va ouvrir une fenêtre à partir de
+          laquelle les icônes ou les valeurs peuvent être choisies. Pour les articles se référant à
+          un dispositif de JMRI (par exemple, un aiguillage, un capteur, etc) une liste de
+          sélection des périphériques disponibles s'affiche. De là, vous sélectionnez l'appareil et
+          l'icône pour le représenter dans la panneau. Exceptions faites des Mémoire et articles
+          Rapport où la sélection met la la valeur de l'élément dans la panneau. L'élément de fond
+          fournit des images pour le fond du panneau. De plus amples détails sur l'utilisation de
+          ces fenêtres sont décrites sur la page de <a href="IconAdder.shtml">Icônes</a>.<br>
+          Les deux choix pour les icônes qui n'ouvrent pas les fenêtres sont le Journal RPS et
+          l'Horloge Rapide. Ces éléments installent eux - mêmes leurs icônes directement dans le
           panneau.
         </li>
 
-        <li>Une case &agrave; cocher pour rendre les menus
-        contextuels actifs. Quand elle est coch&eacute;e, un petit
-        menu contextuel appara&icirc;tra lorsque vous cliquez -
-        droit sur une ic&ocirc;ne. La plupart des ic&ocirc;nes vous
-        permettent de pivoter et de supprimer l'ic&ocirc;ne. Il y
-        d'autres options en fonction du type d'ic&ocirc;ne, par
-        exemple, vous pouvez d&eacute;sactiver un aiguillage afin
-        qu'il ne contr&ocirc;le rien en r&eacute;alit&eacute;.
-
-          <p>Le menu contextuel peut &eacute;galement changer si la
-          configuration d'un &eacute;l&eacute;ment est
-          modifi&eacute;. Par exemple, si vous ajoutez des
-          commentaires &agrave; un aiguillage, le menu contextuel
-          comprend un nouveau choix appel&eacute;
-          "Trois&Eacute;tats". Trois&Eacute;tat vous permet
-          d'utiliser l'ic&ocirc;ne incompatible, ce qui est l'une
-          des quatre ic&ocirc;nes possibles disponibles pour un
-          aiguillage. Normalement, lorsque vous cliquez d'abord sur
-          une ic&ocirc;ne d'aiguillage elle commande au
-          r&eacute;seau de changer l'&eacute;tat de l'aiguillage.
-          Si vous utilisez une r&eacute;trosignalisation,
-          l'affichage de l'ic&ocirc;ne va attendre la
-          r&eacute;ponse du r&eacute;seau avant de modifier
-          l'ic&ocirc;ne de l'aiguillage en position directe ou
-          d&eacute;vi&eacute;s. En utilisant Tristate,
-          l'ic&ocirc;ne va changer imm&eacute;diatement &agrave; l'
-          ic&ocirc;ne incoh&eacute;rente lorsque l'aiguillage est
-          cliqu&eacute;. L'incoh&eacute;rence dans ce cas signifie
-          que j'ai command&eacute; le changement de l'aiguillage et
-          nous sommes maintenant dans l'attente de la
-          r&eacute;ponse du r&eacute;seau . Si et quand le
-          r&eacute;seau retourne "l'&eacute;tat connu" ou
-          r&eacute;el l'aiguillage, l'ic&ocirc;ne va changer pour
-          cet &eacute;tat t. Si vous n'utilisez pas Tristate,
-          lorsque vous cliquez sur l'ic&ocirc;ne, il peut prendre
-          un certain temps (quelques millisecondes &agrave;
-          quelques secondes en fonction du syst&egrave;me) avant
-          que l'ic&ocirc;ne r&eacute;ponde avec l'&eacute;tat connu
-          de l'aiguillage.</p>
+        <li>Une case à cocher pour rendre les menus contextuels actifs. Quand elle est cochée, un
+        petit menu contextuel apparaîtra lorsque vous cliquez - droit sur une icône. La plupart des
+        icônes vous permettent de pivoter et de supprimer l'icône. Il y d'autres options en
+        fonction du type d'icône, par exemple, vous pouvez désactiver un aiguillage afin qu'il ne
+        contrôle rien en réalité.
+          <p>Le menu contextuel peut également changer si la configuration d'un élément est
+          modifié. Par exemple, si vous ajoutez des commentaires à un aiguillage, le menu
+          contextuel comprend un nouveau choix appelé "TroisÉtats". TroisÉtat vous permet
+          d'utiliser l'icône incompatible, ce qui est l'une des quatre icônes possibles disponibles
+          pour un aiguillage. Normalement, lorsque vous cliquez d'abord sur une icône d'aiguillage
+          elle commande au réseau de changer l'état de l'aiguillage. Si vous utilisez une
+          rétrosignalisation, l'affichage de l'icône va attendre la réponse du réseau avant de
+          modifier l'icône de l'aiguillage en position directe ou déviés. En utilisant Tristate,
+          l'icône va changer immédiatement à l' icône incohérente lorsque l'aiguillage est cliqué.
+          L'incohérence dans ce cas signifie que j'ai commandé le changement de l'aiguillage et
+          nous sommes maintenant dans l'attente de la réponse du réseau . Si et quand le réseau
+          retourne "l'état connu" ou réel l'aiguillage, l'icône va changer pour cet état t. Si vous
+          n'utilisez pas Tristate, lorsque vous cliquez sur l'icône, il peut prendre un certain
+          temps (quelques millisecondes à quelques secondes en fonction du système) avant que
+          l'icône réponde avec l'état connu de l'aiguillage.</p>
         </li>
 
-        <li>Tous les articles du panneau peuvent &ecirc;tre
-        repositionn&eacute;s. Quand il est coch&eacute; vous pouvez
-        d&eacute;placer l'article dans votre panneau en le
-        s&eacute;lectionnant et en le faisant glisser avec la
-        touche Meta. Les utilisateurs de Linux et Windows peuvent
-        tenir le clic droit enfonc&eacute; et le faire glisser. Par
-        d&eacute;faut de nouveaux &eacute;l&eacute;ments peuvent
-        &ecirc;tre repositionn&eacute;s m&ecirc;me si cette case
-        n'est pas coch&eacute;e.</li>
+        <li>Tous les articles du panneau peuvent être repositionnés. Quand il est coché vous pouvez
+        déplacer l'article dans votre panneau en le sélectionnant et en le faisant glisser avec la
+        touche Meta. Les utilisateurs de Linux et Windows peuvent tenir le clic droit enfoncé et le
+        faire glisser. Par défaut de nouveaux éléments peuvent être repositionnés même si cette
+        case n'est pas cochée.</li>
 
-        <li>Voir le point de coordonn&eacute;es des articles dans
-        un menu contextuel. Quand elle est coch&eacute;e, le menu
-        contextuel des objet va inclure l'&eacute;l&eacute;ment
-        coordonn&eacute;es X et Y. Cela peut vous aider &agrave;
-        mieux positionner vos ic&ocirc;nes dans la panneau.</li>
+        <li>Voir le point de coordonnées des articles dans un menu contextuel. Quand elle est
+        cochée, le menu contextuel des objet va inclure l'élément coordonnées X et Y. Cela peut
+        vous aider à mieux positionner vos icônes dans la panneau.</li>
 
-        <li>Le Panneau de commande de la disposition des articles.
-        Normalement vous voulez commander votre r&eacute;seau, donc
-        laisser cette case coch&eacute;e. Sinon, d&eacute;cochez la
-        case si vous ne voulez pas que votre TCO envoie des
-        commandes &agrave; votre r&eacute;seau.</li>
+        <li>Le Panneau de commande de la disposition des articles. Normalement vous voulez
+        commander votre réseau, donc laisser cette case cochée. Sinon, décochez la case si vous ne
+        voulez pas que votre TCO envoie des commandes à votre réseau.</li>
 
-        <li>Le panneau a un menu. Une fois que vous n'avez plus
-        besoin de changer ou de modifier votre TCO, vous pouvez
-        d&eacute;sactiver la possibilit&eacute; d'utiliser
-        l'&eacute;diteur de panneau. La seule fa&ccedil;on de
-        r&eacute;-activer l'&eacute;diteur est d'&eacute;diter le
-        fichier de panneau. En utilisant un simple &Eacute;diteur
-        (Nodepad pour les utilisateurs de Window) ou un
-        &eacute;diteur XML, ouvrez votre panneau et trouver Menu
-        panneau = "no" et changez "no" &agrave; "yes" et
-        enregistrez le fichier. La panneau affichera maintenant le
-        menu la prochaine fois que vous chargerez le panneau dans
+        <li>Le panneau a un menu. Une fois que vous n'avez plus besoin de changer ou de modifier
+        votre TCO, vous pouvez désactiver la possibilité d'utiliser l'éditeur de panneau. La seule
+        façon de ré-activer l'éditeur est d'éditer le fichier de panneau. En utilisant un simple
+        Éditeur (Nodepad pour les utilisateurs de Window) ou un éditeur XML, ouvrez votre panneau
+        et trouver Menu panneau = "no" et changez "no" à "yes" et enregistrez le fichier. La
+        panneau affichera maintenant le menu la prochaine fois que vous chargerez le panneau dans
         PanelPro.</li>
 
-        <li>Barre de D&eacute;filement de la panneau. (JMRI 2.5.2
-        et versions ult&eacute;rieures). Vous permet de choisir
-        quelles barres de d&eacute;filement choisir pour
-        afficher.</li>
+        <li>Barre de Défilement de la panneau. (JMRI 2.5.2 et versions ultérieures). Vous permet de
+        choisir quelles barres de défilement choisir pour afficher.</li>
       </ul>
 
-      <h2>Apr&egrave;s avoir Cr&eacute;&eacute; un panneau</h2>
+      <h2>Après avoir Créé un panneau</h2>
 
-      <p>Apr&egrave;s avoir r&eacute;cup&eacute;r&eacute; le
-      panneau de la mani&egrave;re que vous voulez, vous devez
-      utiliser l'entr&eacute;e "Sauvegarder panneau... " dans le
-      menu du " Panneau " pour l'&eacute;crire dans un fichier
+      <p>Après avoir récupéré le panneau de la manière que vous voulez, vous devez utiliser
+      l'entrée "Sauvegarder panneau... " dans le menu du " Panneau " pour l'écrire dans un fichier
       XML.</p>
 
-      <h3>Ic&ocirc;nes disponibles</h3>La biblioth&egrave;que
-      contient beaucoup d'ic&ocirc;nes JMRI Contribu&eacute;es pour
-      repr&eacute;senter les panneaux CTC , LED, etc Vous pouvez
-      les parcourir &agrave; l'aide de l'arborescence des fichiers
-      dans Changer le cadre des ic&ocirc;ne.
+      <h3>Icônes disponibles</h3>
+      La bibliothèque contient beaucoup d'icônes JMRI Contribuées pour représenter les panneaux CTC
+      , LED, etc Vous pouvez les parcourir à l'aide de l'arborescence des fichiers dans Changer le
+      cadre des icône.
+      <p>Chacune des fenêtres Éditeur d'Icône est un Menu <strong>Trouver des Icônes</strong>qui
+      offre plusieurs façons de trouver et d'acquérir des icônes supplémentaires à placer dans
+      votre panneau. Voir l' <a href="IconAdder.shtml">Éditeurs de pages d'Icônes</a> pour plus de
+      détails.</p>
 
-      <p>Chacune des fen&ecirc;tres &Eacute;diteur d'Ic&ocirc;ne
-      est un Menu <b>Trouver des Ic&ocirc;nes</b>qui offre
-      plusieurs fa&ccedil;ons de trouver et d'acqu&eacute;rir des
-      ic&ocirc;nes suppl&eacute;mentaires &agrave; placer dans
-      votre panneau. Voir l' <a href=
-      "IconAdder.shtml">&Eacute;diteurs de pages d'Ic&ocirc;nes</a>
-      pour plus de d&eacute;tails.</p>
+      <h2>D'autres Types de Panneaux</h2>
+      Comme c'est à base d'icônes, vous pouvez créer des panneaux qui ont l'air de ce que vous
+      voulez. Par exemple, au lieu d'utiliser le suivi schématiques des icônes pour les
+      aiguillages, vous pouvez utiliser de petites images des leviers et des plaques sur la machine
+      de la CTC. Ceci vous donnerait des leviers "mécaniques" que vous pouvez retourner en arrière
+      avec un clic.
+      <p>Avec <a href="ControlPanelEditor.shtml">l'Éditeur de Panneau de Commande</a> ou <a href=
+      "LayoutEditor.shtml">l'Éditeur de Réseau</a> c'est possible de créer un panneau où les lignes
+      des "voies" changent de couleur pour indiquer si la piste est occupée.</p>
 
-      <h2>D'autres Types de Panneaux</h2>Comme c'est &agrave; base
-      d'ic&ocirc;nes, vous pouvez cr&eacute;er des panneaux qui ont
-      l'air de ce que vous voulez. Par exemple, au lieu d'utiliser
-      le suivi sch&eacute;matiques des ic&ocirc;nes pour les
-      aiguillages, vous pouvez utiliser de petites images des
-      leviers et des plaques sur la machine de la CTC. Ceci vous
-      donnerait des leviers "m&eacute;caniques" que vous pouvez
-      retourner en arri&egrave;re avec un clic.
+      <p>In JMRI it's also possible to create a panel where the "track" lines change color to
+      indicate whether the block is occupied by switching to either <a href=
+      "ControlPanelEditor.shtml">Control Panel Editor</a> (using Indicator Track icons) or <a href=
+      "LayoutEditor.shtml">Layout Editor</a>.</p>
 
-      <p>Avec <a href="ControlPanelEditor.shtml">l'&#201;diteur
-      de Panneau de Commande</a> ou <a href=
-      "LayoutEditor.shtml">l'&Eacute;diteur de R&eacute;seau</a> c'est possible
-      de cr&eacute;er un panneau o&ugrave; les lignes des "voies" changent
-      de couleur pour indiquer si la piste est occup&eacute;e.</p>
+      <h2>Manipulation des icônes</h2>
+      Pour déplacer une icône dans le panneau, vous avez "méta-tirer". Sur un Mac, c'est "la touche
+      cmd et faites glisser le curseur"; sur Linux ou Windows, "tenir le bouton droit de la souris
+      cliquez et faites glisser le curseur ".
+      <p>Il y a aussi un menu contextuel (ctrl-clic sur un Mac; clic-droit sur Linux ou Windows)
+      qui fournira diverses façons de manipuler l'icône. Il vous permettra de faire tournez l'icône
+      pour qu'elle pointe dans la direction que vous voulez. Des étiquettes de texte peuvent avoir
+      leur police, la taille et la couleur changées. Vous pouvez également supprimer des icônes du
+      panneau avec le menu contextuel.</p>
 
-      <p>In JMRI it's also possible to create a panel where the "track"
-      lines change color to indicate whether the block is occupied by
-      switching to either <a href="ControlPanelEditor.shtml">Control
-        Panel Editor</a> (using Indicator Track icons) or
-      <a href="LayoutEditor.shtml">Layout Editor</a>.</p>
+      <h3>Rotation et Mise à l'Échelle</h3>
 
-      <h2>Manipulation des ic&ocirc;nes</h2>Pour d&eacute;placer
-      une ic&ocirc;ne dans le panneau, vous avez
-      "m&eacute;ta-tirer". Sur un Mac, c'est "la touche cmd et
-      faites glisser le curseur"; sur Linux ou Windows, "tenir le
-      bouton droit de la souris cliquez et faites glisser le
-      curseur ".
+      <p>Lorsque la case pour montrer les coordonnées d'une icône est cochée, l'icône peut être
+      réduite ou pivoter d'un nombre arbitraire de degrés. Lorsque cette case est cochée, deux
+      éléments supplémentaires apparaissent dans le menu contextuel de l'icône - <strong>Rotation
+      (degrés )...</strong> et <strong>Échelle (pourcentage )...</strong>. Lorsque ces éléments
+      sont sélectionnés, une boîte de texte apparaîtra près de l'icône et demandera un chiffre.
+      Dans le cas de "Rotation (degrés), un entier positif ou négatif qui tournera l'icône du
+      nombre de degrés. Dans le cas de "Échelle (de pourcentage), un nombre positif est le
+      pourcentage pour augmenter ou diminuer la taille de l'icône.</p>
 
-      <p>Il y a aussi un menu contextuel (ctrl-clic sur un Mac;
-      clic-droit sur Linux ou Windows) qui fournira diverses
-      fa&ccedil;ons de manipuler l'ic&ocirc;ne. Il vous permettra
-      de faire tournez l'ic&ocirc;ne pour qu'elle pointe dans la
-      direction que vous voulez. Des &eacute;tiquettes de texte
-      peuvent avoir leur police, la taille et la couleur
-      chang&eacute;es. Vous pouvez &eacute;galement supprimer des
-      ic&ocirc;nes du panneau avec le menu contextuel.</p>
+      <p>L'élément <strong>Rotation (Orthogonale)</strong> tourne l'icône de 90 degrés à chaque
+      fois qu'il est sélectionné. Choisir un élément de rotation alternatif réinitialise la
+      rotation à l'ancienne image de l'icône par défaut. Par exemple, si l'icône a été réduite à
+      75% et fixée à 30 degrés, puis "Rotation (Orthogonale) est sélectionné, l'icône sera de
+      retour à sa taille d'origine et d'orientation.</p>
 
-      <h3>Rotation et Mise &agrave; l'&Eacute;chelle</h3>
+      <h3>Déplacement et Alignement de Groupe</h3>
 
-      <p>Lorsque la case pour montrer les coordonn&eacute;es d'une
-      ic&ocirc;ne est coch&eacute;e, l'ic&ocirc;ne peut &ecirc;tre
-      r&eacute;duite ou pivoter d'un nombre arbitraire de
-      degr&eacute;s. Lorsque cette case est coch&eacute;e, deux
-      &eacute;l&eacute;ments suppl&eacute;mentaires apparaissent
-      dans le menu contextuel de l'ic&ocirc;ne - <b>Rotation
-      (degr&eacute;s )...</b> et <b>&Eacute;chelle (pourcentage
-      )...</b>. Lorsque ces &eacute;l&eacute;ments sont
-      s&eacute;lectionn&eacute;s, une bo&icirc;te de texte
-      appara&icirc;tra pr&egrave;s de l'ic&ocirc;ne et demandera un
-      chiffre. Dans le cas de "Rotation (degr&eacute;s), un entier
-      positif ou n&eacute;gatif qui tournera l'ic&ocirc;ne du
-      nombre de degr&eacute;s. Dans le cas de "&Eacute;chelle (de
-      pourcentage), un nombre positif est le pourcentage pour
-      augmenter ou diminuer la taille de l'ic&ocirc;ne.</p>
+      <p>Lorsque la case est cochée pour le repositionnement d'icônes, des groupes d'icônes peuvent
+      être sélectionnés. En appuyant sur le bouton de la souris enfoncé dans un espace ouvert et en
+      faisant glisser vous allez dessiner un rectangle en pointillé rouge. Toutes les icônes qui se
+      trouvent dans cette "clôture" sont des éléments qui sont sélectionnés. Ces icônes dans la
+      "clôture" qui n'ont de position <strong>fixes</strong> ou la <strong>Position
+      Verrouillée</strong> cochée dans leur menu contextuel peuvent être déplacées comme un groupe.
+      Glisser l'un des icônes repositionnables situées à l'intérieur de la clôture va déplacer le
+      groupe entier. En cliquant dans un environnement ouvert va supprimer la "clôture" et
+      dégrouper les icônes.</p>
 
-      <p>L'&eacute;l&eacute;ment <b>Rotation (Orthogonale)</b>
-      tourne l'ic&ocirc;ne de 90 degr&eacute;s &agrave; chaque fois
-      qu'il est s&eacute;lectionn&eacute;. Choisir un
-      &eacute;l&eacute;ment de rotation alternatif
-      r&eacute;initialise la rotation &agrave; l'ancienne image de
-      l'ic&ocirc;ne par d&eacute;faut. Par exemple, si
-      l'ic&ocirc;ne a &eacute;t&eacute; r&eacute;duite &agrave; 75%
-      et fix&eacute;e &agrave; 30 degr&eacute;s, puis "Rotation
-      (Orthogonale) est s&eacute;lectionn&eacute;, l'ic&ocirc;ne
-      sera de retour &agrave; sa taille d'origine et
-      d'orientation.</p>
+      <p>En outre, les icônes regroupées peuvent être alignées horizontalement et verticalement.
+      Lorsque regroupées, les icônes ont deux éléments de menu dans leur menu contextuel :
+      <strong>Aligner verticalement</strong> et <strong>Aligner horizontalement</strong>. Encore
+      une fois, les icônes qui ne sont pas groupées fixes ou verrouillées peuvent être alignées
+      avec soit leur bord gauche (coordonnée x) égale ou supérieur bords (Coordonnée y) égale. Ces
+      éléments de menu disparaîssent lorsque les icônes sont dissociées.</p>
 
-      <h3>D&eacute;placement et Alignement de Groupe</h3>
+      <p>Une autre caractéristique de regrouper les icônes, c'est qu'elles peuvent être
+      verrouillées (fixe) et déverrouillées (non fixé) comme un groupe lorsque l'un des élément du
+      groupe du menu contextuel pour verrouiller ou fixer est bien coché.</p>
 
-      <p>Lorsque la case est coch&eacute;e pour le repositionnement
-      d'ic&ocirc;nes, des groupes d'ic&ocirc;nes peuvent &ecirc;tre
-      s&eacute;lectionn&eacute;s. En appuyant sur le bouton de la
-      souris enfonc&eacute; dans un espace ouvert et en faisant
-      glisser vous allez dessiner un rectangle en pointill&eacute;
-      rouge. Toutes les ic&ocirc;nes qui se trouvent dans cette
-      "cl&ocirc;ture" sont des &eacute;l&eacute;ments qui sont
-      s&eacute;lectionn&eacute;s. Ces ic&ocirc;nes dans la
-      "cl&ocirc;ture" qui n'ont de position <b>fixes</b> ou la
-      <b>Position Verrouill&eacute;e</b> coch&eacute;e dans leur
-      menu contextuel peuvent &ecirc;tre d&eacute;plac&eacute;es
-      comme un groupe. Glisser l'un des ic&ocirc;nes
-      repositionnables situ&eacute;es &agrave; l'int&eacute;rieur
-      de la cl&ocirc;ture va d&eacute;placer le groupe entier. En
-      cliquant dans un environnement ouvert va supprimer la
-      "cl&ocirc;ture" et d&eacute;grouper les ic&ocirc;nes.</p>
+      <p>Lorsque vous placez des icônes sur le dessus d'une autre, l'icône du haut peut empêcher le
+      déplacement de l'icône inférieure. Par exemple, lorsque de l'étiquetage d'un aiguillage, vous
+      n'êtes pas en mesure de repositionner l'étiquette sans glisser l'aiguillage au-dessus.
+      Cependant, si vous appuyez sur la touche Shift avant de faire glisser l'étiquette,
+      l'aiguillage restera en place pendant que vous repositionner l'étiquette. Le "Shift-glisser"
+      laisse l'icône en haut à sa place et déplace uniquement les icônes en dessous.</p>
 
-      <p>En outre, les ic&ocirc;nes regroup&eacute;es peuvent
-      &ecirc;tre align&eacute;es horizontalement et verticalement.
-      Lorsque regroup&eacute;es, les ic&ocirc;nes ont deux
-      &eacute;l&eacute;ments de menu dans leur menu contextuel :
-      <b>Aligner verticalement</b> et <b>Aligner
-      horizontalement</b>. Encore une fois, les ic&ocirc;nes qui ne
-      sont pas group&eacute;es fixes ou verrouill&eacute;es peuvent
-      &ecirc;tre align&eacute;es avec soit leur bord gauche
-      (coordonn&eacute;e x) &eacute;gale ou sup&eacute;rieur bords
-      (Coordonn&eacute;e y) &eacute;gale. Ces
-      &eacute;l&eacute;ments de menu dispara&icirc;ssent lorsque
-      les ic&ocirc;nes sont dissoci&eacute;es.</p>
+      <h3>Fond Multi Couches</h3>
+      Pour les utilisateurs qui ont besoin de construire un panneau classique américain S &amp; il
+      y a plusieurs options. La première consiste à simplement sélectionner le panneau de fond à 15
+      positions depuis icons/USS/background/uss-15.gif. Une autre option consiste à utiliser un
+      éditeur d'image en pixel pour créer votre propre image de fond. Sauver l'image au format GIF.
+      ou fichier similaire. (Voir info ci-dessus de l'endroit où stocker de nouvelles images) Une
+      autre option consiste à créer l'image de fond à partir de multiples tranches de l'ensemble du
+      panneau. JMRI supporte l'utilisation de plusieurs images de fond, simplement en
+      positionnement chaque image correctement, un panneau complet de toute taille raisonnable peut
+      être créé.
+      <p>Actuellement, il y a deux jeux disponibles de "tranches" d'image. Un ensemble fait 718
+      pixels de haut, et le deuxième ensemble fait 900 pixels. Choisissez l'ensemble qui correspond
+      le mieux à votre écran. Ces "tranches" sont situées à icons/USS/background/. Les images de
+      900 pixels de haut inclut un "-9" dans leurs noms. Les images des bords gauche et droite ont
+      chacune 12 pixels de large. Les "Tranches" du panneau principal 65 pixels de large. Cela vous
+      permet de positionner précisément chaque tranche en changeant simplement les coordonnées X:
+      et Y: dans l'éditeur de configuration. Les avantages de la construction des fonds avec des
+      tranches sont que vous pouvez faire pratiquement n'importe quelle longueur de panneau qui est
+      nécessaire, et les plaques seront précisément situées automatiquement.</p>
 
-      <p>Une autre caract&eacute;ristique de regrouper les
-      ic&ocirc;nes, c'est qu'elles peuvent &ecirc;tre
-      verrouill&eacute;es (fixe) et d&eacute;verrouill&eacute;es
-      (non fix&eacute;) comme un groupe lorsque l'un des
-      &eacute;l&eacute;ment du groupe du menu contextuel pour
-      verrouiller ou fixer est bien coch&eacute;.</p>
-
-      <p>Lorsque vous placez des ic&ocirc;nes sur le dessus d'une
-      autre, l'ic&ocirc;ne du haut peut emp&ecirc;cher le
-      d&eacute;placement de l'ic&ocirc;ne inf&eacute;rieure. Par
-      exemple, lorsque de l'&eacute;tiquetage d'un aiguillage, vous
-      n'&ecirc;tes pas en mesure de repositionner
-      l'&eacute;tiquette sans glisser l'aiguillage au-dessus.
-      Cependant, si vous appuyez sur la touche Shift avant de faire
-      glisser l'&eacute;tiquette, l'aiguillage restera en place
-      pendant que vous repositionner l'&eacute;tiquette. Le
-      "Shift-glisser" laisse l'ic&ocirc;ne en haut &agrave; sa
-      place et d&eacute;place uniquement les ic&ocirc;nes en
-      dessous.</p>
-
-      <h3>Fond Multi Couches</h3>Pour les utilisateurs qui ont
-      besoin de construire un panneau classique am&eacute;ricain S
-      &amp; il y a plusieurs options. La premi&egrave;re consiste
-      &agrave; simplement s&eacute;lectionner le panneau de fond
-      &agrave; 15 positions depuis icons/USS/background/uss-15.gif.
-      Une autre option consiste &agrave; utiliser un &eacute;diteur
-      d'image en pixel pour cr&eacute;er votre propre image de
-      fond. Sauver l'image au format GIF. ou fichier similaire.
-      (Voir info ci-dessus de l'endroit o&ugrave; stocker de
-      nouvelles images) Une autre option consiste &agrave;
-      cr&eacute;er l'image de fond &agrave; partir de multiples
-      tranches de l'ensemble du panneau. JMRI supporte
-      l'utilisation de plusieurs images de fond, simplement en
-      positionnement chaque image correctement, un panneau complet
-      de toute taille raisonnable peut &ecirc;tre
-      cr&eacute;&eacute;.
-
-      <p>Actuellement, il y a deux jeux disponibles de "tranches"
-      d'image. Un ensemble fait 718 pixels de haut, et le
-      deuxi&egrave;me ensemble fait 900 pixels. Choisissez
-      l'ensemble qui correspond le mieux &agrave; votre
-      &eacute;cran. Ces "tranches" sont situ&eacute;es &agrave;
-      icons/USS/background/. Les images de 900 pixels de haut
-      inclut un "-9" dans leurs noms. Les images des bords gauche
-      et droite ont chacune 12 pixels de large. Les "Tranches" du
-      panneau principal 65 pixels de large. Cela vous permet de
-      positionner pr&eacute;cis&eacute;ment chaque tranche en
-      changeant simplement les coordonn&eacute;es X: et Y: dans
-      l'&eacute;diteur de configuration. Les avantages de la
-      construction des fonds avec des tranches sont que vous pouvez
-      faire pratiquement n'importe quelle longueur de panneau qui
-      est n&eacute;cessaire, et les plaques seront
-      pr&eacute;cis&eacute;ment situ&eacute;es automatiquement.</p>
-
-      <p>D'abord d&eacute;finir les coordonn&eacute;es de x: 0, y:
-      0 et s&eacute;lectionner les
-      icons/USS/background/Panel-left.gif. (Ou
-      icons/USS/background/Panel-left-9.gif) Cela vous donne le
-      bord gauche du panneau. Changer les coordonn&eacute;es de x:
-      12 y: 0 et choisissez la tranche suivante. Elle peut
-      &ecirc;tre vide, comprenant une plaque interrupteur ,
-      comprenant une plaque de signal, ou d'inclure les deux
-      plaques. Seul la coordonn&eacute;e "x:" a besoins
-      d'&ecirc;tre chang&eacute;e pour pouvoir continuez &agrave;
-      ajouter des sections de panneau additionnel. Les "tranches"
-      ont chacune 65 pixels de large, valeur pour chacun: si
-      simplement ajouter 65 &agrave; l'X tranche
-      suppl&eacute;mentaire. Par exemple, pour construire un
-      panneau de 15 positions &agrave; partir de tranches, utilisez
-      x: 0 pour le c&ocirc;t&eacute; gauche, puis x: 12, x 77, x:
-      142, x: 207, x: 272, x: 337, x: 402, x: 467, x: 532, x: 597,
-      x: 662, x: 727, x: 792, x: 857, et x: 922 pour les tranches
-      individuelles. X Enfin, r&eacute;glez: 987 et
-      compl&eacute;tez le panneau avec des
+      <p>D'abord définir les coordonnées de x: 0, y: 0 et sélectionner les
+      icons/USS/background/Panel-left.gif. (Ou icons/USS/background/Panel-left-9.gif) Cela vous
+      donne le bord gauche du panneau. Changer les coordonnées de x: 12 y: 0 et choisissez la
+      tranche suivante. Elle peut être vide, comprenant une plaque interrupteur , comprenant une
+      plaque de signal, ou d'inclure les deux plaques. Seul la coordonnée "x:" a besoins d'être
+      changée pour pouvoir continuez à ajouter des sections de panneau additionnel. Les "tranches"
+      ont chacune 65 pixels de large, valeur pour chacun: si simplement ajouter 65 à l'X tranche
+      supplémentaire. Par exemple, pour construire un panneau de 15 positions à partir de tranches,
+      utilisez x: 0 pour le côté gauche, puis x: 12, x 77, x: 142, x: 207, x: 272, x: 337, x: 402,
+      x: 467, x: 532, x: 597, x: 662, x: 727, x: 792, x: 857, et x: 922 pour les tranches
+      individuelles. X Enfin, réglez: 987 et complétez le panneau avec des
       icons/USS/background/Panel-right.gif.</p>
 
-      <p>Pour changer le style de toute tranche individuelle (par
-      exemple pour ajouter une nouvelle plaque &agrave; votre
-      panneau) cochez d'abord dans la fen&ecirc;tre de
-      l'&eacute;diteur "Montrer les coordonn&eacute;es de
-      l'&eacute;l&eacute;ment dans le menu contextuel". Ensuite,
-      clic droit dans une zone vierge de l'ancienne tranche pour
-      &eacute;lever le contextuel des informations, y compris les
-      coordonn&eacute;es de cette tranche. Mettez ces
-      num&eacute;ros dans les coordonn&eacute;es de
-      l'&eacute;diteur, puis retirez la tranche. Enfin, choisissez
-      une nouvelle tranche et elle apparait l&agrave; o&ugrave;
-      &eacute;tait l'ancienne.</p>
+      <p>Pour changer le style de toute tranche individuelle (par exemple pour ajouter une nouvelle
+      plaque à votre panneau) cochez d'abord dans la fenêtre de l'éditeur "Montrer les coordonnées
+      de l'élément dans le menu contextuel". Ensuite, clic droit dans une zone vierge de l'ancienne
+      tranche pour élever le contextuel des informations, y compris les coordonnées de cette
+      tranche. Mettez ces numéros dans les coordonnées de l'éditeur, puis retirez la tranche.
+      Enfin, choisissez une nouvelle tranche et elle apparait là où était l'ancienne.</p>
 
-      <h2>Communiquer avec de Multiples
-      Syst&egrave;mes</h2>PanelPro peut communiquer avec plus d'un
-      syst&egrave;me de contr&ocirc;le de r&eacute;seau. Par
-      exemple, le chemin de fer de Cornwall utilise du
-      mat&eacute;riel C/MRI pour la d&eacute;tection de
-      l'&eacute;tat des cantons et des aiguillages sur le
-      r&eacute;seau, mais bascule les aiguillages gr&acirc;ce
-      &agrave; un syst&egrave;me Digitrax DCC.
+      <h2>Communiquer avec de Multiples Systèmes</h2>
+      PanelPro peut communiquer avec plus d'un système de contrôle de réseau. Par exemple, le
+      chemin de fer de Cornwall utilise du matériel C/MRI pour la détection de l'état des cantons
+      et des aiguillages sur le réseau, mais bascule les aiguillages grâce à un système Digitrax
+      DCC.
+      <p>Pour configurer le programme pour parler à plusieurs systèmes, sélectionnez dans le
+      panneau de préférences. (Édition-&gt; Préférences) Cochez la case "Montrer Préférences
+      Avancées "et sous" connexion Auxiliaire réseau: "entrer Les informations système de votre
+      deuxième connexion.</p>
 
-      <p>Pour configurer le programme pour parler &agrave;
-      plusieurs syst&egrave;mes, s&eacute;lectionnez dans le
-      panneau de pr&eacute;f&eacute;rences. (&Eacute;dition-&gt;
-      Pr&eacute;f&eacute;rences) Cochez la case "Montrer
-      Pr&eacute;f&eacute;rences Avanc&eacute;es "et sous" connexion
-      Auxiliaire r&eacute;seau: "entrer Les informations
-      syst&egrave;me de votre deuxi&egrave;me connexion.</p>
-
-      <p>Si vous ajoutez un aiguillage, un capteur ou un signal
-      dans un panneau en utilisant seulement un nombre, par exemple
-      "23", il sera attribu&eacute; au premier syst&egrave;me sur
-      le panneau de pr&eacute;f&eacute;rences. Pour acc&eacute;der
-      au deuxi&egrave;me syst&egrave;me, vous devez utiliser JMRI
-      <a href="../../../../html/doc/Technical/Names.shtml">noms de
-      syst&egrave;me</a>. Par exemple, si la seconde connexion est
-      pour un syst&egrave;me LocoNet, r&eacute;f&eacute;rerez vous
-      au aiguillage LocoNet LTnn; ou un capteur LocoNet LSnn, etc
-      (ou nn est le num&eacute;ro de l'&eacute;l&eacute;ment)</p>
+      <p>Si vous ajoutez un aiguillage, un capteur ou un signal dans un panneau en utilisant
+      seulement un nombre, par exemple "23", il sera attribué au premier système sur le panneau de
+      préférences. Pour accéder au deuxième système, vous devez utiliser JMRI <a href=
+      "../../../../html/doc/Technical/Names.shtml">noms de système</a>. Par exemple, si la seconde
+      connexion est pour un système LocoNet, référerez vous au aiguillage LocoNet LTnn; ou un
+      capteur LocoNet LSnn, etc (ou nn est le numéro de l'élément)</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

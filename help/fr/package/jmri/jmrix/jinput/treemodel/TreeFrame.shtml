@@ -1,96 +1,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-1-->
 
-  <title>JMRI: USB Input Control</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: USB Input Control</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h2>JMRI: contr&Atilde;&acute;le d'entr&Atilde;&copy;e
-      USB</h2><a href="TreeFrame.jpg"><img align="right" height=
-      "132" src="TreeFrame.jpg" width="325"></a> La
-      fen&Atilde;&ordf;tre de contr&Atilde;&acute;le
-      d'entr&Atilde;&copy;e USB vous permet de connecter des
-      capteurs et des m&Atilde;&copy;moires JMRI &Atilde; 
-      l'entr&Atilde;&copy;e USB sur votre ordinateur. Par exemple,
-      vous pourriez avoir un capteur JMRI qui devient ACTIF lorsque
-      vous tapez une cl&Atilde;&copy; ou appuyer sur un bouton du
+      <h2>JMRI: contrÃ´le d'entrÃ©e USB</h2>
+      <a href="TreeFrame.jpg"><img align="right" height="132" src="TreeFrame.jpg" width="325" alt=
+      ""></a> La fenÃªtre de contrÃ´le d'entrÃ©e USB vous permet de connecter des capteurs et des
+      mÃ©moires JMRI Ã l'entrÃ©e USB sur votre ordinateur. Par exemple, vous pourriez avoir un
+      capteur JMRI qui devient ACTIF lorsque vous tapez une clÃ© ou appuyer sur un bouton du
       joystick. Vous pouvez ensuite utiliser <a href=
-      "../../../../../html/tools/Routes.shtml">Itin&Atilde;&copy;raire</a>
-      et <a href="../../../../../html/tools/Logix.shtml">Logix</a>
-      pour utiliser cette entr&Atilde;&copy;e USB pour
-      contr&Atilde;&acute;ler votre r&Atilde;&copy;seau.
+      "../../../../../html/tools/Routes.shtml">ItinÃ©raire</a> et <a href=
+      "../../../../../html/tools/Logix.shtml">Logix</a> pour utiliser cette entrÃ©e USB pour
+      contrÃ´ler votre rÃ©seau.
+      <p>Sur le cÃ´tÃ© gauche de la fenÃªtre est un arbre montrant les ContrÃ´leurs USB disponibles
+      et les composants en leur sein. Selon les dÃ©tails de votre ordinateur, cet arbre peut Ãªtre
+      complÃ¨tement peuplÃ©s lorsque la fenÃªtre s'ouvre, ou vous pourriez avoir Ã changer les
+      entrÃ©es (par exemple cliquer sur un bouton) pour qu'il se manifeste. Les appareils qui sont
+      branchÃ©s aprÃ¨s le dÃ©marrage du programme peuvent ou pas apparaitres, selon les
+      spÃ©cificitÃ©s de configuration de votre ordinateur.</p>
 
-      <p>Sur le c&Atilde;&acute;t&Atilde;&copy; gauche de la
-      fen&Atilde;&ordf;tre est un arbre montrant les
-      Contr&Atilde;&acute;leurs USB disponibles et les composants
-      en leur sein. Selon les d&Atilde;&copy;tails de votre
-      ordinateur, cet arbre peut &Atilde;&ordf;tre
-      compl&Atilde;&uml;tement peupl&Atilde;&copy;s lorsque la
-      fen&Atilde;&ordf;tre s'ouvre, ou vous pourriez avoir &Atilde;
-       changer les entr&Atilde;&copy;es (par exemple cliquer sur un
-      bouton) pour qu'il se manifeste. Les appareils qui sont
-      branch&Atilde;&copy;s apr&Atilde;&uml;s le
-      d&Atilde;&copy;marrage du programme peuvent ou pas
-      apparaitres, selon les sp&Atilde;&copy;cificit&Atilde;&copy;s
-      de configuration de votre ordinateur.</p>
+      <p>Lorsque vous sÃ©lectionnez un seul composant dans l'arbre affichÃ© Ã gauche , le panneau
+      de droite vous montre les dÃ©tails de ce composant et sa valeur actuelle.</p>
 
-      <p>Lorsque vous s&Atilde;&copy;lectionnez un seul composant
-      dans l'arbre affich&Atilde;&copy; &Atilde;  gauche , le
-      panneau de droite vous montre les d&Atilde;&copy;tails de ce
-      composant et sa valeur actuelle.</p>
+      <p>En dessous se trouve une zone permettant de configurer le programme pour piloter un
+      <a href="../../../../../html/tools/Sensors.shtml">Capteur</a> et/ou une <a href=
+      "../../../../../html/tools/Memories.shtml">MÃ©moire</a> JMRI Ã partir de l'entrÃ©e USB. Vous
+      pouvez entrer un nom de capteur dans le champ texte en haut, puis cochez la case "Copier
+      capteur JMRI" . Lorsque l'entrÃ©e devient On(pour une entrÃ©e numÃ©rique), ou a une valeur
+      supÃ©rieure Ã zÃ©ro (pour une entrÃ©e analogique), le capteur sera fixÃ© Ã ACTIF, et il sera
+      autrement, rÃ©glÃ© sur INACTIF. Vous pouvez regarder ce travail dans la Table capteur
+      <a href="../../../jmrit/beantable/SensorTable.shtml"></a>.</p>
 
-      <p>En dessous se trouve une zone permettant de configurer le
-      programme pour piloter un <a href=
-      "../../../../../html/tools/Sensors.shtml">Capteur</a> et/ou
-      une <a href=
-      "../../../../../html/tools/Memories.shtml">M&Atilde;&copy;moire</a>
-      JMRI &Atilde;  partir de l'entr&Atilde;&copy;e USB. Vous
-      pouvez entrer un nom de capteur dans le champ texte en haut,
-      puis cochez la case "Copier capteur JMRI" . Lorsque
-      l'entr&Atilde;&copy;e devient On(pour une entr&Atilde;&copy;e
-      num&Atilde;&copy;rique), ou a une valeur
-      sup&Atilde;&copy;rieure &Atilde;  z&Atilde;&copy;ro (pour une
-      entr&Atilde;&copy;e analogique), le capteur sera
-      fix&Atilde;&copy; &Atilde;  ACTIF, et il sera autrement,
-      r&Atilde;&copy;gl&Atilde;&copy; sur INACTIF. Vous pouvez
-      regarder ce travail dans la Table capteur <a href=
-      "../../../jmrit/beantable/SensorTable.shtml"></a>.</p>
+      <p>Notez que vous ne pouvez pas Ã©diter le nom du capteur tant que la case est cochÃ©e; vous
+      devez dÃ©cocher la case de sorte que le Capteur arrÃªte de suivre l"entrÃ©e USB avant de
+      changer pour un nouveau Nom Capteur.</p>
 
-      <p>Notez que vous ne pouvez pas &Atilde;&copy;diter le nom du
-      capteur tant que la case est coch&Atilde;&copy;e; vous devez
-      d&Atilde;&copy;cocher la case de sorte que le Capteur
-      arr&Atilde;&ordf;te de suivre l"entr&Atilde;&copy;e USB avant
-      de changer pour un nouveau Nom Capteur.</p>
-
-      <p>Cette fonctionnalit&Atilde;&copy; a
-      &Atilde;&copy;t&Atilde;&copy; ajout&Atilde;&copy;e sur une
-      base exp&Atilde;&copy;rimentale dans JMRI 2.1.5. Dans cette
-      version, vos informations de configuration ne sont pas
-      r&Atilde;&copy;tablie apr&Atilde;&uml;s vous ayez
-      quitt&Atilde;&copy; et red&Atilde;&copy;marr&Atilde;&copy;ez
-      le programme. Ce sera ajout&Atilde;&copy; dans la prochaine
-      Version JMRI.</p>
+      <p>Cette fonctionnalitÃ© a Ã©tÃ© ajoutÃ©e sur une base expÃ©rimentale dans JMRI 2.1.5. Dans
+      cette version, vos informations de configuration ne sont pas rÃ©tablie aprÃ¨s vous ayez
+      quittÃ© et redÃ©marrÃ©ez le programme. Ce sera ajoutÃ© dans la prochaine Version JMRI.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

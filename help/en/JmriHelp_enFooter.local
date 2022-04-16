@@ -1,0 +1,13 @@
+
+            </ul>
+        </div>
+
+        <div id="searchID" class="help-list hide">
+            <h3>Search result</h3>
+            <ul id="searchResult"></ul>
+        </div>
+
+        <iframe class="help-page" id="page" height="600" src="../index.shtml" title="JMRI Help"></iframe>
+    </div><p class="clear"> &nbsp; </p>
+    </body>
+</html>

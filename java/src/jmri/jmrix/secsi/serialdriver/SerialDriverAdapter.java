@@ -44,7 +44,7 @@ public class SerialDriverAdapter extends SerialPortController {
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}:", portName, e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -54,7 +54,7 @@ public class SerialDriverAdapter extends SerialPortController {
                 log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
                         activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: {}", ef);
+                log.debug("failed to set serial framing", ef);
             }
 
             // set timeout; framing should work before this anyway
@@ -144,7 +144,7 @@ public class SerialDriverAdapter extends SerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: ", e.getMessage());
+            log.error("getOutputStream exception {}", e.getMessage());
         }
         return null;
     }

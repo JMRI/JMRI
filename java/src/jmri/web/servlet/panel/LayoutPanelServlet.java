@@ -83,7 +83,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 try {
                     panel.addContent(positionableElement(sub));
                 } catch (Exception ex) {
-                    log.error("Error storing panel positionable element: {}", ex);
+                    log.error("Error storing panel positionable element", ex);
                 }
             }
         }
@@ -126,8 +126,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
                 elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
                 elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
-                if (!b.getMemoryName().isEmpty()) {
-                    elem.setAttribute("memory", b.getMemory().getSystemName());
+                Memory m = b.getMemory();
+                if (!b.getMemoryName().isEmpty() && (m != null)) {
+                    elem.setAttribute("memory", m.getSystemName()); // NOI18N
                 }
                 if (!b.useDefaultMetric()) {
                     elem.addContent(new Element("metric").addContent(Integer.toString(b.getBlockMetric())));
@@ -161,7 +162,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                             panel.addContent(e);
                         }
                     } catch (Exception e) {
-                        log.error("Error storing panel LayoutTrack element: {}", e);
+                        log.error("Error storing panel LayoutTrack element", e);
                     }
                 }
             }
@@ -176,7 +177,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
-                log.error("Error storing panel LayoutShape element: {}", e);
+                log.error("Error storing panel LayoutShape element", e);
             }
         }
         log.debug("Number of LayoutShape elements: {}", layoutShapes.size());
@@ -200,12 +201,11 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      *
      */
     private void replaceUserNameAttribute(@Nonnull Element e, @Nonnull String beanType, @Nonnull String attrName) {
-
-        String sn = "";
         Attribute a = e.getAttribute(attrName);
         if (a == null) {
             return;
         }
+        String sn;
         String un = a.getValue();
 
         switch (beanType) {
@@ -241,12 +241,11 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      *
      */
     private void replaceUserNameChild(@Nonnull Element e, @Nonnull String beanType, @Nonnull String childName) {
-
-        String sn = "";
         Element c = e.getChild(childName);
         if (c == null) {
             return;
         }
+        String sn;
         String un = c.getText();
 
         switch (beanType) {

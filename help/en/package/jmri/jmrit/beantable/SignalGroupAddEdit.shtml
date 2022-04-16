@@ -1,107 +1,81 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding Signal Groups</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20181104">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="Date.Modified" content="20181104"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Adding/Editing a Signal Group</h1>
 
       <p>After clicking on the "Add..." button below the <a href=
-      "../beantable/SignalGroupTable.shtml">Signal Group Table</a>,
-      the following pane appears:</p><a href=
-      "images/SignalGroupAdd.png"><img src="images/SignalGroupAdd.png"
-      alt="Signal Group Add new pane" width="292" height="226"></a>
-
+      "../beantable/SignalGroupTable.shtml">Signal Group Table</a>, the following pane appears:</p>
+      <a href="images/SignalGroupAdd.png"><img src="images/SignalGroupAdd.png" alt=
+      "Signal Group Add new pane" width="292" height="226"></a>
       <h3>Enter Signal Group elements</h3>
-      <a href=
-      "images/SingleSignalHead.png"><img src="images/SingleSignalHead.png"
-      height="185" width="127" alt="Signal Head create pane showing
-      Single Output choice" align="right"></a>
-      
-      <p>Signal Groups are built from one or more Signal Heads and
-      comprise the following:</p>
+      <a href="images/SingleSignalHead.png"><img src="images/SingleSignalHead.png" height="185"
+      width="127" alt="Signal Head create pane showing Single Output choice" class=
+      "floatRight"></a>
+      <p>Signal Groups are built from one or more Signal Heads and comprise the following:</p>
 
       <ul>
-        <li>A parent Signal Mast (by System Name) to which this
-        Signal Group is attached.</li>
+        <li>A parent Signal Mast (by System Name) to which this Signal Group is attached.</li>
 
-        <li>A list of Aspects that cause the Signal Group to become
-        active eg. the parent Signal Mast must be set for Proceed
-        or Caution, but not Danger.</li>
+        <li>A list of Aspects that cause the Signal Group to become active eg. the parent Signal
+        Mast must be set for Proceed or Caution, but not Danger.</li>
 
-        <li>A list of Signal Heads that make up each indication of
-        the Signal Group.<br>
-        Signal Heads included in a Signal Group are picked from the
-        Signal Head Table, but only Signal Heads that were created
-        using the <em>Single Output</em> connection type (pictured
+        <li>A list of Signal Heads that make up each indication of the Signal Group.<br>
+        Signal Heads included in a Signal Group are picked from the Signal Head Table, but only
+        Signal Heads that were created using the <em>Single Output</em> connection type (pictured
         to the right) show up in the list.</li>
       </ul>
 
-      <p>In the Add/Edit Signal Group window, after entering a User
-      Name for the new Signal Group and selecting the parent Signal
-      Mast from the combo box, check <b>Include</b> behind one or
-      more Mast Aspects in the table directly below.<br>
-      Next select one or more Signal Heads by checking their
-      <b>Include</b> check boxes in the second list.<br>
-      Click the <b>Apply</b> button at the bottom of the pane or
-      continue further set up.</p>
+      <p>In the Add/Edit Signal Group window, after entering a User Name for the new Signal Group
+      and selecting the parent Signal Mast from the combo box, check <strong>Include</strong>
+      behind one or more Mast Aspects in the table directly below.<br>
+      Next select one or more Signal Heads by checking their <strong>Include</strong> check boxes
+      in the second list.<br>
+      Click the <strong>Apply</strong> button at the bottom of the pane or continue further set
+      up.</p>
 
       <h3>Define Signal Group Conditions</h3>
 
-      <p>Each Signal Head that you include in Signal Group has a set
-      of criteria that have to be met before that Signal Head is
-      illuminated. These criteria are made up from Turnout and/or
-      Sensor states and can be changed by clicking on the
-      corresponding <b>Edit</b> button in the last column of the
-      Add/Edit Signal Group pane. A new pane like the one shown to
-      the right will open, letting you define a specific Signal
-      Head that is part of your Indicator.</p>
+      <p>Each Signal Head that you include in Signal Group has a set of criteria that have to be
+      met before that Signal Head is illuminated. These criteria are made up from Turnout and/or
+      Sensor states and can be changed by clicking on the corresponding <strong>Edit</strong>
+      button in the last column of the Add/Edit Signal Group pane. A new pane like the one shown to
+      the right will open, letting you define a specific Signal Head that is part of your
+      Indicator.</p>
+      <a href="images/SignalGroupAddEditHead.png"><img src="images/SignalGroupAddEditHead.png" alt=
+      "Signal Group Head Edit pane" height="234" width="297" class="floatRight"></a>
+      <p>Choose two <em>different</em> values in the pop up menus at the top of the pane to define
+      the states of the Indicator Signal Head. On meaning when conditions are met, and Off as long
+      as that is not the case.<br>
+      To complete the definition of a Signal Group Indicator Head, mark the appropriate
+      <strong>Include</strong> check boxes for both Turnouts and Sensors, and specify their state
+      in the last column of each list.<br>
+      In between both lists there is a final logic <strong>OR/AND</strong> option to choose
+      from.</p>
 
-      <a href=
-      "images/SignalGroupAddEditHead.png"><img src=
-      "images/SignalGroupAddEditHead.png" alt="Signal Group Head
-      Edit pane" height="234" width="297" align="right"></a>
+      <p>You will need to do some deep thinking to prepare for this last step, as this is the place
+      where you control how your Indicator will behave. The signal hardware on your layout may rule
+      out some options, so build it up in small steps and test often.</p>
 
-      <p>Choose two <i>different</i> values in the pop up menus at
-      the top of the pane to define the states of the Indicator
-      Signal Head. On meaning when conditions are met, and Off
-      as long as that is not the case.<br>
-      To complete the definition of a Signal Group Indicator Head,
-      mark the appropriate <b>Include</b> check boxes for both
-      Turnouts and Sensors, and specify their state in the last
-      column of each list.<br>
-      In between both lists there is a final logic
-      <b>OR/AND</b> option to choose from.</p>
+      <p>Finish the Signal Group definition by clicking <strong>Apply</strong> in the Signal Head
+      set up pane and again click <strong>Apply</strong> to close the Signal Group Add pane. Your
+      new Group will appear in the Table.</p>
 
-      <p>You will need to do some deep thinking to prepare for this
-      last step, as this is the place where you control how your
-      Indicator will behave. The signal hardware on your layout may
-      rule out some options, so build it up in small steps and test
-      often.</p>
-
-      <p>Finish the Signal Group definition by clicking <b>Apply</b>
-      in the Signal Head set up pane and again click <b>Apply</b> to
-      close the Signal Group Add pane. Your new Group will appear in
-      the Table.</p>
-
-      <p>Back to the <a href="SignalGroupTable.shtml">Signal Group
-      Table help page</a>.</p>
-
-        <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Back to the <a href="SignalGroupTable.shtml">Signal Group Table help page</a>.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

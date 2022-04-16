@@ -85,7 +85,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
             }
 
         } catch (NumberFormatException ex) {
-            log.error("NumberFormatException while setting System Console parameters: {}", ex);
+            log.error("NumberFormatException while setting System Console parameters", ex);
             result = false;
         }
 

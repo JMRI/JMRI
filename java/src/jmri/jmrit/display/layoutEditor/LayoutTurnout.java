@@ -1920,7 +1920,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         if (getSecondTurnout() != null) {
             int t2state = getSecondTurnout().getKnownState();
             if (secondTurnoutInverted) {
-                t2state = Turnout.invertTurnoutState(getSecondTurnout().getKnownState());
+                t2state = Turnout.invertTurnoutState(t2state);
             }
             if (result != t2state) {
                 return INCONSISTENT;
@@ -2658,7 +2658,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsB()));
-                    lc.setDirection( models.computeDirectionAB(this) );
+                    lc.setDirection(models.computeDirectionAB(this));
 
                     log.trace("getLayoutConnectivity lbA != lbB");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
@@ -2675,7 +2675,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
-                    lc.setDirection( models.computeDirectionAC(this) );
+                    lc.setDirection(models.computeDirectionAC(this));
 
                     log.trace("getLayoutConnectivity lbA != lbC");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
@@ -2692,7 +2692,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsC(), getCoordsD()));
-                    lc.setDirection( models.computeDirectionCD(this) );
+                    lc.setDirection(models.computeDirectionCD(this));
 
                     log.trace("getLayoutConnectivity lbC != lbD");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
@@ -2709,7 +2709,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
-                    lc.setDirection( models.computeDirectionBD(this) );
+                    lc.setDirection(models.computeDirectionBD(this));
 
                     log.trace("getLayoutConnectivity lbB != lbD");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);

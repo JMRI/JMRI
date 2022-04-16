@@ -194,6 +194,7 @@ public class QualifiedVarTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

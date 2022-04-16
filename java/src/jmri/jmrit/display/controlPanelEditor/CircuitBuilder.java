@@ -91,13 +91,13 @@ public class CircuitBuilder {
 
     // map of PortalIcons by portal. A Portal may have 2 icons to connect non-adjacent blocks
     private final HashMap<Portal, ArrayList<PortalIcon>> _portalIconMap = new HashMap<>();
-    
-    // map of SignalMastIcons or SignalHeadicons by Signal. A Signal may have several icons 
+
+    // map of SignalMastIcons or SignalHeadicons by Signal. A Signal may have several icons
     private final HashMap<NamedBean, ArrayList<PositionableIcon>> _signalIconMap = new HashMap<>();
-    
+
     // list of SignalMastIcon and SignalHeadicon not protecting a block
     private final ArrayList<PositionableIcon> _unattachedMastIcon = new ArrayList<>();
-    
+
     // list of SignalMast and SignalHead not protecting a block
     private final ArrayList<NamedBean> _unprotectingMast = new ArrayList<>();
 
@@ -172,7 +172,7 @@ public class CircuitBuilder {
         circuitItem.addActionListener((ActionEvent event) -> newCircuit());
         _circuitMenu.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
         JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
-        HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
+        HelpUtil.enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder");
         _circuitMenu.add(helpItem);
 
     }
@@ -220,7 +220,7 @@ public class CircuitBuilder {
         _circuitMenu.add(editItem);
 
         JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
-        HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
+        HelpUtil.enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder");
         _circuitMenu.add(helpItem);
         makeToDoMenu();
     }
@@ -308,7 +308,7 @@ public class CircuitBuilder {
             blockNeeds.add(new JMenuItem(Bundle.getMessage("circuitIconsConverted")));
         }
         _todoMenu.add(blockNeeds);  // #2
-        
+
         JMenuItem iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedConversionItem"));
         if (_unconvertedTrack.size() > 0) {
             iconNeeds.addActionListener((ActionEvent event) -> {
@@ -670,7 +670,7 @@ public class CircuitBuilder {
             }
         }
     }
-    
+
     protected void setCurrentBlock(OBlock b) {
         _currentBlock = b;
     }
@@ -682,7 +682,7 @@ public class CircuitBuilder {
             for (ArrayList<PortalIcon> array : _portalIconMap.values()) {
                 for (PortalIcon pi : array) {
                     if (hideAll || pi.getStatus().equals(PortalIcon.VISIBLE)) {
-                        // don't hide warrant arrows 
+                        // don't hide warrant arrows
                         pi.setStatus(PortalIcon.HIDDEN);
                     }
                 }
@@ -808,7 +808,7 @@ public class CircuitBuilder {
         List<Positionable> icons = getCircuitIcons(block);
         icons.clear();
         if (selections != null && !selections.isEmpty()) {
-            NamedBeanHandle<OBlock> handle = 
+            NamedBeanHandle<OBlock> handle =
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(block.getSystemName(), block);
              for (Positionable pos : selections) {
                  if (pos instanceof IndicatorTrack) {
@@ -829,7 +829,7 @@ public class CircuitBuilder {
         setPortalsPositionable(block, false);
         hidePortalIcons(true);
         _editor.resetEditor();
-        
+
     }
 
     /*
@@ -912,7 +912,7 @@ public class CircuitBuilder {
         }
 
         _bareBlock.clear();         // blocks with no track icons
-        _zeroBlock.clear();         // blocks with 0 length 
+        _zeroBlock.clear();         // blocks with 0 length
         _convertBlock.clear();      // blocks with at least one unconverted track icon
         _misplacedPortalIcon.clear();
         _noPortalIcon.clear();
@@ -938,7 +938,7 @@ public class CircuitBuilder {
             if (portals.isEmpty()) {
                 _noPortals.add(block);
             } else {
-                // first add PortalIcons and SignalIcons to circuitMap 
+                // first add PortalIcons and SignalIcons to circuitMap
                 for (Portal portal : portals) {
                     List<PortalIcon> piArray = getPortalIcons(portal);
                     for (PortalIcon pi : piArray) {
@@ -1085,12 +1085,12 @@ public class CircuitBuilder {
         return _circuitMap.computeIfAbsent(block, k -> new ArrayList<>());
     }
 
-    @Nonnull 
+    @Nonnull
     protected List<PortalIcon> getPortalIcons(@Nonnull Portal portal) {
         return _portalIconMap.computeIfAbsent(portal, k -> new ArrayList<>());
     }
 
-    @Nonnull 
+    @Nonnull
     protected List<PositionableIcon> getSignalIconMap(@Nonnull NamedBean mast) {
         return _signalIconMap.computeIfAbsent(mast, k -> new ArrayList<>());
     }
@@ -1378,7 +1378,7 @@ public class CircuitBuilder {
     }
 
     /**
-     * 
+     *
      * @param pos PortalIcon attempting a move. allow or disallow
      * @param x new x position
      * @param y new y position
@@ -1457,7 +1457,7 @@ public class CircuitBuilder {
     public boolean doMouseReleased(Positionable selection, boolean dragging) {
         if (_editFrame != null) {
             if (_editFrame instanceof EditPortalFrame) {
-                if (selection instanceof PortalIcon 
+                if (selection instanceof PortalIcon
                         && getCircuitIcons(_editFrame._homeBlock).contains(selection)) {
                     PortalIcon icon = (PortalIcon)selection;
                     if (dragging) {
@@ -1655,7 +1655,7 @@ public class CircuitBuilder {
             _editFrame.closingEvent(true, null);
         }
     }
-    
+
     static int NONE = 0;
     static int OBLOCK = 1;
     static int PORTAL = 2;
@@ -1667,12 +1667,12 @@ public class CircuitBuilder {
         ButtonGroup _buttonGroup = new ButtonGroup();
         int _which = 0;
         JRadioButton _newCircuitButton = makeButton("newCircuitItem", NONE);
-        
+
         CBFrame(String title) {
             super(false, false);
             setTitle(title);
             addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
-            
+
             _blockTable.getSelectionModel().addListSelectionListener(this);
 
             JPanel contentPane = new JPanel();

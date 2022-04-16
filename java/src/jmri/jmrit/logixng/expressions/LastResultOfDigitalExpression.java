@@ -41,6 +41,10 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getNamedBean(digitalExpressionName);
         if (digitalExpression != null) {
+            // We need the male socket, not the expression itself
+            if (!(digitalExpression instanceof MaleSocket)) {
+                digitalExpression = (DigitalExpressionBean)digitalExpression.getParent();
+            }
             setDigitalExpression(digitalExpression);
         } else {
             removeDigitalExpression();
@@ -94,12 +98,6 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     @Override
     public Category getCategory() {
         return Category.OTHER;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
     }
     
     /** {@inheritDoc} */
@@ -176,9 +174,7 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (getTriggerOnChange()) {
-            getConditionalNG().execute();
-        }
+        getConditionalNG().execute();
     }
     
     /** {@inheritDoc} */

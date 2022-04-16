@@ -1,353 +1,275 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro - Tour</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: DecoderPro - Tour</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>A Short Tour</h2>
 
-      <p class="important">This tour demonstrates DecoderPro
-      version 3.x. As of version 4 it was replaced by a new
-      interface, before known as <a href=
-      "index.shtml">DecoderPro3</a>.</p>
+      <p class="important">This tour demonstrates DecoderPro version 3.x. As of version 4 it was
+      replaced by a new interface, before known as <a href="index.shtml">DecoderPro3</a>.</p>
 
       <div class="image100w">
         <table border="0">
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/DPStart.gif"><img src="./images/DPStart.gif"
-            width="100" height="50" alt=
-            "DecoderPro welcome screen"></a></td>
-
             <td style="vertical-align:top;">
-              <h3>Startup</h3>When you first open the programmer,
-              you see this window. Click the "Program locomotive"
-              button to start. (This assumes you have already
-              <a href="../../hardware/index.shtml">connected</a>
-              your computer to your layout and have a locomotive on
-              your programming track)
+              <a href="./images/DPStart.gif"><img src="./images/DPStart.gif" width="100" height=
+              "50" alt="DecoderPro welcome screen"></a>
+            </td>
+            <td style="vertical-align:top;">
+              <h3>Startup</h3>
+              When you first open the programmer, you see this window. Click the "Program
+              locomotive" button to start. (This assumes you have already <a href=
+              "../../hardware/index.shtml">connected</a> your computer to your layout and have a
+              locomotive on your programming track)
             </td>
           </tr>
 
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/SelDecoder.gif"><img src=
-            "./images/SelDecoder.gif" width="100" height="100" alt=
-            "Decoder Identification"></a></td>
-
+            <td style="vertical-align:top;">
+              <a href="./images/SelDecoder.gif"><img src="./images/SelDecoder.gif" width="100"
+              height="100" alt="Decoder Identification"></a>
+            </td>
             <td style="vertical-align:top;">
               <h3>Decoder and Programmer selection</h3>
 
-              <p>You'll get a new window to configure the
-              programmer with information about a specific type of
-              decoder, or an existing locomotive. This will become
-              your locomotive roster as you program your
-              decoders</p>
+              <p>You'll get a new window to configure the programmer with information about a
+              specific type of decoder, or an existing locomotive. This will become your locomotive
+              roster as you program your decoders</p>
 
-              <p>To start working with a newly-installed decoder,
-              click the adjacent "Ident" button to have the
-              programmer read the decoder and attempt to identify
-              it. (You could also explicitly tell the programmer
-              the decoder type)</p>
+              <p>To start working with a newly-installed decoder, click the adjacent "Ident" button
+              to have the programmer read the decoder and attempt to identify it. (You could also
+              explicitly tell the programmer the decoder type)</p>
 
-              <p>While the programmer is talking to the decoder,
-              status will be displayed in the bottom of the window;
-              "Idle" or "OK" means that things are working. If it
-              succeeds, it will select the decoder model in the
-              selection box. Usually it will only be able to narrow
-              the selection down to a few choices. Check that the
-              right model is selected in the "Decoder Installed"
-              box; update the selection if desired.</p>
+              <p>While the programmer is talking to the decoder, status will be displayed in the
+              bottom of the window; "Idle" or "OK" means that things are working. If it succeeds,
+              it will select the decoder model in the selection box. Usually it will only be able
+              to narrow the selection down to a few choices. Check that the right model is selected
+              in the "Decoder Installed" box; update the selection if desired.</p>
 
-              <p>Some people prefer a very simple programmer, and
-              some want to have access to every feature. To handle
-              this, DecoderPro provides several different
-              programming interfaces:</p>
+              <p>Some people prefer a very simple programmer, and some want to have access to every
+              feature. To handle this, DecoderPro provides several different programming
+              interfaces:</p>
 
               <ul>
-                <li>Basic - A simple one, with just the most
-                popular information</li>
+                <li>Basic - A simple one, with just the most popular information</li>
 
-                <li>Comprehensive - The most complete display, with
-                multiple panes of detailed information.</li>
+                <li>Comprehensive - The most complete display, with multiple panes of detailed
+                information.</li>
 
-                <li>Advanced - Adds advanced panes to the
-                Comprehensive Programmer.</li>
+                <li>Advanced - Adds advanced panes to the Comprehensive Programmer.</li>
 
-                <li>Registers - Complete configuration for a
-                register-only decoder</li>
+                <li>Registers - Complete configuration for a register-only decoder</li>
 
-                <li>Sample Club - A sample of how a club might
-                define their own programmer format that shows just
-                their set of required variables</li>
+                <li>Sample Club - A sample of how a club might define their own programmer format
+                that shows just their set of required variables</li>
 
-                <li>Tutorial - Not useful for actually programming
-                decoders, this contains examples of how various
-                special effects can be obtained when you're
-                constructing your own programmer.</li>
+                <li>Tutorial - Not useful for actually programming decoders, this contains examples
+                of how various special effects can be obtained when you're constructing your own
+                programmer.</li>
               </ul>
 
-              <p>You can even define your own programmer if you'd
-              prefer to just see the variables you use. For this
-              example, we select the "Comprehensive" decoder
-              programmer in the lowest selection box, and then
-              click "Open Programmer" to start working with the
+              <p>You can even define your own programmer if you'd prefer to just see the variables
+              you use. For this example, we select the "Comprehensive" decoder programmer in the
+              lowest selection box, and then click "Open Programmer" to start working with the
               decoder.</p>
             </td>
           </tr>
 
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/BasicPaneY75.gif"><img src=
-            "./images/BasicPaneY75.gif" width="100" height="50"
-            alt="Comprehensive Programmer"></a></td>
-
+            <td style="vertical-align:top;">
+              <a href="./images/BasicPaneY75.gif"><img src="./images/BasicPaneY75.gif" width="100"
+              height="50" alt="Comprehensive Programmer"></a>
+            </td>
             <td style="vertical-align:top;">
               <h3>Programmer Details</h3>
 
-              <p class="dl">Each of the tabs selects a screen you
-              can use to configure different aspects of the
-              decoder. The "Basic" pane handles the address other
-              settings you'll usually need.</p>
+              <p class="dl">Each of the tabs selects a screen you can use to configure different
+              aspects of the decoder. The "Basic" pane handles the address other settings you'll
+              usually need.</p>
 
-              <p class="dl">Using the buttons -- On the bottom of
-              each screen are buttons that will read values from or
-              write values to the decoder. For example, to do a
-              basic configuration, enter values in the fields and
-              click <tt>Write sheet</tt>. The variable fields are
-              color coded to represent their states:</p>
+              <p class="dl">Using the buttons -- On the bottom of each screen are buttons that will
+              read values from or write values to the decoder. For example, to do a basic
+              configuration, enter values in the fields and click <code>Write sheet</code>. The
+              variable fields are color coded to represent their states:</p>
 
               <dl>
-                <dt style="color:orange; background:#DDD;">
-                Edited</dt>
+                <dt style="color:orange; background:#DDD;">Edited</dt>
 
-                <dd>You've changed this value, or it contains
-                default values from the decoder file. This is shown
-                as orange, since the value differs from what's in
-                the decoder.</dd>
+                <dd>You've changed this value, or it contains default values from the decoder file.
+                This is shown as orange, since the value differs from what's in the decoder.</dd>
 
-                <dt style="color:yellow; background:#DDD;">From
-                File</dt>
+                <dt style="color:yellow; background:#DDD;">From File</dt>
 
-                <dd>The field contains values read from a
-                locomotive file. This is shown as yellow, since
-                we're not certain that the file agrees with the
-                decoder contents.</dd>
+                <dd>The field contains values read from a locomotive file. This is shown as yellow,
+                since we're not certain that the file agrees with the decoder contents.</dd>
 
                 <dt style="color:white; background:#DDD;">Read</dt>
 
-                <dd>The value shown has been read from the decoder.
-                This is shown as white to indicate that the value
-                is trustworthy.</dd>
+                <dd>The value shown has been read from the decoder. This is shown as white to
+                indicate that the value is trustworthy.</dd>
 
-                <dt style="color:white; background:#DDD;">
-                Stored</dt>
+                <dt style="color:white; background:#DDD;">Stored</dt>
 
-                <dd>The value show has been written to the decoder.
-                This is also shown as white.</dd>
+                <dd>The value show has been written to the decoder. This is also shown as
+                white.</dd>
 
-                <dt style="color:red; background:#DDD;">
-                Unknown</dt>
+                <dt style="color:red; background:#DDD;">Unknown</dt>
 
-                <dd>If something goes wrong with the read or write
-                process, we might have a completely untrustworthy
-                result. This results in the variable's state being
-                marked as UNKNOWN and shown as red.</dd>
+                <dd>If something goes wrong with the read or write process, we might have a
+                completely untrustworthy result. This results in the variable's state being marked
+                as UNKNOWN and shown as red.</dd>
               </dl>
             </td>
           </tr>
 
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/SpeedTableW75.gif"><img src=
-            "./images/SpeedTableW75.gif" width="100" height="100"
-            alt="Speed table"></a><br>
-            <a href="./images/ModSpeedTable75.gif"><img src=
-            "./images/ModSpeedTable75.gif" width="100" height="100"
-            alt="Modified speed table"></a><br></td>
-
+            <td style="vertical-align:top;">
+              <a href="./images/SpeedTableW75.gif"><img src="./images/SpeedTableW75.gif" width=
+              "100" height="100" alt="Speed table"></a><br>
+              <a href="./images/ModSpeedTable75.gif"><img src="./images/ModSpeedTable75.gif" width=
+              "100" height="100" alt="Modified speed table"></a><br>
+            </td>
             <td style="vertical-align:top;">
               <h3>Examples</h3>
 
-              <p>For example, after a "Read" the speed table values
-              are shown as white in the first image, While in the
-              second image it shows that when you modify a value,
-              its marked as yellow. Doing a write will set it back
-              to white; doing a read will reset the value to the
-              value in the decoder, and also reset it to white.</p>
+              <p>For example, after a "Read" the speed table values are shown as white in the first
+              image, While in the second image it shows that when you modify a value, its marked as
+              yellow. Doing a write will set it back to white; doing a read will reset the value to
+              the value in the decoder, and also reset it to white.</p>
             </td>
           </tr>
 
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/FnMap.gif"><img src="./images/FnMap.gif"
-            width="100" height="100" alt=
-            "Function Mappings"></a></td>
-
+            <td style="vertical-align:top;">
+              <a href="./images/FnMap.gif"><img src="./images/FnMap.gif" width="100" height="100"
+              alt="Function Mappings"></a>
+            </td>
             <td style="vertical-align:top;">
               <h3>Complex interactions - Function Mappings</h3>
 
-              <p>Although having a name for an entire CV is nice,
-              where this really helps is with complicated
-              bit-mapped options. Digitrax FX lighting options, for
-              example, require configuring two sets of bits into
-              one CV. Another example is configuring a Soundtraxx
-              decoder's mapping between functions and sounds. This
-              involves bits and values spread across a dozen
-              different CVs, but DecoderPro turns that
-              configuration job into simple checking of boxes.</p>
+              <p>Although having a name for an entire CV is nice, where this really helps is with
+              complicated bit-mapped options. Digitrax FX lighting options, for example, require
+              configuring two sets of bits into one CV. Another example is configuring a Soundtraxx
+              decoder's mapping between functions and sounds. This involves bits and values spread
+              across a dozen different CVs, but DecoderPro turns that configuration job into simple
+              checking of boxes.</p>
 
-              <p>Each selection box, checkbox or radiobutton is
-              mapped to specific bit(s) in the decoder's CVs. The
-              programmer handles the reading and writing of the CVs
-              when the individual settings are changed. Instead of
-              bits, you're working with the name or description
-              from the decoder manual.</p>
+              <p>Each selection box, checkbox or radiobutton is mapped to specific bit(s) in the
+              decoder's CVs. The programmer handles the reading and writing of the CVs when the
+              individual settings are changed. Instead of bits, you're working with the name or
+              description from the decoder manual.</p>
             </td>
           </tr>
 
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/Digitrax75.gif"><img src=
-            "./images/Digitrax75.gif" width="100" height="100" alt=
-            "Digitrax DH142"></a></td>
-
+            <td style="vertical-align:top;">
+              <a href="./images/Digitrax75.gif"><img src="./images/Digitrax75.gif" width="100"
+              height="100" alt="Digitrax DH142"></a>
+            </td>
             <td style="vertical-align:top;">
               <h3>Decoder-specific programmer Panels</h3>
 
-              <p>DecoderPro is meant to be easily configurable to
-              add new types of decoders. You can also add
-              programmer sheets, change their layout, and even redo
-              the entire appearance. To do that, DecoderPro is
-              driven by human-readable files in XML format.
-              Documentation on the file contents exists, and we're
-              working to continuously update it.</p>
+              <p>DecoderPro is meant to be easily configurable to add new types of decoders. You
+              can also add programmer sheets, change their layout, and even redo the entire
+              appearance. To do that, DecoderPro is driven by human-readable files in XML format.
+              Documentation on the file contents exists, and we're working to continuously update
+              it.</p>
 
-              <p>These files make it convenient to update
-              DecoderPro to work with a new decoder. For example,
-              the unique capabilities of a Digitrax DH142 appear on
-              a "Digitrax" sheet.</p>
+              <p>These files make it convenient to update DecoderPro to work with a new decoder.
+              For example, the unique capabilities of a Digitrax DH142 appear on a "Digitrax"
+              sheet.</p>
 
-              <p>Additional decoder-specific variables and sheets
-              can be added via configuration files. By choosing an
-              industry-standard XML format for decoder information,
-              we hope to make it possible to create a complete
-              library. Perhaps we can even interest manufacturers
-              in documenting their products in this format.</p>
+              <p>Additional decoder-specific variables and sheets can be added via configuration
+              files. By choosing an industry-standard XML format for decoder information, we hope
+              to make it possible to create a complete library. Perhaps we can even interest
+              manufacturers in documenting their products in this format.</p>
             </td>
           </tr>
 
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/CVtable75.gif"><img src=
-            "./images/CVtable75.gif" width="100" height="100" alt=
-            "CV Programmer"></a></td>
-
+            <td style="vertical-align:top;">
+              <a href="./images/CVtable75.gif"><img src="./images/CVtable75.gif" width="100"
+              height="100" alt="CV Programmer"></a>
+            </td>
             <td style="vertical-align:top;">
               <h3>Direct CV Programming</h3>
 
-              <p>Its also possible to program the CVs directly
-              using the CV Programmer. The "Read" and "Write"
-              buttons allow you to work with individual CV
-              contents. Changes made here will also update any
-              associated values found on other programmer
-              screens.</p>
+              <p>Its also possible to program the CVs directly using the CV Programmer. The "Read"
+              and "Write" buttons allow you to work with individual CV contents. Changes made here
+              will also update any associated values found on other programmer screens.</p>
             </td>
           </tr>
 
           <tr>
             <td style="vertical-align:top;">
-              <a href="./images/Roster75.gif"><img src=
-              "./images/Roster75.gif" width="100" height="100" alt=
-              "Rosters"></a>
-
+              <a href="./images/Roster75.gif"><img src="./images/Roster75.gif" width="100" height=
+              "100" alt="Rosters"></a>
               <p>For more info, see<br>
               <a href="./Roster.shtml">Roster Topics</a></p>
             </td>
-
             <td style="vertical-align:top;">
               <h3>Locomotive Rosters</h3>
 
-              <p>DecoderPro maintains a roster of your locomotives.
-              You can save the decoder configuration, and then
-              later work with the stored CV values instead of
-              having to read them from the decoder. This saves the
-              time it takes to read a complete decoder, which can
-              be quite long. The roster can also store locomotive
-              information for you. The "Roster Entry" sheet
-              displays this info and allows you to edit it.</p>
+              <p>DecoderPro maintains a roster of your locomotives. You can save the decoder
+              configuration, and then later work with the stored CV values instead of having to
+              read them from the decoder. This saves the time it takes to read a complete decoder,
+              which can be quite long. The roster can also store locomotive information for you.
+              The "Roster Entry" sheet displays this info and allows you to edit it.</p>
 
-              <p>Click "Save" to store the roster information to a
-              file on your computer's local disk; you'll be
-              reminded to do this if you close the programmer with
-              any unstored information.</p>
+              <p>Click "Save" to store the roster information to a file on your computer's local
+              disk; you'll be reminded to do this if you close the programmer with any unstored
+              information.</p>
 
-              <p>The "ID" field at the top is the name you'll later
-              use to select this locomotive.</p>
+              <p>The "ID" field at the top is the name you'll later use to select this
+              locomotive.</p>
             </td>
           </tr>
 
           <tr>
-            <td style="vertical-align:top;"><a href=
-            "./images/SelLoco.gif"><img src="./images/SelLoco.gif"
-            width="100" height="100" alt=
-            "Selecting a roster entry"></a></td>
-
+            <td style="vertical-align:top;">
+              <a href="./images/SelLoco.gif"><img src="./images/SelLoco.gif" width="100" height=
+              "100" alt="Selecting a roster entry"></a>
+            </td>
             <td style="vertical-align:top;">
               <h3>Selecting a Roster Entry</h3>
 
-              <p>During DecoderPro startup, you can select a
-              specific locomotive to work with by using the "Use
-              locomotive settings for ..." pulldown menu.</p>
+              <p>During DecoderPro startup, you can select a specific locomotive to work with by
+              using the "Use locomotive settings for ..." pulldown menu.</p>
 
-              <p>The "Ident" button uses the DCC address to select
-              a specific locomotive in the roster. When you click
-              "Open Programmer" with a specific locomotive
-              selected, the programmer opens each sheet with the
-              current values already present.</p>
+              <p>The "Ident" button uses the DCC address to select a specific locomotive in the
+              roster. When you click "Open Programmer" with a specific locomotive selected, the
+              programmer opens each sheet with the current values already present.</p>
 
-              <p>You can print the current locomotive's information
-              from the programmer windows. From the "File..." menu,
-              select "Print...", and fill out the dialog box that's
+              <p>You can print the current locomotive's information from the programmer windows.
+              From the "File..." menu, select "Print...", and fill out the dialog box that's
               presented.</p>
             </td>
           </tr>
         </table>
 
-        <h2>More Info</h2>For information on how to setup and use
-        DecoderPro, please see <a href="index.shtml">the DP Guide
-        pages</a>.
-
-        <p>More information on <a href="MoreInfo.shtml">how
-        DecoderPro works</a>, including <a href=
-        "CreateDecoder.shtml">how to add new Decoder Types</a>.</p>
-        <!--#include virtual="/Footer.shtml" -->
-      </div><!-- close #mainContent -->
-    </div><!-- close #mBody -->
+        <h2>More Info</h2>
+        For information on how to setup and use DecoderPro, please see <a href="index.shtml">the DP
+        Guide pages</a>.
+        <p>More information on <a href="MoreInfo.shtml">how DecoderPro works</a>, including
+        <a href="CreateDecoder.shtml">how to add new Decoder Types</a>.</p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- close #mainContent -->
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

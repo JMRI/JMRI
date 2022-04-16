@@ -1,6 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <!-- Updated by Blorec Herv&#233;  2013-09-14-->
+
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -26,132 +26,133 @@
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
 
-      <h1>JMRI Guide Mat&Atilde;&copy;riel: Connexion de Plusieurs
-      Ordinateurs &Atilde;  Travers le Serveur LocoNet
-      JMRI</h1>Cette page d&Atilde;&copy;crit comment utiliser les
-      capacit&Atilde;&copy;s JMRI du Client/Serveur
-      int&Atilde;&copy;gr&Atilde;&copy; de LocoNet&reg; pour
-      connecter plusieurs ordinateurs &Atilde;  un seul
-      r&Atilde;&copy;seau &Atilde;&copy;quip&Atilde;&copy; LocoNet.
+      <h1>JMRI Guide Mat&eacute;riel: Connexion de Plusieurs
+      Ordinateurs &aacute;  Travers le Serveur LocoNet
+      JMRI</h1>Cette page d&eacute;crit comment utiliser les
+      capacit&eacute;s JMRI du Client/Serveur
+      int&eacute;gr&eacute; de LocoNet&reg; pour
+      connecter plusieurs ordinateurs &aacute;  un seul
+      r&eacute;seau &eacute;quip&eacute; LocoNet.
 
       <p>En bref, un ordinateur est physiquement
-      connect&Atilde;&copy; &Atilde;  LocoNet&reg;, et agit comme
+      connect&eacute; &aacute;  LocoNet&reg;, et agit comme
       un "serveur" pour les autres. Un ou plusieurs ordinateurs
       "clients" peuvent alors se connecter via les protocoles
       standard TCP/IP sur le serveur.</p>
 
       <h2>Configuration Client/Serveur LocoNet JMRI</h2>Un
-      ordinateur ex&Atilde;&copy;cutant JMRI agit comme le serveur,
-      qui est directement reli&Atilde;&copy; &Atilde;  LocoNet, les
-      autres ordinateurs ex&Atilde;&copy;cutant JMRI se connectent
-      &Atilde;  l'ordinateur serveur en tant que clients.
+      ordinateur ex&eacute;cutant JMRI agit comme le serveur,
+      qui est directement reli&eacute; &aacute;  LocoNet, les
+      autres ordinateurs ex&eacute;cutant JMRI se connectent
+      &aacute;  l'ordinateur serveur en tant que clients.
 
       <ul>
         <li>Configurer la connexion LocoNet comme pour toute autre
-        utilisation. S&Atilde;&copy;lectionnez le protocole qui
-        correspond &Atilde;  votre mat&Atilde;&copy;riel (par
+        utilisation. S&eacute;lectionnez le protocole qui
+        correspond &aacute;  votre mat&eacute;riel (par
         exemple LocoBuffer-II, etc), le port de communication, et
         d'autres options. Il est
-        pr&Atilde;&copy;f&Atilde;&copy;rable de s'assurer que cela
-        fonctionne bien avant de proc&Atilde;&copy;der.</li>
+        pr&eacute;f&eacute;rable de s'assurer que cela
+        fonctionne bien avant de proc&eacute;der.</li>
 
-        <li>Vous pouvez alors d&Atilde;&copy;marrer manuellement le
-        serveur en s&Atilde;&copy;lectionnant
-        "D&Atilde;&copy;marrer Serveur LocoNet" &Atilde;  partir du
+        <li>Vous pouvez alors d&eacute;marrer manuellement le
+        serveur en s&eacute;lectionnant
+        "D&eacute;marrer Serveur LocoNet" &aacute;  partir du
         menu LocoNet. Cela permettra aux autres ordinateurs de se
-        connecter au r&Atilde;&copy;seau jusqu'&Atilde;  ce que
-        vous arr&Atilde;&ordf;tiez le programme, la prochaine fois
-        que vous le lancez, vous aurez &Atilde;  le faire &Atilde; 
+        connecter au r&eacute;seau jusqu'&aacute;  ce que
+        vous arr&aacute;&ordf;tiez le programme, la prochaine fois
+        que vous le lancez, vous aurez &aacute;  le faire &aacute;
         nouveau.</li>
 
-        <li>Vous pouvez &Atilde;&copy;galement avoir le serveur qui
-        d&Atilde;&copy;marre automatiquement &Atilde;  chaque fois
-        que vous d&Atilde;&copy;marrez le programme en
+        <li>Vous pouvez &eacute;galement avoir le serveur qui
+        d&eacute;marre automatiquement &aacute;  chaque fois
+        que vous d&eacute;marrez le programme en
 
           <ul>
-            <li>Ouvrant les pr&Atilde;&copy;f&Atilde;&copy;rences
+            <li>Ouvrant les pr&eacute;f&eacute;rences
             dans le menu Edition</li>
 
             <li>Cochant la case "Afficher les
-            Pr&Atilde;&copy;f&Atilde;&copy;rences
-            Avanc&Atilde;&copy;es"</li>
+            Pr&eacute;f&eacute;rences
+            Avanc&eacute;es"</li>
 
             <li>Sous la rubrique &Acirc;&laquo;action au
-            d&Atilde;&copy;marrage", cliquez sur "Ajouter
+            d&eacute;marrage", cliquez sur "Ajouter
             action"</li>
 
-            <li>Une liste des possibilit&Atilde;&copy;s sera
-            montr&Atilde;&copy;e. Recherchez et
-            s&Atilde;&copy;lectionnez "D&Atilde;&copy;marrer le
+            <li>Une liste des possibilit&eacute;s sera
+            montr&eacute;e. Recherchez et
+            s&eacute;lectionnez "D&eacute;marrer le
             serveur LocoNet".</li>
 
             <li>Enregistrant les
-            pr&Atilde;&copy;f&Atilde;&copy;rences</li>
+            pr&eacute;f&eacute;rences</li>
           </ul>ran
 
           <p>Le programme de l'ordinateur client peut alors
-          &Atilde;&ordf;tre configur&Atilde;&copy; pour se
-          connecter au r&Atilde;&copy;seau ferr&Atilde;&copy; via
+          &aacute;&ordf;tre configur&eacute; pour se
+          connecter au r&eacute;seau ferr&eacute; via
           le serveur LocoNet par:</p>
 
           <ul>
             <li>Assurez-vous que l'ordinateur serveur qui
-            ex&Atilde;&copy;cute le serveur LocoNet</li>
+            ex&eacute;cute le serveur LocoNet</li>
 
             <li>Ouvrez le programme sur l'ordinateur client</li>
 
-            <li>Ouvrez les pr&Atilde;&copy;f&Atilde;&copy;rences
+            <li>Ouvrez les pr&eacute;f&eacute;rences
             dans le menu Edition</li>
 
-            <li>Pour la connexion r&Atilde;&copy;seau,
-            s&Atilde;&copy;lectionnez "Serveur LocoNet"</li>
+            <li>Pour la connexion r&eacute;seau,
+            s&eacute;lectionnez "Serveur LocoNet"</li>
 
-            <li>Dans la bo&Atilde;&reg;te &Acirc;&laquo;serveur
-            hostname"qui appara&Atilde;&reg;t, tapez le nom
+            <li>Dans la bo&icirc;te "serveur
+            hostname" qui appara&icirc;t, tapez le nom
             d'Internet ou l'adresse de l'ordinateur qui
-            ex&Atilde;&copy;cute le serveur LocoNet. Une adresse
+            ex&eacute;cute le serveur LocoNet. Une adresse
             Internet est quelque chose comme 127.0.1.12; un nom est
             quelque chose comme jmri.org</li>
 
             <li>Enregistrer les
-            pr&Atilde;&copy;f&Atilde;&copy;rences et
-            red&Atilde;&copy;marrer le programme.</li>
+            pr&eacute;f&eacute;rences et
+            red&eacute;marrer le programme.</li>
           </ul>
 
           <h2>Notes:</h2>
 
           <ul>
-            <li>Il est fortement recommand&Atilde;&copy; que vous
-            connectiez l'ordinateur ma&Atilde;&reg;tre &Atilde; 
+            <li>Il est fortement recommand&eacute; que vous
+            connectiez l'ordinateur ma&icirc;tre &aacute;
             LocoNet avec un LocoBuffer ou LocoBuffer-II. Bien qu'un
             MS-100 fera essentiellement le travail pour cette
-            application, la correction r&Atilde;&copy;sultant des
+            application, la correction r&eacute;sultant des
             erreurs occasionnelles de la LocoNet peuvent
-            entra&Atilde;&reg;ner des retards notables dans
+            entra&icirc;ner des retards notables dans
             l'actualisation des ordinateurs distants.</li>
 
             <li>Si les ordinateurs sont tous proches de LocoNet,
             par exemple agissant comme un panneaux de
-            contr&Atilde;&acute;le local , vous n'avez pas vraiment
+            contr&ocirc;le local , vous n'avez pas vraiment
             besoin Server LocoNet pour ce faire. Vous pouvez,
-            autrement relier chacun des ordinateurs &Atilde;  la
+            autrement relier chacun des ordinateurs &aacute;  la
             LocoNet via leurs propres LocoBuffer ou LocoBuffer-II
-            (ou MS-100, m&Atilde;&ordf;me si ce n'est pas
-            recommand&Atilde;&copy;) et ils participent
+            (ou MS-100, m&egrave;me si ce n'est pas
+            recommand&eacute;) et ils participent
             individuellement dans les communications LocoNet. Cela
-            ne cause pas de charge suppl&Atilde;&copy;mentaire de
-            communication. Il co&Atilde;&raquo;te un peu plus pour
-            les cartes suppl&Atilde;&copy;mentaires, et ne vous
-            permettent pas de mettre un ordinateur distant &Atilde;
-             partir du r&Atilde;&copy;seau.</li>
+            ne cause pas de charge suppl&eacute;mentaire de
+            communication. Il co&ucirc;te un peu plus pour
+            les cartes suppl&eacute;mentaires, et ne vous
+            permettent pas de mettre un ordinateur distant &aacute;partir du r&eacute;seau.</li>
           </ul>
 
           <p>LocoNet&reg; est une marque
-          d&Atilde;&copy;pos&Atilde;&copy;e de <a href=
+          d&eacute;pos&eacute;e de <a href=
           "http://www.digitrax.com">Digitrax, Inc.</a></p>
         </li>
       </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer.shtml" -->
+  </div>
 </body>
 </html>

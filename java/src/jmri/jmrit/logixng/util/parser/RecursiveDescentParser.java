@@ -68,12 +68,6 @@ public class RecursiveDescentParser {
             return null;
         }
         
-//        if (exprNodeAndState._exprNode != null) {
-//            System.err.format("Expression: \"%s\"%n", exprNodeAndState._exprNode.getDefinitionString());
-//        } else {
-//            System.err.format("Expression: null%n");
-//        }
-        
         if ((exprNodeAndState._state != null)
                 && (exprNodeAndState._state._tokenIndex < _tokens.size())) {
             
@@ -134,9 +128,11 @@ public class RecursiveDescentParser {
     private final Rule rule11 = new Rule11();
     private final Rule rule12 = new Rule12();
     private final Rule rule14 = new Rule14();
+    private final Rule rule15 = new Rule15();
     private final Rule rule16 = new Rule16();
     private final Rule rule20 = new Rule20();
-    private final Rule21 rule21 = new Rule21();
+    private final Rule21_Function rule21_Function = new Rule21_Function();
+    private final Rule21_Method rule21_Method = new Rule21_Method();
     
     private final Rule firstRule = rule1;
     
@@ -172,6 +168,12 @@ public class RecursiveDescentParser {
                         || (newState._token._tokenType == TokenType.ASSIGN_MULTIPLY)
                         || (newState._token._tokenType == TokenType.ASSIGN_DIVIDE)
                         || (newState._token._tokenType == TokenType.ASSIGN_MODULO)
+                        || (newState._token._tokenType == TokenType.ASSIGN_AND)
+                        || (newState._token._tokenType == TokenType.ASSIGN_OR)
+                        || (newState._token._tokenType == TokenType.ASSIGN_XOR)
+                        || (newState._token._tokenType == TokenType.ASSIGN_SHIFT_LEFT)
+                        || (newState._token._tokenType == TokenType.ASSIGN_SHIFT_RIGHT)
+                        || (newState._token._tokenType == TokenType.ASSIGN_UNSIGNED_SHIFT_RIGHT)
                     )) {
                 
                 TokenType operatorTokenType = newState._token._tokenType;
@@ -200,22 +202,14 @@ public class RecursiveDescentParser {
             if ((newState._token != null)
                     && ((newState._token._tokenType == TokenType.TERNARY_QUESTION_MARK))) {
                 
-                if (! leftSide._exprNode.canBeAssigned()) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("LeftSideCannotBeAssigned"));
-                }
-                
-//                TokenType operatorTokenType = newState._token._tokenType;
                 newState = next(newState);
                 ExpressionNodeAndState middleSide = rule3.parse(newState);
                 
-//                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
-//                leftSide = new ExpressionNodeAndState(exprNode, middleSide._state);
                 newState = middleSide._state;
                 
                 if ((newState._token != null)
                         && ((newState._token._tokenType == TokenType.TERNARY_COLON))) {
                     
-//                    TokenType operatorTokenType = newState._token._tokenType;
                     newState = next(newState);
                     ExpressionNodeAndState rightRightSide = rule3.parse(newState);
                     
@@ -294,7 +288,23 @@ public class RecursiveDescentParser {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            return rule6.parse(state);
+            ExpressionNodeAndState leftSide = rule6.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            while ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.BINARY_OR))) {
+                
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule6.parse(newState);
+                
+                ExpressionNode exprNode = new ExpressionNodeBinaryOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+                newState = rightSide._state;
+            }
+            return leftSide;
         }
         
     }
@@ -306,7 +316,23 @@ public class RecursiveDescentParser {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            return rule7.parse(state);
+            ExpressionNodeAndState leftSide = rule7.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            while ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.BINARY_XOR))) {
+                
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule7.parse(newState);
+                
+                ExpressionNode exprNode = new ExpressionNodeBinaryOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+                newState = rightSide._state;
+            }
+            return leftSide;
         }
         
     }
@@ -318,7 +344,23 @@ public class RecursiveDescentParser {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            return rule8.parse(state);
+            ExpressionNodeAndState leftSide = rule8.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            while ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.BINARY_AND))) {
+                
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule8.parse(newState);
+                
+                ExpressionNode exprNode = new ExpressionNodeBinaryOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+                newState = rightSide._state;
+            }
+            return leftSide;
         }
         
     }
@@ -384,13 +426,31 @@ public class RecursiveDescentParser {
     }
     
     
-    // Shift. Not implemented yet.
+    // Shift
     // <rule10> ::= <rule11> | <rule11> << <rule11> | <rule11> >> <rule11> | <rule11> >>> <rule11>
     private class Rule10 implements Rule {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            return rule11.parse(state);
+            ExpressionNodeAndState leftSide = rule11.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            while ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.SHIFT_LEFT)
+                            || (newState._token._tokenType == TokenType.SHIFT_RIGHT)
+                            || (newState._token._tokenType == TokenType.UNSIGNED_SHIFT_RIGHT))) {
+
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule11.parse(newState);
+
+                ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+                newState = rightSide._state;
+            }
+            return leftSide;
         }
         
     }
@@ -455,16 +515,15 @@ public class RecursiveDescentParser {
     }
     
     
-    // Rule3 in Java is cast object and object creation. Not relevant here.
+    // Rule13 in Java is cast object and object creation. Not relevant here.
     
     
     // Unary pre-increment, unary pre-decrement, unary plus, unary minus, unary logical NOT, unary bitwise NOT
-    // <rule14> ::= <rule16> | ! <rule16> | ~ <rule16>
+    // <rule14> ::= <rule16> | ++ <rule16> | -- <rule16> | + <rule16> | - <rule16> | ! <rule16> | ~ <rule16>
     private class Rule14 implements Rule {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            
             State newState = accept(TokenType.BOOLEAN_NOT, state);
             
             if (newState != null) {
@@ -481,15 +540,58 @@ public class RecursiveDescentParser {
 
                 if (newState != null) {
                     ExpressionNodeAndState exprNodeAndState = rule14.parse(newState);
-                    if (exprNodeAndState._state._token == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
-                    }
                     
                     ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken._tokenType, null, exprNodeAndState._exprNode);
                     return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
                     
                 } else {
-                    return rule16.parse(state);
+                    newState = accept(TokenType.ADD, state);
+
+                    if (newState != null) {
+                        ExpressionNodeAndState exprNodeAndState = rule14.parse(newState);
+
+                        ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken._tokenType, null, exprNodeAndState._exprNode);
+                        return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
+
+                    } else {
+                        newState = accept(TokenType.SUBTRACKT, state);
+
+                        if (newState != null) {
+                            ExpressionNodeAndState exprNodeAndState = rule14.parse(newState);
+
+                            ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken._tokenType, null, exprNodeAndState._exprNode);
+                            return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
+
+                        } else {
+                            newState = accept(TokenType.INCREMENT, state);
+
+                            if (newState != null) {
+                                ExpressionNodeAndState exprNodeAndState = rule15.parse(newState);
+                                if (exprNodeAndState == null) {
+                                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                                }
+
+                                ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, true);
+                                return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
+
+                            } else {
+                                newState = accept(TokenType.DECREMENT, state);
+
+                                if (newState != null) {
+                                    ExpressionNodeAndState exprNodeAndState = rule15.parse(newState);
+                                    if (exprNodeAndState == null) {
+                                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                                    }
+
+                                    ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, true);
+                                    return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
+
+                                } else {
+                                    return rule15.parse(state);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -497,11 +599,37 @@ public class RecursiveDescentParser {
     }
     
     
-    // Rule15 in Java is unary post-increment, unary post-decrement. I.e. ++ and --. Don't implement here.
+    // Rule15 in Java is unary post-increment, unary post-decrement, ++ and --.
+    private class Rule15 implements Rule {
+
+        @Override
+        public ExpressionNodeAndState parse(State state) throws ParserException {
+            
+            ExpressionNodeAndState exprNodeAndState = rule16.parse(state);
+            if (exprNodeAndState == null) return null;
+            
+            State newState = accept(TokenType.INCREMENT, exprNodeAndState._state);
+            
+            if (newState != null) {
+                ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, false);
+                return new ExpressionNodeAndState(exprNode, newState);
+            } else {
+                newState = accept(TokenType.DECREMENT, exprNodeAndState._state);
+                
+                if (newState != null) {
+                    ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, false);
+                    return new ExpressionNodeAndState(exprNode, newState);
+                } else {
+                    return exprNodeAndState;
+                }
+            }
+        }
+        
+    }
     
     
     // Parentheses
-    // <rule16> ::= <rule20> ( <firstRule> )
+    // <rule16> ::= <rule20> | ( <firstRule> )
     private class Rule16 implements Rule {
 
         @Override
@@ -525,45 +653,136 @@ public class RecursiveDescentParser {
     
     
     // Identifiers and constants
-    // <rule20> ::= <identifier> | <identifier> ( <rule21> ) | <integer number> | <floating number> | <string>
+    // <rule20> ::= <identifier>
+    //              | <identifier> ( <rule21> )
+    //              | <rule20> [ <rule21> ]
+    //              | <rule20> { <rule21> }
+    //              | <rule20> . <rule20>
+    //              | <rule20> . <identifier> ( <rule21> )
+    
+    // <rule20> ::= <identifier>
+    //              | <identifier> ( <rule21> )
+    //              | <identifier> [ <rule21> ]
+    //              | <identifier> { <rule21> }
+    //              | <identifier> . <identifier>
+    //              | <identifier> . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> { <rule21> }
+    //              | <identifier> . <identifier>
+    //              | <identifier> . <identifier> . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> . <identifier> { <rule21> }
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> { <rule21> }
+    //              | <integer number>
+    //              | <floating number>
+    //              | <string>
     private class Rule20 implements Rule {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
             ExpressionNode exprNode;
-
             State newState;
+            
+            if ((newState = accept(TokenType.INTEGER_NUMBER, state)) != null) {
+                exprNode = new ExpressionNodeIntegerNumber(newState._lastToken);
+                return new ExpressionNodeAndState(exprNode, newState);
+            } else if ((newState = accept(TokenType.FLOATING_NUMBER, state)) != null) {
+                exprNode = new ExpressionNodeFloatingNumber(newState._lastToken);
+                return new ExpressionNodeAndState(exprNode, newState);
+            }
+            
+            
+            ExpressionNodeAndState expressionNodeAndState;
             if ((newState = accept(TokenType.IDENTIFIER, state)) != null) {
                 State newState2;
                 if ((newState2 = accept(TokenType.LEFT_PARENTHESIS, newState)) != null) {
                     ExpressionNodeAndState exprNodeAndState =
-                            rule21.parse(newState2, newState._lastToken._string);
+                            rule21_Function.parse(newState2, newState._lastToken._string);
                     if (exprNodeAndState._state._token == null) {
                         throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
                     }
+                    exprNode = exprNodeAndState._exprNode;
                     newState2 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
-                    return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState2);
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNodeAndState._exprNode, newState2);
                 } else {
                     exprNode = new ExpressionNodeIdentifier(newState._lastToken, _variables);
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState);
                 }
-            } else if ((newState = accept(TokenType.INTEGER_NUMBER, state)) != null) {
-                exprNode = new ExpressionNodeIntegerNumber(newState._lastToken);
-            } else if ((newState = accept(TokenType.FLOATING_NUMBER, state)) != null) {
-                exprNode = new ExpressionNodeFloatingNumber(newState._lastToken);
             } else if ((newState = accept(TokenType.STRING, state)) != null) {
                 exprNode = new ExpressionNodeString(newState._lastToken);
+                expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState);
             } else {
                 return null;
             }
             
-            return new ExpressionNodeAndState(exprNode, newState);
+            
+            boolean completed = false;
+            do {
+                State newState2;
+                if ((newState2 = accept(TokenType.DOT, newState)) != null) {
+                    State newState3;
+                    if ((newState3 = accept(TokenType.IDENTIFIER, newState2)) != null) {
+                        State newState4;
+                        if ((newState4 = accept(TokenType.LEFT_PARENTHESIS, newState3)) != null) {
+                            ExpressionNodeAndState exprNodeAndState2 =
+                                    rule21_Method.parse(newState4, newState._lastToken._string, newState3._lastToken._string);
+                            if (exprNodeAndState2._state._token == null) {
+                                throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                            }
+                            newState4 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState2._state);
+                            exprNode = new ExpressionNodeComplex(
+                                    exprNode, (ExpressionNodeWithParameter) exprNodeAndState2._exprNode);
+                            expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState4);
+                            newState = newState4;
+                        } else {
+                            exprNode = new ExpressionNodeComplex(
+                                    exprNode,
+                                    new ExpressionNodeInstanceVariable(newState3._lastToken._string, _variables));
+                            expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
+                            newState = newState3;
+                        }
+                    } else {
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                    }
+                } else if ((newState2 = accept(TokenType.LEFT_SQUARE_BRACKET, newState)) != null) {
+                    State newState3;
+                    ExpressionNodeAndState exprNodeAndState2 = rule1.parse(newState2);
+                    if (exprNodeAndState2._state._token == null) {
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                    }
+                    newState3 = expect(TokenType.RIGHT_SQUARE_BRACKET, exprNodeAndState2._state);
+                    exprNode = new ExpressionNodeComplex(
+                            exprNode,
+                            new ExpressionNodeArray(exprNodeAndState2._exprNode));
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
+                    newState = newState3;
+                } else if ((newState2 = accept(TokenType.LEFT_CURLY_BRACKET, newState)) != null) {
+                    State newState3;
+                    ExpressionNodeAndState exprNodeAndState2 = rule1.parse(newState2);
+                    if (exprNodeAndState2._state._token == null) {
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                    }
+                    newState3 = expect(TokenType.RIGHT_CURLY_BRACKET, exprNodeAndState2._state);
+                    exprNode = new ExpressionNodeComplex(
+                            exprNode,
+                            new ExpressionNodeMap(exprNodeAndState2._exprNode));
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
+                    newState = newState3;
+                } else {
+                    completed = true;
+                }
+            } while (!completed);
+            
+            return expressionNodeAndState;
         }
         
     }
     
     
     // <rule21> ::= <empty> | <rule21> | <rule21> , <rule3>
-    private class Rule21 {
+    private class Rule21_Function {
 
         public ExpressionNodeAndState parse(State state, String identifier) throws ParserException {
             
@@ -583,6 +802,33 @@ public class RecursiveDescentParser {
                 newState = exprNodeAndState._state;
             }
             ExpressionNode exprNode = new ExpressionNodeFunction(identifier, parameterList);
+            return new ExpressionNodeAndState(exprNode, newState);
+        }
+        
+    }
+    
+    
+    // <rule21> ::= <empty> | <rule21> | <rule21> , <rule3>
+    private class Rule21_Method {
+
+        public ExpressionNodeAndState parse(State state, String variable, String method) throws ParserException {
+            
+            List<ExpressionNode> parameterList = new ArrayList<>();
+            
+            State newState = state;
+            State newState2;
+            if ((accept(TokenType.RIGHT_PARENTHESIS, newState)) == null) {
+                ExpressionNodeAndState exprNodeAndState = rule3.parse(state);
+                parameterList.add(exprNodeAndState._exprNode);
+                
+                while ((newState2 = accept(TokenType.COMMA, exprNodeAndState._state)) != null) {
+                    exprNodeAndState = rule3.parse(newState2);
+                    parameterList.add(exprNodeAndState._exprNode);
+                }
+                
+                newState = exprNodeAndState._state;
+            }
+            ExpressionNode exprNode = new ExpressionNodeMethod(method, _variables, parameterList);
             return new ExpressionNodeAndState(exprNode, newState);
         }
         

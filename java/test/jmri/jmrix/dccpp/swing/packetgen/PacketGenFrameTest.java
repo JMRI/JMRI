@@ -20,7 +20,7 @@ public class PacketGenFrameTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PacketGenFrame action = new PacketGenFrame();
+        PacketGenFrame action = new PacketGenFrame(memo);
         Assert.assertNotNull("exists", action);
     }
 

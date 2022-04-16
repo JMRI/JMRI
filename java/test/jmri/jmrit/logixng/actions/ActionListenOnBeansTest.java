@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
@@ -39,7 +41,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Listen on beans ::: Log error%n");
+        return String.format("Listen on beans ::: Use default%n");
     }
     
     @Override
@@ -48,7 +50,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Listen on beans ::: Log error%n");
+                "         Listen on beans ::: Use default%n");
     }
     
     @Override
@@ -84,11 +86,6 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
-    }
-    
-    @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
     }
     
     @Test
@@ -131,7 +128,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         _base = actionListenOnBeans;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

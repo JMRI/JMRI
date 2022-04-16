@@ -7,11 +7,7 @@ import java.util.Set;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.parser.CalculateException;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -35,6 +31,17 @@ public class StringFunctions implements FunctionFactory {
         functionClasses.add(new FormatFunction());
         return functionClasses;
     }
+
+    @Override
+    public Set<Constant> getConstants() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public String getConstantDescription() {
+        // This module doesn't define any constants
+        return null;
+    }
     
     
     
@@ -43,6 +50,11 @@ public class StringFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new StringFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new StringFunctions().getConstantDescription();
         }
         
         @Override

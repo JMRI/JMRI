@@ -244,6 +244,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         for (int i = 0; i < Setup.getMaxNumberEngines() + 1; i++) {
             numEngines1Box.addItem(Integer.toString(i));
         }
+        numEngines1Box.addItem(Train.AUTO_HPT);
         numEngines1Box.setMinimumSize(new Dimension(50, 20));
         modelEngine1Box.insertItemAt("", 0);
         modelEngine1Box.setSelectedIndex(0);
@@ -292,6 +293,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         for (int i = 0; i < Setup.getMaxNumberEngines() + 1; i++) {
             numEngines2Box.addItem(Integer.toString(i));
         }
+        numEngines2Box.addItem(Train.AUTO_HPT);
         numEngines2Box.setMinimumSize(new Dimension(50, 20));
         modelEngine2Box.insertItemAt("", 0);
         modelEngine2Box.setSelectedIndex(0);
@@ -404,7 +406,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         // get notified if return to staging option changes
         Setup.getDefault().addPropertyChangeListener(this);
 
-        initMinimumSize();
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight600));
     }
 
     // Save

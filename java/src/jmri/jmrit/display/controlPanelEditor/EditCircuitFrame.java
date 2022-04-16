@@ -285,7 +285,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
                 PortalIcon icon = (PortalIcon)p;
                 Portal portal = icon.getPortal();
                 icon.setName(portal.getName());
-                icon.setToolTip(new ToolTip(portal.getDescription(), 0, 0));
+                icon.setToolTip(new ToolTip(portal.getDescription(), 0, 0, icon));
             }
         }
     }

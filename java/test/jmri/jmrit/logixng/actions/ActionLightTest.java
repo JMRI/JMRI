@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -40,7 +41,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         
         boolean hasThrown = false;
         try {
-            ActionLight.LightState.get(Light.UNKNOWN);
+            ActionLight.LightState.get(100);    // The number 100 is a state that ActionLight.LightState isn't aware of
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "invalid light state".equals(ex.getMessage()));
@@ -65,7 +66,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set light IL1 to state On ::: Log error%n");
+        return String.format("Set light IL1 to state On ::: Use default%n");
     }
     
     @Override
@@ -74,7 +75,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set light IL1 to state On ::: Log error%n");
+                "         Set light IL1 to state On ::: Use default%n");
     }
     
     @Override
@@ -486,13 +487,8 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set light", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Light", _base.getShortDescription());
     }
     
     @Test
@@ -544,7 +540,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         _base = actionLight;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

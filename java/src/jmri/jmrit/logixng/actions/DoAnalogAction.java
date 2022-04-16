@@ -58,12 +58,6 @@ public class DoAnalogAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         double result = _analogExpressionSocket.evaluate();
         

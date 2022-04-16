@@ -43,13 +43,13 @@ public class TrainPrintUtilities {
      * @param printerName   optional default printer name
      * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
      * @param fontSize      font size
+     * @param printHeader   when true print page header
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, boolean isBuildReport,
-            String logoURL, String printerName, String orientation, int fontSize) {
+            String logoURL, String printerName, String orientation, int fontSize, boolean printHeader) {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         boolean isLandScape = false;
-        boolean printHeader = true;
         double margin = .5;
         Dimension pagesize = null; // HardcopyWritter provides default page
                                    // sizes for portrait and landscape

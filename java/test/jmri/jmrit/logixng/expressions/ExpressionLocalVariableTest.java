@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
@@ -48,7 +49,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Local variable myVar is equal to \"\" ::: Log error%n   ::: Local variable \"myVar\", init to String \"\"%n");
+        return String.format("Local variable myVar is equal to \"\" ::: Use default%n   ::: Local variable \"myVar\", init to String \"\"%n");
     }
     
     @Override
@@ -57,12 +58,12 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Always execute ::: Log error%n" +
+                "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Local variable myVar is equal to \"\" ::: Log error%n" +
+                "               Local variable myVar is equal to \"\" ::: Use default%n" +
                 "                  ::: Local variable \"myVar\", init to String \"\"%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -173,17 +174,12 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
         expressionLocalVariable.setLocalVariable("someVar");
-        Assert.assertEquals("Compare local variable", expressionLocalVariable.getShortDescription());
+        Assert.assertEquals("Local variable", expressionLocalVariable.getShortDescription());
         Assert.assertEquals("Local variable someVar is equal to \"\"", expressionLocalVariable.getLongDescription());
         expressionLocalVariable.setLocalVariable("myVar");
         expressionLocalVariable.setConstantValue("A value");
@@ -226,7 +222,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         conditionalNG.setEnabled(false);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.MatchRegex);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
-        expressionLocalVariable.setConstantValue("Hello.*");
+        expressionLocalVariable.setRegEx("Hello.*");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Hello world");
@@ -246,7 +242,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionLocalVariable.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionLocalVariable.setRegEx("\\w\\w\\d+\\s\\d+");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Ab213 31");
@@ -269,7 +265,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         conditionalNG.setEnabled(false);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.NotMatchRegex);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
-        expressionLocalVariable.setConstantValue("Hello.*");
+        expressionLocalVariable.setRegEx("Hello.*");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Hello world");
@@ -289,7 +285,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionLocalVariable.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionLocalVariable.setRegEx("\\w\\w\\d+\\s\\d+");
         // Set the local variable
         localVariableMaleSocket.clearLocalVariables();
         localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, "Ab213 31");
@@ -488,7 +484,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         
         expressionLocalVariable.setLocalVariable("myVar");
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

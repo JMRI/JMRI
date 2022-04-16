@@ -1,343 +1,263 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Warrant Speeds Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Modifying Warrant Speeds">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Warrants: When Warrant Speeds Are Modified</h1>
 
-      <p>Regardless of the throttle setting and intended track
-      speed in the command script of a Warrant, track conditions
-      may occur that require a restriction of the track speed.
-      "Stop" aspects of signals, occupancy or allocation to another
-      Warrant will deny permission to proceed. Other aspects of
-      signals or block limits may require a reduction of speed.
-      For an overview discussion of Warrants, see <a href=
-      "Warrant.shtml">Warrants</a>.</p>
+      <p>Regardless of the throttle setting and intended track speed in the command script of a
+      Warrant, track conditions may occur that require a restriction of the track speed. "Stop"
+      aspects of signals, occupancy or allocation to another Warrant will deny permission to
+      proceed. Other aspects of signals or block limits may require a reduction of speed. For an
+      overview discussion of Warrants, see <a href="Warrant.shtml">Warrants</a>.</p>
 
       <h2>Warrants and Speed Restrictions</h2>
-      <p>A train running under
-      a Warrant must be aware of track conditions ahead. Signals
-      may indicate reduced speed or permission to return to normal
-      speed. Blocks may impose yard limit speed restrictions. Rogue
-      trains may show up unexpectedly in the route. In our
-      imagination, we can presume
-      their detection means our warrant "engineer" sees a fuss. For
-      each of these cases the warrant must look ahead, detect the
-      need for a speed change and schedule the right time to do it
-      - all the while making the change smoothly and completing it
-      in prototypical fashion.</p>
-      
+
+      <p>A train running under a Warrant must be aware of track conditions ahead. Signals may
+      indicate reduced speed or permission to return to normal speed. Blocks may impose yard limit
+      speed restrictions. Rogue trains may show up unexpectedly in the route. In our imagination,
+      we can presume their detection means our warrant "engineer" sees a fuss. For each of these
+      cases the warrant must look ahead, detect the need for a speed change and schedule the right
+      time to do it - all the while making the change smoothly and completing it in prototypical
+      fashion.</p>
+
       <h3>Configuring Speed Restrictions</h3>
-      <p>For a warrant to detect a <b>signaled speed change</b> the signal
-      must be configured in the Occupancy Block Tables. 
-      The Signal Table there configures the entrance Portal to the
-      OBlock that the signal protects.  The warrant then uses the 
-      signal system configured for the signal to define the aspect
-      speed.<br>
-      Likewise, <b>Block Speeds</b> are configured in the Occupancy
-      Block Tables.  A column in the OBlock Table allows you to
-      choose an aspect speed that the Warrant will enforce
+
+      <p>For a warrant to detect a <strong>signaled speed change</strong> the signal must be
+      configured in the Occupancy Block Tables. The Signal Table there configures the entrance
+      Portal to the OBlock that the signal protects. The warrant then uses the signal system
+      configured for the signal to define the aspect speed.<br>
+      Likewise, <strong>Block Speeds</strong> are configured in the Occupancy Block Tables. A
+      column in the OBlock Table allows you to choose an aspect speed that the Warrant will enforce
       before entering the block.</p>
-      
-      <p>When an <b>occupancy</b> sensor is activated ahead of the train
-      on its route, the warrant will take note of it and
-      bring the train to a stop before entering the block.</p>
- 
-      <p>Finally, you can manually instruct the Warrant to ramp
-      down to a stop using the <b>Halt</b> control command.
-      - or issue an emergency stop with the <b>E-Stop</b> command,
-      Also, you can ramp up from a stop and resume the train's 
-      former speed with a <b>Resume</b> command. With the exception
-      of E-Stop, all these unscripted speed changes are made smoothly.</p>
-      
-	  <p>When a warrant ramps down a speed change due to a signal, block
-      or rouge occupancy condition, That speed change remains in
-      effect until the condition is removed. At that time the
-      speed is ramped up to the previous "normal" speed.  The
-      precedence order is: rouge occupancy, signal aspect, block speed.</p>
-            
-      <h2>How Signal Aspects and Block Speeds Modify a Train's
-      Speed</h2>
-      When a speed restriction is required before entering a block,
-      the speed change needs to begin at some point before entry.
 
-      <p>When a Warrant is running and its train enters a
-      block, it looks ahead to see if any speed changes are coming
-      up. The look ahead distance must be adequate for the train to
-      be able to stop should that be needed. The warrant calculates
-      the look ahead distance to be what is needed to stop from its 
-      present speed. This distance may include several blocks. 
-      If a signal or block is
-      encountered within this look ahead distance, and the aspect
-      protecting the block indicates the speed must be restricted,
-      then the warrant performs a "ramp down".</p>
-      
-      <p>When a speed restriction is lifted, the problem is much
-      simpler.  The warrant can immediately begin a "ramp up" upon
-      entering the block.
+      <p>When an <strong>occupancy</strong> sensor is activated ahead of the train on its route,
+      the warrant will take note of it and bring the train to a stop before entering the block.</p>
 
-       <h3>A Note about Ramps</h3>
-       When a warrant ramps up or down, it does it stepwise. In
-       order for it to done smoothly in prototypical fashion, it
-       depends on the following parameters:
+      <p>Finally, you can manually instruct the Warrant to ramp down to a stop using the
+      <strong>Halt</strong> control command. - or issue an emergency stop with the
+      <strong>E-Stop</strong> command, Also, you can ramp up from a stop and resume the train's
+      former speed with a <strong>Resume</strong> command. With the exception of E-Stop, all these
+      unscripted speed changes are made smoothly.</p>
+
+      <p>When a warrant ramps down a speed change due to a signal, block or rouge occupancy
+      condition, That speed change remains in effect until the condition is removed. At that time
+      the speed is ramped up to the previous "normal" speed. The precedence order is: rouge
+      occupancy, signal aspect, block speed.</p>
+
+      <h2>How Signal Aspects and Block Speeds Modify a Train's Speed</h2>
+      When a speed restriction is required before entering a block, the speed change needs to begin
+      at some point before entry.
+      <p>When a Warrant is running and its train enters a block, it looks ahead to see if any speed
+      changes are coming up. The look ahead distance must be adequate for the train to be able to
+      stop should that be needed. The warrant calculates the look ahead distance to be what is
+      needed to stop from its present speed. This distance may include several blocks. If a signal
+      or block is encountered within this look ahead distance, and the aspect protecting the block
+      indicates the speed must be restricted, then the warrant performs a "ramp down".</p>
+
+      <p>When a speed restriction is lifted, the problem is much simpler. The warrant can
+      immediately begin a "ramp up" upon entering the block.</p>
+
+      <h3>A Note about Ramps</h3>
+      When a warrant ramps up or down, it does it stepwise. In order for it to done smoothly in
+      prototypical fashion, it depends on the following parameters:
       <ul>
-        <li><b>Ramp Step Time</b> The number of milliseconds 
-        between making throttle setting changes.</li>
-        <li><b>Ramp Step Throttle Increment</b> The initial
-        throttle increment when increasing speed, or last
-        increment when decreasing speed.</li> 
+        <li><strong>Ramp Step Time</strong> The number of milliseconds between making throttle
+        setting changes.</li>
+
+        <li><strong>Ramp Step Throttle Increment</strong> The initial throttle increment when
+        increasing speed, or last increment when decreasing speed.</li>
       </ul>
       These are configured in Warrant Preferences. See <a href=
-      "../../../apps/TabbedPreferences.shtml#Warrants">Warrant
-      Preferences</a> for information about configuration of
-      Warrant parameters.
-      
-       <h3>Parameters Needed for Look Ahead</h3>
-       <p>Both the
-       look ahead distance and the time when to begin the speed
-       change require knowing the track speed. Thus to get the
-       train to begin and end its speed changes at the proper points,
-       and relating the throttle settings to the actual track
-       speed, some crucial information is needed. Without such 
-       information a fast running
-       engine may overrun the point where a speed change expects to
-       be completed, or a slow running train may stop too far short
-       of where it is expected.</p>
+      "../../../apps/TabbedPreferences.shtml#Warrants">Warrant Preferences</a> for information
+      about configuration of Warrant parameters.
+      <h3>Parameters Needed for Look Ahead</h3>
 
-       <ul>
-        <li><b>Distance</b> the train must travel. <i>Your
-          wild guess is better than any default.</i>
-          <b>Block Lengths</b> are needed for distances.  There
-          is a length column in the OBlock Table. (Use menu
-          <b>Add Items -&gt; Occupancy Blocks</b>).  Also  the
-          <b>Paths</b> column in the table opens its path tables. 
-          Each Path Table has a length column as well.  
-          <p>Likewise the menus 
-          <b>Circuit Builder -&gt; Add/Edit Circuit OBlock</b> 
-          and <b>Circuit Builder -&gt; Add/Edit Circuit OPaths</b>
-          in Circuit Builder have text fields to enter 
-          lengths.</p> 
-          <p>Inches or centimeters may be used for all of these fields.
-          <p>When no block length is specified error messages
-          are written to the console and you may have trains 
-          over-running their stopping points.  It is 
-          <b><i>highly recommended</i></b>
-          that path lengths be specified.  If the 
-          paths within a block vary widely, path lengths
-          should be set. Otherwise, path
-          lengths are inherited from the block length.</p>
+      <p>Both the look ahead distance and the time when to begin the speed change require knowing
+      the track speed. Thus to get the train to begin and end its speed changes at the proper
+      points, and relating the throttle settings to the actual track speed, some crucial
+      information is needed. Without such information a fast running engine may overrun the point
+      where a speed change expects to be completed, or a slow running train may stop too far short
+      of where it is expected.</p>
+
+      <ul>
+        <li>
+          <strong>Distance</strong> the train must travel. <em>Your wild guess is better than any
+          default.</em> <strong>Block Lengths</strong> are needed for distances. There is a length
+          column in the OBlock Table. (Use menu <strong>Add Items -&gt; Occupancy Blocks</strong>).
+          Also the <strong>Paths</strong> column in the table opens its path tables. Each Path
+          Table has a length column as well.
+          <p>Likewise the menus <strong>Circuit Builder -&gt; Add/Edit Circuit OBlock</strong> and
+          <strong>Circuit Builder -&gt; Add/Edit Circuit OPaths</strong> in Circuit Builder have
+          text fields to enter lengths.</p>
+
+          <p>Inches or centimeters may be used for all of these fields.</p>
+
+          <p>When no block length is specified error messages are written to the console and you
+          may have trains over-running their stopping points. It is <strong><em>highly
+          recommended</em></strong> that path lengths be specified. If the paths within a block
+          vary widely, path lengths should be set. Otherwise, path lengths are inherited from the
+          block length.</p>
         </li>
-        <li><b>Layout Scale</b> is needed for distances when speed is
-        expressed as Mph or Kmph.  This is set from a drop down box at
-        the <b>Edit-&gt;Preferences-&gt;Warrants</b> menu of the main 
-        PanelPro window</li>
-        <li><b>Track Speed</b> of the train.  A correlation of 
-          the throttle settings to the actual speed
-          of the train on the layout must be known. For this 
-          two methods are used.
+
+        <li><strong>Layout Scale</strong> is needed for distances when speed is expressed as Mph or
+        Kmph. This is set from a drop down box at the
+        <strong>Edit-&gt;Preferences-&gt;Warrants</strong> menu of the main PanelPro window</li>
+
+        <li>
+          <strong>Track Speed</strong> of the train. A correlation of the throttle settings to the
+          actual speed of the train on the layout must be known. For this two methods are used.
           <ul>
-            <li>
-            A first approximation is the <b>"Throttle Setting/Speed Factor"</b>
-            value at Edit-&gt;Preferences-&gt;Warrants.
-            When used, this factor is a linear multiplier to relate throttle
-            setting to track speed.  <b>Note</b> this is a global value for 
-            all of the locomotives in your fleet and over the entire speed
-            range of each.  Obviously this may not function optimally.
-            However, it could be satisfactory for your tastes.</li>
-            <li> 
-            For more precision a <b>Speed Profile</b> can be used for each
-            locomotive. These provide track speed values that give more  
-            accurate calculations for time and distances.  
-            The Speed Profiler
-            is found at <b>Roster-&gt;Speed Profiling</b> is used to
-            create a speed profilr for each locomotive or consist.</li>  
+            <li>A first approximation is the <strong>"Throttle Setting/Speed Factor"</strong> value
+            at Edit-&gt;Preferences-&gt;Warrants. When used, this factor is a linear multiplier to
+            relate throttle setting to track speed. <strong>Note</strong> this is a global value
+            for all of the locomotives in your fleet and over the entire speed range of each.
+            Obviously this may not function optimally. However, it could be satisfactory for your
+            tastes.</li>
+
+            <li>For more precision a <strong>Speed Profile</strong> can be used for each
+            locomotive. These provide track speed values that give more accurate calculations for
+            time and distances. The Speed Profiler is found at <strong>Roster-&gt;Speed
+            Profiling</strong> is used to create a speed profilr for each locomotive or
+            consist.</li>
           </ul>
-        </li> 
+        </li>
       </ul>
 
       <h3>Getting Speed Profiles for your Trains</h3>
-      <p>Speed Profiles are
-      maintained in the Roster and there is a tool that will create
-      them at <b>Roster-&gt;Speed Profiling</b> The tool can
-      measure a track speed for each step in the throttle.
-      However, interpolation and extrapolation have been implemented
-      so it is not necessary to go to such detail.  Five or
-      six data points well distributed over the throttle's
+
+      <p>Speed Profiles are maintained in the Roster and there is a tool that will create them at
+      <strong>Roster-&gt;Speed Profiling</strong> The tool can measure a track speed for each step
+      in the throttle. However, interpolation and extrapolation have been implemented so it is not
+      necessary to go to such detail. Five or six data points well distributed over the throttle's
       range is quite sufficient.</p>
 
-      <a name="autoSpeedProfile" id="autoSpeedProfile"></a>
-      <h2>Automatic Speed Profiling</h2>
-      <p>Since <b><i>Release 4.9.2</i></b>
-      track speed of an engine/consist is measured when that address
-      is used for running a Warrant. A data point is recorded whenever
-      a path with known length is traversed with a known throttle
-      setting. The data is kept for the layout
-      session and when the session ends this Session Speed Profile 
-      can be merged into the Roster Speed Profile.  Warrant Preferences
-      provides choices for how you may want to manage the merging of
-      Roster Speed Profiles. See <a href=
-      "../../../apps/TabbedPreferences.shtml#Warrants">Warrant
-      Preferences</a> for how you want to manage the end of session
-      behavior.  The default is you are prompted for how you want
-      to treat each Session Speed Profile.</p>
-      
+      <h2 id="autoSpeedProfile">Automatic Speed Profiling</h2>
+
+      <p>Since <strong><em>Release 4.9.2</em></strong> track speed of an engine/consist is measured
+      when that address is used for running a Warrant. A data point is recorded whenever a path
+      with known length is traversed with a known throttle setting. The data is kept for the layout
+      session and when the session ends this Session Speed Profile can be merged into the Roster
+      Speed Profile. Warrant Preferences provides choices for how you may want to manage the
+      merging of Roster Speed Profiles. See <a href=
+      "../../../apps/TabbedPreferences.shtml#Warrants">Warrant Preferences</a> for how you want to
+      manage the end of session behavior. The default is you are prompted for how you want to treat
+      each Session Speed Profile.</p>
+
       <h3>Track Speeds for Throttle Settings</h3>
-      <p>If you used the Roster Speed Profiling tool most likely you ran
-      an engine running light over a straight level track. With 
-      Warrant dynamic speed profiling, measurements are made over
-      straight level track, but also upgrade, down grade, curved
-      gently or severely, running light or pulling 30+ cars. 
-      <i>The track speeds are not going to be all the same for a
-      given throttle setting.</i>  When merging, new values are 
-      averaged with the old, with the intention of a composite
-      speed profile that reflects average use.</p>
-       
-      <p>At some point, merging this data
-      may make a speed profile that is not monotonic increasing.
-      (Certainly increasing throttle setting increases speed). When
-      this anomaly occurs the speed profile is displayed and the
-      cells where the profile is not monotonic are marked in red.
-      You may edit the table to correct it. Whether to do this
-      editing is your choice.  Perhaps it is best to let the
-      anomalies remain and have the profile resolve itself - or
-      do the editing after letting more values accumulate.
-      Of course, a value resulting when the train was shorted
-      or was dragging a derailed car should be deleted.</p>
-      
+
+      <p>If you used the Roster Speed Profiling tool most likely you ran an engine running light
+      over a straight level track. With Warrant dynamic speed profiling, measurements are made over
+      straight level track, but also upgrade, down grade, curved gently or severely, running light
+      or pulling 30+ cars. <em>The track speeds are not going to be all the same for a given
+      throttle setting.</em> When merging, new values are averaged with the old, with the intention
+      of a composite speed profile that reflects average use.</p>
+
+      <p>At some point, merging this data may make a speed profile that is not monotonic
+      increasing. (Certainly increasing throttle setting increases speed). When this anomaly occurs
+      the speed profile is displayed and the cells where the profile is not monotonic are marked in
+      red. You may edit the table to correct it. Whether to do this editing is your choice. Perhaps
+      it is best to let the anomalies remain and have the profile resolve itself - or do the
+      editing after letting more values accumulate. Of course, a value resulting when the train was
+      shorted or was dragging a derailed car should be deleted.</p>
+
       <h4>Editing a Speed Profile</h4>
-      <p>When given the opportunity to edit, either the value of
-      a single cell can be changed or an entire row deleted.
-      Replacing a value with 0.0, causes that speed step to be
-      ignored. When a track speed is needed for a throttle setting
-      there, an interpolated value is used.  If
-      values in both directions are 0.0, the row might as
-      well be deleted.</p>
+
+      <p>When given the opportunity to edit, either the value of a single cell can be changed or an
+      entire row deleted. Replacing a value with 0.0, causes that speed step to be ignored. When a
+      track speed is needed for a throttle setting there, an interpolated value is used. If values
+      in both directions are 0.0, the row might as well be deleted.</p>
 
       <h2>Aspect Speed Table and its Interpretation</h2>
-      <p>Speeds are
-      named in the aspects.xml files that signal masts use in the
-      Signal Mast System. These speed names are also used in the
-      Blocks tables. To control train speed, values must be
-      assigned to these speed names. The Aspect Speed Map found at
-      <i>&gt;Edit-&gt;Preferences-&gt;Warrants</i> provides a value
-      for each named speed. It is up to the user to assign a value
-      to the name and a meaning to the value. On the Warrant
-      Preferences Pane are four radio buttons to assign meaning
-      to the values entered into the Speed Map Table.</p>
 
-      <p>When a signal or block defines an aspect speed by name,
-      the warrant looks up the name in the Aspect Speed Table
-      and uses the value there tp modify the speed of the train.</p>
+      <p>Speeds are named in the aspects.xml files that signal masts use in the Signal Mast System.
+      These speed names are also used in the Blocks tables. To control train speed, values must be
+      assigned to these speed names. The Aspect Speed Map found at
+      <em>&gt;Edit-&gt;Preferences-&gt;Warrants</em> provides a value for each named speed. It is
+      up to the user to assign a value to the name and a meaning to the value. On the Warrant
+      Preferences Pane are four radio buttons to assign meaning to the values entered into the
+      Speed Map Table.</p>
+
+      <p>When a signal or block defines an aspect speed by name, the warrant looks up the name in
+      the Aspect Speed Table and uses the value there tp modify the speed of the train.</p>
+
       <ul>
-        <li>
-          <b>Percent of Normal</b> - The value is a percentage of
-          the recorded ("Normal") speed. <i>Any speed name that is
-          restrictive must have a values less than 100.</i>  The
-          warrant reduces the "Normal" scripted speed by this
-          value as a percentage.
-        </li>
-        <li>
-          <b>Percent of Full Throttle</b> - The value is an
-          absolute throttle setting expressed as a percentage of
-          full throttle. <i>All speed names must be a number 
-          between 0 and 100.</i> The warrant sets the modified speed
-          to be the value as a percentage of the full throttle
-          setting.
-        </li>
-        <li>
-          <b>Miles per hour</b> - The value is the scale speed
-          expressed as miles per hour. <i>All speed names must
-          be expressed as miles per hour.</i> The warrant, using
-          layout scale, converts the value to track speed and
-          finds the corresponding throttle setting for the
-          modified speed.
-        </li>
-        <li>
-          <b>Kilometers per Hour</b> - The value is the scale
-          speed expressed as Kilometers per hour. <i>All speed 
-          names must be expressed as kilometers per hour.</i> 
-          The warrant, using layout scale,
-          converts the value to track speed and finds the
-          corresponding throttle setting for the
-          modified speed.
-        </li>
+        <li><strong>Percent of Normal</strong> - The value is a percentage of the recorded
+        ("Normal") speed. <em>Any speed name that is restrictive must have a values less than
+        100.</em> The warrant reduces the "Normal" scripted speed by this value as a
+        percentage.</li>
+
+        <li><strong>Percent of Full Throttle</strong> - The value is an absolute throttle setting
+        expressed as a percentage of full throttle. <em>All speed names must be a number between 0
+        and 100.</em> The warrant sets the modified speed to be the value as a percentage of the
+        full throttle setting.</li>
+
+        <li><strong>Miles per hour</strong> - The value is the scale speed expressed as miles per
+        hour. <em>All speed names must be expressed as miles per hour.</em> The warrant, using
+        layout scale, converts the value to track speed and finds the corresponding throttle
+        setting for the modified speed.</li>
+
+        <li><strong>Kilometers per Hour</strong> - The value is the scale speed expressed as
+        Kilometers per hour. <em>All speed names must be expressed as kilometers per hour.</em> The
+        warrant, using layout scale, converts the value to track speed and finds the corresponding
+        throttle setting for the modified speed.</li>
       </ul>
-      <p>To sum up; if you are not fussy about being prototypical
-      and always want to see speed change when signals are passed,
-      use "Percent of Normal". If you have calibrated a sufficient
-      Speed Profile for each of your engines you can use either of
-      the last two speed interpretations which express throttle
-      setting in terms of scale speed.</p>
+
+      <p>To sum up; if you are not fussy about being prototypical and always want to see speed
+      change when signals are passed, use "Percent of Normal". If you have calibrated a sufficient
+      Speed Profile for each of your engines you can use either of the last two speed
+      interpretations which express throttle setting in terms of scale speed.</p>
 
       <h3>The Signal Head Appearance Table</h3>
-      <p>If signal heads are
-      used on the layout, their appearances can be mapped to the
-      speed names of signal masts in this table on the Warrant
-      Preferences pane. For the above, the warrant maps
-      appearance name to speed name to value.</p>
 
-      <p>One use of this is to use Virtual Signal Heads to
-      dynamically influence the behavior of warrants. The
-      appearance of these Signal Heads can be set either by panel icons
-      or Logix. Since there are 8 possible Signal Head appearances,
-      additional speed names can be created so a unique speed can
-      be made for each appearance.</p>
+      <p>If signal heads are used on the layout, their appearances can be mapped to the speed names
+      of signal masts in this table on the Warrant Preferences pane. For the above, the warrant
+      maps appearance name to speed name to value.</p>
+
+      <p>One use of this is to use Virtual Signal Heads to dynamically influence the behavior of
+      warrants. The appearance of these Signal Heads can be set either by panel icons or Logix.
+      Since there are 8 possible Signal Head appearances, additional speed names can be created so
+      a unique speed can be made for each appearance.</p>
 
       <h3>Editing the Speed Map Table</h3>
-      <p>Rows can be added or
-      deleted. The default speed map has the names "Fifty" and
-      "Sixty". These names only appear in signal mast systems for
-      UP-2008 and BNSF-1996, so they can safely be deleted if you
-      do use these signal systems. You only need but <i>must
-      have</i> all the speed names that appear in the signal system
-      you have configured for your layout.</p>
 
-      <p>If you add a new speed name for a signal head appearance,
-      then add a row for that name in the Signal Map Table.</p>
+      <p>Rows can be added or deleted. The default speed map has the names "Fifty" and "Sixty".
+      These names only appear in signal mast systems for UP-2008 and BNSF-1996, so they can safely
+      be deleted if you do use these signal systems. You only need but <em>must have</em> all the
+      speed names that appear in the signal system you have configured for your layout.</p>
+
+      <p>If you add a new speed name for a signal head appearance, then add a row for that name in
+      the Signal Map Table.</p>
 
       <h2>Block Speed Names</h2>
-      <p>A speed name can be set for each
-      Block by selecting a name from the <b>Speed Notch</b> column
-      of the OBlock Table. One use of this feature could be to
-      enforce a yard limit speed. Unlike signal speed names, block
-      speed names are bi-directional. <b>NOTE:</b> To return a Warrant's speed
-      to normal when leaving a yard limit, the speed names of the
-      OBlocks on either side of the yard block should set to
-      "Normal". Use care when combining this feature with signals
-      to avoid providing conflicting speed change messages.</p>
 
-      <p>To unset an OBlock speed name, choose the blank setting
-      from the <b>Speed Limit</b> column. As with the absence of a
-      signal, when there is no speed name the Warrant continues at
-      its current speed.</p>
+      <p>A speed name can be set for each Block by selecting a name from the <strong>Speed
+      Notch</strong> column of the OBlock Table. One use of this feature could be to enforce a yard
+      limit speed. Unlike signal speed names, block speed names are bi-directional.
+      <strong>NOTE:</strong> To return a Warrant's speed to normal when leaving a yard limit, the
+      speed names of the OBlocks on either side of the yard block should set to "Normal". Use care
+      when combining this feature with signals to avoid providing conflicting speed change
+      messages.</p>
+
+      <p>To unset an OBlock speed name, choose the blank setting from the <strong>Speed
+      Limit</strong> column. As with the absence of a signal, when there is no speed name the
+      Warrant continues at its current speed.</p>
 
       <p>Back to <a href="Warrant.shtml">Warrants Help</a>.</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

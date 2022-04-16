@@ -226,12 +226,6 @@ public class EnableLogix extends AbstractDigitalAction implements VetoableChange
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
     private String getNewLock() throws JmriException {
         
         switch (_operationAddressing) {
@@ -315,7 +309,7 @@ public class EnableLogix extends AbstractDigitalAction implements VetoableChange
         // Variables used in lambda must be effectively final
         Operation theLock = lock;
         
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             logix.setEnabled(theLock == Operation.Enable);
         });
     }

@@ -1,85 +1,63 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Scale/Translate Track Diagram Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Track">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Scale/Translate Track Diagram</h1>
 
-      <p>The Scale/Translate Track Diagram dialog provides for
-      scaling and translating a track diagram in a panel created
-      using Layout Editor.</p>
+      <p>The Scale/Translate Track Diagram dialog provides for scaling and translating a track
+      diagram in a panel created using Layout Editor.</p>
 
-      <p>To translate your track diagram in the panel window, enter
-      the amount to translate in the <i>x</i> (horizontal) and
-      <i>y</i> (vertical) directions. The units are pixels--the
-      same units shown in the <i>x,y</i> position display in the
-      Layout Editor tool bar. For no translation in either
-      direction enter zero. For horizontal translation, enter a
-      negative number to move the track diagram left that number of
-      pixels; enter a positive number to move right. For vertical
-      translation, enter a negative number to move the track
-      diagram up by that number of pixels; enter a positive number
-      to move the track diagram down. To undo a previous
-      translation, simply enter the same numbers with opposite
-      signs.</p>
+      <p>To translate your track diagram in the panel window, enter the amount to translate in the
+      <em>x</em> (horizontal) and <em>y</em> (vertical) directions. The units are pixels--the same
+      units shown in the <em>x,y</em> position display in the Layout Editor tool bar. For no
+      translation in either direction enter zero. For horizontal translation, enter a negative
+      number to move the track diagram left that number of pixels; enter a positive number to move
+      right. For vertical translation, enter a negative number to move the track diagram up by that
+      number of pixels; enter a positive number to move the track diagram down. To undo a previous
+      translation, simply enter the same numbers with opposite signs.</p>
 
-      <p>To scale your track diagram, enter scale factors for the
-      vertical (<i>y</i>) and/or horizontal (<i>x</i>) directions.
-      All scaling is relative to a fixed point at the upper left of
-      your panel. For no scaling in either direction, enter 1.0 for
-      a scale factor. Enter a number less than 1.0 to reduce the
-      size of the track diagram; enter a number greater than 1.0 to
-      increase the size of the track diagram.</p>
+      <p>To scale your track diagram, enter scale factors for the vertical (<em>y</em>) and/or
+      horizontal (<em>x</em>) directions. All scaling is relative to a fixed point at the upper
+      left of your panel. For no scaling in either direction, enter 1.0 for a scale factor. Enter a
+      number less than 1.0 to reduce the size of the track diagram; enter a number greater than 1.0
+      to increase the size of the track diagram.</p>
 
-      <p><b>Notes:</b></p>
+      <p><strong>Notes:</strong>
+      </p>
 
-        <ol>
-        <li>Translation is performed before scaling, so enter
-        translation units appropriately.</li>
+      <ol>
+        <li>Translation is performed before scaling, so enter translation units appropriately.</li>
 
-        <li>Scaling is not perfect. You may need to adjust the
-        alignment of some items after scaling your track diagram.</li>
+        <li>Scaling is not perfect. You may need to adjust the alignment of some items after
+        scaling your track diagram.</li>
 
-        <li>Scaling is not easily reversed, so consider saving your
-        panel prior to scaling to allow easy return to the previous
-        size if you don't like the scaled panel.</li>
+        <li>Scaling is not easily reversed, so consider saving your panel prior to scaling to allow
+        easy return to the previous size if you don't like the scaled panel.</li>
 
-        <li>Layout Editor keeps track of scale factors that you
-        have applied. When you add a new turnout after scaling, that
-        turnout will be created at the new scale.</li>
+        <li>Layout Editor keeps track of scale factors that you have applied. When you add a new
+        turnout after scaling, that turnout will be created at the new scale.</li>
 
-        <li>The positions of icons and labels are not translated or
-        scaled. Only the track diagram drawing is scaled and
-        translated.</li>
-        </ol>
+        <li>The positions of icons and labels are not translated or scaled. Only the track diagram
+        drawing is scaled and translated.</li>
+      </ol>
 
-      <p><b>To retain your changes, please remember to save your
-      panel!</b></p>
+      <p><strong>To retain your changes, please remember to save your panel!</strong>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -40,7 +41,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         
         boolean hasThrown = false;
         try {
-            ActionSensor.SensorState.get(Sensor.UNKNOWN);
+            ActionSensor.SensorState.get(100);      // The number 100 is a state that ActionSensor.SensorState isn't aware of
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "invalid sensor state".equals(ex.getMessage()));
@@ -65,7 +66,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set sensor IS1 to state Active ::: Log error%n");
+        return String.format("Set sensor IS1 to state Active ::: Use default%n");
     }
     
     @Override
@@ -74,7 +75,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set sensor IS1 to state Active ::: Log error%n");
+                "         Set sensor IS1 to state Active ::: Use default%n");
     }
     
     @Override
@@ -485,13 +486,8 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set sensor", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Sensor", _base.getShortDescription());
     }
     
     @Test
@@ -543,7 +539,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         _base = actionSensor;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

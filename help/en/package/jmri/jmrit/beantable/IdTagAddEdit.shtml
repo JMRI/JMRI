@@ -1,52 +1,42 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing ID Tags</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Matthew Harris">
-  <meta name="keywords" content="JMRI help ID Tag Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help ID Tag Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Adding/Editing ID Tags</h1>
 
-      <p>To create an ID Tag, click the "Add..." button at the
-      bottom of the <a href="IdTagTable.shtml">ID Tag Table</a>
-      pane.<br>
-      This will open a new pane with space to enter a System Name
-      and User Name for the new ID Tag, plus an "Add" button to
-      confirm your entry.</p>
+      <p>To create an ID Tag, click the "Add..." button at the bottom of the <a href=
+      "IdTagTable.shtml">ID Tag Table</a> pane.<br>
+      This will open a new pane with space to enter a System Name and User Name for the new ID Tag,
+      plus an "Add" button to confirm your entry.</p>
 
-      <p>You must enter a unique System Name. System Names for ID
-      Tags should have the following pattern:</p>
+      <p>You must enter a unique System Name. System Names for ID Tags should have the following
+      pattern:</p>
 
       <ul>
-        <li>they should start with "ID" for "Internal
-        iDentity",</li>
+        <li>they should start with "ID" for "Internal iDentity",</li>
 
         <li>followed by the actual Tag number itself.</li>
       </ul>
 
-      <p>The User Name is optional, but if given has to be
-      unique.</p>
+      <p>The User Name is optional, but if given has to be unique.</p>
 
-      <p>The Tag ID shown in the table is determined from the
-      System Name.</p>
+      <p>The Tag ID shown in the table is determined from the System Name.</p>
 
-      <p>Back to the <a href="IdTagTable.shtml">ID Tag Table help
-      page</a>.</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Back to the <a href="IdTagTable.shtml">ID Tag Table help page</a>.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

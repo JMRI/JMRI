@@ -29,10 +29,10 @@ public final class DCCppConstants {
     public static final int MAX_FUNCTION_NUMBER = 68; //
     public static final int REGISTER_UNALLOCATED = -1;
     public static final int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
-    
+
     // DCC++ over TCP Port Number
     public static final int DCCPP_OVER_TCP_PORT = 1235;
-    
+
     // Communications Port Info
     public static final int COMM_TYPE_SERIAL = 0;
     public static final int COMM_TYPE_ENET = 1;
@@ -41,7 +41,7 @@ public final class DCCppConstants {
     // Command Station Types
     public static final int DCCPP_UNO_1_0 = 1;
     public static final int DCCPP_ARDUINO_1_1 = 2;
-    public static final String[] CommandStationNames = {
+    static final String[] CommandStationNames = {
      "DCCPP Arduino Uno v1.0",
      "DCCPP Arduino V1.1",
     };
@@ -79,7 +79,8 @@ public final class DCCppConstants {
     public static final char WRITE_DCC_PACKET_PROG  = 'P';
     public static final char LIST_REGISTER_CONTENTS = 'L';
     public static final char DIAG_CMD               = 'D'; // Send various diagnostics commands
- 
+    public static final char CONTROL_CMD            = '/'; // Send various control commands (e.g. </START 1224 4>), replies via DIAG_REPLY
+
     // Message Replies
     public static final char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
     public static final char TURNOUT_REPLY    = 'H'; // <H id throw> or <X>
@@ -98,16 +99,21 @@ public final class DCCppConstants {
     public static final char MADC_FAIL_REPLY  = 'X';
     public static final char MADC_SUCCESS_REPLY = 'O';
     public static final char COMM_TYPE_REPLY = 'N';
-    public static final char DIAG_REPLY      = '*'; //
+    public static final char DIAG_REPLY      = '*';
+    public static final char LOCO_STATE_REPLY= 'l';
 
     // Message / Reply Regexes
-    public static final String THROTTLE_CMD_REGEX = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
+    public static final String THROTTLE_CMD_REGEX    = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
+    public static final String THROTTLE_V3_CMD_REGEX = "t\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t CAB SPEED DIR>
     public static final String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?"; // <f ADDR BYTE1 (BYTE2)>
     public static final String FUNCTION_V2_CMD_REGEX="F\\s*([0-9]{1,4})\\s*([0-9]){1,2}\\s*([1,0])\\s*"; // <F CAB FUNC STATE>
     public static final String FORGET_CAB_CMD_REGEX ="-\\s*([0-9]{0,4})\\s*"; // <- [CAB]>
     public static final String ACCESSORY_CMD_REGEX = "a\\s(\\d+)\\s(\\d+)\\s([1,0])"; // <a ADDR SUBADDR ACTIVATE>
     public static final String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])"; // <T ID THROW>
-    public static final String TURNOUT_ADD_REGEX = "T\\s(\\d+)\\s(\\d+)\\s(\\d+)"; // <T ID ADDR SUBADDR>
+    public static final String TURNOUT_ADD_REGEX =     "T\\s(\\d+)\\s(\\d+)\\s(\\d+)";                          // <T id addr subaddr> (deprecated at 3.1.7, use DCC)
+    public static final String TURNOUT_ADD_DCC_REGEX = "T\\s(\\d+)\\sDCC\\s(\\d+)\\s(\\d+)";                    // <T id DCC addr subaddr>
+    public static final String TURNOUT_ADD_SERVO_REGEX="T\\s(\\d+)\\sSERVO\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";// <T id SERVO pin thrownposition closedposition profile>
+    public static final String TURNOUT_ADD_VPIN_REGEX ="T\\s(\\d+)\\sVPIN\\s(\\d+)";                            // <T id VPIN pin>
     public static final String TURNOUT_DELETE_REGEX = "T\\s*(\\d+)"; // <T ID>
     public static final String TURNOUT_LIST_REGEX = "T"; // <T>
     public static final String SENSOR_ADD_REGEX = "S\\s(\\d+)\\s(\\d+)\\s([1,0])";
@@ -118,13 +124,14 @@ public final class DCCppConstants {
     public static final String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*"; // <Z ID>
     public static final String OUTPUT_LIST_REGEX = "\\s*Z\\s*"; // <Z>
     public static final String QUERY_SENSOR_STATES_REGEX = "\\s*Q\\s*"; // <Q>
+    public static final String LOCO_STATE_REGEX = "\\s*l\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*"; // <l loco slot speedByte functions>
 
     public static final String WRITE_TO_EEPROM_REGEX = "E";
     public static final String CLEAR_EEPROM_REGEX = "e";
 
     public static final String OPS_WRITE_BYTE_REGEX = "\\s*w\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // TODO
     public static final String OPS_WRITE_BIT_REGEX = "\\s*b\\s*(\\d+)\\s+(\\d+)\\s+([0-7])\\s+([01])\\s*"; // TODO
-    
+
     public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
     public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
     public static final String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
@@ -138,21 +145,26 @@ public final class DCCppConstants {
     public static final String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
     public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
     public static final String DIAG_CMD_REGEX         = "\\s*D\\s.*"; //D alone or followed by various commands
-    public static final String ESTOP_ALL_REGEX        = "\\s*!"; 
+    public static final String CONTROL_CMD_REGEX      = "\\s*/\\s.*"; // slash followed by various commands
+    public static final String ESTOP_ALL_REGEX        = "\\s*!";
 
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";
     public static final String TURNOUT_REPLY_REGEX =       "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
-    public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*";
+    public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*"; // <T id addr subaddr thrown> (deprecated at 3.1.7, use DCC)
+    public static final String TURNOUT_DEF_DCC_REPLY_REGEX = "\\s*H\\s(\\d+)\\sDCC\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";                    // <H id DCC addr subaddr thrown>
+    public static final String TURNOUT_DEF_SERVO_REPLY_REGEX="\\s*H\\s(\\d+)\\sSERVO\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";// <H id SERVO pin thrownposition closedposition profile thrown>
+    public static final String TURNOUT_DEF_VPIN_REPLY_REGEX ="\\s*H\\s(\\d+)\\sVPIN\\s(\\d+)\\s+([0|1]).*";                            // <H id VPIN pin thrown>
+    public static final String TURNOUT_DEF_LCN_REPLY_REGEX = "\\s*H\\s(\\d+)\\sLCN\\s+([0|1]).*";                                      // <H id LCN thrown>
     public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
     public static final String PROGRAM_VERIFY_REGEX =      "\\s*v\\s*(\\d+)\\s*([-]*\\d+)\\s*";
     public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
-    public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*(.*)\\s+\\*$";
+    public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*([\\S\\s]*)\\*$"; //matches anything between leading and trailing asterisks, left-trimmed
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
     public static final String METER_REPLY_REGEX = " *c *(.+) +([\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";
-    
+
     public static final String TRACK_POWER_REPLY_REGEX =       "\\s*p\\s*([0,1])\\s*";
     public static final String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+).*";
     public static final String SENSOR_REPLY_REGEX =          "\\s*[Qq]\\s*(\\d+)\\s*";
@@ -160,13 +172,13 @@ public final class DCCppConstants {
     public static final String SENSOR_ACTIVE_REPLY_REGEX =   "\\s*Q\\s*(\\d+)\\s*";
     public static final String SENSOR_INACTIVE_REPLY_REGEX = "\\s*q\\s*(\\d+)\\s*";
     public static final String OUTPUT_REPLY_REGEX =       "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s*"; // <Y ID STATE>
-    public static final String OUTPUT_LIST_REPLY_REGEX =  "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+).*"; // <Y ID PIN IFLAG STATE>
+    public static final String OUTPUT_DEF_REPLY_REGEX =   "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+).*"; // <Y ID PIN IFLAG STATE>
     public static final String MADC_FAIL_REPLY_REGEX =    "\\s*X.*";
     public static final String MADC_SUCCESS_REPLY_REGEX = "\\s*O.*";
     public static final String STATUS_REPLY_REGEX =       "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
     public static final String STATUS_REPLY_BSC_REGEX =   "i(DCC\\+\\+.*): V-(.*)\\+\\s\\/\\s(.*)"; // BaseStation Classic
     public static final String STATUS_REPLY_ESP32_REGEX = "iDCC\\+\\+.*ESP32.*: V-([\\d\\.]+)\\s+/\\s+(.*)"; // V1.0
-    public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([\\d\\.]*).*G-(.*)"; 
+    public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([\\d\\.]*).*G-(.*)";
     public static final String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+).*";
     public static final String COMM_TYPE_REPLY_REGEX =    "\\s*N\\s*(\\d+):\\s+((SERIAL)|(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})).*";
 
@@ -209,5 +221,27 @@ public final class DCCppConstants {
     public static final int MAX_LOCO_ADDRESS = 10293;
     public static final int MAX_CURRENT = 1024;
     public static final int METER_INTERVAL_MS = 1000;
+
+    //Turnout types (added in DCC-EX 3.1.7)
+    public static final String TURNOUT_TYPE_DCC = "DCC";
+    public static final String TURNOUT_TYPE_SERVO="SERVO";
+    public static final String TURNOUT_TYPE_VPIN ="VPIN";
+    public static final String TURNOUT_TYPE_LCN = "LCN";
+
+    public static final String OUTPUT_TYPE = "OUTPUT";
+    public static final String SENSOR_TYPE = "SENSOR";
+
+    //Property Keys
+    public static final String PROP_TYPE =     "Type";
+    public static final String PROP_ID   =     "ID";
+    public static final String PROP_ADDRESS =  "Address";
+    public static final String PROP_INDEX =    "Index";
+    public static final String PROP_DCCADDRESS="DCC Address";
+    public static final String PROP_PIN   =    "Pin";
+    public static final String PROP_THROWNPOS= "ThrownPos";
+    public static final String PROP_CLOSEDPOS= "ClosedPos";
+    public static final String PROP_PROFILE  = "Profile";
+    public static final String PROP_IFLAG  =   "IFlag";
+    public static final String PROP_PULLUP =   "Pullup";
 
 }

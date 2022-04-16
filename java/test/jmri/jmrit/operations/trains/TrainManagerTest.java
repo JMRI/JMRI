@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -117,8 +117,29 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts", "Boxcar")); // not changed
         Assert.assertFalse("confirm load name", train.isLoadNameAccepted("Nuts"));
         Assert.assertFalse("confirm load name", train.isLoadNameAccepted("bolts"));    
-        
+    }
+    
+    @Test
+    public void testDeleteLoad() {
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        JUnitOperationsUtil.initOperationsData();
+        Train train = tmanager.getTrainById("1");
+        train.setLoadOption(Train.INCLUDE_LOADS);
+        train.addLoadName("Nuts");
+        train.addLoadName("Boxcar" + CarLoad.SPLIT_CHAR + "Nuts");
+        train.addLoadName("Bolts");
+        train.addLoadName("Boxcar" + CarLoad.SPLIT_CHAR + "Bolts");
 
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Nuts"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Nuts", "Boxcar"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts", "Boxcar"));
+
+        tmanager.replaceLoad("Boxcar", "Nuts", null);
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("Nuts"));
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("Nuts", "Boxcar"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts", "Boxcar"));
     }
     
     @Test

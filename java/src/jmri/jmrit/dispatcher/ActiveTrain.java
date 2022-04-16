@@ -1,14 +1,20 @@
 package jmri.jmrit.dispatcher;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Section;
 import jmri.Transit;
+import jmri.beans.PropertyChangeProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +109,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
-public class ActiveTrain {
+public class ActiveTrain implements PropertyChangeProvider {
 
     private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
 
@@ -152,6 +158,7 @@ public class ActiveTrain {
     public static final int AUTOMATIC = 0x02;   // requires mAutoRun to be "true" (auto trains only)
     public static final int MANUAL = 0x04;    // requires mAutoRun to be "true" (auto trains only)
     public static final int DISPATCHED = 0x08;
+    public static final int TERMINATED = 0x10; //terminated
 
     /**
      * Constants representing the source of the train information
@@ -291,7 +298,6 @@ public class ActiveTrain {
             log.error("Invalid ActiveTrain status - {}", status);
         }
     }
-
     public String getStatusText() {
         if (mStatus == RUNNING) {
             return Bundle.getMessage("RUNNING");
@@ -595,7 +601,7 @@ public class ActiveTrain {
 
     public void setMode(int mode) {
         if ((mode == AUTOMATIC) || (mode == MANUAL)
-                || (mode == DISPATCHED)) {
+                || (mode == DISPATCHED || mode == TERMINATED)) {
             int old = mMode;
             mMode = mode;
             firePropertyChange("mode", Integer.valueOf(old), Integer.valueOf(mMode));
@@ -611,6 +617,8 @@ public class ActiveTrain {
             return Bundle.getMessage("MANUAL");
         } else if (mMode == DISPATCHED) {
             return Bundle.getMessage("DISPATCHED");
+        } else if (mMode == TERMINATED) {
+            return Bundle.getMessage("TERMINATED");
         }
         return ("");
     }
@@ -681,6 +689,8 @@ public class ActiveTrain {
             if (InstanceManager.getDefault(DispatcherFrame.class).getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);
             }
+            // notify anyone interested
+            pcs.firePropertyChange("sectionallocated",as , null);
             refreshPanel();
         } else {
             log.error("Null Allocated Section reference in addAllocatedSection of ActiveTrain");
@@ -1082,9 +1092,9 @@ public class ActiveTrain {
         restartPoint = true;
         if (getDelayedRestart() == TIMEDDELAY) {
             Date now = jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime();
-            @SuppressWarnings("deprecation")
+            @SuppressWarnings("deprecation") // Date.getHours
             int nowHours = now.getHours();
-            @SuppressWarnings("deprecation")
+            @SuppressWarnings("deprecation") // Date.getMinutes
             int nowMinutes = now.getMinutes();
             int hours = getRestartDelay() / 60;
             int minutes = getRestartDelay() % 60;
@@ -1118,7 +1128,7 @@ public class ActiveTrain {
 
     boolean restartPoint = false;
 
-    boolean holdAllocation = false;
+    private boolean holdAllocation = false;
 
     protected void holdAllocation(boolean boo) {
         holdAllocation = boo;
@@ -1150,6 +1160,7 @@ public class ActiveTrain {
         if (getRestartSensor() != null && restartSensorListener != null) {
             getRestartSensor().removePropertyChangeListener(restartSensorListener);
         }
+        setMode(TERMINATED);
         mTransit.setState(Transit.IDLE);
     }
 
@@ -1158,18 +1169,41 @@ public class ActiveTrain {
     }
 
     // Property Change Support
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
+    @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class);

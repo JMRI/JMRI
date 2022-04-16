@@ -1,134 +1,85 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: AutoTrains Window Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content=
-  "JMRI help Dispatcher Auto Active Trains">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Dispatcher Auto Active Trains"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h1>La fen&ecirc;tre AutoTrains</h1>
+      <h1>La fenêtre AutoTrains</h1>
 
       <h2>Introduction</h2>
 
-      <p>La fen&ecirc;tre <b>AutoTrains</b> permet au
-      r&eacute;partiteur de prendre le contr&ocirc;le d'un Train
-      Automatique actif (un train actif en ex&eacute;cution
-      automatique ) depuis le <i>r&eacute;partiteur virtuel</i> en
-      cas de besoin pour r&eacute;soudre un probl&egrave;me, et
-      pour r&eacute;tablir un fonctionnement automatique
-      apr&egrave;s que le probl&egrave;me ait &eacute;t&eacute;
-      r&eacute;solu. Exemple de probl&egrave;mes n&eacute;cessitant
-      au r&eacute;partiteur d'intervenir sont, d&eacute;raillement
-      du train, ou d&eacute;couplage inattendu de wagons d'un
-      train. Cette fen&ecirc;tre est &eacute;galement
-      utilis&eacute; pour red&eacute;marrer un fonctionnement
-      automatique apr&egrave;s la suspension par un
-      m&eacute;canicien humain pour couper wagons ou effectuer
-      d'autres travaux.</p>
+      <p>La fenêtre <strong>AutoTrains</strong> permet au répartiteur de prendre le contrôle d'un
+      Train Automatique actif (un train actif en exécution automatique ) depuis le <em>répartiteur
+      virtuel</em> en cas de besoin pour résoudre un problème, et pour rétablir un fonctionnement
+      automatique après que le problème ait été résolu. Exemple de problèmes nécessitant au
+      répartiteur d'intervenir sont, déraillement du train, ou découplage inattendu de wagons d'un
+      train. Cette fenêtre est également utilisé pour redémarrer un fonctionnement automatique
+      après la suspension par un mécanicien humain pour couper wagons ou effectuer d'autres
+      travaux.</p>
 
-      <p>Lorsque le premier Train Auto Actif est cr&eacute;&eacute;
-      en <b><a href="Dispatcher.shtml">Dispatcher</a></b>, une
-      fen&ecirc;tre <b>AutoTrains</b> est ouverte
-      imm&eacute;diatement &agrave; droite de la fen&ecirc;tre du
-      Dispatcher. Cette fen&ecirc;tre peut &ecirc;tre
-      d&eacute;plac&eacute;e &agrave; un autre emplacement, si
-      d&eacute;sir&eacute;. Une entr&eacute;e est ajout&eacute;e
-      pour chaque Train Actif Automatique suppl&eacute;mentaire
-      quand il est cr&eacute;&eacute;. Quand un Train Actif Auto
-      est termin&eacute;, son entr&eacute;e est retir&eacute; de la
-      fen&ecirc;tre <b>AutoTrains</b>.</p>
+      <p>Lorsque le premier Train Auto Actif est créé en <strong><a href=
+      "Dispatcher.shtml">Dispatcher</a></strong>, une fenêtre <strong>AutoTrains</strong> est
+      ouverte immédiatement à droite de la fenêtre du Dispatcher. Cette fenêtre peut être déplacée
+      à un autre emplacement, si désiré. Une entrée est ajoutée pour chaque Train Actif Automatique
+      supplémentaire quand il est créé. Quand un Train Actif Auto est terminé, son entrée est
+      retiré de la fenêtre <strong>AutoTrains</strong>.</p>
 
-      <h2>Utilisation de la Fen&ecirc;tre TrainsAuto</h2>
+      <h2>Utilisation de la Fenêtre TrainsAuto</h2>
 
-      <p>Ci-dessous se trouve une fen&ecirc;tre <b>TrainsAuto</b>
-      montrant deux trains actifs, Amtrak 139 et GTW 6418. Les
-      entr&eacute;es sont s&eacute;par&eacute;es par une ligne
-      horizontale.</p><img src="AutoTrainsA.jpg" height="154"
-      width="255">
+      <p>Ci-dessous se trouve une fenêtre <strong>TrainsAuto</strong> montrant deux trains actifs,
+      Amtrak 139 et GTW 6418. Les entrées sont séparées par une ligne horizontale.</p>
+      <img src="AutoTrainsA.jpg" height="154" width="255" alt="">
+      <p>Chaque entrée a un bouton <strong>Stop</strong> et un bouton <strong>Pour
+      Manuel</strong>.Si le dispatcher presses le bouton <strong>Stop</strong>, le Train Actif en
+      Auto est immédiatement arrêté. L'arrêt est un arrêt d'urgence - pas de réduction progressive
+      de la vitesse. En cliquant sur le bouton <strong>Stop tous les trains Auto</strong> en bas de
+      la fenêtre cela émettra un arrêt d'urgence pour tous les trains actifs montrés dans les
+      <strong>TrainsAuto</strong> de la fenêtre. Le Bouton <strong>STOP</strong> Changer en bouton
+      <strong>Reprendre</strong> lorsque les trains sont arrêtés. Chaque train qui s'est arrêté
+      doit être redémarré individuellement en cliquant sur le bouton
+      <strong>Reprendre</strong>..</p>
 
-      <p>Chaque entr&eacute;e a un bouton <b>Stop</b> et un bouton
-      <b>Pour Manuel</b>.Si le dispatcher presses le bouton
-      <b>Stop</b>, le Train Actif en Auto est imm&eacute;diatement
-      arr&ecirc;t&eacute;. L'arr&ecirc;t est un arr&ecirc;t
-      d'urgence - pas de r&eacute;duction progressive de la
-      vitesse. En cliquant sur le bouton <b>Stop tous les trains
-      Auto</b> en bas de la fen&ecirc;tre cela &eacute;mettra un
-      arr&ecirc;t d'urgence pour tous les trains actifs
-      montr&eacute;s dans les <b>TrainsAuto</b> de la
-      fen&ecirc;tre. Le Bouton <b>STOP</b> Changer en bouton
-      <b>Reprendre</b> lorsque les trains sont
-      arr&ecirc;t&eacute;s. Chaque train qui s'est
-      arr&ecirc;t&eacute; doit &ecirc;tre red&eacute;marr&eacute;
-      individuellement en cliquant sur le bouton
-      <b>Reprendre</b>..</p>
+      <p>Si le dispatcheur clique le bouton <strong>Pour Manuel</strong> pour l'Amtrak 139, la
+      fenêtre ci-dessus va changée pour :</p>
+      <img src="AutoTrainsB.jpg" height="154" width="551" alt="">
+      <p>Le curseur commande la vitesse du train, et les boutons radio <strong>AV</strong> et
+      <strong>AR</strong> commande la direction du train. Le dispatcheur peut utiliser ces
+      commandes pour faire circuler un train et résoudre tous les problèmes présents. Quand le
+      problème est résolu, cliquer le bouton <strong>Pour Auto</strong> restaurera le
+      fonctionnement du train. antérieurement au clic sur <strong>Pour Auto</strong>, le
+      répartiteur doit conduire le train au même endroit où il était quand <strong>Pour
+      Manuel</strong> a été cliqué. Cela assure une reprise en douceur du fonctionnement
+      automatique.</p>
 
-      <p>Si le dispatcheur clique le bouton <b>Pour Manuel</b> pour
-      l'Amtrak 139, la fen&ecirc;tre ci-dessus va chang&eacute;e
-      pour :</p><img src="AutoTrainsB.jpg" height="154" width=
-      "551">
-
-      <p>Le curseur commande la vitesse du train, et les boutons
-      radio <b>AV</b> et <b>AR</b> commande la direction du train.
-      Le dispatcheur peut utiliser ces commandes pour faire
-      circuler un train et r&eacute;soudre tous les
-      probl&egrave;mes pr&eacute;sents. Quand le probl&egrave;me
-      est r&eacute;solu, cliquer le bouton <b>Pour Auto</b>
-      restaurera le fonctionnement du train. ant&eacute;rieurement
-      au clic sur <b>Pour Auto</b>, le r&eacute;partiteur doit
-      conduire le train au m&ecirc;me endroit o&ugrave; il
-      &eacute;tait quand <b>Pour Manuel</b> a &eacute;t&eacute;
-      cliqu&eacute;. Cela assure une reprise en douceur du
-      fonctionnement automatique.</p>
-
-      <p>Une des <b>Actions sp&eacute;cifi&eacute;e par
-      l'utilisateur</b> est de <b>Passer en Mode Manuel</b>. Cette
-      Action soutient l'ex&eacute;cution d'un train Actif Auto
-      automatiquement Pour un travail &agrave; c&ocirc;t&eacute;,
-      o&ugrave; un conducteur humain prend le relais pour les
-      op&eacute;rations pr&eacute;form&eacute;es ( peut-&ecirc;tre
-      une commutation voitures), apr&egrave;s quoi la marche
-      automatique est poursuivie suivant la m&ecirc;me Transit.
-      lorsque l'action <b>Passer en Mode Manuel</b> est
-      lanc&eacute;e, les boutons <b>Arr&ecirc;t</b> et <b>Pour
-      Manuel</b> sont remplac&eacute;s par un bouton <b>Reprendre
-      Auto</b>, et le r&eacute;gulateur informatique &eacute;tant
-      utilis&eacute; par le <i>iconducteur virtuel</i> est
-      lib&eacute;r&eacute;. Un conducteur humain peut alors
-      brancher un R&eacute;gulateur manuel et acqu&eacute;rir le
-      train pour un fonctionnement manuel. Apr&egrave;s que
-      lop&eacute;rateur humain ait termin&eacute; son/ses travaux,
-      l'op&eacute;rateur humain ferme son r&eacute;gulateurs manuel
-      et informe le dispatcheur que le fonctionnement automatique
-      peut &ecirc;tre repris. Le r&eacute;partiteur reprend son
-      fonctionnement automatique en cliquant sur le <b>Reprendre
-      Ex&eacute;cution Automatique</b>. Avant de refermer son
-      r&eacute;gulateur, l'op&eacute;rateur devra conduire le train
-      dans la m&ecirc;me situation il se trouvait lorsque Le
-      fonctionnement en mode manuel &eacute;t&eacute;
-      initi&eacute;. Ceci assure reprise automatique en douceur de
-      l'op&eacute;ration. &lt;/p&gt;
-      <!--#include virtual="/Footer.shtml" -->
+      <p>Une des <strong>Actions spécifiée par l'utilisateur</strong> est de <strong>Passer en Mode
+      Manuel</strong>. Cette Action soutient l'exécution d'un train Actif Auto automatiquement Pour
+      un travail à côté, où un conducteur humain prend le relais pour les opérations préformées (
+      peut-être une commutation voitures), après quoi la marche automatique est poursuivie suivant
+      la même Transit. lorsque l'action <strong>Passer en Mode Manuel</strong> est lancée, les
+      boutons <strong>Arrêt</strong> et <strong>Pour Manuel</strong> sont remplacés par un bouton
+      <strong>Reprendre Auto</strong>, et le régulateur informatique étant utilisé par le
+      <em>iconducteur virtuel</em> est libéré. Un conducteur humain peut alors brancher un
+      Régulateur manuel et acquérir le train pour un fonctionnement manuel. Après que lopérateur
+      humain ait terminé son/ses travaux, l'opérateur humain ferme son régulateurs manuel et
+      informe le dispatcheur que le fonctionnement automatique peut être repris. Le répartiteur
+      reprend son fonctionnement automatique en cliquant sur le <strong>Reprendre Exécution
+      Automatique</strong>. Avant de refermer son régulateur, l'opérateur devra conduire le train
+      dans la même situation il se trouvait lorsque Le fonctionnement en mode manuel été initié.
+      Ceci assure reprise automatique en douceur de l'opération. &lt;/p&gt; 
+      <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>
 </body>

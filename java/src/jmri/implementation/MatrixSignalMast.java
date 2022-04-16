@@ -73,7 +73,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
         mast = mast.substring(0, mast.indexOf("("));
         setMastType(mast);
-        
+
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")")); // retrieve ordinal from name
         try {
             int autoNumber = Integer.parseInt(tmp);
@@ -323,7 +323,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         // to do: use for loop
         ArrayList<String> outputlist = new ArrayList<>();
         //list = outputsToBeans.keySet();
-        
+
         int index = 1;
         while (outputsToBeans.containsKey("output" + index)) {
             outputlist.add(outputsToBeans.get("output" + index).getName());
@@ -394,7 +394,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     try {
                         Thread.sleep(mDelay); // only the Mast specific user defined delay is applied here
                     } catch (InterruptedException e) {
+                        log.debug("interrupted in updateOutputs");
                         Thread.currentThread().interrupt(); // retain if needed later
+                        return;
                     }
                 }
             }

@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable.DefaultParameter;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.jmrit.logixng.tools.swing.swing.ModuleParametersTableModel;
 
 /**
@@ -26,6 +28,47 @@ public class DefaultModuleSwing extends AbstractSwingConfigurator {
     
     protected JPanel panel;
     ModuleParametersTableModel _moduleParametersTableModel;
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getExecuteEvaluateMenuText() {
+        return Bundle.getMessage("MenuText_ExecuteEvaluate");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void executeEvaluate(@Nonnull Base object) {
+        
+        if (! (object instanceof MaleSocket)) {
+            throw new IllegalArgumentException("object is not a MaleSocket");
+        }
+        if (! (((MaleSocket)object).getObject() instanceof Module)) {
+            throw new IllegalArgumentException("((MaleSocket)object).getObject() is not a Module");
+        }
+        Module module = (Module)((MaleSocket)object).getObject();
+        
+        FemaleSocket femaleSocket = module.getRootSocket();
+        if (!femaleSocket.isConnected()) {
+            // Nothing to do since nothing is connected to the female socket
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("ExecuteEvaluate_ActionCompleted"),
+                        Bundle.getMessage("ExecuteEvaluate_Title"),
+                        JOptionPane.PLAIN_MESSAGE);
+            });
+            return;
+        }
+        
+        Base obj = femaleSocket.getConnectedSocket();
+        if (obj == null) throw new NullPointerException("object is null");
+        while (obj instanceof MaleSocket) {
+            obj = ((MaleSocket)obj).getObject();
+        }
+        SwingConfiguratorInterface swi =
+                SwingTools.getSwingConfiguratorForClass(obj.getClass());
+        
+        swi.executeEvaluate(femaleSocket.getConnectedSocket());
+    }
     
     /** {@inheritDoc} */
     @Override

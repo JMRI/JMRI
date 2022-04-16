@@ -33,7 +33,8 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
      * System name is normalized to ensure uniqueness.
      */
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("creating {}", userName);
         RpsReporter r = new RpsReporter(systemName, userName, getSystemPrefix());
         Distributor.instance().addMeasurementListener(r);

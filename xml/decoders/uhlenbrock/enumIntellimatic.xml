@@ -66,53 +66,65 @@
     <enumChoice choice="Turn off Fn" value="32">
         <choice>Turn off Function:</choice>
         <choice xml:lang="de">Funktion ausschalten:</choice>
+        <choice xml:lang="cs">Vypne funkci:</choice>
     </enumChoice>
     <enumChoice choice="Turn on Fn" value="40">
         <choice>Turn on Function:</choice>
         <choice xml:lang="de">Funktion einschalten:</choice>
+        <choice xml:lang="cs">Zapne funkci:</choice>
     </enumChoice>
 
     <enumChoice choice="Apply Speed" value="65">
         <choice>Change speed to:</choice>
         <choice xml:lang="de">Fahrstufe ändern Sollwert:</choice>
+        <choice xml:lang="cs">Změní rychlost na:</choice>
     </enumChoice>
     <enumChoice choice="Recall speed" value="66">
         <choice>Load store speed and go</choice>
         <choice xml:lang="de">Soll-stufe laden und fahren</choice>
+        <choice xml:lang="cs">Načte uloženou rychlost a jde</choice>
     </enumChoice>
     <enumChoice choice="Store speed" value="67">
         <choice>Store current speed</choice>
         <choice xml:lang="de">Soll-Fahrstufe speichern</choice>
+        <choice xml:lang="cs">Uloží aktuální rychlost</choice>
     </enumChoice>
 
     <enumChoice choice="Change Direction" value="82">
         <choice>Change direction</choice>
         <choice xml:lang="de">Fahrtrichtung wechseln</choice>
+        <choice xml:lang="cs">Změní směr</choice>
     </enumChoice>
     <enumChoice choice="Freeze Speed" value="91">
         <choice>Freeze speed + direction</choice>
         <choice xml:lang="de">Friere Geschw. + Richtung</choice>
+        <choice xml:lang="cs">Zmrazí rychlost + směr</choice>
     </enumChoice>
 
     <enumChoice choice="Wait for Fn" value="168">
         <choice>Wait until F key:</choice>
         <choice xml:lang="de">Warte auf F-taste:</choice>
+        <choice xml:lang="cs">Čekat na tlačítko F:</choice>
     </enumChoice>
     <enumChoice choice="Wait until" value="186">
         <choice>Wait until speed reached</choice>
         <choice xml:lang="de">Warte bis Sollwert errecht:</choice>
+        <choice xml:lang="cs">Čekat na dosažení rychlosti:</choice>
     </enumChoice>
 
     <enumChoice choice="Wait time" value="232">
         <choice>Wait for: (*0.2 s)</choice>
         <choice xml:lang="de">Warten für: (*0.2 s)</choice>
+        <choice xml:lang="cs">Čekat po: (×0,2 s)</choice>
     </enumChoice>
     <enumChoice choice="Start with Fn" value="152">
         <choice>Start macro with F key:</choice>
         <choice xml:lang="de">Starte Ablauf mit F-taste:</choice>
+        <choice xml:lang="cs">Spustit makro s tlačítkem F:</choice>
     </enumChoice>
     <enumChoice choice="End macro" value="255">
         <choice>End macro</choice>
         <choice xml:lang="de">Ende des Ablaufes</choice>
+        <choice xml:lang="cs">Ukončit makro</choice>
     </enumChoice>
   </enumVal>

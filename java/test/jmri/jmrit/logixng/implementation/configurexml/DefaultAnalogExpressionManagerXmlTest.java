@@ -32,7 +32,7 @@ public class DefaultAnalogExpressionManagerXmlTest {
     @Test
     public void testLoad() {
         DefaultAnalogExpressionManagerXml b = new DefaultAnalogExpressionManagerXml();
-        
+
         Element e = new Element("logixngAnalogExpressions");
         Element e2 = new Element("missing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
@@ -40,7 +40,7 @@ public class DefaultAnalogExpressionManagerXmlTest {
         e.addContent(e2);
         b.loadExpressions(e);
         JUnitAppender.assertErrorMessage("cannot load class jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
-/*        
+/*
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
@@ -49,7 +49,7 @@ public class DefaultAnalogExpressionManagerXmlTest {
         e2.addContent(new Element("systemName").addContent("IQAE1"));
         e2.addContent(new Element("maleSocket"));
         b.loadExpressions(e);
-        
+
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml");
@@ -57,7 +57,7 @@ public class DefaultAnalogExpressionManagerXmlTest {
         e2.addContent(new Element("systemName").addContent("IQAE2"));
         e2.addContent(new Element("maleSocket"));
         b.loadExpressions(e);
-        
+
         // Test trying to load a class with private constructor
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
@@ -66,7 +66,7 @@ public class DefaultAnalogExpressionManagerXmlTest {
         e.addContent(e2);
         b.loadExpressions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
-        
+
         // Test trying to load a class which throws an exception
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
@@ -75,7 +75,7 @@ public class DefaultAnalogExpressionManagerXmlTest {
         e.addContent(e2);
         b.loadExpressions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
-*/        
+*/
 //        System.out.format("Class name: %s%n", PrivateConstructorXml.class.getName());
     }
 
@@ -83,10 +83,10 @@ public class DefaultAnalogExpressionManagerXmlTest {
     @Test
     public void testStore() {
         DefaultAnalogExpressionManagerXml b = new DefaultAnalogExpressionManagerXml();
-        
+
         // If parameter is null, nothing should happen
         b.store(null);
-        
+
         // Test store a named bean that has no configurexml class
         AnalogExpressionManager manager = InstanceManager.getDefault(AnalogExpressionManager.class);
         manager.registerExpression(new DefaultAnalogExpressionManagerXmlTest.MyAnalogExpression());
@@ -94,10 +94,10 @@ public class DefaultAnalogExpressionManagerXmlTest {
         JUnitAppender.assertErrorMessage("Cannot load configuration adapter for jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogExpressionManagerXmlTest$MyAnalogExpression");
         JUnitAppender.assertErrorMessage("Cannot store configuration for jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogExpressionManagerXmlTest$MyAnalogExpression");
     }
-    
+
     @Test
     public void testReplaceActionManagerWithoutConfigManager() {
-        
+
         // if old manager exists, remove it from configuration process
         if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.AnalogExpressionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -115,26 +115,26 @@ public class DefaultAnalogExpressionManagerXmlTest {
         if (cmOD != null) {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
         }
-        
+
         Assert.assertTrue("manager is a MyManager",
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         instanceof DefaultAnalogExpressionManagerXmlTest.MyManager);
-        
+
         // Test replacing the manager
         DefaultAnalogExpressionManagerXml b = new DefaultAnalogExpressionManagerXml();
         b.replaceExpressionManager();
-        
+
         Assert.assertFalse("manager is not a MyManager",
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         instanceof DefaultAnalogExpressionManagerXmlTest.MyManager);
     }
-    
+
 //    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
-        
+
         JUnitUtil.initConfigureManager();
-        
+
         // if old manager exists, remove it from configuration process
         if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.AnalogExpressionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -152,20 +152,20 @@ public class DefaultAnalogExpressionManagerXmlTest {
         if (cmOD != null) {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
         }
-        
+
         Assert.assertTrue("manager is a MyManager",
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         instanceof DefaultAnalogExpressionManagerXmlTest.MyManager);
-        
+
         // Test replacing the manager
         DefaultAnalogExpressionManagerXml b = new DefaultAnalogExpressionManagerXml();
         b.replaceExpressionManager();
-        
+
         Assert.assertFalse("manager is not a MyManager",
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         instanceof DefaultAnalogExpressionManagerXmlTest.MyManager);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -181,25 +181,25 @@ public class DefaultAnalogExpressionManagerXmlTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyAnalogExpression extends AnalogExpressionMemory {
-        
+
         MyAnalogExpression() {
             super("IQAE9999", null);
         }
-        
+
     }
-    
-    
+
+
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
     class PrivateConstructorXml extends AnalogExpressionMemoryXml {
         private PrivateConstructorXml() {
         }
     }
-    
+
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
     class ThrowExceptionXml extends AnalogExpressionMemoryXml {
@@ -208,9 +208,9 @@ public class DefaultAnalogExpressionManagerXmlTest {
             throw new JmriConfigureXmlException();
         }
     }
-    
-    
+
+
     class MyManager extends DefaultAnalogExpressionManager {
     }
-    
+
 }

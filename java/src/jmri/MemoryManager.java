@@ -71,23 +71,25 @@ public interface MemoryManager extends ProvidingManager<Memory> {
     public Memory getMemory(@Nonnull String name);
 
     /**
-     * Locate an existing Memory based on a system name. Returns null if no instance
-     * already exists.
+     * Locate an existing Memory based on a system name.
+     * Returns null if no instance already exists.
      *
      * @param systemName the system name
      * @return requested Memory object or null if none exists
      */
     @CheckForNull
+    @Override
     public Memory getBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an existing Memory based on a user name. Returns null if no instance
-     * already exists.
+     * Locate an existing Memory based on a user name.
+     * Returns null if no instance already exists.
      *
      * @param userName the user name
      * @return requested Memory object or null if none exists
      */
     @CheckForNull
+    @Override
     public Memory getByUserName(@Nonnull String userName);
 
     /**
@@ -120,29 +122,22 @@ public interface MemoryManager extends ProvidingManager<Memory> {
      *                                  parsed.
      */
     @Nonnull
-    public Memory newMemory(@Nonnull String systemName, String userName);
+    public Memory newMemory(@Nonnull String systemName,@CheckForNull String userName)throws IllegalArgumentException;
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
      * the user can optionally supply a username.
      * <p>
      * This will always return a valid object reference; a new object will be
-     * created if necessary. (If a null reference is given for user name, no
-     * user name will be associated with the Memory object created)
+     * created if necessary.
      *
-     * Note that it is possible to make an inconsistent request if both
-     * addresses are provided, but the given values are associated with
-     * different objects. This is a problem, and we don't have a good solution
-     * except to issue warnings. This will mostly happen if you're creating
-     * Memory objects when you should be looking them up.
-     *
-     * @param userName the user name
+     * @param userName the user name, can be null
      * @return requested Memory object (never null)
      * @throws IllegalArgumentException if cannot create the Memory due to e.g.
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
     @Nonnull
-    public Memory newMemory(@Nonnull String userName);
+    public Memory newMemory(@CheckForNull String userName) throws IllegalArgumentException;
 
 }

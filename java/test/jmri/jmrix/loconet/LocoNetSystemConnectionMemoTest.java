@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -10,16 +9,16 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class LocoNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<LocoNetSystemConnectionMemo> {
+public class LocoNetSystemConnectionMemoTest extends LnSystemConnectionMemoTestBase<LocoNetSystemConnectionMemo> {
 
     @Override
     @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         scm = new LocoNetSystemConnectionMemo();
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(scm);
         scm.setLnTrafficController(lnis);
-        scm.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        scm.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
         scm.configureManagers();
     }
 
@@ -27,7 +26,7 @@ public class LocoNetSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     @AfterEach
     public void tearDown() {
         scm.dispose();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
 }

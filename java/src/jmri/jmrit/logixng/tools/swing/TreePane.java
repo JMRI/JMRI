@@ -16,8 +16,10 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.*;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -296,6 +298,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
     private static final class FemaleSocketTreeRenderer implements TreeCellRenderer {
 
         private final FemaleSocketDecorator _decorator;
+        private static ImageIcon _lockIcon;
         
         
         public FemaleSocketTreeRenderer(FemaleSocketDecorator decorator) {
@@ -305,12 +308,18 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             
+            UIDefaults uiDefaults = javax.swing.UIManager.getDefaults();
+            
             FemaleSocket socket = (FemaleSocket)value;
             
             JPanel mainPanel = new JPanel();
             
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.setOpaque(false);
+            if (selected && InstanceManager.getDefault(LogixNGPreferences.class).getTreeEditorHighlightRow()) {
+                mainPanel.setOpaque(true);
+                mainPanel.setBackground(uiDefaults.getColor("Tree.selectionBackground"));
+            }
             
             JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             mainPanel.add(commentPanel);
@@ -339,7 +348,32 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             
             JLabel connectedItemLabel = new JLabel();
             if (socket.isConnected()) {
+                
+                if (InstanceManager.getDefault(LogixNGPreferences.class).getTreeEditorHighlightRow()) {
+                    connectedItemLabel.setFont(uiDefaults.getFont("Tree.font"));
+                    if (selected) {
+                        connectedItemLabel.setForeground(uiDefaults.getColor("Tree.selectionForeground"));
+                    }
+                }
+                
                 MaleSocket connectedSocket = socket.getConnectedSocket();
+                
+                if (connectedSocket.isSystem()) {
+                    JLabel systemLabel = new JLabel(" "+Bundle.getMessage("TreePane_System")+" ", JLabel.CENTER);
+                    systemLabel.setForeground(Color.YELLOW);
+                    systemLabel.setBackground(Color.RED);
+                    systemLabel.setOpaque(true);
+                    panel.add(systemLabel);
+                    panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
+                }
+                
+                if (connectedSocket.isLocked()) {
+                    if (_lockIcon == null) {
+                        _lockIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/logixng/lock.png", FileUtil.Location.INSTALLED));
+                    }
+                    JLabel icLabel = new JLabel(_lockIcon, JLabel.CENTER);
+                    panel.add(icLabel);
+                }
                 
                 String comment = connectedSocket.getComment();
                 if (comment != null) {
@@ -369,9 +403,15 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                     JLabel variableLabel = new JLabel(Bundle.getMessage(
                             "PrintLocalVariable",
                             variableData._name,
-                            variableData._initalValueType,
+                            variableData._initialValueType,
                             variableData._initialValueData));
                     variableLabel.setAlignmentX(LEFT_ALIGNMENT);
+                    if (InstanceManager.getDefault(LogixNGPreferences.class).getTreeEditorHighlightRow()) {
+                        variableLabel.setFont(uiDefaults.getFont("Tree.font"));
+                        if (selected) {
+                            variableLabel.setForeground(uiDefaults.getColor("Tree.selectionForeground"));
+                        }
+                    }
                     mainPanel.add(variableLabel);
                 }
             }

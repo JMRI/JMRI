@@ -1,13 +1,15 @@
 package jmri.jmrix.nce;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
 import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.implementation.DefaultClockControl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Hardware Fast Clock for NCE.
@@ -45,7 +47,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     public NceClockControl(NceTrafficController tc, String prefix) {
         super();
         this.tc = tc;
-        this.prefix = prefix;
 
         // Create a timebase listener for the Minute change events
         internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
@@ -61,8 +62,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         };
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
-    @SuppressWarnings("unused")
-    private String prefix = "";
+
     private NceTrafficController tc = null;
 
     /* constants, variables, etc */
@@ -136,13 +136,12 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         log.error("message received: {}", m);
     }
 
-    // TODO: Why does this if statement contain a direct false? FIXME!
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void reply(NceReply r) {
-        if (false && log.isDebugEnabled()) {
-            log.debug("NceReply(len {}) waiting: {} watingForRead: {} waitingForCmdTime: {} waitingForCmd1224: {} waitingForCmdRatio: {} waitingForCmdStop: {} waitingForCmdStart: {}", r.getNumDataElements(), waiting, waitingForCmdRead, waitingForCmdTime, waitingForCmd1224, waitingForCmdRatio, waitingForCmdStop, waitingForCmdStart);
+        log.trace("NceReply(len {}) waiting: {} watingForRead: {} waitingForCmdTime: {} waitingForCmd1224: {} waitingForCmdRatio: {} waitingForCmdStop: {} waitingForCmdStart: {}", r.getNumDataElements(), waiting, waitingForCmdRead, waitingForCmdTime, waitingForCmd1224, waitingForCmdRatio, waitingForCmdStop, waitingForCmdStart);
 
-        }
         if (waiting <= 0) {
             log.error(Bundle.getMessage("LogReplyEnexpected"));
             return;
@@ -159,7 +158,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
                 return;
             } else {
                 waitingForCmdTime = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("NCE set clock replied: {}", r.getElement(0));
                 }
                 return;
@@ -171,29 +170,29 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         } else {
             if (waitingForCmd1224) {
                 waitingForCmd1224 = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("{}{}", Bundle.getMessage("LogNceClock1224CmdError"), r.getElement(0));
                 }
                 return;
             }
             if (waitingForCmdRatio) {
                 waitingForCmdRatio = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("{}{}", Bundle.getMessage("LogNceClockRatioCmdError"), r.getElement(0));
                 }
                 return;
             }
             if (waitingForCmdStop) {
                 waitingForCmdStop = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("{}{}", Bundle.getMessage("LogNceClockStopCmdError"), r.getElement(0));
                 }
                 return;
             }
             if (waitingForCmdStart) {
                 waitingForCmdStart = false;
-                if (r.getElement(0) != '!') {
-                    log.error("{}{}", Bundle.getMessage("LogNceClockStartCmdError"), r.getElement(0));
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
+                    log.error("waitingForCmdStart: {}{}", Bundle.getMessage("LogNceClockStartCmdError"), r.getElement(0));
                 }
                 return;
             }
@@ -310,7 +309,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Set the time, the date part is ignored.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
@@ -322,7 +321,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Get the current Nce time, does not have a date component.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public Date getTime() {
         issueReadOnlyRequest(); // go get the current time value
@@ -350,7 +349,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Set Nce clock and start clock.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
@@ -405,7 +404,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     private void readClockPacket(NceReply r) {
         //NceReply priorClockReadPacket = lastClockReadPacket;
         //int priorNceRatio = nceLastRatio;
@@ -457,7 +456,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueClock1224(boolean mode) {
         byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClock1224(mode);
@@ -510,7 +508,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings({"deprecation", "unused"})
+    @SuppressWarnings({"deprecation"}) // Date.getHours, getMinutes, getSeconds
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private Date getNceDate() {
         Date now = internalClock.getTime();
@@ -522,7 +520,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return (now);
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getNceTime() {
         double nceTime = 0;
@@ -535,7 +532,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return (nceTime);
     }
 
-    @SuppressWarnings({"deprecation", "unused"})
+    @SuppressWarnings({"deprecation"}) // Date.getHours, getMinutes, getSeconds
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getIntTime() {
         Date now = internalClock.getTime();
@@ -543,9 +540,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         int ss = now.getSeconds();
         int mm = now.getMinutes();
         int hh = now.getHours();
-        if (false && log.isDebugEnabled()) {
-            log.debug("getIntTime: {}:{}:{}.{}", hh, mm, ss, ms);
-        }
+        log.trace("getIntTime: {}:{}:{}.{}", hh, mm, ss, ms);
         return ((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }
 

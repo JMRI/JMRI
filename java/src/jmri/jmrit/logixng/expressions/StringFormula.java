@@ -98,8 +98,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
             Base parent, FemaleSocketListener listener, String socketName) {
         
         return new DefaultFemaleGenericExpressionSocket(
-                FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName)
-                .getGenericSocket(parent);
+                FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName);
     }
 
     public final void setFormula(String formula) throws ParserException {
@@ -131,12 +130,6 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
     @Override
     public Category getCategory() {
         return Category.COMMON;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
     }
     
     /** {@inheritDoc} */

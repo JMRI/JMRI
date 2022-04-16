@@ -3,19 +3,20 @@ package jmri.jmrit.beantable;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
+import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.util.JmriJFrame;
 
 
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 
@@ -29,20 +30,13 @@ import org.apache.commons.lang3.mutable.MutableInt;
  * Most of the text used in this GUI is in BeanTableBundle.properties, accessed
  * via Bundle.getMessage().
  * <p>
- * Two additional action and variable name selection methods have been added:
- * <ol>
- *     <li>Single Pick List
- *     <li>Combo Box Selection
- * </ol>
- * The traditional tabbed Pick List with text entry is the default method.
- * The Options menu has been expanded to list the 3 methods.
- * Mar 27, 2017 - Dave Sand
  *
  * @author Dave Duchamp Copyright (C) 2007 (LogixTableAction)
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011 (LogixTableAction)
  * @author Matthew Harris copyright (c) 2009 (LogixTableAction)
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019
+ * @author Dave Sand copyright (c) 2021
  */
 public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
@@ -88,6 +82,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         for (LogixNG x : getManager().getNamedBeanSet()) {
             x.setEnabled(enable);
         }
+        m.fireTableDataChanged();
     }
 
     @Override
@@ -111,7 +106,54 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     @Override
     public void deleteBean(LogixNG logixNG) {
         logixNG.setEnabled(false);
-        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(logixNG);
+        try {
+            InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error(e.getMessage());
+        }
+    }
+
+    private void copyConditionalNGToLogixNG(
+            @Nonnull ConditionalNG sourceConditionalNG,
+            @Nonnull LogixNG targetBean) {
+
+            // Create ConditionalNG
+            String sysName = InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName();
+            String oldUserName = sourceConditionalNG.getUserName();
+            String userName = oldUserName != null ? Bundle.getMessage("CopyOfConditionalNG", oldUserName) : null;
+            ConditionalNG targetConditionalNG =
+                    InstanceManager.getDefault(ConditionalNG_Manager.class)
+                            .createConditionalNG(targetBean, sysName, userName);
+
+            sourceConditionalNG.getFemaleSocket().unregisterListeners();
+            targetConditionalNG.getFemaleSocket().unregisterListeners();
+            Map<String, String> systemNames = new HashMap<>();
+            Map<String, String> userNames = new HashMap<>();
+            try {
+                FemaleSocket femaleSourceSocket = sourceConditionalNG.getFemaleSocket();
+                if (femaleSourceSocket.isConnected()) {
+                    targetConditionalNG.getFemaleSocket().connect(
+                            (MaleSocket) femaleSourceSocket.getConnectedSocket()
+                                    .getDeepCopy(systemNames, userNames));
+                }
+            } catch (JmriException ex) {
+                log.error(ex.getMessage(), ex);
+            }
+            sourceConditionalNG.getFemaleSocket().registerListeners();
+            targetConditionalNG.getFemaleSocket().registerListeners();
+    }
+
+    @Override
+    protected void copyBean(@Nonnull LogixNG sourceBean, @Nonnull LogixNG targetBean) {
+        for (int i = 0; i < sourceBean.getNumConditionalNGs(); i++) {
+            copyConditionalNGToLogixNG(sourceBean.getConditionalNG(i), targetBean);
+        }
+    }
+
+    @Override
+    protected boolean isCopyBeanSupported() {
+        return true;
     }
 
     @Override
@@ -119,6 +161,16 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         StringWriter writer = new StringWriter();
         _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
+    }
+
+    @Override
+    protected String getAddTitleKey() {
+        return "TitleAddLogixNG";
+    }
+
+    @Override
+    protected String getCreateButtonHintKey() {
+        return "LogixNGCreateButtonHint";
     }
 
     /**
@@ -133,7 +185,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixNGFrame.addHelpMenu(
-                "package.jmri.jmrit.beantable.LogixNGAddEdit", true);     // NOI18N
+                "package.jmri.jmrit.beantable.LogixNGTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -207,5 +259,17 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         });
         return panel5;
     }
+
+    @Override
+    protected void getListenerRefsIncludingChildren(LogixNG logixNG, java.util.List<String> list) {
+        logixNG.getListenerRefsIncludingChildren(list);
+    }
+
+    @Override
+    protected boolean hasChildren(LogixNG logixNG) {
+        return logixNG.getNumConditionalNGs() > 0;
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
 
 }

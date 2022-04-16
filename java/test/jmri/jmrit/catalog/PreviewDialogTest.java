@@ -42,6 +42,7 @@ public class PreviewDialogTest {
         jf.dispose();
     }
 
+
     @Test
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

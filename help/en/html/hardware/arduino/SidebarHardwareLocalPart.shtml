@@ -1,6 +1,6 @@
 <!-- SidebarHardwareLocalPart.shtml for arduino -->
 
-      <dt><h3 style="padding-left: 1em;"><a href="index.shtml">Arduino Use with JMRI</a></h3></dt>
+      <dt><a href="index.shtml">Arduino Use with JMRI</a></dt>
 		  <dd>
 		     <ul>
 				    <li><a href="index.shtml#connect">Connecting to JMRI</a>
@@ -9,6 +9,6 @@
 				    <li><a href="../dccpp/index.shtml">DCC++ Command Station</a>
 				    <li><a href="index.shtml#example-CMRI">CMRI Node Step-by-Step</a>
 				 </ul>
-		  </dd> 
-          
+		  </dd>
+
 <!-- /SidebarHardwareLocalPart.shtml -->

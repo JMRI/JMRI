@@ -3,8 +3,8 @@ package jmri.jmrit.operations.routes.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -38,7 +38,7 @@ public class ExportRoutesTest extends OperationsTestCase {
                 exportRoutes.writeOperationsRoutesFile();
             }
         });
-        export.setName("Export Trains"); // NOI18N
+        export.setName("Export Routes"); // NOI18N
         export.start();
 
         jmri.util.JUnitUtil.waitFor(() -> {

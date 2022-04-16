@@ -235,12 +235,6 @@ public class ExpressionWarrant extends AbstractDigitalExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewState() throws JmriException {
 
         switch (_stateAddressing) {
@@ -445,9 +439,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (getTriggerOnChange()) {
-            getConditionalNG().execute();
-        }
+        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

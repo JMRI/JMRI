@@ -44,7 +44,11 @@ public class DefaultMaleDigitalActionSocket
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             ((DigitalActionBean)getObject()).execute();
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
+            if (e.getErrors() != null) {
+                handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);
+            } else {
+                handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
+            }
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
         }
@@ -170,14 +174,20 @@ public class DefaultMaleDigitalActionSocket
         return _enabled;
     }
     
-
-
+    
     public static class DigitalActionDebugConfig implements MaleSocket.DebugConfig {
         
         // If true, the socket is not executing the action.
         // It's useful if you want to test the LogixNG without affecting the
         // layout (turnouts, sensors, and so on).
         public boolean _dontExecute = false;
+        
+        @Override
+        public DebugConfig getCopy() {
+            DigitalActionDebugConfig config = new DigitalActionDebugConfig();
+            config._dontExecute = _dontExecute;
+            return config;
+        }
         
     }
     

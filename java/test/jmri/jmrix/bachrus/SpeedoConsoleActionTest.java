@@ -49,6 +49,7 @@ public class SpeedoConsoleActionTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

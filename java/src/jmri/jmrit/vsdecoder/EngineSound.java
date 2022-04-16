@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018, 2021
  */
-class EngineSound extends VSDSound {
+public class EngineSound extends VSDSound {
 
     boolean initialized = false;
     boolean engine_started = false;

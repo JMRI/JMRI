@@ -106,7 +106,9 @@
       <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de
       <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
       <hr class="hide">
+
+    <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer.shtml" -->
+  </div>
 </body>
 </html>

@@ -120,6 +120,9 @@ public class SourceTest {
 
     @AfterAll
     static public void tearDown() {
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.removeMatchingThreads("Routing stabilising timer");
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();

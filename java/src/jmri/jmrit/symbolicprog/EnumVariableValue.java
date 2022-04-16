@@ -104,6 +104,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     public void lastItem() {
         _value = new JComboBox<>(java.util.Arrays.copyOf(_itemArray, _nstored));
+        _value.getAccessibleContext().setAccessibleName(label());
+
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
@@ -324,6 +326,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             case "checkbox": {
                 // this only makes sense if there are exactly two options
                 ComboCheckBox b = new ComboCheckBox(_value, this);
+                b.getAccessibleContext().setAccessibleName(label());
                 comboCBs.add(b);
                 if (getReadOnly() || getInfoOnly()) {
                     b.setEnabled(false);
@@ -333,6 +336,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             }
             case "radiobuttons": {
                 ComboRadioButtons b = new ComboRadioButtons(_value, this);
+                b.getAccessibleContext().setAccessibleName(label());
                 comboRBs.add(b);
                 if (getReadOnly() || getInfoOnly()) {
                     b.setEnabled(false);
@@ -342,6 +346,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             }
             case "onradiobutton": {
                 ComboRadioButtons b = new ComboOnRadioButton(_value, this);
+                b.getAccessibleContext().setAccessibleName(label());
                 comboRBs.add(b);
                 if (getReadOnly() || getInfoOnly()) {
                     b.setEnabled(false);
@@ -351,6 +356,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             }
             case "offradiobutton": {
                 ComboRadioButtons b = new ComboOffRadioButton(_value, this);
+                b.getAccessibleContext().setAccessibleName(label());
                 comboRBs.add(b);
                 if (getReadOnly() || getInfoOnly()) {
                     b.setEnabled(false);
@@ -398,10 +404,12 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
                     log.error("read only variables cannot use tree format: {}", item());
                 }
                 updateRepresentation(dScroll);
+                dScroll.getAccessibleContext().setAccessibleName(label());
                 return dScroll;
             default: {
                 // return a new JComboBox representing the same model
                 VarComboBox b = new VarComboBox(_value.getModel(), this);
+                b.getAccessibleContext().setAccessibleName(label());
                 comboVars.add(b);
                 if (getReadOnly() || getInfoOnly()) {
                     b.setEnabled(false);

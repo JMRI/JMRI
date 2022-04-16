@@ -32,11 +32,11 @@ public class LastResultOfDigitalExpressionSwing extends AbstractDigitalExpressio
         _expressionsComboBox.addItem("");
         for (MaleDigitalExpressionSocket bean : InstanceManager.getDefault(DigitalExpressionManager.class).getNamedBeanSet()) {
             if (bean.getUserName() != null) {
-                _expressionsComboBox.addItem(bean.getUserName());
+                _expressionsComboBox.addItem(bean.getDisplayName());
                 if (expression != null) {
                     NamedBeanHandle<DigitalExpressionBean> handle = expression.getDigitalExpression();
                     if ((handle != null) && (handle.getName().equals(bean.getDisplayName()))) {
-                        _expressionsComboBox.setSelectedItem(bean);
+                        _expressionsComboBox.setSelectedItem(bean.getDisplayName());
                     }
                 }
             }

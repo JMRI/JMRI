@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
  */
 public interface SignalMastManager extends ProvidingManager<SignalMast> {
 
-    // to free resources when no longer used
+    /** {@inheritDoc} */
     @Override
     public void dispose();
 
@@ -37,7 +37,8 @@ public interface SignalMastManager extends ProvidingManager<SignalMast> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    @CheckForNull public SignalMast getSignalMast(@Nonnull String name);
+    @CheckForNull
+    public SignalMast getSignalMast(@Nonnull String name);
 
     /**
      * Get the SignalMast with the user name, then system name if needed; if that fails, create a
@@ -54,7 +55,7 @@ public interface SignalMastManager extends ProvidingManager<SignalMast> {
      *                                  can't be parsed
      */
     @Nonnull
-    public SignalMast provideSignalMast(@Nonnull String name);
+    public SignalMast provideSignalMast(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Retrieve or create a new signal mast with a given system name. If a new object is created,
@@ -67,7 +68,8 @@ public interface SignalMastManager extends ProvidingManager<SignalMast> {
      * @throws JmriException if a signal mast with the given system name is already registered
      * but it is not of the correct class, or an internal error happens during construction.
      */
-    @Nonnull public SignalMast provideCustomSignalMast(@Nonnull String systemName,
+    @Nonnull
+    public SignalMast provideCustomSignalMast(@Nonnull String systemName,
                                                        Class<? extends SignalMast> mastClass)
             throws JmriException;
 
@@ -75,12 +77,16 @@ public interface SignalMastManager extends ProvidingManager<SignalMast> {
     public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
             @Nonnull String signalSystem,
             @Nonnull String mastName,
-            @Nonnull String[] heads);
+            @Nonnull String[] heads) throws JmriException;
 
+    /** {@inheritDoc} */
     @CheckForNull
+    @Override
     public SignalMast getByUserName(@Nonnull String s);
 
+    /** {@inheritDoc} */
     @CheckForNull
+    @Override
     public SignalMast getBySystemName(@Nonnull String s);
 
 }

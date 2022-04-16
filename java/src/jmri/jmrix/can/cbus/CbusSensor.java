@@ -68,8 +68,7 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
      */
     @Override
     public void requestUpdateFromLayout() {
-        CanMessage m;
-        m = addrActive.makeMessage(tc.getCanid());
+        CanMessage m = addrActive.makeMessage(tc.getCanid());
         int opc = CbusMessage.getOpcode(m);
         if (CbusOpCodes.isShortEvent(opc)) {
             m.setOpCode(CbusConstants.CBUS_ASRQ);
@@ -189,10 +188,10 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
             return;
         }
         // convert response events to normal
-        f = CbusMessage.opcRangeToStl(f);
-        if (addrActive.match(f)) {
+        CanReply opcf = CbusMessage.opcRangeToStl(f);
+        if (addrActive.match(opcf)) {
             setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
-        } else if (addrInactive.match(f)) {
+        } else if (addrInactive.match(opcf)) {
             setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
     }

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
 /**
@@ -26,12 +25,14 @@ public interface SignalMastLogic extends NamedBean {
      * been entered via the setAutoBean are not stored.
      */
     public int STOREALL = 0;
+    
     /**
      * Constant representing that only the basic Signal Mast Logic details are
      * stored. All details that determine the triggering of the logic are not
      * stored.
      */
     public int STOREMASTSONLY = 2;
+    
     /**
      * Constant representing that this Signal Mast Logic is not stored with the
      * panel file. This is used where another piece of code uses handles the
@@ -150,6 +151,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of block objects
      */
+    @Nonnull
     public List<Block> getAutoBlocksBetweenMasts(SignalMast destination);
 
     /**
@@ -170,6 +172,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return The name of the Aspect the Control Mast should display
      */
+    @CheckForNull
     public String getAutoSignalMastState(SignalMast mast, SignalMast destination);
 
     /**
@@ -190,6 +193,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of turnout objects
      */
+    @Nonnull
     public List<Turnout> getAutoTurnouts(SignalMast destination);
 
     /**
@@ -209,6 +213,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of Block objects
      */
+    @Nonnull
     public List<Block> getBlocks(SignalMast destination);
 
     /**
@@ -226,6 +231,7 @@ public interface SignalMastLogic extends NamedBean {
      *
      * @return A list of Signal Mast objects
      */
+    @Nonnull
     public List<SignalMast> getDestinationList();
 
     /**
@@ -262,6 +268,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of Sensor objects
      */
+    @Nonnull
     public List<Sensor> getSensors(SignalMast destination);
 
     /**
@@ -271,6 +278,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of Sensor NamedBeanHandles
      */
+    @Nonnull
     public List<NamedBeanHandle<Sensor>> getNamedSensors(SignalMast destination);
 
     /**
@@ -291,8 +299,14 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of Signal Mast objects
      */
+    @Nonnull
     public List<SignalMast> getSignalMasts(SignalMast destination);
 
+    /**
+     * Get the Source Mast.
+     * @return Signal Mast object.
+     */ 
+    @Nonnull
     public SignalMast getSourceMast();
 
     /**
@@ -312,6 +326,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of Turnout objects
      */
+    @Nonnull
     public List<Turnout> getTurnouts(SignalMast destination);
 
     /**
@@ -321,6 +336,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return A list of Turnout NamedBeanHandles
      */
+    @Nonnull
     public List<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination);
 
     /**
@@ -685,6 +701,7 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      * @return the Layout Block
      */
+    @CheckForNull
     public LayoutBlock getProtectingBlock(SignalMast destination);
 
     /**
@@ -697,6 +714,7 @@ public interface SignalMastLogic extends NamedBean {
      *         plus any blocks found on double cross-overs that also need to be
      *         un-occupied.
      */
+    @Nonnull
     public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
 
     @Override

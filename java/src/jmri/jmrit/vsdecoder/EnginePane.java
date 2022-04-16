@@ -5,6 +5,8 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
 /**
+ * Superclass for Diesel, Steam, Electric panes.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>

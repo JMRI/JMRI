@@ -36,6 +36,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;
+    public static final int MAX_BLOCKING_ORDER = 100;
     public static final boolean FORCE = true; // ignore length, type, etc. when setting car's track
     protected static final String DEFAULT_WEIGHT = "0";
 
@@ -687,14 +688,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public Division getDivision() {
         return _division;
     }
-    
+
     public String getDivisionName() {
         if (getDivision() != null) {
             return getDivision().getName();
         }
         return NONE;
     }
-    
+
     public String getDivisionId() {
         if (getDivision() != null) {
             return getDivision().getId();
@@ -849,18 +850,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             _rfid = id;
             if (!id.equals(NONE)) {
                 try {
-                    IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id);
-                    if (tag != null) {
-                        log.debug("Tag {} found", tag);
-                        setIdTag(tag);
-                    } else {
-                        log.error("Tag {} not found", id);
-                    }
-                } catch (NullPointerException e) {
-                    log.error("Tag manager not found");
+                    IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(id);
+                    setIdTag(tag);
+                    setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+                } catch (IllegalArgumentException e) {
+                    log.error("Exception recording tag {} - exception value {}", id, e.getMessage());
                 }
             }
-            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+
         }
     }
 
@@ -1322,9 +1319,13 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             track = destination.getTrackById(a.getValue());
         }
         setDestination(destination, track, true); // force destination
-        
+
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
-           _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
+        }
+        // TODO remove the following 3 lines in 2022
+        if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
+            _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.MOVES)) != null) {
             try {

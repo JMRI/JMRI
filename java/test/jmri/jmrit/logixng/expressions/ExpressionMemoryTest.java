@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -63,7 +64,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Memory IM1 is equal to \"\" ::: Log error%n");
+        return String.format("Memory IM1 is equal to \"\" ::: Use default%n");
     }
     
     @Override
@@ -72,11 +73,11 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Always execute ::: Log error%n" +
+                "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Memory IM1 is equal to \"\" ::: Log error%n" +
+                "               Memory IM1 is equal to \"\" ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -185,17 +186,12 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
         expressionMemory.removeMemory();
-        Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
+        Assert.assertEquals("Memory", expressionMemory.getShortDescription());
         Assert.assertEquals("Memory '' is equal to \"\"", expressionMemory.getLongDescription());
         expressionMemory.setMemory(memory);
         expressionMemory.setConstantValue("A value");
@@ -245,7 +241,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.MatchRegex);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
-        expressionMemory.setConstantValue("Hello.*");
+        expressionMemory.setRegEx("Hello.*");
         memory.setValue("Hello world");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
@@ -261,7 +257,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionMemory.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionMemory.setRegEx("\\w\\w\\d+\\s\\d+");
         memory.setValue("Ab213 31");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
@@ -280,7 +276,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.NotMatchRegex);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
-        expressionMemory.setConstantValue("Hello.*");
+        expressionMemory.setRegEx("Hello.*");
         memory.setValue("Hello world");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
@@ -296,7 +292,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         
         // Test regular expressions
         conditionalNG.setEnabled(false);
-        expressionMemory.setConstantValue("\\w\\w\\d+\\s\\d+");
+        expressionMemory.setRegEx("\\w\\w\\d+\\s\\d+");
         memory.setValue("Ab213 31");
         atomicBoolean.set(false);
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
@@ -491,7 +487,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         expressionMemory.setMemory(memory);
         memory.setValue("");
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

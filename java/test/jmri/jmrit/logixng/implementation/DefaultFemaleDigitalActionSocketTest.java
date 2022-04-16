@@ -87,27 +87,34 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
 
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.actions.ActionAudio.class);
         classes.add(jmri.jmrit.logixng.actions.ActionBlock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionClock.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionDispatcher.class);
         classes.add(jmri.jmrit.logixng.actions.ActionEntryExit.class);
         classes.add(jmri.jmrit.logixng.actions.ActionLight.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionLightIntensity.class);
         classes.add(jmri.jmrit.logixng.actions.ActionLocalVariable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionMemory.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionOBlock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionPower.class);
-        classes.add(jmri.jmrit.logixng.actions.ActionSimpleScript.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionReporter.class);
         classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSensor.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalHead.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalMast.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionSound.class);
         classes.add(jmri.jmrit.logixng.actions.ActionThrottle.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnout.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnoutLock.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionWarrant.class);
         classes.add(jmri.jmrit.logixng.actions.EnableLogix.class);
         classes.add(jmri.jmrit.logixng.actions.TriggerRoute.class);
         map.put(Category.ITEM, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionTimer.class);
+        classes.add(jmri.jmrit.logixng.actions.DigitalFormula.class);
         classes.add(jmri.jmrit.logixng.actions.DoAnalogAction.class);
         classes.add(jmri.jmrit.logixng.actions.DoStringAction.class);
         classes.add(jmri.jmrit.logixng.actions.ExecuteDelayed.class);
@@ -124,9 +131,13 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeans.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansTable.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.actions.Logix.class);
+        classes.add(jmri.jmrit.logixng.actions.LogData.class);
         classes.add(jmri.jmrit.logixng.actions.LogLocalVariables.class);
+        classes.add(jmri.jmrit.logixng.actions.Timeout.class);
+        classes.add(jmri.jmrit.logixng.actions.ShowDialog.class);
         classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);
         map.put(Category.OTHER, classes);
@@ -146,8 +157,11 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
+
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+                .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _action = new MyActionTurnout("IQDA321");

@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
@@ -88,7 +90,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTextArea commentTextArea = new JTextArea(2, 60);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    
+    JColorChooser commentColorChooser = new JColorChooser();
+
     // combo boxes
     protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
 
@@ -195,13 +198,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         p1.add(pName);
         p1.add(directionPanel);
-        
+
         // division field
         JPanel pDivision = new JPanel();
         pDivision.setLayout(new GridBagLayout());
         pDivision.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Division")));
         addItem(pDivision, divisionComboBox, 2, 0);
         addItem(pDivision, editDivisionButton, 3, 0);
+        setDivisionButtonText();
 
         // row 5
         panelCheckBoxes.setLayout(new GridBagLayout());
@@ -221,9 +225,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pC.setLayout(new GridBagLayout());
         pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         addItem(pC, commentScroller, 0, 0);
+        if (_location != null) {
+            addItem(pC, OperationsPanel.getColorChooserPanel(_location.getCommentWithColor(), commentColorChooser), 2, 0);
+        } else {
+            addItem(pC, OperationsPanel.getColorChooserPanel("", commentColorChooser), 2, 0);
+        }
 
-        // adjust text area width based on window size
-        adjustTextAreaColumnWidth(commentScroller, commentTextArea);
+        // adjust text area width based on window size less color chooser
+        Dimension d = new Dimension(getPreferredSize().width - 100, getPreferredSize().height);
+        adjustTextAreaColumnWidth(commentScroller, commentTextArea, d);
 
         JPanel readerPanel = new JPanel();
         readerPanel.setVisible(false);
@@ -290,6 +300,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addCheckBoxTrainAction(eastCheckBox);
         addCheckBoxTrainAction(westCheckBox);
 
+        addComboBoxAction(divisionComboBox);
+
         // add property listeners
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).addPropertyChangeListener(this);
@@ -303,9 +315,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_AddLocation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
     }
 
     private void loadToolMenu() {
@@ -321,12 +331,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
-        toolMenu.addSeparator();
-        toolMenu.add(new PrintLocationsAction(false, _location));
-        toolMenu.add(new PrintLocationsAction(true, _location));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintLocationsAction(false, _location));
+        toolMenu.add(new PrintLocationsAction(true, _location));
     }
 
     // frames
@@ -348,22 +358,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (ae.getSource() == addYardButton) {
             yef = new YardEditFrame();
             yef.initComponents(_location, null);
-            yef.setTitle(Bundle.getMessage("AddYard"));
         }
         if (ae.getSource() == addSpurButton) {
             sef = new SpurEditFrame();
             sef.initComponents(_location, null);
-            sef.setTitle(Bundle.getMessage("AddSpur"));
         }
         if (ae.getSource() == addInterchangeButton) {
             ief = new InterchangeEditFrame();
             ief.initComponents(_location, null);
-            ief.setTitle(Bundle.getMessage("AddInterchange"));
         }
         if (ae.getSource() == addStagingButton) {
             stef = new StagingEditFrame();
             stef.initComponents(_location, null);
-            stef.setTitle(Bundle.getMessage("AddStaging"));
         }
 
         if (ae.getSource() == saveLocationButton) {
@@ -390,14 +396,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             }
             int rs = l.getNumberRS();
             if (rs > 0) {
-                if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("ThereAreCars"),
-                        new Object[]{Integer.toString(rs)}), Bundle.getMessage("deletelocation?"),
-                        JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                if (JOptionPane.showConfirmDialog(this,
+                        MessageFormat.format(Bundle.getMessage("ThereAreCars"), new Object[] { Integer.toString(rs) }),
+                        Bundle.getMessage("deletelocation?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                     return;
                 }
             } else {
-                if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                        .getMessage("DoYouWantToDeleteLocation"), new Object[]{locationNameTextField.getText()}),
+                if (JOptionPane.showConfirmDialog(this,
+                        MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteLocation"),
+                                new Object[] { locationNameTextField.getText() }),
                         Bundle.getMessage("deletelocation?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                     return;
                 }
@@ -445,8 +452,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (ae.getSource() == autoSelectButton) {
             log.debug("auto select button pressed");
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("autoSelectCarTypes?"), Bundle
-                    .getMessage("autoSelectLocations?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("autoSelectCarTypes?"),
+                    Bundle.getMessage("autoSelectLocations?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
             autoSelectCheckboxes();
@@ -490,7 +497,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             stagingTable.getCellEditor().stopCellEditing();
         }
         _location.setName(locationNameTextField.getText());
-        _location.setComment(commentTextArea.getText());
+        _location.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
         _location.setDivision((Division) divisionComboBox.getSelectedItem());
         if (Setup.isRfidEnabled() && readerSelector != null) {
             _location.setReporter(readerSelector.getSelectedItem());
@@ -503,25 +510,38 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
      * @return true if name OK and is less than the maximum allowed length
      */
     private boolean checkName(String s) {
-        if (locationNameTextField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        if (TrainCommon.splitString(locationNameTextField.getText()).length() > MAX_NAME_LENGTH) {
-            // log.error("Location name must be less than "+
-            // Integer.toString(MAX_NAME_LENGTH+1) +" characters");
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
-                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}),
-                    MessageFormat.format(Bundle
-                            .getMessage("CanNotLocation"), new Object[]{s}),
+        String locationName = locationNameTextField.getText().trim();
+        if (locationName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (!OperationsXml.checkFileName(locationNameTextField.getText())) { // NOI18N
+        // hyphen feature needs at least one character to work properly
+        if (locationName.contains(TrainCommon.HYPHEN)) {
+            String[] check = locationName.split(TrainCommon.HYPHEN);
+            if (check.length == 0) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
+                        MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
+                        JOptionPane.ERROR_MESSAGE);
+
+                return false;
+            }
+        }
+        if (TrainCommon.splitString(locationName).length() > MAX_NAME_LENGTH) {
+            // log.error("Location name must be less than "+
+            // Integer.toString(MAX_NAME_LENGTH+1) +" characters");
+            JOptionPane.showMessageDialog(this,
+                    MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
+                            new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }),
+                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!OperationsXml.checkFileName(locationName)) { // NOI18N
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
-                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[]{s}),
+                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -530,8 +550,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void reportLocationExists(String s) {
         // log.info("Can not " + s + ", location already exists");
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"), MessageFormat.format(Bundle
-                .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"),
+                MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {
@@ -637,7 +658,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         panelCheckBoxes.revalidate();
         repaint();
     }
-    
+
     protected void updateDivisionComboBox() {
         InstanceManager.getDefault(DivisionManager.class).updateComboBox(divisionComboBox);
         if (_location != null) {
@@ -763,6 +784,19 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     @Override
+    protected void comboBoxActionPerformed(ActionEvent ae) {
+        setDivisionButtonText();
+    }
+
+    private void setDivisionButtonText() {
+        if (divisionComboBox.getSelectedItem() == null) {
+            editDivisionButton.setText(Bundle.getMessage("Add"));
+        } else {
+            editDivisionButton.setText(Bundle.getMessage("ButtonEdit"));
+        }
+    }
+
+    @Override
     public void dispose() {
         if (_location != null) {
             _location.removePropertyChangeListener(this);
@@ -782,8 +816,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY) ||

@@ -1,227 +1,291 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI CBUS help support event request feedback monitor monitoring tool">
-  <title>JMRI: CBUS&reg; Event Request Table</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta name="keywords" content=
+  "JMRI CBUS help support event request feedback monitor monitoring tool">
+  <title>JMRI: CBUS® Event Request Table</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI : Tableau de contrôle des Demandes d'Événements CBUS</h1>
 
-      <h1>JMRI : Tableau de contr&#244;le des Demandes d'&#201;v&#233;nements CBUS</h1>
-      
-        <ul class="snav">
-        <li><a href="#stats">Colonnes</a></li>
-        <li><a href="#status">&#201;tat de la Demande d'&#201;v&#233;nement</a></li>
-        <li><a href="#opc">OPCs</a></li>
-        </ul>
-      
-      <img src="../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
+      <ul class="snav">
+        <li><a href="#stats">Colonnes</a>
+        </li>
+
+        <li><a href="#status">État de la Demande d'Événement</a>
+        </li>
+
+        <li><a href="#opc">OPCs</a>
+        </li>
+      </ul>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
       width="630" height="210" alt="CBUS Event Request Table" align="right">
+      <p>Le tableau des Événements de CBUS affiche les informations relatives aux événements sur
+      votre connexion <a href=".">CBUS</a>.</p>
 
-      <p>Le tableau des &#201;v&#233;nements de  CBUS affiche les informations relatives aux &#233;v&#233;nements sur votre connexion <a href=.
-      "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>.</p>
-      
-      <p>Les messages entrants vers JMRI et les messages sortants sont enregistr&#233;s dans le tableau.</p>
+      <p>Les messages entrants vers JMRI et les messages sortants sont enregistrés dans le
+      tableau.</p>
 
-      <p>Pendant que la fen&#234;tre est ouverte, elle maintient une liste d'&#233;v&#233;nements courts on / off, 
-      des &#233;v&#233;nements longs on / off, des &#233;v&#233;nements OPC &#233;tendus on / off, des &#233;v&#233;nements on / off de r&#233;ponse d'accessoires.</p> 
+      <p>Pendant que la fenêtre est ouverte, elle maintient une liste d'événements courts on / off,
+      des événements longs on / off, des événements OPC étendus on / off, des événements on / off
+      de réponse d'accessoires.</p>
 
-      
-       <p>Chaque combinaison d'&#233;v&#233;nement et de n&#339;ud est unique, le nombre maximum d'&#233;v&#233;nements est de 65 535.</p> 
-      <p>Le nombre maximum de n&#339;uds est &#233;galement de 65 535.</p>
-      
-      <p>Le tableau commencera toujours sans aucune entr&#233;e, les donn&#233;es ne sont pas maintenues entre les sessions.</p> <p>.
-      
-      </p> <p>Vous pouvez ouvrir la table automatiquement en l'ajoutant &#224; votre liste d'actions de d&#233;marrage JMRI.
-      <br>PanelPro > Modifier les pr&#233;f&#233;rences > D&#233;marrage > Ajouter > Effectuer une action > Ouvrir le Tableau des &#201;v&#233;nements CBUS.
+      <p>Chaque combinaison d'événement et de nœud est unique, le nombre maximum d'événements est
+      de 65 535.</p>
+
+      <p>Le nombre maximum de nœuds est également de 65 535.</p>
+
+      <p>Le tableau commencera toujours sans aucune entrée, les données ne sont pas maintenues
+      entre les sessions.</p>
+
+      <p>.</p>
+
+      <p>Vous pouvez ouvrir la table automatiquement en l'ajoutant à votre liste d'actions de
+      démarrage JMRI.<br>
+      PanelPro &gt; Modifier les préférences &gt; Démarrage &gt; Ajouter &gt; Effectuer une action
+      &gt; Ouvrir le Tableau des Événements CBUS.</p>
+
+      <p>Les codes d'événements courts seront dépouillés de tout numéro de nœud contenu dans le
+      message CAN de l'événement.</p>
+
+      <p>Toutes les valeurs numériques sont décimales.</p>
+
+      <h2><a name="stats" id="stats">Colonnes</a>
+      </h2>
+
+      <p>Les colonnes peuvent être sélectionnées pour être affichées via la barre de menu
+      supérieure, elles sont divisées en 2 catégories.</p>
+
+      <ul>
+        <li>Colonnes d' Événements</li>
+
+        <li>Colonnes de Rétrosignalisation</li>
+      </ul>
+
+      <p>L'ordre des colonnes peut être réorganisé en faisant glisser l'en-tête de la colonne.</p>
+
+      <p>Changer l'ordre de tri des colonnes en cliquant avec le bouton gauche de la souris sur
+      l'en-tête de colonne.</p>
+
+      <h3>Colonnes d'Événements</h3>
+
+      <ul>
+        <li>Evénement : Numéro de l'Événement ( ou du dispositif ) signalé dans un message CAN
+        d'événement.</li>
+
+        <li>Nœud : Numéro de nœud rapporté par un message CAN d'événement.</li>
+
+        <li>Nom de l'événement .</li>
+
+        <li>Envoyer une Requête : envoie une requête d'événement. Si l'événement a un numéro de
+        nœud, ce sera un événement long sinon court.</li>
+
+        <li>Supprimer: ( L'événement de requête sera réajouté à la table s'il est réentendu sur le
+        réseau. )</li>
+      </ul>
+
+      <h3>Colonnes de Rétrosignalisation</h3>
+
+      <ul>
+        <li>FB Status - Statut de la toute dernière demande de rétrosignalisation. OK, En attente
+        ou PAS de rétrosignalisation.</li>
+
+        <li>FB requise - Nombre de réponse d'événements requis pour prouver.</li>
+
+        <li>FB en suspens - Nombre d'événements de rétrosignalisation sont actuellement en
+        suspens.</li>
+
+        <li>FB Timeout - ms avant que les alertes ne se déclenchent.</li>
+
+        <li>FB Événement - Si un autre événement est en rétrosignalisation pour cet événement,
+        ajoutez le numéro de l'autre événement.</li>
+
+        <li>FB Nœud - Si un autre événement est une rétrosignalisation pour cet événement, ajoutez
+        l'autre numéro de nœud d'événement.</li>
+      </ul>
+
+      <p>Lorsqu'un événement est envoyé par JMRI qui a un numéro dans la colonne de réponse de
+      rétrosignalisation, la table de demande d'événement va surveiller sa réponse et avertir si
+      celle-ci n'est pas reçue.</p>
+
+      <p>Le système surveillera un événement de rétrosignalisation sous la d'un événement de
+      réponse, ou d'un événement normal d'activation et de désactivation. Les événements de réponse
+      n'ont pas besoin de correspondre au statut ( on ou off ), et peuvent être n'importe quelle
+      longueur de données.</p>
+
+      <p><img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-feedback-792x221.png"
+      width="792" height="221" alt="CBUS Event Table Feedback">
       </p>
 
-      <p>Les codes d'&#233;v&#233;nements courts seront d&#233;pouill&#233;s de tout num&#233;ro de n&#339;ud contenu dans le message CAN de l'&#233;v&#233;nement.</p>
-      <p>Toutes les valeurs num&#233;riques sont d&#233;cimales.</p>
-      
+      <h3><a name="status" id="status">Demander le Statut d'un Événement</a>
+      </h3>
 
-    <h2><a name="stats" id="stats">Colonnes</a></h2>
+      <div>
+        <p>En cliquant sur Statut, JMRI envoie un message de demande de statut d'accessoire
+        d'événement. au réseau, long si l'événement possède un nœud, court s'il n'en possède
+        pas.</p>
 
-      <p>Les colonnes peuvent &#234;tre s&#233;lectionn&#233;es pour &#234;tre affich&#233;es via la barre de menu sup&#233;rieure,
-      elles sont divis&#233;es en 2 cat&#233;gories.</p>
-      
-        <ul>
-        <li>Colonnes d'	&#201;v&#233;nements</li>
-        <li>Colonnes de R&#233;trosignalisation</li>
-        </ul>
-      
-        <p>L'ordre des colonnes peut &#234;tre r&#233;organis&#233; en faisant glisser l'en-t&#234;te de la colonne. </p>
-        <p>Changer l'ordre de tri des colonnes en cliquant avec le bouton gauche de la souris sur l'en-t&#234;te de colonne.</p>
-      
-    <h3>Colonnes d'&#201;v&#233;nements</h3>
-    
-        <ul>
-        <li>Ev&#233;nement : Num&#233;ro de l'&#201;v&#233;nement ( ou du dispositif ) signal&#233; dans un message CAN d'&#233;v&#233;nement.</li>
-        <li>N&#339;ud : Num&#233;ro de n&#339;ud rapport&#233; par un message CAN d'&#233;v&#233;nement.</li>
-        <li>Nom de l'&#233;v&#233;nement .</li>  
-        <li>Envoyer une Requ&#234;te : envoie une requ&#234;te d'&#233;v&#233;nement. Si l'&#233;v&#233;nement a un num&#233;ro de n&#339;ud, ce sera un &#233;v&#233;nement long sinon court.</li>
-        <li>Supprimer: ( L'&#233;v&#233;nement de requ&#234;te sera r&#233;ajout&#233; &#224; la table s'il est r&#233;entendu sur le r&#233;seau. )</li>
-        </ul>
-        
-    
-    <h3>Colonnes de R&#233;trosignalisation</h3>  
-    
-    <ul>
-      <li>FB Status - Statut de la toute derni&#232;re demande de r&#233;trosignalisation.  OK, En attente ou PAS de r&#233;trosignalisation.</li>
-      
-      <li>FB requise - Nombre de r&#233;ponse d'&#233;v&#233;nements requis pour prouver.</li>
+        <p>Cela déclenche un surveillant d'événement JMRI qui attend une réponse de l'événement,
+        soit une réponse de demande, soit un événement normal est accepté comme réponse.</p>
 
-      <li>FB en suspens - Nombre d'&#233;v&#233;nements de r&#233;trosignalisation sont actuellement en suspens.</li> 
-      
-      <li>FB Timeout - ms avant que les alertes ne se d&#233;clenchent.</li>
-      
-      <li>FB &#201;v&#233;nement - Si un autre &#233;v&#233;nement est en r&#233;trosignalisation pour cet &#233;v&#233;nement, ajoutez le num&#233;ro de l'autre &#233;v&#233;nement.</li>
-      
-      <li>FB N&#339;ud - Si un autre &#233;v&#233;nement est une r&#233;trosignalisation pour cet &#233;v&#233;nement, ajoutez l'autre num&#233;ro de n&#339;ud d'&#233;v&#233;nement.</li>
-     </ul>
+        <p>Si rien n'est défini dans la rétrosignalisation d'événement, le délai d'attente par
+        défaut est de 4 secondes à partir d'une même combinaison d'événement et de nœud.</p>
 
+        <p>La réponse à un événement est une réponse à une demande.</p>
 
-      <p>Lorsqu'un &#233;v&#233;nement est envoy&#233; par JMRI qui a un num&#233;ro dans la colonne de r&#233;ponse de r&#233;trosignalisation,
-      la table de demande d'&#233;v&#233;nement va surveiller sa r&#233;ponse et avertir si celle-ci n'est pas re&#231;ue.
-      </p>
-      
-      <p>Le syst&#232;me surveillera un &#233;v&#233;nement de r&#233;trosignalisation sous la 
-      d'un &#233;v&#233;nement de r&#233;ponse, ou d'un &#233;v&#233;nement normal d'activation et de d&#233;sactivation.
-      Les &#233;v&#233;nements de r&#233;ponse n'ont pas besoin de correspondre au statut ( on ou off ), 
-      et peuvent &#234;tre n'importe quelle longueur de donn&#233;es.</p> <p>
-   
-      <img src="../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-feedback-792x221.png"
-      width="792" height="221" alt="CBUS Event Table Feedback" >      
-      
-    <h3><a name="status" id="status">Demander le Statut d'un &#201;v&#233;nement</a></h3>
-        <div>
-      <p>En cliquant sur Statut, JMRI envoie un message de demande de statut d'accessoire d'&#233;v&#233;nement. 
-      au r&#233;seau, long si l'&#233;v&#233;nement poss&#232;de un n&#339;ud, court s'il n'en poss&#232;de pas.</p>
-      <p>Cela d&#233;clenche un surveillant d'&#233;v&#233;nement JMRI qui attend une r&#233;ponse 
-      de l'&#233;v&#233;nement, soit une r&#233;ponse de demande, soit un &#233;v&#233;nement normal 
-      est accept&#233; comme r&#233;ponse.</p> <p>
-      <p>Si rien n'est d&#233;fini dans la r&#233;trosignalisation d'&#233;v&#233;nement, le d&#233;lai d'attente par d&#233;faut est de 
-      4 secondes &#224; partir d'une m&#234;me combinaison d'&#233;v&#233;nement et de n&#339;ud.</p> <p>La r&#233;ponse &#224; un &#233;v&#233;nement est une r&#233;ponse &#224; une demande.
-      </p> <p>Certains utilisateurs peuvent souhaiter cr&#233;er un nouvel aiguillage, capteur ou lumi&#232;re JMRI 
-      pour repr&#233;senter le bouton d'obtention d'&#233;tat et envoyer le message d'&#233;tat de demande d'&#233;v&#233;nement.
-      
-      <br>Les adresses mat&#233;rielles de ces &#233;v&#233;nements de demande ressembleraient &#224; quelque chose comme :</p> <p>.
-      
-        <table border="1">
-        <tbody>
-        <tr>
-        <th>Adresse Mat&#233;riel</th>
-        <th>Ops Code Hex</th>
-        <th>Ops Code Translat&#233;</th>
-        <th>N&#339;ud Dec</th>
-        <th>&#201;v&#233;nement Dec</th>
-        </tr>
-        <tr>
-        <td>X9A0000007B</td>
-        <td>9A</td>
-        <td>Demande d'accessoire court</td>
-        <td>0</td>
-        <td>123</td>
-        </tr>      
-        <tr>
-        <td>X92007B01C8</td>
-        <td>92</td>
-        <td>Demande d'accessoire longue</td>
-        <td>123</td>
-        <td>456</td>
-        </tr>  
-        </tbody>
+        <p>Certains utilisateurs peuvent souhaiter créer un nouvel aiguillage, capteur ou lumière
+        JMRI pour représenter le bouton d'obtention d'état et envoyer le message d'état de demande
+        d'événement.<br>
+        Les adresses matérielles de ces événements de demande ressembleraient à quelque chose comme
+        :</p>
+
+        <p>.</p>
+
+        <table border="1" summary="">
+          <tbody>
+            <tr>
+              <th>Adresse Matériel</th>
+              <th>Ops Code Hex</th>
+              <th>Ops Code Translaté</th>
+              <th>Nœud Dec</th>
+              <th>Événement Dec</th>
+            </tr>
+
+            <tr>
+              <td>X9A0000007B</td>
+              <td>9A</td>
+              <td>Demande d'accessoire court</td>
+              <td>0</td>
+              <td>123</td>
+            </tr>
+
+            <tr>
+              <td>X92007B01C8</td>
+              <td>92</td>
+              <td>Demande d'accessoire longue</td>
+              <td>123</td>
+              <td>456</td>
+            </tr>
+          </tbody>
         </table>
-      
-      <p>Il y a quelques m&#233;thodes dans JMRI pour envoyer cet &#233;v&#233;nement de ping toutes les quelques secondes, 
-      l'une &#233;tant de cr&#233;er un script jython pour envoyer un ping &#224; 1 capteur toutes les quelques secondes, 
-      et d'utiliser logix sur ce 1 capteur pour cr&#233;er d'autres sorties de demandes d'&#233;tat d'&#233;v&#233;nement ping.</p> 
-      <p>La r&#233;ponse &#224; l'&#233;v&#233;nement de ping est envoy&#233;e &#224; l'utilisateur.
 
-      <p>Quand un message de demande de r&#233;ponse d'&#233;v&#233;nement est vu sur le r&#233;seau, 
-      la table d'&#233;v&#233;nement surveillera le retour d'&#233;v&#233;nement.</p> <p>
+        <p>Il y a quelques méthodes dans JMRI pour envoyer cet événement de ping toutes les
+        quelques secondes, l'une étant de créer un script jython pour envoyer un ping à 1 capteur
+        toutes les quelques secondes, et d'utiliser logix sur ce 1 capteur pour créer d'autres
+        sorties de demandes d'état d'événement ping.</p>
+
+        <p>La réponse à l'événement de ping est envoyée à l'utilisateur.</p>
+
+        <p>Quand un message de demande de réponse d'événement est vu sur le réseau, la table
+        d'événement surveillera le retour d'événement.</p>
       </div>
-        
-      
-      
-    <h3><a name="opc" id="opc">Codes d'Op&#233;ration pris en Charge</a></h3>.
-      
-        <ul>
-        <li>ASRQ - Envoy&#233; lorsque l'utilisateur clique sur le bouton d'&#233;tat, num&#233;ro de n&#339;ud 0</li>.      
-        <li>AREQ - Envoy&#233; lorsque l'utilisateur clique sur le bouton d'&#233;tat, num&#233;ro de n&#339;ud > 0</li>.
-        </ul>
-      
-        <p>Les OPC re&#231;us peuvent provenir d'autres composants JMRI,
-        ou d'une connexion externe CBUS.</p> <p>
-        
-        <p>Tous les opscodes d&#233;finis comme un &#233;v&#233;nement accessoire ( &#224; l'exception de Fast Clock ) 
-        sont des Surveillants constants, c'est-&#224;-dire </p> <p>.
-        
-        <ul>
-        <li>ASRQ / AREQ - D&#233;marre automatiquement le minuteur de retour pour l'&#233;v&#233;nement associ&#233;.</li>
-        <li>ACON / ACOF</li>
-        <li>ARON / AROF</li>
-        <li>ASON / ASOF</li>
-        <li>ARSON / ARSOF</li>
-        <li>ACON1 / ACOF1</li>
-        <li>ARON1 / AROF1</li>
-        <li>ASON1 / ASOF1</li>
-        <li>ARSON1 / ARSOF1</li>
-        <li>ACON2 / ACOF2</li>
-        <li>ARON2 / AROF2</li>
-        <li>ASON2 / ASOF2</li>
-        <li>ARSON2 / ARSOF2</li>
-        <li>ACON3 / ACOF3</li>
-        <li>ARON3 / AROF3</li>
-        <li>ACDAT</li>
-        <li>ARDAT</li>
-        <li>ASON3 / ASOF3</li>
-        <li>DDES</li>
-        <li>DDRS</li>
-        <li>ARSON3 / ARSOF3</li>
-        </ul>
-      
 
-      <h4>Variance par rapport au guide du d&#233;veloppeur CBUS 6b</h4>
-        <p>Dans ce mod&#232;le de donn&#233;es, il est suppos&#233; que les combinaisons 
-        d'&#233;v&#233;nements et de n&#339;uds constituent le facteur unique.</p> 
-        <p>Il n'y a pas d'&#233;v&#233;nement. </p>      
-        <p>Tout &#233;v&#233;nement OPC envoy&#233; avec des octets de donn&#233;es suppl&#233;mentaires 
-        sera enregistr&#233; en fonction de sa combinaison principale d'&#233;v&#233;nement et de n&#339;ud, 
-        sans tenir compte des octets de donn&#233;es suppl&#233;mentaires.</p>
-         <p>La combinaison d'&#233;v&#233;nements et de n&#339;uds est unique.</p>
-       
-      
-    <h3>Aide JMRI</h3>
-      
-        <p>Vous pouvez afficher cette page d'aide dans JMRI en s&#233;lectionnant 
-        Aide > Aide de la fen&#234;tre dans la barre sup&#233;rieure de la fen&#234;tre du 
-        tableau d'&#233;v&#233;nements du MERG.</p>
-        
-        <p>La <a href="../console/CbusConsoleFrame.shtml">CBUS
-        Console</a> peut vous aider &#224; comprendre quels &#233;v&#233;nements se produisent
-        sur votre r&#233;seau.</p>
-      
-      
-      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'aide JMRI CBUS</a>.</p>
-        
-        <h2></h2>
-        <p>CBUS&reg ; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>.
-        <p></p>
-		<p>Traduction2021-03-19</p>
+      <h3><a name="opc" id="opc">Codes d'Opération pris en Charge</a>
+      </h3>
+      .
+      <ul>
+        <li>ASRQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud 0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>AREQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud &gt;
+        0</li>
+
+        <li style="list-style: none">.</li>
+      </ul>
+
+      <p>Les OPC reçus peuvent provenir d'autres composants JMRI, ou d'une connexion externe
+      CBUS.</p>
+
+      <p>Tous les opscodes définis comme un événement accessoire ( à l'exception de Fast Clock )
+      sont des Surveillants constants, c'est-à-dire</p>
+
+      <p>.</p>
+
+      <ul>
+        <li>ASRQ / AREQ - Démarre automatiquement le minuteur de retour pour l'événement
+        associé.</li>
+
+        <li>ACON / ACOF</li>
+
+        <li>ARON / AROF</li>
+
+        <li>ASON / ASOF</li>
+
+        <li>ARSON / ARSOF</li>
+
+        <li>ACON1 / ACOF1</li>
+
+        <li>ARON1 / AROF1</li>
+
+        <li>ASON1 / ASOF1</li>
+
+        <li>ARSON1 / ARSOF1</li>
+
+        <li>ACON2 / ACOF2</li>
+
+        <li>ARON2 / AROF2</li>
+
+        <li>ASON2 / ASOF2</li>
+
+        <li>ARSON2 / ARSOF2</li>
+
+        <li>ACON3 / ACOF3</li>
+
+        <li>ARON3 / AROF3</li>
+
+        <li>ACDAT</li>
+
+        <li>ARDAT</li>
+
+        <li>ASON3 / ASOF3</li>
+
+        <li>DDES</li>
+
+        <li>DDRS</li>
+
+        <li>ARSON3 / ARSOF3</li>
+      </ul>
+
+      <h4>Variance par rapport au guide du développeur CBUS 6b</h4>
+
+      <p>Dans ce modèle de données, il est supposé que les combinaisons d'événements et de nœuds
+      constituent le facteur unique.</p>
+
+      <p>Il n'y a pas d'événement.</p>
+
+      <p>Tout événement OPC envoyé avec des octets de données supplémentaires sera enregistré en
+      fonction de sa combinaison principale d'événement et de nœud, sans tenir compte des octets de
+      données supplémentaires.</p>
+
+      <p>La combinaison d'événements et de nœuds est unique.</p>
+
+      <h3>Aide JMRI</h3>
+
+      <p>Vous pouvez afficher cette page d'aide dans JMRI en sélectionnant Aide &gt; Aide de la
+      fenêtre dans la barre supérieure de la fenêtre du tableau d'événements du MERG.</p>
+
+      <p>La <a href="../console/CbusConsoleFrame.shtml">CBUS Console</a> peut vous aider à
+      comprendre quels événements se produisent sur votre réseau.</p>
+
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'aide JMRI
+      CBUS</a>.</p>
+
+      <p>CBUS® ; est une marque déposée du Dr Michael Bolton</p>
+      .
+      <p>Traduction2021-03-19</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>
-
-

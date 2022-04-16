@@ -57,7 +57,7 @@
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
-              <text xml:lang="cs"> desetiny vteřiny</text>
+              <text xml:lang="cs">Desetiny sekundy</text>
               <text xml:lang="de">Zehntelsekunden</text>
             </label>
           </column>
@@ -129,7 +129,7 @@
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
-              <text xml:lang="cs"> desetiny vteřiny</text>
+              <text xml:lang="cs">Desetiny sekundy</text>
               <text xml:lang="de">Zehntelsekunden</text>
             </label>
           </column>
@@ -193,7 +193,7 @@
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
-              <text xml:lang="cs"> desetiny vteřiny</text>
+              <text xml:lang="cs">Desetiny sekundy</text>
               <text xml:lang="de">Zehntelsekunden</text>
             </label>
           </column>
@@ -265,7 +265,7 @@
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
-              <text xml:lang="cs"> desetiny vteřiny</text>
+              <text xml:lang="cs">Desetiny sekundy</text>
               <text xml:lang="de">Zehntelsekunden</text>
             </label>
           </column>

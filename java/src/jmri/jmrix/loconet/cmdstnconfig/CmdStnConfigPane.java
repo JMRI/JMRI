@@ -38,7 +38,8 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
     int CONFIG_SLOT = 127;
     int MIN_OPTION = 1;
-    int MAX_OPTION = 96;
+    int MAX_OPTION = 128;
+    int CONFIG_SLOT2 = 126;
 
     String labelT;
     String labelC;
@@ -47,6 +48,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     String write;
 
     int[] oldcontent = new int[10];
+    int[] oldcontent2 = new int[10];
 
     JCheckBox optionBox;
 
@@ -98,18 +100,23 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             if (name.indexOf(' ') != -1) {
                 name = name.substring(0, name.indexOf(' '));
             }
+            name = name.replace("+", "Plus");
             log.debug("match /{}/", name); // NOI18N
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig." + name + "options"); // NOI18N
         } catch (Exception e) { // use standard option set
             log.warn("Failed to find properties for /{}/ command station type", name, e); // NOI18N
             rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions"); // NOI18N
-            // Localized strings common to all LocoNet command station models are fetched using Bundle.getMessage()
+            // Localized strings common to all LocoNet command station models
+            // are fetched using Bundle.getMessage()
         }
 
         try {
             CONFIG_SLOT = Integer.parseInt(rb.getString("CONFIG_SLOT"));
             MIN_OPTION = Integer.parseInt(rb.getString("MIN_OPTION"));
             MAX_OPTION = Integer.parseInt(rb.getString("MAX_OPTION"));
+            if (MAX_OPTION > 64) {
+                CONFIG_SLOT2 = Integer.parseInt(rb.getString("CONFIG_SLOT2"));
+            }
         } catch (NumberFormatException e) {
             log.error("Failed to load values from /{}/ properties", name); // NOI18N
         }
@@ -136,7 +143,9 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             pane.setLayout(new FlowLayout());
             pane.add(readButton);
             pane.add(writeButton);
-            if (CONFIG_SLOT == -1) { // disable reading/writing for non-configurable CS types, ie. Intellibox-I/-II
+            if (CONFIG_SLOT == -1) { // disable reading/writing for
+                                     // non-configurable CS types, ie.
+                                     // Intellibox-I/-II
                 readButton.setEnabled(false);
                 writeButton.setEnabled(false);
             }
@@ -167,7 +176,6 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
                 p2.add(t);
                 p2.add(c);
-
                 closedButtons[i - MIN_OPTION] = c;
                 thrownButtons[i - MIN_OPTION] = t;
                 gc.weightx = 1.0;
@@ -180,7 +188,8 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 gc.anchor = GridBagConstraints.WEST;
                 String label;
                 try {
-                    label = rb.getString("Option" + i); // model specific Option descriptions NOI18N
+                    label = rb.getString("Option" + i); // model specific Option
+                                                        // descriptions NOI18N
                     isReserved[i - MIN_OPTION] = false;
                 } catch (java.util.MissingResourceException e) {
                     label = "" + i + ": " + Bundle.getMessage("Reserved");
@@ -190,7 +199,9 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 if (i > 20 && i < 24) {
                     log.debug("CS name: {}", name);
                     if (name.startsWith("DB150")) {
-                        // DB150 is the only model using different OpSw 21-23 combos than the common tooltip, which is stored in LocoNetBundle
+                        // DB150 is the only model using different OpSw 21-23
+                        // combos than the common tooltip, which is stored in
+                        // LocoNetBundle
                         tooltip = rb.getString("DB150ConfigFxToolTip");
                     }
                     t.setToolTipText(tooltip);
@@ -245,24 +256,35 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     }
 
     public void writeButtonActionPerformed(java.awt.event.ActionEvent e) {
+
+        updateSlot(CONFIG_SLOT, MIN_OPTION, MAX_OPTION <= 64 ? MAX_OPTION : 64, oldcontent);
+        if (MAX_OPTION > 64) {
+            updateSlot(CONFIG_SLOT2, 65, MAX_OPTION, oldcontent2);
+        }
+    }
+
+    public void updateSlot(int opSwSlot, int firstOpSw, int lastOpsw, int[] oldData) {
         LocoNetMessage msg = new LocoNetMessage(14);
         msg.setElement(0, LnConstants.OPC_WR_SL_DATA);
         msg.setElement(1, 0x0E);
-        msg.setElement(2, CONFIG_SLOT);
+        msg.setElement(2, opSwSlot);
 
         // load last seen contents into message
         for (int i = 0; i < 10; i++) {
-            msg.setElement(3 + i, oldcontent[i]);
+            msg.setElement(3 + i, oldData[i]);
         }
 
-        // load contents to message
-        for (int i = 0; i <= (MAX_OPTION - MIN_OPTION); i++) {
-            // i indexes over closed buttons
-            int byteIndex = i / 8; // byteIndex = 0 is the first payload byte
+        int byteBase = (firstOpSw / 64) * 64;
+        // button 0 = opsw 1
+        for (int i = firstOpSw - 1; i <= lastOpsw - 1; i++) {
+            // i indexes over closed buttons - 1
+            int byteIndex = (i - byteBase) / 8; // byteIndex = 0 is the first
+                                                // payload byte
             if (byteIndex > 3) {
                 byteIndex++; // Skip the 4th payload byte for some reason
             }
-            byteIndex += 3; // Add base offset into slot message to first data byte
+            byteIndex += 3; // Add base offset into slot message to first data
+                            // byte
 
             int bitIndex = i % 8;
             int bitMask = 0x01 << bitIndex;
@@ -289,6 +311,11 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         l.setElement(2, 0);
         l.setElement(3, 0);
         memo.getLnTrafficController().sendLocoNetMessage(l);
+        if (MAX_OPTION > 64) {
+            // need second slot
+            l.setElement(1, CONFIG_SLOT2);
+            memo.getLnTrafficController().sendLocoNetMessage(l);
+        }
     }
 
     /**
@@ -299,36 +326,66 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         if (msg.getOpCode() != LnConstants.OPC_SL_RD_DATA) {
             return;
         }
-        if (msg.getElement(2) != CONFIG_SLOT) {
-            return;
-        }
-
-        // save contents for later
-        for (int i = 0; i < 10; i++) {
-            oldcontent[i] = msg.getElement(3 + i);
-        }
-
-        // set the GUI
-        for (int i = 0; i <= (MAX_OPTION - MIN_OPTION); i++) {
-            // i indexes over closed/thrown buttons
-            int byteIndex = i / 8; // index = 0 is the first payload byte
-            if (byteIndex > 3) {
-                byteIndex++; // Skip the 4th payload byte for some reason
+        if (msg.getElement(2) == CONFIG_SLOT) {
+            // save contents for later
+            for (int i = 0; i < 10; i++) {
+                oldcontent[i] = msg.getElement(3 + i);
             }
-            byteIndex += 3; // Add base offset to first data byte
 
-            int bitIndex = i % 8;
-            int bitMask = 0x01 << bitIndex;
+            // set the GUI
+            int iLimit = MAX_OPTION <= 63 ? MAX_OPTION - 1 : 63;
+            for (int i = 0; i <= iLimit; i++) {
+                // i indexes over closed/thrown buttons
+                int byteIndex = i / 8; // index = 0 is the first payload byte
+                if (byteIndex > 3) {
+                    byteIndex++; // Skip the 4th payload byte for some reason
+                }
+                byteIndex += 3; // Add base offset to first data byte
 
-            int data = msg.getElement(byteIndex);  // data is the payload byte
+                int bitIndex = i % 8;
+                int bitMask = 0x01 << bitIndex;
 
-            if ((data & bitMask) != 0) {
-                closedButtons[i].setSelected(true);
-            } else {
-                thrownButtons[i].setSelected(true);
+                int data = msg.getElement(byteIndex); // data is the payload
+                                                      // byte
+                if ((data & bitMask) != 0) {
+                    closedButtons[i].setSelected(true);
+                } else {
+                    thrownButtons[i].setSelected(true);
+                }
             }
-        }
+        } else if (msg.getElement(2) == CONFIG_SLOT2 && MAX_OPTION > 64) {
 
+            // save contents for later
+            for (int i = 0; i < 10; i++) {
+                oldcontent2[i] = msg.getElement(3 + i);
+            }
+
+            // set the GUI for option sw 64 thru MAX
+            // note indexes are 0 based sor start at 63
+
+            for (int i = 63; i <= MAX_OPTION - 1; i++) {
+                // i indexes over closed/thrown buttons
+                int byteIndex = (i - 63) / 8; // index = 0 is the first payload
+                                              // byte
+                if (byteIndex > 3) {
+                    byteIndex++; // Skip the 4th payload byte for some reason
+                }
+                byteIndex += 3; // Add base offset to first data byte
+
+                int bitIndex = i % 8;
+                int bitMask = 0x01 << bitIndex;
+
+                int data = msg.getElement(byteIndex); // data is the payload
+                                                      // byte
+                if ((data & bitMask) != 0) {
+                    closedButtons[i].setSelected(true);
+                } else {
+                    thrownButtons[i].setSelected(true);
+                }
+            }
+        } else {
+            // do nothing
+        }
         log.debug("Config Slot Data: {}", msg);
     }
 

@@ -2062,7 +2062,7 @@ final public class LayoutEditorTools {
                             Bundle.getMessage("BeanNameBlock") + " 1 "));
             panel11.add(block1NameLabel);
             panel11.add(block1IDComboBox);
-            block1IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
+            block1IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHintNW"));
             theContentPane.add(panel11);
 
             JPanel panel12 = new JPanel(new FlowLayout());
@@ -2072,7 +2072,7 @@ final public class LayoutEditorTools {
                             + " 2 " + Bundle.getMessage("Name")));
             panel12.add(block2NameLabel);
             panel12.add(block2IDComboBox);
-            block2IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHint"));
+            block2IDComboBox.setToolTipText(Bundle.getMessage("SignalsBlockNameHintSE"));
             theContentPane.add(panel12);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -8721,36 +8721,87 @@ final public class LayoutEditorTools {
 
         Point2D p = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
-        //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
+        //Track segment is used to determine the alignment,
+        // therefore this is opposite to the block that we are protecting
+
+        //For edge connectors we need to do two things:
+        // - change the dir value as east and west are swapped
+        // - and as we have only one track segment on any one layout editor
+        // so we determine where the track segment would end if we did a mirror image
+        // so that the calculations for angled segments is correct
+
         TrackSegment t = boundary.getConnect2();
         boolean dir = true;
+        boolean shouldUseConnect2 = true;
+
         if (boundary.getType() == PositionablePoint.PointType.END_BUMPER) {
             t = boundary.getConnect1();
-        } else {
+        } else{
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                 t = boundary.getConnect1();
             }
         }
 
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            t = boundary.getConnect1();  //have to use connect1 as there is only one track segment attached to edge connector
+            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                shouldUseConnect2 = false;
+            }
+        }
+
         Point2D pt2;
-        if (t.getConnect1() == boundary) {
+        if (t.getConnect1() == boundary){
             pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
-        setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
+
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            Point2D p3 = (Point2D) pt2.clone();
+            if (shouldUseConnect2) {
+                //use a point opposite pt2  (= p + p- pt2 using vector addition)
+                double px = p.getX();
+                double py = p.getY();
+                double p2x = pt2.getX();
+                double p2y = pt2.getY();
+                double p3x = px + px - p2x;
+                double p3y = py + py - p2y;
+                p3.setLocation(p3x, p3y);
+            }
+            dir = false;  //east and west are swapped with edge connectors
+            setIconOnPanel(t, icon, dir, p, p3, isRightSide, fromPoint);
+        } else{
+            setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
+        }
+
     }
 
     private void placeWestBoundIcon(PositionableIcon icon, boolean isRightSide, double fromPoint) {
 
         Point2D p = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
-        //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
+        //Track segment is used to determine the alignment,
+        // therefore this is opposite to the block that we are protecting
+
+        //For edge connectors we need to do two things:
+        // - change the dir value as east and west are swapped
+        // - and as we have only one track segment on any one layout editor
+        // so we determine where the track segment would end if we did a mirror image
+        // so that the calculations for angled segments is correct
+
         TrackSegment t = boundary.getConnect1();
         boolean dir = false;
+        boolean shouldUseConnect2 = false;
         if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                 t = boundary.getConnect2();
+            }
+        }
+
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            t = boundary.getConnect1(); //have to use connect1 as there is only one track segment attached to edge connector
+            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                shouldUseConnect2 = true;
             }
         }
 
@@ -8760,8 +8811,24 @@ final public class LayoutEditorTools {
         } else {
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
-        setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
 
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            Point2D p3 = (Point2D) pt2.clone();
+            if (shouldUseConnect2) {
+                //use a point opposite pt2  (= p + p - pt2 using vector addition)
+                double px = p.getX();
+                double py = p.getY();
+                double p2x = pt2.getX();
+                double p2y = pt2.getY();
+                double p3x = px + px - p2x;
+                double p3y = py + py - p2y;
+                p3.setLocation(p3x, p3y);
+            }
+            dir = true;  //east and west are swapped with edge connectors
+            setIconOnPanel(t, icon, dir, p, p3, isRightSide, fromPoint);
+        } else{
+            setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
+        }
     }
 
     private void setIconOnPanel(@Nonnull TrackSegment t,
@@ -8779,9 +8846,9 @@ final public class LayoutEditorTools {
         }
         Point loc;
         if (triX == 0 || triX == 360) {
-            //In a vertical Striaght Line
+            //In a vertical Straight Line
             if (isEastBound) {
-                log.debug("In a vertical striaghtline facing South");
+                log.debug("In a vertical straightline facing South");
                 loc = northToSouth(pt1, l, isRightSide, fromPoint);
             } else {
                 log.debug("In a vertical striaghtline facing North");
@@ -8815,6 +8882,7 @@ final public class LayoutEditorTools {
             }
 
             int rotateDEG = ((int) Math.toDegrees(radAngleFromDatum));
+
             if (log.isDebugEnabled()) {
                 double tanx = o / a;
                 double angletanRAD = Math.atan2(o, a);
@@ -11156,7 +11224,7 @@ final public class LayoutEditorTools {
      * @param position   Which of the four points is being changed
      */
     <T extends LayoutTurnout> void setTurnoutSensor(T trackItem, Sensor newSensor, Sensor currSensor,
-            BeanDetails beanDetail, LayoutTrack connect, Point2D coords, String position) {
+            BeanDetails<? extends NamedBean> beanDetail, LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
@@ -11671,7 +11739,7 @@ final public class LayoutEditorTools {
      * @param coords     The track componennt coordinates
      * @param position   Which of the four points is being changed
      */
-    void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails beanDetail,
+    void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails<? extends NamedBean> beanDetail,
             LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {

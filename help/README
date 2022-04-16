@@ -1,8 +1,8 @@
-This is the JMRI "help" directory, the root of the 
-JMRI JavaHelp file tree.
+This is the JMRI "help" directory, the root of the
+JMRI JmriHelp file tree.
 
-To ease later localization, the English-language help is in 
-the en/ directory, with the HelpSet definition file called "JmriHelp_en.hs"
+To ease later localization, the English-language help is in
+the en/ directory.
 
 See the COPYING file for license information.
 

@@ -36,38 +36,15 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
      *            "CanDelete" will inquire with all listeners if the item can
      *            be deleted. "DoDelete" tells the listener to delete the item.
      * @param old The old value of the property.
-     * @param errors if there are errors, the error messages are added to this list
-     * @return true if all beans can be deleted, false otherwise
+     * @throws java.beans.PropertyVetoException If the recipients wishes the
+     *                                          delete to be aborted (see above)
      */
     @OverridingMethodsMustInvokeSuper
-    public boolean fireVetoableChange(String p, Object old, List<String> errors) {
-        boolean result = true;
+    public void fireVetoableChange(String p, Object old) throws PropertyVetoException {
         PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, null);
-        if (p.equals("CanDelete")) { // NOI18N
-//            StringBuilder message = new StringBuilder();
-            for (VetoableChangeListener vc : vetoableChangeSupport.getVetoableChangeListeners()) {
-                try {
-                    vc.vetoableChange(evt);
-                } catch (PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                        log.info(e.getMessage());
-                        result = false;
-//                        throw e;
-                    }
-//                    message.append(e.getMessage()).append("<hr>"); // NOI18N
-                    errors.add(e.getMessage());
-                }
-            }
-//            throw new PropertyVetoException(message.toString(), evt);
-        } else {
-            try {
-                vetoableChangeSupport.fireVetoableChange(evt);
-            } catch (PropertyVetoException e) {
-                log.error("Change vetoed.", e);
-                result = false;
-            }
+        for (VetoableChangeListener vc : vetoableChangeSupport.getVetoableChangeListeners()) {
+            vc.vetoableChange(evt);
         }
-        return result;
     }
     
     /**
@@ -81,15 +58,48 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     
     /** {@inheritDoc} */
     @Override
+//    @OverridingMethodsMustInvokeSuper
+    public final void deleteBean(@Nonnull E n, @Nonnull String property) throws PropertyVetoException {
+        this.deleteBean((MaleSocket)n, property);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     @OverridingMethodsMustInvokeSuper
-    @SuppressWarnings("unchecked")  // cast in "deregister((E)socket)" is nessesary and cannot be avoided
-    public void deleteBean(@Nonnull MaleSocket socket, @Nonnull String property) {
+//    @SuppressWarnings("unchecked")  // cast in "deregister((E)socket)" is nessesary and cannot be avoided
+    public void deleteBean(@Nonnull MaleSocket socket, @Nonnull String property) throws PropertyVetoException {
+        for (int i=0; i < socket.getChildCount(); i++) {
+            FemaleSocket child = socket.getChild(i);
+            if (child.isConnected()) {
+                MaleSocket maleSocket = child.getConnectedSocket();
+                maleSocket.getManager().deleteBean(maleSocket, property);
+            }
+        }
+        
         // throws PropertyVetoException if vetoed
-        fireVetoableChange(property, socket, null);
+        fireVetoableChange(property, socket);
         if (property.equals("DoDelete")) { // NOI18N
             deregister(castBean(socket));
             socket.dispose();
         }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void deregister(@Nonnull E s) {
+        // A LogixNG action or expression is contained in one or more male
+        // sockets. A male socket might be contained in another male socket.
+        // In some cases, it seems that the male socket used in this call is
+        // not the male socket that's registered in the manager. To resolve
+        // this, we search for the registered bean with the system name and
+        // then deregister the bean we have found.
+        E bean = getBySystemName(s.getSystemName());
+        if (bean == null) {
+            // This should never happen.
+            throw new IllegalArgumentException(s.getSystemName() + " is not registered in manager");
+        }
+        super.deregister(bean);
     }
     
     /**
@@ -106,11 +116,17 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     
     @Override
     public void register(@Nonnull E s) {
+        throw new RuntimeException("Use BaseManager.registerBean() instead");
+    }
+    
+    @Override
+    public E registerBean(@Nonnull E s) {
         E bean = s;
         for (MaleSocketFactory<E> factory : _maleSocketFactories) {
             bean = factory.encapsulateMaleSocket(this, bean);
         }
         super.register(bean);
+        return bean;
     }
     
     @Override
@@ -118,6 +134,6 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
         _maleSocketFactories.add(factory);
     }
     
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseManager.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseManager.class);
     
 }

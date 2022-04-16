@@ -141,7 +141,9 @@
           <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
         </li>
       </ul>
+
+    <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!--#include virtual="/Footer.shtml" -->
+  </div>
 </body>
 </html>

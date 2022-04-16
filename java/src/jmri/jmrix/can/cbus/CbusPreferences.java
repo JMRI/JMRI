@@ -35,6 +35,7 @@ public class CbusPreferences extends PreferencesBean {
     private boolean _isGlobalProgrammerAvailable = true;
     private boolean _isAddressedModePossible = true;
     private int _progTrackMode = SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE;
+    private int _nodeTableSplit = 100;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -67,6 +68,8 @@ public class CbusPreferences extends PreferencesBean {
             "addressedprogrammer", this.isAddressedModePossible() );
 
         this._progTrackMode = sharedPreferences.getInt("progtrackmode", this.getProgTrackMode() );
+        
+        this._nodeTableSplit = sharedPreferences.getInt("nodetablesplit", this.getNodeTableSplit() );
     }
 
     public void savePreferences() {
@@ -90,6 +93,8 @@ public class CbusPreferences extends PreferencesBean {
         sharedPreferences.putBoolean("addressedprogrammer", this.isAddressedModePossible() );
         
         sharedPreferences.putInt("progtrackmode", this.getProgTrackMode() );
+        
+        sharedPreferences.putInt("nodetablesplit", this.getNodeTableSplit() );
         
         try {
             sharedPreferences.sync();
@@ -336,6 +341,25 @@ public class CbusPreferences extends PreferencesBean {
      */
     public void setProgTrackMode(int mode) {
         _progTrackMode = mode;
+        savePreferences();
+    }
+    
+    /**
+     * Get the position of the node table split
+     * 
+     * @return position in pixels
+     */
+    public int getNodeTableSplit() {
+        return _nodeTableSplit;
+    }
+    
+    /**
+     * Set the position of the node table split from the top of thw window
+     * 
+     * @param pixels new position
+     */
+    public void setNodeTableSplit(int pixels) {
+        _nodeTableSplit = pixels;
         savePreferences();
     }
     

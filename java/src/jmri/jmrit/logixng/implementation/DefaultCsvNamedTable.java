@@ -27,7 +27,8 @@ import jmri.jmrit.logixng.NamedTableManager;
  */
 public class DefaultCsvNamedTable extends AbstractNamedTable {
 
-    private final String _fileName;
+    private String _fileName;
+    
     /**
      * Create a new named table.
      * @param sys the system name
@@ -38,7 +39,7 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
      */
     public DefaultCsvNamedTable(
             @Nonnull String sys, @CheckForNull String user,
-            @Nonnull String fileName,
+            @CheckForNull String fileName,
             @Nonnull Object[][] data)
             throws BadUserNameException, BadSystemNameException {
         super(sys,user,data);
@@ -48,6 +49,10 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
     
     public String getFileName() {
         return _fileName;
+    }
+    
+    public void setFileName(String fileName) {
+        this._fileName = fileName;
     }
     
 }

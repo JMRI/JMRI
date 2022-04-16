@@ -32,9 +32,6 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
     public static synchronized LnMessageServer getInstance() throws RemoteException {
         if (self == null) {
-            if (System.getSecurityManager() == null) {
-                System.setSecurityManager(new SecurityManager());
-            }
             self = new LnMessageServer();
         }
         return self;
@@ -58,7 +55,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
             log.debug("Register LocoNet Server Complete"); // NOI18N
         } catch (Exception ex) {
-            log.warn("LnMessageServer: {}", ex); // NOI18N
+            log.warn("LnMessageServer", ex); // NOI18N
         }
     }
 
@@ -66,7 +63,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
         try {
             Naming.unbind(serviceName);
         } catch (Exception ex) {
-            log.error("Exception during disable: {}", ex); // NOI18N
+            log.error("Exception during disable", ex); // NOI18N
         }
     }
 

@@ -53,8 +53,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
             }
             printValidity(fileOut, getDate(true));
             // train comment can have multiple lines
-            if (!train.getComment().equals(Train.NONE)) {
-                String[] comments = train.getComment().split(NEW_LINE);
+            if (!train.getCommentWithColor().equals(Train.NONE)) {
+                String[] comments = train.getCommentWithColor().split(NEW_LINE);
                 for (String comment : comments) {
                     fileOut.printRecord("TC", Bundle.getMessage("csvTrainComment"), comment); // NOI18N
                 }
@@ -76,10 +76,10 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 String locationName = routeLocationName;
                 if (!routeLocationName.equals(previousRouteLocationName)) {
                     printLocationName(fileOut, locationName);
-                    if (rl != train.getRoute().getDepartsRouteLocation()) {
+                    if (rl != train.getTrainDepartsRouteLocation()) {
                         fileOut.printRecord("AT", Bundle.getMessage("csvArrivalTime"), train.getExpectedArrivalTime(rl)); // NOI18N
                     }
-                    if (rl == train.getRoute().getDepartsRouteLocation()) {
+                    if (rl == train.getTrainDepartsRouteLocation()) {
                         fileOut.printRecord("DT", Bundle.getMessage("csvDepartureTime"), train.getFormatedDepartureTime()); // NOI18N
                     } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                         fileOut.printRecord("DTR", Bundle.getMessage("csvDepartureTimeRoute"), rl.getFormatedDepartureTime()); // NOI18N
@@ -89,9 +89,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
 
                     Location location = rl.getLocation();
                     // add location comment
-                    if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(Location.NONE)) {
+                    if (Setup.isPrintLocationCommentsEnabled() && !location.getCommentWithColor().equals(Location.NONE)) {
                         // location comment can have multiple lines
-                        String[] comments = location.getComment().split(NEW_LINE); // NOI18N
+                        String[] comments = location.getCommentWithColor().split(NEW_LINE); // NOI18N
                         for (String comment : comments) {
                             printLocationComment(fileOut, comment);
                         }
@@ -121,13 +121,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     }
                 }
 
-                // block pick up cars by destination
-                boolean found = false; // begin blocking at rl
-                for (RouteLocation rld : routeList) {
-                    if (rld != rl && !found) {
-                        continue;
-                    }
-                    found = true;
+                // block pick up cars
+                for (RouteLocation rld : train.getTrainBlockingOrder()) {
                     for (Car car : carList) {
                         if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
                             newWork = true;
@@ -180,7 +175,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                         printCar(fileOut, car, "HOLD", Bundle.getMessage("csvHoldCar"), count);
                     }
                 }
-                if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                if (rl != train.getTrainTerminatesRouteLocation()) {
                     // Is the next location the same as the previous?
                     RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
                     String nextRouteLocationName = splitString(rlNext.getName());

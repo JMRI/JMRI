@@ -55,9 +55,9 @@ public class ForTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "For (Init; While; AfterEach) do Do ::: Log error%n" +
+                "For (Init; While; AfterEach) do Do ::: Use default%n" +
                 "   ! Init%n" +
-                "      Many ::: Log error%n" +
+                "      Many ::: Use default%n" +
                 "         ! A1%n" +
                 "            Socket not connected%n" +
                 "   ? While%n" +
@@ -74,9 +74,9 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         For (Init; While; AfterEach) do Do ::: Log error%n" +
+                "         For (Init; While; AfterEach) do Do ::: Use default%n" +
                 "            ! Init%n" +
-                "               Many ::: Log error%n" +
+                "               Many ::: Use default%n" +
                 "                  ! A1%n" +
                 "                     Socket not connected%n" +
                 "            ? While%n" +
@@ -227,16 +227,11 @@ public class ForTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         TableForEach a1 = new TableForEach("IQDA321", null);
         Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
     }
     
     @Test
@@ -370,7 +365,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
 //        System.out.format("fn_1: %s%n", symbolTable.getValue("fn_1"));
 //        System.out.format("fn: %s%n", symbolTable.getValue("fn"));
 //        System.out.format("result: %s%n", symbolTable.getValue("result"));
-        System.out.format("result: %s%n", result.getValue());
+//        System.out.format("result: %s%n", result.getValue());
         
 //        System.out.format("%n%n%ndebug: %s%n", debug.getValue());
         
@@ -424,7 +419,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 .registerAction(new DigitalMany(
                         InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null)));
         
-        _logixNG.setParentForAllChildren();
+        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.setEnabled(false);
     }
 

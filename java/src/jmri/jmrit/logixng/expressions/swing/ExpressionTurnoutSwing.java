@@ -220,14 +220,18 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionTurnout but is a: "+object.getClass().getName());
         }
         ExpressionTurnout expression = (ExpressionTurnout)object;
-        if (!turnoutBeanPanel.isEmpty() && (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect)) {
+        if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
             Turnout turnout = turnoutBeanPanel.getNamedBean();
             if (turnout != null) {
                 NamedBeanHandle<Turnout> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(turnout.getDisplayName(), turnout);
                 expression.setTurnout(handle);
+            } else {
+                expression.removeTurnout();
             }
+        } else {
+            expression.removeTurnout();
         }
         try {
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {

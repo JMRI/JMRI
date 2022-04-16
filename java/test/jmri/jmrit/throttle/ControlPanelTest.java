@@ -36,12 +36,12 @@ public class ControlPanelTest {
     private void setupControlPanel() {
         panel = new ControlPanel();
         Assert.assertNotNull("exists", panel);
-        
+
         frame = new JFrame("ControlPanelTest");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setSize(200, 400);
-        
+
         JPanel mainPanel = new JPanel();
         mainPanel.setOpaque(true);
         mainPanel.add(new JDesktopPane());
@@ -78,7 +78,7 @@ public class ControlPanelTest {
                     }
                     Assert.assertFalse(r1.intersects(r2));
                 }
-                
+
                 if (c1 instanceof Container) {
                     checkFrameOverlap((Container)c1);
                 }
@@ -92,6 +92,8 @@ public class ControlPanelTest {
         setupControlPanel();
 
         checkFrameOverlap(panel.getContentPane());
+        Assert.assertTrue(panel.getSpeedSlider() != null);
+
     }
 
     @Test
@@ -169,9 +171,9 @@ public class ControlPanelTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {         
+            if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
                 jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-            }        
+            }
             InstanceManager.getDefault(ThrottlesPreferences.class).setUseExThrottle(true);
         }
     }

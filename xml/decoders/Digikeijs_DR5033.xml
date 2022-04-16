@@ -36,8 +36,10 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="fr">Adresse décodeur: </label>
               <label xml:lang="de">Decoderadresse: </label>
               <label xml:lang="nl">Decoderadres: </label>
+              <label xml:lang="cs">Adresa dekodéru: </label>
               <label>Decoder Address: </label>
               <tooltip>Enter as decimal value (1-9999)</tooltip>
+              <tooltip xml:lang="cs">Zadejte desítkovou hodnotu (1-9999)</tooltip>
             </variable>
             <variable CV="5033.1" item="Decoder Version" readOnly="yes">
               <decVal/>
@@ -45,6 +47,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="fr">Version Booster: </label>
               <label xml:lang="de">Verstärker Version: </label>
               <label xml:lang="nl">Booster firmware-versie: </label>
+              <label xml:lang="cs">Zesilovač verze firmware: </label>
               <label>Booster Firmware Version: </label>
             </variable>
 
@@ -52,31 +55,37 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <decVal/>
               <label xml:lang="de">Gesamtwert LNCV3: </label>
               <label xml:lang="nl">Gecombineerde waarde LNCV3: </label>
+              <label xml:lang="cs">Kombinovaná hodnota LNCV3: </label>
               <label>Combined LNCV3 Value: </label>
               <tooltip>Intended for verification only, set options above.</tooltip>
+              <tooltip xml:lang="cs">Určeno pouze pro ověření, nastavte volby výše.</tooltip>
             </variable>
             <variable CV="5033.3" mask="XXXXXXVX" item="Track Out" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label xml:lang="de">Gleisspannung wartet auf GO</label>
               <label xml:lang="fr">La sortie du Booster d'après GO</label>
               <label xml:lang="nl">Spanning wacht op GO</label>
+              <label xml:lang="cs">Napětí koleje čeká na GO</label>
               <label>Track Out waits for GO</label>
               <tooltip>Off: Turn on output from the booster as soon as there is an input signal.<br/>
                 On: Wait until the GO button is pressed or the connected switching address is 'green' (closed)</tooltip>
               <tooltip xml:lang="de">Ein: Warte bis der GO Knopf gedrückt wird oder die verbundene Schaltadresse Grün ist</tooltip>
               <tooltip xml:lang="fr">Déclenchement de la sortie du Booster lorsque on appuie le bouton GO ou que l’adresse de commutation connectée est «Verte».</tooltip>
               <tooltip xml:lang="nl">Aan: Track Out actief zodra de GO/Stopknop van de besturing wordt ingedrukt of het aangesloten schakeladres (LNCV 8) op Groen wordt gezet.</tooltip>
+              <tooltip xml:lang="cs">Vypnuto: Zapne výstup ze zesilovače, jakmile je k dispozici vstupní signál.<br/>Zapnuto: Čeká dokud není stisknuto tlačítko GO nebo dokud adresa zesilovače pro Zap/Vyp není ve stavu 'zelená' (Přímo).</tooltip>
             </variable>
             <variable CV="5033.3" mask="XXXXXVXX" item="Send GPON" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label xml:lang="de">Versendet GPON/GPOFF Bericht</label>
               <label xml:lang="fr">Envoie des rapports GPON/ GPOFF</label>
               <label xml:lang="nl">Stuur GPON/GPOFF bericht</label>
+              <label xml:lang="cs">Odešle zprávu GPON/GPOFF</label>
               <label>Send GPON/GPOFF Message</label>
               <tooltip>Send 'GPON/GPOFF' L.NET report when a short circuit is detected. Automatic short circuit restart is active.</tooltip>
               <tooltip xml:lang="de">Booster versendet 'GPON/GPOFF' L.NET Berichte. Die Kontrolleinheit steuert, wann der Booster sich wieder einschaltet.</tooltip>
               <tooltip xml:lang="fr">Le booster envoie des rapports L.NET 'GPON/ GPOFF'. L’unité centrale vérifie lorsque le booster se rallume.</tooltip>
               <tooltip xml:lang="nl">Booster stuurt 'GPON/GPOFF' L.NET rapport naar Centrale. De centrale bepaalt wanneer het circuit weer wordt ingeschakeld.</tooltip>
+              <tooltip xml:lang="cs">Odešle zprávu 'GPON/GPOFF' do L.NET při zkratu. Automatický restart po zkratu je aktivní.</tooltip>
             </variable>
             <variable CV="5033.3" mask="XXXXVXXX" item="Bit 3 Not In Use" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -86,26 +95,31 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">Versendet Kurzschluss-bericht</label>
               <label xml:lang="fr">Envoie un rapport á court-circuit</label>
               <label xml:lang="nl">Stuur LN bericht bij kortsluiting</label>
+              <label xml:lang="cs">Odešle zprávu LN o zkratu</label>
               <label>Send Short Detected LN-message</label>
               <tooltip>Booster sends a special L.NET report if there is a short circuit, enabling the control unit to display which booster has a short circuit.</tooltip>
               <tooltip xml:lang="de">Booster versendet bei Kurzschluss einen besonderen L.NET Bericht damit die Kontrolleinheit anzeigen kann welcher Booster einen Kurzschluss hatte.</tooltip>
               <tooltip xml:lang="fr">Le booster envoie un rapport L.NET spécial s’il y a un court-circuit, ce qui permet à l’unité centrale de montrer quel booster a un court-circuit.</tooltip>
+              <tooltip xml:lang="cs">Zesilovač odešle zvláštní zprávu L.NET o zkratu. To umožňuje centrále zobrazit, který zesilovač má zkrat.</tooltip>
             </variable>
             <variable CV="5033.3" mask="XXVXXXXX" item="Invert Outputs" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label xml:lang="de">Booster Output Umgepolt</label>
               <label xml:lang="fr">Booster á polarité inversé́</label>
               <label xml:lang="nl">Uitgangen Omgekeerd</label>
+              <label xml:lang="cs">Otočení výstupní polarity</label>
               <label>Invert Output Polarity</label>
               <tooltip>Start the booster output with reversed polarity (blue LED on)</tooltip>
               <tooltip xml:lang="de">Beginnt den Booster Output Umgepolt (blaues LED an)</tooltip>
               <tooltip xml:lang="fr">Déclenchement de la sortie du booster avec inversion de polarité (LED bleu allumé)</tooltip>
+              <tooltip xml:lang="cs">Spustí zesilovač s otočenou polaritou. (modrá LED svítí).</tooltip>
             </variable>
             <variable CV="5033.3" mask="XVXXXXXX" item="Auto Invert" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label xml:lang="de">Automatische Verpolung</label>
               <label xml:lang="fr">Inversion de polarité automatique</label>
               <label xml:lang="nl">Automatisch Omkeren</label>
+              <label xml:lang="cs">Automatické otočení polarity</label>
               <label>Auto Reverse Polarity</label>
             </variable>
             <variable CV="5033.3" mask="VXXXXXXX" item="Bit 7 Not In Use" default="0">
@@ -117,6 +131,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">H-Brücke Temperatur in Grad °C: </label>
               <label xml:lang="fr">Température du pont en H (ºC): </label>
               <label xml:lang="nl">Temperatuur H-brug (ºC): </label>
+              <label xml:lang="cs">Teplota H-můstku (°C): </label>
               <label>H-Bridge Temperature (ºC): </label>
             </variable>
             <variable CV="5033.7" readOnly="yes" item="Load">
@@ -124,6 +139,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">Belastungsprozentsatz: </label>
               <label xml:lang="fr">Pourcentage de charge: </label>
               <label xml:lang="nl">Huidige belasting (%): </label>
+              <label xml:lang="cs">Aktuální zatížení (%): </label>
               <label>Current Load (%): </label>
             </variable>
             <variable CV="5033.8" item="Switch Address" default="0">
@@ -131,44 +147,52 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">Adresse Ein-/Ausschalten: </label>
               <label xml:lang="fr">Adresse de commutation: </label>
               <label xml:lang="nl">Adres voor Aan/Uit: </label>
+              <label xml:lang="cs">Adresa zesilovače Zap/Vyp: </label>
               <label>Booster On/Off Address: </label>
               <tooltip>Switching address to turn the booster on or off</tooltip>
               <tooltip xml:lang="de">Adresse schalten um Booster ein oder aus zu schalten</tooltip>
               <tooltip xml:lang="fr">Adresse de commutation pour allumer ou éteindre le booster</tooltip>
               <tooltip xml:lang="nl">Magnetisch artikeladres voor Individuele uitschakeling van de boosters</tooltip>
+              <tooltip xml:lang="cs">Adresa zesilovače pro přepínání zesilovače do Zapnuto nebo Vypnuto.</tooltip>
             </variable>
             <variable CV="5033.11" item="Restart Wait" default="244">
               <decVal min="64" max="30000"/>
               <label xml:lang="de">Einschaltzeit nach Kurzschluss: </label>
               <label xml:lang="fr">Activation d'après court-circuit: </label>
               <label xml:lang="nl">Wachttijd na kortsluiting: </label>
+              <label xml:lang="cs">Čekání restartu po zkratu: </label>
               <label>Restart Wait after Short: </label>
               <tooltip>Turn on automatically following a short circuit in 3 ms steps. The standard value is equivalent to approx. 3/4 of a second (750 ms)</tooltip>
               <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im drei Ms Takt. Der Standardwert entspricht ca. einer 3/4 Sekunde (750 ms)</tooltip>
               <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 3 ms. La valeur standard équivaut à env. 3⁄4 de seconde (750 ms)</tooltip>
               <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 3/4 seconde (750 ms). (Het instellen gebeurt in drie milliseconde stappen.)</tooltip>
+              <tooltip xml:lang="cs">Automatické Zapnutí po zkratu v násobcích 3 ms. Standardní hodnota odpovídá přibližně 3/4 sekundy (750 ms).</tooltip>
             </variable>
             <variable CV="5033.12" item="Reverse Wait" default="48">
               <decVal min="32" max="250"/>
               <label xml:lang="de">Wartezeit Kurzschl. nach Verpolung: </label>
               <label xml:lang="fr">Temps d’attente après inversion: </label>
               <label xml:lang="nl">Wachttijd Kortsl. na ompolen: </label>
+              <label xml:lang="cs">Čekání na detekci zkratu po přepólování: </label>
               <label>Short Detect Wait on Reverse: </label>
               <tooltip>The waiting time after automatic polarity reversal of the output prior to short circuit being reported in 3 ms steps</tooltip>
               <tooltip xml:lang="de">Wartezeit nach automatischer Verpolung des Ausgangs vor der Kurzschlussberichterstattung im drei Millisekunden Takt</tooltip>
               <tooltip xml:lang="fr">Le temps d’attente après une inversion automatique de polarité à la sortie avant rapport d’un court-circuit en étapes de 3 ms.</tooltip>
               <tooltip xml:lang="nl">Wachttijd na automatische polariteitsverandering van het circuit voordat een kortsluiting aan de besturing wordt gemeld. (Instelling in 3 milliseconde stappen.)</tooltip>
+              <tooltip xml:lang="cs">Čekací doba po automatickém přepólování výstupu před hlášením zkratu. Hodnota v násobcích 3 ms.</tooltip>
             </variable>
             <variable CV="5033.13" item="Delay" default="32">
               <decVal min="16" max="250"/>
               <label xml:lang="de">Verzögerung: </label>
               <label xml:lang="fr">Retard de réaction: </label>
               <label xml:lang="nl">Vertraging: </label>
+              <label xml:lang="cs">Zpoždění: </label>
               <label>Delay: </label>
               <tooltip>The short-circuit or polarity-reversal delay time in 3 ms steps</tooltip>
               <tooltip xml:lang="de">Kurzschluss- oder Verpolungsreaktionszeit im 3 Ms Takt</tooltip>
               <tooltip xml:lang="fr">Le temps de réaction du court-circuit ou de l’inversion de polarité en étapes de 3 ms.</tooltip>
               <tooltip xml:lang="nl">Wachttijd voor het omkeren van de polariteit of kortsluitingssignaal. (Instelling in 3 milliseconde stappen.)</tooltip>
+              <tooltip xml:lang="cs">Zpoždění zkratu nebo přepólování v násobcích 3 ms.</tooltip>
             </variable>
 
             <variable CV="5033.14" item="Reverse Address" default="0">
@@ -176,11 +200,13 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">Schaltadresse Verpolung: </label>
               <label xml:lang="fr">Adresse pour l’inversion: </label>
               <label xml:lang="nl">Adres voor Ompolen: </label>
+              <label xml:lang="cs">Adresa zesilovače pro přepólování: </label>
               <label>Booster Reverse Address: </label>
               <tooltip>Optional switching address to reverse the polarity</tooltip>
               <tooltip xml:lang="de">Optionale Schaltadresse zur Verpolung des Ausgangs</tooltip>
               <tooltip xml:lang="fr">Adresse de commutation optionnelle pour l’inversion de polarité</tooltip>
               <tooltip xml:lang="nl">Optioneel schakeladres voor de omkering van de polariteit van de uitgang</tooltip>
+              <tooltip xml:lang="cs">Volitelná adresa zesilovače pro přepólování.</tooltip>
             </variable>
 
             <variable CV="5033.15" item="Feedback A Address" default="0">
@@ -188,44 +214,52 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">Verpolung EIN Rückmeldung A: </label>
               <label xml:lang="fr">Inversion ON rétrosignal A: </label>
               <label xml:lang="nl">Ompolen AAN Feedback-adres A: </label>
+              <label xml:lang="cs">Přepólování Zap pro zpětný ohlas A: </label>
               <label>Reverse Feedback ON Address A: </label>
               <tooltip>Polarity reversal ON to feedback A</tooltip>
               <tooltip xml:lang="de">Verpolung EIN bei Feedback A</tooltip>
               <tooltip xml:lang="fr">Inversion de polarité ON au rétrosignal A: </tooltip>
               <tooltip xml:lang="nl">Omkering van de polariteit AAN voor feedback A</tooltip>
+              <tooltip xml:lang="cs">Adresa zpětného ohlasu A pro Zapnutí přepólování.</tooltip>
             </variable>
             <variable CV="5033.16" item="Feedback B Address" default="0">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Verpolung EIN Rückmeldung B: </label>
               <label xml:lang="fr">Inversion ON rétrosignal B: </label>
               <label xml:lang="nl">Ompolen AAN Feedback-adres B: </label>
+              <label xml:lang="cs">Přepólování Zap pro zpětný ohlas B: </label>
               <label>Reverse Feedback ON Address B: </label>
               <tooltip>Polarity reversal ON to feedback B</tooltip>
               <tooltip xml:lang="de">Verpolung EIN bei Feedback B</tooltip>
               <tooltip xml:lang="fr">Inversion de polarité ON au rétrosignal B: </tooltip>
               <tooltip xml:lang="nl">Omkering van de polariteit AAN voor feedback B</tooltip>
+              <tooltip xml:lang="cs">Adresa zpětného ohlasu B pro Zapnutí přepólování.</tooltip>
             </variable>
             <variable CV="5033.17" item="Feedback D Address" default="0">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Verpolung AUS Rückmeldung D: </label>
               <label xml:lang="fr">Inversion OFF rétrosignal D: </label>
               <label xml:lang="nl">Ompolen UIT Feedback-adres D: </label>
+              <label xml:lang="cs">Přepólování Zap pro zpětný ohlas D: </label>
               <label>Reverse Feedback OFF Address D: </label>
               <tooltip>Polarity reversal OFF to feedback D</tooltip>
               <tooltip xml:lang="de">Verpolung AUS bei Feedback D</tooltip>
               <tooltip xml:lang="fr">Inversion de polarité OFF au rétrosignal D: </tooltip>
               <tooltip xml:lang="nl">Omkering van de polariteit UIT voor terugkoppeling D</tooltip>
+              <tooltip xml:lang="cs">Adresa zpětného ohlasu D pro Zapnutí přepólování.</tooltip>
             </variable>
             <variable CV="5033.18" item="Feedback E Address" default="0">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Verpolung AUS Rückmeldung E: </label>
               <label xml:lang="fr">Inversion OFF rétrosignal E: </label>
               <label xml:lang="nl">Ompolen UIT Feedback-adres E: </label>
+              <label xml:lang="cs">Přepólování Zap pro zpětný ohlas E: </label>
               <label>Reverse Feedback OFF Address E: </label>
               <tooltip>Polarity reversal OFF to feedback D</tooltip>
               <tooltip xml:lang="de">Verpolung AUS bei Feedback E</tooltip>
               <tooltip xml:lang="fr">Inversion de polarité OFF au rétrosignal E: </tooltip>
               <tooltip xml:lang="nl">Omkering van de polariteit UIT voor terugkoppeling E</tooltip>
+              <tooltip xml:lang="cs">Adresa zpětného ohlasu E pro Zapnutí přepólování.</tooltip>
             </variable>
 
         </variables>
@@ -235,6 +269,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         <name>LNCV Configuration</name>
         <name xml:lang="de">LNCV Konfiguration</name>
         <name xml:lang="nl">LNCV Configuratie</name>
+        <name xml:lang="cs">Konfigurace LNCV</name>
         <row>
             <column>
               <label>
@@ -242,6 +277,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <text xml:lang="nl">Adressen</text>
                 <text xml:lang="de">Adressen</text>
                 <text xml:lang="fr">Adresses</text>
+                <text xml:lang="cs">Adresy</text>
               </label>
               <separator/>
               <display item="Switch Address"/>
@@ -257,11 +293,13 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                   <text>Before writing, open a Programming</text>
                   <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                   <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                  <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
                 </label>
                 <label>
                   <text>session using the LocoNet LNCV Tool.</text>
                   <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
                   <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                  <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
                 </label>
                 <label>
                   <text> </text>
@@ -272,6 +310,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                   <text xml:lang="nl">Instelling LNCV3</text>
                   <text xml:lang="de">LNCV3 Konfiguration</text>
                   <text xml:lang="fr">Configuration LNCV3</text>
+                  <text xml:lang="cs">Konfigurace LNCV</text>
                 </label>
               <separator/>
                 <display item="Track Out" format="checkbox"/>
@@ -288,6 +327,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                   <text xml:lang="nl">Tijdinstellingen</text>
                   <text xml:lang="de">Zeiteinstellungen</text>
                   <text xml:lang="fr">Configuration Temporelle</text>
+                  <text xml:lang="cs">Nastavení časů</text>
                 </label>
               <separator/>
                 <display item="Restart Wait"/>
@@ -303,6 +343,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                   <text xml:lang="de">Aktueller Zustand</text>
                   <text xml:lang="fr">Condition Actuelle</text>
                   <text xml:lang="nl">Actuele Status</text>
+                  <text xml:lang="cs">Aktuální stav</text>
                 </label>
               <separator/>
                 <display item="Temperature"/>

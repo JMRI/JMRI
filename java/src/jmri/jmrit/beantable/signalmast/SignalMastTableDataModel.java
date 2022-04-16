@@ -70,11 +70,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
             case VALUECOL:
                 return RowComboBoxPanel.class; // Use a JPanel containing a custom Aspect ComboBox
             case EDITMASTCOL:
-                return JButton.class;
             case EDITLOGICCOL:
                 return JButton.class;
             case LITCOL:
-                return Boolean.class;
             case HELDCOL:
                 return Boolean.class;
             default:
@@ -103,11 +101,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case LITCOL:
-                return true;
             case EDITLOGICCOL:
-                return true;
             case EDITMASTCOL:
-                return true;
             case HELDCOL:
                 return true;
             default:
@@ -229,11 +224,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
             AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame(getBySystemName(sysNameList.get(row)));
             editFrame.setVisible(true);
         });
-    }
-
-    @Override
-    protected String getBeanType() {
-        return Bundle.getMessage("BeanNameSignalMast");
     }
 
     /**

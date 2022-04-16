@@ -51,7 +51,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         }
         return false;
     }
-    
+
     int count = 0;
     int leafcount = 0;
 
@@ -85,7 +85,16 @@ public class CatalogTreeFS extends AbstractCatalogTree {
             CatalogTreeNode newElement = new CatalogTreeNode(pName);
             insertNodeInto(newElement, pParent, pParent.getChildCount());
             String[] sp = fp.list();
+
             if (sp !=null) {
+
+                // sort list of files alphabetically
+                if (sp.length > 0) {
+                    java.util.ArrayList<String> aList = new java.util.ArrayList<>(java.util.Arrays.asList(sp));
+                    java.util.Collections.sort(aList);
+                    sp = aList.toArray(sp);
+                }
+
                 for (int i = 0; i < sp.length; i++) {
                     log.debug("Descend into resource: {} count {}",sp[i], count++);
                     insertNodes(sp[i], pPath + File.separator + sp[i], newElement);

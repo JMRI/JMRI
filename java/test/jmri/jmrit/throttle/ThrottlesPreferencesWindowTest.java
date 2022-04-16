@@ -1,10 +1,10 @@
 package jmri.jmrit.throttle;
 
-import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of ThrottlesPreferencesWindow
@@ -12,22 +12,27 @@ import org.junit.jupiter.api.*;
  * @author Lionel Jeanson
  */
 public class ThrottlesPreferencesWindowTest {
+
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
-        Assert.assertNotNull("exists", w);
+        try {
+            ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
+            Assert.assertNotNull("exists", w);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("IndexOutOfBoundsException\n"+e);
+        }
     }
 
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
     @AfterEach
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
     }
 }

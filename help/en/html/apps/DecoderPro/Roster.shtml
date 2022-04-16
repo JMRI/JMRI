@@ -1,86 +1,62 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro - Rosters</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: DecoderPro - Rosters</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: DecoderPro User Guide</h1>
 
-      <h2>Rosters</h2><a href="images/DP4StartScreen.png"><img src=
-      "images/DP4StartScreen.png" width="376" height="278" align=
-      "right"></a>
+      <h2>Rosters</h2>
+      <a href="images/DP4StartScreen.png"><img src="images/DP4StartScreen.png" width="376" height=
+      "278" class="floatRight" alt="roster"></a>
+      <p>Reading the contents of a decoder generally takes a long time, and with some command
+      stations it's not even possible. The JMRI Roster stores the known values of decoder
+      configuration values to make it unnecessary to read them from the decoder. It can contain
+      "Roster entries" for an unlimited number of individual locomotives.</p>
 
-      <p>Reading the contents of a decoder generally takes a long
-      time, and with some command stations it's not even possible.
-      The JMRI Roster stores the known values of decoder
-      configuration values to make it unnecessary to read them from
-      the decoder. It can contain "Roster entries" for an unlimited
-      number of individual locomotives.</p>
+      <p>Each Roster entry has an "identifier" (Roster ID) by which it's known. This is your name
+      it. When the program wants you to select a Roster entry, it will ask you to pick from a
+      selection box or menu containing Roster entry IDs. You can use anything you want for this:
+      Road number, type, even "That crummy old model I need to repaint" or "My beautiful Shay".</p>
 
-      <p>Each Roster entry has an "identifier" (Roster ID) by which
-      it's known. This is your name it.
-      When the program wants you to select a Roster
-      entry, it will ask you to pick from a selection box or menu containing 
-      Roster entry IDs. You can use anything you want for this:
-      Road number, type, even "That crummy old model I need to
-      repaint" or "My beautiful Shay".</p>
-
-      <p>You can edit the contents of a Roster entry with the
-      programmer panes.</p>
+      <p>You can edit the contents of a Roster entry with the programmer panes.</p>
 
       <h3>Roster Entry</h3>
 
-      <p>When you first open a JMRI programmer, you'll see a
-      "Create New Loco" pane (pictured to the right).<br>
+      <p>When you first open a JMRI programmer, you'll see a "Create New Loco" pane (pictured to
+      the right).<br>
       On it is displayed:</p>
 
       <dl>
         <dt>Roster ID</dt>
 
-        <dd>Your name for the new locomotive, see above.
-        You can change an entry's ID later,
-        in which case it will appear in new selection boxes, etc, with
-        the new ID name.</dd>
+        <dd>Your name for the new locomotive, see above. You can change an entry's ID later, in
+        which case it will appear in new selection boxes, etc, with the new ID name.</dd>
 
         <dt>DCC Address</dt>
 
-        <dd>This is either a Short or Long Address, based on how
-        the decoder is configured.</dd>
+        <dd>This is either a Short or Long Address, based on how the decoder is configured.</dd>
 
         <dt>Buttons</dt>
 
-        <dd>To <strong>Read</strong> the information from a decoder
-        with this address, <strong>Write</strong> changes to that
-        decoder or only <strong>Save</strong> this entry to
+        <dd>To <strong>Read</strong> the information from a decoder with this address,
+        <strong>Write</strong> changes to that decoder or only <strong>Save</strong> this entry to
         disk.</dd>
       </dl>
 
-      <p>Click the "Open Comprehensive Programmer" button at lower
-      right to display a row of tabbed panes with additional
-      properties:</p>
+      <p>Click the "Open Comprehensive Programmer" button at lower right to display a row of tabbed
+      panes with additional properties:</p>
 
       <dl>
         <dt>Roster Entry</dt>
@@ -103,130 +79,105 @@
             <li>Decoder Family</li>
 
             <li>Decoder Model<br>
-            These two fields are filled in based on the decoder
-            that was selected when the entry was created. They
-            can't be edited after that.</li>
+            These two fields are filled in based on the decoder that was selected when the entry
+            was created. They can't be edited after that.</li>
 
             <li>Decoder Comment<br>
-            You can put anything you want here. Some people have
-            used it to record whether an NMRA plug was used,
-            whether the decoder was soldered in, etc.</li>
+            You can put anything you want here. Some people have used it to record whether an NMRA
+            plug was used, whether the decoder was soldered in, etc.</li>
           </ul>
         </dd>
 
         <dt>Basic</dt>
 
-        <dd>With additional information about your Locomotive
-        etc.</dd>
+        <dd>With additional information about your Locomotive etc.</dd>
 
         <dt>Motor, Basic Speed Control, and many other tabs:</dt>
 
-        <dd><a href="images/DP4ComprehensiveTabs.png"><img src=
-        "images/DP4ComprehensiveTabs.png" alt="DP pane tabs" width=
-        "531" height="47"></a></dd>
-      </dl><a id="menu" name="menu"></a>
+        <dd>
+          <a href="images/DP4ComprehensiveTabs.png"><img src="images/DP4ComprehensiveTabs.png" alt=
+          "DP pane tabs" width="531" height="47"></a>
+        </dd>
+      </dl>
 
-      <h3>The Roster Menu</h3><img src="images/DPRosterMenu.png"
-      width="207" height="313" align="right"> The JMRI application
-      main windows and the DecoderPro windows have a "Roster" menu
-      available. That menu allows you to manage the entries in your
-      Roster with commands:
-
+      <h3 id="menu">The Roster Menu</h3>
+      <img src="images/DPRosterMenu.png" width="207" height="313" class="floatRight" alt=
+      "roster menu"> The JMRI application main windows and the DecoderPro windows have a "Roster"
+      menu available. That menu allows you to manage the entries in your Roster with commands:
       <dl>
-        <dd><a id="create" name="create"></a></dd>
+        <dt id="create">Create Entry ...</dt>
 
-        <dt>Create Entry ...</dt>
+        <dd>"Create" is used to create a new Roster entry, even if you don't currently have a
+        connection to a layout. When you select this, you're given a window in which to select a
+        decoder type. Pick the right decoder type, the format you want, and click "Open". You'll
+        see a DecoderPro-style window for changing the contents of the new entry. Don't forget to
+        click "Save" when you're done!</dd>
 
-        <dd>"Create" is used to create a new Roster entry, even if
-        you don't currently have a connection to a layout. When you
-        select this, you're given a window in which to select a
-        decoder type. Pick the right decoder type, the format you
-        want, and click "Open". You'll see a DecoderPro-style
-        window for changing the contents of the new entry. Don't
-        forget to click "Save" when you're done! <a id="edit" name=
-        "edit"></a></dd>
+        <dt id="edit">Edit Entry ...</dt>
 
-        <dt>Edit Entry ...</dt>
+        <dd>"Edit" is used to update the contents of a Roster entry, even when you don't have a
+        layout connection (normally, if you do have a layout connection, you'll use the DecoderPro
+        programming functions). When you select this, you'll get a window in which to select an
+        existing Roster entry, a format, and an "Open" button. Once you click "Open", you'll get a
+        DecoderPro-style window for viewing and changing the contents of the entry. Don't forget to
+        click "Save" when you're done!</dd>
 
-        <dd>"Edit" is used to update the contents of a Roster
-        entry, even when you don't have a layout connection
-        (normally, if you do have a layout connection, you'll use
-        the DecoderPro programming functions). When you select
-        this, you'll get a window in which to select an existing
-        Roster entry, a format, and an "Open" button. Once you
-        click "Open", you'll get a DecoderPro-style window for
-        viewing and changing the contents of the entry. Don't
-        forget to click "Save" when you're done! <a id="copy" name=
-        "copy"></a></dd>
+        <dt id="copy">Copy Entry ...</dt>
 
-        <dt>Copy Entry ...</dt>
+        <dd>"Copy" is used to create another Roster entry that's identical to the original except
+        for it's ID. If you have a standard setup you'd like to use for new locomotives, you can
+        create a Roster entry with all the right values filled in, and then copy it every time you
+        want to program a new locomotive.</dd>
 
-        <dd>"Copy" is used to create another Roster entry that's
-        identical to the original except for it's ID. If you have a
-        standard setup you'd like to use for new locomotives, you
-        can create a Roster entry with all the right values filled
-        in, and then copy it every time you want to program a new
-        locomotive. <a id="export" name="export"></a></dd>
-
-        <dt>Export Entry ...</dt>
+        <dt id="export">Export Entry ...</dt>
 
         <dd>
-          Although it is possible to find the XML files defining
-          Roster entries in the preferences directory, it's better
-          not to mess with them directly. The "Export" command will
-          create a new file representing a Roster entry, including
-          all of the comments, CV values, etc. You can then take
-          that to another copy of DecoderPro and import it into
-          that Roster. Export does not change your current Roster
-          in any way, it just makes a copy for you of a specific
+          Although it is possible to find the XML files defining Roster entries in the preferences
+          directory, it's better not to mess with them directly. The "Export" command will create a
+          new file representing a Roster entry, including all of the comments, CV values, etc. You
+          can then take that to another copy of DecoderPro and import it into that Roster. Export
+          does not change your current Roster in any way, it just makes a copy for you of a
+          specific entry.
+          <p>When you select "Export ...", you be asked to select the Roster entry you want to
+          export, then you'll be prompted to select a new filename. You can call it anything you
+          want, but it's best to put a ".xml" extension on the name.</p>
+        </dd>
+
+        <dt id="import">Import Entry ...</dt>
+
+        <dd>
+          The combination of "Export" then "Import" allows you to bring a locomotives Roster entry
+          when you move to another layout, with it's own DecoderPro installation.
+          <p>When you select "Import ...", you'll be asked to locate an XML file to import. It
+          should have been created by an "Export" command. You'll also be asked for the ID of the
+          new Roster entry to be created. This can be the same as it was before it was exported, or
+          you can give it a new ID.</p>
+        </dd>
+
+        <dt id="delete">Delete Entry ...</dt>
+
+        <dd>This completely removes a Roster entry. You're asked if you're sure and a backup is
+        made, in case of mistakes.</dd>
+
+        <dt id="summary">Print Summary ...</dt>
+
+        <dd>
+          This prints a summary of the entire Roster, listing the primary information for each
           entry.
-
-          <p>When you select "Export ...", you be asked to select
-          the Roster entry you want to export, then you'll be
-          prompted to select a new filename. You can call it
-          anything you want, but it's best to put a ".xml"
-          extension on the name. <a id="import" name=
-          "import"></a></p>
+          <p>For a more detailed listing of a specific decoder, see the "File" menu on the
+          programmer screens.</p>
         </dd>
 
-        <dt>Import Entry ...</dt>
+        <dt id="previewsummary">Print Preview Summary ...</dt>
 
-        <dd>
-          The combination of "Export" then "Import" allows you to
-          bring a locomotives Roster entry when you move to another
-          layout, with it's own DecoderPro installation.
-
-          <p>When you select "Import ...", you'll be asked to
-          locate an XML file to import. It should have been created
-          by an "Export" command. You'll also be asked for the ID
-          of the new Roster entry to be created. This can be the
-          same as it was before it was exported, or you can give it
-          a new ID.</p><a id="delete" name="delete"></a>
-        </dd>
-
-        <dt>Delete Entry ...</dt>
-
-        <dd>This completely removes a Roster entry. You're asked if
-        you're sure and a backup is made, in case of mistakes.
-        <a id="summary" name="summary"></a></dd>
-
-        <dt>Print Summary ...</dt>
-
-        <dd>
-          This prints a summary of the entire Roster, listing the
-          primary information for each entry.
-
-          <p>For a more detailed listing of a specific decoder, see
-          the "File" menu on the programmer screens. <a id=
-          "previewsummary" name="previewsummary"></a></p>
-        </dd>
-
-        <dt>Print Preview Summary ...</dt>
-
-        <dd>This shows the contents of the printed summary on your
-        screen, so you can preview it before printing.</dd>
-      </dl><!--#include virtual="/Footer.shtml" -->
-    </div><!-- close #mainContent -->
-  </div><!-- close #mBody -->
+        <dd>This shows the contents of the printed summary on your screen, so you can preview it
+        before printing.</dd>
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- close #mainContent -->
+  </div>
+  <!-- closes #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

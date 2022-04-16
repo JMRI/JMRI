@@ -16,7 +16,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Define the copyright year for the output page
@@ -24,7 +24,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -38,14 +38,14 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='decoderIndex-config'>
 
 <html>
 	<head>
 		<title>JMRI decoder identification</title>
 	</head>
-	
+
 	<body>
 		<h2>JMRI decoder selection identification</h2>
 
@@ -94,7 +94,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 		<xsl:for-each select="/decoderIndex-config/decoderIndex/familyList/family">
 		  <xsl:if test="( @mfg = $mfgname )" >
 			<xsl:for-each select="model">
-			
+
 			  <!-- display model as row in table -->
 			  <tr>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@model"/></td>

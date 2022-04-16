@@ -48,7 +48,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Many ::: Log error%n" +
+                "Many ::: Use default%n" +
                 "   !s A1%n" +
                 "      Socket not connected%n");
     }
@@ -59,11 +59,11 @@ public class StringManyTest extends AbstractStringActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A ::: Log error%n" +
+                "         Read string E and set string A ::: Use default%n" +
                 "            ?s E%n" +
                 "               Socket not connected%n" +
                 "            !s A%n" +
-                "               Many ::: Log error%n" +
+                "               Many ::: Use default%n" +
                 "                  !s A1%n" +
                 "                     Socket not connected%n");
     }
@@ -267,11 +267,6 @@ public class StringManyTest extends AbstractStringActionTestBase {
         Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
     }
     
-    @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
     // Test the methods connected(FemaleSocket) and getActionSystemName(int)
     @Test
     public void testConnected_getActionSystemName() throws SocketAlreadyConnectedException {
@@ -348,7 +343,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
         _base = action;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

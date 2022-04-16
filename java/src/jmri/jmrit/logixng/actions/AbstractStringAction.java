@@ -18,7 +18,6 @@ public abstract class AbstractStringAction extends AbstractBase
         implements StringActionBean {
 
     private Base _parent = null;
-    private Lock _lock = Lock.NONE;
     private int _state = StringExpressionBean.UNKNOWN;
 
 
@@ -62,19 +61,6 @@ public abstract class AbstractStringAction extends AbstractBase
         return _state;
     }
     
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _lock;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _lock = lock;
-    }
-
     public String getNewSocketName() {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop

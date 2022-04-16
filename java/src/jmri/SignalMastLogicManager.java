@@ -89,7 +89,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @return source The new SML instance
      */
     @Nonnull
-    public SignalMastLogic newSignalMastLogic(SignalMast source);
+    public SignalMastLogic newSignalMastLogic(SignalMast source) throws IllegalArgumentException;
 
     /**
      * Remove a destination Signal Mast and its settings from a Signal Mast

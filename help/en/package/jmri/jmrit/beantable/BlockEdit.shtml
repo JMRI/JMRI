@@ -1,177 +1,151 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Block Edit Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Block Table Edit">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Edit Block Window</h1>
 
-      <p>The Edit Block pane allows you to edit the following
-      tabs:</p>
-
-      <ul>
-        <li><a href="#basic">Basic</a></li>
-
-        <li><a href="#sensor">Sensor</a></li>
-
-        <li><a href="#reporter">Reporter</a></li>
-
-        <li><a href="#physicaldetails">Physical Details</a></li>
-
-        <li><a href="#usage">Usage</a></li>
-
-        <li><a href="#properties">Properties</a></li>
-      </ul><a name="basic" id="basic"></a>
-
-      <h2>Basic</h2>
-
-      <p>This provides basic information about the Block, as
-      entered on its creation:</p>
-      <img src="images/BlocksEditBasicTab.png" width="461" height="155">
+      <p>The Edit Block pane allows you to edit the following tabs:</p>
 
       <ul>
         <li>
-          <p><b>System Name</b> - The system name of the Block.
-          There is no functional requirement for a type letter in
-          the System Name of a Block, but by convention we use 'B'
-          for 'Block'. The default implementation is not
-          system-specific, so a system letter of 'I' is
-          appropriate. This leads to system names like "IB201".</p>
+          <a href="#basic">Basic</a>
         </li>
 
         <li>
-          <p><b>User Name</b> - The user name of the Block. The
-          user name of a Block created here may be set to any text.
-          The user name for a Block created by Layout Editor is set
-          by Layout Editor and should not be changed.</p>
+          <a href="#sensor">Sensor</a>
         </li>
 
         <li>
-          <p><b>Comment</b> - You may enter any text in this field
-          that will help you distinguish this Block from other
-          Blocks, or provide useful notes about its use.</p>
+          <a href="#reporter">Reporter</a>
+        </li>
+
+        <li>
+          <a href="#physicaldetails">Physical Details</a>
+        </li>
+
+        <li>
+          <a href="#usage">Usage</a>
+        </li>
+
+        <li>
+          <a href="#properties">Properties</a>
         </li>
       </ul>
 
-      <a name="sensor" id="sensor"></a>
-      <h2>Sensor</h2>
+      <h2 id="basic">Basic</h2>
 
-      <p>This tab allows you to assign a Sensor to the Block to
-      change the occupancy state. It also allows certain
-      information about the Sensor to be changed:</p><img src=
-      "images/BlocksEditSensorTab.png" width="460" height="193">
-
+      <p>This provides basic information about the Block, as entered on its creation:</p>
+      <img src="images/BlocksEditBasicTab.png" width="461" height="155" alt="basic tab">
       <ul>
         <li>
-          <p><b>Sensor</b> Select the Sensor from the drop down
-          list that will be associated with this Block.</p>
+          <p><strong>System Name</strong> - The system name of the Block. There is no functional
+          requirement for a type letter in the System Name of a Block, but by convention we use 'B'
+          for 'Block'. The default implementation is not system-specific, so a system letter of 'I'
+          is appropriate. This leads to system names like "IB201".</p>
         </li>
 
-        <li style="list-style: none">You can edit the Sensor
-        Debounce options from this tab; setting the Sensor Debounce
-        helps to prevent false triggers of a Sensor being passed
-        into the system and triggering other events in the system.
-        Such false triggers could be due to a dirty piece of track
-        or electrical interference.</li>
-
-        <li>The <b>Use Global Debounce Values</b> check box, allows you
-        to select if the sensor will use the default sensor
-        debounce values if configured.</li>
-
-        <li><b>Inactive Delay</b> and <b>Active
-        Delay</b> allow you to specify the amount of time in
-        milliseconds that the system waits before registering the
-        state change of a sensor.</li>
-      </ul>
-
-      <a name="reporter" id="reporter"></a>
-      <h2>Reporter</h2>
-      <img src="images/BlocksEditReporterTab.png" width="460"
-           height="62">
-
-      <ul>
-        <li><b>Reporter</b> Set the Reporter assigned to this
-        Block. See the <a href="ReporterTable.shtml">Reporter
-        Table</a>. Selecting a Reporter and clicking
-        <strong>Apply</strong> puts the Reporter Value into the
-        Block value.</li>
+        <li>
+          <p><strong>User Name</strong> - The user name of the Block. The user name of a Block
+          created here may be set to any text. The user name for a Block created by Layout Editor
+          is set by Layout Editor and should not be changed.</p>
+        </li>
 
         <li>
-          <b>Use Current</b> If we consider the scenario whereby
-          we want to track a train around the layout, typically this
-          is achieved via the use of Memory objects associated with
-          Blocks. Until the train is known, we have nothing to
-          track. Typically, we can manually type in the Train ID
-          into a panel and then this is tracked around the layout
-          based on Block occupancy. If, however, we have an
-          attached device that can provide us with the Train ID,
-          such as an RFID reader, we no longer need to manually
-          type in the Train ID - the reader does this for us. In
-          essence, the reader is little more than an 'intelligent'
-          sensor - not only can it sense that 'something' is there,
-          it can tell us which something it is. Now to the
-          implementation. A Sensor is purely ACTIVE or INACTIVE -
-          i.e. something is there or it isn't. A Reporter, however,
-          can tell us one of the following:
+          <p><strong>Comment</strong> - You may enter any text in this field that will help you
+          distinguish this Block from other Blocks, or provide useful notes about its use.</p>
+        </li>
+      </ul>
 
+      <h2 id="sensor">Sensor</h2>
+
+      <p>This tab allows you to assign a Sensor to the Block to change the occupancy state. It also
+      allows certain information about the Sensor to be changed:</p>
+      <img src="images/BlocksEditSensorTab.png" width="460" height="193" alt="sensor tab">
+      <ul>
+        <li>
+          <p><strong>Sensor</strong> Select the Sensor from the drop down list that will be
+          associated with this Block.</p>
+        </li>
+
+        <li style="list-style: none">You can edit the Sensor Debounce options from this tab;
+        setting the Sensor Debounce helps to prevent false triggers of a Sensor being passed into
+        the system and triggering other events in the system. Such false triggers could be due to a
+        dirty piece of track or electrical interference.</li>
+
+        <li>The <strong>Use Global Debounce Values</strong> check box, allows you to select if the
+        sensor will use the default sensor debounce values if configured.</li>
+
+        <li><strong>Inactive Delay</strong> and <strong>Active Delay</strong> allow you to specify
+        the amount of time in milliseconds that the system waits before registering the state
+        change of a sensor.</li>
+      </ul>
+
+      <h2 id="reporter">Reporter</h2>
+      <img src="images/BlocksEditReporterTab.png" width="460" height="62" alt="reporter tab">
+      <ul>
+        <li>
+          <strong>Reporter</strong> Set the Reporter assigned to this Block. See the <a href=
+          "ReporterTable.shtml">Reporter Table</a>. Selecting a Reporter and clicking
+          <strong>Apply</strong> puts the Reporter Value into the Block value.
+        </li>
+
+        <li>
+          <strong>Use Current</strong> If we consider the scenario whereby we want to track a train
+          around the layout, typically this is achieved via the use of Memory objects associated
+          with Blocks. Until the train is known, we have nothing to track. Typically, we can
+          manually type in the Train ID into a panel and then this is tracked around the layout
+          based on Block occupancy. If, however, we have an attached device that can provide us
+          with the Train ID, such as an RFID reader, we no longer need to manually type in the
+          Train ID - the reader does this for us. In essence, the reader is little more than an
+          'intelligent' sensor - not only can it sense that 'something' is there, it can tell us
+          which something it is. Now to the implementation. A Sensor is purely ACTIVE or INACTIVE -
+          i.e. something is there or it isn't. A Reporter, however, can tell us one of the
+          following:
           <ol>
-            <li>'Hey, I'm seeing something right now - this is
-            it'</li>
+            <li>'Hey, I'm seeing something right now - this is it'</li>
 
             <li>'Hmm, I'm not seeing anything right now'</li>
 
-            <li>'Hey, I saw something a while back - this was
-            it'</li>
+            <li>'Hey, I saw something a while back - this was it'</li>
 
             <li>'Hmm, I've not seen anything yet'</li>
           </ol>
-          The first two are from the CurrentReport; the last
-          two from LastReport. At start-up (assuming there is
-          nothing within the range of the reader), both 2 and 4 are
-          the initial state. Once something is seen, both 1 and 3
-          return the same result. When the something is
-          'out-of-range' 2 and 3 are then active. With 'Use
-          Current' selected the Block value will switch between 1
-          and 2, whereas with 'Use Current' unselected the Block
-          value will switch between 3 and 4.
+          The first two are from the CurrentReport; the last two from LastReport. At start-up
+          (assuming there is nothing within the range of the reader), both 2 and 4 are the initial
+          state. Once something is seen, both 1 and 3 return the same result. When the something is
+          'out-of-range' 2 and 3 are then active. With 'Use Current' selected the Block value will
+          switch between 1 and 2, whereas with 'Use Current' unselected the Block value will switch
+          between 3 and 4.
         </li>
       </ul>
 
-      <a name="physicaldetails" id="physicaldetails"></a>
-      <h2>Physical Details</h2>
+      <h2 id="physicaldetails">Physical Details</h2>
 
-      <p>Describe the geometry of the Block using the fields
-      shown.</p>
+      <p>Describe the geometry of the Block using the fields shown.</p>
 
-      <p><img src="images/BlocksEditPhysicalTab.png" width="460" height=
-      "191"></p>
+      <p><img src="images/BlocksEditPhysicalTab.png" width="460" height="191" alt="physical tab">
+      </p>
 
       <table>
-        <tr valign="top">
-          <td><img src="images/BlocksEditCurvaturePopup.png" width="193"
-          height="107"></td>
-
-          <td><img src="images/BlocksEditSpeedPopup.png" width="249"
-          height="191"></td>
-
+        <tr>
+          <td><img src="images/BlocksEditCurvaturePopup.png" width="193" height="107" alt=
+          "curvature popup">
+          </td>
+          <td><img src="images/BlocksEditSpeedPopup.png" width="249" height="191" alt=
+          "speed popup">
+          </td>
           <td>
             Speed options:
-
             <ul>
               <li>Use Global Normal</li>
 
@@ -202,71 +176,58 @@
       </table>
 
       <ul>
-        <li><b>Length</b> (optional) - Displays the length of the
-        Block. Optionally, you may enter the length of the Block
-        here. The length is used for automatic running of trains.
-        If '0.0' is displayed, the length has not been entered. The
-        entered length should be the actual length of the Block on
-        the model railroad layout. Length is entered and displayed
-        in either inches or centimeters, depending on which unit is
-        next in the Block Table.</li>
+        <li><strong>Length</strong> (optional) - Displays the length of the Block. Optionally, you
+        may enter the length of the Block here. The length is used for automatic running of trains.
+        If '0.0' is displayed, the length has not been entered. The entered length should be the
+        actual length of the Block on the model railroad layout. Length is entered and displayed in
+        either inches or centimeters, depending on which unit is next in the Block Table.</li>
 
-        <li><b>Units</b> - Choose one of both as the unit for the
-        Block Length</li>
+        <li><strong>Units</strong> - Choose one of both as the unit for the Block Length</li>
 
-        <li><b>Curvature</b> (optional) - Displays the curvature
-        selected for the track in the Block. Curvature is used for
-        automatic running of trains, and need not be entered if
-        trains will not be run automatically. Curvature, if
-        present, indicates to the computer that it should slow the
-        train as it runs through the Block. If <b>None</b> or
-        <b>Gradual</b> are selected, an automatic train will
-        proceed at normal speed. <b>Tight</b> should be selected if
-        the train should slow down some; <b>Severe</b> should be
-        selected if the train should slow by a maximum amount. If
-        the Block has variable curvature, your selection should be
-        made according to the most limiting part of the Block.</li>
+        <li><strong>Curvature</strong> (optional) - Displays the curvature selected for the track
+        in the Block. Curvature is used for automatic running of trains, and need not be entered if
+        trains will not be run automatically. Curvature, if present, indicates to the computer that
+        it should slow the train as it runs through the Block. If <strong>None</strong> or
+        <strong>Gradual</strong> are selected, an automatic train will proceed at normal speed.
+        <strong>Tight</strong> should be selected if the train should slow down some;
+        <strong>Severe</strong> should be selected if the train should slow by a maximum amount. If
+        the Block has variable curvature, your selection should be made according to the most
+        limiting part of the Block.</li>
 
-        <li><b>Speed</b> - The speed is used with certain
-        automation tools and logic, to help determine the speed at
-        which a train can be set through the block. It is also used
-        by the Signal Mast Logic for determining which Aspect
-        should be displayed in a signal path.<br>
-        In the drop down list, you are presented a set of named
-        fixed speeds that have been predefined in the
-        signalSpeed.xml file, in addition to a global option.<br>
-        It is also possible to enter a numerical value to represent
-        a speed. The global value is set via the <b>Speeds</b> menu
-        option.</li>
+        <li><strong>Speed</strong> - The speed is used with certain automation tools and logic, to
+        help determine the speed at which a train can be set through the block. It is also used by
+        the Signal Mast Logic for determining which Aspect should be displayed in a signal
+        path.<br>
+        In the drop down list, you are presented a set of named fixed speeds that have been
+        predefined in the signalSpeed.xml file, in addition to a global option.<br>
+        It is also possible to enter a numerical value to represent a speed. The global value is
+        set via the <strong>Speeds</strong> menu option.</li>
 
-        <li><b>Permissive</b> - The Permissive option is used to
-        identify Blocks that can be entered by another Train while
-        it is already occupied. This option is used with certain
-        automation tools and Logix to help determine if a Train can
-        enter an occupied Block and what Aspect should be displayed
-        on its Signal Mast.</li>
+        <li><strong>Permissive</strong> - The Permissive option is used to identify Blocks that can
+        be entered by another Train while it is already occupied. This option is used with certain
+        automation tools and Logix to help determine if a Train can enter an occupied Block and
+        what Aspect should be displayed on its Signal Mast.</li>
+      </ul>
 
-      </ul><a name="usage" id="usage"></a>
-      <h2>Usage</h2>
+      <h2 id="usage">Usage</h2>
 
-      <p>This is an information field, showing where you have the
-      Block displayed on a Panel:</p><img src=
-      "images/BlocksEditUsageTab.png" width="460" height="120">
+      <p>This is an information field, showing where you have the Block displayed on a Panel:</p>
+      <img src="images/BlocksEditUsageTab.png" width="460" height="120" alt="usage tab">
+      <h2 id="properties">Properties</h2>
+      <img src="images/BlocksEditPropsTab.png" width="392" height="89" alt="properties tab">
+      <p><a href="../../../../html/tools/tracker/index.shtml">More information on Blocks</a>
+      </p>
 
-      <a name="properties" id="properties"></a>
-      <h2>Properties</h2>
-      <img src="images/BlocksEditPropsTab.png" width="392" height="89">
+      <p><a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout
+      Editor</a>
+      </p>
 
-      <p><a href="../../../../html/tools/tracker/index.shtml">More
-      information on Blocks</a></p>
-
-      <p><a href="../display/LayoutEditor.shtml">More information
-      on using Blocks with Layout Editor</a></p>
-
-      <p>Back to the <a href="BlockTable.shtml">Block Table Help
-      page</a>.</p>
+      <p>Back to the <a href="BlockTable.shtml">Block Table Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

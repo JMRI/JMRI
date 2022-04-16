@@ -18,6 +18,7 @@
     </enumVal>
     <label>RailCom speed reporting method</label>
     <label xml:lang="de">RailCom Geschwindigkeits-Rückmeldung</label>
+    <label xml:lang="cs">Metoda hlášení rychlosti RailCom</label>
   </variable>
   <variable CV="158" item="Standing Sound on premature shutdown" mask="XXXXVXXX" default="0" exclude="130,177,195,197,199,211,218,240">
     <enumVal>

@@ -51,9 +51,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        slotModel = new CbusSlotMonitorDataModel(memo, 5,
-            CbusSlotMonitorDataModel.MAX_COLUMN); // controller, row, column
-        
+        slotModel = new CbusSlotMonitorDataModel(memo);
         _slotTable = new JTableWithColumnToolTips(slotModel,CbusSlotMonitorDataModel.CBUSSLOTMONTOOLTIPS);
         init();
     }

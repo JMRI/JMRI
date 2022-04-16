@@ -34,9 +34,9 @@ public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTest
     
     @Test
     public void testBundle() {
-        Assert.assertEquals("strings are equal", "Compare memory", Bundle.getMessage("Memory_Short"));
+        Assert.assertEquals("strings are equal", "Memory", Bundle.getMessage("Memory_Short"));
         Assert.assertEquals("strings are equal", "Memory IM1 is null", Bundle.getMessage("Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")));
-        Assert.assertEquals("strings are equal", "Compare memory", Bundle.getMessage(Locale.CANADA, "Memory_Short"));
+        Assert.assertEquals("strings are equal", "Memory", Bundle.getMessage(Locale.CANADA, "Memory_Short"));
         Assert.assertEquals("strings are equal", "Memory IM1 is null", Bundle.getMessage(Locale.CANADA, "Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")));
     }
     

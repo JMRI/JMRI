@@ -8,7 +8,6 @@ import jmri.InstanceManager;
 import jmri.Logix;
 
 import jmri.util.*;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
@@ -20,17 +19,13 @@ import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 
-
-/*
+/**
 * Tests for the LogixTableAction Class
-* Re-created using JUnit4 with support for the new conditional editors
+* Re-created using JUnit5 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017
  */
 @Timeout(10)
 public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
-
-    //@Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {

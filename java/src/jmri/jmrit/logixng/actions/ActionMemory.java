@@ -4,7 +4,6 @@ import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -12,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -36,7 +36,10 @@ public class ActionMemory extends AbstractDigitalAction
     private String _otherFormula = "";
     private ExpressionNode _otherExpressionNode;
     private boolean _listenToMemory = true;
-//    private boolean _listenToMemory = false;
+
+    private final LogixNG_SelectTable _selectTable =
+            new LogixNG_SelectTable(this, () -> {return _memoryOperation == MemoryOperation.CopyTableCellToMemory;});
+
 
     public ActionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -59,9 +62,11 @@ public class ActionMemory extends AbstractDigitalAction
         if (_otherMemoryHandle != null) copy.setOtherMemory(_otherMemoryHandle);
         copy.setMemoryOperation(_memoryOperation);
         copy.setOtherConstantValue(_otherConstantValue);
+//        copy.setOtherTableCell(_otherTableCell);
         copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setOtherFormula(_otherFormula);
         copy.setListenToMemory(_listenToMemory);
+        _selectTable.copy(copy._selectTable);
         return manager.registerAction(copy);
     }
 
@@ -100,9 +105,10 @@ public class ActionMemory extends AbstractDigitalAction
         return _memoryHandle;
     }
 
+
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
         _addressing = addressing;
-        parseOtherFormula();
+        parseFormula();
     }
 
     public NamedBeanAddressing getAddressing() {
@@ -148,6 +154,26 @@ public class ActionMemory extends AbstractDigitalAction
         }
     }
 
+
+    public void setMemoryOperation(MemoryOperation state) throws ParserException {
+        _memoryOperation = state;
+        parseOtherFormula();
+    }
+
+    public MemoryOperation getMemoryOperation() {
+        return _memoryOperation;
+    }
+
+    // Constant tab
+    public void setOtherConstantValue(String constantValue) {
+        _otherConstantValue = constantValue;
+    }
+
+    public String getConstantValue() {
+        return _otherConstantValue;
+    }
+
+    // Memory tab
     public void setOtherMemory(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setOtherMemory");
         MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
@@ -184,30 +210,8 @@ public class ActionMemory extends AbstractDigitalAction
         return _otherMemoryHandle;
     }
 
-    public void setOtherLocalVariable(@Nonnull String localVariable) {
-        assertListenersAreNotRegistered(log, "setOtherLocalVariable");
-        _otherLocalVariable = localVariable;
-    }
-
-    public String getOtherLocalVariable() {
-        return _otherLocalVariable;
-    }
-
-    public void setOtherConstantValue(String constantValue) {
-        _otherConstantValue = constantValue;
-    }
-
-    public String getConstantValue() {
-        return _otherConstantValue;
-    }
-
-    public void setOtherFormula(String formula) throws ParserException {
-        _otherFormula = formula;
-        parseOtherFormula();
-    }
-
-    public String getOtherFormula() {
-        return _otherFormula;
+    public LogixNG_SelectTable getSelectTable() {
+        return _selectTable;
     }
 
     public void setListenToMemory(boolean listenToMemory) {
@@ -218,34 +222,29 @@ public class ActionMemory extends AbstractDigitalAction
         return _listenToMemory;
     }
 
-    public void setMemoryOperation(MemoryOperation state) throws ParserException {
-        _memoryOperation = state;
+    // Variable tab
+    public void setOtherLocalVariable(@Nonnull String localVariable) {
+        assertListenersAreNotRegistered(log, "setOtherLocalVariable");
+        _otherLocalVariable = localVariable;
+    }
+
+    public String getOtherLocalVariable() {
+        return _otherLocalVariable;
+    }
+
+    // Formula tab
+    public void setOtherFormula(String formula) throws ParserException {
+        _otherFormula = formula;
         parseOtherFormula();
     }
 
-    public MemoryOperation getMemoryOperation() {
-        return _memoryOperation;
+    public String getOtherFormula() {
+        return _otherFormula;
     }
 
     private void parseOtherFormula() throws ParserException {
         if (_memoryOperation == MemoryOperation.CalculateFormula) {
             Map<String, Variable> variables = new HashMap<>();
-/*
-            SymbolTable symbolTable =
-                    InstanceManager.getDefault(LogixNG_Manager.class)
-                            .getSymbolTable();
-
-            if (symbolTable == null && 1==1) return;    // Why does this happens?
-//            if (symbolTable == null && 1==1) return;    // Nothing we can do if we don't have a symbol table
-            if (symbolTable == null) throw new RuntimeException("Daniel AA");
-            if (symbolTable.getSymbols() == null) throw new RuntimeException("Daniel BB");
-            if (symbolTable.getSymbols().values() == null) throw new RuntimeException("Daniel BB");
-
-            for (SymbolTable.Symbol symbol : symbolTable.getSymbols().values()) {
-                variables.put(symbol.getName(),
-                        new LocalVariableExpressionVariable(symbol.getName()));
-            }
-*/
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _otherExpressionNode = parser.parseExpression(_otherFormula);
         } else {
@@ -266,20 +265,17 @@ public class ActionMemory extends AbstractDigitalAction
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 boolean doVeto = false;
-                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) doVeto = true;
-                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) doVeto = true;
+                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if ((_memoryOperation == MemoryOperation.CopyMemoryToMemory)
+                        && (_otherMemoryHandle != null)
+                        && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
+                    doVeto = true;
+                }
                 if (doVeto) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionMemory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
-                    removeMemory();
-                }
-                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
-                    removeOtherMemory();
+                    throw new PropertyVetoException(Bundle.getMessage("ActionMemory_MemoryInUseMemoryActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
@@ -289,12 +285,6 @@ public class ActionMemory extends AbstractDigitalAction
     @Override
     public Category getCategory() {
         return Category.ITEM;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
     }
 
     /** {@inheritDoc} */
@@ -346,7 +336,9 @@ public class ActionMemory extends AbstractDigitalAction
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
 
-        ThreadingUtil.runOnLayout(() -> {
+        final ConditionalNG conditionalNG = getConditionalNG();
+
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
             switch (_memoryOperation) {
                 case SetToNull:
@@ -357,8 +349,13 @@ public class ActionMemory extends AbstractDigitalAction
                     memory.setValue(_otherConstantValue);
                     break;
 
+                case CopyTableCellToMemory:
+                    Object value = _selectTable.evaluateTableData(getConditionalNG());
+                    memory.setValue(value);
+                    break;
+
                 case CopyVariableToMemory:
-                    Object variableValue = getConditionalNG()
+                    Object variableValue = conditionalNG
                                     .getSymbolTable().getValue(_otherLocalVariable);
                     memory.setValue(variableValue);
                     break;
@@ -380,7 +377,7 @@ public class ActionMemory extends AbstractDigitalAction
                                 return;
                             }
                             memory.setValue(_otherExpressionNode.calculate(
-                                    getConditionalNG().getSymbolTable()));
+                                    conditionalNG.getSymbolTable()));
                         } catch (JmriException e) {
                             ref.set(e);
                         }
@@ -412,11 +409,33 @@ public class ActionMemory extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        String memoryName;
-        if (_memoryHandle != null) {
-            memoryName = _memoryHandle.getBean().getDisplayName();
-        } else {
-            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        String namedBean;
+
+        switch (_addressing) {
+            case Direct:
+                String memoryName;
+                if (_memoryHandle != null) {
+                    memoryName = _memoryHandle.getBean().getDisplayName();
+                } else {
+                    memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+                }
+                namedBean = Bundle.getMessage(locale, "AddressByDirect", memoryName);
+                break;
+
+            case Reference:
+                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
+
+            case LocalVariable:
+                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                break;
+
+            case Formula:
+                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
         String copyToMemoryName;
@@ -428,15 +447,20 @@ public class ActionMemory extends AbstractDigitalAction
 
         switch (_memoryOperation) {
             case SetToNull:
-                return Bundle.getMessage(locale, "ActionMemory_Long_Null", memoryName);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Null", namedBean);
             case SetToString:
-                return Bundle.getMessage(locale, "ActionMemory_Long_Value", memoryName, _otherConstantValue);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Value", namedBean, _otherConstantValue);
             case CopyVariableToMemory:
-                return Bundle.getMessage(locale, "ActionMemory_Long_CopyVariableToMemory", memoryName, _otherLocalVariable);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyVariableToMemory", namedBean, _otherLocalVariable);
             case CopyMemoryToMemory:
-                return Bundle.getMessage(locale, "ActionMemory_Long_CopyMemoryToMemory", memoryName, copyToMemoryName);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyMemoryToMemory", namedBean, copyToMemoryName);
+            case CopyTableCellToMemory:
+                String tableName = _selectTable.getTableNameDescription(locale);
+                String rowName = _selectTable.getTableRowDescription(locale);
+                String columnName = _selectTable.getTableColumnDescription(locale);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyTableCellToMemory", namedBean, tableName, rowName, columnName);
             case CalculateFormula:
-                return Bundle.getMessage(locale, "ActionMemory_Long_Formula", memoryName, _otherFormula);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Formula", namedBean, _otherFormula);
             default:
                 throw new IllegalArgumentException("_memoryOperation has invalid value: " + _memoryOperation.name());
         }
@@ -464,7 +488,7 @@ public class ActionMemory extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             if (_listenToMemory && (_otherMemoryHandle != null)) {
-                _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+                _otherMemoryHandle.getBean().removePropertyChangeListener("value", this);
             }
             _listenersAreRegistered = false;
         }
@@ -487,6 +511,7 @@ public class ActionMemory extends AbstractDigitalAction
         SetToString(Bundle.getMessage("ActionMemory_MemoryOperation_SetToString")),
         CopyVariableToMemory(Bundle.getMessage("ActionMemory_MemoryOperation_CopyVariableToMemory")),
         CopyMemoryToMemory(Bundle.getMessage("ActionMemory_MemoryOperation_CopyMemoryToMemory")),
+        CopyTableCellToMemory(Bundle.getMessage("ActionMemory_MemoryOperation_CopyTableCellToMemory")),
         CalculateFormula(Bundle.getMessage("ActionMemory_MemoryOperation_CalculateFormula"));
 
         private final String _text;

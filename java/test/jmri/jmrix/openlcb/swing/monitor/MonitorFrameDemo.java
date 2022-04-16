@@ -156,6 +156,7 @@ public class MonitorFrameDemo {
         tcs.terminateThreads();
         tcs = null;
         jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
 
     }

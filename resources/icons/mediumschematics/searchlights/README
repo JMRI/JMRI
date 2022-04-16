@@ -1,0 +1,18 @@
+These icons were extracted from images on Carsten S. Lundsten's web site,
+with updates by Dick Bronson. They were expanded to this size by Keith Usher
+
+Please see http://www.lundsten.dk/us_signaling/abs_st_sp/index.html#example
+
+Your usage of these is subject to the licensing terms in the COPYING file.
+
+Images with names like "right-yellow-marker.gif" represent:
+
+  "right"  - the signal is for a right-bound train
+  "yellow" - the searchilight aspect is yellow (c.f. "red-green" for
+                red over green)
+  "marker" - the mast has a marker plate, e.g. is a block signal
+  "held" - the signal is being held (red) by logic
+  "flashing" - the image represents a flashing signal on the layout
+  "short" - the image is for a dwarf or dual head signal
+  "white" - actually gray outline so it will show against black background panels
+

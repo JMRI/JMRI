@@ -1,10 +1,8 @@
 package jmri.jmrix.ecos.networkdriver.configurexml;
 
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
-import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.networkdriver.ConnectionConfig;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -24,8 +22,16 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     public void storeTest() {
         super.storeTest();
         // TODO: remove catching java.lang.NullPointerException in ConnectionConfigXml.loadTest()
-        jmri.util.JUnitAppender.suppressErrorMessage("Null EcosPrefManager");
-        jmri.util.JUnitAppender.suppressErrorMessage("Null EcosPrefManager");
+        JUnitAppender.suppressErrorMessage("Null EcosPrefManager");
+        JUnitAppender.suppressErrorMessage("Null EcosPrefManager");
+    }
+    
+    @Test
+    @Override
+    public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+        super.loadTest();
+        JUnitAppender.suppressWarnMessage("Null EcosPrefManager");
+        JUnitAppender.suppressWarnMessage("Null EcosPrefManager");
     }
 
     @BeforeEach

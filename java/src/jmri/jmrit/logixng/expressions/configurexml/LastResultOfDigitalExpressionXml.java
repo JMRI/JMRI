@@ -17,7 +17,7 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
 
     public LastResultOfDigitalExpressionXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -31,17 +31,17 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
         Element element = new Element("LastResultOfDigitalExpression");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle handle = p.getDigitalExpression();
+        var handle = p.getDigitalExpression();
         if (handle != null) {
             element.addContent(new Element("expression").addContent(handle.getName()));
         }
-        
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
@@ -62,6 +62,6 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LastResultOfDigitalExpressionXml.class);
 }

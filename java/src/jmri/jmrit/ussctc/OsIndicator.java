@@ -18,6 +18,9 @@ import jmri.implementation.DefaultConditionalAction;
  * separate lock/unlocked indication by showing occupied if the associated
  * turnout has been unlocked.
  *
+ * @see jmri.jmrit.ussctc.OsIndicatorFrame
+ * @see jmri.jmrit.ussctc.OsIndicatorPanel
+ * @see jmri.jmrit.ussctc.OsIndicatorAction
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class OsIndicator implements Constants {

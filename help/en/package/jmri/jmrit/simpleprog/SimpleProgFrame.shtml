@@ -1,58 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Single CV Programmer</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Single CV Programmer</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h2>Single CV Programmer</h2><a href=
-      "SimpleProgFrame.jpg"><img src="SimpleProgFrame.jpg" align=
-      "right" width="132" height="180"></a>
-      <p>The Single CV Programmer lets you easily read and write CV
-      values in DCC decoders. It can (usually) be found in the
-      "Programmers" submenu of the "Tools" menu.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h2>Single CV Programmer</h2>
+      <a href="SimpleProgFrame.jpg"><img src="SimpleProgFrame.jpg" class="floatRight" width="132"
+      height="180" alt="simple cv programmer"></a>
+      <p>The Single CV Programmer lets you easily read and write CV values in DCC decoders. It can
+      (usually) be found in the "Programmers" submenu of the "Tools" menu.</p>
 
       <p>At the top are two buttons for "Read" and "Write".</p>
 
-      <p>Before you use them, you should put in the CV Number
-      (address), and if you want to do a write, the new value.</p>
+      <p>Before you use them, you should put in the CV Number (address), and if you want to do a
+      write, the new value.</p>
 
-      <p>Below that on the left is a place to select the
-      programming mode. Modes that your command station can't
-      provide are disabled and can't be selected.</p>
+      <p>Below that on the left is a place to select the programming mode. Modes that your command
+      station can't provide are disabled and can't be selected.</p>
 
-      <p>If you select an "ops" mode, which does programming on the
-      main track, you need to enter the address of the decoder to
-      be programmed. Depending on your DCC system, you might need
-      to check the "Long address" box if this is a long address;
-      for some DCC systems, JMRI can figure that out from the
-      address. Some DCC systems don't allow you to read on the
-      main, in which case the "read" button will be disabled.</p>
+      <p>If you select an "ops" mode, which does programming on the main track, you need to enter
+      the address of the decoder to be programmed. Depending on your DCC system, you might need to
+      check the "Long address" box if this is a long address; for some DCC systems, JMRI can figure
+      that out from the address. Some DCC systems don't allow you to read on the main, in which
+      case the "read" button will be disabled.</p>
 
-      <p>To the right of that is a place where you can select
-      either Decimal (base 10) or Hexadecimal (base 16) for the
-      input values.</p>
+      <p>To the right of that is a place where you can select either Decimal (base 10) or
+      Hexadecimal (base 16) for the input values.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

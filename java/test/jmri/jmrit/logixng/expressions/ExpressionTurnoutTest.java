@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -64,7 +65,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Turnout IT1 is Thrown ::: Log error%n");
+        return String.format("Turnout IT1 is Thrown ::: Use default%n");
     }
     
     @Override
@@ -73,11 +74,11 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Execute on change ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Turnout IT1 is Thrown ::: Log error%n" +
+                "               Turnout IT1 is Thrown ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true ::: Log error%n" +
+                "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -179,17 +180,12 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
         expressionTurnout.removeTurnout();
-        Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
+        Assert.assertTrue("Turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
@@ -437,7 +433,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         expressionTurnout.setTurnout(turnout);
         turnout.setCommandedState(Turnout.THROWN);
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

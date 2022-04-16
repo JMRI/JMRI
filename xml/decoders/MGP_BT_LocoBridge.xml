@@ -29,47 +29,67 @@
 		<variables>
 			<variable CV="2" item="Decoder Version" readOnly="yes" >
 				<decVal/>
-				<label>Manufacturer Version No.</label>
+				<label>Software Version</label>
+        <label xml:lang="cs">Verze SW</label>
 			</variable>	  
 			<variable CV="3" item="Serial Number" readOnly="yes" >
 				<splitVal highCV="4" upperMask="XXXXVVVV"/>
 				<label>Decoder serial number</label>
+                                <label xml:lang="cs">Sériové číslo</label>
 			</variable>
 			<variable CV="7" item="Manufacturer" readOnly="yes" >
 				<decVal/>
 				<label>Manufacturer Id</label>
+                                <label xml:lang="cs">ID výrobce</label>
 			</variable>
 			<variable CV="8" item="Developer Id" readOnly="yes" >
 				<decVal/>
 				<label>Developer Id</label>
+                                <label xml:lang="cs">ID vývojáře</label>
 			</variable>
 			<variable CV="9" item="Product Id" readOnly="yes" >
 				<decVal/>
 				<label>Product Id</label>
+                                <label xml:lang="cs">ID výrobku</label>
 			</variable>
 
 			<variable CV="21" item="Short Address" default="1">
 				<splitVal highCV="22" upperMask="XXXXXVVV"/>
 				<label>Long Address</label>
+                                <label xml:lang="cs">Dlouhá adresa</label>
 			</variable>	  
 
 			<variable item="Compatible with LocoBuffer" CV="12" mask="XXXXXXXV">
 				<enumVal>
-					<enumChoice choice="No" value="0"/>
-					<enumChoice choice="Yes" value="1"/>
+					<enumChoice choice="No" value="0">
+                                            <choice>No</choice>
+                                            <choice xml:lang="cs">Ne</choice>
+                                        </enumChoice>   
+					<enumChoice choice="Yes" value="1">
+                                            <choice>Yes</choice>
+                                            <choice xml:lang="cs">Ano</choice>
+                                        </enumChoice>   
 				</enumVal>
 				<label>Compatible with LocoBuffer</label>
-			</variable>
+                                <label xml:lang="cs">Kompatibilní s LocoBuffer</label>			</variable>
 			<variable item="Update BlueTooth" CV="13" mask="XXXXXXXV">
 				<enumVal>
-					<enumChoice choice="No" value="0"/>
-					<enumChoice choice="Yes" value="1"/>
+					<enumChoice choice="No" value="0">
+                                            <choice>No</choice>
+                                            <choice xml:lang="cs">Ne</choice>
+                                        </enumChoice>   
+					<enumChoice choice="Yes" value="1">
+                                            <choice>Yes</choice>
+                                            <choice xml:lang="cs">Ano</choice>
+                                        </enumChoice>   
 				</enumVal>
 				<label>Update BlueTooth at next startup</label>
+                                <label xml:lang="cs">Aktualizace Bluetooth při příštím startu</label>
 			</variable>
 			<variable item="Pincode" CV="14">
 				<splitVal highCV="15"/>
 				<label>Pincode (4 digits)</label>
+                                <label xml:lang="cs">PIN kód (4 číslice)</label>
 			</variable>
 
 			<variable item="Bluetooth name, char 1" CV="30">
@@ -139,6 +159,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, first character</label>
+                                <label xml:lang="cs">Název Bluetooth, první znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 2" CV="31">
 				<enumVal>
@@ -207,6 +228,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 2</label>
+                                <label xml:lang="cs">Název Bluetooth, 2. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 3" CV="32">
 				<enumVal>
@@ -275,6 +297,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 3</label>
+                                <label xml:lang="cs">Název Bluetooth, 3. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 4" CV="33">
 				<enumVal>
@@ -343,6 +366,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 4</label>
+                                <label xml:lang="cs">Název Bluetooth, 4. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 5" CV="34">
 				<enumVal>
@@ -411,6 +435,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 5</label>
+                                <label xml:lang="cs">Název Bluetooth, 5. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 6" CV="35">
 				<enumVal>
@@ -479,6 +504,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 6</label>
+                                <label xml:lang="cs">Název Bluetooth, 6. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 7" CV="36">
 				<enumVal>
@@ -547,6 +573,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 7</label>
+                                <label xml:lang="cs">Název Bluetooth, 7. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 8" CV="37">
 				<enumVal>
@@ -615,6 +642,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 8</label>
+                                <label xml:lang="cs">Název Bluetooth, 8. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 9" CV="38">
 				<enumVal>
@@ -683,6 +711,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 9</label>
+                                <label xml:lang="cs">Název Bluetooth, 9. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 10" CV="39">
 				<enumVal>
@@ -751,6 +780,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 10</label>
+                                <label xml:lang="cs">Název Bluetooth, 10. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 11" CV="40">
 				<enumVal>
@@ -819,6 +849,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 11</label>
+                                <label xml:lang="cs">Název Bluetooth, 11. znak</label>
 			</variable>
 			<variable item="Bluetooth name, char 12" CV="41">
 				<enumVal>
@@ -887,6 +918,7 @@
 					<enumChoice choice="z" value="122"/>
 				</enumVal>
 				<label>Bluetooth name, character 12</label>
+                                <label xml:lang="cs">Název Bluetooth, 12. znak</label>
 			</variable>
 
 		</variables>
@@ -897,27 +929,29 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
   <pane>
     <name>General info</name>
+    <name xml:lang="cs">Všeobecné informace</name>
     <column>
       <label>
         <text>LocoNet address to Bluetooth interface</text>
+        <text xml:lang="cs">Adresa LocoNet pro rozhraní Bluetooth</text>
       </label>
       <display item="Short Address"/>
       <label>
         <text> </text>
       </label>
-      <display item="Decoder Version" label="Software Version"/>
+      <display item="Decoder Version" />
       <label>
         <text> </text>
       </label>
-      <display item="Manufacturer Id" label="Manufacturer Id"/>
+      <display item="Manufacturer" />
       <label>
         <text> </text>
       </label>
-      <display item="Developer Id" label="Developer Id"/>
+      <display item="Developer Id" />
       <label>
         <text> </text>
       </label>
-      <display item="Product Id" label="Product Id"/>
+      <display item="Product Id" />
     </column>
   </pane>
 
@@ -940,7 +974,10 @@
 				<text> </text>
 			</label>
 			<row>
-			<label><text>Bluetooth name</text></label>
+			<label>
+                            <text>Bluetooth name</text>
+                            <text xml:lang="cs">Název Bluetooth</text>
+                        </label>
 			<display item="Bluetooth name, char 1"><label></label></display>
 			<display item="Bluetooth name, char 2"><label></label></display>
 			<display item="Bluetooth name, char 3"><label></label></display>

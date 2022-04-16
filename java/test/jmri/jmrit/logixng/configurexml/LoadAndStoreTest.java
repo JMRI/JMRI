@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.configurexml;
 
-
 import jmri.configurexml.*;
 
 import java.io.File;

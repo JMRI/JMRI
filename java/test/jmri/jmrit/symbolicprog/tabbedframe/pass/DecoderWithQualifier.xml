@@ -13,6 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Bob Jacobsen" version="1" lastUpdated="20100119"/>
+    <version author="Dave Heap" version="2" lastUpdated="20210505"/>
 
     <decoder>
 
@@ -56,10 +57,10 @@
             <label>Acceleration Rate</label>
           </variable>
 
-            <variable label="Minor Version Number" CV="56.254.5" readOnly="yes" item="CV56.254.5">
+            <variable label="Minor Version Number" CV="56.254.5" readOnly="yes" item="Minor Version">
               <decVal/>
             </variable>
-            <variable label="Major Version Number" CV="56.254.6" readOnly="yes" item="CV56.254.6">
+            <variable label="Major Version Number" CV="56.254.6" readOnly="yes" item="Major Version">
               <decVal/>
             </variable>
 
@@ -78,7 +79,7 @@
 
             <variable label="CV55.92.0 qual minor gt 100" CV="55.92.0" mask="XXXXXXXV" default="1" item="iCV55.92.0">
                 <qualifier>
-                    <variableref>Minor Version Number</variableref>
+                    <variableref>Minor Version</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
@@ -90,12 +91,12 @@
 
             <variable label="CV55.92.1 qual minor, major gt 100" CV="55.92.1" mask="XXXXXXXV" default="1" item="iCV55.92.1">
                 <qualifier>
-                    <variableref>Minor Version Number</variableref>
+                    <variableref>Minor Version</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
                 <qualifier>
-                    <variableref>Major Version Number</variableref>
+                    <variableref>Major Version</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2021-10-02</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation (support for 4 outputs)</revremark>
+    </revision>
+  </revhistory>
+  <!-- This is a standard variables list for Tams Functions effects (developped for Tams FD-R basic 3 but compatible with other models)   -->
+  <!-- Using the standard "LightsPane" of JMRI Decoder Pro   -->
+  <variable CV="99" item="Global lighting option 1" comment="Range 0-255" default="32">
+    <decVal min="0" max="255"/>
+    <label>Kicking time</label>
+    <label xml:lang="de">Kickzeit</label>
+    <label xml:lang="nl">Kicktijd</label>
+    <tooltip>&lt;html&gt;The kick function must be switched on for the output.&lt;br&gt;
+                         0 = short&lt;br&gt;
+                         255 = long&lt;br&gt;
+                         (Range: 0-255, Default: 32) &lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;Für den Ausgang muss die Kickfunktion eingeschaltet sein.&lt;br&gt;
+                                       0 = kurz&lt;br&gt;
+                                       255 = lang&lt;br&gt;
+                                       (Bereich: 0-255, voreingestellt: 32) &lt;/html&gt;</tooltip>
+    <tooltip xml:lang="nl">&lt;html&gt;De kick-functie moet worden ingeschakeld voor de uitgang.&lt;br&gt;
+                                       0 = kort&lt;br&gt;
+                                       255 = lang&lt;br&gt;
+                                       (Bereik: 0-255, standaardinstelling: 32) &lt;/html&gt;</tooltip>
+    <comment>Range 0-255</comment>
+  </variable>
+  <variable item="Global lighting option 2" CV="63" mask="XXXXXXXV" default="1">
+  <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+  <label>Delayed directional option switching</label>
+  <label xml:lang="de">Richtungswechsel nur bei Fahrstuffe 0</label>
+  <tooltip>&lt;html&gt;Setting common for all outputs. &lt;br&gt;
+                        0 = Direction-dependent outputs are switched immediately when the direction changes. &lt;br&gt;
+                        1 = Direction-dependent outputs are only switched over in the event of a change of direction when speed level 0 is reached.&lt;/html&gt;</tooltip>
+  <tooltip xml:lang="de">&lt;html&gt;Einstellung gemeinsam für alle Ausgänge. &lt;br&gt;
+                        0 = Richtungsabhängige Ausgänge werden bei einem Richtungswechsel sofort umgeschaltet. &lt;br&gt;
+                        1 = Richtungsabhängige Ausgänge werden bei einem Richtungswechsel erst bei Erreichen der Fahrstufe 0 umgeschaltet. &lt;/html&gt;</tooltip>
+  </variable>
+  <variable CV="101" item="Function F0F option 1" comment="Range 1-255" default="20">
+    <decVal min="1" max="255"/>
+    <label>Flashing frequency F0f</label>
+    <label xml:lang="de">Blinkfrequenz F0f</label>
+    <label xml:lang="nl">Knipperfrequentie F0f</label>
+    <tooltip>Range: 1-255, Default: 20 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
+    <comment>Range 1-255</comment>
+  </variable>
+  <variable CV="102" item="Function F0R option 1" comment="Range 1-255" default="20">
+    <decVal min="1" max="255"/>
+    <label>Flashing frequency F0r</label>
+    <label xml:lang="de">Blinkfrequenz F0r</label>
+    <label xml:lang="nl">Knipperfrequentie F0r</label>
+    <tooltip>Range: 1-255, Default: 20 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
+    <comment>Range 1-255</comment>
+  </variable>
+  <variable CV="103" item="Function 1 option 1" comment="Range 1-255" default="20">
+    <decVal min="1" max="255"/>
+    <label>Flashing frequency AUX1</label>
+    <label xml:lang="de">Blinkfrequenz AUX1</label>
+    <label xml:lang="nl">Knipperfrequentie AUX1</label>
+    <tooltip>Range: 1-255, Default: 20 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
+    <comment>Range 1-255</comment>
+  </variable>
+  <variable CV="104" item="Function 2 option 1" comment="Range 1-255" default="20">
+    <decVal min="1" max="255"/>
+    <label>Flashing frequency AUX2</label>
+    <label xml:lang="de">Blinkfrequenz AUX2</label>
+    <label xml:lang="nl">Knipperfrequentie AUX2</label>
+    <tooltip>Range: 1-255, Default: 20 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
+    <comment>Range 1-255</comment>
+  </variable>
+  <variable CV="57" mask="XXXXXXXV" item="Function F0F check 1" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Function inverted</label>
+    <label xml:lang="de">Funktion invertiert</label>
+    <label xml:lang="nl">Functie geïnverteerd</label>
+  </variable>
+  <variable CV="57" mask="XXXXXXVX" item="Function F0F check 2" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Flashing on</label>
+    <label xml:lang="de">Blinken ein</label>
+    <label xml:lang="nl">Knipperen aan</label>
+  </variable>
+  <variable CV="57" mask="XXXXXVXX" item="Function F0F check 3" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Kicking on</label>
+    <label xml:lang="de">Kicken ein</label>
+    <label xml:lang="nl">Kicken aan</label>
+  </variable>
+  <variable CV="58" mask="XXXXXXXV" item="Function F0R check 1" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Function inverted</label>
+    <label xml:lang="de">Funktion invertiert</label>
+    <label xml:lang="nl">Functie geïnverteerd</label>
+  </variable>
+  <variable CV="58" mask="XXXXXXVX" item="Function F0R check 2" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Flashing on</label>
+    <label xml:lang="de">Blinken ein</label>
+    <label xml:lang="nl">Knipperen aan</label>
+  </variable>
+  <variable CV="58" mask="XXXXXVXX" item="Function F0R check 3" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Kicking on</label>
+    <label xml:lang="de">Kicken ein</label>
+    <label xml:lang="nl">Kicken aan</label>
+  </variable>
+  <variable CV="59" mask="XXXXXXXV" item="Function 1 check 1" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Function inverted</label>
+    <label xml:lang="de">Funktion invertiert</label>
+    <label xml:lang="nl">Functie geïnverteerd</label>
+  </variable>
+  <variable CV="59" mask="XXXXXXVX" item="Function 1 check 2" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Flashing on</label>
+    <label xml:lang="de">Blinken ein</label>
+    <label xml:lang="nl">Knipperen aan</label>
+  </variable>
+  <variable CV="59" mask="XXXXXVXX" item="Function 1 check 3" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Kicking on</label>
+    <label xml:lang="de">Kicken ein</label>
+    <label xml:lang="nl">Kicken aan</label>
+  </variable>
+  <variable CV="60" mask="XXXXXXXV" item="Function 2 check 1" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Function inverted</label>
+    <label xml:lang="de">Funktion invertiert</label>
+    <label xml:lang="nl">Functie geïnverteerd</label>
+  </variable>
+  <variable CV="60" mask="XXXXXXVX" item="Function 2 check 2" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Flashing on</label>
+    <label xml:lang="de">Blinken ein</label>
+    <label xml:lang="nl">Knipperen aan</label>
+  </variable>
+  <variable CV="60" mask="XXXXXVXX" item="Function 2 check 3" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Kicking on</label>
+    <label xml:lang="de">Kicken ein</label>
+    <label xml:lang="nl">Kicken aan</label>
+  </variable>
+  <variable CV="47" item="Function F0F option 2" comment="Range 1-64" default="64">
+    <decVal min="1" max="64"/>
+    <label>Dimming F0f</label>
+    <label xml:lang="de">Dimmen F0f</label>
+    <label xml:lang="nl">Dimmen F0f</label>
+    <tooltip>Range: 1-64, Default: 64 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
+    <comment>Range 1-64</comment>
+  </variable>
+  <variable CV="48" item="Function F0R option 2" comment="Range 1-64" default="64">
+    <decVal min="1" max="64"/>
+    <label>Dimming F0r</label>
+    <label xml:lang="de">Dimmen F0r</label>
+    <label xml:lang="nl">Dimmen F0r</label>
+    <tooltip>Range: 1-64, Default: 64 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
+    <comment>Range 1-64</comment>
+  </variable>
+  <variable CV="49" item="Function 1 option 2" comment="Range 1-64" default="64">
+    <decVal min="1" max="64"/>
+    <label>Dimming AUX 1</label>
+    <label xml:lang="de">Dimmen AUX 1</label>
+    <label xml:lang="nl">Dimmen AUX 1</label>
+    <tooltip>Range: 1-64, Default: 64 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
+    <comment>Range 1-64</comment>
+  </variable>
+  <variable CV="50" item="Function 2 option 2" comment="Range 1-64" default="64">
+    <decVal min="1" max="64"/>
+    <label>Dimming AUX 2</label>
+    <label xml:lang="de">Dimmen AUX 2</label>
+    <label xml:lang="nl">Dimmen AUX 2</label>
+    <tooltip>Range: 1-64, Default: 64 </tooltip>
+    <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
+    <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
+    <comment>Range 1-64</comment>
+  </variable>
+
+
+</variables>

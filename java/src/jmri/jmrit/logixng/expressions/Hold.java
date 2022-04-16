@@ -62,12 +62,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         if (_isActive) {
             _isActive = _holdExpressionSocket.evaluate()

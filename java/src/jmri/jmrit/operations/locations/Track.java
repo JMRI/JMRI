@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jdom2.Attribute;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -25,6 +25,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -206,6 +207,7 @@ public class Track extends PropertyChangeSupport {
     public static final String ALTERNATE_TRACK_CHANGED_PROPERTY = "trackAlternate"; // NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
     public static final String TRACK_REPORTER_PROPERTY = "trackReporterChange"; // NOI18N
+    public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -239,9 +241,9 @@ public class Track extends PropertyChangeSupport {
         newTrack.setAlternateTrack(getAlternateTrack());
         newTrack.setBlockCarsEnabled(isBlockCarsEnabled());
         newTrack.setComment(getComment());
-        newTrack.setCommentBoth(getCommentBoth());
-        newTrack.setCommentPickup(getCommentPickup());
-        newTrack.setCommentSetout(getCommentSetout());
+        newTrack.setCommentBoth(getCommentBothWithColor());
+        newTrack.setCommentPickup(getCommentPickupWithColor());
+        newTrack.setCommentSetout(getCommentSetoutWithColor());
 
         newTrack.setDestinationOption(getDestinationOption());
         newTrack.setDestinationIds(getDestinationIds());
@@ -305,11 +307,11 @@ public class Track extends PropertyChangeSupport {
     public String getName() {
         return _name;
     }
-    
+
     public Division getDivision() {
         return getLocation().getDivision();
     }
-    
+
     public String getDivisionName() {
         return getLocation().getDivisionName();
     }
@@ -488,7 +490,7 @@ public class Track extends PropertyChangeSupport {
     public int getScheduleMode() {
         return _mode;
     }
-    
+
     public String getScheduleModeName() {
         if (getScheduleMode() == Track.MATCH) {
             return Bundle.getMessage("Match");
@@ -533,8 +535,7 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Used to determine if there's space available at this track for the car.
-     * Considers cars en route to this track. Used to prevent overloading the track
-     * with cars from staging or cars with custom loads.
+     * Considers cars en-route to this track. Used to prevent overloading the track.
      *
      * @param car The car to be set out.
      * @return true if space available.
@@ -545,7 +546,7 @@ public class Track extends PropertyChangeSupport {
             carLength = car.getKernel().getTotalLength();
         }
         int trackLength = getLength();
-     
+
         // is the car or kernel too long for the track?
         if (trackLength < carLength && getPool() == null) {
             return false;
@@ -762,8 +763,12 @@ public class Track extends PropertyChangeSupport {
             setDirtyAndFirePropertyChange("trackCommentPickup", old, comment); // NOI18N
         }
     }
-
+    
     public String getCommentPickup() {
+        return TrainCommon.getTextColorString(getCommentPickupWithColor());
+    }
+
+    public String getCommentPickupWithColor() {
         return _commentPickup;
     }
 
@@ -774,8 +779,12 @@ public class Track extends PropertyChangeSupport {
             setDirtyAndFirePropertyChange("trackCommentSetout", old, comment); // NOI18N
         }
     }
-
+    
     public String getCommentSetout() {
+        return TrainCommon.getTextColorString(getCommentSetoutWithColor());
+    }
+
+    public String getCommentSetoutWithColor() {
         return _commentSetout;
     }
 
@@ -786,8 +795,12 @@ public class Track extends PropertyChangeSupport {
             setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
         }
     }
-
+    
     public String getCommentBoth() {
+        return TrainCommon.getTextColorString(getCommentBothWithColor());
+    }
+
+    public String getCommentBothWithColor() {
         return _commentBoth;
     }
 
@@ -817,17 +830,22 @@ public class Track extends PropertyChangeSupport {
      * @return rolling stock type names
      */
     public String[] getTypeNames() {
-        return _typeList.toArray(new String[0]);
+        List<String> list = new ArrayList<>();
+        for (String typeName : _typeList) {
+            if (_location.acceptsTypeName(typeName)) {
+                list.add(typeName);
+            }
+        }
+        return list.toArray(new String[0]);
     }
 
     private void setTypeNames(String[] types) {
-        if (types.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(types);
-        for (String type : types) {
-            if (!_typeList.contains(type)) {
-                _typeList.add(type);
+        if (types.length > 0) {
+            Arrays.sort(types);
+            for (String type : types) {
+                if (!_typeList.contains(type)) {
+                    _typeList.add(type);
+                }
             }
         }
     }
@@ -910,14 +928,14 @@ public class Track extends PropertyChangeSupport {
     public String[] getRoadNames() {
         String[] roads = _roadList.toArray(new String[0]);
         if (_roadList.size() > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
         }
         return roads;
     }
 
     private void setRoadNames(String[] roads) {
         if (roads.length > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
             for (String roadName : roads) {
                 if (!roadName.equals(NONE)) {
                     _roadList.add(roadName);
@@ -989,7 +1007,7 @@ public class Track extends PropertyChangeSupport {
 
     private void setLoadNames(String[] loads) {
         if (loads.length > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
             for (String loadName : loads) {
                 if (!loadName.equals(NONE)) {
                     _loadList.add(loadName);
@@ -1007,7 +1025,7 @@ public class Track extends PropertyChangeSupport {
     public String[] getLoadNames() {
         String[] loads = _loadList.toArray(new String[0]);
         if (_loadList.size() > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
         }
         return loads;
     }
@@ -1117,7 +1135,7 @@ public class Track extends PropertyChangeSupport {
 
     private void setShipLoadNames(String[] loads) {
         if (loads.length > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
             for (String shipLoadName : loads) {
                 if (!shipLoadName.equals(NONE)) {
                     _shipLoadList.add(shipLoadName);
@@ -1135,7 +1153,7 @@ public class Track extends PropertyChangeSupport {
     public String[] getShipLoadNames() {
         String[] loads = _shipLoadList.toArray(new String[0]);
         if (_shipLoadList.size() > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
         }
         return loads;
     }
@@ -1957,8 +1975,13 @@ public class Track extends PropertyChangeSupport {
         // okay
         if (!car.getScheduleItemId().equals(NONE)) {
             ScheduleItem si = getSchedule().getItemById(car.getScheduleItemId());
-            if (si != null && checkScheduleItem(si, car).equals(OKAY)) {
-                return OKAY;
+            if (si != null) {
+                String status = checkScheduleItem(si, car);
+                if (status.equals(OKAY)) {
+                    return OKAY;
+                }
+                log.debug("Car ({}) with schedule id ({}) failed check, status: {}", car.toString(),
+                        car.getScheduleItemId(), status);
             }
         }
         // search schedule for a match
@@ -1990,19 +2013,22 @@ public class Track extends PropertyChangeSupport {
     }
 
     private String checkScheduleItem(ScheduleItem si, Car car) {
-        if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
+        // if car is already assigned to this schedule item allow it to be dropped off
+        // on the wrong day (car arrived late)
+        if (!car.getScheduleItemId().equals(si.getId()) &&
+                !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
                 !InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
                         .equals(si.getSetoutTrainScheduleId())) {
-            TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+            TrainSchedule trainSch = InstanceManager.getDefault(TrainScheduleManager.class)
                     .getScheduleById(si.getSetoutTrainScheduleId());
-            if (sch != null) {
+            if (trainSch != null) {
                 return SCHEDULE +
                         " (" +
                         getScheduleName() +
                         ") " +
                         Bundle.getMessage("requestCarOnly") +
                         " (" +
-                        sch.getName() +
+                        trainSch.getName() +
                         ")";
             }
         }
@@ -2160,8 +2186,8 @@ public class Track extends PropertyChangeSupport {
             }
             return SCHEDULE +
                     MessageFormat.format(Bundle.getMessage("sequentialMessage"),
-                            new Object[] { getScheduleName(), getScheduleModeName(), car.toString(), car.getTypeName(), scheduleName,
-                                    car.getRoadName(), car.getLoadName(), currentSi.getTypeName(),
+                            new Object[] { getScheduleName(), getScheduleModeName(), car.toString(), car.getTypeName(),
+                                    scheduleName, car.getRoadName(), car.getLoadName(), currentSi.getTypeName(),
                                     currentTrainScheduleName, currentSi.getRoadName(),
                                     currentSi.getReceiveLoadName() });
         } else {
@@ -2199,6 +2225,66 @@ public class Track extends PropertyChangeSupport {
                 car.getFinalDestinationTrackName(), car.getNextWait()); // NOI18N
         // set all cars in kernel to the next load
         car.updateKernel();
+    }
+
+    public static final String TRAIN_SCHEDULE = "trainSchedule"; // NOI18N
+    public static final String ALL = "all"; // NOI18N
+
+    public boolean checkScheduleAttribute(String attribute, String carType, Car car) {
+        Schedule schedule = getSchedule();
+        if (schedule == null) {
+            return true;
+        }
+        // if car is already placed at track, don't check car type and load
+        if (car != null && car.getTrack() == this) {
+            return true;
+        }
+        List<ScheduleItem> scheduleItems = schedule.getItemsBySequenceList();
+        for (ScheduleItem si : scheduleItems) {
+            // check to see if schedule services car type
+            if (attribute.equals(TYPE) && si.getTypeName().equals(carType)) {
+                return true;
+            }
+            // check to see if schedule services car type and load
+            if (attribute.equals(LOAD) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getReceiveLoadName().equals(car.getLoadName()))) {
+                return true;
+            }
+            // check to see if schedule services car type and road
+            if (attribute.equals(ROAD) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getRoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getRoadName().equals(car.getRoadName()))) {
+                return true;
+            }
+            // check to see if train schedule allows delivery
+            if (attribute.equals(TRAIN_SCHEDULE) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getSetoutTrainScheduleId().isEmpty() ||
+                            InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
+                                    .equals(si.getSetoutTrainScheduleId()))) {
+                return true;
+            }
+            // check to see if at least one schedule item can service car
+            if (attribute.equals(ALL) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getReceiveLoadName().equals(car.getLoadName())) &&
+                    (si.getRoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getRoadName().equals(car.getRoadName())) &&
+                    (si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
+                            InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
+                                    .equals(si.getSetoutTrainScheduleId()))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -2444,7 +2530,7 @@ public class Track extends PropertyChangeSupport {
     public void setOnlyCarsWithFinalDestinationEnabled(boolean enable) {
         boolean old = _onlyCarsWithFD;
         _onlyCarsWithFD = enable;
-        setDirtyAndFirePropertyChange("onlyCarsWithFinalDestinations", old, enable);
+        setDirtyAndFirePropertyChange(ROUTED_CHANGED_PROPERTY, old, enable);
     }
 
     /**
@@ -2479,12 +2565,11 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized with
-     * the detailed DTD in operations-config.xml
+     * the detailed DTD in operations-location.dtd.
      *
      * @param e        Consist XML element
      * @param location The Location loading this track.
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Track(Element e, Location location) {
         _location = location;
         Attribute a;
@@ -2539,7 +2624,7 @@ public class Track extends PropertyChangeSupport {
         }
         // old way of reading track comment, see comments below for new format
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {
@@ -2802,7 +2887,6 @@ public class Track extends PropertyChangeSupport {
                 log.warn("Not able to find reader: {} for location ({})", a.getValue(), getName());
             }
         }
-
     }
 
     /**
@@ -2823,7 +2907,7 @@ public class Track extends PropertyChangeSupport {
             trackType = SIDING; // Pre 4.21.1 location type
         }
         e.setAttribute(Xml.LOC_TYPE, trackType); // backwards compatibility
-        
+
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));
@@ -2970,9 +3054,9 @@ public class Track extends PropertyChangeSupport {
         }
         // save manifest track comments if they exist
         if (!getComment().equals(NONE) ||
-                !getCommentBoth().equals(NONE) ||
-                !getCommentPickup().equals(NONE) ||
-                !getCommentSetout().equals(NONE)) {
+                !getCommentBothWithColor().equals(NONE) ||
+                !getCommentPickupWithColor().equals(NONE) ||
+                !getCommentSetoutWithColor().equals(NONE)) {
             Element comments = new Element(Xml.COMMENTS);
             Element track = new Element(Xml.TRACK);
             Element both = new Element(Xml.BOTH);
@@ -2989,9 +3073,9 @@ public class Track extends PropertyChangeSupport {
             comments.addContent(printSwitchList);
 
             track.setAttribute(Xml.COMMENT, getComment());
-            both.setAttribute(Xml.COMMENT, getCommentBoth());
-            pickup.setAttribute(Xml.COMMENT, getCommentPickup());
-            setout.setAttribute(Xml.COMMENT, getCommentSetout());
+            both.setAttribute(Xml.COMMENT, getCommentBothWithColor());
+            pickup.setAttribute(Xml.COMMENT, getCommentPickupWithColor());
+            setout.setAttribute(Xml.COMMENT, getCommentSetoutWithColor());
             printManifest.setAttribute(Xml.COMMENT, isPrintManifestCommentEnabled() ? Xml.TRUE : Xml.FALSE);
             printSwitchList.setAttribute(Xml.COMMENT, isPrintSwitchListCommentEnabled() ? Xml.TRUE : Xml.FALSE);
 

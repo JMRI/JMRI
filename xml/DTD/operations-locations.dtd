@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (options | locations | schedules)*>
+<!ELEMENT operations-config (options | locations | schedules | divisions)*>
 
 <!ELEMENT options (locationEditOptions)*>
 <!ELEMENT locationEditOptions EMPTY>
@@ -27,6 +27,9 @@
 <!ELEMENT schedules (schedule)*>
 <!ELEMENT schedule (item)*>
 <!ELEMENT item EMPTY>
+
+<!ELEMENT divisions (division)*>
+<!ELEMENT division EMPTY>
 
 <!ATTLIST location id				CDATA #REQUIRED>          
 <!ATTLIST location name				CDATA #IMPLIED>
@@ -48,6 +51,7 @@
 <!ATTLIST location switchListComment CDATA #IMPLIED>
 <!ATTLIST location physicalLocation CDATA #IMPLIED>
 <!ATTLIST location idReader 		CDATA #IMPLIED>
+<!ATTLIST location divisionId 		CDATA #IMPLIED>
 
 <!ATTLIST track id				CDATA #IMPLIED>          
 <!ATTLIST track name			CDATA #IMPLIED>
@@ -151,3 +155,7 @@
 <!ELEMENT setout EMPTY>
 <!ELEMENT printManifest EMPTY>
 <!ELEMENT printSwitchLists EMPTY>
+
+<!ATTLIST division id				CDATA #REQUIRED>          
+<!ATTLIST division name				CDATA #IMPLIED>
+<!ATTLIST division comment				CDATA #IMPLIED>

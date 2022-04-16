@@ -86,6 +86,9 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
             right = right.toString();
         }
         
+        // Object.toString() might return null
+        if ((left == null) || (right == null)) return calculateNull(left, right);
+        
         // A number is always less than a String. If one operand is a number
         // and the other operand is a String, we can change the operands to
         // two integers to make the check easier.
@@ -95,6 +98,20 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
         } else if (!(left instanceof Number) && ((right instanceof Number))) {
             left = 2;
             right = 1;
+        }
+        
+        if ((left instanceof Double) && (!(right instanceof Double))) {
+            right = ((Number)left).doubleValue();
+        }
+        if ((right instanceof Double) && (!(left instanceof Double))) {
+            left = ((Number)left).doubleValue();
+        }
+        
+        if ((left instanceof Long) && (!(right instanceof Long))) {
+            right = ((Number)right).longValue();
+        }
+        if ((right instanceof Long) && (!(left instanceof Long))) {
+            left = ((Number)left).longValue();
         }
         
         if (left instanceof Number) {

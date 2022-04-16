@@ -3,170 +3,183 @@
 <!-- Updated by Herv&#233; Blorec 2016/06/12-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Add/Edit Actions</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Transit Special Actions">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=ISO-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Transit Special Actions"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
       <h1>Transit : Ajouter/Modifier une action</h1>
 
-      <h2>La fen&#234tre d'ajout/modification d'action</h2>
+      <h2>La fenêtre d'ajout/modification d'action</h2>
 
-      <p>Les <b><a href="ViewSpecialActions.shtml">Actions Sp&#233ciales</a></b>
-      sont des tâches qui peuvent &#234tre lanc&#233es automatiquement en tant que Dispatcheur.
-      Train fonctionnant en mode automatique sur le r&#233seau.<br>
-      Le volet Ajouter une action permet de cr&#233er de
-      nouvelles actions :</p>
-      <img src="images/AddEditAction.png" width="322" height="247">.
-      <p>La version "Modifier" de cette fen&#234tre est la m&#234me que celle qui est
-      montr&#233 ci-dessus, sauf que le bouton <b>Cr&#233er une nouvelle action</b> est
-      remplac&#233 par un bouton <b>Mise &#224; jour de l'action</b> et que les s&#233lections
-      et les donn&#233es sont compl&#233t&#233es par les valeurs actuelles de l'action en cours de modifications
-      .</p>
-      <p>Une action se d&#233finit en deux &#233tapes :</p>
+      <p>Les <strong><a href="ViewSpecialActions.shtml">Actions Spéciales</a></strong> sont des
+      tâches qui peuvent être lancées automatiquement en tant que Dispatcheur. Train fonctionnant
+      en mode automatique sur le réseau.<br>
+      Le volet Ajouter une action permet de créer de nouvelles actions :</p>
+      <img src="images/AddEditAction.png" width="322" height="247" alt="">.
+      <p>La version "Modifier" de cette fenêtre est la même que celle qui est montré ci-dessus,
+      sauf que le bouton <strong>Créer une nouvelle action</strong> est remplacé par un bouton
+      <strong>Mise à jour de l'action</strong> et que les sélections et les données sont complétées
+      par les valeurs actuelles de l'action en cours de modifications .</p>
+
+      <p>Une action se définit en deux étapes :</p>
+
       <ol>
-        <li>sp&#233cifier <b>Quand</b> une action doit &#234tre initi&#233e</li>.
-        <li>sp&#233cifier <b>Quelle</b> action doit &#234tre ex&#233cut&#233e</li>.
-      </ol>
+        <li>spécifier <strong>Quand</strong> une action doit être initiée.</li>
 
+        <li>spécifier <strong>Quelle</strong> action doit être exécutée.</li>
+      </ol>
       <a id="when" name="when"></a>
       <h3>Quand agir</h3>
 
-      <p>Pour sp&#233cifier la partie <b>Quand</b>, s&#233lectionnez une option dans la section
-      <b>Quand</b> du menu d&#233roulant, et remplissez toutes les donn&#233es qui pourraient &#234tre
-      requises. Les champs ou les menus des &#233l&#233ments de donn&#233es appara&#238tront lorsque l'&#233l&#233ment
-      qui en a besoin est s&#233lectionn&#233. Chaque &#233l&#233ment de donn&#233es est fourni avec une
-      description textuelle (info-bulle) qui peut &#234tre appel&#233e en passant le curseur
-      sur l'&#233l&#233ment. Chaque option <b>Quand</b> est
-      d&#233crite de mani&#232re plus d&#233taill&#233e dans l'<b><a href=
-      "ViewSpecialActions.shtml#when">Aide Actions</a></b> Aide.</p>
+      <p>Pour spécifier la partie <strong>Quand</strong>, sélectionnez une option dans la section
+      <strong>Quand</strong> du menu déroulant, et remplissez toutes les données qui pourraient
+      être requises. Les champs ou les menus des éléments de données apparaîtront lorsque l'élément
+      qui en a besoin est sélectionné. Chaque élément de données est fourni avec une description
+      textuelle (info-bulle) qui peut être appelée en passant le curseur sur l'élément. Chaque
+      option <strong>Quand</strong> est décrite de manière plus détaillée dans l'<strong><a href=
+      "ViewSpecialActions.shtml#when">Aide Actions</a></strong> Aide.</p>
 
-      <p>Optionnellement, un d&#233lai, sp&#233cifi&#233 en millisecondes, peut &#234tre d&#233fini
-      avec chaque option <b>quand</b>. Le d&#233lai par d&#233faut de 0 entra&#238ne
-      l'action &#224; &#234tre initi&#233e imm&#233diatement apr&#232s que l'&#233v&#233nement <i>quand</i>
-      se produise. Si un d&#233lai de retard sup&#233rieur &#224; 0 est sp&#233cifi&#233,
-      Dispatcher attendra le temps sp&#233cifi&#233 apr&#232s que l'&#233v&#233nement 
-      <i>quand</i> se produise avant de d&#233clencher l'Action.</p>
+      <p>Optionnellement, un délai, spécifié en millisecondes, peut être défini avec chaque option
+      <strong>quand</strong>. Le délai par défaut de 0 entraîne l'action à être initiée
+      immédiatement après que l'événement <em>quand</em> se produise. Si un délai de retard
+      supérieur à 0 est spécifié, Dispatcher attendra le temps spécifié après que l'événement
+      <em>quand</em> se produise avant de déclencher l'Action.</p>
 
-      <p>Pour sp&#233cifier <b>Quelle</b> action est demand&#233e, s&#233lectionnez une
-      option dans le menu contextuel <b>Quoi:</b> et remplissez toutes les donn&#233es
-      qui pourraient &#234tre requises. Les champs de saisie appara&#238tront lorsque l'&#233l&#233ment
-      &#233l&#233ment qui en a besoin est s&#233lectionn&#233. Chaque &#233l&#233ment de donn&#233es est fourni
-      d'une description textuelle (info-bulle) qui peut &#234tre appel&#233e en
-      survolant le curseur sur l'&#233l&#233ment.<br>
-      Dans la liste d&#233roulante, choisissez l'un des &#233l&#233ments suivants :</p> <p>
+      <p>Pour spécifier <strong>Quelle</strong> action est demandée, sélectionnez une option dans
+      le menu contextuel <strong>Quoi:</strong> et remplissez toutes les données qui pourraient
+      être requises. Les champs de saisie apparaîtront lorsque l'élément élément qui en a besoin
+      est sélectionné. Chaque élément de données est fourni d'une description textuelle
+      (info-bulle) qui peut être appelée en survolant le curseur sur l'élément.<br>
+      Dans la liste déroulante, choisissez l'un des éléments suivants :</p>
+
       <ul>
-        <li><b>&#224; l'entr&#233e de la section</b> - Lorsque le train automatique
-          entre dans la section en cours (voir image ci-dessus).</li>
+        <li><strong>à l'entrée de la section</strong> - Lorsque le train automatique entre dans la
+        section en cours (voir image ci-dessus).</li>
 
-        <li><b>Lors de la sortie de section</b> - Lorsque le train automatique quitte
-          la section en cours. Cela signifie lorsque le dernier wagon d&#233tectable
-          quitte la Section, et que la Section est inoccup&#233e.</li>
+        <li><strong>Lors de la sortie de section</strong> - Lorsque le train automatique quitte la
+        section en cours. Cela signifie lorsque le dernier wagon détectable quitte la Section, et
+        que la Section est inoccupée.</li>
 
-        <li><b>Sur l'entr&#233e du Canton</b> - Lorsque le train automatique entre dans
-          un Canton sp&#233cifi&#233 dans la section. Pour les Sections avec seulement
-          un seul Canton, ceci est &#233quivalent &#224; <b>sur Entr&#233e Section</b>.<br>
-        <img src="images/AddEditWhenBlock.png" height="110" width="461">.
-        </li>
+        <li><strong>Sur l'entrée du Canton</strong> - Lorsque le train automatique entre dans un
+        Canton spécifié dans la section. Pour les Sections avec seulement un seul Canton, ceci est
+        équivalent à <strong>sur Entrée Section</strong>.<br>
+        <img src="images/AddEditWhenBlock.png" height="110" width="461" alt="">.</li>
 
-        <li><b>Sur la sortie de canton</b> - Lorsque le train automatique quitte un
-          Canton sp&#233cifi&#233 dans la section. Cela signifie que lorsque le dernier
-          wagon d&#233tectable quitte le canton sp&#233cifi&#233, et que le canton est
-          inoccup&#233. Pour les sections ne comportant qu'un seul canton, ceci est
-          &#233quivalent &#224; <b>La sortie de section</b>.</li>
+        <li><strong>Sur la sortie de canton</strong> - Lorsque le train automatique quitte un
+        Canton spécifié dans la section. Cela signifie que lorsque le dernier wagon détectable
+        quitte le canton spécifié, et que le canton est inoccupé. Pour les sections ne comportant
+        qu'un seul canton, ceci est équivalent à <strong>La sortie de section</strong>.</li>
 
-        <li><b>Sur l'arr&#234t du train</b> - Lorsque le train automatique s'arr&#234te.
-          Ceci peut &#234tre utilis&#233, par exemple, pour arr&#234ter la cloche dans un
-          d&#233codeur sonore ou le d&#233clenchement d'autres actions lorsque le train
-          s'arr&#234te dans une gare.<br>
-          <img src="images/AddEditWhenStop.png" height="116" width="460">.
-        </li>
+        <li><strong>Sur l'arrêt du train</strong> - Lorsque le train automatique s'arrête. Ceci
+        peut être utilisé, par exemple, pour arrêter la cloche dans un décodeur sonore ou le
+        déclenchement d'autres actions lorsque le train s'arrête dans une gare.<br>
+        <img src="images/AddEditWhenStop.png" height="116" width="460" alt="">.</li>
 
-        <li><b>Au d&#233marrage du train</b> - Lorsque les trains automatiques
-          d&#233marrent apr&#232s avoir &#233t&#233 arr&#234t&#233s. Ceci peut &#234tre utilis&#233, par
-          par exemple, pour lancer des actions lorsqu'un train d&#233marre apr&#232s un
-          arr&#234t en gare.</li>
+        <li><strong>Au démarrage du train</strong> - Lorsque les trains automatiques démarrent
+        après avoir été arrêtés. Ceci peut être utilisé, par par exemple, pour lancer des actions
+        lorsqu'un train démarre après un arrêt en gare.</li>
 
-        <li><b>Sur capteur ACTIF</b> - Lorsque le capteur sp&#233cifi&#233 [...]
-          passe &#224; l'&#233tat actif. Le capteur sp&#233cifi&#233 peut &#234tre
-          interne ou mat&#233riel, et doit figurer dans la table des capteurs.
-          Table. Cela peut &#234tre utilis&#233, par exemple, avec un capteur mat&#233riel connect&#233 &#224; un bouton poussoir de TCO
-           pour d&#233clencher une action.
-          Il peut &#233galement &#234tre utilis&#233 pour d&#233clencher des actions en utilisant
-          des capteurs de position mat&#233riels sur le r&#233seau. Avec des capteurs internes
-          , il peut fournir un lien vers Logix.<br>
-          <img src="images/AddEditWhenSensor.png" height="117" width="461">
-        </li>
+        <li><strong>Sur capteur ACTIF</strong> - Lorsque le capteur spécifié [...] passe à l'état
+        actif. Le capteur spécifié peut être interne ou matériel, et doit figurer dans la table des
+        capteurs. Table. Cela peut être utilisé, par exemple, avec un capteur matériel connecté à
+        un bouton poussoir de TCO pour déclencher une action. Il peut également être utilisé pour
+        déclencher des actions en utilisant des capteurs de position matériels sur le réseau. Avec
+        des capteurs internes , il peut fournir un lien vers Logix.<br>
+        <img src="images/AddEditWhenSensor.png" height="117" width="461" alt=""></li>
 
-        <li><b>OSur capteur INACTIF</b> - Lorsque le capteur sp&#233cifi&#233.
-          passe &#224; l'&#233tat inactif. C'est la m&#234me chose que ci-dessus, mais
-          avec l'&#233tat oppos&#233 du capteur. Utilisez celui qui correspond le mieux &#224;
-          votre mat&#233riel ou Logix.</li>
+        <li><strong>OSur capteur INACTIF</strong> - Lorsque le capteur spécifié. passe à l'état
+        inactif. C'est la même chose que ci-dessus, mais avec l'état opposé du capteur. Utilisez
+        celui qui correspond le mieux à votre matériel ou Logix.</li>
       </ul>
 
       <h3>Que faire</h3>
-      <p>Apr&#232s avoir fait un choix <b>Quand</b>, continuez en choisissant l'une
-      d des <b><br></b> <b>suivantes
-      "ViewSpecialActions.shtml#what">Quelle</a></b> actions et en remplissant
-      dans les param&#232tres:</p>
+
+      <p>Après avoir fait un choix <strong>Quand</strong>, continuez en choisissant l'une d des
+      <strong><br></strong> <strong>suivantes "ViewSpecialActions.shtml#what"&gt;Quelle</strong>
+      actions et en remplissant dans les paramètres:</p>
 
       <ul>
-        <li><b>Pause du train</b></li>.  
-        <li><b>D&#233finir la vitesse maximale</b></li>.
-        <li><b>D&#233finir la vitesse du train</b></li>
-        <li><b>Rampe Vitesse du train</b></li>
-        <li><b>Aller au mode manuel</b></li>
-        <li><b>R&#233gler le feu de la locomotive</b></li>
-        <li><b>D&#233marrer la cloche</b></li>
-        <li><b>Sonnerie d'arr&#234t</b></li>
-        <li><b>Sonnerie du klaxon</b></li>
-        <li><b>Sonorisation &#224; motif</b></li>
-        <li><b>Fonctionnement du d&#233codeur</b></li>
-        <li><b>D&#233finir le capteur ACTIF</b></li>
-        <li><b>D&#233finir le capteur INACTIF</b></li>
-        <li><b>Maintien du signal</b></li>
-        <li><b>D&#233verouillage du Signal</b></li>
+        <li><strong>Pause du train</strong>
+        </li>
+
+        <li style="list-style: none">.</li>
+
+        <li><strong>Définir la vitesse maximale</strong>
+        </li>
+
+        <li style="list-style: none">.</li>
+
+        <li><strong>Définir la vitesse du train</strong>
+        </li>
+
+        <li><strong>Rampe Vitesse du train</strong>
+        </li>
+
+        <li><strong>Aller au mode manuel</strong>
+        </li>
+
+        <li><strong>Régler le feu de la locomotive</strong>
+        </li>
+
+        <li><strong>Démarrer la cloche</strong>
+        </li>
+
+        <li><strong>Sonnerie d'arrêt</strong>
+        </li>
+
+        <li><strong>Sonnerie du klaxon</strong>
+        </li>
+
+        <li><strong>Sonorisation à motif</strong>
+        </li>
+
+        <li><strong>Fonctionnement du décodeur</strong>
+        </li>
+
+        <li><strong>Définir le capteur ACTIF</strong>
+        </li>
+
+        <li><strong>Définir le capteur INACTIF</strong>
+        </li>
+
+        <li><strong>Maintien du signal</strong>
+        </li>
+
+        <li><strong>Déverouillage du Signal</strong>
+        </li>
       </ul>
 
-      <p>Quand l'action est compl&#232tement d&#233finie, cliquez sur le bouton <b>Cr&#233er
-      nouvelle action</b> (ou sur le bouton <b>Mise &#224; jour de l'action</b> s'il s'agit d'une
-      modification). Toutes les donn&#233es requises seront valid&#233es. Si un probl&#232me
-      est trouv&#233, un message appara&#238tra, et la fen&#234tre d'ajout/modification d'action
-      restera pour permettre la correction du probl&#232me. 
-      Si tout est en ordre, la fen&#234tre Ajouter/Modifier une action
-      dispara&#238tra et la nouvelle (ou modifi&#233e) action appara&#238tra dans la fen&#234tre
-      <b>Voir les actions</b> .</p>
+      <p>Quand l'action est complètement définie, cliquez sur le bouton <strong>Créer nouvelle
+      action</strong> (ou sur le bouton <strong>Mise à jour de l'action</strong> s'il s'agit d'une
+      modification). Toutes les données requises seront validées. Si un problème est trouvé, un
+      message apparaîtra, et la fenêtre d'ajout/modification d'action restera pour permettre la
+      correction du problème. Si tout est en ordre, la fenêtre Ajouter/Modifier une action
+      disparaîtra et la nouvelle (ou modifiée) action apparaîtra dans la fenêtre <strong>Voir les
+      actions</strong> .</p>
 
-      </p> <p>Cliquez sur le bouton <b>Annuler</b> pour quitter la fen&#234tre Ajouter/Modifier
-      Action sans cr&#233er une nouvelle action ou sans terminer la
-      modification d'une action existante. Fermer la fen&#234tre Ajouter/Modifier une action
-      est &#233quivalente &#224; cliquer sur le bouton <b>Annuler</b>.
-      </p>
+      <p>Cliquez sur le bouton <strong>Annuler</strong> pour quitter la fenêtre Ajouter/Modifier
+      Action sans créer une nouvelle action ou sans terminer la modification d'une action
+      existante. Fermer la fenêtre Ajouter/Modifier une action est équivalente à cliquer sur le
+      bouton <strong>Annuler</strong>.</p>
 
-      <p>Retour &#224; l'aide <a href="ViewSpecialActions.shtml">Actions sp&#233ciales
-      </a>.</p>
-      <p> Traduction 2021-03-26</p>
+      <p>Retour à l'aide <a href="ViewSpecialActions.shtml">Actions spéciales</a> .</p>
+
+      <p>Traduction 2021-03-26</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

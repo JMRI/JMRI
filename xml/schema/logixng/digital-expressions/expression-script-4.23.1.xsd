@@ -28,26 +28,49 @@
     <xs:complexType name="LogixNG_DigitalExpression_ExpressionScriptType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ExpressionScript class.
+          Define the XML stucture for storing the contents of a ExpressionSimpleScript class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionScriptXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionScriptXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-
+        
             <xs:sequence>
 
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="operationType" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="RunScript"/>
+                    <xs:enumeration value="JythonCommand"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="scriptAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="script" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="scriptReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="scriptLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="scriptFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="registerListenerScript" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="unregisterListenerScript" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            <xs:attribute name="class" type="classType" use="required"/>
-
+            
+			<xs:attribute name="class" type="classType" use="required"/>
+        
     </xs:complexType>
 
 </xs:schema>

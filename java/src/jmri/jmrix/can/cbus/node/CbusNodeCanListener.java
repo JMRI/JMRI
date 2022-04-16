@@ -161,7 +161,10 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
                 break;
             case CbusConstants.CBUS_NNLRN:
                 // sent from software
-                _node.setNodeInLearnMode(true);
+                // [AC] Ignore setting servo modules into learn mode during NV GUI edit
+                if (((CbusNode)_node).getnvWriteInLearnOnly() == false) {
+                    _node.setNodeInLearnMode(true);
+                }
                 break;
             case CbusConstants.CBUS_NNULN:
                 // sent from software

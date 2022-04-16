@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspecttable>SNCF-2015</aspecttable>
+  <name>appearance-CibleB</name>
+  <reference>https://fr.wikipedia.org/wiki/Signalisation_ferroviaire_en_France</reference>
+  <description>Signal de manoeuvre, utilisation horizontale ou verticale.</description>
+
+
+ <appearances>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <reference>Carré d'arrêt</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBC_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBC_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBC_face.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Semaphore</aspectname>
+      <show>red</show>
+      <reference>Semaphore, permissif ou non permissif</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBS_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBS_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBS_face.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>Voie libre</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBVL_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBVL_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBVL_face.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>ClearSlow</aspectname>
+      <show>green</show>
+      <reference>Voie libre avec ralentissement vitesse max 130km/h</reference>
+      <comment>flashgreen</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBVLr_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBVLr_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBVLr_face.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <reference>Avertissement</reference>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBA_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBA_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBA_face.gif</imagelink>
+    </appearance>
+   <appearance>
+      <aspectname>Advanced Approach</aspectname>
+      <show>yellow</show>
+      <reference>Jaune clignotant</reference>
+      <comment>flashyellow</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBAa_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBAa_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBAa_face.gif</imagelink>
+    </appearance>
+   <appearance>
+      <aspectname>Restricted</aspectname>
+      <show>red</show>
+      <reference>Rouge clignotant</reference>
+      <comment>flashred</comment>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBSa_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBSa_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBSa_face.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleB/CibleBdark_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleB/CibleBdark_face.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleB/CibleBdark_face.gif</imagelink>
+    </appearance>
+ </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Approach</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Semaphore</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>ClearSlow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advanced Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advanced Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Not Lit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

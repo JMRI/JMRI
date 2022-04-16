@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  * Test TimeDiagram
- * 
+ *
  * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class ImportLogixFrameTest {
@@ -18,7 +18,7 @@ public class ImportLogixFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         ImportLogixFrame b = new ImportLogixFrame();
         Assert.assertNotNull("exists", b);
     }
@@ -36,6 +36,7 @@ public class ImportLogixFrameTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -1,55 +1,39 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Configure Digitrax Command Station</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help configure Digitrax command station">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help configure Digitrax command station">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Configure a Digitrax Command Station</h1>
-      
-      <p>Recent JMRI versions support configuration of the Command Station
-          "Operation Switches" (OpSws) via a "roster" entry.  See the JMRI 
-          <a href="../../../../../html/hardware/loconet/CommandStationConfig.shtml">
-          Digitrax Command Station Configuration</a> page for details.  The
-          new "roster" entry-based method is preferred over the tool described
-          below.</p>
 
-      <p>This tool Configures the Digitrax MASTER DCS OpSw's. You
-      do not need to set any of the switches on the DCS to use this
-      tool.</p>
+      <p>Recent JMRI versions support configuration of the Command Station "Operation Switches"
+      (OpSws) via a "roster" entry. See the JMRI <a href=
+      "../../../../../html/hardware/loconet/CommandStationConfig.shtml">Digitrax Command Station
+      Configuration</a> page for details. The new "roster" entry-based method is preferred over the
+      tool described below.</p>
 
-      <p>OpSw2 being set to Thrown allows this tool to access Slot
-      127, which contains the OpSw settings. DB do not have OpSw
-      and can not be set with this tool, DCS's that have OpSw2 set
-      to Closed are not programmed by this tool.</p>
+      <p>This tool Configures the Digitrax MASTER DCS OpSw's. You do not need to set any of the
+      switches on the DCS to use this tool.</p>
 
-      <p>To configure DB's and DCS's set as Boosters, you need to
-      follow the original Digitrax instructions.</p>
+      <p>OpSw2 being set to Thrown allows this tool to access Slot 127, which contains the OpSw
+      settings. DB do not have OpSw and can not be set with this tool, DCS's that have OpSw2 set to
+      Closed are not programmed by this tool.</p>
 
+      <p>To configure DB's and DCS's set as Boosters, you need to follow the original Digitrax
+      instructions.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

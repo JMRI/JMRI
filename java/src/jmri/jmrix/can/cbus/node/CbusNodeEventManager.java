@@ -561,6 +561,14 @@ public class CbusNodeEventManager {
         return newIndex;
     }
     
+    /**
+     * @return descriptive string
+     */
+    @Override
+    public String toString() {
+        return "Node Events";
+    }
+    
     private static final Logger log = LoggerFactory.getLogger(CbusNodeEventManager.class);
     
 }

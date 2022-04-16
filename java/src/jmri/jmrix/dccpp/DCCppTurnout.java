@@ -260,6 +260,13 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      */
     @Override
     synchronized public void message(DCCppReply l) {
+        //if this is a turnout definition message, copy the defining properties from message to turnout
+        if (l.isTurnoutDefDCCReply() || l.isTurnoutDefServoReply() || l.isTurnoutDefVpinReply()  || l.isTurnoutDefLCNReply() ) {
+            l.getProperties().forEach((key, value) -> {
+                this.setProperty(key, value); //copy the properties
+            });
+        }
+        
         switch (getFeedbackMode()) {
         case EXACT:
             handleExactModeFeedback(l);

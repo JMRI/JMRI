@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Mode</name>
+    <column>
+        <label>
+          <text>CV 128 places the locomotive in a special mode and automatically sets a number of CV’s associated with that mode.</text>
+        </label>
+        <label>
+          <text>1 - Turn on Promode template</text>
+        </label>
+        <label>
+          <text>2 - Turn off Promode template</text>
+        </label>
+        <label>
+          <text>3 - Turn on Switcher mode</text>
+        </label>
+        <label>
+          <text>4 - Turn off Switcher mode</text>
+        </label>
+        <label>
+          <text>10 - Loads and Saves Factory Stored Macro</text>
+        </label>
+        <label>
+          <text>16 - Saves Recorded Macro</text>
+        </label>
+        <label>
+          <text>18 - Initializes rolling thunder to last saved values</text>
+        </label>
+        <label>
+          <text>20 - Disable Promode consist</text>
+        </label>
+        <label>
+          <text>21 - Set Locomotive as Front Engine Promode consist</text>
+        </label>
+        <label>
+          <text>22 - Set Locomotive as Middle Engine Promode cons</text>
+        </label>
+        <label>
+          <text>23 - Set Locomotive as Rear Engine (Forward Facing) Promode consist</text>
+        </label>
+        <label>
+          <text>38 - Sets F0 thru F12 to match the Blue Line engine function keys</text>
+        </label>
+        <label>
+          <text>100 -Lock CV’s while moving</text>
+        </label>
+        <label>
+          <text>101 - Unlocks CV’s while moving</text>
+        </label>
+        <label>
+          <text>113 - Sets F0 thru F12 to match QSI engine function keys</text>
+        </label>
+        <label>
+          <text>141 - Sets F0 thru F12 to match SoundTraxx engine function keys</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>If you want to make the locomotive part of a consist, and have Pro Mode Lighting available for the consist:</text>
+        </label>
+        <label>
+          <text>Set CV128=21, then set CV128=1 for a lead engine.</text>
+        </label>
+        <label>
+          <text>Set CV128=22, then set CV128=1 for a middle engine.</text>
+        </label>
+        <label>
+          <text>Set CV128=23, then set CV128=1 for a trailing engine.</text>
+        </label>
+        <label>
+          <text>Set CV128=20 to exit a Pro Mode Consist</text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text></text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Macro Play Select"/>
+    </column>
+</pane>

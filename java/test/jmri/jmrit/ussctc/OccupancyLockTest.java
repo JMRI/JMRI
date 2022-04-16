@@ -21,7 +21,7 @@ public class OccupancyLockTest {
 
         OccupancyLock lock = new OccupancyLock(list);
 
-        Assert.assertTrue(lock.isLockClear());
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class OccupancyLockTest {
 
         OccupancyLock lock = new OccupancyLock(list);
 
-        Assert.assertTrue(lock.isLockClear());
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -51,17 +51,17 @@ public class OccupancyLockTest {
 
         OccupancyLock lock = new OccupancyLock(list);
 
-        Assert.assertTrue(!lock.isLockClear());
+        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
     public void testOneFailStringArrayCtor() throws JmriException {
-    
+
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
 
         OccupancyLock lock = new OccupancyLock(new String[]{"IS1"});
 
-        Assert.assertTrue(!lock.isLockClear());
+        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class OccupancyLockTest {
 
         OccupancyLock lock = new OccupancyLock("IS1");
 
-        Assert.assertTrue(!lock.isLockClear());
+        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class OccupancyLockTest {
 
         OccupancyLock lock = new OccupancyLock(list);
 
-        Assert.assertTrue(!lock.isLockClear());
+        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class OccupancyLockTest {
 
         OccupancyLock lock = new OccupancyLock(list);
 
-        Assert.assertTrue(!lock.isLockClear());
+        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class OccupancyLockTest {
 
         OccupancyLock lock = new OccupancyLock(list);
 
-        Assert.assertTrue(!lock.isLockClear());
+        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @BeforeEach

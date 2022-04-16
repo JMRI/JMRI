@@ -39,6 +39,7 @@
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
         <label>Manufacturer Version No: </label>
+        <label xml:lang="cs">Verze dekodéru: </label>
   </variable>
   <variable CV="8" readOnly="yes" item="Manufacturer" default="55">
     <decVal/>
@@ -46,5 +47,6 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
+        <label xml:lang="cs">ID výrobce: </label>
   </variable>
 </variables>

@@ -1,162 +1,180 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Blorec Herv&#233; le 2017-01-07-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Throttle: Getting Started</title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days">
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
+  <meta name="Revisit-After" content="7 Days"><!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1><span style="color:#ff0000">
-Mise &#224; jour de la Version de documentation du R&#233;gulateur
-</span></h1>
+      <h1><span style="color:#ff0000">Mise à jour de la Version de documentation du
+      Régulateur</span>
+      </h1>
 
-<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour. Version Actuelle</p>
-<ul>
- <li>Le <a href="ToolsMenuThrottleEntry.shtml">menu R&#233;gulateur dans JMRI</a></li>
- <li>La <a href="BasicThrottleWindow.shtml">Fen&#232;tre R&#233;gulateur elle-m&#234;me</a></li>
- <li>Les <a href="ThrottleWindowMenus.shtml">menus Fen&#234;tre R&#233;gulateur</a></li>
- <li>Les <a href="ThrottleToolBar.shtml">barre d'outils de la Fen&#234;tre R&#233;gulateur</a></li>
- <li>La <a href="AdvancedThrottleControl.shtml">commandes de la Fen&#234;tre R&#233;gulateur</a></li>
- <li>La <a href="ThrottlesListWindow.shtml">liste des Fen&#234;tres R&#233;gulateurs</a></li>
- <li><a href="ThrottlesListWindow.shtml"></a>
-Le <a href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences R&#233;gulateurs</a><br>
-</li>
-</ul>
+      <p>S'il vous plaît noter que cette documentation a été mise à jour. Version Actuelle</p>
 
-<h1>R&#233;gulateurs dans JMRI v2.x</h1>
-<h2>O&#249; puis-je trouver les  R&#233;gulateurs?</h2>
+      <ul>
+        <li>Le <a href="ToolsMenuThrottleEntry.shtml">menu Régulateur dans JMRI</a></li>
 
-<p>Par chance , si vous lisez ce texte
-, alors vous avez probablement vu des r&#233;f&#233;rence
-aux "R&#233;gulateurs" dans les messages du groupe d'utilisateurs JMRI. Et la premi&#232;re question qui vous est
-sans doute venue &#224; l'esprit fut: "O&#249; diable vais-je trouver ces R&#233;gulateurs?"</p>
+        <li>La <a href="BasicThrottleWindow.shtml">Fenètre Régulateur elle-même</a></li>
 
-<p> Eh bien vous avez commenc&#233; au bon endroit. La premi&#232;re chose que cette section va 
-faire est de vous montrer comment acc&#233;der aux R&#233;gulateurs. Cette section vous fera
-&#233;galement voir les options de menu qui sont disponibles.</p>
+        <li>Les <a href="ThrottleWindowMenus.shtml">menus Fenêtre Régulateur</a></li>
 
-<p> Premi&#232;rement, il est important de comprendre que le projet JMRI est un groupe 
-de nombreux <b>"outils"</b> pour vos r&#233;seaux avec de nombreuses contributions de diff&#233;rents
- programmeurs. Il y a quatre principales applications de d&#233;marrage disponibles</p>
+        <li>Les <a href="ThrottleToolBar.shtml">barre d'outils de la Fenêtre Régulateur</a></li>
 
-<ul>
-    <li><b>DecoderPro</b> (le morceau le plus largement et commun&#233;ment appel&#233; le
-     projet)</li>
-    <li><b>JMRI d&#233;mo</b></li>
-    <li><b>Outils Loco</b></li>
-    <li><b>PanelPro</b></li>
-</ul>
+        <li>La <a href="AdvancedThrottleControl.shtml">commandes de la Fenêtre Régulateur</a></li>
 
-<p> Pour le sujet de ce guide utilisateur, l'application de d&#233;marrage<b>JMRI d&#233;mo</b> 
-a &#233;t&#233; utilis&#233;e aux fins de la r&#233;daction de ces pages. Toutefois, vous pourrez
-constater que de nombreux outils "cross over" ont de multiples applications de d&#233;marrage. L'
-<b>Outil R&#233;gulateur</b> est un bon exemple de cela. Peu importe les applications mentionn&#233;es qui pr&#233;c&#232;dent avec 
-lesquelles vous commencez, vous serez capable de trouver les r&#233;gulateurs.</p>
+        <li>La <a href="ThrottlesListWindow.shtml">liste des Fenêtres Régulateurs</a></li>
 
-<a name="MainMenu"></a>
-<h2>Menu Principal (ou primaire)</h2>
+        <li><a href="ThrottlesListWindow.shtml"></a> Le <a href=
+        "ThrottlesPreferencesPane.shtml">Volet préférences Régulateurs</a><br></li>
+      </ul>
 
- <p> Dans chacune des applications de d&#233;marrage not&#233;e ci-dessus, il y a toujours une fen&#234;tre principale 
-   "<i>primaire</i>" qui s'affiche sur votre &#233;cran (similaire &#224; celle montr&#233;e
-   ci-dessous dans la figure 1-1). Fermez cette fen&#234;tre et toute l'application sera
-   termin&#233;e. Cette fen&#234;tre principale contient un ensemble d'options de menu principal. C'est l'endroit 
-o&#249; vous trouverez la plupart des outils et des options disponibles y compris les R&#233;gulateurs.</p>
+      <h1>Régulateurs dans JMRI v2.x</h1>
 
-<ul type="square">
- <li> Cliquez sur<big>"Outils"</big>.</li>
-  <li> Cela va ouvrir un sous-menu.</li>
-  <li> D&#233;placez le pointeur de votre souris jusqu'&#224; ce que vous localisiez
-  "<big>"R&#233;gulateurs"</big>".</li>
-  <li> Cela va ouvrir un autre sous-menu.</li>
-  <li> C'est le menu des R&#233;gulateurs(voir figure 1-2).</li>
-</ul>
+      <h2>Où puis-je trouver les Régulateurs?</h2>
 
-<p style="text-align: center; font-
-size: xx-small"><img width="410"
-height="228" src="images/jmri010.jpg" title="JMRI main menu structure"><br>
-Figure 1-1: structure menu principal JMRI</p><br>
-<br>
-<br>
-<br>
-<a name="ThrottlesSub"></a> 
+      <p>Par chance , si vous lisez ce texte , alors vous avez probablement vu des référence aux
+      "Régulateurs" dans les messages du groupe d'utilisateurs JMRI. Et la première question qui
+      vous est sans doute venue à l'esprit fut: "Où diable vais-je trouver ces Régulateurs?"</p>
 
-<h2>Le Sous- menu R&#233;gulateurs</h2>
+      <p>Eh bien vous avez commencé au bon endroit. La première chose que cette section va faire
+      est de vous montrer comment accéder aux Régulateurs. Cette section vous fera également voir
+      les options de menu qui sont disponibles.</p>
 
- <p> Le sous-menu r&#233;gulateurs (comme le montre la figure 1-2 ci-dessous) contient les
-   options suivantes, qui sont d&#233;finies comme suit:</p>
+      <p>Premièrement, il est important de comprendre que le projet JMRI est un groupe de nombreux
+      <strong>"outils"</strong> pour vos réseaux avec de nombreuses contributions de différents
+      programmeurs. Il y a quatre principales applications de démarrage disponibles</p>
 
-<ul>
-    <li><b> Nouveau R&#233;gulateurs...
-    </b>&#8212; ouvrir une nouvelle fen&#234;tre r&#233;gulateur simple avec des param&#232;tres r&#233;gulateur par d&#233;faut est activ&#233;e.<br>
-    </li>
-    <li><b>Enregistrer R&#233;gulateurs ...</b>&#8212;sauve une ou plusieurs
-      fen&#234;tres r&#233;gulateur actuellement ouvertes dans un fichier utilisateur nomm&#233; sur votre disque dur.<br>
-    </li>
-    <li><b>Charger R&#233;gulateurs ...</b>&#8212;ouvre un fichier r&#233;gulateur enregistr&#233; pr&#233;c&#233;demment.
-     Ce fichier peut contenir une ou plusieurs fen&#234;tres r&#233;gulateur selon la fa&#231;on dont la 
-     mise en page a &#233;t&#233; sauv&#233;e .<br>
-    </li>
-    <li><b>Sauvegarder les Pr&#233;f&#233;rences R&#233;gulateurs ...</b>&#8212;Permet de configurer votre ensemble
-     pr&#233;f&#233;rences pour toutes les fen&#234;tres r&#233;gulateur.
-    </li>
-</ul>
+      <ul>
+        <li><strong>DecoderPro</strong> (le morceau le plus largement et communément appelé le
+        projet)</li>
 
-<p style="text-align: center; font-size: xx-small"><img width="359"
-height="225" src="images/jmri009.jpg"
-title="JMRI Throttles sub-menu structure"><br>
-Figure 1-2: stucture sous-menu des R&#233;gulateurs JMRI</p><br>
-<br>
+        <li><strong>JMRI démo</strong>
+        </li>
 
-<p> Utilisez les liens ci-dessous pour acc&#233;der au chapitre suivant pour vous d&#233;placer &#224; travers le
-processus d'ouverture d'une  nouvelle fen&#234;tre de r&#233;gulateur et la mise en place de certaines des
-options disponibles, et n'oublions pas ... de faire circuler une locomotive.</p>
+        <li><strong>Outils Loco</strong>
+        </li>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
- <tbody>
-   <tr>
+        <li><strong>PanelPro</strong>
+        </li>
+      </ul>
 
-     <td align="right"><dl>
-         <dt><a href="ThrottleMain.shtml"
-          title="Return to the previous chapter"><img width="18" height="18"
-          src="images/LeftArrow2.jpg"></a></dt>
-      </dl>
-    </td>
-     <td><img src="images/spacer.gif" width="30" height="10"></td>
-     <td align="center"><b><a href="ThrottleTOC.shtml"
-        title="Jump to the Table Of Contents page">TOC</a></b></td>
-     <td><img src="images/spacer.gif" width="30" height="10"></td>
-     <td align="left"><b><a href="ThrottleChapter2.shtml"
-        title="Advance to the next chapter"><img width="18" height="18"
-        src="images/RightArrow2.jpg"></a></b></td>
-  </tr>
+      <p>Pour le sujet de ce guide utilisateur, l'application de démarrage<strong>JMRI
+      démo</strong> a été utilisée aux fins de la rédaction de ces pages. Toutefois, vous pourrez
+      constater que de nombreux outils "cross over" ont de multiples applications de démarrage. L'
+      <strong>Outil Régulateur</strong> est un bon exemple de cela. Peu importe les applications
+      mentionnées qui précèdent avec lesquelles vous commencez, vous serez capable de trouver les
+      régulateurs.</p>
+      <a name="MainMenu" id="MainMenu"></a>
+      <h2>Menu Principal (ou primaire)</h2>
 
- </tbody>
-</table>
+      <p>Dans chacune des applications de démarrage notée ci-dessus, il y a toujours une fenêtre
+      principale "<em>primaire</em>" qui s'affiche sur votre écran (similaire à celle montrée
+      ci-dessous dans la figure 1-1). Fermez cette fenêtre et toute l'application sera terminée.
+      Cette fenêtre principale contient un ensemble d'options de menu principal. C'est l'endroit où
+      vous trouverez la plupart des outils et des options disponibles y compris les
+      Régulateurs.</p>
 
-        <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <ul type="square">
+        <li>Cliquez sur<big>"Outils"</big>.</li>
+
+        <li>Cela va ouvrir un sous-menu.</li>
+
+        <li>Déplacez le pointeur de votre souris jusqu'à ce que vous localisiez
+        "<big>"Régulateurs"</big>".</li>
+
+        <li>Cela va ouvrir un autre sous-menu.</li>
+
+        <li>C'est le menu des Régulateurs(voir figure 1-2).</li>
+      </ul>
+
+      <p style="text-align: center; font- size: xx-small"><img width="410" height="228" src=
+      "images/jmri010.jpg" title="JMRI main menu structure" alt=""><br>
+      Figure 1-1: structure menu principal JMRI</p>
+      <br>
+      <br>
+      <br>
+      <br>
+      <a name="ThrottlesSub" id="ThrottlesSub"></a>
+      <h2>Le Sous- menu Régulateurs</h2>
+
+      <p>Le sous-menu régulateurs (comme le montre la figure 1-2 ci-dessous) contient les options
+      suivantes, qui sont définies comme suit:</p>
+
+      <ul>
+        <li><strong>Nouveau Régulateurs...</strong> — ouvrir une nouvelle fenêtre régulateur simple
+        avec des paramètres régulateur par défaut est activée.<br></li>
+
+        <li><strong>Enregistrer Régulateurs ...</strong>—sauve une ou plusieurs fenêtres régulateur
+        actuellement ouvertes dans un fichier utilisateur nommé sur votre disque dur.<br></li>
+
+        <li><strong>Charger Régulateurs ...</strong>—ouvre un fichier régulateur enregistré
+        précédemment. Ce fichier peut contenir une ou plusieurs fenêtres régulateur selon la façon
+        dont la mise en page a été sauvée .<br></li>
+
+        <li><strong>Sauvegarder les Préférences Régulateurs ...</strong>—Permet de configurer votre
+        ensemble préférences pour toutes les fenêtres régulateur.</li>
+      </ul>
+
+      <p style="text-align: center; font-size: xx-small"><img width="359" height="225" src=
+      "images/jmri009.jpg" title="JMRI Throttles sub-menu structure" alt=""><br>
+      Figure 1-2: stucture sous-menu des Régulateurs JMRI</p>
+      <br>
+      <br>
+
+      <p>Utilisez les liens ci-dessous pour accéder au chapitre suivant pour vous déplacer à
+      travers le processus d'ouverture d'une nouvelle fenêtre de régulateur et la mise en place de
+      certaines des options disponibles, et n'oublions pas ... de faire circuler une
+      locomotive.</p>
+
+      <table border="0" width="100%" cellpadding="0" cellspacing="0" summary="">
+        <tbody>
+          <tr>
+            <td align="right">
+              <dl>
+                <dt><a href="ThrottleMain.shtml" title="Return to the previous chapter"><img width=
+                "18" height="18" src="images/LeftArrow2.jpg" alt=""></a>
+                </dt>
+              </dl>
+            </td>
+            <td><img src="images/spacer.gif" width="30" height="10" alt="">
+            </td>
+            <td align="center"><strong><a href="ThrottleTOC.shtml" title=
+            "Jump to the Table Of Contents page">TOC</a></strong>
+            </td>
+            <td><img src="images/spacer.gif" width="30" height="10" alt="">
+            </td>
+            <td align="left"><strong><a href="ThrottleChapter2.shtml" title=
+            "Advance to the next chapter"><img width="18" height="18" src="images/RightArrow2.jpg"
+            alt=""></a></strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

@@ -75,19 +75,14 @@ public class DefaultAnonymousTable implements AnonymousTable {
     }
     
     private void setupTable() {
-        for (int i=1; i <= _numRows; i++) {
+        for (int i=0; i <= _numRows; i++) {
             Object cell = _data[i][0];
             if (cell != null && cell instanceof String) {
                 rowNames.put(cell.toString(), i);
             }
-//            if (cell != null) {
-//                rowNames.put(cell.toString(), i);
-//            } else {
-//                rowNames.put(Integer.toString(i), i);
-//            }
         }
         
-        for (int i=1; i <= _numColumns; i++) {
+        for (int i=0; i <= _numColumns; i++) {
             Object cell = _data[0][i];
             if (cell != null && cell instanceof String) {
                 columnNames.put(cell.toString(), i);
@@ -175,7 +170,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
             return rowNumber;
         }
         // If here, the row is not found
-        return -1;
+        throw new RowNotFoundException(rowName);
     }
 
     /**
@@ -186,16 +181,16 @@ public class DefaultAnonymousTable implements AnonymousTable {
         Integer columnNumber = columnNames.get(columnName);
         if (columnNumber == null) {
             try {
-                int row = Integer.parseInt(columnName);
-                if (row >= 0 && row <= _numRows) return row;
+                int column = Integer.parseInt(columnName);
+                if (column >= 0 && column <= _numColumns) return column;
             } catch (NumberFormatException e) {
                 // Do nothing
             }
         } else {
             return columnNumber;
         }
-        // If here, the row is not found
-        return -1;
+        // If here, the column is not found
+        throw new ColumnNotFoundException(columnName);
     }
 
     @Override

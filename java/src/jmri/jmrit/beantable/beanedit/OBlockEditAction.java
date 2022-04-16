@@ -223,7 +223,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         });
 
         speedField = new JComboBox<>(speedList);
-        
+        JComboBoxUtil.setupComboBoxMaxRows(speedField);
         basic.addItem(new BeanEditItem(p, Bundle.getMessage("BlockLengthUnits"), Bundle.getMessage("BlockLengthUnitsText")));
         basic.addItem(new BeanEditItem(curvatureField, Bundle.getMessage("BlockCurveColName"), ""));
         basic.addItem(new BeanEditItem(speedField, Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));

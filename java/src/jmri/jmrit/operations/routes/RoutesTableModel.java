@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.table.ButtonEditor;
@@ -36,7 +37,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     public static final int ID_COLUMN = 0;
     public static final int NAME_COLUMN = ID_COLUMN + 1;
     public static final int COMMENT_COLUMN = NAME_COLUMN + 1;
-    public static final int MIN_LENGTH_COLUMN = COMMENT_COLUMN + 1;
+    public static final int DEPARTS_COLUMN = COMMENT_COLUMN + 1;
+    public static final int MIN_LENGTH_COLUMN = DEPARTS_COLUMN + 1;
     public static final int MAX_LENGTH_COLUMN = MIN_LENGTH_COLUMN + 1;
     public static final int STATUS_COLUMN = MAX_LENGTH_COLUMN + 1;
     public static final int EDIT_COLUMN = STATUS_COLUMN + 1;
@@ -45,6 +47,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     public RoutesTableModel() {
         super();
+        Setup.getDefault().addPropertyChangeListener(this);
         routemanager = InstanceManager.getDefault(RouteManager.class);
         routemanager.addPropertyChangeListener(this);
         InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
@@ -92,6 +95,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(220);
         table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(380);
         table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(70);
+        table.getColumnModel().getColumn(DEPARTS_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(MIN_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(MAX_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
@@ -118,6 +122,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("Name");
             case COMMENT_COLUMN:
                 return Bundle.getMessage("Comment");
+            case DEPARTS_COLUMN:
+                return Bundle.getMessage("DepartsDirection");
             case MIN_LENGTH_COLUMN:
                 return Bundle.getMessage("MinLength");
             case MAX_LENGTH_COLUMN:
@@ -136,6 +142,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
             case NAME_COLUMN:
             case COMMENT_COLUMN:
+            case DEPARTS_COLUMN:
             case STATUS_COLUMN:
                 return String.class;
             case ID_COLUMN:
@@ -175,6 +182,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
                 return route.getName();
             case COMMENT_COLUMN:
                 return route.getComment();
+            case DEPARTS_COLUMN:
+                return route.getDepartureDirection();
             case MIN_LENGTH_COLUMN:
                 return route.getRouteMinimumTrainLength();
             case MAX_LENGTH_COLUMN:
@@ -234,7 +243,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE)) {
             fireTableDataChanged();
         } else if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
@@ -263,6 +273,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         if (ref != null) {
             ref.dispose();
         }
+        Setup.getDefault().removePropertyChangeListener(this);
         routemanager.removePropertyChangeListener(this);
         InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
         removePropertyChangeRoutes();

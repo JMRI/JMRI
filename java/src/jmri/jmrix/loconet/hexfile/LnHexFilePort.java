@@ -85,6 +85,13 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         f.configure();
     }
 
+    public boolean threadSuspended = false;
+
+    public synchronized void suspendReading(boolean suspended) {
+        this.threadSuspended = suspended;
+        if (! threadSuspended) notify();
+    }
+
     @Override
     public void run() { // invoked in a new thread
         log.info("LocoNet Simulator Started"); // NOI18N
@@ -137,7 +144,15 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                     synchronized (this) {
                         wait(delay);
                     }
-                    //Thread.sleep(delay);
+                    //
+                    // Check for suspended
+                    if (threadSuspended) {
+                        // yes - wait until no longer suspended
+                        synchronized(this) {
+                            while (threadSuspended)
+                                wait();
+                        }
+                    }
                 }
 
                 // here we're done processing the file

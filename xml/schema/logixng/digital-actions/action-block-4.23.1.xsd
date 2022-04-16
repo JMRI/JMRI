@@ -48,29 +48,34 @@
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
-
               <xs:element name="operationDirect" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="None"/>
                     <xs:enumeration value="SetOccupied"/>
                     <xs:enumeration value="SetNotOccupied"/>
                     <xs:enumeration value="SetAltColorOn"/>
                     <xs:enumeration value="SetAltColorOff"/>
                     <xs:enumeration value="SetNullValue"/>
-                    <xs:enumeration value="SetToConstant"/>
-                    <xs:enumeration value="CopyFromMemory"/>
-                    <xs:enumeration value="CopyToMemory"/>
+                    <xs:enumeration value="SetToConstant"/>     <!-- deprecated 4.23.5 remove 4.25.1 -->
+                    <xs:enumeration value="CopyFromMemory"/>    <!-- deprecated 4.23.5 remove 4.25.1 -->
+                    <xs:enumeration value="CopyToMemory"/>      <!-- deprecated 4.23.5 remove 4.25.1 -->
+                    <xs:enumeration value="SetValue"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-
               <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="blockConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="blockMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="dataAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="blockConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>      <!-- deprecated 4.23.5 remove 4.25.1 -->
+              <xs:element name="blockMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>     <!-- deprecated 4.23.5 remove 4.25.1 -->
+
+              <xs:element name="blockValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

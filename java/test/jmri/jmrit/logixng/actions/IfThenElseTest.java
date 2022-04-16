@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
@@ -43,11 +45,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "If Then Else. Execute on change ::: Log error%n" +
+                "If Then Else. Execute on change ::: Use default%n" +
                 "   ? If%n" +
-                "      Sensor '' is Active ::: Log error%n" +
+                "      Sensor '' is Active ::: Use default%n" +
                 "   ! Then%n" +
-                "      Set turnout '' to state Thrown ::: Log error%n" +
+                "      Set turnout '' to state Thrown ::: Use default%n" +
                 "   ! Else%n" +
                 "      Socket not connected%n");
     }
@@ -58,11 +60,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Execute on change ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Sensor '' is Active ::: Log error%n" +
+                "               Sensor '' is Active ::: Use default%n" +
                 "            ! Then%n" +
-                "               Set turnout '' to state Thrown ::: Log error%n" +
+                "               Set turnout '' to state Thrown ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -344,11 +346,6 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
     }
     
-    @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -390,7 +387,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         _base = actionIfThenElse;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

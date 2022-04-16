@@ -1,29 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Intro to XML</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Intro to XML</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -32,68 +20,64 @@
 
         <h2>Intro to XML</h2>
 
-        <p>All of the JMRI configuration files use the XML format.
-        This section is a brief explanation of that format to make
-        it a little easier to understand.</p>
+        <p>All of the JMRI configuration files use the XML format. This section is a brief
+        explanation of that format to make it a little easier to understand.</p>
 
         <h3>Elements and Tags</h3>
 
-        <p>XML files are made up of "elements", which are delimited
-        by "tags". It's a lot like HTML, if you're familiar with
-        that. A tag is enclosed in angle brackets, for example
-        &lt;decoder&gt;. An element can either begin and end with a
-        tag:</p>
+        <p>XML files are made up of "elements", which are delimited by "tags". It's a lot like
+        HTML, if you're familiar with that. A tag is enclosed in angle brackets, for example
+        &lt;decoder&gt;. An element can either begin and end with a tag:</p>
 
         <p class="example">&lt;decoder&gt;<br>
-            other stuff here<br>
-        &lt;/decoder&gt;<br></p>or have both the start and end tags
-        combined:
-
+        other stuff here<br>
+        &lt;/decoder&gt;<br></p>
+        or have both the start and end tags combined:
         <p class="example">&lt;decoder/&gt;</p>
 
-        <p>Note the back-slash characters. They mark the end of the
-        element. The starting tag of an element can also carry
-        attributes:</p>
+        <p>Note the back-slash characters. They mark the end of the element. The starting tag of an
+        element can also carry attributes:</p>
 
         <p class="example">&lt;decoder name="foo"&gt;<br>
-            other stuff here<br>
+        other stuff here<br>
         &lt;/decoder&gt;<br></p>
 
-        <p>This example shows the attribute "name" being set to a
-        value of "foo". Some attributes are required, and some are
-        optional. Note the double-quotes around the attribute
-        value. They are required.</p>
+        <p>This example shows the attribute "name" being set to a value of "foo". Some attributes
+        are required, and some are optional. Note the double-quotes around the attribute value.
+        They are required.</p>
 
         <h3>Line Breaks and Indentation</h3>
 
-        <p>Finally, a word about line-breaks and indentation. Tabs,
-        spaces and line-breaks don't mean anything in XML files
-        except within the double quotes of an attribute value. To
-        make it easier to read the original file, we often use the
-        indenting to show what elements are inside each other. Each
-        time we start a new element, we indent its contents by
-        another four spaces. An example would be:</p>
+        <p>Finally, a word about line-breaks and indentation. Tabs, spaces and line-breaks don't
+        mean anything in XML files except within the double quotes of an attribute value. To make
+        it easier to read the original file, we often use the indenting to show what elements are
+        inside each other. Each time we start a new element, we indent its contents by another four
+        spaces. An example would be:</p>
 
         <p class="example">&lt;decoder&gt;<br>
-            &lt;variable&gt;<br>
-                stuff in the 1st variable element<br>
-            &lt;/variable&gt;<br>
-            &lt;variable&gt;<br>
-                stuff in the 2nd variable element<br>
-            &lt;/variable&gt;<br>
+        &lt;variable&gt;<br>
+        stuff in the 1st variable element<br>
+        &lt;/variable&gt;<br>
+        &lt;variable&gt;<br>
+        stuff in the 2nd variable element<br>
+        &lt;/variable&gt;<br>
         &lt;/decoder&gt;</p>
 
-        <p>You can break the contents of an element across a line,
-        if that makes it easier to read:</p>
+        <p>You can break the contents of an element across a line, if that makes it easier to
+        read:</p>
 
         <p class="example">&lt;tagWithLotsOfAttributes<br>
-            firstAttribute="foo"<br>
-            secondAttribute="bar"<br>
-            thirdAttribute="biff"<br>
-            fourthAttribute="bing" /&gt;</p>
-        <!--#include virtual="/Footer.shtml" -->
-      </div><!-- close #mainContent -->
-    </div><!-- close #mBody -->
+        firstAttribute="foo"<br>
+        secondAttribute="bar"<br>
+        thirdAttribute="biff"<br>
+        fourthAttribute="bing" /&gt;</p>
+      </div>
+      <!-- closes list -->
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- close #mainContent -->
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

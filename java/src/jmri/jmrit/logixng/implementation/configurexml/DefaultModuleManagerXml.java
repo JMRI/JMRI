@@ -31,7 +31,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
     }
 
     /**
-     * Default implementation for storing the contents of a LogixManager
+     * Default implementation for storing the contents of a ModuleManager
      *
      * @param o Object to store, of type LogixManager
      * @return Element containing the complete info
@@ -42,7 +42,8 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
         setStoreElementClass(expressions);
         DefaultModuleManager tm = (DefaultModuleManager) o;
         if (tm != null) {
-            for (Module module:  tm.getNamedBeanSet()) {
+            if (tm.getNamedBeanSet().isEmpty()) return null;
+            for (Module module : tm.getNamedBeanSet()) {
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(module);
                     if (e != null) {
@@ -53,7 +54,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
                 }
             }
         }
-        return (expressions);
+        return expressions;
     }
 
     /**

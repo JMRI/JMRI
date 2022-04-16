@@ -64,12 +64,6 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     public void setMemory(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setMemory");
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
@@ -131,7 +125,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "AnalogExpression_Short");
+        return Bundle.getMessage(locale, "AnalogExpressionMemory_Short");
     }
 
     /** {@inheritDoc} */

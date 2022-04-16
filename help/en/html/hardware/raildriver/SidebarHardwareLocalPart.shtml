@@ -1,10 +1,10 @@
 <!-- Local part of sidebar for hardware/raildriver files -->
 
-<dt><h3 style="padding-left: 1em;"><a href="../raildriver/index.shtml">Pi Engineering RailDriver</a></h3></dt>
-   <dd>             
+<dt><a href="../raildriver/index.shtml">Pi Engineering RailDriver</a></dt>
+   <dd>
                 <ul>
                     <li><a href="details.shtml">Details</a>
 						    </ul>
 		</dd>
-    
+
     <!-- /SidebarHardwareLocalPart.shtml -->

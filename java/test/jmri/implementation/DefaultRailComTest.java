@@ -3,8 +3,7 @@ package jmri.implementation;
 import java.util.Calendar;
 import java.util.Date;
 
-import jmri.RailCom;
-import jmri.Reporter;
+import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -39,15 +38,6 @@ public class DefaultRailComTest {
     public void testRailComGetLocoAddress() {
         RailCom r = new DefaultRailCom("ID1234");
         Assert.assertEquals("Loco Address ", new jmri.DccLocoAddress(1234,true), r.getLocoAddress());
-    }
-
-    @Test
-    public void testRailComGetDccLocoAddress() {
-        // this is testing a now deprecated default method in
-        // the RailCom interface.  For code coverage, we need to
-        // leave this until the deprecated method can be removed.
-        RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("Dcc Loco Address ", new jmri.DccLocoAddress(1234,true), r.getDccLocoAddress());
     }
 
     @Test
@@ -88,7 +78,7 @@ public class DefaultRailComTest {
             public void setState(int s) {
                 state = s;
             }
-            int state = 0;
+            private int state = 0;
         };
 
         Date timeBefore = Calendar.getInstance().getTime();
@@ -98,15 +88,113 @@ public class DefaultRailComTest {
         Date timeAfter = Calendar.getInstance().getTime();
 
         Assert.assertEquals("Where last seen is 'IR1'", rep, r.getWhereLastSeen());
-        Assert.assertNotNull("When last seen is not null", r.getWhenLastSeen());
+        
+        Date date = r.getWhenLastSeen();
+        Assert.assertNotNull("When last seen is not null", date);
         Assert.assertEquals("Status is SEEN", RailCom.SEEN, r.getState());
         Assert.assertTrue("Time when last seen is later than 'timeBefore'", r.getWhenLastSeen().after(timeBefore));
         Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", r.getWhenLastSeen().before(timeAfter));
 
         r.setWhereLastSeen(null);
-        Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
+        Assert.assertTrue("Time when last seen is later than 'timeBefore'", date.after(timeBefore));
+        Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", date.before(timeAfter));
         Assert.assertEquals("After setWhereLastSeen(null), RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
+
+    }
+    
+    @Test
+    public void testGetSetOrientation(){
+        RailCom r = new DefaultRailCom("ID0415556BC1");
+        Assert.assertEquals("getorientation is UNKNOWN at start", Sensor.UNKNOWN , r.getOrientation());
+        r.setOrientation(RailCom.ORIENTA);
+        Assert.assertEquals("getorientation is RailCom.ORIENTA", RailCom.ORIENTA , r.getOrientation());
+    }
+
+    @Test
+    public void testGetSetActualSpeed(){
+        RailCom r = new DefaultRailCom("ID0415556BC2");
+        Assert.assertEquals("ActualSpeed is UNKNOWN at start", -1 , r.getActualSpeed());
+        r.setActualSpeed(44);
+        Assert.assertEquals("ActualSpeed is 44", 44 , r.getActualSpeed());
+    }
+
+    @Test
+    public void testGetSetActualLoad(){
+        RailCom r = new DefaultRailCom("ID0415556BC3");
+        Assert.assertEquals("ActualLoad is UNKNOWN at start", -1 , r.getActualLoad());
+        r.setActualLoad(3);
+        Assert.assertEquals("ActualLoad is 3", 3 , r.getActualLoad());
+    }
+
+    @Test
+    public void testGetSetActualTemperature(){
+        RailCom r = new DefaultRailCom("ID0415556BC4");
+        Assert.assertEquals("ActualTemperature is UNKNOWN at start", -1 , r.getActualTemperature());
+        r.setActualTemperature(4);
+        Assert.assertEquals("ActualTemperature is 4", 4 , r.getActualTemperature());
+    }
+
+    @Test
+    public void testGetSetWaterLevel(){
+        RailCom r = new DefaultRailCom("ID0415556BC5");
+        Assert.assertEquals("WaterLevel is UNKNOWN at start", -1 , r.getWaterLevel());
+        r.setWaterLevel(5);
+        Assert.assertEquals("WaterLevel is 5", 5 , r.getWaterLevel());
+    }
+
+    @Test
+    public void testGetSetFuelLevel(){
+        RailCom r = new DefaultRailCom("ID0415556BC6");
+        Assert.assertEquals("FuelLevel is UNKNOWN at start", -1 , r.getFuelLevel());
+        r.setFuelLevel(6);
+        Assert.assertEquals("FuelLevel is 6", 6 , r.getFuelLevel());
+    }
+
+    @Test
+    public void testGetSetLocation(){
+        RailCom r = new DefaultRailCom("ID0415556BC7");
+        Assert.assertEquals("Location is UNKNOWN at start", -1 , r.getLocation());
+        r.setLocation(7);
+        Assert.assertEquals("Location is 7", 7 , r.getLocation());
+    }
+
+    @Test
+    public void testGetSetRoutingNo(){
+        RailCom r = new DefaultRailCom("ID0415556BD1");
+        Assert.assertEquals("RoutingNo is UNKNOWN at start", -1 , r.getRoutingNo());
+        r.setRoutingNo(8);
+        Assert.assertEquals("RoutingNo is 8", 8 , r.getRoutingNo());
+    }
+
+    @Test
+    public void testGetSetExpectedCv(){
+        RailCom r = new DefaultRailCom("ID0415556BD2");
+        Assert.assertEquals("ExpectedCv is UNKNOWN at start", -1 , r.getExpectedCv());
+        r.setExpectedCv(9);
+        Assert.assertEquals("ExpectedCv is 9", 9 , r.getExpectedCv());
+    }
+
+    @Test
+    public void TestToReportString(){
+        DefaultRailCom r = new DefaultRailCom("ID1234");
+        Assert.assertEquals("Basic Report String", "Unknown Orientation Address 1234(L) " , r.toReportString());
+
+        r.setOrientation(RailCom.ORIENTA);
+        Assert.assertEquals("Report String ORIENTA", "Orientation A Address 1234(L) " , r.toReportString());
+
+        r.setOrientation(RailCom.ORIENTB);
+        Assert.assertEquals("Report String ORIENTB", "Orientation B Address 1234(L) " , r.toReportString());
+
+        r.setWaterLevel(2);
+        r.setFuelLevel(3);
+        r.setLocation(4);
+        r.setRoutingNo(5);
+        r.setActualTemperature(6);
+        r.setActualLoad(7);
+        r.setActualSpeed(8);
+        Assert.assertEquals("Report String ORIENTB", 
+            "Orientation B Address 1234(L) Water 2 Fuel 3 Location : 4 Routing No : 5 Temperature : 6 Load : 7 Speed : 8 "
+            , r.toReportString());
 
     }
 

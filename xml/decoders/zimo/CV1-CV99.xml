@@ -1550,9 +1550,9 @@
     <label>Signal Dependent Acceleration</label>
     <label xml:lang="it">Accellerazione dipendente da Segnale</label>
     <label xml:lang="de">Signalabhängige (HLU) Beschleunigung</label>
+    <label xml:lang="cs">Zrychlení závislé na návěstidle</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori 0-255</comment>
-    <label xml:lang="cs">Zrychlení závislé na návěstidlech</label>
     <comment xml:lang="cs">Meze 0-255</comment>
   </variable>
   <variable item="Signal Dependent Deceleration" CV="50" default="0" comment="Range 0-255">
@@ -1560,9 +1560,9 @@
     <label>Signal Dependent Deceleration</label>
     <label xml:lang="it">Decellarazione dipendente da Segnale</label>
     <label xml:lang="de">Signalabhängige (HLU) Bremszeit</label>
+    <label xml:lang="cs">Zpomalení závislé na návěstidle</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori 0-255</comment>
-    <label xml:lang="cs">Zpomalení závislé na návěstidlech</label>
     <comment xml:lang="cs">Meze 0-255</comment>
   </variable>
   <variable item="-1-" CV="51" default="20" comment="Range 0-252">
@@ -1629,7 +1629,7 @@
     <decVal max="255"/>
     <label>Signal Dependent Reaction Time</label>
     <label xml:lang="it">Tempo di reazione dipendente da Segnale</label>
-    <label xml:lang="cs">Reakční doba závisí na signálu</label>
+    <label xml:lang="cs">Reakční doba závisí na návěstidle</label>
     <label xml:lang="de">Signalabhängige (HLU) Reaktionszeit</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori 0-255</comment>

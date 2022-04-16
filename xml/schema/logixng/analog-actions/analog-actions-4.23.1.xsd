@@ -25,6 +25,7 @@
             "
         >
 
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-actions/action-light-intensity-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-actions/action-memory-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-actions/many-4.23.1.xsd"/>
 
@@ -42,8 +43,9 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
-            <xs:element name="AnalogActionMemory"  type="LogixNG_AnalogAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="AnalogMany"          type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogActionLightIntensity"  type="LogixNG_AnalogAction_LightIntensityType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogActionMemory"          type="LogixNG_AnalogAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogMany"                  type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
 
         </xs:choice>
       </xs:sequence>

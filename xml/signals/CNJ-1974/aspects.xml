@@ -166,7 +166,7 @@
       <rule>Rule 285</rule>
       <indication>Proceed preparing to Stop at next signal. Trains exceeding Medium speed must at once reduce to that speed.</indication>
       <reference>Page 47</reference>
-      <speed>Medium</speed>
+      <speed>Normal</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
     </aspect>

@@ -44,18 +44,6 @@ public interface LogixNGPreferences {
     public boolean getStartLogixNGOnStartup();
 
     /**
-     * Set whenether generic sockets should be used for expression sockets.
-     * @param value true if generic sockets should be used, false otherwise
-     */
-    public void setUseGenericFemaleSockets(boolean value);
-
-    /**
-     * Get whenether generic sockets should be used for expression sockets.
-     * @return true if generic sockets should be used, false otherwise
-     */
-    public boolean getUseGenericFemaleSockets();
-
-    /**
      * Set whenether system names and user names should be visible for actions
      * and expressions.
      * @param value true if names should be visible, false otherwise
@@ -92,5 +80,17 @@ public interface LogixNGPreferences {
      * @return the error handling type
      */
     public ErrorHandlingType getErrorHandlingType();
+
+    /**
+     * Set whether row in tree editor should be highlighted or not.
+     * @param value true if the row should be highlighted, false not
+     */
+    public void setTreeEditorHighlightRow(boolean value);
+
+    /**
+     * Get whether row in tree editor should be highlighted or not.
+     * @return true if the row should be highlighted, false not
+     */
+    public boolean getTreeEditorHighlightRow();
 
 }

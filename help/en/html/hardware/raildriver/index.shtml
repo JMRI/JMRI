@@ -1,154 +1,116 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <title>JMRI Hardware Support - RailDriver Throttle</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - RailDriver Throttle</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: RailDriver Throttle</h1>
 
-      <p>
-      <a href="images/RailDriver.gif"><img src="images/RailDriver.gif"
-      align="right" width="389" height="236" alt=
-      "RailDriver line drawing"></a> </p>
-
-      <a name="hardware" id="hardware"></a>
-      <h2>Supported Hardware</h2>
-
-      <p>JMRI allows you to use a <a href=
-      "http://raildriver.com/">RailDriver</a> from <a href=
-      "http://www.piengineering.com/">PI Engineering</a> as a
-      Hardware Throttle to run Locomotives with your DCC system.
+      <p><a href="images/RailDriver.gif"><img src="images/RailDriver.gif" class="floatRight" width=
+      "389" height="236" alt="RailDriver line drawing"></a>
       </p>
 
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2>
+      <h2 id="hardware">Supported Hardware</h2>
+
+      <p>JMRI allows you to use a <a href="http://raildriver.com/">RailDriver</a> from <a href=
+      "http://www.piengineering.com/">PI Engineering</a> as a Hardware Throttle to run Locomotives
+      with your DCC system.</p>
+
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Wiring</h3>
 
-      <p>First, connect your computer to your DCC system and make
-      sure that the regular <a href=
-      "../../tools/throttle/ThrottleMain.shtml">JMRI Throttles</a>
-      are working fine (Unless you do this first, debugging
-      possible problems connecting the RailDriver is very
-      difficult.)</p>
+      <p>First, connect your computer to your DCC system and make sure that the regular <a href=
+      "../../tools/throttle/ThrottleMain.shtml">JMRI Throttles</a> are working fine (Unless you do
+      this first, debugging possible problems connecting the RailDriver is very difficult.)</p>
 
-      <p>Next, plug the RailDriver into a USB port on your computer
-      while your JMRI application (PanelPro or DecoderPro) isn't
-      running.</p>
+      <p>Next, plug the RailDriver into a USB port on your computer while your JMRI application
+      (PanelPro or DecoderPro) isn't running.</p>
 
       <h3>Configure OS</h3>
-        <h4>Linux</h4>
-        
-        Out of the box Ubuntu classifies HID devices as belonging to root. 
-        You can override this rule by creating your own under /etc/udev/rules.d:
 
+      <h4>Linux</h4>
+      Out of the box Ubuntu classifies HID devices as belonging to root. You can override this rule
+      by creating your own under /etc/udev/rules.d:
 
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
         sudo gedit /etc/udev/rules.d/99-myhid.rules
-</pre>  
+</pre>
+      <p>Make the content of this file as below (using your own discovered hex values for idVendor
+      and idProduct): (note: RailDriver: 0x05F3 / 0x00D2)</p>
 
-        <p>Make the content of this file as below 
-        (using your own discovered hex values for idVendor and idProduct): (note: RailDriver: 0x05F3 / 0x00D2)
-
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
         # My HID device
         ATTRS{idProduct}=="00D2", ATTRS{idVendor}=="05F3", MODE="0660", GROUP="plugdev"
-</pre>  
+</pre>
+      <p>Save and exit from root, then unplug and replug your device. The rules should take effect
+      immediately. If they're still not running it may that you're not a member of the plugdev
+      group. You can fix this as follows (assuming that plugdev is not present on your system):</p>
 
-        <p>Save and exit from root, then unplug and replug your device. 
-        The rules should take effect immediately. 
-        If they're still not running it may that you're not a member of the plugdev group. 
-        You can fix this as follows (assuming that plugdev is not present on your system):
-
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
         sudo addgroup plugdev
         sudo addgroup yourusername plugdev
-</pre>            
+</pre>
       <h3>Settings</h3>
 
-      <p>Once connected, start the JMRI program and select
-      "RailDriver Throttle" from the Debug menu (It's temporarily
-      located there while we develop the support).</p>
+      <p>Once connected, start the JMRI program and select "RailDriver Throttle" from the Debug
+      menu (It's temporarily located there while we develop the support).</p>
 
       <p>A Throttle window titled "RailDriver" should open:<br>
-      <img src="../../tools/throttle/images/jmri012.jpg" alt=
-      "throttle window" align="right" height="188" width="154"></p>
+      <img src="../../tools/throttle/images/jmri012.jpg" alt="throttle window" class="floatRight"
+      height="188" width="154"></p>
 
-      <p>Type the DCC address of your Locomotive into the address
-      box, just like a <a href=
-      "../../tools/throttle/ThrottleMain.shtml">regular JMRI
-      Throttle</a>, and click "Set". This connects both the
-      Throttle window and the RailDriver console through the DCC
-      system to the decoder. You should now be able to operate the
-      Locomotive from the RailDriver.</p>
+      <p>Type the DCC address of your Locomotive into the address box, just like a <a href=
+      "../../tools/throttle/ThrottleMain.shtml">regular JMRI Throttle</a>, and click "Set". This
+      connects both the Throttle window and the RailDriver console through the DCC system to the
+      decoder. You should now be able to operate the Locomotive from the RailDriver.</p>
 
-      <a name="tools" id="tools"></a>
-      <h2>Raildriver Tools</h2>
+      <h2 id="tools">Raildriver Tools</h2>
 
       <ul>
-        <li>The top row of buttons across the front edge control
-        the decoder functions. The left most (#1 in the figure) is
-        F0, usually the headlight. The next button to the right (#2
-        in the figure) is F1, etc. When you press the button, the
-        function toggles: From Off to On, or On to Off. Try
-        pressing one, and see if the Throttle function buttons on
-        the screen and the functions in the Locomotive
-        respond.</li>
+        <li>The top row of buttons across the front edge control the decoder functions. The left
+        most (#1 in the figure) is F0, usually the headlight. The next button to the right (#2 in
+        the figure) is F1, etc. When you press the button, the function toggles: From Off to On, or
+        On to Off. Try pressing one, and see if the Throttle function buttons on the screen and the
+        functions in the Locomotive respond.</li>
 
-        <li>The "Bell" button (#37 in the figure) drives F3 (this
-        can be changed by editing a file in the JMRI distribution
-        if your DCC system uses something different). It's
-        momentary, so F3 is set on when the button is pressed, and
-        off when it's released.</li>
+        <li>The "Bell" button (#37 in the figure) drives F3 (this can be changed by editing a file
+        in the JMRI distribution if your DCC system uses something different). It's momentary, so
+        F3 is set on when the button is pressed, and off when it's released.</li>
 
-        <li>The horn lever (#38 in the figure) operates F2. Push it
-        forward or back to turn F2 On, and release or center it to
-        turn F2 Off.</li>
+        <li>The horn lever (#38 in the figure) operates F2. Push it forward or back to turn F2 On,
+        and release or center it to turn F2 Off.</li>
 
-        <li>The left-most large handle, labeled "Forward N Reverse"
-        (#39 in the figure) serves to control direction. Since
-        (most) DCC decoders don't have a neutral position, the N
-        position isn't used.</li>
+        <li>The left-most large handle, labeled "Forward N Reverse" (#39 in the figure) serves to
+        control direction. Since (most) DCC decoders don't have a neutral position, the N position
+        isn't used.</li>
 
-        <li>The next lever, labelled "Dyn Brake Throttle" (#40 in
-        the figure), controls the decoder speed setting. For now,
-        zero speed is (roughly) the center, and higher speeds are
-        when the lever is pulled back.</li>
+        <li>The next lever, labelled "Dyn Brake Throttle" (#40 in the figure), controls the decoder
+        speed setting. For now, zero speed is (roughly) the center, and higher speeds are when the
+        lever is pulled back.</li>
       </ul>
 
-      <p>Eventually, we'd like to make a more detailed simulation
-      available by connecting the rest of the controls, and adding
-      a detailed model of the trains braking and acceleration.</p>
+      <p>Eventually, we'd like to make a more detailed simulation available by connecting the rest
+      of the controls, and adding a detailed model of the trains braking and acceleration.</p>
 
-      <a name="documentation" id="documentation"></a>
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
 
-      <p>For technical information on Raildriver, please see the
-      <a href="details.shtml">Details Help page</a>.</p>
-
+      <p>For technical information on Raildriver, please see the <a href="details.shtml">Details
+      Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

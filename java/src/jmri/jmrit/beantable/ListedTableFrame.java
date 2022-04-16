@@ -537,7 +537,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         ActionJList(BeanTableFrame<E> f) {
             frame = f;
             popUp = new JPopupMenu();
-            menuItem = new JMenuItem("Open in New Window"); // TODO I18N
+            menuItem = new JMenuItem(Bundle.getMessage("MenuOpenInNewWindow")); 
             popUp.add(menuItem);
             menuItem.addActionListener((ActionEvent e) -> openNewTableWindow(mouseItem));
             currentItemSelected = 0;

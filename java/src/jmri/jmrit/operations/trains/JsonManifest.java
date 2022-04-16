@@ -1,13 +1,19 @@
 package jmri.jmrit.operations.trains;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -17,9 +23,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A minimal manifest in JSON.
@@ -84,10 +87,10 @@ public class JsonManifest extends TrainCommon {
             ObjectNode jsonCars = this.mapper.createObjectNode();
             jsonLocation.put(JSON.USERNAME, StringEscapeUtils.escapeHtml4(locationName));
             jsonLocation.put(JSON.NAME, routeLocation.getId());
-            if (routeLocation != train.getRoute().getDepartsRouteLocation()) {
+            if (routeLocation != train.getTrainDepartsRouteLocation()) {
                 jsonLocation.put(JSON.ARRIVAL_TIME, train.getExpectedArrivalTime(routeLocation));
             }
-            if (routeLocation == train.getRoute().getDepartsRouteLocation()) {
+            if (routeLocation == train.getTrainDepartsRouteLocation()) {
                 jsonLocation.put(JSON.DEPARTURE_TIME, train.getDepartureTime());
             } else if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
                 jsonLocation.put(JSON.DEPARTURE_TIME, routeLocation.getDepartureTime());
@@ -160,7 +163,7 @@ public class JsonManifest extends TrainCommon {
             }
             jsonCars.set(JSON.REMOVE, setouts);
 
-            if (routeLocation != train.getRoute().getTerminatesRouteLocation()) {
+            if (routeLocation != train.getTrainTerminatesRouteLocation()) {
                 jsonLocation.set(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
                 jsonLocation.put(JSON.TRAIN_DIRECTION, routeLocation.getTrainDirection());
                 ObjectNode length = this.mapper.createObjectNode();

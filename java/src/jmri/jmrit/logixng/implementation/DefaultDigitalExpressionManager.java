@@ -71,18 +71,10 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     
     /** {@inheritDoc} */
     @Override
-    public void register(MaleSocket maleSocket) {
-        if (!(maleSocket instanceof MaleDigitalExpressionSocket)) {
-            throw new IllegalArgumentException("maleSocket is not a MaleDigitalExpressionSocket");
-        }
-        register((MaleDigitalExpressionSocket)maleSocket);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void register(MaleDigitalExpressionSocket maleSocket) {
-        super.register(maleSocket);
+    public MaleDigitalExpressionSocket registerBean(MaleDigitalExpressionSocket maleSocket) {
+        MaleDigitalExpressionSocket bean = super.registerBean(maleSocket);
         _lastRegisteredBean = maleSocket;
+        return bean;
     }
     
     /**
@@ -110,8 +102,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         
         // save in the maps
         MaleDigitalExpressionSocket maleSocket = createMaleExpressionSocket(expression);
-        register(maleSocket);
-        return maleSocket;
+        return registerBean(maleSocket);
     }
     
     @Override
@@ -140,15 +131,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     public FemaleDigitalExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
         
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
-//        if (preferences.getUseGenericFemaleSockets() && false) {
-        if (preferences.getUseGenericFemaleSockets()) {
-            return new DefaultFemaleGenericExpressionSocket(
-                    FemaleGenericExpressionSocket.SocketType.DIGITAL, parent, listener, socketName)
-                    .getDigitalSocket(parent);
-        } else {
-            return new DefaultFemaleDigitalExpressionSocket(parent, listener, socketName);
-        }
+        return new DefaultFemaleDigitalExpressionSocket(parent, listener, socketName);
     }
     
     @Override

@@ -35,9 +35,18 @@ public class InterchangeTableModel extends TrackTableModel {
         SwingUtilities.invokeLater(() -> {
             tef = new InterchangeEditFrame();
             Track interchange = _tracksList.get(row);
-            tef.initComponents(_location, interchange);
-            tef.setTitle(Bundle.getMessage("EditInterchange"));
+            tef.initComponents(interchange);
         });
+    }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("InterchangeName");
+            default:
+                return super.getColumnName(col);
+        }
     }
 
     // this table listens for changes to a location and its interchanges

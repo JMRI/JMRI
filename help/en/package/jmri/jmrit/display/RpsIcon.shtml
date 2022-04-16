@@ -1,286 +1,224 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: RPS Icon</title>
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: RPS Icon</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI: RPS Icon</h1>RPS is a system for measuring the
-      positions of rolling stock on your layout. More information
-      on RPS is available on the <a href=
-      "../../../../html/hardware/rps/index.shtml">main RPS help
-      page</a>. RPS Reporter icons move around on the panel to show
-      where the corresponding equipment is on the layout.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: RPS Icon</h1>
+      RPS is a system for measuring the positions of rolling stock on your layout. More information
+      on RPS is available on the <a href="../../../../html/hardware/rps/index.shtml">main RPS help
+      page</a>. RPS Reporter icons move around on the panel to show where the corresponding
+      equipment is on the layout.
+      <p><img src="../../../../images/bangdesk.gif" class="floatRight" height="45" width="45" alt=
+      "Cute image of work"> <em>This page is still under construction, but the RPS icon support
+      itself is already present in JMRI. Go ahead and try it out!</em></p>
 
-      <p><img src="../../../../images/bangdesk.gif" align="right"
-      height="45" width="45" alt="Cute image of work"> <em>This
-      page is still under construction, but the RPS icon support
-      itself is already present in JMRI. Go ahead and try it
-      out!</em></p>
+      <p>RPS icons are a way of putting icons on a <a href="PanelEditor.shtml">panel</a> that will
+      move around as the RPS system finds the location of an associated transmitter.</p>
 
-      <p>RPS icons are a way of putting icons on a <a href=
-      "PanelEditor.shtml">panel</a> that will move around as the
-      RPS system finds the location of an associated
-      transmitter.</p>
+      <h2>Adding an RPS Icon to a Panel</h2>
+      Usually, each RPS icon represents one RPS transmitter, hence one locomotive. Currently, you
+      need to add one for each RPS-equipped piece of equipment you want to track. Although this is
+      a pain, it gives you very fine control over which transmitter's positions are displayed and
+      how they are presented. <em>Section still needs lots of work</em>
+      <p>Click "Add RPS reporter" on the <a href="PanelEditor.shtml">panel editor</a>. An RPS icon
+      will appear on the panel at the default location, but it won't work yet until it's
+      calibrated.</p>
 
-      <h2>Adding an RPS Icon to a Panel</h2>Usually, each RPS icon
-      represents one RPS transmitter, hence one locomotive.
-      Currently, you need to add one for each RPS-equipped piece of
-      equipment you want to track. Although this is a pain, it
-      gives you very fine control over which transmitter's
-      positions are displayed and how they are presented.
-      <em>Section still needs lots of work</em>
+      <p>Right-click or option-click on the icon to see the popup menu, where you can calibrate the
+      icon.</p>
 
-      <p>Click "Add RPS reporter" on the <a href=
-      "PanelEditor.shtml">panel editor</a>. An RPS icon will appear
-      on the panel at the default location, but it won't work yet
-      until it's calibrated.</p>
-
-      <p>Right-click or option-click on the icon to see the popup
-      menu, where you can calibrate the icon.</p>
-
-      <h3>Calibrating an RPS Icon</h3>When you calibrate an RPS
-      icon, you're specifying how RPS measured locations correspond
-      to positions on the panel.
-
+      <h3>Calibrating an RPS Icon</h3>
+      When you calibrate an RPS icon, you're specifying how RPS measured locations correspond to
+      positions on the panel.
       <p>The steps are:</p>
 
       <ul>
-        <li>Stop the RPS system polling, so things won't move
-        around on you.</li>
+        <li>Stop the RPS system polling, so things won't move around on you.</li>
 
         <li>Add the icon to the panel.</li>
 
-        <li>Drag the icon until it sits over the position that
-        corresponds to the 0,0 origin of your RPS
-        installation.</li>
+        <li>Drag the icon until it sits over the position that corresponds to the 0,0 origin of
+        your RPS installation.</li>
 
-        <li>Right-click or option-click on the icon to get the
-        pop-up menu, and select "Set Origin".</li>
+        <li>Right-click or option-click on the icon to get the pop-up menu, and select "Set
+        Origin".</li>
 
-        <li>Move the actual locomotive to some other point on the
-        layout, and start the RPS system polling again. Get a good
-        measurement of the position. Stop the RPS system.</li>
+        <li>Move the actual locomotive to some other point on the layout, and start the RPS system
+        polling again. Get a good measurement of the position. Stop the RPS system.</li>
 
-        <li>Drag the icon to where you want it to be on the screen
-        when the transmitter is in that location.</li>
+        <li>Drag the icon to where you want it to be on the screen when the transmitter is in that
+        location.</li>
 
-        <li>From the icon's popup menu, select "Set Current
-        Location".</li>
+        <li>From the icon's popup menu, select "Set Current Location".</li>
 
-        <li>Get the popup menu again. It should no longer say "Not
-        Calibrated", and instead should show you the current
-        position.</li>
+        <li>Get the popup menu again. It should no longer say "Not Calibrated", and instead should
+        show you the current position.</li>
       </ul>
 
       <p>Don't forget to save your panel!</p>
 
-      <h2><a id="popup" name="popup">Popup Menu</a></h2>
+      <h2 id="popup">Popup Menu</h2>
+
       <p>The popup menu for an RPS icon contains:</p>
 
       <dl>
         <dt>RPS Position Readout</dt>
 
-        <dd>This is just a title; selecting it doesn't do
-        anything</dd>
+        <dd>This is just a title; selecting it doesn't do anything</dd>
 
         <dt>Rotate</dt>
 
-        <dd>Rotates how the icon is displayed, in 90-degree
-        increments. Note that this is not a rotation of the RPS
-        coordinate system, but merely of the icon
-        presentation.</dd>
+        <dd>Rotates how the icon is displayed, in 90-degree increments. Note that this is not a
+        rotation of the RPS coordinate system, but merely of the icon presentation.</dd>
 
         <dt>Show ID</dt>
 
-        <dd>When checked, the ID string will be displayed in
-        addition to the icon.</dd>
+        <dd>When checked, the ID string will be displayed in addition to the icon.</dd>
 
         <dt>Set Origin</dt>
 
-        <dd>Sets the current display position of the icon as the
-        0,0 position of the RPS system. This must be done as the
-        first step in calibration.</dd>
+        <dd>Sets the current display position of the icon as the 0,0 position of the RPS system.
+        This must be done as the first step in calibration.</dd>
 
         <dt>Set Current Location</dt>
 
-        <dd>Changes the calibration so that it's position on the
-        screen and the RPS measurement agree. To use this, first
-        make sure that the RPS system has made a good measurement
-        of the transmitters position, then drag the icon to where
-        it should appear on the screen, and finally choose "Set
-        Current Location" from the popup menu. In the future, when
-        the RPS system measures the same location, the icon will
-        appear in that position.</dd>
+        <dd>Changes the calibration so that it's position on the screen and the RPS measurement
+        agree. To use this, first make sure that the RPS system has made a good measurement of the
+        transmitters position, then drag the icon to where it should appear on the screen, and
+        finally choose "Set Current Location" from the popup menu. In the future, when the RPS
+        system measures the same location, the icon will appear in that position.</dd>
 
         <dt>Not Calibrated</dt>
 
-        <dd>A status message, not a control, this appears when the
-        icon has not been calibrated. Calibration ensure the icon's
-        position on the screen properly reflects the location that
+        <dd>A status message, not a control, this appears when the icon has not been calibrated.
+        Calibration ensure the icon's position on the screen properly reflects the location that
         RPS has measured.</dd>
 
         <dt>At (x), (y)</dt>
 
-        <dd>Once the icon has been calibrated, the popup menu
-        displays the most recent RPS location measurement.</dd>
+        <dd>Once the icon has been calibrated, the popup menu displays the most recent RPS location
+        measurement.</dd>
 
         <dt>Show ID</dt>
 
-        <dd>If checked, the icon will have it's ID information
-        displayed next to it.</dd>
+        <dd>If checked, the icon will have it's ID information displayed next to it.</dd>
 
         <dt>Set Filter</dt>
 
-        <dd>Opens a window that lets you enter a filter value for
-        this icon.</dd>
+        <dd>Opens a window that lets you enter a filter value for this icon.</dd>
 
         <dt>Disable</dt>
 
-        <dd>Controls whether or not the icon can be dragged around
-        manually.</dd>
+        <dd>Controls whether or not the icon can be dragged around manually.</dd>
 
         <dt>Remove</dt>
 
-        <dd>Removes the RPS icon from the panel. This is a
-        permanent deletion.</dd>
+        <dd>Removes the RPS icon from the panel. This is a permanent deletion.</dd>
 
         <dt>Help</dt>
 
         <dd>Shows this page</dd>
       </dl>
 
-      <h2><a id="filter" name="filter">Filtering and Multiple
-      Locomotives</a></h2>We're still
-      trying to figure out how best to configure multiple icons on
-      a panel. A single icon, with no special settings, will hop
-      around as readings come in. It will go to the position of one
-      reading, and then move directly to the position of the next
-      reading, which might come from another locomotive
-      transmitter.
-
-      <p>If you want to have multiple icons, each showing the
-      position of a single locomotive, you can configure filters on
-      each icon.</p>
+      <h2 id="filter">Filtering and Multiple Locomotives</h2>
+      We're still trying to figure out how best to configure multiple icons on a panel. A single
+      icon, with no special settings, will hop around as readings come in. It will go to the
+      position of one reading, and then move directly to the position of the next reading, which
+      might come from another locomotive transmitter.
+      <p>If you want to have multiple icons, each showing the position of a single locomotive, you
+      can configure filters on each icon.</p>
 
       <ul>
         <li>Add an RPS icon to the panel</li>
 
-        <li>Open the icon's pop-up menu, and select "Set
-        Filter".</li>
+        <li>Open the icon's pop-up menu, and select "Set Filter".</li>
 
-        <li>This will open a small window in which you can enter
-        the ID value for the locomotive you want this icon to
-        track. Once you've done this, the icon will only move to
-        the position measured for this locomotive.</li>
+        <li>This will open a small window in which you can enter the ID value for the locomotive
+        you want this icon to track. Once you've done this, the icon will only move to the position
+        measured for this locomotive.</li>
       </ul>
 
-      <p>This method is a little tedious, particularly if you have
-      a large roster, since you'll have to do it manually for each
-      locomotive. And you'll have to calibrate them all. (One good
-      way to do this is to copy the lines defining one icon in the
-      panel file, in effect making a bunch of duplicate calibrated
-      icons, and then set the filters; see below). But it has the
-      advantage that you can control exactly which locomotives to
-      display and which not to. This method also allows you to
-      <a href="#custicon">attach custom images</a> (e.g. a picture
-      of a specific locomotive) to the specific icon that
-      represents each ID. <a id="custom" name="custom"></a></p>
+      <p>This method is a little tedious, particularly if you have a large roster, since you'll
+      have to do it manually for each locomotive. And you'll have to calibrate them all. (One good
+      way to do this is to copy the lines defining one icon in the panel file, in effect making a
+      bunch of duplicate calibrated icons, and then set the filters; see below). But it has the
+      advantage that you can control exactly which locomotives to display and which not to. This
+      method also allows you to <a href="#custicon">attach custom images</a> (e.g. a picture of a
+      specific locomotive) to the specific icon that represents each ID.</p>
 
-      <h2>Customization</h2>
+      <h2 id="custom">Customization</h2>
 
-      <h3>Starting Position</h3>When you first open the panel, the
-      icons are put back to the same position on the screen that
+      <h3>Starting Position</h3>
+      When you first open the panel, the icons are put back to the same position on the screen that
       they occupied when the screen was saved to the file.
+      <p>You can use this to e.g. put the icons out of the way initially. They'll stay in that
+      position until a valid reading moves them, so you can use this to "park" locomotives that are
+      not on the track off the active part of the panel.</p>
 
-      <p>You can use this to e.g. put the icons out of the way
-      initially. They'll stay in that position until a valid
-      reading moves them, so you can use this to "park" locomotives
-      that are not on the track off the active part of the panel.
-      <a id="custicon" name="custicon"></a></p>
-
-      <h3>Displaying a Custom Icon</h3>Although there is not yet a
-      graphical interface for this yet (it's coming!), you can
-      modify the icon for a transmitter that's being tracked by the
-      RPS system so that it displays e.g. a small picture of the
-      locomotive. To do this, you'll edit the panel definition file
-      directly. (There's more information on the XML format we use
-      <a href=
-      "../../../../html/apps/DecoderPro/IntroXML.shtml">here</a>)
-      The steps are:
-
+      <h3 id="custicon">Displaying a Custom Icon</h3>
+      Although there is not yet a graphical interface for this yet (it's coming!), you can modify
+      the icon for a transmitter that's being tracked by the RPS system so that it displays e.g. a
+      small picture of the locomotive. To do this, you'll edit the panel definition file directly.
+      (There's more information on the XML format we use <a href=
+      "../../../../html/apps/DecoderPro/IntroXML.shtml">here</a>) The steps are:
       <ul>
-        <li>Create the icon on the panel editor, and save the panel
-        into a file.</li>
+        <li>Create the icon on the panel editor, and save the panel into a file.</li>
 
-        <li>Make a backup copy of the file, in case something goes
-        wrong.</li>
+        <li>Make a backup copy of the file, in case something goes wrong.</li>
 
         <li>Using a text editor, open the file to change it.</li>
 
-        <li>Find the line that defines the icon. It will contain
-        the string "RpsPositionIconXml", so one approach is to
-        search for that. It will look something like (it'll
-        probably be all on one line):
+        <li>Find the line that defines the icon. It will contain the string "RpsPositionIconXml",
+        so one approach is to search for that. It will look something like (it'll probably be all
+        on one line):
+
           <pre style="font-family: monospace;">
 
-    &lt;sensoricon x="95" y="150" level="10" 
-            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" 
-            error="resources/icons/smallschematics/tracksegments/circuit-error.gif" 
-            rotate="0" forcecontroloff="false" momentary="false" 
-            sxscale="11.849106591612951" syscale="-11.889381744148094" 
-            sxorigin="41" syorigin="768" 
+    &lt;sensoricon x="95" y="150" level="10"
+            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif"
+            error="resources/icons/smallschematics/tracksegments/circuit-error.gif"
+            rotate="0" forcecontroloff="false" momentary="false"
+            sxscale="11.849106591612951" syscale="-11.889381744148094"
+            sxorigin="41" syorigin="768"
             class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
 </pre>
         </li>
 
-        <li>To make the icon track a specific transmitter, enter
-        the transmitter's ID as a "filter" attribute. For example,
-        to have it track transmitter 5510, change the line to:
+        <li>To make the icon track a specific transmitter, enter the transmitter's ID as a "filter"
+        attribute. For example, to have it track transmitter 5510, change the line to:
+
           <pre style="font-family: monospace;">
 
-    &lt;sensoricon filter="5510" x="95" y="150" level="10" 
-            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" 
-            error="resources/icons/smallschematics/tracksegments/circuit-error.gif" 
+    &lt;sensoricon filter="5510" x="95" y="150" level="10"
+            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif"
+            error="resources/icons/smallschematics/tracksegments/circuit-error.gif"
             rotate="0" forcecontroloff="false" momentary="false" s
-            xscale="11.849106591612951" syscale="-11.889381744148094" 
-            sxorigin="41" syorigin="768" 
+            xscale="11.849106591612951" syscale="-11.889381744148094"
+            sxorigin="41" syorigin="768"
             class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
 </pre>
         </li>
 
-        <li>The "active" and "error" attributes are the icons to be
-        displayed when the system is getting good readings and not
-        getting good readings, respectively. You can change these
-        to the location of any icon file you'd like. For example,
-        you can change them to a (small) photo of a locomotive, or
-        to an image with the train number.</li>
+        <li>The "active" and "error" attributes are the icons to be displayed when the system is
+        getting good readings and not getting good readings, respectively. You can change these to
+        the location of any icon file you'd like. For example, you can change them to a (small)
+        photo of a locomotive, or to an image with the train number.</li>
       </ul>
-      <p>A nice graphical interface for this is coming, but it's
-      not here yet.</p>
 
+      <p>A nice graphical interface for this is coming, but it's not here yet.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

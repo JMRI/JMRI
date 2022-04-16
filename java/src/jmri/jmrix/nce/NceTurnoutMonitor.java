@@ -1,9 +1,10 @@
 package jmri.jmrix.nce;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.Turnout;
 
 /**
  * Polls NCE Command Station for turnout discrepancies
@@ -225,7 +226,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                                     // MSB isn't used and the bit map is skewed
                                     // by one bit, ie accy num 2 is in bit 0,
                                     // should have been in bit 1.
-                                    if (NceConnectionStatus.isNceEpromMarch2007()) {
+                                    if (tc.isNceEpromMarch2007() && !tc.isSimulatorRunning()) {
                                         // bit 3 is shared by two accessories!!!!
                                         if (i == 3) {
                                             monitorActionCommanded(NTnum - 3,
@@ -269,7 +270,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                                     // MSB isn't used and the bit map is skewed
                                     // by one bit, ie accy num 2 is in bit 0,
                                     // should have been in bit 1.
-                                    if (NceConnectionStatus.isNceEpromMarch2007()) {
+                                    if (tc.isNceEpromMarch2007() && !tc.isSimulatorRunning()) {
                                         if (!sentWarnMessage) {
                                             log.warn(
                                                     "The installed NCE Command Station EPROM has problems when using turnout MONITORING feedback");

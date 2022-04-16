@@ -26,7 +26,9 @@
     <decVal max="32"/>
     <label>Quick Select Shift key</label>
     <label xml:lang="de">Set+1 Taste erweitern</label>
+    <label xml:lang="cs">Shift tlačítko pro rychlý výběr</label>
     <tooltip>Shift key to switch between sound sets.</tooltip>
     <tooltip xml:lang="de">Set+1 Taste erweitern.</tooltip>
+    <tooltip xml:lang="cs">Shift tlačítko pro přepínaní mezi sadami zvuků.</tooltip>
   </variable>
 </variables>

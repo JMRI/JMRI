@@ -121,8 +121,8 @@
       Avanc&eacute;). Ces entr&eacute;es seront
       r&eacute;utilis&eacute;es par le Groupe Fonction <a href=
       "BasicThrottleWindow.shtml">dans les fen&ecirc;tres
-      R&eacute;gulateurs</a> .<br>
-      <br>
+      R&eacute;gulateurs</a> .
+      <p>
       Il y a une option pour les Limite JMRI qui montrera les
       boutons Fonction R&eacute;gulateur <a href=
       "ThrottlesPreferencesPane.shtml">s uniquement pour une
@@ -131,8 +131,10 @@
       <br>
       Vous pouvez &eacute;galement jeter un oeil &agrave;
       Jynstruments pour le bouton de fonction avanc&eacute;e.<br>
-      <br>
-    </div><!--#include virtual="/Footer.shtml" -->
+      </p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
   </div>
 </body>
 </html>

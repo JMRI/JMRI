@@ -111,6 +111,7 @@ public class DetectionPanel extends JPanel {
         return panel;
     }
 
+    @SuppressWarnings("raw")
     void openPickList() {
         _pickFrame = new JFrame();
         JPanel content = new JPanel();
@@ -126,7 +127,7 @@ public class DetectionPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.add(blurb);
         content.add(panel);
-        PickListModel[] models = {PickListModel.oBlockPickModelInstance(),
+        PickListModel<?>[] models = {PickListModel.oBlockPickModelInstance(),
             PickListModel.sensorPickModelInstance()
         };
         content.add(new PickPanel(models));

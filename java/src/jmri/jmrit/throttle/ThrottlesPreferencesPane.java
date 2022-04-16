@@ -124,6 +124,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         uiSettingsPane.updateThrottlesPreferences(tp);
         ctrlSettingsPane.updateThrottlesPreferences(tp);
         InstanceManager.getDefault(ThrottlesPreferences.class).set(tp);
+        InstanceManager.getDefault(ThrottleFrameManager.class).applyPreferences();
     }
 
     @Override

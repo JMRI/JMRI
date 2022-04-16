@@ -35,6 +35,7 @@ public class LearnThrottleFrameTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

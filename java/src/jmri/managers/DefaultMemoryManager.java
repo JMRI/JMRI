@@ -19,7 +19,7 @@ public class DefaultMemoryManager extends AbstractMemoryManager {
 
     @Override
     @Nonnull
-    protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName) {
+    protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
         // makeSystemName validates that systemName is correct
         return new DefaultMemory(makeSystemName(systemName), userName);
     }

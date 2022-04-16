@@ -55,12 +55,6 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         return !_socket.evaluate();
     }

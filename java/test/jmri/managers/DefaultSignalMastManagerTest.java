@@ -118,6 +118,7 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
 
     @AfterEach
     public void tearDown() {
+        l.dispose();
         l = null;
         JUnitUtil.tearDown();
     }

@@ -1,164 +1,129 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Block Tracking</title>
   <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "java model railroad JMRI Block tracking">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="java model railroad JMRI Block tracking">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h2>JMRI: Block Tracking</h2>
 
-      <h3>Background Information</h3>Model railroad control systems
-      generally can't tell you which train occupies a particular
+      <h3>Background Information</h3>
+      Model railroad control systems generally can't tell you which train occupies a particular
       piece of track at any given time.
+      <p>This is unfortunate, because there are lots of reasons you might want to know. For
+      example, you might want to command any train that reaches a particular red signal to stop.
+      But you can't do that unless you know <em>which</em> train it is that is reaching the
+      signal.</p>
 
-      <p>This is unfortunate, because there are lots of reasons you
-      might want to know. For example, you might want to command
-      any train that reaches a particular red signal to stop. But
-      you can't do that unless you know <i>which</i> train it is
-      that is reaching the signal.</p>
+      <p>JMRI provides experimental tools for tracking trains as them move around on the
+      layout.</p>
 
-      <p>JMRI provides experimental tools for tracking trains as
-      them move around on the layout.</p>
-
-      <h2>Basic Concepts</h2>Imagine a simple loop of track that's
-      been wired with occupancy sensors on individual segments of
-      track, which we'll call "Blocks". Imagine the train is in
-      Block A, and will shortly move to Block B, then C.
-
-      <p>At first the sensor for Block A is showing active. As the
-      train moves into Block B, the Sensor for B will go active.
-      When the train has completely left A, it's sensor will go
+      <h2>Basic Concepts</h2>
+      Imagine a simple loop of track that's been wired with occupancy sensors on individual
+      segments of track, which we'll call "Blocks". Imagine the train is in Block A, and will
+      shortly move to Block B, then C.
+      <p>At first the sensor for Block A is showing active. As the train moves into Block B, the
+      Sensor for B will go active. When the train has completely left A, it's sensor will go
       inactive etc.</p>
 
-      <p>Although a particular Block only knows whether it's active
-      or not (occupied or not), by also looking at the occupancy of
-      the adjacent Blocks it can tell more. In the example above,
-      if the code knew that train 321 was in Block A, when Block B
-      goes active, the program can infer that 321 is now also in
-      Block B.</p>
+      <p>Although a particular Block only knows whether it's active or not (occupied or not), by
+      also looking at the occupancy of the adjacent Blocks it can tell more. In the example above,
+      if the code knew that train 321 was in Block A, when Block B goes active, the program can
+      infer that 321 is now also in Block B.</p>
 
-      <p>This doesn't always work, unfortunately. Imagine the case
-      above, where there is both a train in Block A and also a
-      train in Block C. When Block B goes from inactive to active
-      (unoccupied to occupied), which train moved in? The one from
-      A, or the one from C?</p>
+      <p>This doesn't always work, unfortunately. Imagine the case above, where there is both a
+      train in Block A and also a train in Block C. When Block B goes from inactive to active
+      (unoccupied to occupied), which train moved in? The one from A, or the one from C?</p>
 
-      <p>Some of this ambiguity can be removed by careful
-      arrangement of the detection Blocks, by accepting limitations
-      on how trains can run (or how short Blocks have to be), and
-      by using more intelligent logic that thinks about the
-      direction and priority of trains. But it's clear that even
-      straight track poses some problems.</p>
+      <p>Some of this ambiguity can be removed by careful arrangement of the detection Blocks, by
+      accepting limitations on how trains can run (or how short Blocks have to be), and by using
+      more intelligent logic that thinks about the direction and priority of trains. But it's clear
+      that even straight track poses some problems.</p>
 
-      <p>Turnouts add an additional layer of complexity. Imagine a
-      train is sitting in the Block next to the normal (closed)
-      route, and another is sitting in the reversed (thrown) route.
-      When the occupancy Sensor for the Turnout goes active, which
-      Train has entered the Turnout track? That depends on which
-      way the Turnout is set, so the program needs to be able to
+      <p>Turnouts add an additional layer of complexity. Imagine a train is sitting in the Block
+      next to the normal (closed) route, and another is sitting in the reversed (thrown) route.
+      When the occupancy Sensor for the Turnout goes active, which Train has entered the Turnout
+      track? That depends on which way the Turnout is set, so the program needs to be able to
       consider that information too.</p>
 
-      <h2>JMRI Block Tools</h2>JMRI provides a "Block" class to
-      handle the tracking.
+      <h2>JMRI Block Tools</h2>
+      JMRI provides a "Block" class to handle the tracking.
+      <p>Note that this is test code, and not all features are completely present. For example, you
+      cannot store Block objects in a Configuration file; they must be manually created in your
+      scripts. This limitations will be removed with time.</p>
 
-      <p>Note that this is test code, and not all features are
-      completely present. For example, you cannot store Block
-      objects in a Configuration file; they must be manually
-      created in your scripts. This limitations will be removed
-      with time.</p>
-
-      <h3>Block Table</h3>The <a href=
-      "../../../package/jmri/jmrit/beantable/BlockTable.shtml">Block
-      Table</a> lets you see the status of your Blocks.
-
-      <h3>Issues</h3>There is no functional requirement for a type
-      letter in the System Name, but by convention we use 'B' for
-      'Block'. The default implementation is not system-specific,
-      so a system letter of 'I' is appropriate. This leads to
-      system names like "IB201".
-
-      <p>The direction of a Block is set from the direction of the
-      incoming train. When a train is found to be coming in on a
-      particular Path, that Path's getFromBlockDirection becomes
-      the direction of the train in this Block.</p>
+      <h3>Block Table</h3>
+      The <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a> lets you
+      see the status of your Blocks.
+      <h3>Issues</h3>
+      There is no functional requirement for a type letter in the System Name, but by convention we
+      use 'B' for 'Block'. The default implementation is not system-specific, so a system letter of
+      'I' is appropriate. This leads to system names like "IB201".
+      <p>The direction of a Block is set from the direction of the incoming train. When a train is
+      found to be coming in on a particular Path, that Path's getFromBlockDirection becomes the
+      direction of the train in this Block.</p>
 
       <p>Issues:</p>
 
       <ul>
         <li>Doesn't handle a train pulling in behind another well:
-
           <ul>
-            <li>When the 2nd train arrives, the Sensor is already
-            active, so the value is unchanged (but the value can
-            only be a single object anyway)</li>
+            <li>When the 2nd train arrives, the Sensor is already active, so the value is unchanged
+            (but the value can only be a single object anyway)</li>
 
-            <li>When the 1st train leaves, the Sensor stays active,
-            so the value remains that of the 1st train</li>
+            <li>When the 1st train leaves, the Sensor stays active, so the value remains that of
+            the 1st train</li>
           </ul>
         </li>
 
-        <li>The assumption is that a train will only go through a
-        set turnout. For example, a train could come into the
-        turnout Block from the main even if the turnout is set to
-        the siding. (Ignoring those layouts where this would cause
-        a short; it doesn't do so on all layouts)</li>
+        <li>The assumption is that a train will only go through a set turnout. For example, a train
+        could come into the turnout Block from the main even if the turnout is set to the siding.
+        (Ignoring those layouts where this would cause a short; it doesn't do so on all
+        layouts)</li>
 
-        <li>Does not handle closely-following trains where there is
-        only one electrical Block per Signal. To do this, it
-        probably needs some type of "assume a train doesn't back
-        up" logic. A better solution is to have multiple sensors
-        and Block objects between each signal head.</li>
+        <li>Does not handle closely-following trains where there is only one electrical Block per
+        Signal. To do this, it probably needs some type of "assume a train doesn't back up" logic.
+        A better solution is to have multiple sensors and Block objects between each signal
+        head.</li>
 
-        <li>If a train reverses in a Block and goes back the way it
-        came (e.g. b1 to b2 to b1), the Block that's re-entered
-        will get an updated direction, but the direction of this
-        Block (b2 in the example) is not updated. In other words,
-        we're not noticing that the train must have reversed to go
-        back out.</li>
+        <li>If a train reverses in a Block and goes back the way it came (e.g. b1 to b2 to b1), the
+        Block that's re-entered will get an updated direction, but the direction of this Block (b2
+        in the example) is not updated. In other words, we're not noticing that the train must have
+        reversed to go back out.</li>
       </ul>
 
-      <p>Do not assume that only one Block object uniquely
-      represents a piece of track. To allow independent
-      development, it must be possible for multiple Block objects
-      to take care of a particular section of track.</p>
+      <p>Do not assume that only one Block object uniquely represents a piece of track. To allow
+      independent development, it must be possible for multiple Block objects to take care of a
+      particular section of track.</p>
 
-      <h3>Technical Information</h3>For technical information, see
-      the Javadoc pages for
-
+      <h3>Technical Information</h3>
+      For technical information, see the Javadoc pages for
       <ul>
-        <li><a href=
-        "https://jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> -
-        represents each Block and its connections</li>
+        <li>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> - represents each Block
+          and its connections
+        </li>
 
-        <li><a href=
-        "https://jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> -
-        represents the connections to and from another Block,
-        including any Turnout settings, etc, that are needed.</li>
-      </ul><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <li>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> - represents the
+          connections to and from another Block, including any Turnout settings, etc, that are
+          needed.
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

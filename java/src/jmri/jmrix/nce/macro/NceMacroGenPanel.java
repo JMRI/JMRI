@@ -3,13 +3,12 @@ package jmri.jmrix.nce.macro;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
+
+import jmri.jmrix.nce.*;
 
 /**
  * Pane for user input of NCE macros.
@@ -140,7 +139,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         if (r.getNumDataElements() == NceMessage.REPLY_1) {
 
             int recChar = r.getElement(0);
-            if (recChar == '!') {
+            if (recChar == NceMessage.NCE_OKAY) {
                 macroReply.setText(Bundle.getMessage("okay"));
             }
             if (recChar == '0') {

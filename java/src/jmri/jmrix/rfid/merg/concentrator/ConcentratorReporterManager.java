@@ -34,14 +34,14 @@ public class ConcentratorReporterManager extends RfidReporterManager {
     }
 
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("Create new Reporter: {}", systemName);
         if (!systemName.matches(getSystemNamePrefix() + "[" + tc.getRange() + "]")) {
             log.warn("Invalid Reporter name: {}} - out of supported range {}", systemName, tc.getRange());
             throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
         }
-        Reporter r;
-        r = new TimeoutReporter( new RfidReporter(systemName, userName));
+        Reporter r = new TimeoutReporter( new RfidReporter(systemName, userName));
         r.addPropertyChangeListener(this);
         return r;
     }

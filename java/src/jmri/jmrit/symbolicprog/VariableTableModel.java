@@ -53,14 +53,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Define the columns.
      * <p>
-     * Values understood are: "Name", "Value", "Range",
-     * "Read", "Write", "Comment", "CV", "Mask", "State". 
+     * Values understood are: "Name", "Value", "Range", "Read", "Write",
+     * "Comment", "CV", "Mask", "State".
      * <p>
-     * For each, a property
-     * key in SymbolicProgBundle by the same name allows i18n.
-     * 
-     * @param status variable status.
-     * @param h values headers array.
+     * For each, a property key in SymbolicProgBundle by the same name allows
+     * i18n.
+     *
+     * @param status  variable status.
+     * @param h       values headers array.
      * @param cvModel cv table model to use.
      */
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
@@ -360,6 +360,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         } else if ((child = e.getChild("splitDateTimeVal")) != null) {
             v = processSplitDateTimeVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
+        } else if ((child = e.getChild("splitEnumVal")) != null) {
+            v = processSplitEnumVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
+
         } else {
             reportBogus();
             return;
@@ -392,7 +395,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * If there are any modifier elements, process them by e.g. setting
      * attributes on the VariableValue.
      *
-     * @param e Element that's source of info
+     * @param e        Element that's source of info
      * @param variable Variable to load
      */
     protected void processModifierElements(final Element e, final VariableValue variable) {
@@ -412,9 +415,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     /**
-     * If there's a "default" attribute, or matching defaultItem element, set that value to start.
+     * If there's a "default" attribute, or matching defaultItem element, set
+     * that value to start.
      *
-     * @param e Element that's source of info
+     * @param e        Element that's source of info
      * @param variable Variable to load
      * @return true if the value was set
      */
@@ -466,7 +470,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * <p>
      * Adapted from handleEnumValChildren for use in LocoIO Legacy tool.
      *
-     * @param e Element that's source of info
+     * @param e   Element that's source of info
      * @param var Variable to load
      */
     protected void handleCompositeValChildren(Element e, CompositeVariableValue var) {
@@ -534,12 +538,97 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v1.lastItem();
         return v;
     }
+    
+    protected VariableValue processSplitEnumVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        String highCV = null;
+        
+        int count = 0;
+        IteratorIterable<Content> iterator = child.getDescendants();
+        while (iterator.hasNext()) {
+            Object ex = iterator.next();
+            if (ex instanceof Element) {
+                if (((Element) ex).getName().equals("enumChoice")) {
+                    count++;
+                }
+            }
+        }
 
+        if ((a = child.getAttribute("highCV")) != null) {
+            highCV = a.getValue();
+            _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.parseInt(a.getValue());
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.parseInt(a.getValue());
+        }
+        String uppermask = "VVVVVVVV";
+        if ((a = child.getAttribute("upperMask")) != null) {
+            uppermask = a.getValue();
+        }
+        String extra3 = "0";
+        if ((a = child.getAttribute("min")) != null) {
+            extra3 = a.getValue();
+        }
+        String extra4 = Long.toUnsignedString(~0);
+        if ((a = child.getAttribute("max")) != null) {
+            extra4 = a.getValue();
+        }
+        
+        SplitEnumVariableValue v1 = new SplitEnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, null, null, extra3, extra4);
+        v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
+
+        v1.nItems(count);
+        
+        handleSplitEnumValChildren(child, v1);
+        v1.lastItem();
+        return v;
+    }
+        /**
+     * Recursively walk the child enumChoice elements, working through the
+     * enumChoiceGroup elements as needed.
+     *
+     * @param e   Element that's source of info
+     * @param var Variable to load
+     */
+    protected void handleSplitEnumValChildren(Element e, SplitEnumVariableValue var) {
+        List<Element> local = e.getChildren();
+        
+        for (int k = 0; k < local.size(); k++) {
+            Element el = local.get(k);
+            log.debug("processing element='{}' name='{}' choice='{}' value='{}'", el.getName(), LocaleSelector.getAttribute(el, "name"), LocaleSelector.getAttribute(el, "choice"), el.getAttribute("value"));
+            if (_df != null && !DecoderFile.isIncluded(el, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
+                log.debug("element excluded by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
+                continue;
+            }
+            if (el.getName().equals("enumChoice")) {
+                Attribute valAttr = el.getAttribute("value");
+                if (valAttr == null) {
+                    var.addItem(LocaleSelector.getAttribute(el, "choice"));
+                } else {
+                    var.addItem(LocaleSelector.getAttribute(el, "choice"),
+                            Integer.parseInt(valAttr.getValue()));
+                }
+            } else if (el.getName().equals("enumChoiceGroup")) {
+                var.startGroup(LocaleSelector.getAttribute(el, "name"));
+                handleSplitEnumValChildren(el, var);
+                var.endGroup();
+            }
+            log.debug("element processed");
+        }
+    }
     /**
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
      *
-     * @param e Element that's source of info
+     * @param e   Element that's source of info
      * @param var Variable to load
      */
     protected void handleEnumValChildren(Element e, EnumVariableValue var) {
@@ -709,7 +798,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("min")) != null) {
             extra3 = a.getValue();
         }
-        String extra4 = Long.toUnsignedString(~0,16);
+        String extra4 = Long.toUnsignedString(~0, 16);
         if ((a = child.getAttribute("max")) != null) {
             extra4 = a.getValue();
         }
@@ -805,7 +894,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             uppermask = a.getValue();
         }
         String extra1 = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
-                                                // Java epoch is "1970-01-01T00:00:00"
+        // Java epoch is "1970-01-01T00:00:00"
         if ((a = child.getAttribute("base")) != null) {
             extra1 = a.getValue();
         }
@@ -856,7 +945,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     public void setButtonModeFromProgrammer() {
         if (_cvModel.getProgrammer() == null || !_cvModel.getProgrammer().getCanRead()) {
-            for (JButton b : _readButtons) b.setEnabled(false);
+            for (JButton b : _readButtons) {
+                b.setEnabled(false);
+            }
         }
     }
 
@@ -937,14 +1028,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     /**
      * Programmatically create a new DecVariableValue from parameters.
-     * @param name variable name.
-     * @param CV CV string.
-     * @param comment variable comment.
-     * @param mask CV mask.
-     * @param readOnly true if read only, else false.
-     * @param infoOnly true if information only, else false.
+     *
+     * @param name      variable name.
+     * @param CV        CV string.
+     * @param comment   variable comment.
+     * @param mask      CV mask.
+     * @param readOnly  true if read only, else false.
+     * @param infoOnly  true if information only, else false.
      * @param writeOnly true if write only, else false.
-     * @param opsOnly true if ops only, else false.
+     * @param opsOnly   true if ops only, else false.
      */
     public void newDecVariableValue(String name, String CV, String comment, String mask,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly) {
@@ -1040,6 +1132,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Represents any change to values, etc, hence rewriting the file is
      * desirable.
+     *
      * @return true if dirty, else false.
      */
     public boolean fileDirty() {
@@ -1054,6 +1147,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Check for change to values, etc, hence rewriting the decoder is
      * desirable.
+     *
      * @return true if dirty, else false.
      */
     public boolean decoderDirty() {
@@ -1079,25 +1173,71 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public VariableValue findVar(String name) {
         for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getItem(i))) {
+                log.debug("findVar matched '{}' by Item", name);
                 return getVariable(i);
             }
+        }
+        for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getLabel(i))) {
+                log.warn("findVar matched '{}' by Label rather than Item", name);
                 return getVariable(i);
             }
         }
         return null;
     }
 
+    /**
+     * Returns the index of the first variable that matches a given name string.
+     * <p>
+     * Checks the search string against every variable's "item", the true name, 
+     * then against their "label" (default language only) and finally the
+     * CV name before moving on to the next variable if none of those match.
+     *
+     * @param name search string.
+     * @return index of the first matching variable found.
+     */
     public int findVarIndex(String name) {
-        for (int i = 0; i < getRowCount(); i++) {
-            if (name.equals(getItem(i))) {
-                return i;
+        return findVarIndex(name, false);
+    }
+    
+    /**
+     * Returns the index of a variable that matches a given name string.
+     * <p>
+     * Checks the search string against every variable's "item", the true name, 
+     * then against their "label" (default language only) and finally the
+     * CV name before moving on to the next variable if none of those match.
+     *
+     * Depending on the second parameter, it will return the index of the first
+     * or last variable in our internal rowVector that matches the given string.
+     *
+     * @param name search string.
+     * @param searchFromEnd If true, will start searching from the end.
+     * @return index of the first matching variable found.
+     */
+    public int findVarIndex(String name, boolean searchFromEnd) {
+        if(searchFromEnd) {
+            for (int i = getRowCount() - 1; i >= 0; i--) {
+                if (name.equals(getItem(i))) {
+                    return i;
+                }
+                if (name.equals(getLabel(i))) {
+                    return i;
+                }
+                if (name.equals("CV" + getCvName(i))) {
+                    return i;
+                }
             }
-            if (name.equals(getLabel(i))) {
-                return i;
-            }
-            if (name.equals("CV" + getCvName(i))) {
-                return i;
+        } else {
+            for (int i = 0; i < getRowCount(); i++) {
+                if (name.equals(getItem(i))) {
+                    return i;
+                }
+                if (name.equals(getLabel(i))) {
+                    return i;
+                }
+                if (name.equals("CV" + getCvName(i))) {
+                    return i;
+                }
             }
         }
         return -1;

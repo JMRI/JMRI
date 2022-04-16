@@ -112,9 +112,8 @@ public class JUnitOperationsUtil {
         co.addName("DAB");
 
         // Set up four engines in two consists
-        Consist con1 = emanager.newConsist("C16");
-
-        Consist con2 = emanager.newConsist("C14");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C16");
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C14");
 
         Engine e1 = new Engine("PC", "5016");
         e1.setModel("GP40");
@@ -401,17 +400,24 @@ public class JUnitOperationsUtil {
 
     public static Route createFiveLocationRoute() {
 
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
-        Route route = createThreeLocationRoute();
+        createSevenNormalLocations();
 
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford-Davers-Essex");
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
         Location danvers = lmanager.getLocationByName("Danvers");
         Location essex = lmanager.getLocationByName("Essex");
 
+        route.addLocation(acton);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
         route.addLocation(danvers);
         route.addLocation(essex);
-
-        route.setName("Route Acton-Boston-Chelmsford-Davers-Essex");
 
         return route;
     }
@@ -556,8 +562,11 @@ public class JUnitOperationsUtil {
         Location l3 = lManager.newLocation("Test Loc C");
         l3.setLength(1003);
         Location l4 = lManager.newLocation("Test Loc B");
+        l4.addTrack("Yard Track", Track.YARD);
+        l4.addTrack("Interchange Track", Track.INTERCHANGE);
         l4.setLength(1004);
         Location l5 = lManager.newLocation("Test Loc A");
+        l5.addTrack("Staging Track", Track.STAGING);
         l5.setLength(1005);
     }
 
@@ -666,14 +675,14 @@ public class JUnitOperationsUtil {
         // remove the operations shut down tasks
         Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
+        var list = sm.getRunnables();
         // only one operations shut down task, the others can be NCE shutdown and EditorManager shutdown.
         Assert.assertTrue("Two shut down tasks max", list.size() < 4);
         ShutDownTask operationShutdownTask = null;
-        for (ShutDownTask task : list) {
-            if (task.getName().equals("Operations Train Window Check")
-                    || task.getName().equals("Save Operations State")) {
-                operationShutdownTask = task;
+        for (var task : list) {
+            if (((ShutDownTask)task).getName().equals("Operations Train Window Check")
+                    || ((ShutDownTask)task).getName().equals("Save Operations State")) {
+                operationShutdownTask = ((ShutDownTask)task);
             }
         }
         Assert.assertNotNull(operationShutdownTask);

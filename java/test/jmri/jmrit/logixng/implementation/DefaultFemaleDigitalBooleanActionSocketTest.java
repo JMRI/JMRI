@@ -21,13 +21,13 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Test ExpressionTimer
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTestBase {
 
     private MyOnChangeAction _action;
-    
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -35,25 +35,25 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
     protected Manager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class);
     }
-    
+
     @Test
     public void testBundleClass() {
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"));
         Assert.assertEquals("bundle is correct", "Generic", Bundle.getMessage(Locale.US, "SocketTypeGeneric"));
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc"));
     }
-    
+
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "A1".equals(_femaleSocket.getName()));
     }
-    
+
     @Test
     public void testGetDescription() {
         Assert.assertTrue("String matches", "!b".equals(_femaleSocket.getShortDescription()));
         Assert.assertTrue("String matches", "!b A1".equals(_femaleSocket.getLongDescription()));
     }
-    
+
     @Override
     protected FemaleSocket getFemaleSocket(String name) {
         return new DefaultFemaleDigitalBooleanActionSocket(null, new FemaleSocketListener() {
@@ -66,12 +66,12 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
             }
         }, name);
     }
-    
+
     @Override
     protected boolean hasSocketBeenSetup() {
         return _action._hasBeenSetup;
     }
-    
+
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
@@ -80,28 +80,28 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         // Test execute() when not connected
         ((DefaultFemaleDigitalBooleanActionSocket)_femaleSocket).execute(false, false);
     }
-    
+
     @Test
     public void testGetConnectableClasses() {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
-        
+
         List<Class<? extends Base>> classes = new ArrayList<>();
 //        classes.add(jmri.jmrit.logixng.actions.ActionLight.class);
         map.put(Category.ITEM, classes);
-        
+
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.DigitalBooleanMany.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalBooleanOnChange.class);
         map.put(Category.COMMON, classes);
-        
+
         classes = new ArrayList<>();
 //        classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
         map.put(Category.OTHER, classes);
-        
+
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -112,9 +112,12 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
+
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+                .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _action = new MyOnChangeAction("IQDB321");
@@ -140,22 +143,22 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyOnChangeAction extends DigitalBooleanOnChange {
-        
+
         private boolean _hasBeenSetup = false;
-        
+
         public MyOnChangeAction(String systemName) {
             super(systemName, null, DigitalBooleanOnChange.Trigger.CHANGE);
         }
-        
+
         /** {@inheritDoc} */
         @Override
         public void setup() {
             _hasBeenSetup = true;
         }
     }
-    
+
 }

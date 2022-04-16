@@ -974,7 +974,7 @@ public class Car extends RollingStock {
             _utility = a.getValue().equals(Xml.TRUE);
         }
         if ((a = e.getAttribute(Xml.KERNEL)) != null) {
-            Kernel k = InstanceManager.getDefault(CarManager.class).getKernelByName(a.getValue());
+            Kernel k = InstanceManager.getDefault(KernelManager.class).getKernelByName(a.getValue());
             if (k != null) {
                 setKernel(k);
                 if ((a = e.getAttribute(Xml.LEAD_KERNEL)) != null && a.getValue().equals(Xml.TRUE)) {

@@ -91,12 +91,6 @@ public class ExpressionReference extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() {
         if (_reference == null) return false;
         
@@ -220,9 +214,7 @@ public class ExpressionReference extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (getTriggerOnChange()) {
-            getConditionalNG().execute();
-        }
+        getConditionalNG().execute();
     }
     
     /** {@inheritDoc} */

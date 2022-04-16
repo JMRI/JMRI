@@ -281,8 +281,14 @@ public class PreviewDialog extends JDialog {
         _cnt = 0;       // number of images displayed in this panel
         int cnt = 0;    // total number of images in directory
         File[] files = _currentDir.listFiles(); // all files, filtered below
+
         if (files != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
-            
+
+            // sort list of files alphabetically
+            ArrayList<File> aList = new ArrayList<>(java.util.Arrays.asList(files));
+            java.util.Collections.sort(aList);
+            files = aList.toArray(files);
+
             int nCols = 1;
             int nRows = 1;
             int nAvail = 1;
@@ -398,20 +404,7 @@ public class PreviewDialog extends JDialog {
     static int CHUNK = 500000;
 
     private long availableMemory() {
-        long total = 0;
-        ArrayList<byte[]> memoryTest = new ArrayList<>();
-        try {
-            while (true) {
-                memoryTest.add(new byte[CHUNK]);
-                total += CHUNK;
-            }
-        } catch (OutOfMemoryError me) {
-            for (int i = memoryTest.size() - 1; i >= 0; i--) { // safe direction to remove
-                memoryTest.remove(i);
-            }
-            log.debug("availableMemory= {}", total);
-        }
-        return total;
+        return Runtime.getRuntime().freeMemory()/2;
     }
 
     @Override

@@ -42,12 +42,12 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     
     /**
      * Create a new CanMessage of given length
-     * @param i number of CAN Frame data bytes, max 8
+     * @param numDataBytes number of CAN Frame data bytes, max 8
      * @param header The CAN Frame header value
      */
-    public CanMessage(int i, int header) {
+    public CanMessage(int numDataBytes, int header) {
         this(header);
-        _nDataChars = (i <= 8) ? i : 8;
+        _nDataChars = (numDataBytes <= 8) ? numDataBytes : 8;
     }
     
     /**

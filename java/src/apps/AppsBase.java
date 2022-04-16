@@ -6,7 +6,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import jmri.*;
@@ -113,7 +115,7 @@ public abstract class AppsBase {
         // all loaded, initialize objects as necessary
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        
+
         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         logixNG_Manager.setupAllLogixNGs();
@@ -321,14 +323,6 @@ public abstract class AppsBase {
     }
 
     /**
-     * @deprecated for removal since 4.17.2 without replacement
-     */
-    @Deprecated
-    protected void installShutDownManager() {
-        // nothing to do
-    }
-
-    /**
      * Final actions before releasing control of the application to the user,
      * invoked explicitly after object has been constructed in main().
      */
@@ -395,7 +389,7 @@ public abstract class AppsBase {
                 log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
         } catch (Exception e) {
-            log.error("Unable to set JMRI property {} to {}due to exception: {}", key, value, e);
+            log.error("Unable to set JMRI property {} to {}due to exception", key, value, e);
         }
     }
 

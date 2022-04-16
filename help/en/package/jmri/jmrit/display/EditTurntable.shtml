@@ -1,61 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Edit Turntable Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content=
-  "JMRI help Layout Editor turntable">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Layout Editor turntable">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Edit Turntable</h1>A Layout Editor turntable is a
-      schematic representation of a turntable on the layout. A
-      turntable is drawn as a circle with a variable number of
-      track connections, called <i>ray tracks</i>. Each <i>ray
-      track</i> is drawn as a short stub track radiating from the
-      turntable circle. A track segment should connect to each ray
-      track. Most of these track segments will connect a ray track
-      to an end bumper. The distance of each ray track connection
-      point from the turntable circle is fixed, but the direction
-      of each ray track may be varied by dragging its connection
-      point around the turntable circle. Any number of turntables
-      may be added to a panel, and each turntable may have any
-      number of ray tracks.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Edit Turntable</h1>
+      A Layout Editor turntable is a schematic representation of a turntable on the layout. A
+      turntable is drawn as a circle with a variable number of track connections, called <em>ray
+      tracks</em>. Each <em>ray track</em> is drawn as a short stub track radiating from the
+      turntable circle. A track segment should connect to each ray track. Most of these track
+      segments will connect a ray track to an end bumper. The distance of each ray track connection
+      point from the turntable circle is fixed, but the direction of each ray track may be varied
+      by dragging its connection point around the turntable circle. Any number of turntables may be
+      added to a panel, and each turntable may have any number of ray tracks.
+      <p>A turntable is added to a panel by selecting <strong>Add Turntable</strong> in the panel's
+      Option menu. New turntables are placed at the center of the panel, and should be moved to
+      desired locations by dragging its center point with the meta key pressed (right button drag
+      on Windows). When a turntable is added, it has four ray tracks located in up, down, left, and
+      right directions. The turntable's popup menu has two items. Selecting
+      <strong>Edit...</strong> brings up an Edit Turntable dialog, and selecting
+      <strong>Remove</strong> deletes the turntable and any track segments connected to it. Before
+      a turntable is actually deleted, the program asks for verification of that action.</p>
 
-      <p>A turntable is added to a panel by selecting <b>Add
-      Turntable</b> in the panel's Option menu. New turntables are
-      placed at the center of the panel, and should be moved to
-      desired locations by dragging its center point with the meta
-      key pressed (right button drag on Windows). When a turntable
-      is added, it has four ray tracks located in up, down, left,
-      and right directions. The turntable's popup menu has two
-      items. Selecting <b>Edit...</b> brings up an Edit Turntable
-      dialog, and selecting <b>Remove</b> deletes the turntable and
-      any track segments connected to it. Before a turntable is
-      actually deleted, the program asks for verification of that
-      action.</p>
-
-      <p><img src="images/EditTurntable.png" align="right"> The
-      Edit Turntable dialog allows the following</p>
+      <p><img src="images/EditTurntable.png" class="floatRight" alt="turnout dialog"> The Edit
+      Turntable dialog allows the following</p>
 
       <ul>
         <li>Radius of the turntable circle to be changed</li>
@@ -69,45 +45,37 @@
         <li>Automation to be configured</li>
       </ul>
 
-      <p>Ray track angles are measured from the vertical in a
-      clockwise direction. So, thinking of an analog clock, an
-      angle of 0 degrees is exactly vertical (the 12 o'clock
-      position). Similarly an angle of 90 degrees corresponds to
-      the 3 o'clock position, 180 degrees to 6 o'clock, 270 degrees
-      to 9 o'clock, and so on. Angles are always entered in
-      degrees.</p>
+      <p>Ray track angles are measured from the vertical in a clockwise direction. So, thinking of
+      an analog clock, an angle of 0 degrees is exactly vertical (the 12 o'clock position).
+      Similarly an angle of 90 degrees corresponds to the 3 o'clock position, 180 degrees to 6
+      o'clock, 270 degrees to 9 o'clock, and so on. Angles are always entered in degrees.</p>
 
-      <p>To add a ray track, enter the angle corresponding to it's
-      desired position in <b>Ray Track Angle</b>, and click <b>New
-      Ray Track</b>. The turntable shows the new ray track
-      immediately. To delete a ray track, find it in the connection
-      list and press <b>Remove</b>. The ray track, and any
-      connected track segment are immediately deleted from the
-      panel. <b>Caution: There is no undo for these
-      operations.</b></p>
+      <p>To add a ray track, enter the angle corresponding to it's desired position in <strong>Ray
+      Track Angle</strong>, and click <strong>New Ray Track</strong>. The turntable shows the new
+      ray track immediately. To delete a ray track, find it in the connection list and press
+      <strong>Remove</strong>. The ray track, and any connected track segment are immediately
+      deleted from the panel. <strong>Caution: There is no undo for these operations.</strong></p>
 
-      <p><b>DCC Controlled Turntable</b><br>
-      When this is selected it allows for control of turntables
-      (and drivers) that use DCC turnout addresses to set the
-      turntable to various positions. Such examples are the LDT
-      TT-DEC or Heljan DCC Turntable. For each Ray, select or
-      create the DCC turnout address and the position required to
-      set it.<br>
-      To set the turntable to the desired position, simply click on
-      the ray that you wish the turntable to be aligned with.</p>
+      <p><strong>DCC Controlled Turntable</strong><br>
+      When this is selected it allows for control of turntables (and drivers) that use DCC turnout
+      addresses to set the turntable to various positions. Such examples are the LDT TT-DEC or
+      Heljan DCC Turntable. For each Ray, select or create the DCC turnout address and the position
+      required to set it.<br>
+      To set the turntable to the desired position, simply click on the ray that you wish the
+      turntable to be aligned with.</p>
 
-      <p><b>Note:</b> An easy procedure is possible for accurately
-      aligning ray track connection points and end bumpers so that
-      each track segment extends through the center of the
-      turntable. After positioning the center of the turntable, and
-      after adding ray tracks where needed, expand the radius of
-      the turntable by a factor of three to four. Then add end
-      bumpers adjacent to (or on top of) each ray track connection
-      point. After shrinking the radius back to its final radius,
-      add track segments. Track segments will be aligned fairly
+      <p><strong>Note:</strong> An easy procedure is possible for accurately aligning ray track
+      connection points and end bumpers so that each track segment extends through the center of
+      the turntable. After positioning the center of the turntable, and after adding ray tracks
+      where needed, expand the radius of the turntable by a factor of three to four. Then add end
+      bumpers adjacent to (or on top of) each ray track connection point. After shrinking the
+      radius back to its final radius, add track segments. Track segments will be aligned fairly
       precisely to the turntable center.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

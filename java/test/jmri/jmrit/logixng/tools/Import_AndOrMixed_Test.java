@@ -142,7 +142,8 @@ public class Import_AndOrMixed_Test {
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
         importLogix.getLogixNG().setEnabled(true);
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
 /*        
         System.err.println("-------------------------------------------");
         java.io.PrintWriter p = new java.io.PrintWriter(System.err);
@@ -257,7 +258,8 @@ public class Import_AndOrMixed_Test {
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
         importLogix.getLogixNG().setEnabled(true);
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
         
         check.runTest("LogixNG is activated", true);
         
@@ -371,7 +373,8 @@ public class Import_AndOrMixed_Test {
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
         importLogix.getLogixNG().setEnabled(true);
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
         
         check.runTest("LogixNG is activated", true);
         

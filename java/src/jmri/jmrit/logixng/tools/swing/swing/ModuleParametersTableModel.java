@@ -230,7 +230,7 @@ public class ModuleParametersTableModel extends AbstractTableModel {
             JComboBox<InitialValueType> typeComboBox = new JComboBox<>();
             
             for (InitialValueType type : InitialValueType.values()) {
-                typeComboBox.addItem(type);
+                if (type.isValidAsParameter()) typeComboBox.addItem(type);
             }
             JComboBoxUtil.setupComboBoxMaxRows(typeComboBox);
             

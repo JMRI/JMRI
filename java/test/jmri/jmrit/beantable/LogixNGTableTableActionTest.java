@@ -13,32 +13,24 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
-import jmri.util.junit.rules.*;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
-import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
 
 
-/*
+/**
 * Tests for the NamedTableTableAction Class
-* Re-created using JUnit4 with support for the new conditional editors
+* Re-created using JUnit5 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017 (for the LogixTableActionTest class)
 * @author Daniel Bergqvist Copyright (C) 2019
 */
+@Timeout(10)
 public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTable> {
 
     static final ResourceBundle rbxNamedTableSwing = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {
@@ -59,7 +51,7 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
     @Override
     @Test
     public void testGetClassDescription() {
-        Assert.assertEquals("NamedTable Table Action class description", Bundle.getMessage("TitleLogixNGTable"), a.getClassDescription());  // NOI18N
+        Assert.assertEquals("NamedTable Table Action class description", Bundle.getMessage("TitleLogixNGTableTable"), a.getClassDescription());  // NOI18N
     }
 
     @Disabled("Fix later")
@@ -67,37 +59,37 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
     @Override
     public void testAddThroughDialog() {
     }
-    
+
     @Disabled("Fix later")
     @Test
     @Override
     public void testAddButton() {
     }
-    
+
     @Disabled("Fix later")
     @Test
     @Override
     public void testEditButton() {
     }
-    
+
     @Disabled("Fix later")
     @Test
     @Override
     public void testIncludeAddButton() {
     }
-    
+
     @Disabled("Fix later")
     @Test
     @Override
     public void testHelpTarget() {
     }
-    
+
     @Disabled("Fix later")
     @Test
     @Override
     public void testExecute() {
     }
-    
+
     /*.*
      * Check the return value of includeAddButton.
      * <p>
@@ -124,7 +116,7 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
 
         NamedTable logixNG = InstanceManager.getDefault(NamedTableManager.class).getBySystemName("IQ1");
         Assert.assertNull("NamedTable does not exist", logixNG);
-        
+
         // find the "Add... " button and press it.
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
@@ -139,14 +131,14 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
         ((JTextField)jlo.getLabelFor()).setText("IQ1");
         //and press create
         jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
-        
+
         // Click button "Done" on the EditNamedTable frame
         String title = String.format("Edit NamedTable %s", "IQ1");
         JFrame frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
         JFrameOperator jf2 = new JFrameOperator(frame);
         jmri.util.swing.JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
         JUnitUtil.dispose(frame);
-        
+
         // Test that we can open the NamedTableEdtior window twice
         logixNGTable.editPressed("IQ101");  // NOI18N
         // Click button "Done" on the EditNamedTable frame
@@ -155,10 +147,10 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
         jf2 = new JFrameOperator(frame);
         jmri.util.swing.JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
         JUnitUtil.dispose(frame);
-        
+
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
-        
+
         logixNG = InstanceManager.getDefault(NamedTableManager.class).getBySystemName("IQ1");
         Assert.assertNotNull("NamedTable has been created", logixNG);
     }
@@ -168,31 +160,31 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
-        
+
         logixNGTable.setEditorMode(AbstractLogixNGTableAction.EditMode.TREEEDIT);
 
         NamedTable table = InstanceManager.getDefault(NamedTableManager.class).getBySystemName("IQ101");
         Assert.assertNotNull("NamedTable exists", table);
-        
+
         logixNGTable.editPressed("IQ101");  // NOI18N
 
         String title = String.format("Edit NamedTable %s - %s", table.getSystemName(), table.getUserName());
         JFrame frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
 //        JFrame frame2 = JFrameOperator.waitJFrame(Bundle.getMessage("EditTitle"), true, true);  // NOI18N
-        
+
         // Click button "New ConditionalNG" on the EditNamedTable frame
         JFrameOperator jf = new JFrameOperator(frame);
         jmri.util.swing.JemmyUtil.pressButton(jf,"New ConditionalNG");
-        
-        
+
+
         JDialogOperator addDialog = new JDialogOperator("Add ConditionalNG");  // NOI18N
         new JButtonOperator(addDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
-        
+
         // Close window
 //        JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit ConditionalNG " + table.getConditionalNG(0));
         JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit ConditionalNG aaa");
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
-        
+
         Assert.assertNotNull(frame);
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(frame),Bundle.getMessage("ButtonDone"));
         JUnitUtil.dispose(frame);
@@ -308,7 +300,7 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
 
         JUnitUtil.dispose(logixNGFrame);
     }
-    
+
     Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -320,8 +312,8 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
         t.start();
         return t;
     }
-*/    
-    
+*/
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -330,18 +322,18 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initLogixNGManager();
-        
+
 //        InstanceManager.getDefault(NamedTablePreferences.class).setLimitRootActions(false);
-        
+
         InstanceManager.getDefault(UserPreferencesManager.class)
                 .setSimplePreferenceState(ConditionalNGEditor.class.getName()+".AutoSystemName", true);
-        
+
 ////        InstanceManager.getDefault(NamedTableManager.class).createNamedTable("IQ101", "NamedTable 101");
 ////        InstanceManager.getDefault(NamedTableManager.class).createNamedTable("IQ102", "NamedTable 102");
 ////        InstanceManager.getDefault(NamedTableManager.class).createNamedTable("IQ103", "NamedTable 103");
 ////        InstanceManager.getDefault(NamedTableManager.class).createNamedTable("IQ104", "NamedTable 104");
 
-        helpTarget = "package.jmri.jmrit.beantable.NamedTableTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.NamedTableTable";
         a = new LogixNGTableTableAction();
     }
 
@@ -353,8 +345,8 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableTableActionTest.class);
 
 }

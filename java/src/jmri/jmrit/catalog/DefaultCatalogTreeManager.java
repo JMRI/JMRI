@@ -1,22 +1,20 @@
 package jmri.jmrit.catalog;
 
 import java.util.Set;
-import jmri.CatalogTree;
-import jmri.CatalogTreeLeaf;
-import jmri.CatalogTreeNode;
-import jmri.CatalogTreeManager;
-import jmri.InstanceInitializer;
-import jmri.InstanceManager;
-import jmri.ShutDownTask;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+
+import jmri.*;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
+import jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
+
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Provide the concrete implementation for the Internal CatalogTree Manager.
@@ -58,15 +56,14 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return '0';
     }
 
+    @CheckForNull
     @Override
     public CatalogTree getCatalogTree(@Nonnull String name) {
         CatalogTree t = getByUserName(name);
-        if (t != null) {
-            return t;
-        }
-        return getBySystemName(name);
+        return (t != null ? t : getBySystemName(name));
     }
 
+    @CheckForNull
     @Override
     public CatalogTree getBySystemName(@Nonnull String key) {
         if (log.isDebugEnabled()) {
@@ -80,31 +77,37 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return _tsys.get(key);
     }
 
+    @CheckForNull
     @Override
     public CatalogTree getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
     /**
+     * Provide CatalogTree by UserName, then SystemName, then creates if not found.
      * {@inheritDoc}
      */
     @Override
-    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName) {
+    @Nonnull
+    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("new CatalogTree: systemName= {}, userName= {}", systemName, userName);
-        if (systemName.length() == 0) {
-            log.error("Empty systemName!");
-            return null;
+        if (systemName.isEmpty()) {
+            throw new IllegalArgumentException("Empty systemName!");
         }
         // return existing if there is one
         CatalogTree t;
-        if ((userName != null) && ((t = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != t) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, t.getSystemName());
+        if (userName != null) { 
+            t = getByUserName(userName);
+            if (t != null) {
+                if (getBySystemName(systemName) != t) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                            userName, systemName, t.getSystemName());
+                }
+                return t;
             }
-            return t;
         }
-        if ((t = getBySystemName(systemName)) != null) {
+        t = getBySystemName(systemName);
+        if (t != null) {
             if ((t.getUserName() == null) && (userName != null)) {
                 t.setUserName(userName);
             } else if (userName != null) {
@@ -137,16 +140,16 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      *
      * @param systemName system name for catalog tree, never null/empty
      * @param userName   user name for catalog tree
-     * @return the new catalog tree or null if unable to create
+     * @return the new catalog tree or 
+     * @throws IllegalArgumentException if unable to create
      */
-    protected CatalogTree createNewCatalogTree(@Nonnull String systemName, String userName) {
-        if (systemName.length() == 0) {
-            log.error("Empty systemName!");
-            return null;
+    @Nonnull
+    protected CatalogTree createNewCatalogTree(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        if (systemName.isEmpty()) {
+            throw new IllegalArgumentException("Empty systemName!");
         }
-        if (userName == null || userName.length() == 0) {
-            log.error("Null userName!");
-            return null;
+        if (userName == null || userName.isEmpty()) {
+            throw new IllegalArgumentException("Null or empty userName!");
         }
         if (systemName.charAt(1) == CatalogTree.XML) {
             switch (systemName.charAt(0)) {
@@ -179,7 +182,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
                     log.error("Bad systemName: {} (userName= {})", systemName, userName);
             }
         }
-        return null;
+        throw new IllegalArgumentException("systemName.charAt not XML or FILESYS !");
     }
 
     @Override
@@ -196,13 +199,16 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return CatalogTree.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void storeImageIndex() {
         jmri.jmrit.display.palette.ItemPalette.storeIcons();
 
         log.debug("Start writing CatalogTree info");
         try {
-            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().writeCatalogTrees();
+            new DefaultCatalogTreeManagerXml().writeCatalogTrees();
             indexChanged(false);
         } catch (java.io.IOException ioe) {
             log.error("Exception writing CatalogTrees: ", ioe);
@@ -215,26 +221,35 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public void loadImageIndex() {
         if (!isIndexLoaded()) {
-            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+            new DefaultCatalogTreeManagerXml().readCatalogTrees();
             _indexLoaded = true;
             log.debug("loadImageIndex: catalog file loaded");
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isIndexChanged() {
         return _indexChanged;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isIndexLoaded() {
         return _indexLoaded;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;
-        jmri.ShutDownManager sdm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+        ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
         if (changed) {
             if (_shutDownTask == null) {
                 _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",

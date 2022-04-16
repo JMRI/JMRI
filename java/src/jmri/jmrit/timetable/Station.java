@@ -35,7 +35,7 @@ public class Station {
 
     private final int _stationId;
     private final int _segmentId;
-    private String _stationName = "New Station";  // NOI18N
+    private String _stationName = Bundle.getMessage("NewStationName");  // NOI18N
     private double _distance = 1.0;
     private boolean _doubleTrack = false;
     private int _sidings = 0;

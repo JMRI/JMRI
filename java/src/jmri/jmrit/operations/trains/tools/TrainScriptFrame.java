@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +18,7 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.script.JmriScriptEngineManager;
+import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 
 /**
@@ -391,13 +391,12 @@ public class TrainScriptFrame extends OperationsFrame {
      * We always use the same file chooser in this class, so that the user's
      * last-accessed directory remains available.
      */
-    JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+    ScriptFileChooser fc = new ScriptFileChooser(FileUtil.getUserFilesPath());
 
     private File selectFile() {
         if (fc == null) {
             log.error("Could not find user directory");
         } else {
-            fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("PythonScriptFiles"), "py")); // NOI18N
             fc.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
             // when reusing the chooser, make sure new files are included
             fc.rescanCurrentDirectory();

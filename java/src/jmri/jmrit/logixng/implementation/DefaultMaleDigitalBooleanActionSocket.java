@@ -44,7 +44,11 @@ public class DefaultMaleDigitalBooleanActionSocket
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             ((DigitalBooleanActionBean)getObject()).execute(hasChangedToTrue, hasChangedToFalse);
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e.getLocalizedMessage()), e, log);
+            if (e.getErrors() != null) {
+                handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);
+            } else {
+                handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e.getLocalizedMessage()), e, log);
+            }
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e.getLocalizedMessage()), e, log);
         }
@@ -183,6 +187,13 @@ public class DefaultMaleDigitalBooleanActionSocket
         // It's useful if you want to test the LogixNG without affecting the
         // layout (turnouts, sensors, and so on).
         public boolean _dontExecute = false;
+        
+        @Override
+        public DebugConfig getCopy() {
+            DigitalBooleanActionDebugConfig config = new DigitalBooleanActionDebugConfig();
+            config._dontExecute = _dontExecute;
+            return config;
+        }
         
     }
     

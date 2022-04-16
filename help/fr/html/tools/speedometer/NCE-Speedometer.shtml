@@ -1,335 +1,239 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-10-01-->
 
-  <title>JMRI: Using The JMRI Speedometer with NCE</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <title>JMRI: Using The JMRI Speedometer with NCE</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
-<h1>Utilisation du Compteur JMRI avec NCE</h1>
+      <!-- Page Body -->
 
-      <h2>Installation</h2>La fonction compteur de vitesse au sein
-      de DecoderPro est utilis&eacute;e pour mesurer la vitesse
-      d'un train &agrave; l'&eacute;chelle. Une fois que tout est
-      configur&eacute;, la vitesse est automatiquement
-      calcul&eacute;e en fonction des mouvements de la machine
-      &agrave; travers des cantons distincts.
+      <h1>Utilisation du Compteur JMRI avec NCE</h1>
 
-      <p>Chaque canton doit avoir un moyen de d&eacute;tection
-      d'occupation. La BD20 fabriqu&eacute;s par NCE est un
-      d&eacute;tecteur canton simple et efficace . Trois BD20 sont
-      recommand&eacute;s. Comme les cantons s'allongent, il est
-      pr&eacute;f&eacute;rable d'avoir un autre d&eacute;tecteur
-      dans la section suivante de la voie pour savoir quand la
-      machine est entr&eacute;e dans ce bloc. Comme il est
-      d&eacute;crit &agrave; la fin de ce document, il est possible
-      d'utiliser moins de 3 d&eacute;tecteurs.</p>
+      <h2>Installation</h2>
+      La fonction compteur de vitesse au sein de DecoderPro est utilisée pour mesurer la vitesse
+      d'un train à l'échelle. Une fois que tout est configuré, la vitesse est automatiquement
+      calculée en fonction des mouvements de la machine à travers des cantons distincts.
+      <p>Chaque canton doit avoir un moyen de détection d'occupation. La BD20 fabriqués par NCE est
+      un détecteur canton simple et efficace . Trois BD20 sont recommandés. Comme les cantons
+      s'allongent, il est préférable d'avoir un autre détecteur dans la section suivante de la voie
+      pour savoir quand la machine est entrée dans ce bloc. Comme il est décrit à la fin de ce
+      document, il est possible d'utiliser moins de 3 détecteurs.</p>
 
-      <p>La connexion de chaque BD20 au programme des Centrale NCE
-      est r&eacute;alis&eacute;e avec l'AIU (Unit&eacute;
-      d'entr&eacute;e auxiliaire) fabriqu&eacute;e aussi par NCE.
-      L'AIU a besoin d'&ecirc;tre connect&eacute;e avec le bus cab.
-      Une fois que l'AIU est connect&eacute;e au bus cab, et donc
-      &agrave; la Centrale, DecoderPro fait le reste.</p>
+      <p>La connexion de chaque BD20 au programme des Centrale NCE est réalisée avec l'AIU (Unité
+      d'entrée auxiliaire) fabriquée aussi par NCE. L'AIU a besoin d'être connectée avec le bus
+      cab. Une fois que l'AIU est connectée au bus cab, et donc à la Centrale, DecoderPro fait le
+      reste.</p>
 
-      <p>La voie utilis&eacute;e doit &ecirc;tre reli&eacute;e
-      &agrave; la ligne principale depuis le syst&egrave;me NCE. Ne
-      la connectez PAS &agrave; la voie de programmation</p>
+      <p>La voie utilisée doit être reliée à la ligne principale depuis le système NCE. Ne la
+      connectez PAS à la voie de programmation</p>
 
-      <p>Le choix de la voie est fonction de l'utilisateur et de
-      l'espace disponible. Une section ind&eacute;pendante de piste
-      ou une voie d'&eacute;vitement assez longue sur un
-      r&eacute;seau existant sont &agrave; la fois acceptables. La
-      section ind&eacute;pendante de la voie peut &ecirc;tre longue
-      et droite ou elle peut &ecirc;tre une boucle. Chaque type a
-      ses avantages et ses inconv&eacute;nients.</p>
+      <p>Le choix de la voie est fonction de l'utilisateur et de l'espace disponible. Une section
+      indépendante de piste ou une voie d'évitement assez longue sur un réseau existant sont à la
+      fois acceptables. La section indépendante de la voie peut être longue et droite ou elle peut
+      être une boucle. Chaque type a ses avantages et ses inconvénients.</p>
 
-      <p>Il est &eacute;galement possible d'utiliser cet Indicateur
-      de vitesse tandis que le reste du r&eacute;seau est en
-      fonctionnement. Si vous le faites, assurez-vous de ne pas
-      bloquer la voie principale ou au moins avoir l'autorisation
-      appropri&eacute;e du dispatcheur.</p>
+      <p>Il est également possible d'utiliser cet Indicateur de vitesse tandis que le reste du
+      réseau est en fonctionnement. Si vous le faites, assurez-vous de ne pas bloquer la voie
+      principale ou au moins avoir l'autorisation appropriée du dispatcheur.</p>
 
-      <p>La figure 1 montre la configuration id&eacute;ale pour
-      connecter les blocs d&eacute;tecteurs dans le syst&egrave;me
-      des NCE avec les BD20s et l'AIU.</p>
+      <p>La figure 1 montre la configuration idéale pour connecter les blocs détecteurs dans le
+      système des NCE avec les BD20s et l'AIU.</p>
 
-      <h2>C&acirc;blage</h2>
+      <h2>Câblage</h2>
 
-      <p>La Figure 1 montre comment int&eacute;grer les sections de
-      la voie, les d&eacute;tecteurs de canton et l'AIU dans la
-      Centrale.</p>
+      <p>La Figure 1 montre comment intégrer les sections de la voie, les détecteurs de canton et
+      l'AIU dans la Centrale.</p>
 
-      <p>Soyez s&ucirc;r qu'il y ait une bonne soudure entre le fil
-      et le rail, et que les rails sont propres. Il est possible
-      d'avoir de fausses lectures au compteur si le signal DCC est
+      <p>Soyez sûr qu'il y ait une bonne soudure entre le fil et le rail, et que les rails sont
+      propres. Il est possible d'avoir de fausses lectures au compteur si le signal DCC est
       interrompu.</p>
 
-      <p>Il est seulement n&eacute;cessaire de faire des coupures
-      dans l'un des rails.</p>
+      <p>Il est seulement nécessaire de faire des coupures dans l'un des rails.</p>
 
-      <p>Vous pouvez utiliser une boucle de voie ou une section
-      droite de la voie. Pour une boucle, le bloc 5 sur le
-      sch&eacute;ma est reli&eacute; au bloc 1 et la
-      possibilit&eacute; de pouvoir bloquer l'alimentation 5 peut
-      &ecirc;tre supprim&eacute;e car elle est aliment&eacute;e par
-      le bloc 1.</p><img width="496" height="429" src=
-      "./images/image001.gif"><br>
-      C'est une bonne id&eacute;e d'avoir trois cantons
-      ind&eacute;pendants. Le cantons 2 est utilis&eacute; pour
-      mesurer les vitesses de ralenti pour les machines en marche.
-      canton 3 devrait &ecirc;tre un peu plus long que le canton 2
-      pour permettre aux machines d'atteindre leur vitesse de
-      croisi&egrave;re. La longueur de chaque bloc est une
-      r&eacute;ponse subjective. Ces valeurs ne sont pas
-      coul&eacute;es dans le b&eacute;ton et l'exp&eacute;rience de
-      chaque personne et l'espace disponible peuvent dicter la
+      <p>Vous pouvez utiliser une boucle de voie ou une section droite de la voie. Pour une boucle,
+      le bloc 5 sur le schéma est relié au bloc 1 et la possibilité de pouvoir bloquer
+      l'alimentation 5 peut être supprimée car elle est alimentée par le bloc 1.</p>
+      <img width="496" height="429" src="./images/image001.gif" alt=""><br>
+      C'est une bonne idée d'avoir trois cantons indépendants. Le cantons 2 est utilisé pour
+      mesurer les vitesses de ralenti pour les machines en marche. canton 3 devrait être un peu
+      plus long que le canton 2 pour permettre aux machines d'atteindre leur vitesse de croisière.
+      La longueur de chaque bloc est une réponse subjective. Ces valeurs ne sont pas coulées dans
+      le béton et l'expérience de chaque personne et l'espace disponible peuvent dicter la
       longueurs des cantons.
+      <p>Les BD20s devraient être situés à une distance raisonnable de la voie.</p>
 
-      <p>Les BD20s devraient &ecirc;tre situ&eacute;s &agrave; une
-      distance raisonnable de la voie.</p>
+      <p>Le fil de chaque canton doit être soudé le plus près possible du début du canton.</p>
 
-      <p>Le fil de chaque canton doit &ecirc;tre soud&eacute; le
-      plus pr&egrave;s possible du d&eacute;but du canton.</p>
+      <p>Suivez des instructions pour le BD-20 concernant le nombre de tours.</p>
 
-      <p>Suivez des instructions pour le BD-20 concernant le nombre
-      de tours.</p>
+      <p>Suivez les instructions pour l'AIU . Comme les instructions d'état de AIU, c'est un bonne
+      idée de changer l'adresse par défaut de la cabine à 4.</p>
 
-      <p>Suivez les instructions pour l'AIU . Comme les
-      instructions d'&eacute;tat de AIU, c'est un bonne id&eacute;e
-      de changer l'adresse par d&eacute;faut de la cabine &agrave;
-      4.</p>
-
-      <p>Tous les fils de chaque broche 1 de la BD20 doivent aller
-      &agrave; la broche GND sur le AIU. Les fils de chaque broche
-      2 sur le BD20 va &agrave; une broche unique sur l'AIU.</p>
+      <p>Tous les fils de chaque broche 1 de la BD20 doivent aller à la broche GND sur le AIU. Les
+      fils de chaque broche 2 sur le BD20 va à une broche unique sur l'AIU.</p>
 
       <h2>Configuration DecoderPro</h2>
 
-      <table cellpadding="0" cellspacing="0">
+      <table cellpadding="0" cellspacing="0" summary="">
         <tr>
-          <td width="13" height="0"></td>
+          <td width="13" height="0">
+          </td>
         </tr>
 
         <tr>
-          <td></td>
-
-          <td><img width="415" height="284" src=
-          "../../../images/speedometer.gif"></td>
+          <td>
+          </td>
+          <td><img width="415" height="284" src="../../../images/speedometer.gif" alt="">
+          </td>
         </tr>
-      </table>insi<br>
-      Ouvrez DecoderPro. Sous le menu Outils ouvrez
-      Tachym&egrave;tre. Voir Figure 2.
-
+      </table>
+      insi<br>
+      Ouvrez DecoderPro. Sous le menu Outils ouvrez Tachymètre. Voir Figure 2.
       <ol>
-        <li>Entrez le num&eacute;ro d'identification du capteur
-        dans les bo&icirc;tes de capteur # 1, # 2 et # 3. Le
-        num&eacute;ro d'identification du capteur peut &ecirc;tre
-        trouv&eacute; en utilisant la formule suivante: ID =
-        Capteur
+        <li>Entrez le numéro d'identification du capteur dans les boîtes de capteur # 1, # 2 et #
+        3. Le numéro d'identification du capteur peut être trouvé en utilisant la formule suivante:
+        ID = Capteur
+          <p>(cabine AIU Adresse - 1) * 16 -insi1 + (NIP sur AIU)</p>
 
-          <p>(cabine AIU Adresse - 1) * 16 -insi1 + (NIP sur
-          AIU)</p>
+          <p>Par exemple: L'adresse de cabine AIU est fixé à 50 et l'un des BD20s est connecté à la
+          broche 2. Par conséquent, l'ID du capteur serait:</p>
 
-          <p>Par exemple: L'adresse de cabine AIU est fix&eacute;
-          &agrave; 50 et l'un des BD20s est connect&eacute;
-          &agrave; la broche 2. Par cons&eacute;quent, l'ID du
-          capteur serait:</p>
-
-          <p>Capteur ID = ( <b>50</b> - 1) * 16 -1 + ( <b>2</b>
-          )</p>
+          <p>Capteur ID = ( <strong>50</strong> - 1) * 16 -1 + ( <strong>2</strong> )</p>
 
           <p>Capteur ID = 785</p>
         </li>
 
-        <li>Bas&eacute; sur la figure 2, tous les capteurs doivent
-        &ecirc;tre mis &agrave; 'Enter'. Cela signifie que la
-        minuterie interne commence ou s'arr&ecirc;te lorsque le
-        train p&eacute;n&egrave;tre dans le canton donn&eacute;. Si
-        les capteur ont &eacute;t&eacute; mis &agrave; 'Exit',
-        alors l'horloge interne pourrait d&eacute;marrer ou
-        s'arr&ecirc;ter quand le train sortira des cantons.</li>
+        <li>Basé sur la figure 2, tous les capteurs doivent être mis à 'Enter'. Cela signifie que
+        la minuterie interne commence ou s'arrête lorsque le train pénètre dans le canton donné. Si
+        les capteur ont été mis à 'Exit', alors l'horloge interne pourrait démarrer ou s'arrêter
+        quand le train sortira des cantons.</li>
 
-        <li>La lumi&egrave;re au bout de chaque rang&eacute;e de
-        capteurs donne l'indication d' Occupation.
+        <li>La lumière au bout de chaque rangée de capteurs donne l'indication d' Occupation.
+          <p>Rouge: Aucune lecture, statut inconnu (typiquement si aucune valeur pour l'ID du
+          capteur n'est entrée)</p>
 
-          <p>Rouge: Aucune lecture, statut inconnu (typiquement si
-          aucune valeur pour l'ID du capteur n'est
-          entr&eacute;e)</p>
+          <p>Jaune: canton occupé</p>
 
-          <p>Jaune: canton occup&eacute;</p>
-
-          <p>Vert : canton inoccup&eacute;es</p>
+          <p>Vert : canton inoccupées</p>
         </li>
 
-        <li>Entrez la distance correspondant &agrave; la longueur
-        &agrave; l'&eacute;chelle 1 . Par exemple un morceau de 3
-        pieds de long de voie flexible en HO serait 261 pieds
-        r&eacute;els.
+        <li>Entrez la distance correspondant à la longueur à l'échelle 1 . Par exemple un morceau
+        de 3 pieds de long de voie flexible en HO serait 261 pieds réels.
+          <p>Distance 1 et 2 fois commencer au début du canton 2 (ou la fin du canton 1).</p>
 
-          <p>Distance 1 et 2 fois commencer au d&eacute;but du
-          canton 2 (ou la fin du canton 1).</p>
-
-          <p>Unit&eacute;s m&eacute;triques appuyez sur le bouton
-          "en unit&eacute;s m&eacute;triques" et entrer les
-          informations dans les unit&eacute;s correctes.</p>
+          <p>Unités métriques appuyez sur le bouton "en unités métriques" et entrer les
+          informations dans les unités correctes.</p>
         </li>
       </ol>
 
       <h2>Fonctionnement du compteur de vitesse</h2>
 
-      <p>Maintenant que tout est branch&eacute; et le formulaire de
-      compteur de vitesse est ouvert et les valeurs correctes
-      entr&eacute;es comme demand&eacute;es, nous sont pr&ecirc;ts
-      &agrave; utiliser le compteur de vitesse.</p>
+      <p>Maintenant que tout est branché et le formulaire de compteur de vitesse est ouvert et les
+      valeurs correctes entrées comme demandées, nous sont prêts à utiliser le compteur de
+      vitesse.</p>
 
       <ol>
         <li>Placer une machine dans le canton 1.</li>
 
-        <li>Appuyez sur le bouton "D&eacute;marrer" sur le
-        formulaire de vitesse pour lui dire de commencer &agrave;
-        obtenir les commentaires de l'AIU. Toutes les
-        lumi&egrave;res doivent &ecirc;tre grises.</li>
+        <li>Appuyez sur le bouton "Démarrer" sur le formulaire de vitesse pour lui dire de
+        commencer à obtenir les commentaires de l'AIU. Toutes les lumières doivent être
+        grises.</li>
 
-        <li>D&eacute;marrer le train en marche vers le canton 2.
-        Augmenter la vitesse &agrave; une valeur donn&eacute;e .
-        Gardez cette vitesse.</li>
+        <li>Démarrer le train en marche vers le canton 2. Augmenter la vitesse à une valeur donnée
+        . Gardez cette vitesse.</li>
 
-        <li>Comme le train se d&eacute;place &agrave; travers les
-        cantons , vous devriez remarquer que chaque capteur change
-        de couleur.</li>
+        <li>Comme le train se déplace à travers les cantons , vous devriez remarquer que chaque
+        capteur change de couleur.</li>
 
-        <li>Une fois que la condition pour le capteur n&deg; 2 est
-        atteinte, ce qui signifie que la minuterie pour la distance
-        1 s'est arr&ecirc;t&eacute;e, vous devriez voir les valeurs
-        pour la vitesse Temps 1 et le temps affich&eacute;s sur le
-        Formulaire de Vitesse. N'oubliez pas qu'il s'agit de
-        vitesse &agrave; l'&eacute;chelle!</li>
+        <li>Une fois que la condition pour le capteur n° 2 est atteinte, ce qui signifie que la
+        minuterie pour la distance 1 s'est arrêtée, vous devriez voir les valeurs pour la vitesse
+        Temps 1 et le temps affichés sur le Formulaire de Vitesse. N'oubliez pas qu'il s'agit de
+        vitesse à l'échelle!</li>
 
-        <li>Une fois que la condition pour le capteur n&deg; 3 est
-        atteinte, ce qui signifie la minuterie pour la distance 2
-        est arr&ecirc;t&eacute;e, vous devriez voir les valeurs
-        pour la vitesse temps 2 et le temps affich&eacute;s sur le
-        Formulaire de Vitesse. N'oubliez pas qu'il s'agit de
-        vitesse &agrave; l'&eacute;chelle!</li>
+        <li>Une fois que la condition pour le capteur n° 3 est atteinte, ce qui signifie la
+        minuterie pour la distance 2 est arrêtée, vous devriez voir les valeurs pour la vitesse
+        temps 2 et le temps affichés sur le Formulaire de Vitesse. N'oubliez pas qu'il s'agit de
+        vitesse à l'échelle!</li>
 
-        <li>Une fois que le train a atteint la fin de la voie ne
-        basculer pas tout de suite pour revenir en arri&egrave;re.
-        Cela ferait penser &agrave; la minuterie que des trains
-        sont dans l'un des cantons et fait red&eacute;marrer ou
-        donner une autre lecture de la vitesse et de temps.
-        Enregistrer les valeurs de vitesse et de temps. Maintenant,
-        d&eacute;placez le train pour rentrer dans le canton 1.
-
-          <p>Si vous avez une boucle, une fois que le train a
-          atteint le canton 5 (en fait le d&eacute;but du canton 1)
-          arr&ecirc;ter le train avant qu'il n'atteigne
-          l'extr&eacute;mit&eacute; du canton 1. Si vous ne le
-          faites pas la temporisation red&eacute;marrera.</p>
+        <li>Une fois que le train a atteint la fin de la voie ne basculer pas tout de suite pour
+        revenir en arrière. Cela ferait penser à la minuterie que des trains sont dans l'un des
+        cantons et fait redémarrer ou donner une autre lecture de la vitesse et de temps.
+        Enregistrer les valeurs de vitesse et de temps. Maintenant, déplacez le train pour rentrer
+        dans le canton 1.
+          <p>Si vous avez une boucle, une fois que le train a atteint le canton 5 (en fait le début
+          du canton 1) arrêter le train avant qu'il n'atteigne l'extrémité du canton 1. Si vous ne
+          le faites pas la temporisation redémarrera.</p>
         </li>
 
-        <li>Pour red&eacute;marrer la minuterie, assurez-vous que
-        le train est dans le canton 1. Appuyez sur bouton "Clear"
-        sur le compteur de vitesse. Passez &agrave; l'&eacute;tape
-        3.</li>
+        <li>Pour redémarrer la minuterie, assurez-vous que le train est dans le canton 1. Appuyez
+        sur bouton "Clear" sur le compteur de vitesse. Passez à l'étape 3.</li>
 
-        <li>D&eacute;cider quand il faut passer &agrave; un canton
-        plus long est du domaine de l'exp&eacute;rience de
+        <li>Décider quand il faut passer à un canton plus long est du domaine de l'expérience de
         l'utilisateur.
-
           <h2>Usages du compteur de vitesse</h2>
 
-          <p>&eacute;videmment l'utilisation principale de l'
-          Indicateur de vitesse est de cr&eacute;er des tables de
-          vitesse personnalis&eacute;es. La Cr&eacute;ation de
-          tableaux de vitesse peut &ecirc;tre utilis&eacute;e pour
-          diff&eacute;rents types de machines qui peuvent
-          fonctionner ensembles comme dans un couplage</p>
+          <p>évidemment l'utilisation principale de l' Indicateur de vitesse est de créer des
+          tables de vitesse personnalisées. La Création de tableaux de vitesse peut être utilisée
+          pour différents types de machines qui peuvent fonctionner ensembles comme dans un
+          couplage</p>
 
-          <p>Chaque m&eacute;thode pour la mise en &oelig;uvre
-          d'une table de vitesse peut &ecirc;tre diff&eacute;rente.
-          Mais comme point de d&eacute;part quelques lignes
-          directrices g&eacute;n&eacute;rales sont &agrave;
-          suivre.</p>
+          <p>Chaque méthode pour la mise en œuvre d'une table de vitesse peut être différente. Mais
+          comme point de départ quelques lignes directrices générales sont à suivre.</p>
 
           <ol>
-            <li>Choisissez une machine qui a la performance que
-            vous voulez. Regardez la vitesse au ralenti et vitesses
-            haute, comment elle acc&eacute;l&egrave;re, etc. Comme
-            alternative, changer manuellement le tableau de vitesse
-            d'une machine jusqu'&agrave; atteindre les performances
-            souhait&eacute;es.</li>
+            <li>Choisissez une machine qui a la performance que vous voulez. Regardez la vitesse au
+            ralenti et vitesses haute, comment elle accélère, etc. Comme alternative, changer
+            manuellement le tableau de vitesse d'une machine jusqu'à atteindre les performances
+            souhaitées.</li>
 
-            <li>Utilisez le compteur de vitesse pour saisir et
-            documenter la vitesse &agrave; chaque cran de vitesse .
-            Vous ne pouvez pas simplement copier la valeur CV d'une
-            machine &agrave; l'autre. Ceci est parce que la tension
-            qu'une machine a besoin pour atteindre la vitesse
-            requise n'est pas n&eacute;cessairement la m&ecirc;me
-            que pour une autre machine. C'est pourquoi nous
-            cr&eacute;ons la table de vitesse en utilisant
-            l'indicateur de vitesse en premier lieu.
-
-              <p>C'est maintenant le moments de faire correspondre
-              l'autre machine. C'est l&agrave; que la programmation
-              sur la ligne principale est la seule fa&ccedil;on de
-              le r&eacute;aliser. A chaque cran de vitesse
-              documenter la vitesse de la machine.</p>
+            <li>Utilisez le compteur de vitesse pour saisir et documenter la vitesse à chaque cran
+            de vitesse . Vous ne pouvez pas simplement copier la valeur CV d'une machine à l'autre.
+            Ceci est parce que la tension qu'une machine a besoin pour atteindre la vitesse requise
+            n'est pas nécessairement la même que pour une autre machine. C'est pourquoi nous créons
+            la table de vitesse en utilisant l'indicateur de vitesse en premier lieu.
+              <p>C'est maintenant le moments de faire correspondre l'autre machine. C'est là que la
+              programmation sur la ligne principale est la seule façon de le réaliser. A chaque
+              cran de vitesse documenter la vitesse de la machine.</p>
             </li>
 
-            <li>Ajuster la valeur CV &agrave; ce cran de
-            vitesse.</li>
+            <li>Ajuster la valeur CV à ce cran de vitesse.</li>
 
-            <li>Retester la vitesse. Gardez la valeur
-            modifi&eacute;e du CV quand la vitesse souhait&eacute;e
-            est atteinte.</li>
+            <li>Retester la vitesse. Gardez la valeur modifiée du CV quand la vitesse souhaitée est
+            atteinte.</li>
 
-            <li>Passez &agrave; l'&eacute;tape suivante de vitesse.
-            R&eacute;p&eacute;tez les &eacute;tapes 5 &agrave; 7
-            jusqu'&agrave; ce que vitesse d&eacute;sir&eacute;e
-            soit atteinte.</li>
+            <li>Passez à l'étape suivante de vitesse. Répétez les étapes 5 à 7 jusqu'à ce que
+            vitesse désirée soit atteinte.</li>
 
             <li>Passez par chaque cran de vitesse.
-
-              <p>Le moteur devrait d&eacute;sormais fonctionner
-              comme le moteur mod&egrave;le.</p>
+              <p>Le moteur devrait désormais fonctionner comme le moteur modèle.</p>
             </li>
           </ol>
 
-          <h2>Configurations Alternative pour
-          Tachym&egrave;tre</h2>
+          <h2>Configurations Alternative pour Tachymètre</h2>
 
           <h3>avec moins de 3 capteurs</h3>
 
-          <p>Si vous avez moins de 3 capteurs il est toujours
-          possible d'utiliser le compteur de vitesse. Par exemple,
-          pour les blocs courts un seul capteur peut &ecirc;tre
-          utilis&eacute;.</p>
+          <p>Si vous avez moins de 3 capteurs il est toujours possible d'utiliser le compteur de
+          vitesse. Par exemple, pour les blocs courts un seul capteur peut être utilisé.</p>
 
-          <p>Dans ce cas, la valeur sur l' Indicateur de vitesse
-          pour la fen&ecirc;tre du capteur n &deg; 1 et n &deg; 2
-          du capteur serait le m&ecirc;me num&eacute;ro. Le capteur
-          # 1 serait mis &agrave; "Enter" et le capteur n&deg; 2
-          serait fix&eacute; &agrave; "Exit".</p>
-
+          <p>Dans ce cas, la valeur sur l' Indicateur de vitesse pour la fenêtre du capteur n ° 1
+          et n ° 2 du capteur serait le même numéro. Le capteur # 1 serait mis à "Enter" et le
+          capteur n° 2 serait fixé à "Exit".</p>
           <!--#include virtual="/Footer.shtml" -->
         </li>
       </ol>

@@ -45,9 +45,12 @@ public class LocoFile extends XmlFile {
      * @param cvModel An existing CvTableModel object which will have the CVs
      *                from the loco Element appended. It is intended, but not
      *                required, that this be empty.
-     * @param family  unused.
+     * @param mfgID   Decoder manufacturer. Used to check if there's need for special
+     *                treatment.
+     * @param family  Decoder family. Used to check if there's need for special
+     *                treatment.
      */
-    public static void loadCvModel(Element loco, CvTableModel cvModel, String family) {
+    public static void loadCvModel(Element loco, CvTableModel cvModel, String mfgID, String family) {
         CvValue cvObject;
         // get the CVs and load
         String rosterName = loco.getAttributeValue("id");
@@ -88,15 +91,36 @@ public class LocoFile extends XmlFile {
                 String value = element.getAttribute("value").getValue();
                 log.debug("CV named {} has value: {}", name, value);
 
+                // Fairly ugly hack to migrate Indexed CVs of existing Tsunami2 & Econami
+                // roster entries to full NMRA S9.2.2 format (include CV 31 value).
+                if (family != null && (family.startsWith("Tsunami2") || family.startsWith("Econami")) && name.matches("\\d+\\.\\d+")) {
+                    String oldName = name;
+                    name = "16." + oldName;
+                    log.info("CV{} renamed to {} has value: {}", oldName, name, value);
+                }
+
+                // check whether the CV already exists, i.e. due to a variable definition
                 cvObject = cvModel.allCvMap().get(name);
-                if (cvObject == null) {
-                    // need to disable this warning as ESU files do not generate CV entries until panel load time
-                    // log.warn("CV "+name+" was in loco file, but not defined by the decoder definition");
+                if (cvObject == null && name.equals("19")) {
+                    log.info("CV19 special case triggered, kept without Variable; {} {}", mfgID, family);
                     cvModel.addCV(name, false, false, false);
                     cvObject = cvModel.allCvMap().get(name);
                 }
-                cvObject.setValue(Integer.parseInt(value));
-                cvObject.setState(CvValue.FROMFILE);
+                if (cvObject == null) {
+                    log.trace("undefined CV check with mfgID={} family={}", mfgID, family);
+                    if ( (mfgID != null && mfgID.equals("151")) || (family != null && family.startsWith("ESU ")) ) { // Electronic Solutions Ulm GmbH
+                        // ESU files do not generate CV entries until panel load time
+                        cvModel.addCV(name, false, false, false);
+                        cvObject = cvModel.allCvMap().get(name);
+                     } else {
+                        // this is a valid way to migrate a decoder definition, i.e. to remove a variable.
+                        log.info("CV "+name+" was in loco file, but not defined by the decoder definition; migrated");
+                    }
+                }
+                if (cvObject != null) {
+                    cvObject.setValue(Integer.parseInt(value));
+                    cvObject.setState(CvValue.FROMFILE);
+                }
             }
         } else {
             log.error("no values element found in config file; CVs not configured for ID=\"{}\"", rosterName);
@@ -171,7 +195,8 @@ public class LocoFile extends XmlFile {
                 var.setValue(value);
             } else {
                 if (selectMissingVarResponse(item) == MessageResponse.REPORT) {
-                    log.warn("Did not find locofile variable \"{}\" in decoder definition, not loading", item);
+                    // not an warning, as this is how some definitions are migrated to remove erroneous variables
+                    log.debug("Did not find locofile variable \"{}\" in decoder definition, no variable loaded", item);
                 }
             }
         }
@@ -240,7 +265,7 @@ public class LocoFile extends XmlFile {
             if (variableModel != null) {
                 for (int i = 0; i < variableModel.getRowCount(); i++) {
                     decoderDef.addContent(new Element("varValue")
-                            .setAttribute("item", variableModel.getLabel(i))
+                            .setAttribute("item", variableModel.getItem(i))
                             .setAttribute("value", variableModel.getValString(i))
                     );
                 }

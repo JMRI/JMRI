@@ -1,13 +1,13 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.beans.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.Locale;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -81,7 +81,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         }
         try {
             // NamedTable does not exist, create a new NamedTable
-            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, fileName);
+            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, fileName, true);
         } catch (IOException ex) {
 //            Exceptions.printStackTrace(ex);
             log.error("Cannot load table due to I/O error", ex);
@@ -146,27 +146,10 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
      * {@inheritDoc}
      */
     @Override
-    public NamedTable loadTableFromCSV(@Nonnull String fileName)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(fileName);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public NamedTable loadTableFromCSV(@Nonnull String fileName, @Nonnull String text)
+    public NamedTable loadTableFromCSVData(
+            @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        return AbstractNamedTable.loadTableFromCSV_Text(fileName, text);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public NamedTable loadTableFromCSV(@Nonnull File file)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(file);
+        return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, true);
     }
     
     /**
@@ -174,10 +157,21 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
      */
     @Override
     public NamedTable loadTableFromCSV(
-            @Nonnull File file,
-            @Nonnull String sys, @CheckForNull String user)
+            @Nonnull String sys, @CheckForNull String user,
+            @Nonnull String fileName)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(sys, user, file);
+        return AbstractNamedTable.loadTableFromCSV_File(sys, user, fileName, true);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NamedTable loadTableFromCSV(
+            @Nonnull String sys, @CheckForNull String user,
+            @Nonnull File file)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
+        return AbstractNamedTable.loadTableFromCSV_File(sys, user, file, true);
     }
     
     /**
@@ -236,7 +230,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public void printTree(Locale locale, PrintWriter writer, String indent) {
         for (NamedTable namedTable : getNamedBeanSet()) {
-            writer.append(indent);
             if (namedTable instanceof DefaultCsvNamedTable) {
                 DefaultCsvNamedTable csvTable = (DefaultCsvNamedTable)namedTable;
                 writer.append(String.format(
@@ -254,7 +247,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             writer.println();
             writer.println();
         }
-        InstanceManager.getDefault(NamedTableManager.class);
     }
     
     static volatile DefaultNamedTableManager _instance = null;
@@ -279,6 +271,43 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         return NamedTable.class;
     }
 
+    /**
+     * Inform all registered listeners of a vetoable change.If the propertyName
+     * is "CanDelete" ALL listeners with an interest in the bean will throw an
+     * exception, which is recorded returned back to the invoking method, so
+     * that it can be presented back to the user.However if a listener decides
+     * that the bean can not be deleted then it should throw an exception with
+     * a property name of "DoNotDelete", this is thrown back up to the user and
+     * the delete process should be aborted.
+     *
+     * @param p   The programmatic name of the property that is to be changed.
+     *            "CanDelete" will inquire with all listeners if the item can
+     *            be deleted. "DoDelete" tells the listener to delete the item.
+     * @param old The old value of the property.
+     * @throws java.beans.PropertyVetoException If the recipients wishes the
+     *                                          delete to be aborted (see above)
+     */
+    @OverridingMethodsMustInvokeSuper
+    public void fireVetoableChange(String p, Object old) throws PropertyVetoException {
+        PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, null);
+        for (VetoableChangeListener vc : vetoableChangeSupport.getVetoableChangeListeners()) {
+            vc.vetoableChange(evt);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+//    @OverridingMethodsMustInvokeSuper
+    public final void deleteBean(@Nonnull NamedTable namedTable, @Nonnull String property) throws PropertyVetoException {
+        // throws PropertyVetoException if vetoed
+        fireVetoableChange(property, namedTable);
+        if (property.equals("DoDelete")) { // NOI18N
+            deregister(namedTable);
+            namedTable.dispose();
+        }
+    }
+    
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultNamedTableManager.class);
 
 }

@@ -1,366 +1,457 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Blorec Herv&#233;  2016-08-09-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Construire avec NetBeans</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code NetBeans">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta name="keywords" content="JMRI technical code NetBeans"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI: Construire avec NetBeans</h1>
- 	<ul>
-        <li><a href="#intro">Introduction</a></li>
-        <li><a href="#installing">Obtention et Installation de NetBeans</a></li>
-        <li><a href="#checkout">V&#233;rification sur le code</a></li>
-        <li><a href="#updating">Actualisation du code depuis Git</a></li>
-        <li><a href="#buildandrun">Construction et Ex&#233;cution de JMRI</a></li>
-        <li><a href="#jar">Faire un Fichier Jar</a></li>
-        <li><a href="#nsis">Faire un paquet deparution pour Windows en utilisant NSIS</a></li>
-        <li><a href="#xmltools">Utilisation des outils XML de NetBeans</a></li>
-        <li><a href="#findbugs">Ex&#233;cuter SpotBugs</a></li>
-        <li><a href="#compileIndividualFile">NetBeans et la compilation de fichiers individuels</a></li>            
-        <li><a href="#patch">R&#233;alisation d'uin Fichier Patch</a></li>
-    </ul>
+      <h1>JMRI: Construire avec NetBeans</h1>
 
-		<a href="#SeeAlso">Voir Aussi</a>
-    <h2><a id="intro">Introduction</a></h2>
-    <p>NetBeans 8 (disponible sur le site<a href="http://www.netbeans.org"> www.netbeans.org</a>)
-     est une plate-forme id&#233;ale pour travailler avec JMRI.
-     Le code JMRI est configur&#233; pour travailler avec NetBeans avec presque pas de
-     configuration suppl&#233;mentaire.
-     (La description ci-dessous est exacte pour la version Windows de NetBeans 8.
-     NetBeans est <i>cens&#233;</i> &#234;tre identique sur toutes les plateformes, mais cela n'a pas
-     &#233;t&#233; v&#233;rifi&#233; pour toutes).</p>
-     <p>NetBeans est un environnement tr&#232;s puissant de D&#233;veloppement Int&#233;gr&#233; (IDE),
-     qui peut rendre le travail avec le code JMRI assez facile. Mais cela prend un peu de temps
-     pour s'y habituer, et lire les tutoriels sur le site web depuis le
-    <a href="http://netbeans.org">site web NetBeans </a> 
-     sera utile.</p>
+      <ul>
+        <li><a href="#intro">Introduction</a>
+        </li>
 
-    <h2><a id="installing"></a>Obtention et Installation de NetBeans</h2>
-    <ul>
-        <li> T&#233;l&#233;charger Netbeans 8 (La version Java SE est tr&#232;s bien) depuis 
-	   	<a href="www.netbeans.org"> www.netbeans.org</a><br>
-		(Si vous n'avez pas le Kit de D&#233;veloppement Java 8 (JDK) install&#233; sur votre
-		syst&#232;me, t&#233;l&#233;chargez un paquet JDK-NetBeans sur la	page de t&#233;l&#233;chargement de NetBeans,
-		regarder aussi pour un lien similaire pour "JDK with NetBeans IDE Java SE bundle".</li>
-       <li> Ex&#233;cutez le paquet d'installation de netbeans</li>
-	</ul>
-	<p>Beaucoup de distribution Linux ont NetBeans disponible dans leur r&#233;pertoire de logiciels
-	- Chercher NetBeans dans votre logith&#232;que (NetBeans 8.1 pour Ubuntu 16.04LTS).</p>
+        <li><a href="#installing">Obtention et Installation de NetBeans</a>
+        </li>
 
-    <h3>Note Importante pour les utilisateurs de Windows</h3>
+        <li><a href="#checkout">Vérification sur le code</a>
+        </li>
 
-	<p>En raison d'une gestion diff&#233;rente des caract&#232;res de Fin de Ligne	( <code>LF/CR LF</code> ) entre Windows et les autres syst&#232;mes - nomm&#233;ment Unix et OS X
-			( voir <a href="GitFAQ.shtml#lineends">Gestion des Fins de Lignes</a> ) - il est de la plus haute importance que tous les utilisateurs Windows
-	adoptent les r&#233;glages suivants pour leur environnement de d&#233;veloppement. Ceci est absolument n&#233;cessaire pour que Git ppuisse suivre les modifications individuelles sur les fichiers que vous soumettez. </p>
-	<p>Si vous ne suivez pas ces instructions, vous aurez ab&#238;mer les terminaisons de ligne dans les fichiers que vous soumettez, qui &#224; son tour va
-	rendre leur historique de r&#233;vision beaucoup plus difficile d'acc&#232;s. Dans ces conditions, les fichiers ne serons pas accept&#233;s lors d'un "pull request"</p>
+        <li><a href="#updating">Actualisation du code depuis Git</a>
+        </li>
 
-	<p>Comme premi&#232;re &#233;tape, comme JMRI a adopt&#233; <code>LF</code> comme convention de Fin de Ligne,
-			il est n&#233;cessaire de r&#233;gler le param&#232;tre <code>core.autocrlf</code> &#224; <code>true</code>
-			(voir <a href=https://help.github.com/articles/dealing-with-line-endings>"Dealing with line endings" on GitHub Help)</a> </p>
+        <li><a href="#buildandrun">Construction et Exécution de JMRI</a>
+        </li>
 
-	<h4>Note Suppl&#233;mentaire Importante pour les utilisateurs de NetBean sous Windows</h4>
+        <li><a href="#jar">Faire un Fichier Jar</a>
+        </li>
 
-	<p><em>En outre, si vous utilisez <b>NetBeans</b> sous Windows, vous <u>installez</u> le Plug-in
-	<a href="http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">"Change Line Endings on Save"</a>
-			avant d'utiliser Git via NetBeans.</em>
-	<p>Installez le plug-in pour &#234;tre s&#251;r que NetBeans maintienne
-		  proprement les caract&#232;res LF &#224; la fin des lignes de code-source.</p>
-	<p>Actuellement le plug-in est d&#233;j&#224; disponible dans la distribution NetBeans,
-		  donc allez <code>Tools > Plugins > Available Plugins</code>
-		  et l&#224; s&#233;lectionnez <code>Change Line Endings on Save</code> et ensuite <code>Install</code>.</p>
-	<p>Vous pouvez v&#233;rifier que le plug-in est proprement install&#233; en allant &#224; <code>Tools > Plugins > Installed</code>,
-			o&#249; vous pouvez voir quelque chose comme ceci (les versions peuvent diff&#233;r&#233;es):</p>
-	<p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png" height="102" width="224"></a></p>
+        <li><a href="#nsis">Faire un paquet deparution pour Windows en utilisant NSIS</a>
+        </li>
 
-	<p>Une fois le plug-in install&#233; et activ&#233;, il est n&#233;cessaire de le configurer pour le caract&#232;re de fin de ligne souhait&#233;, via l'onglet  <code>Tools > Options > Editor > Line Endings</code>.</p>
-	<p>Pour JMRI, nous voulons utiliser le caract&#232;re de fin de ligne du style Unix, <code>LF</code>.</p>
-	<p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" height="168" width="237"></a></p>
+        <li><a href="#xmltools">Utilisation des outils XML de NetBeans</a>
+        </li>
 
-	<p>Le plug-in peut &#234;tre activ&#233; depuis un bouton sur la barre d'outil
-	<a href="images/NetbeansChangeLineEndingsPluginEnabled.png"><img
-			src="images/NetbeansChangeLineEndingsPluginEnabled.png" height="19" width="55"></a></p>
+        <li><a href="#findbugs">Exécuter SpotBugs</a>
+        </li>
 
-	<p>Et le plug-in peut &#234;tre desactiv&#233; depuis ce bouton
-	<a href="images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png" height="19" width="55"></a></p>
+        <li><a href="#compileIndividualFile">NetBeans et la compilation de fichiers individuels</a>
+        </li>
 
-	<p>Quand un fichier est sauvegard&#233; ( en supposant que le plug-in est configur&#233; et est activ&#233; ) et ce fichier n'a pas les caract&#232;res de fin de ligne correspondant au type configur&#233; par le plug-in, le message suivant s'affiche.</p>
-	<p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"><img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" height="50" width="174"></a></p>
+        <li><a href="#patch">Réalisation d'uin Fichier Patch</a>
+        </li>
+      </ul>
+      <a href="#SeeAlso">Voir Aussi</a>
+      <h2><a id="intro" name="intro">Introduction</a>
+      </h2>
 
-	<p>Quand "OK" est s&#233;lectionn&#233;, le plug-in actualise les fins de lignes pour la forme configur&#233;e et sauvegarde le fichier. Si "CANCEL" est s&#233;lectionn&#233;, le fichier sera sauvegarder SANS changement des fins de lignes.</p>
+      <p>NetBeans 8 (disponible sur le site <a href="http://www.netbeans.org">www.netbeans.org</a>)
+      est une plate-forme idéale pour travailler avec JMRI. Le code JMRI est configuré pour
+      travailler avec NetBeans avec presque pas de configuration supplémentaire. (La description
+      ci-dessous est exacte pour la version Windows de NetBeans 8. NetBeans est <em>censé</em> être
+      identique sur toutes les plateformes, mais cela n'a pas été vérifié pour toutes).</p>
 
-    <h2><a id="gituse" name="gituse"></a>Utilisation de NetBeans avec le r&#233;pertoire Git du Code JMRI</h2>
-    
-    <p>Git fournit un r&#233;pertoire de Code JMRI par l'utilisation de l'outil Git.
-	Pour plus d'information sur la fa&#231;on dont JMRI utilise Git, voir l'Aide JMRI dans
-	<a href="getgitcode.shtml">Obtention du code via Git</a> et
-	<a href="GitFAQ.shtml">FAQ Git</a>.</p>
+      <p>NetBeans est un environnement très puissant de Développement Intégré (IDE), qui peut
+      rendre le travail avec le code JMRI assez facile. Mais cela prend un peu de temps pour s'y
+      habituer, et lire les tutoriels sur le site web depuis le <a href="http://netbeans.org">site
+      web NetBeans</a> sera utile.</p>
 
-    <p>une fois configur&#233;, Netbeans fournit un support int&#233;gr&#233;
-	pour l'utilisation de Git.</p>
+      <h2><a id="installing" name="installing"></a>Obtention et Installation de NetBeans</h2>
 
-    <p>Pour plus d'information sur Git et NetBeans, voir la
-	<a href="https://netbeans.org/kb/docs/ide/git.html">page d'aide NetBeans Git</a></p>
+      <ul>
+        <li>Télécharger Netbeans 8 (La version Java SE est très bien) depuis <a href=
+        "www.netbeans.org">www.netbeans.org</a><br>
+        (Si vous n'avez pas le Kit de Développement Java 8 (JDK) installé sur votre système,
+        téléchargez un paquet JDK-NetBeans sur la page de téléchargement de NetBeans, regarder
+        aussi pour un lien similaire pour "JDK with NetBeans IDE Java SE bundle".</li>
 
-    <h3><a id="setup" name="setup"></a>V&#233;rification du Code</h3>
-	<p>Dans NetBeans, sous le menu "Team", s&#233;lectionnez Git, puis le Clone Repository.
-	Entrez l'URL du r&#233;pertoire  https://github.com/JMRI/JMRI.git repository depuis la
-	<a href="https://github.com/JMRI/JMRI">page JMRI GitHub</a>
-	dans le formulaire NetBeans "Repository URL". Nous vous recommendons
-	&#233;galement d'entrer vos identifiants GitHub, ainsi nous pourrons plus tard,
-	vous attibuer vos contributions. Cliquze "Next".
-	Soyez s&#251;r que la case "master" est coch&#233;e pour r&#233;cup&#233;rer la version
-	principale du Code. Cliquez "Next", et ensuite cliquez"Finish".</p>
-	<p>
-	La r&#233;cup&#233;ration de la copie du code peut prendre du temps
-	( notez la barre de progression un bas &#224; droite).</p>
-        
-    <h3>Soumissions Locales</h3>
+        <li>Exécutez le paquet d'installation de netbeans</li>
+      </ul>
 
-	<p>Quand vous utilisez Git, l'op&#233;ration de" soumission" est localis&#233;e &#224; votre ordinateur.
-	Elle ne fait aucun changement dans le r&#233;pertoire principal JMRI.</p>
-	<p>
-	Vous &#234;tes encourag&#233;s &#224; soumettre souvent, ainsi vos changements seront stock&#233;s en toute s&#233;curit&#233;
-	loin de votre r&#233;pertoire de travail et chaque petit changement est enregistr&#233; s&#233;par&#233;ment.</p>
+      <p>Beaucoup de distribution Linux ont NetBeans disponible dans leur répertoire de logiciels -
+      Chercher NetBeans dans votre logithèque (NetBeans 8.1 pour Ubuntu 16.04LTS).</p>
 
-    <h3><a id="updating" name="updating"></a>Mise &#224; jour du code depuis Git</h3>				
-    
-	<p>De temps en temps, vous voudrez mettre &#224; jour votre copie locale du code pour qu'elle
-				 corresponde au contenu de "HEAD" du r&#233;pertoire principal JMRi Git.
-				 Le processus basique est de r&#233;cup&#233;rer
-				 la version la plus r&#233;cente depuis le r&#233;pertoire principal JMRI faire toute fusion qui
-				 est n&#233;cessaire si vous avez apport&#233; des modifications conflictuelles, et ensuite et mettre le r&#233;sultat
-				 dans votre propre r&#233;pertoire GitHub.
+      <h3>Note Importante pour les utilisateurs de Windows</h3>
 
-	<p>Pour le faire, utilisez le choix suivant du menu NetBeans: [Team] -&gt; [Remote] -&gt; [Pull from Upstream].
-		 Demandez &#224; NetBeans de r&#233;cup&#233;rer depuis le "github" distant que vous avez d&#233;fini ci-dessus.
+      <p>En raison d'une gestion différente des caractères de Fin de Ligne ( <code>LF/CR LF</code>
+      ) entre Windows et les autres systèmes - nommément Unix et OS X ( voir <a href=
+      "GitFAQ.shtml#lineends">Gestion des Fins de Lignes</a> ) - il est de la plus haute importance
+      que tous les utilisateurs Windows adoptent les réglages suivants pour leur environnement de
+      développement. Ceci est absolument nécessaire pour que Git ppuisse suivre les modifications
+      individuelles sur les fichiers que vous soumettez.</p>
 
-	<p>Vous pouvez aussi actualiser un simple fichier ou le contenu d'un dossier, en
-		 clic droit sur un &#233;l&#233;ments de la fen&#234;tre "Files", et ensuite en s&#233;lectionnant
-		 [Git] -&gt; [Remote] -&gt; [Pull from Upstream].</p>
+      <p>Si vous ne suivez pas ces instructions, vous aurez abîmer les terminaisons de ligne dans
+      les fichiers que vous soumettez, qui à son tour va rendre leur historique de révision
+      beaucoup plus difficile d'accès. Dans ces conditions, les fichiers ne serons pas acceptés
+      lors d'un "pull request"</p>
 
-    <h3><a id="pullreq" name="pullreq"></a>Cr&#233;ation d'un Pull Request</h3>
+      <p>Comme première étape, comme JMRI a adopté <code>LF</code> comme convention de Fin de
+      Ligne, il est nécessaire de régler le paramètre <code>core.autocrlf</code> à
+      <code>true</code> (voir <a href=
+      "https://help.github.com/articles/dealing-with-line-endings">"Dealing with line endings" on
+      GitHub Help)</a></p>
 
-	<p>Un "Pull Request" ( PR ) est un moyen ais&#233; de rassembler tous vos changements, m&#234;me
-	s'ils couvrent plusieurs fichiers, dans quelque chose que vous pouvez ensuite soumettre
-	pour inclusion dans le r&#233;pertoire principal JMRI.
+      <h4>Note Supplémentaire Importante pour les utilisateurs de NetBean sous Windows</h4>
 
-	<p>Premi&#232;rement, vous devez d&#233;finir un compte GitHub et votre
-	propre r&#233;pertoire.
+      <p><em>En outre, si vous utilisez <strong>NetBeans</strong> sous Windows, vous
+      <u>installez</u> le Plug-in <a href=
+      "http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">"Change Line Endings
+      on Save"</a> avant d'utiliser Git via NetBeans.</em>
+      </p>
 
-		<ul>
-		<li>Obtenez un <a href="https://github.com/join">compte GitHub</a> et connectez-vous</li>
-		<li>Demandez &#224; GitHub de <a href="https://help.github.com/articles/fork-a-repo/">"fork"
-		le r&#233;pertoire JMRI</a> dans votre propre r&#233;pertoire. Il y a une
-		<a href="https://help.github.com/articles/fork-a-repo/">bonne page d'aide</a>,
-		mais basiquement vous allez &#224; la
-		<a href="https://github.com/JMRI/JMRI">page r&#233;pertoire JMRI</a>
-		et cliquez sur le bouton "Fork" en haut &#224; droite.</li>
-		</ul>
+      <p>Installez le plug-in pour être sûr que NetBeans maintienne proprement les caractères LF à
+      la fin des lignes de code-source.</p>
 
-		Ceci vous donne votre propre r&#233;pertoire, avec lequel vous pouvez travailler librement
+      <p>Actuellement le plug-in est déjà disponible dans la distribution NetBeans, donc allez
+      <code>Tools &gt; Plugins &gt; Available Plugins</code> et là sélectionnez <code>Change Line
+      Endings on Save</code> et ensuite <code>Install</code>.</p>
 
-		<p>
-		Ensuite, pousser les changements dans votre r&#233;pertoire. ( Tout le monde peut pousser dans son
-		r&#233;pertoire personnel, mais tout le monde n'a pas la permission de modifier directement le
-		r&#233;pertoire principal JMRI; c'est pourquoi le "pull request" est n&#233;cessaire ). Pour le faire:
-		<ul>
-			<li>Utilisez le choix [Team] &gt; [Remote] &gt; [Push ...] dans le menu NetBeans. ( Si vous essayez d'utiliser
-			le choix "Push to Upstream", il essaiera d'&#233;crire &#224; nouveau dans le r&#233;pertoire principal, et il &#233;chouera. )</li>
-			<li>Cliquez sur "Specify Git Repository", et entrez l'URL pour votre r&#233;pertoire personnel, ex: https://github.com/yourname/JMRI.git</li>
-			<li>Puis cliquez next.</li>
-			<li>NetBeans va v&#233;rifier avec le r&#233;pertoire et montrer une indication de branche pour pousser
-			ex: "master -&gt; master"
-			Cochez la case appropri&#233;e pour la branche sur laquelle vous voulez travailler.
-			<li>Cliquez Next et Finish.
-			NetBeans fera la pouss&#233;e r&#233;elle vers votre r&#233;pertoire.</li>
-		</ul>
-		Vous pouvez r&#233;p&#233;ter ceci aussi souvent que vous le voulez quand vous travaillez sur vos changements.
-		&#192; chaque fois, les changements les plus r&#233;cents sont pouss&#233;s et rendu disponibles.
-		<p>Finalement, quand votre changement est pr&#234;t &#224; &#234;tre soumis, allez sur
-		le site web de GitHub pour
-		<a href="gitdeveloper.shtml#pull">Remplir et soumettre un "Pull Request"</a>
-		<p>&#201;ventuellement, quelqu'un regardera le "Pull Request" et d&#233;cidera de
-		fusionner. Parfois, ils vont demander des modifications suppl&#233;mentaires. Dans ce
-		cas vous pouvez actualiser le pull request en poussant juste vos derniers changements
-		dans votre r&#233;pertoire, d'o&#249; ils sont automatiquement pr&#233;lev&#233;s.
+      <p>Vous pouvez vérifier que le plug-in est proprement installé en allant à <code>Tools &gt;
+      Plugins &gt; Installed</code>, où vous pouvez voir quelque chose comme ceci (les versions
+      peuvent différées):</p>
 
-    <h2><a id="buildandrun">Construction et Ex&#233;cution de JMRI</a></h2>
-    <p>Pour construire et ex&#233;cuter DecoderPRo, tout ce que vous avez &#224; faire est de s&#233;lectionner
-	"Run Project" ( JMRI ) dans le menu Run, ou cliquer l'ic&#242;ne Run dans la barre d'outil.</p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src=
+      "images/NetbeansChangeLineEndingsPluginInstalled.png" height="102" width="224" alt=""></a>
+      </p>
 
-	<ul>
-		<li>[Run] -> [Run Project (JMRI)] compilera et appellera DecoderPro </li>
-		<li>Vous pouvez choisir un autre objectif ( ex: PanelPro... ) en changeant
-								 [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</li>
-	</ul>
-	<p>Si vous voulez ex&#233;cuter le programme sous le d&#233;bogueur NetBeans,
-	premi&#232;rement configurez JMRI pour &#234;tre le projet principal via [Run]-&gt;[Set Main Project]-&gt;[JMRI]
-	puis s&#233;lectionnez "Debug Main Project" dans le menu "Debug".</p>
+      <p>Une fois le plug-in installé et activé, il est nécessaire de le configurer pour le
+      caractère de fin de ligne souhaité, via l'onglet <code>Tools &gt; Options &gt; Editor &gt;
+      Line Endings</code>.</p>
 
-     <h2><a id="jar"> Cr&#233;ation d'un fichier Jar</a></h2>
+      <p>Pour JMRI, nous voulons utiliser le caractère de fin de ligne du style Unix,
+      <code>LF</code>.</p>
 
-     La plupart du code dans une installation normale JMRI est dans un fichier appel&#233;
-     jmri.jar. Si vous voulez le remplacer par la version actualis&#233;e, vous avez
-     besoin de cr&#233;er un nouveau fichierjmri.jar &#224; partir de votre code modifi&#233;.
-     <p>
-     Pour ce faire,
-     ctrl-clic (ou un clic droit) sur le nom du projet "JMRI" dans la
-     Fen&#234;tre "Project". Cela ouvrira un menu contextuel, sur lequel vous
-     trouverez "Make Jar File". S&#233;lectionnez cela, et un nouveau fichier jmri.jar sera
-     produit dans le r&#233;pertoire principal du projet.
-     <p> Sinon, &#224; partir de la fen&#234;tre "Files", cliquez-droit sur le fichier build.xml,
-     et s&#233;lectionner "Run Target", puis "jar".</p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src=
+      "images/NetbeansChangeLineEndingsPluginConfiguration.png" height="168" width="237" alt=
+      ""></a>
+      </p>
 
+      <p>Le plug-in peut être activé depuis un bouton sur la barre d'outil <a href=
+      "images/NetbeansChangeLineEndingsPluginEnabled.png"><img src=
+      "images/NetbeansChangeLineEndingsPluginEnabled.png" height="19" width="55" alt=""></a></p>
 
-     <h2> <a id="nsis"> Faire un package de mise &#224; disposition pour Windows en utilisant NSIS</a></h2>
+      <p>Et le plug-in peut être desactivé depuis ce bouton <a href=
+      "images/NetbeansChangeLineEndingsPluginDisabled.png"><img src=
+      "images/NetbeansChangeLineEndingsPluginDisabled.png" height="19" width="55" alt=""></a></p>
 
-     <p>Il est possible pour les utilisateurs de NetBeans de cr&#233;er un package de mise &#224; disposition sur
-         la plate-forme Windows. Cela n&#233;cessite l'installation du Nullsoft Scriptable
-         Install System (NSIS), qui peut &#234;tre t&#233;l&#233;charg&#233; &#224; partir du
-         <a href="http://sourceforge.net/projects/nsis"> site web du projet NSIS</a> sur SourceForge.</p>
-     <p>Une fois que NSIS est install&#233; sur l'ordinateur, il est n&#233;cessaire de cr&#233;er un fichier appel&#233;
-         local.properties dans le m&#234;me r&#233;pertoire que le fichier build.xml de JMRI. Ce fichier <i>n'est
-         pas</i> sp&#233;cifiquement enregistr&#233; via SVN, aussi les chemins d'installation de l'outil de 
-				 votre machine sp&#233;cifique ne <i>ne sont pas</i> archiv&#233;s dans SVN. Cr&#233;ez le fichier,
-         et ajouter une d&#233;finition de variable avec le chemin d'acc&#232;s dans le r&#233;pertoire qui
-         comprend l'ex&#233;cutable NSIS, tels que:</p>
-     <p style="font-family: monospace"> nsis.home = C:Program Files (x86)NSIS</p>
-     <p>ou</p>
-	 <p style="font-family: monospace"> nsis.home=/opt/nsis/nsis-2.46/</p>
-			 <p>Si vous installez un outil "spotbugs", vous d&#233;finirez &#233;galement spotbugs.home
-				 dans ce fichier. Vous pouvez &#233;galement d&#233;finir plusieurs autres machines sp&#233;cifiques et
-	 les informations sp&#233;cifiques utilisateur, comme d&#233;crit dans divers endroits du
-	 fichier build.xml.</p>
-     <p>Avec le paquet  NSIS install&#233; sur votre ordinateur, il est n&#233;cessaire de cr&#233;er un fichier appel&#233;
-	 local.properties dans le m&#234;me r&#233;pertoire que le fichier build.xml de JMRI. Ce fichier n'est
-	 sp&#233;cifiquement <i>pas</i> v&#233;rifi&#233; via SVN afin que vos chemins d'installation d'outils sp&#233;cifiques
-	 &#224; la machine ne sont <i>pas</i> v&#233;rifi&#233; dans SVN. Cr&#233;er ce fichier,
-	 et ajouter une d&#233;finition de variable avec le chemin correcte pour le r&#233;pertoire qui
-	 inclus les ex&#233;cutables NSIS, tel que:</p>
-    <p style="font-family: monospace">nsis.home=C:/Program  Files (x86)/NSIS</p>
-    <p>ou</p>
-    <p style="font-family: monospace">nsis.home=/opt/nsis/nsis-2.46/</p> 
-    <p>Si vous installez un outil "spotbugs", vous devez aussi d&#233;finir spotbugs.home
-        dans ce fichier. Vous pouvez aussi d&#233;finir plusieurs autres informations  machine-specific ou
-		user-specific, comme d&#233;crit dans des emplacements vari&#233;s dans le
-		fichier build.xml.</p>
-		<p>Avec le paquet NSIS install&#233; sur votre ordinateur, et build.xml proprement
-		modifi&#233;, le paquet Windows peut &#234;tre cr&#233;&#233; en ex&#233;cutant la
-		cible ant "package-windows" dans build.xml.</p>
+      <p>Quand un fichier est sauvegardé ( en supposant que le plug-in est configuré et est activé
+      ) et ce fichier n'a pas les caractères de fin de ligne correspondant au type configuré par le
+      plug-in, le message suivant s'affiche.</p>
 
- 		<h2><a id="xmltools">Utilisation des outils NetBeans XML</a></h2>
+      <p><a href=
+      "images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png">
+      <img src=
+      "images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"
+      height="50" width="174" alt=""></a>
+      </p>
 
-		NetBeans a de bons outils pour travailler avec des fichiers XML, y compris 
-		l'&#233;dition et leur validation. JMRI utilise XInclude pour inclure 
-		des "fragments" de fichiers XML dans d'autres via l'URL qui pointe 
-		sur le site web de JMRI: https://jmri.org/xml/decoders/types/foo.xml
-		Les programmes JMRI les convertissent au moment de l'ex&#233;cution en fichiers locaux de r&#233;f&#233;rences,
-		mais par d&#233;faut NetBeans ne sait pas faire cela.
-		<p>
-		Vous pouvez demander &#224; NetBeans comment g&#233;rer cela en ajoutant le
-		fichier xml/catalog.xml ( depuis la distribution JMRI pour NetBeans
-		dans les Outils --> DTDs et Sch&#233;mas XML. )
-		Ceci permet &#224; NetBeans d'utiliser votre sch&#233;ma local lors de la validation d'un document XML dans l'&#233;diteur.
-		Notez que ceci est un r&#233;glage global dans NetBeans, donc si vous travaillez sur de multiple branches JMRI,
-		quelque soit la branche que vous ajoutez au catalogue, ce sch&#233;ma de branche est celui qui est utilis&#233;.
+      <p>Quand "OK" est sélectionné, le plug-in actualise les fins de lignes pour la forme
+      configurée et sauvegarde le fichier. Si "CANCEL" est sélectionné, le fichier sera sauvegarder
+      SANS changement des fins de lignes.</p>
 
-                <h2> <a id="findbugs"> Ex&#233;cution de SpotBugs </a></h2>
+      <h2><a id="gituse" name="gituse"></a>Utilisation de NetBeans avec le répertoire Git du Code
+      JMRI</h2>
 
-     <p> L'outil SpotBugs est un outil d'analyse de code statique qui examine le code source Java
-         pour les questions de codage courantes. L'installation d'un outil SpotBugs permet une t&#226;che ant
-         d&#233;finie dans le build.xml pour ex&#233;cuter l'analyse SpotBugs &#224; travers l'ensemble du code source Java
-         dans JMRI.</p>
-     	<p> Il semble que le fichier build.xml ne soit pas configur&#233; pour permettre au "plug-in" NetBeans
-        SpotBugs de lancer l'analyse sur le code JMRI sauf sur un one-file-at-a-time-basis.
-        En tant que tel, il semble conseill&#233; de t&#233;l&#233;charger et d'installer
-                                 l'outil appropri&#233; SpotBugs autonome pour votre syst&#232;me d'exploitation. Les t&#233;l&#233;chargements SpotBugs
-                                 peuvent &#234;tre trouv&#233;s &#224; l'adresse du <a href="https://spotbugs.github.io">
-                                     Site web SpotBugs </a>.
-     	<p> Une fois que vous avez l'outil SpotBugs install&#233;, vous devez fournir un chemin vers le
-        r&#233;pertoire contenant l'ex&#233;cutable pour une utilisation par le fichier ant build.xml.
-        Si n&#233;cessaire, cr&#233;ez le fichier local.properties dans le m&#234;me r&#233;pertoire que
-        le fichier JMRI build.xml. Dans le fichier local.properties, ajouter la variable
-        spotbugs.home avec un chemin vers l'ex&#233;cutable spotbugs, tels que: </p>
-		<p style="font-family: monospace"> spotbugs.home=C:/spotbugs-3.1.1</p>
-		<p>ou</p>
-		<p style="font-family: monospace">spotbugs.home =/opt/spotbugs-3.1.1</p>
-		<p>Pour ex&#233;cuter l'outil SpotBugs sur le code JMRI,ex&#233;cutez la cible ant "spotbugs"
-		qui est d&#233;fini dans build.xml. Dans NetBeans cela peut &#234;tre accompli
-		par un clic droit sur le fichier build.xml  dans le volet "Files" et " Run"ing La cible "SpotBugs".
-		Quand SpotBugs est termin&#233;, la fen&#234;tre de sortie NetBeans va montrer
-		le chemin vers un fichier de rapport au format HTML. Ouvrez ce fichier avec un navigateur
-		pour examiner les r&#233;sultats SpotBugs.</p>
+      <p>Git fournit un répertoire de Code JMRI par l'utilisation de l'outil Git. Pour plus
+      d'information sur la façon dont JMRI utilise Git, voir l'Aide JMRI dans <a href=
+      "getgitcode.shtml">Obtention du code via Git</a> et <a href="GitFAQ.shtml">FAQ Git</a>.</p>
 
+      <p>une fois configuré, Netbeans fournit un support intégré pour l'utilisation de Git.</p>
 
-		<h2><a id="compileIndividualFile"> NetBeans et la compilation des fichiers individuels</a></h2>
-        <p> L'IDE NetBeans affiche des ic&#244;nes sur le c&#244;t&#233; de chaque objet dans la fen&#234;tre Projects ,
-            et sur le c&#244;t&#233; de chaque fichier dans la fen&#234;tre Files. Ces ic&#244;nes peuvent refl&#233;ter l'
-            &#233;tat de chaque &#233;l&#233;ment, y compris le changement local et le v&#233;ritable statut d'ach&#232;vement.</p>
-        <p> A cette &#233;poque, les fichiers ( dans project's nbproject/directory) qui
-            contr&#244;le la fa&#231;on dont NetBeans effectue la compilation des fichiers individuels, ne refl&#232;tent pas 
-						correctement toutes les exigences du projet JMRI. <i>Tant que ces fichiers ne 
-            sont correctement mis &#224; jour, les ic&#244;nes d'erreur vont persister dans le projet JMRI.</i>
-            Ces ic&#244;nes d'erreur <i>n'affectent pas</i> la capacit&#233; de NetBeans de compiler les
-            fichiers sources en utilisant les t&#226;ches Ant d&#233;finies dans le fichier build.xml du projet.</p>
-        <p> Construire le fichier JMRI.jar, et l'ex&#233;cution d'un outil JMRI de l'int&#233;rieur
-            NetBeans est g&#233;n&#233;ralement effectu&#233;e via des t&#226;ches Ant, qui sont d&#233;finies dans le fichier 
-						de projet build.xml. Les d&#233;veloppeurs de JMRI ont g&#233;n&#233;ralement gard&#233; ce dossier &#224; jour, ainsi
-             la cr&#233;ation du fichier JMRI.jar et l'ex&#233;cution d'un outil JMRI au sein de NetBeans
-            g&#233;n&#233;ralement ne souffriront pas des lacunes de l'information de configuration
-            trouv&#233;es dans les fichiers dans le nbproject/r&#233;pertoire du projet.</p> 
-       
-	 <h1> <a id="SeeAlso"> Voir aussi </a></h1>
-        <p> <a href="http://netbeans.org/"> Le site Web d'Environnement de d&#233;veloppement int&#233;gr&#233; NetBeans </a></p>
-        <p> <a href="http://subversion.apache.org/"> Le site Web du projet Subversion de Apache.org</a></p>
-        <p> <a href="http://sourceforge.net/projects/nsis"> Le site web du projet NSIS</a></p>
-        <p> <a href="https://spotbugs.github.io"> Le site web SpotBugs</a></p>
+      <p>Pour plus d'information sur Git et NetBeans, voir la <a href=
+      "https://netbeans.org/kb/docs/ide/git.html">page d'aide NetBeans Git</a></p>
 
-		<h2><a id="patch">Cr&#233;ation d'un fichier patch</a></h2>
-    
-			<p> Un "diff patch file" est un moyen facile de rassembler toutes vos modifications, m&#234;me
-	    si elles s'&#233;tendent sur plusieurs dossiers, en un seul fichier.
-			&#199;a peut &#234;tre utilis&#233; par exemple pour soumettre un Patch.
-			Maintenant que nous utilisons Git et GitHub, cependant, nous pr&#233;f&#233;rons que vous
-			contribuez au changements de code par un
-			<a href="gitdeveloper.shtml">GitHub Pull Requests</a>.
-			</p>
+      <h3><a id="setup" name="setup"></a>Vérification du Code</h3>
 
-			<p>
-    	Pour cr&#233;er le fichier "patch diff" <strong>[deprecated]</strong>( obsol&egrave;te ):
-     <ul>
- 
-     <li> Depuis le menu [Team], s&#233;lectionnez "Export Diff Patch..."
-     <li> Un explorateur de fichiers s'ouvre, saisissez un nouveau nom de fichier &#224; 
-         l'endroit de votre choix et cliquez sur "Save" ou "Open",
-         selon ce que la bo&#238;te de dialogue affiche.
-     <li> Apr&#232;s la fin du calcul des diffs, le fichier que vous avez s&#233;lectionn&#233; contiendra
-         les patchs, avec un en-t&#234;te de l'information.
-    </ul>
+      <p>Dans NetBeans, sous le menu "Team", sélectionnez Git, puis le Clone Repository. Entrez
+      l'URL du répertoire https://github.com/JMRI/JMRI.git repository depuis la <a href=
+      "https://github.com/JMRI/JMRI">page JMRI GitHub</a> dans le formulaire NetBeans "Repository
+      URL". Nous vous recommendons également d'entrer vos identifiants GitHub, ainsi nous pourrons
+      plus tard, vous attibuer vos contributions. Cliquze "Next". Soyez sûr que la case "master"
+      est cochée pour récupérer la version principale du Code. Cliquez "Next", et ensuite
+      cliquez"Finish".</p>
 
-  <!--#include virtual="/Footer.shtml" -->
+      <p>La récupération de la copie du code peut prendre du temps ( notez la barre de progression
+      un bas à droite).</p>
 
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <h3>Soumissions Locales</h3>
+
+      <p>Quand vous utilisez Git, l'opération de" soumission" est localisée à votre ordinateur.
+      Elle ne fait aucun changement dans le répertoire principal JMRI.</p>
+
+      <p>Vous êtes encouragés à soumettre souvent, ainsi vos changements seront stockés en toute
+      sécurité loin de votre répertoire de travail et chaque petit changement est enregistré
+      séparément.</p>
+
+      <h3><a id="updating" name="updating"></a>Mise à jour du code depuis Git</h3>
+
+      <p>De temps en temps, vous voudrez mettre à jour votre copie locale du code pour qu'elle
+      corresponde au contenu de "HEAD" du répertoire principal JMRi Git. Le processus basique est
+      de récupérer la version la plus récente depuis le répertoire principal JMRI faire toute
+      fusion qui est nécessaire si vous avez apporté des modifications conflictuelles, et ensuite
+      et mettre le résultat dans votre propre répertoire GitHub.</p>
+
+      <p>Pour le faire, utilisez le choix suivant du menu NetBeans: [Team] -&gt; [Remote] -&gt;
+      [Pull from Upstream]. Demandez à NetBeans de récupérer depuis le "github" distant que vous
+      avez défini ci-dessus.</p>
+
+      <p>Vous pouvez aussi actualiser un simple fichier ou le contenu d'un dossier, en clic droit
+      sur un éléments de la fenêtre "Files", et ensuite en sélectionnant [Git] -&gt; [Remote] -&gt;
+      [Pull from Upstream].</p>
+
+      <h3><a id="pullreq" name="pullreq"></a>Création d'un Pull Request</h3>
+
+      <p>Un "Pull Request" ( PR ) est un moyen aisé de rassembler tous vos changements, même s'ils
+      couvrent plusieurs fichiers, dans quelque chose que vous pouvez ensuite soumettre pour
+      inclusion dans le répertoire principal JMRI.</p>
+
+      <p>Premièrement, vous devez définir un compte GitHub et votre propre répertoire.</p>
+
+      <ul>
+        <li>Obtenez un <a href="https://github.com/join">compte GitHub</a> et connectez-vous</li>
+
+        <li>Demandez à GitHub de <a href="https://help.github.com/articles/fork-a-repo/">"fork" le
+        répertoire JMRI</a> dans votre propre répertoire. Il y a une <a href=
+        "https://help.github.com/articles/fork-a-repo/">bonne page d'aide</a>, mais basiquement
+        vous allez à la <a href="https://github.com/JMRI/JMRI">page répertoire JMRI</a> et cliquez
+        sur le bouton "Fork" en haut à droite.</li>
+      </ul>
+      Ceci vous donne votre propre répertoire, avec lequel vous pouvez travailler librement
+      <p>Ensuite, pousser les changements dans votre répertoire. ( Tout le monde peut pousser dans
+      son répertoire personnel, mais tout le monde n'a pas la permission de modifier directement le
+      répertoire principal JMRI; c'est pourquoi le "pull request" est nécessaire ). Pour le
+      faire:</p>
+
+      <ul>
+        <li>Utilisez le choix [Team] &gt; [Remote] &gt; [Push ...] dans le menu NetBeans. ( Si vous
+        essayez d'utiliser le choix "Push to Upstream", il essaiera d'écrire à nouveau dans le
+        répertoire principal, et il échouera. )</li>
+
+        <li>Cliquez sur "Specify Git Repository", et entrez l'URL pour votre répertoire personnel,
+        ex: https://github.com/yourname/JMRI.git</li>
+
+        <li>Puis cliquez next.</li>
+
+        <li>NetBeans va vérifier avec le répertoire et montrer une indication de branche pour
+        pousser ex: "master -&gt; master" Cochez la case appropriée pour la branche sur laquelle
+        vous voulez travailler.</li>
+
+        <li>Cliquez Next et Finish. NetBeans fera la poussée réelle vers votre répertoire.</li>
+      </ul>
+      Vous pouvez répéter ceci aussi souvent que vous le voulez quand vous travaillez sur vos
+      changements. À chaque fois, les changements les plus récents sont poussés et rendu
+      disponibles.
+      <p>Finalement, quand votre changement est prêt à être soumis, allez sur le site web de GitHub
+      pour <a href="gitdeveloper.shtml#pull">Remplir et soumettre un "Pull Request"</a></p>
+
+      <p>Éventuellement, quelqu'un regardera le "Pull Request" et décidera de fusionner. Parfois,
+      ils vont demander des modifications supplémentaires. Dans ce cas vous pouvez actualiser le
+      pull request en poussant juste vos derniers changements dans votre répertoire, d'où ils sont
+      automatiquement prélevés.</p>
+
+      <h2><a id="buildandrun" name="buildandrun">Construction et Exécution de JMRI</a>
+      </h2>
+
+      <p>Pour construire et exécuter DecoderPRo, tout ce que vous avez à faire est de sélectionner
+      "Run Project" ( JMRI ) dans le menu Run, ou cliquer l'icòne Run dans la barre d'outil.</p>
+
+      <ul>
+        <li>[Run] -&gt; [Run Project (JMRI)] compilera et appellera DecoderPro</li>
+
+        <li>Vous pouvez choisir un autre objectif ( ex: PanelPro... ) en changeant
+        [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</li>
+      </ul>
+
+      <p>Si vous voulez exécuter le programme sous le débogueur NetBeans, premièrement configurez
+      JMRI pour être le projet principal via [Run]-&gt;[Set Main Project]-&gt;[JMRI] puis
+      sélectionnez "Debug Main Project" dans le menu "Debug".</p>
+
+      <h2><a id="jar" name="jar">Création d'un fichier Jar</a>
+      </h2>
+      La plupart du code dans une installation normale JMRI est dans un fichier appelé jmri.jar. Si
+      vous voulez le remplacer par la version actualisée, vous avez besoin de créer un nouveau
+      fichierjmri.jar à partir de votre code modifié.
+      <p>Pour ce faire, ctrl-clic (ou un clic droit) sur le nom du projet "JMRI" dans la Fenêtre
+      "Project". Cela ouvrira un menu contextuel, sur lequel vous trouverez "Make Jar File".
+      Sélectionnez cela, et un nouveau fichier jmri.jar sera produit dans le répertoire principal
+      du projet.</p>
+
+      <p>Sinon, à partir de la fenêtre "Files", cliquez-droit sur le fichier build.xml, et
+      sélectionner "Run Target", puis "jar".</p>
+
+      <h2><a id="nsis" name="nsis">Faire un package de mise à disposition pour Windows en utilisant
+      NSIS</a>
+      </h2>
+
+      <p>Il est possible pour les utilisateurs de NetBeans de créer un package de mise à
+      disposition sur la plate-forme Windows. Cela nécessite l'installation du Nullsoft Scriptable
+      Install System (NSIS), qui peut être téléchargé à partir du <a href=
+      "http://sourceforge.net/projects/nsis">site web du projet NSIS</a> sur SourceForge.</p>
+
+      <p>Une fois que NSIS est installé sur l'ordinateur, il est nécessaire de créer un fichier
+      appelé local.properties dans le même répertoire que le fichier build.xml de JMRI. Ce fichier
+      <em>n'est pas</em> spécifiquement enregistré via SVN, aussi les chemins d'installation de
+      l'outil de votre machine spécifique ne <em>ne sont pas</em> archivés dans SVN. Créez le
+      fichier, et ajouter une définition de variable avec le chemin d'accès dans le répertoire qui
+      comprend l'exécutable NSIS, tels que:</p>
+
+      <p style="font-family: monospace">nsis.home = C:Program Files (x86)NSIS</p>
+
+      <p>ou</p>
+
+      <p style="font-family: monospace">nsis.home=/opt/nsis/nsis-2.46/</p>
+
+      <p>Si vous installez un outil "spotbugs", vous définirez également spotbugs.home dans ce
+      fichier. Vous pouvez également définir plusieurs autres machines spécifiques et les
+      informations spécifiques utilisateur, comme décrit dans divers endroits du fichier
+      build.xml.</p>
+
+      <p>Avec le paquet NSIS installé sur votre ordinateur, il est nécessaire de créer un fichier
+      appelé local.properties dans le même répertoire que le fichier build.xml de JMRI. Ce fichier
+      n'est spécifiquement <em>pas</em> vérifié via SVN afin que vos chemins d'installation
+      d'outils spécifiques à la machine ne sont <em>pas</em> vérifié dans SVN. Créer ce fichier, et
+      ajouter une définition de variable avec le chemin correcte pour le répertoire qui inclus les
+      exécutables NSIS, tel que:</p>
+
+      <p style="font-family: monospace">nsis.home=C:/Program Files (x86)/NSIS</p>
+
+      <p>ou</p>
+
+      <p style="font-family: monospace">nsis.home=/opt/nsis/nsis-2.46/</p>
+
+      <p>Si vous installez un outil "spotbugs", vous devez aussi définir spotbugs.home dans ce
+      fichier. Vous pouvez aussi définir plusieurs autres informations machine-specific ou
+      user-specific, comme décrit dans des emplacements variés dans le fichier build.xml.</p>
+
+      <p>Avec le paquet NSIS installé sur votre ordinateur, et build.xml proprement modifié, le
+      paquet Windows peut être créé en exécutant la cible ant "package-windows" dans build.xml.</p>
+
+      <h2><a id="xmltools" name="xmltools">Utilisation des outils NetBeans XML</a>
+      </h2>
+      NetBeans a de bons outils pour travailler avec des fichiers XML, y compris l'édition et leur
+      validation. JMRI utilise XInclude pour inclure des "fragments" de fichiers XML dans d'autres
+      via l'URL qui pointe sur le site web de JMRI: https://jmri.org/xml/decoders/types/foo.xml Les
+      programmes JMRI les convertissent au moment de l'exécution en fichiers locaux de références,
+      mais par défaut NetBeans ne sait pas faire cela.
+      <p>Vous pouvez demander à NetBeans comment gérer cela en ajoutant le fichier xml/catalog.xml
+      ( depuis la distribution JMRI pour NetBeans dans les Outils --&gt; DTDs et Schémas XML. )
+      Ceci permet à NetBeans d'utiliser votre schéma local lors de la validation d'un document XML
+      dans l'éditeur. Notez que ceci est un réglage global dans NetBeans, donc si vous travaillez
+      sur de multiple branches JMRI, quelque soit la branche que vous ajoutez au catalogue, ce
+      schéma de branche est celui qui est utilisé.</p>
+
+      <h2><a id="findbugs" name="findbugs">Exécution de SpotBugs</a>
+      </h2>
+
+      <p>L'outil SpotBugs est un outil d'analyse de code statique qui examine le code source Java
+      pour les questions de codage courantes. L'installation d'un outil SpotBugs permet une tâche
+      ant définie dans le build.xml pour exécuter l'analyse SpotBugs à travers l'ensemble du code
+      source Java dans JMRI.</p>
+
+      <p>Il semble que le fichier build.xml ne soit pas configuré pour permettre au "plug-in"
+      NetBeans SpotBugs de lancer l'analyse sur le code JMRI sauf sur un one-file-at-a-time-basis.
+      En tant que tel, il semble conseillé de télécharger et d'installer l'outil approprié SpotBugs
+      autonome pour votre système d'exploitation. Les téléchargements SpotBugs peuvent être trouvés
+      à l'adresse du <a href="https://spotbugs.github.io">Site web SpotBugs</a> .</p>
+
+      <p>Une fois que vous avez l'outil SpotBugs installé, vous devez fournir un chemin vers le
+      répertoire contenant l'exécutable pour une utilisation par le fichier ant build.xml. Si
+      nécessaire, créez le fichier local.properties dans le même répertoire que le fichier JMRI
+      build.xml. Dans le fichier local.properties, ajouter la variable spotbugs.home avec un chemin
+      vers l'exécutable spotbugs, tels que:</p>
+
+      <p style="font-family: monospace">spotbugs.home=C:/spotbugs-4.2.3</p>
+
+      <p>ou</p>
+
+      <p style="font-family: monospace">spotbugs.home =/opt/spotbugs-4.2.3</p>
+
+      <p>Pour exécuter l'outil SpotBugs sur le code JMRI,exécutez la cible ant "spotbugs" qui est
+      défini dans build.xml. Dans NetBeans cela peut être accompli par un clic droit sur le fichier
+      build.xml dans le volet "Files" et " Run"ing La cible "SpotBugs". Quand SpotBugs est terminé,
+      la fenêtre de sortie NetBeans va montrer le chemin vers un fichier de rapport au format HTML.
+      Ouvrez ce fichier avec un navigateur pour examiner les résultats SpotBugs.</p>
+
+      <h2><a id="compileIndividualFile" name="compileIndividualFile">NetBeans et la compilation des
+      fichiers individuels</a>
+      </h2>
+
+      <p>L'IDE NetBeans affiche des icônes sur le côté de chaque objet dans la fenêtre Projects ,
+      et sur le côté de chaque fichier dans la fenêtre Files. Ces icônes peuvent refléter l' état
+      de chaque élément, y compris le changement local et le véritable statut d'achèvement.</p>
+
+      <p>A cette époque, les fichiers ( dans project's nbproject/directory) qui contrôle la façon
+      dont NetBeans effectue la compilation des fichiers individuels, ne reflètent pas correctement
+      toutes les exigences du projet JMRI. <em>Tant que ces fichiers ne sont correctement mis à
+      jour, les icônes d'erreur vont persister dans le projet JMRI.</em> Ces icônes d'erreur
+      <em>n'affectent pas</em> la capacité de NetBeans de compiler les fichiers sources en
+      utilisant les tâches Ant définies dans le fichier build.xml du projet.</p>
+
+      <p>Construire le fichier JMRI.jar, et l'exécution d'un outil JMRI de l'intérieur NetBeans est
+      généralement effectuée via des tâches Ant, qui sont définies dans le fichier de projet
+      build.xml. Les développeurs de JMRI ont généralement gardé ce dossier à jour, ainsi la
+      création du fichier JMRI.jar et l'exécution d'un outil JMRI au sein de NetBeans généralement
+      ne souffriront pas des lacunes de l'information de configuration trouvées dans les fichiers
+      dans le nbproject/répertoire du projet.</p>
+
+      <h1><a id="SeeAlso" name="SeeAlso">Voir aussi</a>
+      </h1>
+
+      <p><a href="http://netbeans.org/">Le site Web d'Environnement de développement intégré
+      NetBeans</a>
+      </p>
+
+      <p><a href="http://subversion.apache.org/">Le site Web du projet Subversion de Apache.org</a>
+      </p>
+
+      <p><a href="http://sourceforge.net/projects/nsis">Le site web du projet NSIS</a>
+      </p>
+
+      <p><a href="https://spotbugs.github.io">Le site web SpotBugs</a>
+      </p>
+
+      <h2><a id="patch" name="patch">Création d'un fichier patch</a>
+      </h2>
+
+      <p>Un "diff patch file" est un moyen facile de rassembler toutes vos modifications, même si
+      elles s'étendent sur plusieurs dossiers, en un seul fichier. Ça peut être utilisé par exemple
+      pour soumettre un Patch. Maintenant que nous utilisons Git et GitHub, cependant, nous
+      préférons que vous contribuez au changements de code par un <a href=
+      "gitdeveloper.shtml">GitHub Pull Requests</a>.</p>
+
+      <p>Pour créer le fichier "patch diff" <strong>[deprecated]</strong>( obsolète ):</p>
+
+      <ul>
+        <li>Depuis le menu [Team], sélectionnez "Export Diff Patch..."</li>
+
+        <li>Un explorateur de fichiers s'ouvre, saisissez un nouveau nom de fichier à l'endroit de
+        votre choix et cliquez sur "Save" ou "Open", selon ce que la boîte de dialogue
+        affiche.</li>
+
+        <li>Après la fin du calcul des diffs, le fichier que vous avez sélectionné contiendra les
+        patchs, avec un en-tête de l'information.</li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

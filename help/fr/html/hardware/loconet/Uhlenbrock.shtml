@@ -1,196 +1,206 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Blorec Herv&#233;  2017-01-29-->
 <html lang="fr">
 <head>
- <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
-    <meta name="author" content="Michael Beck">
-    <meta name="author" content="John Plocher">
-    <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
+  <meta name="author" content="Michael Beck">
+  <meta name="author" content="John Plocher">
+  <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-	<!--#include virtual="Sidebar" -->
-	<div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-      <h1>Guide Installation JMRI: Uhlenbrock Intellibox via Port
-      S&eacute;rie</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>Guide Installation JMRI: Uhlenbrock Intellibox via Port Série</h1>
 
       <p>DecoderPro peut communiquer avec une <a href=
-      "http://www.uhlenbrock.de/3/index.htm">Uhlenbrock
-      Intellibox</a> via le port s&eacute;rie int&eacute;gr&eacute;
-      et le protocole LocoNet&reg;.</p>
+      "http://www.uhlenbrock.de/3/index.htm">Uhlenbrock Intellibox</a> via le port série intégré et
+      le protocole LocoNet®.</p>
 
-      <p>Configurer les options de votre Intellibox Uhlenbrock
-      &agrave;:</p>
+      <p>Configurer les options de votre Intellibox Uhlenbrock à:</p>
 
       <ul>
-        <li>SO 2 de valeur 4 (S&eacute;lectionner LocoNet protocole
-        dans l'interface)</li>
+        <li>SO 2 de valeur 4 (Sélectionner LocoNet protocole dans l'interface)</li>
 
-        <li>SO 5 valeur 1 (Utilisation 1 bit d'arr&ecirc;t sur le
-        port s&eacute;rie)</li>
+        <li>SO 5 valeur 1 (Utilisation 1 bit d'arrêt sur le port série)</li>
 
-        <li>SO 6 valeur 255 (CTS jamais mis erreurs dues &agrave;
-        un appui sur un bouton d'arr&ecirc;t)</li>
+        <li>SO 6 valeur 255 (CTS jamais mis erreurs dues à un appui sur un bouton d'arrêt)</li>
 
         <li>Vitesse de transmission: 19200</li>
-      </ul>Ensuite, d&eacute;marrez le programme JMRI et le
-      configurer pour:
-
+      </ul>
+      Ensuite, démarrez le programme JMRI et le configurer pour:
       <ul>
         <li>protocole "LocoNet Intellibox Serial Port"</li>
 
-        <li>S&eacute;lectionnez le port s&eacute;rie
-        appropri&eacute; sur votre ordinateur</li>
+        <li>Sélectionnez le port série approprié sur votre ordinateur</li>
 
-        <li>S&eacute;lectionnez 19200 bauds</li>
+        <li>Sélectionnez 19200 bauds</li>
 
-        <li>S&eacute;lectionnez mat&eacute;riels Handshaking</li>
+        <li>Sélectionnez matériels Handshaking</li>
       </ul>
 
-      <h1>JMRI Guide d'installation: Uhlenbrock Intellibox II et
-      IB-COM via l'interface USB</h1>
+      <h1>JMRI Guide d'installation: Uhlenbrock Intellibox II et IB-COM via l'interface USB</h1>
 
-      <p>JMRI peut communiquer avec une centrale Intellibox II
-      Uhlenbrock et IB-COM via l'interface int&eacute;gr&eacute;e
-      USB en utilisant le protocole LocoNet.</p>
+      <p>JMRI peut communiquer avec une centrale Intellibox II Uhlenbrock et IB-COM via l'interface
+      intégrée USB en utilisant le protocole LocoNet.</p>
 
       <ul>
-        <li>D&eacute;marrer JMRI ou un autre programme et le
-        configurer pour:
-
+        <li>Démarrer JMRI ou un autre programme et le configurer pour:
           <ul>
-            <li><b>Fabricant:</b> Uhlenbrock,</li>
+            <li><strong>Fabricant:</strong> Uhlenbrock,</li>
 
-            <li><b>Syst&egrave;me:</b> Uhlenbrock LocoNet
-            Implementation</li>
+            <li><strong>Système:</strong> Uhlenbrock LocoNet Implementation</li>
 
             <li>Choisissez votre port</li>
           </ul>
         </li>
       </ul>
 
-      <h1>Support Mat&#233;riel:Intellibox Uhlenbrock</h1>
+      <h1>Support Matériel:Intellibox Uhlenbrock</h1>
 
-<p>DecoderPro peut communiquer avec une
-	<a href="http://www.uhlenbrock.de/3/index.htm"> Uhlenbrock Intellibox </a>
-	via le port s&#233;rie int&#233;gr&#233; et le protocole LocoNet&reg;.
+      <p>DecoderPro peut communiquer avec une <a href=
+      "http://www.uhlenbrock.de/3/index.htm">Uhlenbrock Intellibox</a> via le port série intégré et
+      le protocole LocoNet®. <a name="hardware" id="hardware"></a></p>
 
-<a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
-<h3>Centrale</h3>
-		<ul>
-				<li>Intellibox-I
-				<li>Intellibox-II
-				<li>IB-Com
-				<li>Fleischman Twin Center ( version logiciel 1.1 ou plus r&#233;cente )
-		</ul>
+      <h2>Matériel pris en charge</h2>
 
-<a name="limitations"></a><h2>Limitations</h2>
-	<ul>
-		<li>La prise en charge compl&#232;te de l'Intellibox-II a &#233;t&#233; ajout&#233;e &#224; partir de la version 3.11.1.
-		</li>
-	</ul>
+      <h3>Centrale</h3>
 
-<a name="connecting"></a><h2>Connexion</h2>
+      <ul>
+        <li>Intellibox-I</li>
 
-		<h3 id="serial">Connexion directe s&#233;rie</h3>	
-		<a href="images/UhlenbrockConfig-I.png"><img src="images/UhlenbrockConfig-I.png" align="right" width="180" height="115"></a>
-		Cette section est applicable &#224; l"Intellibox-I", ce qui inclut
-		<ul>
-				<li>Intellibox r&#233;f: 65000
-				<li>Intellibox IR r&#233;f: 65050
-				<li>Fleischman Twin Center ( version logiciel 1.1 ou plus r&#233;cente )
-		</ul>
-		qui ont un port s&#233;rie RS232 pour la connexion.
-		<p>
-		Configurer les options de votre centrale Intellibox-I pour &#234;tre:
-		<ul>
-				<li>SO 2 de valeur 4 (S&#233;lectionner LocoNet protocole dans l'interface)
-				<li>SO 5 valeur 1 	  (Utilisation 1 bit d'arr&#234;t sur le port s&#233;rie)
-				<li>SO 6 valeur 255  (CTS jamais mis erreurs dues &#224; un appui sur un bouton d'arr&#234;t)
-				<li>Vitesse de transmission: 19200
-		</ul>
+        <li>Intellibox-II</li>
 
-		<p>
-		Ensuite, d&#233;marrez le programme JMRI et configurez le pour ouvrir le menu Pr&#233;f&#233;rences et:
-		<ul>
-		<li>S&#233;lectionnez "Uhlenbtock comme System Manufacturer dans l'onglet Connexions
-		<li>S&#233;lectionnez "LocoNet Intellibox-I ( Serial )" comme protocole System Connection
-		<strong>Le protocole Direct Serial pour l'intellibox-I &#233;tait nomm&#233; "LocoNet Intellibox Serial Port" jusqu'&#224; la version 3.10 de JMRI</strong></li>
-		<li>>S&#233;lectionnez le port s&#233;rie appropri&#233; sur votre ordinateur
-		<li>S&#233;lectionnez 19200 bauds
-		<li>S&#233;lectionnez mat&#233;riels Handshake 
-		</ul>
-		Enregistrez et red&#233;marrez.
+        <li>IB-Com</li>
 
-		<p>
-		Notez que le mat&#233;riel handshake dans le port s&#233;rie Intellibox n'est pas enti&#232;rement fiable, et des messages 
-		peuvent &#234;tre perdus si vous avez beaucoup de trafic. Pour exploiter un r&#233;seau compliqu&#233;, nous 
-		vous recommandons de consid&#233;rer un LocoBuffer-USB, PR3 ou autre interface qui vous permettra de connecter 
-		JMRI au port LocoNet de l'Intellibox au lieu du port s&#233;rie.
-		Voir la <a href="#loconet">section connexion LocoNet</a> ci-dessus.
+        <li>Fleischman Twin Center ( version logiciel 1.1 ou plus récente )</li>
+      </ul>
+      <a name="limitations" id="limitations"></a>
+      <h2>Limitations</h2>
 
-		<h3 id="usb">Connexion USB Directe</h3>
-		<a href="images/UhlenbrockConfig-II.png"><img src="images/UhlenbrockConfig-II.png" align="right" width="180" height="115"></a>
-		Cette section est applicable &#224; l"Intellibox-II", ce qui inclut:
-		<ul>
-				<li>Intellibox II r&#233;f: 65100
-				<li>IB-Com r&#233;f: 65070/65071
-				<li>Intellibox Basic r&#233;f: 65060	
-		</ul>
-		qui ont un port USB pour une connexion directe.
+      <ul>
+        <li>La prise en charge complète de l'Intellibox-II a été ajoutée à partir de la version
+        3.11.1.</li>
+      </ul>
+      <a name="connecting" id="connecting"></a>
+      <h2>Connexion</h2>
 
-		<p>
-		D&#233;marrez le progrmme JMRI et configurez le en ouvrant le menu Pr&#233;f&#233;rences et:
-		<ul>
-				<li>S&#233;lectionnez "Uhlenbrock" comme System Manufacturer dans l'onglet Connexions
-				<li>S&#233;lectionnez "LocoNet Intellibox-II/IB-Com (USB)" comme le System Connection
-		</ul>
-		Enregistrez et red&#233;marrez.
-		
-		<h3 id="loconet">Connexion LocoNet</h3>
-		<p>
-		Vous pouvez connecter une centrale Intellibox &#224; LocoNet, en utilisant
-		n'importe laquelle des  
-		<a href="Digitrax.shtml">M&#233;thodes de connexion LocoNet</a> disponibles.
-		<p>
-		Les centrales Intellibox sont divis&#233;es en deux types, 
-		appel&#233; "Intellibox-I":
-		<ul>
-				<li>Intellibox r&#233;f: 65000
-				<li>Intellibox IR r&#233;f: 65050
-				<li>Fleischmann Twin Center ( version logiciel 1.1 ou plus r&#233;cente )
-		</ul>
-		et "Intellibox-II":
-		<ul>
-				<li>Intellibox II r&#233;f.:65100
-				<li>IB-Com r&#233;f: 65070/65071
-				<li>Intellibox Basic r&#233;f: 65060
-		</ul>
-		<p>
-		D&#233;marrez le progrmme JMRI et configurez le en ouvrant le menu Pr&#233;f&#233;rences et:
-		<ul>
-				<li>S&#233;lectionnez "Digitrax" comme System Manufacturer dans l'onglet Connexions
-				<li>S&#233;lectionnez le System Connection appropri&#233; &#224; votre mat&#233;riel
-				<li>S&#233;lectionnez soit  "Intellibox-I" ou "Intellibox-II" comme Type de Centrale
-		</ul>
-		Enregistrez et re&#233;marrez.
+      <h3 id="serial">Connexion directe série</h3>
+      <a href="images/UhlenbrockConfig-I.png"><img src="images/UhlenbrockConfig-I.png" align=
+      "right" width="180" height="115" alt=""></a> Cette section est applicable à l"Intellibox-I",
+      ce qui inclut
+      <ul>
+        <li>Intellibox réf: 65000</li>
 
-		<a name="tools"></a><h2>Outils JMRI Uhlenbrock</h2>
-		N/A
+        <li>Intellibox IR réf: 65050</li>
 
-	<!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+        <li>Fleischman Twin Center ( version logiciel 1.1 ou plus récente )</li>
+      </ul>
+      qui ont un port série RS232 pour la connexion.
+      <p>Configurer les options de votre centrale Intellibox-I pour être:</p>
+
+      <ul>
+        <li>SO 2 de valeur 4 (Sélectionner LocoNet protocole dans l'interface)</li>
+
+        <li>SO 5 valeur 1 (Utilisation 1 bit d'arrêt sur le port série)</li>
+
+        <li>SO 6 valeur 255 (CTS jamais mis erreurs dues à un appui sur un bouton d'arrêt)</li>
+
+        <li>Vitesse de transmission: 19200</li>
+      </ul>
+
+      <p>Ensuite, démarrez le programme JMRI et configurez le pour ouvrir le menu Préférences
+      et:</p>
+
+      <ul>
+        <li>Sélectionnez "Uhlenbtock comme System Manufacturer dans l'onglet Connexions</li>
+
+        <li>Sélectionnez "LocoNet Intellibox-I ( Serial )" comme protocole System Connection
+        <strong>Le protocole Direct Serial pour l'intellibox-I était nommé "LocoNet Intellibox
+        Serial Port" jusqu'à la version 3.10 de JMRI</strong></li>
+
+        <li>&gt;Sélectionnez le port série approprié sur votre ordinateur</li>
+
+        <li>Sélectionnez 19200 bauds</li>
+
+        <li>Sélectionnez matériels Handshake</li>
+      </ul>
+      Enregistrez et redémarrez.
+      <p>Notez que le matériel handshake dans le port série Intellibox n'est pas entièrement
+      fiable, et des messages peuvent être perdus si vous avez beaucoup de trafic. Pour exploiter
+      un réseau compliqué, nous vous recommandons de considérer un LocoBuffer-USB, PR3 ou autre
+      interface qui vous permettra de connecter JMRI au port LocoNet de l'Intellibox au lieu du
+      port série. Voir la <a href="#loconet">section connexion LocoNet</a> ci-dessus.</p>
+
+      <h3 id="usb">Connexion USB Directe</h3>
+      <a href="images/UhlenbrockConfig-II.png"><img src="images/UhlenbrockConfig-II.png" align=
+      "right" width="180" height="115" alt=""></a> Cette section est applicable à l"Intellibox-II",
+      ce qui inclut:
+      <ul>
+        <li>Intellibox II réf: 65100</li>
+
+        <li>IB-Com réf: 65070/65071</li>
+
+        <li>Intellibox Basic réf: 65060</li>
+      </ul>
+      qui ont un port USB pour une connexion directe.
+      <p>Démarrez le progrmme JMRI et configurez le en ouvrant le menu Préférences et:</p>
+
+      <ul>
+        <li>Sélectionnez "Uhlenbrock" comme System Manufacturer dans l'onglet Connexions</li>
+
+        <li>Sélectionnez "LocoNet Intellibox-II/IB-Com (USB)" comme le System Connection</li>
+      </ul>
+      Enregistrez et redémarrez.
+      <h3 id="loconet">Connexion LocoNet</h3>
+
+      <p>Vous pouvez connecter une centrale Intellibox à LocoNet, en utilisant n'importe laquelle
+      des <a href="Digitrax.shtml">Méthodes de connexion LocoNet</a> disponibles.</p>
+
+      <p>Les centrales Intellibox sont divisées en deux types, appelé "Intellibox-I":</p>
+
+      <ul>
+        <li>Intellibox réf: 65000</li>
+
+        <li>Intellibox IR réf: 65050</li>
+
+        <li>Fleischmann Twin Center ( version logiciel 1.1 ou plus récente )</li>
+      </ul>
+      et "Intellibox-II":
+      <ul>
+        <li>Intellibox II réf.:65100</li>
+
+        <li>IB-Com réf: 65070/65071</li>
+
+        <li>Intellibox Basic réf: 65060</li>
+      </ul>
+
+      <p>Démarrez le progrmme JMRI et configurez le en ouvrant le menu Préférences et:</p>
+
+      <ul>
+        <li>Sélectionnez "Digitrax" comme System Manufacturer dans l'onglet Connexions</li>
+
+        <li>Sélectionnez le System Connection approprié à votre matériel</li>
+
+        <li>Sélectionnez soit "Intellibox-I" ou "Intellibox-II" comme Type de Centrale</li>
+      </ul>
+      Enregistrez et reémarrez. <a name="tools" id="tools"></a>
+      <h2>Outils JMRI Uhlenbrock</h2>
+      N/A <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
-</html>			
+</html>

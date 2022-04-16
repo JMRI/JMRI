@@ -47,12 +47,6 @@ public class WebBrowser
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         String url = _urlExpressionSocket.evaluate();
         

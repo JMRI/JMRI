@@ -8,6 +8,7 @@ import javax.annotation.*;
 
 import jmri.JmriException;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 import jmri.beans.PropertyChangeProvider;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -80,52 +81,6 @@ public interface Base extends PropertyChangeProvider {
      */
     public static final int SOCKET_DISCONNECTED = 0x04;
 
-
-    public enum Lock {
-
-        /**
-         * The item is not locked.
-         */
-        NONE("BaseLockNone"),
-
-        /**
-         * The item is locked by the user and can be unlocked by the user.
-         */
-        USER_LOCK("BaseLockUser"),
-
-        /**
-         * The item is locked by a hard lock that cannot be unlocked by the
-         * user. But it can be removed by editing the xml file. This lock is
-         * used for items that normally shouldn't be changed.
-         */
-        HARD_LOCK("BaseLockHard");
-
-
-        private final String _bundleKey;
-
-        private Lock(String bundleKey) {
-            _bundleKey = bundleKey;
-        }
-
-        public final boolean isChangeableByUser() {
-            switch (this) {
-                case NONE:
-                case USER_LOCK:
-                    return true;
-
-                case HARD_LOCK:
-                    return false;
-
-                default:
-                    throw new RuntimeException("lock has unknown value: "+this.name());
-            }
-        }
-
-        @Override
-        public String toString() {
-            return Bundle.getMessage(_bundleKey);
-        }
-    }
 
     /**
      * Get the system name.
@@ -282,8 +237,11 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Set the parent for all the children.
+     *
+     * @param errors a list of potential errors
+     * @return true if success, false otherwise
      */
-    public void setParentForAllChildren();
+    public boolean setParentForAllChildren(List<String> errors);
 
     /**
      * Get a child of this item
@@ -331,30 +289,6 @@ public interface Base extends PropertyChangeProvider {
      * @return the category
      */
     public Category getCategory();
-
-    /**
-     * Is this external?
-     * Does it affects or is dependent on external things, like
-     * turnouts and sensors? Timers are considered as internal since they
-     * behavies the same on every computer on every layout.
-     * @return true if this is external
-     */
-    public boolean isExternal();
-
-    /**
-     * Get the status of the lock.
-     * @return the current lock
-     */
-    public Lock getLock();
-
-    /**
-     * Set the status of the lock.
-     *
-     * Note that the user interface should normally not allow editing a hard lock.
-     *
-     * @param lock the new lock
-     */
-    public void setLock(Lock lock);
 
     /**
      * Is this item active? If this item is enabled and all the parents are
@@ -586,6 +520,15 @@ public interface Base extends PropertyChangeProvider {
     public ArrayList<String> getListenerRefs();
 
     /**
+     * Returns a list of all the listeners references for this object
+     * and all its children.
+     *
+     * @param list a list of textual references
+     */
+    @CheckReturnValue
+    public void getListenerRefsIncludingChildren(List<String> list);
+
+    /**
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
      *
@@ -617,9 +560,26 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
+    /**
+     * Do something on every item in the sub tree of this item.
+     * @param r the action to do on all items.
+     * @throws Exception if an exception occurs
+     */
+    public default void forEntireTreeWithException(RunnableWithBaseThrowException r) throws Exception {
+        r.run(this);
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).forEntireTreeWithException(r);
+        }
+    }
+
 
     public interface RunnableWithBase {
         public void run(@Nonnull Base b);
+    }
+
+
+    public interface RunnableWithBaseThrowException {
+        public void run(@Nonnull Base b) throws Exception;
     }
 
 
@@ -629,6 +589,8 @@ public interface Base extends PropertyChangeProvider {
 
     public static class PrintTreeSettings {
         public boolean _printLineNumbers = false;
+        public boolean _printDisplayName = false;
+        public boolean _hideUserName = false;           // Used for tests
         public boolean _printErrorHandling = true;
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;

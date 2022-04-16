@@ -13,6 +13,7 @@ public class CarLoad {
     public static final String NONE = "";
 
     public static final String PRIORITY_LOW = Bundle.getMessage("PriorityLow");
+    public static final String PRIORITY_MEDIUM = Bundle.getMessage("PriorityMedium");
     public static final String PRIORITY_HIGH = Bundle.getMessage("PriorityHigh");
 
     public static final String LOAD_TYPE_EMPTY = Bundle.getMessage("EmptyTypeName");

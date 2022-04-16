@@ -34,7 +34,8 @@ public class StandaloneReporterManager extends RfidReporterManager {
     }
 
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("Create new Reporter: {}", systemName);
         if (!systemName.matches(getSystemNamePrefix() + "[" + tc.getRange() + "]")) {
             log.warn("Invalid Reporter name: {} - out of supported range {}", systemName, tc.getRange());

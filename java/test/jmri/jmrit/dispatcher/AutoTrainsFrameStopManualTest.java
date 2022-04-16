@@ -59,6 +59,8 @@ import java.nio.file.StandardCopyOption;
             };
             // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
+            JUnitUtil.WAITFOR_DELAY_STEP = 20;  // more time for us less for the waitfor code...
+            
             WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
             // load layout file
@@ -100,6 +102,8 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return smm.getSignalMast("South To West").getAspect().equals("Approach");
             }, "Signal South To West now Approach");
+            // test train runs in reverse, then fwd
+            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "Failed To Start - Stop / Resume");
@@ -107,7 +111,10 @@ import java.nio.file.StandardCopyOption;
             // ****************************
             // Stop train with stop button, then resume
             // ****************************
-            JButtonOperator boStop = new JButtonOperator(atw, Bundle.getMessage("StopButton"));
+            // first instance is "Stop All Trains", we want "Stop", use index = 1
+            JButtonOperator boStop = new JButtonOperator(atw, Bundle.getMessage("StopButton"),1);
+            boStop.getActionCommand();
+            boStop.getSource();
             boStop.push();
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -249,6 +256,9 @@ import java.nio.file.StandardCopyOption;
 
             JRadioButtonOperator boRev = new JRadioButtonOperator(atw, Bundle.getMessage("ReverseRadio"));
             boRev.push();
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                }, "Throttle should be in reverse");
             sliderSpeed.setValue(100);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 1.0f;

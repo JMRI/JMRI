@@ -71,18 +71,10 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     
     /** {@inheritDoc} */
     @Override
-    public void register(MaleSocket maleSocket) {
-        if (!(maleSocket instanceof MaleAnalogExpressionSocket)) {
-            throw new IllegalArgumentException("maleSocket is not a MaleAnalogExpressionSocket");
-        }
-        register((MaleAnalogExpressionSocket)maleSocket);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void register(MaleAnalogExpressionSocket maleSocket) {
-        super.register(maleSocket);
+    public MaleAnalogExpressionSocket registerBean(MaleAnalogExpressionSocket maleSocket) {
+        MaleAnalogExpressionSocket bean = super.registerBean(maleSocket);
         _lastRegisteredBean = maleSocket;
+        return bean;
     }
     
     /**
@@ -110,8 +102,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         
         // save in the maps
         MaleAnalogExpressionSocket maleSocket = createMaleAnalogExpressionSocket(expression);
-        register(maleSocket);
-        return maleSocket;
+        return registerBean(maleSocket);
     }
     
     @Override
@@ -153,15 +144,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     public FemaleAnalogExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
         
-        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
-//        preferences.setUseGenericFemaleSockets(false);
-        if (preferences.getUseGenericFemaleSockets()) {
-            return new DefaultFemaleGenericExpressionSocket(
-                    FemaleGenericExpressionSocket.SocketType.ANALOG, parent, listener, socketName)
-                    .getAnalogSocket(parent);
-        } else {
-            return new DefaultFemaleAnalogExpressionSocket(parent, listener, socketName);
-        }
+        return new DefaultFemaleAnalogExpressionSocket(parent, listener, socketName);
     }
     
     @Override

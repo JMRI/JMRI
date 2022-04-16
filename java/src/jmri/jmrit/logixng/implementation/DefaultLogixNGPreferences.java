@@ -10,7 +10,7 @@ import jmri.profile.ProfileUtils;
 
 /**
  * Preferences for LogixNG
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public final class DefaultLogixNGPreferences extends PreferencesBean implements LogixNGPreferences {
@@ -20,14 +20,15 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     public static final String INSTALL_DEBUGGER = "installDebugger";
     public static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
     public static final String ERROR_HANDLING_TYPE = "errorHandlingType";
-    
+    public static final String TREE_EDITOR_HIGHLIGHT_ROW = "treeEditorHighlightRow";
+
     private boolean _startLogixNGOnLoad = true;
-    private boolean _useGenericFemaleSockets = false;
     private boolean _showSystemUserNames = false;
     private boolean _installDebugger = true;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.ShowDialogBox;
-    
-    
+    private boolean _treeEditorHighlightRow = false;
+
+
     public DefaultLogixNGPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
 //        System.out.format("LogixNG preferences%n");
@@ -38,13 +39,13 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
 
     private void readPreferences(Preferences sharedPreferences) {
         _startLogixNGOnLoad = sharedPreferences.getBoolean(START_LOGIXNG_ON_LOAD, _startLogixNGOnLoad);
-        _useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, _useGenericFemaleSockets);
         _installDebugger = sharedPreferences.getBoolean(INSTALL_DEBUGGER, _installDebugger);
         _showSystemUserNames = sharedPreferences.getBoolean(SHOW_SYSTEM_USER_NAMES, _showSystemUserNames);
         _errorHandlingType = ErrorHandlingType.valueOf(
                 sharedPreferences.get(ERROR_HANDLING_TYPE, _errorHandlingType.name()));
-        
-/*        
+        _treeEditorHighlightRow = sharedPreferences.getBoolean(TREE_EDITOR_HIGHLIGHT_ROW, _treeEditorHighlightRow);
+
+/*
         this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
         this.clickDelay = sharedPreferences.getInt(CLICK_DELAY, this.clickDelay);
         this.simple = sharedPreferences.getBoolean(SIMPLE, this.simple);
@@ -86,7 +87,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getShowSystemUserNames() != prefs.getShowSystemUserNames()) {
             return true;
         }
-        if (getUseGenericFemaleSockets() != prefs.getUseGenericFemaleSockets()) {
+        if (getTreeEditorHighlightRow() != prefs.getTreeEditorHighlightRow()) {
             return true;
         }
         return (getErrorHandlingType() != prefs.getErrorHandlingType());
@@ -95,50 +96,23 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public void apply(LogixNGPreferences prefs) {
         setStartLogixNGOnStartup(prefs.getStartLogixNGOnStartup());
-        setUseGenericFemaleSockets(prefs.getUseGenericFemaleSockets());
         setInstallDebugger(prefs.getInstallDebugger());
         setShowSystemUserNames(prefs.getShowSystemUserNames());
         this.setErrorHandlingType(prefs.getErrorHandlingType());
+        setTreeEditorHighlightRow(prefs.getTreeEditorHighlightRow());
     }
 
     @Override
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putBoolean(START_LOGIXNG_ON_LOAD, this.getStartLogixNGOnStartup());
-        sharedPreferences.putBoolean(USE_GENERIC_FEMALE_SOCKETS, this.getUseGenericFemaleSockets());
         sharedPreferences.putBoolean(INSTALL_DEBUGGER, this.getInstallDebugger());
         sharedPreferences.putBoolean(SHOW_SYSTEM_USER_NAMES, this.getShowSystemUserNames());
         sharedPreferences.put(ERROR_HANDLING_TYPE, this.getErrorHandlingType().name());
-/*        
-        sharedPreferences.putInt(PORT, this.getPort());
-        sharedPreferences.putBoolean(USE_ZERO_CONF, this.isUseZeroConf());
-        sharedPreferences.putInt(CLICK_DELAY, this.getClickDelay());
-        sharedPreferences.putInt(REFRESH_DELAY, this.getRefreshDelay());
-        sharedPreferences.putBoolean(USE_AJAX, this.isUseAjax());
-        sharedPreferences.putBoolean(SIMPLE, this.isSimple());
-        sharedPreferences.putBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig());
-        sharedPreferences.putBoolean(READONLY_POWER, this.isReadonlyPower());
-        sharedPreferences.put(RAILROAD_NAME, getRailroadName());
-        sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
-        sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
-        try {
-            Preferences node = sharedPreferences.node(DISALLOWED_FRAMES);
-            this.disallowedFrames.stream().forEach((frame) -> {
-                node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
-            });
-            if (this.disallowedFrames.size() < node.keys().length) {
-                for (int i = node.keys().length - 1; i >= this.disallowedFrames.size(); i--) {
-                    node.remove(Integer.toString(i));
-                }
-            }
-            sharedPreferences.sync();
-            setIsDirty(false);  //  Resets only when stored
-        } catch (BackingStoreException ex) {
-            log.error("Exception while saving web server preferences", ex);
-        }
-*/
+        sharedPreferences.putBoolean(TREE_EDITOR_HIGHLIGHT_ROW, this.getTreeEditorHighlightRow());
+        setIsDirty(false);
     }
-    
+
     @Override
     public void setStartLogixNGOnStartup(boolean value) {
         _startLogixNGOnLoad = value;
@@ -148,17 +122,6 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getStartLogixNGOnStartup() {
         return _startLogixNGOnLoad;
-    }
-
-    @Override
-    public void setUseGenericFemaleSockets(boolean value) {
-        _useGenericFemaleSockets = value;
-        setIsDirty(true);
-    }
-
-    @Override
-    public boolean getUseGenericFemaleSockets() {
-        return _useGenericFemaleSockets;
     }
 
     @Override
@@ -192,6 +155,17 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public ErrorHandlingType getErrorHandlingType() {
         return _errorHandlingType;
+    }
+
+    @Override
+    public void setTreeEditorHighlightRow(boolean value) {
+        _treeEditorHighlightRow = value;
+        setIsDirty(true);
+    }
+
+    @Override
+    public boolean getTreeEditorHighlightRow() {
+        return _treeEditorHighlightRow;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

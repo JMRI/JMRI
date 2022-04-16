@@ -825,7 +825,7 @@ public class TrainManager extends PropertyChangeSupport
         newTrain.setSendCarsToTerminalEnabled(train.isSendCarsToTerminalEnabled());
         newTrain.setServiceAllCarsWithFinalDestinationsEnabled(train.isServiceAllCarsWithFinalDestinationsEnabled());
         // comment
-        newTrain.setComment(train.getComment());
+        newTrain.setComment(train.getCommentWithColor());
         // description
         newTrain.setDescription(train.getRawDescription());
         return newTrain;
@@ -938,7 +938,17 @@ public class TrainManager extends PropertyChangeSupport
             @Override
             public void run() {
                 for (Train train : trains) {
-                    train.buildIfSelected();
+                    if (train.buildIfSelected()) {
+                        continue;
+                    }
+                    if (isBuildMessagesEnabled() && train.isBuildEnabled() && !train.isBuilt()) {
+                        if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("ContinueBuilding"),
+                                MessageFormat.format(Bundle.getMessage("buildFailedMsg"),
+                                        new Object[] { train.getName(), }),
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                            break;
+                        }
+                    }
                 }
                 setDirtyAndFirePropertyChange(TRAINS_BUILT_CHANGED_PROPERTY, false, true);
             }
@@ -956,7 +966,7 @@ public class TrainManager extends PropertyChangeSupport
                 }
                 status = false; // failed to print all selected trains
                 if (isBuildMessagesEnabled()) {
-                    JOptionPane.showMessageDialog(null,
+                    int response = JOptionPane.showConfirmDialog(null,
                             MessageFormat.format(Bundle.getMessage("NeedToBuildBeforePrinting"),
                                     new Object[] { train.getName(),
                                             (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
@@ -964,7 +974,10 @@ public class TrainManager extends PropertyChangeSupport
                             MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
                                     new Object[] { isPrintPreviewEnabled() ? Bundle.getMessage("preview")
                                             : Bundle.getMessage("print") }),
-                            JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.OK_CANCEL_OPTION);
+                    if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                        break;
+                    }
                 }
             }
         }
@@ -983,18 +996,25 @@ public class TrainManager extends PropertyChangeSupport
                             Bundle.getMessage("WarningTrainManifestNotPrinted"),
                             MessageFormat.format(Bundle.getMessage("TerminateTrain"),
                                     new Object[] { train.getName(), train.getDescription() }),
-                            JOptionPane.YES_NO_OPTION);
+                            JOptionPane.YES_NO_CANCEL_OPTION);
                     if (response == JOptionPane.YES_OPTION) {
                         train.terminate();
                     }
                     // Quit?
-                    if (response == JOptionPane.CLOSED_OPTION) {
+                    if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
                         break;
                     }
                 }
             }
         }
         return status;
+    }
+
+    public void resetBuildFailedTrains() {
+        for (Train train : getList()) {
+            if (train.isBuildFailed())
+                train.reset();
+        }
     }
 
     public void load(Element root) {

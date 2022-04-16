@@ -94,6 +94,7 @@ public class LightTableWindowTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

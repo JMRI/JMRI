@@ -74,9 +74,9 @@ public class AnalogActionMemory extends AbstractAnalogAction
 
     /** {@inheritDoc} */
     @Override
-    public void setValue(double value) {
+    public void setValue(double value) throws JmriException {
         if (_memoryHandle != null) {
-            jmri.util.ThreadingUtil.runOnLayout(() -> {
+            jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
                 _memoryHandle.getBean().setValue(value);
             });
         }
@@ -88,7 +88,7 @@ public class AnalogActionMemory extends AbstractAnalogAction
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("AnalogMemory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("AnalogMemory_MemoryInUseMemoryActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
@@ -117,12 +117,6 @@ public class AnalogActionMemory extends AbstractAnalogAction
     @Override
     public Category getCategory() {
         return Category.ITEM;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
     }
 
     /** {@inheritDoc} */

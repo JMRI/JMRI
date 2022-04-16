@@ -107,6 +107,9 @@
         <enumChoice choice="Brake Light" value="19">
             <choice>Brake Light</choice>
         </enumChoice>
+        <enumChoice choice="16 2/3 Hz flickering" value="20">
+            <choice>16 2/3 Hz flickering</choice>
+        </enumChoice>
         <enumChoice choice="ESU coupler" value="21">
             <choice>ESU coupler</choice>
         </enumChoice>

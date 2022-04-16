@@ -1,57 +1,40 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Multi-connection Update</title>
   <meta name="keywords" content="JMRI jmrix connections hardware">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
-    <h1>JMRI Code: Multi-connection Update</h1>
-      This page is a list of hints for adapting systems (jmri.jmrix
-      subdirectories) to the new multi-system format.<br>
+      <h1>JMRI Code: Multi-connection Update</h1>
+      This page is a list of hints for adapting systems (jmri.jmrix subdirectories) to the new
+      multi-system format.<br>
       It's clearly a work in progress!
+      <p>Basically, you have to get all the static variables and instance() methods out of the
+      code. In their place, you put references to methods of a specific SystemConnectionMemo object
+      that carries the references that used to be static.</p>
 
-      <p>Basically, you have to get all the static variables and
-      instance() methods out of the code. In their place, you put
-      references to methods of a specific SystemConnectionMemo
-      object that carries the references that used to be
-      static.</p>
+      <p>At the same time, we're doing the Swing pattern update, and a couple other minor cleanups
+      on the code.</p>
 
-      <p>At the same time, we're doing the Swing pattern update,
-      and a couple other minor cleanups on the code.</p>
-
-      <h2>In primary system directory</h2>Create a specific
-      subclass of SystemConnectionMemo. This will eventually do all
-      the manager initialization, and carry any object references
-      that used to be through instance variables.
-
+      <h2>In primary system directory</h2>
+      Create a specific subclass of SystemConnectionMemo. This will eventually do all the manager
+      initialization, and carry any object references that used to be through instance variables.
       <p>Add all that stuff.</p>
 
       <h3>For each connection method (e.g. each subdirectory)</h3>
 
-      <p>Edit the ConnectionConfig class to take and record a
-      reference to a SerialPortAdapter object, and to return it
-      from the getAdapter() method. Also, remove the instance()
-      method and its implementation.</p>
+      <p>Edit the ConnectionConfig class to take and record a reference to a SerialPortAdapter
+      object, and to return it from the getAdapter() method. Also, remove the instance() method and
+      its implementation.</p>
+
       <pre style="font-family: monospace">
     protected void setInstance() { 
         if (adapter == null) {
@@ -59,83 +42,70 @@
         }
     }
 </pre>
+      <p>Edit the adapter class (e.g. PR3Adapter) to remove the instance() method and its
+      implementation.</p>
 
-      <p>Edit the adapter class (e.g. PR3Adapter) to remove the
-      instance() method and its implementation.</p>
+      <p>The configurexml/ConnectionConfigXml class needs to have a method added:</p>
 
-      <p>The configurexml/ConnectionConfigXml class needs to have a
-      method added:</p>
       <pre style="font-family: monospace">
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre>We should probably refactor this later, but this is the
-current form to make sure the correct ConnectionConfig class is
-used. We're leaving it unchanged for now to avoid competition with
-the serial/network refactoring.
-
+</pre>We should probably refactor this later, but this is the current form to make sure the correct
+ConnectionConfig class is used. We're leaving it unchanged for now to avoid competition with the
+serial/network refactoring.
       <p>Also, change this</p>
+
       <pre style="font-family: monospace">
     protected void getInstance() {
         adapter = LnHexFilePort.instance();
     }
 </pre>to this
+
       <pre>
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
 </pre>
+      <h3>Managers and Beans</h3>
+      For each manager and bean combination, you have to update them to no longer use an instance()
+      method to access the TrafficController. Passing the SystemConectionMemo in to the Manager at
+      construction time is the recommended approach, then if need be passing it through to the
+      newly created Beans. That passes the prefix string, user name for tbe connection, etc.
+      <p>The manager must also use the system prefix instead of a fixed, single system letter.
+      Using e.g. '.startsWith(getSystemPrefix()+"T")' is a good approach. Don't just check that the
+      name starts with the prefix because e.g. "L" and "L2" are not unambiguous then.</p>
 
-      <h3>Managers and Beans</h3>For each manager and bean
-      combination, you have to update them to no longer use an
-      instance() method to access the TrafficController. Passing
-      the SystemConectionMemo in to the Manager at construction
-      time is the recommended approach, then if need be passing it
-      through to the newly created Beans. That passes the prefix
-      string, user name for tbe connection, etc.
+      <h3>Menu</h3>
+      Create a swing subdirectory, if it doesn't exist already.
+      <p>Put the code for making the menu there, if need be leaving a migration subclass behind.
+      (c.f. jmri.jmrix.loconet.LocoNetMenu and jmri.jmrix.loconet.swing.LocoNetMenu for a
+      template)</p>
 
-      <p>The manager must also use the system prefix instead of a
-      fixed, single system letter. Using e.g.
-      '.startsWith(getSystemPrefix()+"T")' is a good approach.
-      Don't just check that the name starts with the prefix because
-      e.g. "L" and "L2" are not unambiguous then.</p>
+      <p>Create a ComponentFactory factory class in the swing subpackage that can e.g. create the
+      menu, and eventually the trees, etc.</p>
 
-      <h3>Menu</h3>Create a swing subdirectory, if it doesn't exist
-      already.
-
-      <p>Put the code for making the menu there, if need be leaving
-      a migration subclass behind. (c.f.
-      jmri.jmrix.loconet.LocoNetMenu and
-      jmri.jmrix.loconet.swing.LocoNetMenu for a template)</p>
-
-      <p>Create a ComponentFactory factory class in the swing
-      subpackage that can e.g. create the menu, and eventually the
-      trees, etc.</p>
-
-      <p>Edit jmri.jmrix.ActiveSystemsMenu to remove the class;
-      menu creation is automatic from now on. (Every time you
-      create and register a *SystemConnectionMemo, you also
-      register the ComponentFactory)</p>
+      <p>Edit jmri.jmrix.ActiveSystemsMenu to remove the class; menu creation is automatic from now
+      on. (Every time you create and register a *SystemConnectionMemo, you also register the
+      ComponentFactory)</p>
 
       <h3>Keep startup actions working</h3>
 
-      <p>To keep things working, it's best to convert to JmriPane
-      subclasses. Temporarily, the system connection is then
-      created via the use of internal classes, like
+      <p>To keep things working, it's best to convert to JmriPane subclasses. Temporarily, the
+      system connection is then created via the use of internal classes, like
       jmri.jmrix.loconet.locomon.LocoMonPane$Default</p>
 
-      <p>This does require people to reset their preferences for
-      startup actions, buttons, etc. We're not going to migrate
-      those for them.</p>
+      <p>This does require people to reset their preferences for startup actions, buttons, etc.
+      We're not going to migrate those for them.</p>
 
-      <p>To make startup actions work with more than one connection of their type, 
-        they should implement the 
-        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/swing/SystemConnectionAction.html">jmri.jmrix.SystemConnectionAction</a>
-        interface. This will connected them to their specific 
-        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a>.
-        
-      <!--#include virtual="/Footer.shtml" -->
+      <p>To make startup actions work with more than one connection of their type, they should
+      implement the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/swing/SystemConnectionAction.html">jmri.jmrix.SystemConnectionAction</a>
+      interface. This will connected them to their specific <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a>.
+      <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

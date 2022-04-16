@@ -331,7 +331,7 @@ public class AbstractFemaleSocketTest {
         }
 
         @Override
-        public void setParentForAllChildren() {
+        public boolean setParentForAllChildren(List<String> errors) {
             throw new UnsupportedOperationException("Not supported");
         }
 
@@ -347,21 +347,6 @@ public class AbstractFemaleSocketTest {
 
         @Override
         public Category getCategory() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public Lock getLock() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public void setLock(Lock lock) {
             throw new UnsupportedOperationException("Not supported");
         }
 
@@ -447,6 +432,12 @@ public class AbstractFemaleSocketTest {
 
         @Override
         public ArrayList<String> getListenerRefs() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public void getListenerRefsIncludingChildren(List<String> list) {
             throw new UnsupportedOperationException("Not supported");
         }
 

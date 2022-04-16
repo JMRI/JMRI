@@ -1,6 +1,8 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -35,6 +37,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param name CatalogTree object to locate
      * @return null if no match found
      */
+    @CheckForNull
     public CatalogTree getCatalogTree(@Nonnull String name);
 
     /**
@@ -45,6 +48,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @return requested CatalogTree object or null if none exists
      */
     @Override
+    @CheckForNull
     public CatalogTree getBySystemName(@Nonnull String systemName);
 
     /**
@@ -55,6 +59,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @return requested CatalogTree object or null if none exists
      */
     @Override
+    @CheckForNull
     public CatalogTree getByUserName(@Nonnull String userName);
 
     /**
@@ -82,8 +87,10 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param systemName system name for new CatalogTree
      * @param userName   user name for new CatalogTree
      * @return requested CatalogTree object (never null)
+     * @throws IllegalArgumentException if unable to create.
      */
-    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName);
+    @Nonnull
+    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     public void storeImageIndex();
 

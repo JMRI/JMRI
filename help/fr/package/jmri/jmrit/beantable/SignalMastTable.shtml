@@ -1,64 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; Blorec 2013-10-12-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Le Tableau M&acirc;t Signal</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Le Tableau Mât Signal</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Signal Mast Table">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Signal Mast Table"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h1>Le Tableau M&acirc;t Signal</h1><a href=
-      "SignalMastTable.png"><img src="SignalMastTable.png" height=
-      "173" width="376" align="right"></a>
-
-      <p>Pour plus d'informations sur les M&acirc;ts de Signaux et
-      les aspect de la signalisation, voir la <a href=
-      "../../../../html/tools/signaling/AspectSignaling.shtml">page
+      <h1>Le Tableau Mât Signal</h1>
+      <a href="SignalMastTable.png"><img src="SignalMastTable.png" height="173" width="376" align=
+      "right" alt=""></a>
+      <p>Pour plus d'informations sur les Mâts de Signaux et les aspect de la signalisation, voir
+      la <a href="../../../../html/tools/signaling/AspectSignaling.shtml">page
       introduction</a>.</p>
 
-      <p>Pour d&eacute;finir un nouveau m&acirc;t de signal,
-      cliquez sur le bouton" <a href=
-      "SignalMastAddEdit.shtml">Ajouter ..."</a> . Il vous sera
-      demand&eacute; toutes les informations de configuration
-      n&eacute;cessaires.</p>
+      <p>Pour définir un nouveau mât de signal, cliquez sur le bouton" <a href=
+      "SignalMastAddEdit.shtml">Ajouter ..."</a> . Il vous sera demandé toutes les informations de
+      configuration nécessaires.</p>
 
-      <p>Utilisez l'option Stocker dans le menu Fichier pour
-      enregistrer les informations de signalisation sur le disque.
-      Ces informations sont enregistr&eacute;es avec la
-      configuration dans un fichier XML, avec l'installation du
-      panneau de commande et des chosess similaires. Pour stocker
-      vos panneaux dans le m&ecirc;me fichier (recommand&eacute;),
-      s&eacute;lectionnez <b>Fichier&gt; Stocker &gt; Stocker
-      Configuration et les panneaux dans Fichier ...</b> ou
-      s&eacute;lectionnez <b>Panneaux...</b> dans la fen&ecirc;tre
-      principale JMRI.</p>
+      <p>Utilisez l'option Stocker dans le menu Fichier pour enregistrer les informations de
+      signalisation sur le disque. Ces informations sont enregistrées avec la configuration dans un
+      fichier XML, avec l'installation du panneau de commande et des chosess similaires. Pour
+      stocker vos panneaux dans le même fichier (recommandé), sélectionnez <strong>Fichier&gt;
+      Stocker &gt; Stocker Configuration et les panneaux dans Fichier ...</strong> ou sélectionnez
+      <strong>Panneaux...</strong> dans la fenêtre principale JMRI.</p>
 
-      <p>Pour plus d'informations sur la cr&eacute;ation et
-      l'affichage des panneaux, y compris la mani&egrave;re de
-      montrer les signaux sur vos panneaux, s'il vous pla&icirc;t
-      voir les <a href=
-      "../../../../html/apps/PanelPro/Panels.shtml">pages
-      Panneaux</a>.</p><!--#include virtual="/Footer.shtml" -->
+      <p>Pour plus d'informations sur la création et l'affichage des panneaux, y compris la manière
+      de montrer les signaux sur vos panneaux, s'il vous plaît voir les <a href=
+      "../../../../html/apps/PanelPro/Panels.shtml">pages Panneaux</a>.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -75,7 +75,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         Assert.assertFalse("result is false", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
         // Test evaluate() when connected
         _femaleSocket.connect(maleSocket);
-        _conditionalNG.setParentForAllChildren();
+        if (! _conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         _expression.setTurnout(t);
         _expression.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
@@ -93,6 +93,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionBlock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionClock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionConditional.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionDispatcher.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionEntryExit.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionLight.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionLocalVariable.class);
@@ -100,6 +101,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionOBlock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionPower.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReference.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionReporter.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionScript.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSensor.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalHead.class);
@@ -121,6 +123,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.False.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);
         classes.add(jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression.class);
+        classes.add(jmri.jmrit.logixng.expressions.LogData.class);
         classes.add(jmri.jmrit.logixng.expressions.TriggerOnce.class);
         classes.add(jmri.jmrit.logixng.expressions.True.class);
         map.put(Category.OTHER, classes);

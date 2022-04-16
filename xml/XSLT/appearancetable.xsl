@@ -15,8 +15,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
-<xsl:stylesheet	version="1.0" 
+
+<xsl:stylesheet	version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:db="http://docbook.org/ns/docbook"
     >
@@ -25,14 +25,14 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
 <xsl:output method="html" encoding="ISO-8859-1"/>
 
-<!-- Overide basic default template rule to 
+<!-- Overide basic default template rule to
      copy nodes to the output.  This lets e.g.
      XHTML be embedded in comments, etc, and
      be properly carried through. -->
@@ -46,7 +46,7 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='/'>
 
 <html>
@@ -55,9 +55,9 @@
 		                  <xsl:text>: </xsl:text>
 		                  <xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</title>
 	</head>
-	
+
 	<body>
-		<h2>JMRI &quot;<xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/> 
+		<h2>JMRI &quot;<xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/>
 		               <xsl:text>: </xsl:text>
 		               <xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</h2>
 
@@ -76,7 +76,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <!-- Overall table display -->
 <xsl:template match="appearancetable">
-    For aspect table: 
+    For aspect table:
     <a href="aspects.xml">
         <!-- The second argument provides the context (parent file) for the document() path; -->
         <!-- without it, the reference is relative to the stylesheet location -->
@@ -91,9 +91,9 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
     <!-- show the appearances -->
     <xsl:apply-templates select="appearances"/>
-	
+
 	<xsl:apply-templates select="aspectMappings"/>
-    
+
     <xsl:apply-templates select="specificappearances"/>
 
     <!-- revision history -->
@@ -116,7 +116,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:for-each select="document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
         <!-- looking at all aspects to find the one matching matchaspect -->
             <!-- now current node is match in aspects.xml -->
-                        
+
             <!-- show title element if it exists -->
             <xsl:for-each select="rule">
                 <xsl:value-of select="." />
@@ -134,13 +134,13 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- end heading -->
     </h3>
     <!-- end heading -->
-    
+
     <!-- error if no match -->
     <xsl:if test="not(document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect])">
         <em>Error: This appearance does not appear in the <a href="aspects.xml">aspect table</a>.
         Check spelling and upper/lower case.</em>
     </xsl:if>
-    
+
     <!-- then compare to each aspect name in aspects.xml for match -->
     <!-- The second argument provides the context (parent file) for the document() path; -->
     <!-- without it, the reference is relative to the stylesheet location -->
@@ -160,33 +160,33 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
                 <xsl:value-of select="." />
                 <br/>
             </xsl:for-each>
-            
+
             <!-- show description element(s) if any -->
             <xsl:for-each select="description">
                 <xsl:text>Description: </xsl:text>
                 <xsl:apply-templates select="." />
                 <br/>
             </xsl:for-each>
-            
+
             <!-- show reference element(s) if any -->
             <xsl:for-each select="reference">
                 <xsl:text>Aspect reference: </xsl:text>
                 <xsl:apply-templates select="." />
                 <br/>
             </xsl:for-each>
-            
+
             <!-- show comment element(s) if any -->
             <xsl:for-each select="comment">
                 <xsl:text>Comment: </xsl:text>
                 <xsl:apply-templates select="." />
                 <br/>
             </xsl:for-each>
-            
+
             <xsl:for-each select="diverging">
                 <xsl:text>Diverging flag set</xsl:text>
                 <br/>
             </xsl:for-each>
-            
+
             <p/>
     </xsl:for-each>
 
@@ -206,11 +206,11 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:for-each select="show">
         Show: <xsl:value-of select="."/><br/>
     </xsl:for-each>
-    
+
     </td></tr></table>
     <!-- show rest of element -->
     <xsl:apply-templates/>
-    
+
 </xsl:template>
 
 <xsl:template match="aspectMappings">
@@ -223,7 +223,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 	  <td>Advanced Aspect</td>
 	  <td>Our Aspect</td>
 	</tr>
-  
+
     <!-- iterate through items -->
     <xsl:for-each select="aspectMapping">
 	  <tr>
@@ -259,7 +259,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 	  <td>Mapped To  </td>
       <td>Alternative Image  </td>
 	</tr>
-  
+
     <!-- iterate through items -->
     <xsl:for-each select="danger">
 	  <tr>
@@ -283,7 +283,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 		</td>
       </tr>
     </xsl:for-each>
-    
+
     <xsl:for-each select="held">
 	  <tr>
 	    <td>
@@ -306,7 +306,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 		</td>
       </tr>
     </xsl:for-each>
-    
+
     <xsl:for-each select="permissive">
 	  <tr>
 	    <td>
@@ -329,7 +329,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 		</td>
       </tr>
     </xsl:for-each>
-    
+
     <xsl:for-each select="dark">
 	  <tr>
 	    <td>

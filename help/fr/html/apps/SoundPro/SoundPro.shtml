@@ -1,59 +1,55 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
-
- <html lang="fr">
+<html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Fen&ecirc;tre Principale SoundPro</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Fenêtre Principale SoundPro</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Matthew Harris">
-  <meta name="keywords" content="JMRI help preferences">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help preferences"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-
-      <h1>JMRI: Fen&ecirc;tre Principale SoundPro</h1><img src=
-      "../../../../../resources/SoundPro.gif" align="right" height=
-      "100" width="100"> Le fen&ecirc;tre principale SoundPro vous
-      donne acc&egrave;s &agrave; toutes les capacit&eacute;s de JMRI.
-
-      <p>Aide sur les menus sp&eacute;cifiques:</p>
+      <h1>JMRI: Fenêtre Principale SoundPro</h1>
+      <img src="../../../../../resources/SoundPro.gif" align="right" height="100" width="100" alt=
+      ""> Le fenêtre principale SoundPro vous donne accès à toutes les capacités de JMRI.
+      <p>Aide sur les menus spécifiques:</p>
 
       <ul>
-        <li>Edit - (<a href=
-        "../TabbedPreferences.shtml">Pr&eacute;f&eacute;rences</a>)</li>
+        <li>Edit - (<a href="../TabbedPreferences.shtml">Préférences</a>)</li>
       </ul>
-<p>
-Aide sur les menus sp&#233;cifiques:
-    <ul>
-    <li>Edit - (<a href="../TabbedPreferences.shtml">Pr&#233;f&#233;rences</a>)</li>
-    <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a></li>
-    <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Inventaire</a></li>
-    <li><a href="../../../html/tools/Audio.shtml">Audio</a></li>
-    </ul>
 
-Plus d'information au sujet de <a href="../../setup/Files.shtml">Fichiers de Configuration JMRI</a>
-    <ul>
-        <li><a href=
-        "../../../html/tools/Audio.shtml">Audio</a></li>
-    </ul>
+      <p>Aide sur les menus spécifiques:</p>
 
+      <ul>
+        <li>Edit - (<a href="../TabbedPreferences.shtml">Préférences</a>)</li>
+
+        <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a>
+        </li>
+
+        <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Inventaire</a>
+        </li>
+
+        <li><a href="../../../html/tools/Audio.shtml">Audio</a>
+        </li>
+      </ul>
+      Plus d'information au sujet de <a href="../../setup/Files.shtml">Fichiers de Configuration
+      JMRI</a>
+      <ul>
+        <li><a href="../../../html/tools/Audio.shtml">Audio</a>
+        </li>
+      </ul>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

@@ -230,6 +230,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
     @AfterEach
     @Override
     public void tearDown() throws Exception {
+        JUnitUtil.clearTurnoutThreads();
         super.tearDown();
     }
 

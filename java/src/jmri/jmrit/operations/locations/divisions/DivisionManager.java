@@ -76,28 +76,28 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
      * @return new Division or existing Division
      */
     public Division newDivision(String name) {
-        Division Division = getDivisionByName(name);
-        if (Division == null) {
+        Division division = getDivisionByName(name);
+        if (division == null) {
             _id++;
-            Division = new Division(Integer.toString(_id), name);
+            division = new Division(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_divisionHashTable.size());
-            _divisionHashTable.put(Division.getId(), Division);
+            _divisionHashTable.put(division.getId(), division);
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
                     Integer.valueOf(_divisionHashTable.size()));
         }
-        return Division;
+        return division;
     }
 
     /**
      * Remember a NamedBean Object created outside the manager.
      *
-     * @param Division The Division to add.
+     * @param division The Division to add.
      */
-    public void register(Division Division) {
+    public void register(Division division) {
         Integer oldSize = Integer.valueOf(_divisionHashTable.size());
-        _divisionHashTable.put(Division.getId(), Division);
+        _divisionHashTable.put(division.getId(), division);
         // find last id created
-        int id = Integer.parseInt(Division.getId());
+        int id = Integer.parseInt(division.getId());
         if (id > _id) {
             _id = id;
         }
@@ -107,14 +107,14 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
     /**
      * Forget a NamedBean Object created outside the manager.
      *
-     * @param Division The Division to delete.
+     * @param division The Division to delete.
      */
-    public void deregister(Division Division) {
-        if (Division == null) {
+    public void deregister(Division division) {
+        if (division == null) {
             return;
         }
         Integer oldSize = Integer.valueOf(_divisionHashTable.size());
-        _divisionHashTable.remove(Division.getId());
+        _divisionHashTable.remove(division.getId());
         setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_divisionHashTable.size()));
     }
 
@@ -128,15 +128,15 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
         List<Division> sortList = getList();
         // now re-sort
         List<Division> out = new ArrayList<Division>();
-        for (Division Division : sortList) {
+        for (Division division : sortList) {
             for (int j = 0; j < out.size(); j++) {
-                if (Division.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
-                    out.add(j, Division);
+                if (division.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
+                    out.add(j, division);
                     break;
                 }
             }
-            if (!out.contains(Division)) {
-                out.add(Division);
+            if (!out.contains(division)) {
+                out.add(division);
             }
         }
         return out;

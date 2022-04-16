@@ -5,7 +5,7 @@
 	    <div style="text-align: center">JMRI Web Access</div>
 	    <dl>
 
-		<dt><h3><a href="index.shtml">Basic Use</a></h3></dt>
+		<dt><a href="index.shtml">Basic Use</a></dt>
 		<dd>JMRI supports working with your layout from a web browser.
 		    <ul>
 		    <li><a href="index.shtml#Start">Getting Started</a></li>
@@ -14,7 +14,7 @@
 		    </ul>
 		</dd>
 
-		<dt><h3>Services</h3></dt>
+		<dt class="dtheader">Services</dt>
 		<dd>Details of the JMRI web services.
 		    <ul>
 		    <li><a href="FrameServlet.shtml">Frames</a></li>
@@ -29,7 +29,9 @@
 	    </dl>
 
             <!--#include virtual="../../parts/SidebarTail.shtml" -->
-	    
+
 	</div> <!-- closes #side -->
 
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

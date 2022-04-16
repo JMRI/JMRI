@@ -99,7 +99,7 @@ public class MathFunctionsTest {
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
         // Test sin(x,"deg", 12, 23)
-        Assert.assertEquals("numbers are equal", (Double)14.350836848733938, (Double)sinFunction.calculate(symbolTable, getParameterList(expr12_34, expr_str_DEG, expr12, expr23)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)18.675418424366967, (Double)sinFunction.calculate(symbolTable, getParameterList(expr12_34, expr_str_DEG, expr12, expr23)), 0.0000001d);
         
         // Test sin()
         hasThrown.set(false);

@@ -1,166 +1,123 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: The Python/Jython language</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: The Python/Jython language</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1>JMRI: The Python/Jython language</h1><a href=
-      "http://www.python.org" target="_blank">Python</a> is a widely used scripting
-      language that's available on many types of computers. A
-      Java-based variant, called <a href=
-      "http://www.jython.org" target="_blank">Jython</a>, has been integrated with
-      JMRI to make it easy to control a model railroad from the
-      command line of a computer. For our purposes, the two
-      languages are completely the same.
+      <h1>JMRI: The Python/Jython language</h1>
+      <a href="http://www.python.org" target="_blank">Python</a> is a widely used scripting
+      language that's available on many types of computers. A Java-based variant, called <a href=
+      "http://www.jython.org" target="_blank">Jython</a>, has been integrated with JMRI to make it
+      easy to control a model railroad from the command line of a computer. For our purposes, the
+      two languages are completely the same.
+      <p>If like me you prefer to read off paper, there are lots of books available on Python.
+      Perhaps one of the best for beginners is <a href="http://www.oreilly.com/catalog/lpython2/"
+      target="_blank">"Learning Python"</a> published by O'Reilly. It contains more than you really
+      need to know, though.</p>
 
-      <p>If like me you prefer to read off paper, there are lots of
-      books available on Python. Perhaps one of the best for
-      beginners is <a href=
-      "http://www.oreilly.com/catalog/lpython2/" target="_blank">"Learning
-      Python"</a> published by O'Reilly. It contains more than you
-      really need to know, though.</p>
+      <p>The <a href="http://www.jython.org" target="_blank">jython.org site</a> has some
+      introductory information, though their <a href="http://www.python.org/doc/tut/tut.html"
+      target="_blank">tutorial</a> spends too much time on the engineering details at the
+      beginning. You might want to skip to the <a href="http://www.python.org/doc/tut/node5.html"
+      target="_blank">part about the language itself</a>.</p>
 
-      <p>The <a href="http://www.jython.org" target="_blank">jython.org site</a>
-      has some introductory information, though their <a href=
-      "http://www.python.org/doc/tut/tut.html" target="_blank">tutorial</a> spends
-      too much time on the engineering details at the beginning.
-      You might want to skip to the <a href=
-      "http://www.python.org/doc/tut/node5.html" target="_blank">part about the
-      language itself</a>.</p>
+      <p>Non-programmers might want to start with some of the <a href=
+      "http://www.python.org/moin/BeginnersGuide" target="_blank">resources for them</a> listed on
+      the python website.</p>
 
-      <p>Non-programmers might want to start with some of the
-      <a href="http://www.python.org/moin/BeginnersGuide" target="_blank">resources
-      for them</a> listed on the python website.</p>
+      <p>If you are interested in the underlying technicalities of the language, IBM Developerworks
+      has two good articles <a href=
+      "http://www-106.ibm.com/developerworks/java/library/j-jython.html" target="_blank">here</a>
+      and <a href="http://www-106.ibm.com/developerworks/java/library/j-alj07064/" target=
+      "_blank">here</a>. They also have a nice tutorial <a href=
+      "http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02"
+      target="_blank">here</a>, although they require you to register with your email address to
+      access it.</p>
 
-      <p>If you are interested in the underlying technicalities of
-      the language, IBM Developerworks has two good articles
-      <a href=
-      "http://www-106.ibm.com/developerworks/java/library/j-jython.html" target="_blank">
-      here</a> and <a href=
-      "http://www-106.ibm.com/developerworks/java/library/j-alj07064/" target="_blank">
-      here</a>. They also have a nice tutorial <a href=
-      "http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02" target="_blank">
-      here</a>, although they require you to register with your
-      email address to access it.</p>
+      <p>Looking at the examples in the "jython" directory in the JMRI distribution will also be of
+      value. See the <a href="Examples.shtml">examples page</a> for links to these sample
+      scripts.</p>
 
-      <p>Looking at the examples in the "jython" directory in the JMRI distribution will also be of value.
-      See the <a href="Examples.shtml">examples page</a> for links to these sample scripts. </p>
-
-        <h2>How do Jython and Python differ?</h2>
+      <h2>How do Jython and Python differ?</h2>
 
       <div class="para">
-        <p>For the purposes of writing JMRI scripts, they don't
-        differ very much. Most of the differences involve what
-        happens in somewhat contrived error cases. There are also
-        some restrictions on what you can do with the computer's
-        configuration information, etc, in Jython, but these are
-        not things a JMRI script is likely to need.</p>
+        <p>For the purposes of writing JMRI scripts, they don't differ very much. Most of the
+        differences involve what happens in somewhat contrived error cases. There are also some
+        restrictions on what you can do with the computer's configuration information, etc, in
+        Jython, but these are not things a JMRI script is likely to need.</p>
 
-        <p>Some additional information on the differences is
-        <a href=
+        <p>Some additional information on the differences is <a href=
         "http://jython.sourceforge.net/docs/differences.html" target="_blank">available
         here</a>.</p>
       </div>
 
-            
       <h2>IMPORTANT INFORMATION ABOUT PROGRAM FORMATTING: INDENTATION MATTERS</h2>
-      <div class="para">      
-      The single
-      oddest thing about Python is that the indentation matters.
-      Instead of using { and } characters to indicate the beginning
-      and end of a block or function, that's done with indentation
-      in Python. 
-      Of course, in a C-like language people usually
-      indent blocks anyway, but it takes a little getting used to
-      that you <em>have</em> to do it in Python.
-      You should indent with four spaces for each level
-      in your code.
-      (Four is a convention, but it really helps readability; 
-      using tabs can cause lots of confusion and is not recommended.
-      Mixing spaces and tabs is likely to cause lots of confusion; 
-      please don't do that)
 
-      <p>For example, this is a syntax error:</p>
-      <pre>
+      <div class="para">
+        The single oddest thing about Python is that the indentation matters. Instead of using {
+        and } characters to indicate the beginning and end of a block or function, that's done with
+        indentation in Python. Of course, in a C-like language people usually indent blocks anyway,
+        but it takes a little getting used to that you <em>have</em> to do it in Python. You should
+        indent with four spaces for each level in your code. (Four is a convention, but it really
+        helps readability; using tabs can cause lots of confusion and is not recommended. Mixing
+        spaces and tabs is likely to cause lots of confusion; please don't do that)
+        <p>For example, this is a syntax error:</p>
+
+        <pre>
    a = 15
       print a
    b = 21  
-</pre>
+</pre>because those statements, though logically grouped at the same level in the program, aren't
+indented the same. This sounds like a pain at first, but you rapidly get used to it. Then it makes
+things like the following pretty easy to read, without having to worry about where the { and } go:
 
-because those statements, though logically grouped at the
-same level in the program, aren't indented the same. This sounds
-like a pain at first, but you rapidly get used to it. Then it makes
-things like the following pretty easy to read, without having to
-worry about where the { and } go:
-      <pre>
+        <pre>
         if ( now == -1 ) :
                 done = 1
         else :
                 done = 0
         print done 
-</pre>
+</pre>If you do get a message about "Syntax error", look at the indicated line number to see if
+your indentation isn't lined up.
+      </div>
+      <a id="newJython"></a>
+      <h2>Is JMRI's support for Python complete?</h2>
+      JMRI scripting uses <a href="http://www.jython.org" target="_blank">Jython</a>, a
+      Java-implemented form of the Python language. The basic language is pretty complete, but not
+      all of the Python libraries are available. Some "import" statements that you might read in a
+      book might not work because of missing libraries.
+      <p>Support is improving all the time, though, and you might want to try a more modern version
+      of Jython than the one that JMRI distributes. To do that, install Jython on you computer,
+      then add a python.properties file in your <a href="../../setup/Files.shtml">user files
+      directory</a> or <a href="../../setup/Files.shtml">preferences directory</a> that sets the
+      python configuration variables, e.g. on Windows:</p>
 
-If you do get a message about "Syntax error", look at the
-indicated line number to see if your indentation isn't lined up.
-
-       </div>
-       
-         <a id="newJython"></a>
-        <h2>Is JMRI's support for Python complete?</h2>JMRI
-        scripting uses <a href="http://www.jython.org" target="_blank">Jython</a>, a Java-implemented
-        form of the Python language. The basic language is pretty
-        complete, but not all of the Python libraries are
-        available. Some "import" statements that you might read in
-        a book might not work because of missing libraries.
-
-        <p>Support is improving all the time, though, and you might
-        want to try a more modern version of Jython than the one
-        that JMRI distributes. To do that, install Jython on you
-        computer, then add a python.properties file in your 
-        <a href="../../setup/Files.shtml">user files directory</a>
-        or
-        <a href="../../setup/Files.shtml">preferences directory</a>
-        that sets the python configuration variables,
-        e.g. on Windows:</p>
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
 python.path = C:\\jython2.7.0\\Lib\\site\-packages
 python.startup = 
 </pre>
-<p>Note that the double-back-slashes are necessary.  They'll appear as single-back-slashes
-in the final value, which you can check with the "Context" item from the main JMRI
-Help menu. On Mac use something like:</p>
-<pre style="font-family: monospace;">
+      <p>Note that the double-back-slashes are necessary. They'll appear as single-back-slashes in
+      the final value, which you can check with the "Context" item from the main JMRI Help menu. On
+      Mac use something like:</p>
+
+      <pre style="font-family: monospace;">
 python.path = /Users/username/jython2.7.0/Lib/site-packages
 python.startup = 
-</pre>
-or where-ever you've installed the new Jython. Linux is similar.
-
-
-
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+</pre>or where-ever you've installed the new Jython. Linux is similar. 
+<!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

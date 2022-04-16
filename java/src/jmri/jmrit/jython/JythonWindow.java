@@ -17,7 +17,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.script.ScriptOutput;
+import jmri.script.swing.ScriptOutput;
 import jmri.util.JmriJFrame;
 
 /**

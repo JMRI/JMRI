@@ -2,9 +2,6 @@ package jmri.jmrit.logixng;
 
 import java.util.Map;
 
-import jmri.Manager;
-import jmri.NamedBean;
-
 /**
  * Manager for FemaleSockets
  * 

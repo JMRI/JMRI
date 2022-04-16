@@ -41,13 +41,13 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super(SaveType.Config, false);
     }
 
-    
+
     LocoNetSystemConnectionMemo memo1;
     LocoNetInterfaceScaffold lnis1;
-    
+
     LocoNetSystemConnectionMemo memo2;
     LocoNetInterfaceScaffold lnis2;
-    
+
     /**
      * {@inheritDoc}
      * Ensure that a LocoNet connection is available
@@ -62,19 +62,19 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         lnis1 = new LocoNetInterfaceScaffold(memo1);
         memo1.setLnTrafficController(lnis1);
         jmri.InstanceManager.store(lnis1, jmri.jmrix.loconet.LnTrafficController.class);
-        memo1.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo1.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
         memo1.configureManagers(); // Does this generate autonomous loconet traffic? Needs a wait?
         jmri.InstanceManager.store(memo1,LocoNetSystemConnectionMemo.class);
-        
+
         // 2nd LocoNet connection L2
         memo2 = new LocoNetSystemConnectionMemo();
         lnis2 = new LocoNetInterfaceScaffold(memo1);
         memo2.setLnTrafficController(lnis2);
         jmri.InstanceManager.store(lnis2, jmri.jmrix.loconet.LnTrafficController.class);
-        memo2.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo2.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
         memo2.configureManagers(); // Does this generate autonomous loconet traffic? Needs a wait?
         jmri.InstanceManager.store(memo2,LocoNetSystemConnectionMemo.class);
-        
+
         jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LnTrafficController.class, lnis1);
     }
 
@@ -87,6 +87,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     public void tearDown() {
         memo1.dispose();
         memo2.dispose();
+        jmri.util.JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
+        jmri.util.JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
         super.tearDown();
     }
 }

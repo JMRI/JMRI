@@ -142,9 +142,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static final String RED_X = "resources/icons/misc/X-red.gif";
 
     @GuardedBy("ItemPalette")
-    protected static JTabbedPane _tabPane;
+    static JTabbedPane _tabPane;
     @GuardedBy("ItemPalette")
-    protected static HashMap<String, ItemPanel> _tabIndex;
+    static HashMap<String, ItemPanel> _tabIndex;
 
     private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
@@ -423,7 +423,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         instance.setVisible(true);
         return instance;
     }
-    
+
     public void setEditor(Editor ed) {
         updateBackground(ed);
         InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, this);

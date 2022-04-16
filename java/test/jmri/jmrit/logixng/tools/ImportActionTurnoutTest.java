@@ -51,7 +51,6 @@ public class ImportActionTurnoutTest extends ImportActionTestBase {
     @Override
     public ConditionalAction newConditionalAction() {
         turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
-        System.out.format("New turnout IT2: %s%n", turnout.getSystemName());
         ca = new DefaultConditionalAction();
         ca.setActionData(Turnout.THROWN);
         ca.setType(Conditional.Action.SET_TURNOUT);

@@ -33,14 +33,14 @@ public class CbusNodeNVTableDataModelTest {
         t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
-        assertThat(t.getColumnCount()).isEqualTo(7);
+        assertThat(t.getColumnCount()).isEqualTo(8);
         
         CbusNode myNode = new CbusNode(memo,12345);
         
         t.setNode(myNode);
         
         assertThat(t.getRowCount()).isEqualTo(0);
-        assertThat(t.getColumnCount()).isEqualTo(7);
+        assertThat(t.getColumnCount()).isEqualTo(8);
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             assertThat(t.getColumnName(i)).isNotEmpty();

@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -85,49 +84,22 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         if (_mergeProfiles == null || _mergeProfiles.isEmpty()) {
             return false;
         }
-        HashMap<String, RosterSpeedProfile> sessionProfiles = manager.getSessionProfiles();
-        if (sessionProfiles == null || sessionProfiles.isEmpty()) {
-            return false;
-        }
-        ArrayList<String> deletes = new ArrayList<>();
-        for (String key : sessionProfiles.keySet()) {
-            if (key == null || (key.charAt(0) =='$' && key.charAt(key.length()-1) == '$')) {
-                deletes.add(key);
-            }
-        }
-        for (String k : deletes) {
-            sessionProfiles.remove(k);
-        }
-        if (sessionProfiles.isEmpty()) {
-            return false;
-        }
-        boolean allEmpty = true;
-        Iterator<RosterSpeedProfile> it = sessionProfiles.values().iterator();
-        while(it.hasNext()) {
-            RosterSpeedProfile profile = it.next();
-            if (profile != null) {
-                if (profile.hasForwardSpeeds() || profile.hasReverseSpeeds()) {
-                    allEmpty = false;
-                    break;
-                }
-            }
-        }
-        if (allEmpty) {
-            return false;
-        }
         _anomalies = new HashMap<>();
         _mergeCandidates = new HashMap<>();
         Iterator<java.util.Map.Entry<String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator();
         while (iter.hasNext()) {
             java.util.Map.Entry<String, RosterSpeedProfile> entry = iter.next();
             Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(entry.getValue());
-            if (anomaly.size() > 0) {
+            if (anomaly != null && anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }
             String rosterId = entry.getKey();
             if (Roster.getDefault().getEntryForId(rosterId) != null) {
                 _mergeCandidates.put(rosterId, true);
             }
+        }
+        if (_mergeCandidates.isEmpty()) {
+            return false;
         }
         return true;
     }

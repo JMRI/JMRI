@@ -7,8 +7,15 @@ package jmri.jmrit.logixng.implementation;
  */
 public class DefaultConditionalNGScaffold extends DefaultConditionalNG {
     
-    public DefaultConditionalNGScaffold(String sys, String user) throws BadUserNameException, BadSystemNameException {
+    public DefaultConditionalNGScaffold(String sys, String user)
+            throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+        setSymbolTable(new DefaultSymbolTable(this));
+    }
+    
+    public DefaultConditionalNGScaffold(String sys, String user, int threadID)
+            throws BadUserNameException, BadSystemNameException {
+        super(sys, user, threadID);
         setSymbolTable(new DefaultSymbolTable(this));
     }
     

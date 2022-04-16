@@ -38,20 +38,6 @@ public class DefaultConditionalNGTest {
     }
     
     @Test
-    public void testLock() {
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
-        
-        conditionalNG.setLock(Base.Lock.NONE);
-        Assert.assertEquals("Lock is correct", Base.Lock.NONE, conditionalNG.getLock());
-        
-        conditionalNG.setLock(Base.Lock.USER_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.USER_LOCK, conditionalNG.getLock());
-        
-        conditionalNG.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertEquals("Lock is correct", Base.Lock.HARD_LOCK, conditionalNG.getLock());
-    }
-    
-    @Test
     public void testState() throws JmriException {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         conditionalNG.setState(NamedBean.INCONSISTENT);
@@ -69,7 +55,7 @@ public class DefaultConditionalNGTest {
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
-        conditionalNG.setParentForAllChildren();
+        if (! conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -100,6 +86,7 @@ public class DefaultConditionalNGTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setInstallDebugger(false);
         JUnitUtil.initLogixNGManager();
     }
 
@@ -158,11 +145,6 @@ public class DefaultConditionalNGTest {
         @Override
         public Category getCategory() {
             throw new UnsupportedOperationException("Not supported7");
-        }
-
-        @Override
-        public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported8");
         }
 
         @Override

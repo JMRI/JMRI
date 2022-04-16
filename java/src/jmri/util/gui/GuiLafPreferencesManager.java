@@ -89,17 +89,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private static final Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
 
     @Override
-    @SuppressWarnings("deprecation") // use of apps.gui.GuiLafPreferencesManager
     public void initialize(Profile profile) throws InitializationException {
         if (!this.initialized) {
-            boolean migrate = false;
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-            // if FONT_SIZE == MIN_VALUE, preferences have not been written
-            // using the new structure, so use the old structure
-            if (preferences.getInt(FONT_SIZE, Integer.MIN_VALUE) == Integer.MIN_VALUE) {
-                preferences = ProfileUtils.getPreferences(profile, apps.gui.GuiLafPreferencesManager.class, true);
-                migrate = preferences.getInt(FONT_SIZE, Integer.MIN_VALUE) != Integer.MIN_VALUE;
-            }
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
             this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
 
@@ -128,7 +120,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
             this.applyLookAndFeel();
             this.applyFontSize();
-            this.setDirty(migrate);
             this.initialized = true;
         }
     }

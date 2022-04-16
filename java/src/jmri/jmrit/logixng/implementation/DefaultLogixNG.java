@@ -26,6 +26,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
  * The default implementation of LogixNG.
  *
  * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Sand        Copyright 2021
  */
 public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
@@ -33,11 +34,6 @@ public class DefaultLogixNG extends AbstractNamedBean
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _enabled = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
-
-    /**
-     * Maintain a list of conditional objects.  The key is the conditional system name
-     */
-    HashMap<String, ConditionalNG> _conditionalNGMap = new HashMap<>();
 
 
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -78,40 +74,6 @@ public class DefaultLogixNG extends AbstractNamedBean
         return UNKNOWN;
     }
 
-    /*.*
-     * Set enabled status. Enabled is a bound property All conditionals are set
-     * to UNKNOWN state and recalculated when the Logix is enabled, provided the
-     * Logix has been previously activated.
-     *./
-    @Override
-    public void setEnabled(boolean state) {
-
-        boolean old = _enabled;
-        _enabled = state;
-        if (old != state) {
-/*
-            boolean active = _isActivated;
-            deActivateLogix();
-            activateLogix();
-            _isActivated = active;
-            for (int i = _listeners.size() - 1; i >= 0; i--) {
-                _listeners.get(i).setEnabled(state);
-            }
-            firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(state));  // NOI18N
-*/
-//        }
-//    }
-
-    /*.*
-     * Get enabled status
-     */
-//    @Override
-//    public boolean getEnabled() {
-//        return _enabled;
-//    }
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNG.class);
-
     @Override
     public String getShortDescription(Locale locale) {
         return "LogixNG";
@@ -134,21 +96,6 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     @Override
     public Category getCategory() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public boolean isExternal() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public Lock getLock() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public void setLock(Lock lock) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -183,7 +130,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         _enabled = enable;
         if (isActive()) {
             registerListeners();
-            execute();
+            execute(true);
         } else {
             unregisterListeners();
         }
@@ -193,27 +140,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public boolean isEnabled() {
         return _enabled;
-//        return _enabled && _userEnabled;
     }
-
-    /*.*
-     * Set whenether this object is enabled or disabled by the user.
-     *
-     * @param enable true if this object should be enabled, false otherwise
-     *./
-    public void setUserEnabled(boolean enable) {
-        _userEnabled = enable;
-    }
-*/
-    /*.*
-     * Determines whether this object is enabled by the user.
-     *
-     * @return true if the object is enabled, false otherwise
-     *./
-    public boolean isUserEnabled() {
-        return _userEnabled;
-    }
-*/
 
     /** {@inheritDoc} */
     @Override
@@ -265,21 +192,35 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public boolean addConditionalNG(ConditionalNG conditionalNG) {
-        ConditionalNG chkDuplicate = _conditionalNGMap.putIfAbsent(conditionalNG.getSystemName(), conditionalNG);
-        if (chkDuplicate == null) {
-            ConditionalNG_Entry entry = new ConditionalNG_Entry(conditionalNG);
-            _conditionalNG_Entries.add(entry);
-            conditionalNG.setParent(this);
-            return true;
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            if (conditionalNG.getSystemName().equals(entry._systemName)) {
+                if (entry._conditionalNG == null) {
+                    // Normally this will be during xml loading
+                    entry._conditionalNG = conditionalNG;
+                    return true;
+                } else {
+                    log.error("ConditionalNG '{}' has already been added to LogixNG '{}'", conditionalNG.getSystemName(), getSystemName());  // NOI18N
+                    return false;
+                }
+            }
+
         }
-        log.error("ConditionalNG '{}' has already been added to LogixNG '{}'", conditionalNG.getSystemName(), getSystemName());  // NOI18N
-        return (false);
+
+        ConditionalNG_Entry entry = new ConditionalNG_Entry(conditionalNG, conditionalNG.getSystemName());
+        _conditionalNG_Entries.add(entry);
+        conditionalNG.setParent(this);
+        return true;
     }
 
     /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNG(String systemName) {
-        return _conditionalNGMap.get(systemName);
+        for (int i = 0; i < getNumConditionalNGs(); i++) {
+            if (systemName.equals(_conditionalNG_Entries.get(i)._systemName)) {
+                return _conditionalNG_Entries.get(i)._conditionalNG;
+            }
+        }
+        return null;
     }
 
     /** {@inheritDoc} */
@@ -312,9 +253,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         if (!found) {
             log.error("attempt to delete ConditionalNG not in LogixNG: {}", conditionalNG.getSystemName());  // NOI18N
-            return;
         }
-        _conditionalNGMap.remove(conditionalNG.getSystemName());
     }
 
     /** {@inheritDoc} */
@@ -328,6 +267,14 @@ public class DefaultLogixNG extends AbstractNamedBean
     public void execute() {
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             entry._conditionalNG.execute();
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void execute(boolean allowRunDelayed) {
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            entry._conditionalNG.execute(allowRunDelayed);
         }
     }
 
@@ -351,13 +298,15 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    public void setParentForAllChildren() {
+    public boolean setParentForAllChildren(List<String> errors) {
+        boolean result = true;
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             if (entry._conditionalNG != null) {
                 entry._conditionalNG.setParent(this);
-                entry._conditionalNG.setParentForAllChildren();
+                result = result && entry._conditionalNG.setParentForAllChildren(errors);
             }
         }
+        return result;
     }
 
     /** {@inheritDoc} */
@@ -382,7 +331,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             PrintWriter writer,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         if (settings._printLineNumbers) {
             writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
         }
@@ -398,7 +347,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
@@ -410,7 +359,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
@@ -423,7 +372,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             String indent,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         for (int i=0; i < this.getNumConditionalNGs(); i++) {
@@ -459,6 +408,14 @@ public class DefaultLogixNG extends AbstractNamedBean
             this._systemName = systemName;
         }
 
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder("ConditionalNG_Entry: name =");
+            sb.append(_systemName);
+            sb.append(", cdl = ");
+            sb.append(_conditionalNG == null ? "----" : _conditionalNG.getDisplayName());
+            return sb.toString();
+        }
     }
 
     /** {@inheritDoc} */
@@ -473,6 +430,8 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());
 
@@ -486,4 +445,15 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getListenerRefsIncludingChildren(List<String> list) {
+        list.addAll(getListenerRefs());
+        for (int i=0; i < getNumConditionalNGs(); i++) {
+            getConditionalNG(i).getListenerRefsIncludingChildren(list);
+        }
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNG.class);
 }

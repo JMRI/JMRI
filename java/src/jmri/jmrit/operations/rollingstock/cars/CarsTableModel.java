@@ -79,18 +79,18 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBY_RFID = 12;
     public final int SORTBY_RWE = 13; // return when empty
     public final int SORTBY_RWL = 14; // return when loaded
-    public final int SORTBY_FINALDESTINATION = 15;
-    public final int SORTBY_VALUE = 16;
-    public final int SORTBY_WAIT = 17;
-    public final int SORTBY_PICKUP = 18;
-    public final int SORTBY_LAST = 19;
-    public final int SORTBY_DIVISION = 20;
+    public final int SORTBY_DIVISION = 15;
+    public final int SORTBY_FINALDESTINATION = 16;
+    public final int SORTBY_VALUE = 17;
+    public final int SORTBY_WAIT = 18;
+    public final int SORTBY_PICKUP = 19;
+    public final int SORTBY_LAST = 20; // also used by PrintCarRosterAction
 
     private int _sort = SORTBY_NUMBER;
 
     List<Car> carList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
-    String locationName = null; // only show cars with this location
+    public String locationName = null; // only show cars with this location
     public String trackName = null; // only show cars with this track
     JTable _table;
     CarsTableFrame _frame;
@@ -129,8 +129,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
         }
-        if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE || sort == SORTBY_RWL
-                || sort == SORTBY_DIVISION) {
+        if (sort == SORTBY_DESTINATION ||
+                sort == SORTBY_FINALDESTINATION ||
+                sort == SORTBY_RWE ||
+                sort == SORTBY_RWL ||
+                sort == SORTBY_DIVISION) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), sort == SORTBY_RWE);
@@ -256,25 +259,32 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int getIndex(int start, String roadNumber) {
         for (int index = start; index < carList.size(); index++) {
-            Car c = carList.get(index);
-            if (c != null) {
-                String[] number = c.getNumber().split(TrainCommon.HYPHEN);
+            Car car = carList.get(index);
+            if (car != null) {
+                String[] number = car.getNumber().split(TrainCommon.HYPHEN);
                 // check for wild card '*'
-                if (roadNumber.startsWith("*")) {
+                if (roadNumber.startsWith("*") && roadNumber.endsWith("*")) {
+                    String rN = roadNumber.substring(1, roadNumber.length() - 1);
+                    if (car.getNumber().contains(rN)) {
+                        _roadNumber = roadNumber;
+                        _index = index + 1;
+                        return index;
+                    }
+                } else if (roadNumber.startsWith("*")) {
                     String rN = roadNumber.substring(1);
-                    if (c.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
+                    if (car.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
                         _roadNumber = roadNumber;
                         _index = index + 1;
                         return index;
                     }
                 } else if (roadNumber.endsWith("*")) {
                     String rN = roadNumber.substring(0, roadNumber.length() - 1);
-                    if (c.getNumber().startsWith(rN)) {
+                    if (car.getNumber().startsWith(rN)) {
                         _roadNumber = roadNumber;
                         _index = index + 1;
                         return index;
                     }
-                } else if (c.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
+                } else if (car.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
                     _roadNumber = roadNumber;
                     _index = index + 1;
                     return index;
@@ -584,6 +594,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case LOAD_COLUMN:
                 if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
                     return car.getLoadName() + " " + Bundle.getMessage("(P)");
+                } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+                    return car.getLoadName() + " " + Bundle.getMessage("(M)");
                 } else {
                     return car.getLoadName();
                 }
@@ -715,12 +727,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     log.error("move count must be a number");
                 }
                 break;
-            case BUILT_COLUMN:
-                car.setBuilt(value.toString());
-                break;
-            case OWNER_COLUMN:
-                car.setOwner(value.toString());
-                break;
             case VALUE_COLUMN:
                 car.setValue(value.toString());
                 break;
@@ -733,9 +739,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 } catch (NumberFormatException e) {
                     log.error("wait count must be a number");
                 }
-                break;
-            case LAST_COLUMN:
-                // do nothing
                 break;
             default:
                 break;

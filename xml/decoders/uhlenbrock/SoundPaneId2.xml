@@ -110,6 +110,7 @@
           <text>Speed Step activating Switching Sound</text>
           <text xml:lang="de">Fahrstufe für Schaltgerausch</text>
           <text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
+          <text xml:lang="cs">Rychlostní krok pro přepnutí zvuku</text>
         </label>
         <row>
           <display item="Bank D Sound Setting 1" layout="above" label=""/>
@@ -362,6 +363,7 @@
           <text>Volume for each Sound Slot</text>
           <text xml:lang="de">Lautstärke für jedes Soundslot</text>
           <text xml:lang="nl">Volume per Soundslot</text>
+          <text xml:lang="cs">Hlasitost pro každý zvukový slot</text>
         </label>
         <row>
           <display item="Bank E Sound Setting 1" layout="above" label=""/>

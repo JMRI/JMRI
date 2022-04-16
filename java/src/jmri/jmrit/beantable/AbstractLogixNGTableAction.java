@@ -1,38 +1,16 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.text.MessageFormat;
 import java.util.*;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
@@ -52,20 +30,13 @@ import jmri.util.JmriJFrame;
  * Most of the text used in this GUI is in BeanTableBundle.properties, accessed
  * via Bundle.getMessage().
  * <p>
- * Two additional action and variable name selection methods have been added:
- * <ol>
- *     <li>Single Pick List
- *     <li>Combo Box Selection
- * </ol>
- * The traditional tabbed Pick List with text entry is the default method.
- * The Options menu has been expanded to list the 3 methods.
- * Mar 27, 2017 - Dave Sand
  *
  * @author Dave Duchamp Copyright (C) 2007 (LogixTableAction)
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011 (LogixTableAction)
  * @author Matthew Harris copyright (c) 2009 (LogixTableAction)
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019 (AbstractLogixNGTableEditor)
+ * @author Dave Sand copyright (c) 2021 (AbstractLogixNGTableEditor)
  *
  * @param <E> the type of NamedBean supported by this model
  */
@@ -73,6 +44,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
 
     private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
+    private static final ResourceBundle rbx2 = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
 
     // Browser Options
     static final String PRINT_LINE_NUMBERS_OPTION = "jmri.jmrit.logixng.PrintLineNumbers";
@@ -111,7 +83,17 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected abstract void deleteBean(E bean);
 
+    protected boolean browseMonoSpace() { return false; }
+
     protected abstract String getBeanText(E bean);
+
+    protected abstract String getAddTitleKey();
+
+    protected abstract String getCreateButtonHintKey();
+
+    protected abstract void getListenerRefsIncludingChildren(E t, List<String> list);
+
+    protected abstract boolean hasChildren(E t);
 
     // ------------ Methods for LogixNG Table Window ------------
 
@@ -131,7 +113,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ColumnHeadMenu");     // This makes it easier to test the table
-//                    return "";  // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
                     return enabledString;
@@ -248,21 +229,16 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             @Override
             public Manager<E> getManager() {
                 return AbstractLogixNGTableAction.this.getManager();
-//                return InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
             }
 
             @Override
             public E getBySystemName(String name) {
                 return AbstractLogixNGTableAction.this.getManager().getBySystemName(name);
-//                return InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).getBySystemName(
-//                        name);
             }
 
             @Override
             public E getByUserName(String name) {
                 return AbstractLogixNGTableAction.this.getManager().getByUserName(name);
-//                return InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).getByUserName(
-//                        name);
             }
 
             @Override
@@ -275,6 +251,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+                if (!(getManager() instanceof jmri.jmrit.logixng.LogixNG_Manager)) {
+                    table.getColumnModel().getColumn(2).setMinWidth(0);
+                    table.getColumnModel().getColumn(2).setMaxWidth(0);
+                }
                 super.configureTable(table);
             }
 
@@ -289,7 +269,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 editCombo.addItem(Bundle.getMessage("ButtonSelect"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonEdit"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
-                editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
+                if (isCopyBeanSupported()) editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
                 col.setCellEditor(new DefaultCellEditor(editCombo));
@@ -307,7 +287,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
             @Override
             protected String getBeanType() {
-                return Bundle.getMessage("BeanNameLogix");  // NOI18N
+//                 return Bundle.getMessage("BeanNameLogix");  // NOI18N
+                return rbx.getString("BeanNameLogixNG");  // NOI18N
             }
         };
     }
@@ -331,10 +312,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
-        loadSelectionMode();
-        loadEditorMode();
-
+    public void setMenuBar(BeanTableFrame<E> f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
@@ -349,167 +327,40 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
         }
 
-        ButtonGroup enableButtonGroup = new ButtonGroup();
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(Bundle.getMessage("EnableAllLogixNGs"));  // NOI18N
-        r.addActionListener((ActionEvent e) -> {
-            enableAll(true);
-        });
-        enableButtonGroup.add(r);
-        r.setSelected(true);
-        menu.add(r);
+        // Do not include this menu for Module or Table tables
+        if (this instanceof LogixNGTableAction) {
+            JMenuItem r = new JMenuItem(Bundle.getMessage("EnableAllLogixNGs"));  // NOI18N
+            r.addActionListener((ActionEvent e) -> {
+                enableAll(true);
+            });
+            menu.add(r);
 
-        r = new JRadioButtonMenuItem(Bundle.getMessage("DisableAllLogixNGs"));  // NOI18N
-        r.addActionListener((ActionEvent e) -> {
-            enableAll(false);
-        });
-        enableButtonGroup.add(r);
-        menu.add(r);
+            r = new JMenuItem(Bundle.getMessage("DisableAllLogixNGs"));  // NOI18N
+            r.addActionListener((ActionEvent e) -> {
+                enableAll(false);
+            });
+            menu.add(r);
 
-        menu.addSeparator();
-
-        ButtonGroup modeButtonGroup = new ButtonGroup();
-        r = new JRadioButtonMenuItem(Bundle.getMessage("UseMultiPick"));  // NOI18N
-        r.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                setSelectionMode(SelectionMode.USEMULTI);
-            }
-        });
-        modeButtonGroup.add(r);
-        menu.add(r);
-        r.setSelected(_selectionMode == SelectionMode.USEMULTI);
-
-        r = new JRadioButtonMenuItem(Bundle.getMessage("UseSinglePick"));  // NOI18N
-        r.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                setSelectionMode(SelectionMode.USESINGLE);
-            }
-        });
-        modeButtonGroup.add(r);
-        menu.add(r);
-        r.setSelected(_selectionMode == SelectionMode.USESINGLE);
-
-        r = new JRadioButtonMenuItem(Bundle.getMessage("UseComboNameBoxes"));  // NOI18N
-        r.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                setSelectionMode(SelectionMode.USECOMBO);
-            }
-        });
-        modeButtonGroup.add(r);
-        menu.add(r);
-        r.setSelected(_selectionMode == SelectionMode.USECOMBO);
-
-        menu.addSeparator();
-
-        ButtonGroup viewButtonGroup = new ButtonGroup();
-        r = new JRadioButtonMenuItem(Bundle.getMessage("TreeEdit"));  // NOI18N
-        r.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                setEditorMode(EditMode.TREEEDIT);
-            }
-        });
-        viewButtonGroup.add(r);
-        menu.add(r);
-        r.setSelected(_editMode == EditMode.TREEEDIT);
-
-        menuBar.add(menu, pos + offset);
+            menuBar.add(menu, pos + offset);
+            offset++;
+        }
 
         menu = new JMenu(Bundle.getMessage("MenuTools"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_T);
 
-        JMenuItem item = new JMenuItem(Bundle.getMessage("OpenPickListTables"));  // NOI18N
+        JMenuItem item = new JMenuItem(rbx2.getString("MenuOpenClipboard"));  // NOI18N
+        item.addActionListener((ActionEvent e) -> {
+            jmri.jmrit.logixng.tools.swing.TreeEditor.openClipboard();
+        });
+        menu.add(item);
+
+        item = new JMenuItem(Bundle.getMessage("OpenPickListTables"));  // NOI18N
         item.addActionListener((ActionEvent e) -> {
             openPickListTable();
         });
         menu.add(item);
 
-        menuBar.add(menu, pos + offset + 1);  // add this menu to the right of the previous
-    }
-
-    /**
-     * Get the saved mode selection, default to the tranditional tabbed pick
-     * list.
-     * <p>
-     * During the menu build process, the corresponding menu item is set to
-     * selected.
-     *
-     * @since 4.7.3
-     */
-    void loadSelectionMode() {
-        Object modeName = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                getProperty(getClassName(), "Selection Mode");      // NOI18N
-        if (modeName == null) {
-            _selectionMode = SelectionMode.USEMULTI;
-        } else {
-            String currentMode = (String) modeName;
-            switch (currentMode) {
-                case "USEMULTI":        // NOI18N
-                    _selectionMode = SelectionMode.USEMULTI;
-                    break;
-                case "USESINGLE":       // NOI18N
-                    _selectionMode = SelectionMode.USESINGLE;
-                    break;
-                case "USECOMBO":        // NOI18N
-                    _selectionMode = SelectionMode.USECOMBO;
-                    break;
-                default:
-                    log.warn("Invalid NamedBean selection mode value, '{}', returned", currentMode);  // NOI18N
-                    _selectionMode = SelectionMode.USEMULTI;
-            }
-        }
-    }
-
-    /**
-     * Save the mode selection. Called by menu item change events.
-     *
-     * @since 4.7.3
-     * @param newMode The SelectionMode enum constant
-     */
-    void setSelectionMode(SelectionMode newMode) {
-        _selectionMode = newMode;
-        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                setProperty(getClassName(), "Selection Mode", newMode.toString());  // NOI18N
-    }
-
-    /**
-     * Get the saved mode selection, default to the tree editor.
-     * <p>
-     * During the menu build process, the corresponding menu item is set to
-     * selected.
-     *
-     * @since 4.9.x
-     */
-    void loadEditorMode() {
-        Object modeName = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                getProperty(getClassName(), "Edit Mode");      // NOI18N
-        if (modeName == null) {
-            _editMode = EditMode.TREEEDIT;
-        } else {
-            String currentMode = (String) modeName;
-            switch (currentMode) {
-                case "TREEEDIT":       // NOI18N
-                    _editMode = EditMode.TREEEDIT;
-                    break;
-                default:
-                    log.warn("Invalid edit mode value, '{}', returned", currentMode);  // NOI18N
-                    _editMode = EditMode.TREEEDIT;
-            }
-        }
-    }
-
-    /**
-     * Save the view mode selection. Called by menu item change events.
-     *
-     * @since 4.9.x
-     * @param newMode The ViewMode enum constant
-     */
-    void setEditorMode(EditMode newMode) {
-        _editMode = newMode;
-        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                setProperty(getClassName(), "Edit Mode", newMode.toString());  // NOI18N
+        menuBar.add(menu, pos + offset);  // add this menu to the right of the previous
     }
 
     /**
@@ -531,10 +382,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     // ------------ variable definitions ------------
 
-//    LogixNG_Manager _logixNG_Manager = null;  // set when LogixNGAction is created
-
     protected AbstractLogixNGEditor<E> _editor = null;
-//    ConditionalNGEditor _treeEdit = null;
 
     boolean _showReminder = false;
     jmri.jmrit.picker.PickFrame _pickTables;
@@ -552,46 +400,12 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     JLabel _sysNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnSystemName") + ":");  // NOI18N
     JLabel _userNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnUserName") + ":");   // NOI18N
-    String systemNameAuto = this.getClass().getName() + ".AutoSystemName";       // NOI18N
+    String systemNameAuto = this.getClassName() + ".AutoSystemName";       // NOI18N
     JButton create;
 
     // Edit E Variables
     private boolean _inEditMode = false;
     private boolean _inCopyMode = false;
-
-    /**
-     * Input selection names.
-     *
-     * @since 4.7.3
-     */
-    public enum SelectionMode {
-        /**
-         * Use the traditional text field, with the tabbed Pick List available
-         * for drag-n-drop
-         */
-        USEMULTI,
-        /**
-         * Use the traditional text field, but with a single Pick List that
-         * responds with a click
-         */
-        USESINGLE,
-        /**
-         * Use combo boxes to select names instead of a text field.
-         */
-        USECOMBO;
-    }
-    SelectionMode _selectionMode;
-
-    /**
-     * Edit view mode
-     */
-    public enum EditMode {
-        /**
-         * Use the tree based mode for editing bean
-         */
-        TREEEDIT;
-    }
-    EditMode _editMode;
 
     // ------------ Methods for Add bean Window ------------
 
@@ -610,12 +424,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         _showReminder = true;
         // make an Add bean Frame
         if (addLogixNGFrame == null) {
-            JPanel panel5 = makeAddFrame("TitleAddLogixNG", "Add");  // NOI18N
+            String titleKey = getAddTitleKey();
+            String buttonHintKey = getCreateButtonHintKey();
+            JPanel panel5 = makeAddFrame(titleKey, "Add");  // NOI18N
             // Create bean
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             panel5.add(create);
             create.addActionListener(this::createPressed);
-            create.setToolTipText(Bundle.getMessage("LogixNGCreateButtonHint"));  // NOI18N
+            create.setToolTipText(Bundle.getMessage(buttonHintKey));  // NOI18N
         }
         addLogixNGFrame.pack();
         addLogixNGFrame.setVisible(true);
@@ -644,7 +460,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     /**
      * Respond to the Cancel button in Add bean window.
      * <p>
- Note: Also get there if the user closes the Add bean window.
+     * Note: Also get there if the user closes the Add bean window.
      *
      * @param e The event heard
      */
@@ -673,26 +489,23 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         Runnable t = new Runnable() {
             @Override
             public void run() {
-                log.error("Copy LogixNG is not implemented yet");
+//                JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
 
-                // This may or may not work. It's not tested yet.
-                // Disable for now.
-                if (1==0) {
-                    JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
-                    // Create bean
-                    JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                    panel5.add(create);
-                    create.addActionListener((ActionEvent e) -> {
-                        JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
-    //                    copyLogixNGPressed(e);
-                    });
-                    addLogixNGFrame.pack();
-                    addLogixNGFrame.setVisible(true);
-                    _autoSystemName.setSelected(false);
-                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                        _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
-                    });
-                }
+                JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
+                // Create bean
+                JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
+                panel5.add(create);
+                create.addActionListener((ActionEvent e) -> {
+                    copyBeanPressed(e);
+                });
+                addLogixNGFrame.pack();
+                addLogixNGFrame.setVisible(true);
+                _autoSystemName.setSelected(false);
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
+                });
+
+                _inCopyMode = false;
             }
         };
         log.debug("copyPressed started for {}", sName);  // NOI18N
@@ -703,32 +516,40 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     String _logixNGSysName;
 
+    protected void copyBean(@Nonnull E sourceBean, @Nonnull E targetBean) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    protected boolean isCopyBeanSupported() {
+        return false;
+    }
+
     /**
      * Copy the bean as configured in the Copy set up pane.
      *
      * @param e the event heard
      */
-    void copyLogixNGPressed(ActionEvent e) {
-/*
+    private void copyBeanPressed(ActionEvent e) {
+
         String uName = _addUserName.getText().trim();
         if (uName.length() == 0) {
             uName = null;
         }
-        LogixNG targetLogixNG;
+        E targetBean;
         if (_autoSystemName.isSelected()) {
             if (!checkLogixNGUserName(uName)) {
                 return;
             }
-            targetLogixNG = _logixNG_Manager.createLogixNG(uName);
+            targetBean = createBean(uName);
         } else {
             if (!checkLogixNGSysName()) {
                 return;
             }
             String sName = _systemName.getText().trim();
-            // check if a LogixNG with this name already exists
+            // check if a bean with this name already exists
             boolean createLogix = true;
-            targetLogixNG = _logixNG_Manager.getBySystemName(sName);
-            if (targetLogixNG != null) {
+            targetBean = getManager().getBySystemName(sName);
+            if (targetBean != null) {
                 int result = JOptionPane.showConfirmDialog(f,
                         Bundle.getMessage("ConfirmLogixDuplicate", sName, _logixNGSysName), // NOI18N
                         Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,    // NOI18N
@@ -737,7 +558,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     return;
                 }
                 createLogix = false;
-                String userName = targetLogixNG.getUserName();
+                String userName = targetBean.getUserName();
                 if (userName != null && userName.length() > 0) {
                     _addUserName.setText(userName);
                     uName = userName;
@@ -747,26 +568,23 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
             if (createLogix) {
                 // Create the new LogixNG
-                targetLogixNG = _logixNG_Manager.createLogixNG(sName, uName);
-                if (targetLogixNG == null) {
+                targetBean = createBean(sName, uName);
+                if (targetBean == null) {
                     // should never get here unless there is an assignment conflict
                     log.error("Failure to create LogixNG with System Name: {}", sName);  // NOI18N
                     return;
                 }
-            } else if (targetLogixNG == null) {
+            } else if (targetBean == null) {
                 log.error("Error targetLogix is null!");  // NOI18N
                 return;
             } else {
-                targetLogixNG.setUserName(uName);
+                targetBean.setUserName(uName);
             }
         }
-        LogixNG srcLogic = _logixNG_Manager.getBySystemName(_logixNGSysName);
-        for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
-            String cSysName = srcLogic.getConditionalByNumberOrder(i);
-            copyConditionalToLogix(cSysName, srcLogic, targetLogixNG);
-        }
+        E sourceBean = getManager().getBySystemName(_logixNGSysName);
+        if (sourceBean != null) copyBean(sourceBean, targetBean);
+        else log.error("Error targetLogix is null!");  // NOI18N
         cancelAddPressed(null);
-*/
     }
 
     /**
@@ -831,7 +649,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             if (_editor != null) {
-//                _logixNGEdit.toFront();
                 _editor.bringToFront();
             }
             return false;
@@ -880,6 +697,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 return;
             }
             _curNamedBean = createBean(uName);
+            if (_curNamedBean == null) {
+                log.error("Failure to create bean with System Name: {}", "none");  // NOI18N
+                return;
+            }
             sName = _curNamedBean.getSystemName();
         } else {
             if (!checkLogixNGSysName()) {
@@ -888,7 +709,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             // Get validated system name
             sName = _systemName.getText();
             // check if a bean with this name already exists
-            E x = null;
+            E x;
             try {
                 x = getManager().getBySystemName(sName);
             } catch (Exception ex) {
@@ -943,39 +764,33 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         }
 
         // Create a new bean edit view, add the listener.
-        if (_editMode == EditMode.TREEEDIT) {
-            _editor = getEditor(f, m, sName);
+        _editor = getEditor(f, m, sName);
 
-            if (_editor == null) return;    // Editor not implemented yet for LogixNG Tables
+        if (_editor == null) return;    // Editor not implemented yet for LogixNG Tables
 
-            _inEditMode = true;
+        _inEditMode = true;
 
-            _editor.addEditorEventListener((data) -> {
-                String lgxName = sName;
-                data.forEach((key, value) -> {
-                    if (key.equals("Finish")) {                  // NOI18N
-                        _editor = null;
-                        _inEditMode = false;
-
-//                        _curLogixNG.setEnabled(true);
-//                        _curLogixNG.getConditionalNG(0).setEnabled(true);
-//                        log.warn("zxc Enable LogixNG: {}", _curLogixNG.getSystemName());
-//                        _curLogixNG.activateLogixNG();
-                        f.setVisible(true);
-                    } else if (key.equals("Delete")) {           // NOI18N
-                        deletePressed(value);
-                    } else if (key.equals("chgUname")) {         // NOI18N
-                        E x = getManager().getBySystemName(lgxName);
-                        if (x == null) {
-                            log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
-                            return;
-                        }
-                        x.setUserName(value);
-                        m.fireTableDataChanged();
+        _editor.addEditorEventListener((data) -> {
+            String lgxName = sName;
+            data.forEach((key, value) -> {
+                if (key.equals("Finish")) {                  // NOI18N
+                    _editor = null;
+                    _inEditMode = false;
+                    f.setVisible(true);
+                } else if (key.equals("Delete")) {           // NOI18N
+                    _inEditMode = false;
+                    deletePressed(value);
+                } else if (key.equals("chgUname")) {         // NOI18N
+                    E x = getManager().getBySystemName(lgxName);
+                    if (x == null) {
+                        log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
+                        return;
                     }
-                });
+                    x.setUserName(value);
+                    m.fireTableDataChanged();
+                }
             });
-        }
+        });
     }
 
     /**
@@ -1016,31 +831,83 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         final E x = getManager().getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        if (p != null && p.getMultipleChoiceOption(getClassName(), "delete") == 0x02) {     // NOI18N
-            if (x != null) {
-                deleteBean(x);
-//                deleteSourceWhereUsed();
+
+        if (x == null) return;  // This should never happen
+
+        StringBuilder message = new StringBuilder();
+        try {
+            getManager().deleteBean(x, "CanDelete");  // NOI18N
+        } catch (PropertyVetoException e) {
+            if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                log.warn(e.getMessage());
+                message.append(Bundle.getMessage("VetoDeleteBean", x.getBeanType(), x.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
+                JOptionPane.showMessageDialog(null, message.toString(),
+                        Bundle.getMessage("QuestionTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            message.append(e.getMessage());
+        }
+        List<String> listenerRefs = new ArrayList<>();
+        getListenerRefsIncludingChildren(x, listenerRefs);
+        int listenerRefsCount = listenerRefs.size();
+        log.debug("Delete with {}", listenerRefsCount);
+        if (p != null && p.getMultipleChoiceOption(getClassName(), "delete") == 0x02 && message.toString().isEmpty()) {
+            deleteBean(x);
         } else {
             final JDialog dialog = new JDialog();
-            String msg;
-            dialog.setTitle(Bundle.getMessage("QuestionTitle"));     // NOI18N
-            dialog.setLocationRelativeTo(null);
-            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            dialog.setTitle(Bundle.getMessage("QuestionTitle"));
+            dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             JPanel container = new JPanel();
             container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            msg = Bundle.getMessage("ConfirmLogixDelete", sName);    // NOI18N
-            JLabel question = new JLabel(msg);
-            question.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.add(question);
 
-            final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));  // NOI18N
+            if (listenerRefsCount > 0) { // warn of listeners attached before delete
+                String prompt = hasChildren(x)
+                        ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                JLabel question = new JLabel(Bundle.getMessage(prompt, x.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+
+                ArrayList<String> listeners = new ArrayList<>();
+                for (String listenerRef : listenerRefs) {
+                    if (!listeners.contains(listenerRef)) {
+                        listeners.add(listenerRef);
+                    }
+                }
+
+                message.append("<br>");
+                message.append(Bundle.getMessage("ReminderInUse", listenerRefsCount));
+                message.append("<ul>");
+                for (String listener : listeners) {
+                    message.append("<li>");
+                    message.append(listener);
+                    message.append("</li>");
+                }
+                message.append("</ul>");
+
+                JEditorPane pane = new JEditorPane();
+                pane.setContentType("text/html");
+                pane.setText("<html>" + message.toString() + "</html>");
+                pane.setEditable(false);
+                JScrollPane jScrollPane = new JScrollPane(pane);
+                container.add(jScrollPane);
+            } else {
+                String prompt = hasChildren(x)
+                        ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                String msg = MessageFormat.format(
+                        Bundle.getMessage(prompt), x.getSystemName());
+                JLabel question = new JLabel(msg);
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+            }
+
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
             remember.setFont(remember.getFont().deriveFont(10f));
             remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));    // NOI18N
-            JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));      // NOI18N
+            JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+            JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
             JPanel button = new JPanel();
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.add(yesButton);
@@ -1048,22 +915,16 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             container.add(button);
 
             noButton.addActionListener((ActionEvent e) -> {
-                //there is no point in remebering this the user will never be
+                //there is no point in remembering this the user will never be
                 //able to delete a bean!
-                /*if(remember.isSelected()){
-                setDisplayDeleteMsg(0x01);
-                }*/
                 dialog.dispose();
             });
 
             yesButton.addActionListener((ActionEvent e) -> {
-                if (p != null && remember.isSelected()) {
+                if (remember.isSelected() && p != null) {
                     p.setMultipleChoiceOption(getClassName(), "delete", 0x02);  // NOI18N
                 }
-                if (x != null) {
-                    deleteBean(x);
-//                        deleteSourceWhereUsed();
-                }
+                deleteBean(x);
                 dialog.dispose();
             });
             container.add(remember);
@@ -1071,62 +932,18 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             container.setAlignmentY(Component.CENTER_ALIGNMENT);
             dialog.getContentPane().add(container);
             dialog.pack();
+
+            dialog.getRootPane().setDefaultButton(noButton);
+            noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
+            dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
+                    dialog.setVisible(false);
+                    dialog.dispose(); },
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+            dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
             dialog.setModal(true);
             dialog.setVisible(true);
         }
-
-        f.setVisible(true);
-    }
-
-    /**
-     * Create Variable and Action editing pane center part.
-     *
-     * @param comp  Field or comboBox to include on sub pane
-     * @param label property key for label
-     * @param hint  property key for tooltip for this sub pane
-     * @return JPanel containing interface
-     */
-    JPanel makeEditPanel(JComponent comp, String label, String hint) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JPanel p = new JPanel();
-        p.add(new JLabel(Bundle.getMessage(label)));
-        panel.add(p);
-        if (hint != null) {
-            panel.setToolTipText(Bundle.getMessage(hint));
-        }
-        comp.setMaximumSize(comp.getPreferredSize());  // override for text fields
-        panel.add(comp);
-        panel.add(Box.createVerticalGlue());
-        return panel;
-    }
-
-    /**
-     * Format time to hh:mm given integer hour and minute.
-     *
-     * @param hour   value for time hours
-     * @param minute value for time minutes
-     * @return Formatted time string
-     */
-    public static String formatTime(int hour, int minute) {
-        String s = "";
-        String t = Integer.toString(hour);
-        if (t.length() == 2) {
-            s = t + ":";
-        } else if (t.length() == 1) {
-            s = "0" + t + ":";
-        }
-        t = Integer.toString(minute);
-        if (t.length() == 2) {
-            s = s + t;
-        } else if (t.length() == 1) {
-            s = s + "0" + t;
-        }
-        if (s.length() != 5) {
-            // input error
-            s = "00:00";
-        }
-        return s;
     }
 
     @Override
@@ -1136,7 +953,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     @Override
     protected String getClassName() {
-        return AbstractLogixNGTableAction.class.getName();
+        // The class that is returned must have a default constructor,
+        // a constructor with no parameters.
+        return jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName();
     }
 
 // ------------ Methods for Conditional Browser Window ------------
@@ -1175,8 +994,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * Create and initialize the conditionalNGs browser window.
      */
     void makeBrowserWindow() {
-        JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("BrowserTitle"), false, true);   // NOI18N
-        condBrowserFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);            // NOI18N
+        JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("LogixNG_Browse_Title"), false, true);   // NOI18N
 
         condBrowserFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -1200,6 +1018,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
         // Build the conditionalNGs listing
         _textContent = new JTextArea(this.getBeanText(_curNamedBean));
+        if (browseMonoSpace()) {
+            _textContent.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        }
         JScrollPane scrollPane = new JScrollPane(_textContent);
         contentPane.add(scrollPane);
 
@@ -1209,7 +1030,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         bottomPanel.add(helpBrowse, BorderLayout.WEST);
         helpBrowse.addActionListener((ActionEvent e) -> {
             JOptionPane.showMessageDialog(condBrowserFrame,
-                    Bundle.getMessage("BrowserHelpText"),   // NOI18N
+                    Bundle.getMessage("LogixNG_Browse_HelpText"),   // NOI18N
                     Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
                     JOptionPane.INFORMATION_MESSAGE);
         });
@@ -1239,7 +1060,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logixNG system name.txt
-        userFileChooser.setSelectedFile(new File(_curNamedBean.getSystemName() + ".txt"));  // NOI18N
+        String suggestedFileName = _curNamedBean.getSystemName().replace(':', '_') + ".txt";
+        userFileChooser.setSelectedFile(new File(suggestedFileName));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1273,14 +1095,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 + (isEnabled(_curNamedBean)
                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-//        JTextArea textContent = buildConditionalListing();
-        JTextArea textContent = new JTextArea();
         try {
             // Add bean Header inforation first
             FileUtil.appendTextToFile(file, tStr);
-            FileUtil.appendTextToFile(file, textContent.getText());
+            FileUtil.appendTextToFile(file, "-".repeat(tStr.length()));
+            FileUtil.appendTextToFile(file, "");
+            FileUtil.appendTextToFile(file, _textContent.getText());
         } catch (IOException e) {
-            log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
         }
     }
 

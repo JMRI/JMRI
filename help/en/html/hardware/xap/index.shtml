@@ -1,81 +1,59 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - xAP</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - xAP</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: xAP</h1>
 
-      <p>xAP is a popular home-automation protocol used by
-      do-it-yourself hobbyists through large professional
-      installations.</p>
+      <p>xAP is a popular home-automation protocol used by do-it-yourself hobbyists through large
+      professional installations.</p>
 
-      <p>xAP should not be confused with the Lenz XPA, which is a
-      device for using a portable phone as a throttle for a Lenz
-      DCC system. <a name="connecting" id="connecting"></a></p>
+      <p>xAP should not be confused with the Lenz XPA, which is a device for using a portable phone
+      as a throttle for a Lenz DCC system.</p>
 
-      <h2>Connecting</h2>
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Software settings</h3>
 
-      <p>xAP devices that provide either the "input" or "output"
-      form of the <a href=
-      "http://www.xapautomation.org/index.php?title=Basic_Status_and_Control_Schema">
-      Basic Status and Control Schema</a> (BSC devices). "Input"
-      devices are mapped to JMRI Sensor objects, and "Output"
-      devices are mapped to JMRI Turnouts.</p>
+      <p>xAP devices that provide either the "input" or "output" form of the <a href=
+      "http://www.xapautomation.org/index.php?title=Basic_Status_and_Control_Schema">Basic Status
+      and Control Schema</a> (BSC devices). "Input" devices are mapped to JMRI Sensor objects, and
+      "Output" devices are mapped to JMRI Turnouts.</p>
 
-      <p>When JMRI sees a new BSC device, it creates the necessary
-      Sensor or Turnout. The full source name is used to create the
-      system name, for example:
-      <code>IS:xPA:xAPBSC:mi4.homeseer.scafell.91:VIOMBoard.Input14GJDRFXEnable</code>
-      The xPA-defined user defined name fills in the JMRI User
-      Name, for example:</p>
+      <p>When JMRI sees a new BSC device, it creates the necessary Sensor or Turnout. The full
+      source name is used to create the system name, for example:
+      <code>IS:xPA:xAPBSC:mi4.homeseer.scafell.91:VIOMBoard.Input14GJDRFXEnable</code> The
+      xPA-defined user defined name fills in the JMRI User Name, for example:</p>
+
       <pre>
  Input 14 GJD RFX Enable
-</pre>You can later change the JMRI User Name to anything you'd
-like via the usual tables if desired. <a name="tools" id="tools">
-      </a>
+</pre>You can later change the JMRI User Name to anything you'd like via the usual tables if
+desired.
+      <h2 id="tools">JMRI Tools</h2>
 
-      <h2>JMRI Tools</h2>
+      <p>JMRI's support for xAP started with a simple <strong>xAPadapter.py</strong> script
+      available in JMRI 2.9.5 and later releases. Eventually, a full set of JMRI xAP tools will be
+      available directly within the JMRI tool set.</p>
 
-      <p>JMRI's support for xAP started with a simple <a href=
-      "https://jmri.org/jython/jython/xAPadapter.py">xAPadapter.py
-      script</a> available in JMRI 2.9.5 and later releases.
-      Eventually, a full set of JMRI xAP tools will be available
-      directly within the JMRI tool set. <a name="documentation"
-      id="documentation"></a></p>
-
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>Third Party info</h3>
 
-      <p>For more information on the protocol and available
-      equipment, please see the <a href=
+      <p>For more information on the protocol and available equipment, please see the <a href=
       "http://www.xapautomation.org">xAP home page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

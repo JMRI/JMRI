@@ -24,13 +24,9 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
         return (EcosSystemConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    @Override
-    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Reporter r = new EcosReporter(systemName, userName);
         register(r);
         return r;

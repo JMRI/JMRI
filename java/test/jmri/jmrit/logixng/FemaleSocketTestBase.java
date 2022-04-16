@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.*;
@@ -15,6 +16,7 @@ import jmri.jmrit.logixng.swing.SwingTools;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
 
 /**
  * Base class for testing FemaleStringExpressionSocket classes
@@ -255,10 +257,10 @@ public abstract class FemaleSocketTestBase {
     @Test
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
         Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
-        _femaleSocket.setParentForAllChildren();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertNull("malesocket.getParent() is null", maleSocket.getParent());
         _femaleSocket.connect(maleSocket);
-        _femaleSocket.setParentForAllChildren();
+        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Assert.assertEquals("malesocket.getParent() is femaleSocket", _femaleSocket, maleSocket.getParent());
     }
 
@@ -272,7 +274,7 @@ public abstract class FemaleSocketTestBase {
         Assert.assertTrue(_femaleSocket.validateName("Abc___"));
         Assert.assertTrue(_femaleSocket.validateName("Abc___fsdffs"));
         Assert.assertTrue(_femaleSocket.validateName("Abc3123__2341fsdf"));
-        
+
         // Invalid names
         Assert.assertFalse(_femaleSocket.validateName("12Abc"));  // Starts with a digit
         Assert.assertFalse(_femaleSocket.validateName("_Abc"));   // Starts with an underscore
@@ -281,7 +283,7 @@ public abstract class FemaleSocketTestBase {
         Assert.assertFalse(_femaleSocket.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
         Assert.assertFalse(_femaleSocket.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
     }
-    
+
     private boolean setName_verifyException(String newName, String expectedExceptionMessage) {
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         try {
@@ -335,38 +337,6 @@ public abstract class FemaleSocketTestBase {
     }
 
     @Test
-    public void testLock() throws SocketAlreadyConnectedException {
-        _femaleSocket.connect(maleSocket);
-        Assert.assertTrue("socket is connected", _femaleSocket.isConnected());
-
-        _femaleSocket.setLock(Base.Lock.NONE);
-        Assert.assertEquals("lock matches", Base.Lock.NONE, _femaleSocket.getLock());
-        _femaleSocket.setLock(Base.Lock.USER_LOCK);
-        Assert.assertEquals("lock matches", Base.Lock.USER_LOCK, _femaleSocket.getLock());
-        _femaleSocket.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertEquals("lock matches", Base.Lock.HARD_LOCK, _femaleSocket.getLock());
-
-        _femaleSocket.disconnect();
-        boolean hasThrown = false;
-        try {
-            _femaleSocket.setLock(Base.Lock.NONE);
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
-//        JUnitAppender.assertErrorMessage("the name is not valid: ----");
-
-        hasThrown = false;
-        try {
-            _femaleSocket.getLock();
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
-//        JUnitAppender.assertErrorMessage("the name is not valid: ----");
-    }
-
-    @Test
     public void testDisposeWithoutChild() {
         _femaleSocket.dispose();
         Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
@@ -409,14 +379,6 @@ public abstract class FemaleSocketTestBase {
 
         errorFlag.set(false);
         try {
-            _femaleSocket.isExternal();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-
-        errorFlag.set(false);
-        try {
             _femaleSocket.getChild(0);
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
@@ -446,19 +408,13 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getSystemName();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-
     }
 
     @Test
     public void testCategory() {
+        org.junit.Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        JDialog dialog = new JDialog();
+
         // Test that the classes method getCategory() returns the same value as
         // the factory.
         Map<Category, List<Class<? extends Base>>> map = _femaleSocket.getConnectableClasses();
@@ -468,6 +424,7 @@ public abstract class FemaleSocketTestBase {
             for (Class<? extends Base> clazz : entry.getValue()) {
                 // The class SwingToolsTest does not have a swing configurator
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
+                iface.setJDialog(dialog);
                 iface.getConfigPanel(new JPanel());
                 Base obj = iface.createNewObject(iface.getAutoSystemName(), null);
                 Assert.assertEquals("category is correct for "+((MaleSocket)obj).getObject().getClass().getName(), entry.getKey(), obj.getCategory());
@@ -595,7 +552,7 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
-        public void setParentForAllChildren() {
+        public boolean setParentForAllChildren(List<String> errors) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
@@ -611,21 +568,6 @@ public abstract class FemaleSocketTestBase {
 
         @Override
         public Category getCategory() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public Lock getLock() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setLock(Lock lock) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
@@ -734,6 +676,12 @@ public abstract class FemaleSocketTestBase {
             throw new UnsupportedOperationException("Not supported");
         }
 
+        /** {@inheritDoc} */
+        @Override
+        public void getListenerRefsIncludingChildren(List<String> list) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
         @Override
         public int getNumPropertyChangeListeners() {
             throw new UnsupportedOperationException("Not supported");
@@ -807,6 +755,51 @@ public abstract class FemaleSocketTestBase {
         @Override
         public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
             throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public boolean isLocked() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setLocked(boolean locked) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public boolean isSystem() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setSystem(boolean system) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public boolean getCatchAbortExecution() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setCatchAbortExecution(boolean catchAbortExecution) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void handleError(Base item, String message, List<String> messageList, JmriException e, Logger log) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
         }
     }
 

@@ -1,302 +1,475 @@
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Blorec Herv&#233;  2017-01-27-->
 <html lang="fr">
 <head>
-    <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
-    <!-- Style -->
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-    <link rel="icon" href="/images/jmri.ico" type="image/png">
-    <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - LocoNet® Addressing</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>Adressage LocoNet</h1>
-      Le Syst&egrave;mes LocoNet adresse
-      des capteurs en entr&eacute;e et des aiguillages en sortie en
-      utilisant des num&eacute;ros. Cette page explique comment ces
-      chiffres sont d&eacute;finis dans JMRI, et comment ils se
-      rapportent pour les num&eacute;ros dans d'autres
-      syst&egrave;mes..
-
-      <h2>Adressage Aiguillage LocoNet dans JMRI</h2>A
-      l'int&eacute;rieur des paquets sur la LocoNet, les sorties
-      aiguillages sont adress&eacute;es avec des nombres de 0
-      &agrave; 4095. Les r&eacute;gulateurs cependant,
-      r&eacute;pondent aux num&eacute;ros 1 &agrave; 4096. Pour
-      &eacute;viter la confusion pour l'utilisateur , JMRI utilise
-      la m&ecirc;me num&eacute;rotation que les r&eacute;gulateurs:
-      LT1 &agrave; LT4096.
-
-      <p>Notez que lorsque le panneau moniteur LocoNet affiche le
-      contenu des paquets LocoNet dans le texte, il utilise le
-      m&ecirc;me adressage, donc 1 &agrave; 4096. Il est ensuite
-      diff&eacute;rent des octets bruts qui sont affich&eacute;s,
-      mais au moins c'est compatible avec ce que les utilisateurs
-      s'attendent &agrave; voir. Nous convenons de la confusion,
-      mais il doit y avoir une certaine confusion, quelque part,
-      &eacute;tant donn&eacute; la fa&ccedil;on dont cela a
-      &eacute;t&eacute; mis en place</p>
+      Le Systèmes LocoNet adresse des capteurs en entrée et des aiguillages en sortie en utilisant
+      des numéros. Cette page explique comment ces chiffres sont définis dans JMRI, et comment ils
+      se rapportent pour les numéros dans d'autres systèmes..
+      <h2>Adressage Aiguillage LocoNet dans JMRI</h2>
+      A l'intérieur des paquets sur la LocoNet, les sorties aiguillages sont adressées avec des
+      nombres de 0 à 4095. Les régulateurs cependant, répondent aux numéros 1 à 4096. Pour éviter
+      la confusion pour l'utilisateur , JMRI utilise la même numérotation que les régulateurs: LT1
+      à LT4096.
+      <p>Notez que lorsque le panneau moniteur LocoNet affiche le contenu des paquets LocoNet dans
+      le texte, il utilise le même adressage, donc 1 à 4096. Il est ensuite différent des octets
+      bruts qui sont affichés, mais au moins c'est compatible avec ce que les utilisateurs
+      s'attendent à voir. Nous convenons de la confusion, mais il doit y avoir une certaine
+      confusion, quelque part, étant donné la façon dont cela a été mis en place</p>
 
       <h3>Le Tableau Aiguillage</h3>
 
-<h1>Support: Adressage LocoNet&reg;</h1>
+      <h1>Support: Adressage LocoNet®</h1>
 
-<ul class="snav"><!-- h2 TOC -->
-    <li><a href="#turnouts">Aiguillages</a></li>
-    <li><a href="#sensor">Capteurs</a></li>
-    <li><a href="#transponding">Retransmission</a></li>
-    <li><a href="#SVs">SVs</a></li>
-</ul>
+      <ul class="snav">
+        <!-- h2 TOC -->
 
-Le Syst&#232;mes LocoNet&reg; adresse des Capteurs en entr&#233;e et des Aiguillages en  sortie en utilisant des num&#233;ros.
-Cette page explique comment ces chiffres sont d&#233;finis dans JMRI, et comment ils se rapportent
-auxs num&#233;ros dans d'autres syst&#232;mes..
+        <li><a href="#turnouts">Aiguillages</a>
+        </li>
 
-<h2>Adressage Aiguillage LocoNet</h2>
+        <li><a href="#sensor">Capteurs</a>
+        </li>
 
-A l'int&#233;rieur des paquets sur la LocoNet, les sorties Aiguillages sont adress&#233;es avec des num&#233;ros de 0 &#224; 4095.
-Les r&#233;gulateurs cependant, adressent ceux-ci avec des num&#233;ros de1 &#224; 4096. Pour &#233;viter la confusion pour l'utilisateur
-, JMRI utilise la m&#234;me num&#233;rotation que les r&#233;gulateurs: LT1 &#224; LT4096.
-<p>
-Notez que lorsque le panneau moniteur LocoNet affiche le contenu des paquets LocoNet 
-dans le texte, il utilise le m&#234;me adressage, donc 1 &#224; 4096. Il est ensuite diff&#233;rent 
-des octets bruts qui sont affich&#233;s, mais au moins c'est compatible avec ce que les 
-utilisateurs s'attendent &#224; voir. Nous convenons de  la confusion, mais il doit y avoir une certaine 
-confusion, quelque part, &#233;tant donn&#233; la fa&#231;on dont cela a &#233;t&#233; mis en place
+        <li><a href="#transponding">Retransmission</a>
+        </li>
 
-<h3>Le Tableau Aiguillage</h3>
-<p>Le Table Aiguillage JMRI montre un tableau des Aiguillage que JMRI connait. &#192; 
-chaque fois que JMRI voit un message LocoNet qui sp&#233;cifie un Aiguillage, JMRI met &#224; jour 
-une entr&#233;e existante dans le tableau ou cr&#233;e une nouvelle entr&#233;e si elle 
-n'existe pas. Chaque Aiguillage dans le tableau peut &#234;tre affect&#233; d'un "Nom Utilisateur".</p>
-<p>Le tableau Aiguillage fournit un aper&#231;u utile de l'&#233;tat actuel de tous 
-les Aiguillages connus, et permet &#224; l'utilisateur de changer l'&#233;tat de ces Aiguillages.</p>
-<p>Des informations suppl&#233;mentaires sur les Aiguillages et le Tableau Aiguillage peuvent &#234;tre trouv&#233;es dans la
-     <a href="../../tools/Turnouts.shtml">page principale des Aiguillages</a>.</p>
+        <li><a href="#SVs">SVs</a>
+        </li>
+      </ul>
+      Le Systèmes LocoNet® adresse des Capteurs en entrée et des Aiguillages en sortie en utilisant
+      des numéros. Cette page explique comment ces chiffres sont définis dans JMRI, et comment ils
+      se rapportent auxs numéros dans d'autres systèmes..
+      <h2>Adressage Aiguillage LocoNet</h2>
+      A l'intérieur des paquets sur la LocoNet, les sorties Aiguillages sont adressées avec des
+      numéros de 0 à 4095. Les régulateurs cependant, adressent ceux-ci avec des numéros de1 à
+      4096. Pour éviter la confusion pour l'utilisateur , JMRI utilise la même numérotation que les
+      régulateurs: LT1 à LT4096.
+      <p>Notez que lorsque le panneau moniteur LocoNet affiche le contenu des paquets LocoNet dans
+      le texte, il utilise le même adressage, donc 1 à 4096. Il est ensuite différent des octets
+      bruts qui sont affichés, mais au moins c'est compatible avec ce que les utilisateurs
+      s'attendent à voir. Nous convenons de la confusion, mais il doit y avoir une certaine
+      confusion, quelque part, étant donné la façon dont cela a été mis en place</p>
 
-<a name="sensor" id="sensor"></a>
-<h2>Adressage des Capteurs LocoNet</h2>
+      <h3>Le Tableau Aiguillage</h3>
 
-A l'int&#233;rieur des paquets sur le LocoNet, les Capteurs sont trait&#233;s avec des num&#233;ros de 0 &#224; 4095.
-La documentation Digitrax  fait r&#233;f&#233;rence &#224; des nombres de 1 &#224; 4096, cependant. Tout comme pour les 
-Aiguillages, nous utilisons la documentation de num&#233;rotation pour d&#233;finir les noms de Capteur: LS1 &#224; LS4096.
-<p>
-La fa&#231;on la plus simple de trouver 
-les bon num&#233;ros pour un Canton donn&#233; est d'ouvrir une fen&#234;tre, "LocoNet moniteur", et d&#233;poser une
-locomotive sur le Canton qui vous &#234;tes int&#233;resse Vous verrez 
-les Message LocoNet, avec le num&#233;ro, dans la fen&#234;tre qui 
-ressemble &#224; quelque chose comme ceci:
-<code>
-    "General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi"
-</code>
-Le num&#233;ro de contact, 161 dans ce cas, est l'adresse du Capteur. 
-Le pr&#233;fixe qui avec LS obtient le Nom Syst&#232;me du Capteur, par exemple LS161 dans ce cas.
-<p>
-Si vous voulez entrer manuellement les adresses du mat&#233;riel dans le syst&#232;me, vous pouvez le faire en entrant le num&#233;ro de la carte, 
-suivi par le num&#233;ro de canal s&#233;par&#233; par un":"<br>
-Ainsi pour un Capteur sur la carte 11, canal 1, vous devrez entre dans le champs 
-Adresse Mat&#233;riel:<b>11:1</b>
-<p>
-Si vous voulez calculer l'adresse d'une entr&#233;e BDL168, vous pouvez utiliser
-<code>
-&nbsp;&nbsp;&nbsp;&nbsp;nombre = 16 * (num&#233;ro de carte) + (num&#233;ro de canal) - 16
-</code>
-o&#249; "num&#233;ro de canal" va de 1 &#224; 16. Par exemple, le premier circuit
-(num&#233;ro 1) sur la carte 11 a le num&#233;ro:
-<code>
-&nbsp;&nbsp;&nbsp;&nbsp;nombre = 16 * (11) + (1) - 16 = 161
-</code>
-o&ugrave; "num&eacute;ro de canal" va de 1 &agrave; 16. Par
-exemple, le premier circuit (num&eacute;ro 1) sur la carte 11 a le
-num&eacute;ro: <code>nombre = 16 * (11) + (1) - 16 = 161</code>
-comme nous l'avons vu dans l'exemple ci-dessus.
-<p>
-Si vous voulez calculer l'adresse d'une DS54, utilisez:
-<code>
-&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 * (num&#233;ro de l'Aiguillage - 1) + 1
-</code>
-Par exemple, l'entr&#233;e associ&#233;e &#224; l'Aiguillage 81 a le num&#233;ro:
-<code>
-&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 * (81 - 1) + 1 = 161
- </code>
-Si c'est l'entr&#233;e du commutateur, vous ajouter un plus &#224; ce que:
-<code>
-&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 * (num&#233;ro d'Aiguillage  - 1) + 2
-</code>
-<p>Par exemple, l'entr&#233;e du commutateur associ&#233;s &#224; l'Aiguillage 12 a le num&#233;ro:</p>
-<code>
-&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 * (12 - 1) + 2 = 24.
-</code>
+      <p>Le Table Aiguillage JMRI montre un tableau des Aiguillage que JMRI connait. À chaque fois
+      que JMRI voit un message LocoNet qui spécifie un Aiguillage, JMRI met à jour une entrée
+      existante dans le tableau ou crée une nouvelle entrée si elle n'existe pas. Chaque Aiguillage
+      dans le tableau peut être affecté d'un "Nom Utilisateur".</p>
 
-<h3>Le Tableau Capteur</h3>
-<p>Le tableau Capteur JMRI montre un tableau de Capteurs que JMRI connait.Chaque 
-fois que JMRI voit un message LocoNet qui sp&#233;cifie un Capteur ,JMRI met &#224; jour une 
-entr&#233;e existante dans le tableau ou cr&#233;e une nouvelle entr&#233;e si elle n'existe pas d&#233;j&#224;. 
-Chaque Capteur dans le tableau peut &#234;tre affect&#233; d'un "Nom Utilisateur".</p>
-<p>Le Tableau Capteur fournit un aper&#231;u utile de l'&#233;tat actuel de tous 
-les Capteurs connus.</p>
-<p>Des informations suppl&#233;mentaires sur les Capteurs et le Tableau Capteurs peuvent &#234;tre trouv&#233;es dans la
-     <a href="../../tools/Sensors.shtml"> page principale Capteurs</a>.</p>
+      <p>Le tableau Aiguillage fournit un aperçu utile de l'état actuel de tous les Aiguillages
+      connus, et permet à l'utilisateur de changer l'état de ces Aiguillages.</p>
 
-<h2>Addressage Transpondeur</h2>
+      <p>Des informations supplémentaires sur les Aiguillages et le Tableau Aiguillage peuvent être
+      trouvées dans la <a href="../../tools/Turnouts.shtml">page principale des
+      Aiguillages</a>.</p>
+      <a name="sensor" id="sensor"></a>
+      <h2>Adressage des Capteurs LocoNet</h2>
+      A l'intérieur des paquets sur le LocoNet, les Capteurs sont traités avec des numéros de 0 à
+      4095. La documentation Digitrax fait référence à des nombres de 1 à 4096, cependant. Tout
+      comme pour les Aiguillages, nous utilisons la documentation de numérotation pour définir les
+      noms de Capteur: LS1 à LS4096.
+      <p>La façon la plus simple de trouver les bon numéros pour un Canton donné est d'ouvrir une
+      fenêtre, "LocoNet moniteur", et déposer une locomotive sur le Canton qui vous êtes intéresse
+      Vous verrez les Message LocoNet, avec le numéro, dans la fenêtre qui ressemble à quelque
+      chose comme ceci: <code>"General sensor input report: contact 161 (DS54 switch 81 Aux input)
+      (BDL16 11,1) is Hi"</code> Le numéro de contact, 161 dans ce cas, est l'adresse du Capteur.
+      Le préfixe qui avec LS obtient le Nom Système du Capteur, par exemple LS161 dans ce cas.</p>
 
-<p>Le transpondeur Digitrax est g&#233;r&#233; via le m&#233;canisme de Rapport
-dans JMRI. Les Rapports recueillent l'information depuis le r&#233;seau et la rend
-disponible quand elle change. JMRI se r&#233;f&#232;re &#224; aux Rapports en utilisant le nom
-<i> LRx</i> o&#249; <i> x</i> est un nombre qui correspond &#224; une zone de d&#233;tection</p>
-<p>
-Les zones de transpondeur sont num&#233;rot&#233;es s&#233;quentiellement depuis 1 &#224; 4096. Le 
-     mat&#233;riel actuel BDL16x oeuvre seulement sur les zones de transpondage impaires. La premi&#232;re
-     zone transpondage d'une carte BDL16x est rapport&#233; comme un journal num&#233;ro
-     <span style="font-family: monospace"> (1 + ( adresse carte -1) * 16)</span>.
-     La deuxi&#232;me zone de transpondage d'une carte BDL16x est rapport&#233; comme un journal num&#233;ro
-     <span style="font-family: monospace"> (1 + ( adresse carte -1) * 16) + 2</span>.</p>
-La num&#233;rotation Rapports  <p> est r&#233;sum&#233;e dans le tableau ci-dessous:</p>
-     <table border="2">
-	  <tr align="center"><td>Adresse Carte</td><td>Zone</td><td>Num&#233;ro Rapport</td></tr>
-        <tr align="center"><td rowspan="8">1</td><td>A</td><td>LR1</td></tr>
-        <tr align="center"><td>B</td><td>LR3</td></tr>
-        <tr align="center"><td>C</td><td>LR5</td></tr>
-        <tr align="center"><td>D</td><td>LR7</td></tr>
-        <tr align="center"><td>E</td><td>LR9</td></tr>
-        <tr align="center"><td>F</td><td>LR11</td></tr>
-        <tr align="center"><td>G</td><td>LR13</td></tr>
-        <tr align="center"><td>H</td><td>LR15</td></tr>
-        <tr align="center"><td rowspan="8">2</td><td>A</td><td>LR17</td></tr>
-        <tr align="center"><td>B</td><td>LR19</td></tr>
-        <tr align="center"><td>C</td><td>LR21</td></tr>
-        <tr align="center"><td>D</td><td>LR23</td></tr>
-        <tr align="center"><td>E</td><td>LR25</td></tr>
-        <tr align="center"><td>F</td><td>LR27</td></tr>
-        <tr align="center"><td>G</td><td>LR29</td></tr>
-        <tr align="center"><td>H</td><td>LR31</td></tr>
-        <tr align="center"><td rowspan="8">3</td><td>A</td><td>LR33</td></tr>
-        <tr align="center"><td>B</td><td>LR35</td></tr>
-        <tr align="center"><td>C</td><td>LR37</td></tr>
-        <tr align="center"><td>D</td><td>LR39</td></tr>
-        <tr align="center"><td>E</td><td>LR41</td></tr>
-        <tr align="center"><td>F</td><td>LR43</td></tr>
-        <tr align="center"><td>G</td><td>LR45</td></tr>
-        <tr align="center"><td>H</td><td>LR47</td></tr>
-        <tr align="center"><td colspan="3">...</td></tr>
-        <tr align="center"><td rowspan="4">256</td><td>A</td><td>LR4081</td></tr>
-        <tr align="center"><td>B</td><td>LR4083</td></tr>
-        <tr align="center"><td colspan="2">...</td></tr>
-        <tr align="center"><td>H</td><td>LR4095</td></tr>
-    </table>
+      <p>Si vous voulez entrer manuellement les adresses du matériel dans le système, vous pouvez
+      le faire en entrant le numéro de la carte, suivi par le numéro de canal séparé par un":"<br>
+      Ainsi pour un Capteur sur la carte 11, canal 1, vous devrez entre dans le champs Adresse
+      Matériel:<strong>11:1</strong></p>
 
-<a name="reporter" id="reporter"></a>
-<h3>Le Tableau Rapports</h3>
-<p>Le Tableau Rapports JMRI montre un tableau de Rapports que JMRI connait. JMRI
-     cr&#233;e une entr&#233;e dans ce tableau pour chaque nouvelle zone de r&#233;p&#233;teurs pour lesquels il voit un message
-     transpondage  Chaque rapport dans le tableau peut &#234;tre affect&#233; d'un "Nom Utilisateur".</p>
-<p>Une fois que vous avez le mat&#233;riel transpondage install&#233; et au moins une locomotive
-     r&#233;pondant correctement, il est simple de remplir le tableau de rapports pour chaque 
-	zone de transpondage  en mettant la locomotive transpondante  	   
-	dans toutes les zones de transpondages compatibles. Il peut &#234;tre utile de remplir un "Nom Utilisateur"
-     dans le tableau Rapports JMRI au m&#234;me moment o&#249; la locomotive p&#233;n&#232;tre dans
-     chaque zone de transpondage</p>
-<p>Des informations suppl&#233;mentaires sur les Rapports et le Tableau Rapports peuvent &#234;tre trouv&#233; dans la
-     <a  href="../../tools/Reporters.shtml"> page principale Rapports</a>.</p>
+      <p>Si vous voulez calculer l'adresse d'une entrée BDL168, vous pouvez utiliser
+      <code>&nbsp;&nbsp;&nbsp;&nbsp;nombre = 16 * (numéro de carte) + (numéro de canal) - 16</code>
+      où "numéro de canal" va de 1 à 16. Par exemple, le premier circuit (numéro 1) sur la carte 11
+      a le numéro: <code>&nbsp;&nbsp;&nbsp;&nbsp;nombre = 16 * (11) + (1) - 16 = 161</code> où
+      "numéro de canal" va de 1 à 16. Par exemple, le premier circuit (numéro 1) sur la carte 11 a
+      le numéro: <code>nombre = 16 * (11) + (1) - 16 = 161</code> comme nous l'avons vu dans
+      l'exemple ci-dessus.</p>
 
-<a name="SVs" id="SVs"></a>
-<h2>Traitement des Variables Syst&#232;me LocoNet (SVs)</h2>
-( Ce qui suit a &#233;t&#233; tout d'abord disponible dansAvant
-<a href="https://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI 4.1.2</a>. Les versions pr&#233;c&#233;dentes 
-peuvent ne pas &#234;tres termin&#233;es ).
-<p>
-Comme les d&#233;codeurs stockent les Variables de Configuration ( CVs ) pour d&#233;finir leurs r&#233;glages, 
-certains appareils compatibles LocoNet disposent de Variables Syst&#232;me ( SVs ).
-<p>
-Il y a ( au moins ) deux variantes du protocole pour acc&#233;der &#224; celles-ci. 
-JMRI peut utiliser la version 1 ou 2 pour acc&#233;der aux SVs compatibles en s&#233;lectionnant 
-"System Variable Type 1" ou "System Variable Type 2" comme mode programmation, respectivement.
-Cette option est pr&#233;sent&#233;e 
-quand vous utilisez une Connexion Syst&#232;me LocoNet qui est actuellement connect&#233;e &#224; LocoNet, 
-Tel qu'un LocoBuffer - USB ou PR3 dans le mode MS100.
-<p>
-SVs sont num&#233;rot&#233;es de 1 &#224; 127 pour le mat&#233;riel version 1 et de 1 &#224; 2^16-1 = 65,565 
-pour le mat&#233;riel version 2. Leurs noms peuvent &#234;tre &#233;crits dans plusieurs formats:
-<ul>
-    <li>nnnn, exemple: 12345- Comme CVs r&#233;guliers,c'est le format pour lire et &#233;crire
-    un octet ( byte ) entier.
-    <li>nnnL, exempe: 123L - ( version 2 seulement ). Ceci signifie lire ou &#233;crire 4 octets &#224; la fois.Ceci est plus
-    &#233;fficace pour les grandes variables, mais notez que vous devrez &#234;tre tr&#233;s soigneux pour ne pas d&#233;finir de chevauchement
-    dans la m&#234;me m&#233;moire: avoir CV10L et CV12L pr&#233;sent causera de la confusion,
-    car nous aurons &#224; la fois CV12L et CV13 pr&#233;sent.
-    <li>nnnn^HH, exemple:123^80 - ( version 2 seulement ). Cela signifie une &#233;criture masqu&#233;e. Seul les bits marqu&#233;s &#224; 1
-    dans les deux digits apr&#232;s le caract&#232;re "^", seront &#233;crits dans l'&#233;quipement. Dans l'exemple,
-    cela signifie juste que le bit le plus significatif sera &#233;crit. LEs valeurs des autres bits actuelleemnt
-    dans l'&#233;quipement ne seront pas chang&#233;s.
-            C'est un peu subtil, aussi nous fournissons quelques exemples:
-    <table border= "2">
-    <tr><th>CV<br>Num&#233;ro</th><th>Prior<br>Contenu</th><th>Valeur<br>&#201;crite</th><th>Masqu&#233;<br>Valeur
-    </th><th>New<br>Contenu</th></tr>
-    <tr><td>CV1^01</td><td>0x55</td><td>0x22</td><td>0x01</td><td>0x23</td></tr>
-    <tr><td>CV1^01</td><td>0x54</td><td>0x22</td><td>0x01</td><td>0x22</td></tr>
-    <tr><td>CV1^0F</td><td>0x55</td><td>0x33</td><td>0x03</td><td>0x53</td></tr>
-    <tr><td>CV1^F0</td><td>0x55</td><td>0x33</td><td>0x03</td><td>0x53</td></tr>
-    <tr><td>CV1^33</td><td>0xF0</td><td>0x77</td><td>0x30</td><td>0x37</td></tr>
-    </table>
-    Notez que, Contrairement &#224; l'attribut "masque" JMRI, la valeur n'est pas d&#233;cal&#233;e pour correspondre aux bits de masque.
-    C'est peut-&#234;tre mieux utilis&#233; pour les valeurs de bit unique via des variables enum, o&#249; les choix sp&#233;cifi&#233;s
-    peuvent avoir le bon codage de bits. Ou pas utilis&#233; du tout, et compter sur DecoderPro
-    pour &#233;crire les valeurs combin&#233;es des mots complets correctement.</li>
-</ul>
+      <p>Si vous voulez calculer l'adresse d'une DS54, utilisez:
+      <code>&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 * (numéro de l'Aiguillage - 1) + 1</code> Par
+      exemple, l'entrée associée à l'Aiguillage 81 a le numéro:
+      <code>&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 * (81 - 1) + 1 = 161</code> Si c'est l'entrée du
+      commutateur, vous ajouter un plus à ce que: <code>&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 *
+      (numéro d'Aiguillage - 1) + 2</code></p>
 
-<h3>Adressage SV Carte Version 1</h3>
-<p>Dans plusieurs documents, le protocole SV version utilise Une adresse en deux parties: 83/1, par exemple.
-(SV version 2 utilise un simple nombre avec jusqu'&#224; 14 bits; 0 n'est pas utilis&#233; ). 
-Il ne semble pas y avoir de m&#233;thode standard pour cartographier cela en un seul nombre. 
-JMRI cartographie A/B par (B-1)*256+A. La plupart des cartes semblent utiliser les adresses N/1, ainsi ceci 
-fait que cela corresponde tout juste &#224; N dans JMRI. Pour r&#233;sum&#233;:
-</p>
+      <p>Par exemple, l'entrée du commutateur associés à l'Aiguillage 12 a le numéro:</p>
+      <code>&nbsp;&nbsp;&nbsp;&nbsp;nombre = 2 * (12 - 1) + 2 = 24.</code>
+      <h3>Le Tableau Capteur</h3>
 
-<table border="2">
-<tr><th width="80">Ancien<br>Style</th><th width="80">JMRI<br>Nombre</th></tr>
-<tr><td>10/1</td><td>10</td></tr>
-<tr><td>83/1</td><td>83</td></tr>
-<tr><td>83/2</td><td>339</td></tr>
-<tr><td>83/0</td><td>-173</td></tr>
-</table>
+      <p>Le tableau Capteur JMRI montre un tableau de Capteurs que JMRI connait.Chaque fois que
+      JMRI voit un message LocoNet qui spécifie un Capteur ,JMRI met à jour une entrée existante
+      dans le tableau ou crée une nouvelle entrée si elle n'existe pas déjà. Chaque Capteur dans le
+      tableau peut être affecté d'un "Nom Utilisateur".</p>
 
-Notez que les adresses N/0 font des op&#233;rations sp&#233;ciales, et ne sont pas r&#233;ellement des adresses: Elles tournent 
-les messages de programmation en commandes. Ils sont disponibles en utilisant des nombres n&#233;gatifs 
-comme ci-dessus, mais ils ne sont vraiment pas recommand&#233;!
+      <p>Le Tableau Capteur fournit un aperçu utile de l'état actuel de tous les Capteurs
+      connus.</p>
 
-<h3>Utilisation de ceci dans une carte de d&#233;finition DecoderPro</h3>
+      <p>Des informations supplémentaires sur les Capteurs et le Tableau Capteurs peuvent être
+      trouvées dans la <a href="../../tools/Sensors.shtml">page principale Capteurs</a>.</p>
 
-Vous pouvez utilisez tous les outils DecderPro pour g&#233;rer une carte utilisant le protocole SV LocoNet 
-si vous fournissez un fichier de d&#233;finition appropri&#233;. Ceuc-ci sont dans le m&#234;meformat 
-qu'un fichier de d&#233;finition d&#233;codeur, ecept&#233; que pour spcifier le protocole SV LocoNet Version 2 Vous modifiez 
-l'&#233;l&#233;ment "programming pour ressembler &#224;:
-<code>
-    &lt;programming direct="no" paged="no" register="no" ops="no"&gt;
-        &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
-    &lt;/programming&gt;
-</code>
-<p>lLe protocole SV LocoNet Version 1 est la m&#234;me exception que vous sp&#233;cifiez LOCONETSV1MODE.
-Pour avoir plus d'information, voir le schema definition file.
-<p>
-Notez que le protocole version 1 n'est plus recommand&#233;e. Si vous &#233;crivez 
-une d&#233;finition d&#233;codeur pour un circuit qui peut utiliser les deux, vous sautereze la ver sion 1 par 
-la fourniture de l'option LOCONETSV2MODE.
+      <h2>Addressage Transpondeur</h2>
 
-<p>LocoNet&reg; est une marque enregistr&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <p>Le transpondeur Digitrax est géré via le mécanisme de Rapport dans JMRI. Les Rapports
+      recueillent l'information depuis le réseau et la rend disponible quand elle change. JMRI se
+      réfère à aux Rapports en utilisant le nom <em>LRx</em> où <em>x</em> est un nombre qui
+      correspond à une zone de détection</p>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Les zones de transpondeur sont numérotées séquentiellement depuis 1 à 4096. Le matériel
+      actuel BDL16x oeuvre seulement sur les zones de transpondage impaires. La première zone
+      transpondage d'une carte BDL16x est rapporté comme un journal numéro <span style=
+      "font-family: monospace">(1 + ( adresse carte -1) * 16)</span>. La deuxième zone de
+      transpondage d'une carte BDL16x est rapporté comme un journal numéro <span style=
+      "font-family: monospace">(1 + ( adresse carte -1) * 16) + 2</span>.</p>
+      La numérotation Rapports
+      <p>est résumée dans le tableau ci-dessous:</p>
+
+      <table border="2" summary="">
+        <tr align="center">
+          <td>Adresse Carte</td>
+          <td>Zone</td>
+          <td>Numéro Rapport</td>
+        </tr>
+
+        <tr align="center">
+          <td rowspan="8">1</td>
+          <td>A</td>
+          <td>LR1</td>
+        </tr>
+
+        <tr align="center">
+          <td>B</td>
+          <td>LR3</td>
+        </tr>
+
+        <tr align="center">
+          <td>C</td>
+          <td>LR5</td>
+        </tr>
+
+        <tr align="center">
+          <td>D</td>
+          <td>LR7</td>
+        </tr>
+
+        <tr align="center">
+          <td>E</td>
+          <td>LR9</td>
+        </tr>
+
+        <tr align="center">
+          <td>F</td>
+          <td>LR11</td>
+        </tr>
+
+        <tr align="center">
+          <td>G</td>
+          <td>LR13</td>
+        </tr>
+
+        <tr align="center">
+          <td>H</td>
+          <td>LR15</td>
+        </tr>
+
+        <tr align="center">
+          <td rowspan="8">2</td>
+          <td>A</td>
+          <td>LR17</td>
+        </tr>
+
+        <tr align="center">
+          <td>B</td>
+          <td>LR19</td>
+        </tr>
+
+        <tr align="center">
+          <td>C</td>
+          <td>LR21</td>
+        </tr>
+
+        <tr align="center">
+          <td>D</td>
+          <td>LR23</td>
+        </tr>
+
+        <tr align="center">
+          <td>E</td>
+          <td>LR25</td>
+        </tr>
+
+        <tr align="center">
+          <td>F</td>
+          <td>LR27</td>
+        </tr>
+
+        <tr align="center">
+          <td>G</td>
+          <td>LR29</td>
+        </tr>
+
+        <tr align="center">
+          <td>H</td>
+          <td>LR31</td>
+        </tr>
+
+        <tr align="center">
+          <td rowspan="8">3</td>
+          <td>A</td>
+          <td>LR33</td>
+        </tr>
+
+        <tr align="center">
+          <td>B</td>
+          <td>LR35</td>
+        </tr>
+
+        <tr align="center">
+          <td>C</td>
+          <td>LR37</td>
+        </tr>
+
+        <tr align="center">
+          <td>D</td>
+          <td>LR39</td>
+        </tr>
+
+        <tr align="center">
+          <td>E</td>
+          <td>LR41</td>
+        </tr>
+
+        <tr align="center">
+          <td>F</td>
+          <td>LR43</td>
+        </tr>
+
+        <tr align="center">
+          <td>G</td>
+          <td>LR45</td>
+        </tr>
+
+        <tr align="center">
+          <td>H</td>
+          <td>LR47</td>
+        </tr>
+
+        <tr align="center">
+          <td colspan="3">...</td>
+        </tr>
+
+        <tr align="center">
+          <td rowspan="4">256</td>
+          <td>A</td>
+          <td>LR4081</td>
+        </tr>
+
+        <tr align="center">
+          <td>B</td>
+          <td>LR4083</td>
+        </tr>
+
+        <tr align="center">
+          <td colspan="2">...</td>
+        </tr>
+
+        <tr align="center">
+          <td>H</td>
+          <td>LR4095</td>
+        </tr>
+      </table>
+      <a name="reporter" id="reporter"></a>
+      <h3>Le Tableau Rapports</h3>
+
+      <p>Le Tableau Rapports JMRI montre un tableau de Rapports que JMRI connait. JMRI crée une
+      entrée dans ce tableau pour chaque nouvelle zone de répéteurs pour lesquels il voit un
+      message transpondage Chaque rapport dans le tableau peut être affecté d'un "Nom
+      Utilisateur".</p>
+
+      <p>Une fois que vous avez le matériel transpondage installé et au moins une locomotive
+      répondant correctement, il est simple de remplir le tableau de rapports pour chaque zone de
+      transpondage en mettant la locomotive transpondante dans toutes les zones de transpondages
+      compatibles. Il peut être utile de remplir un "Nom Utilisateur" dans le tableau Rapports JMRI
+      au même moment où la locomotive pénètre dans chaque zone de transpondage</p>
+
+      <p>Des informations supplémentaires sur les Rapports et le Tableau Rapports peuvent être
+      trouvé dans la <a href="../../tools/Reporters.shtml">page principale Rapports</a>.</p>
+      <a name="SVs" id="SVs"></a>
+      <h2>Traitement des Variables Système LocoNet (SVs)</h2>
+      ( Ce qui suit a été tout d'abord disponible dansAvant <a href=
+      "https://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI 4.1.2</a>. Les versions précédentes
+      peuvent ne pas êtres terminées ).
+      <p>Comme les décodeurs stockent les Variables de Configuration ( CVs ) pour définir leurs
+      réglages, certains appareils compatibles LocoNet disposent de Variables Système ( SVs ).</p>
+
+      <p>Il y a ( au moins ) deux variantes du protocole pour accéder à celles-ci. JMRI peut
+      utiliser la version 1 ou 2 pour accéder aux SVs compatibles en sélectionnant "System Variable
+      Type 1" ou "System Variable Type 2" comme mode programmation, respectivement. Cette option
+      est présentée quand vous utilisez une Connexion Système LocoNet qui est actuellement
+      connectée à LocoNet, Tel qu'un LocoBuffer - USB ou PR3 dans le mode MS100.</p>
+
+      <p>SVs sont numérotées de 1 à 127 pour le matériel version 1 et de 1 à 2^16-1 = 65,565 pour
+      le matériel version 2. Leurs noms peuvent être écrits dans plusieurs formats:</p>
+
+      <ul>
+        <li>nnnn, exemple: 12345- Comme CVs réguliers,c'est le format pour lire et écrire un octet
+        ( byte ) entier.</li>
+
+        <li>nnnL, exempe: 123L - ( version 2 seulement ). Ceci signifie lire ou écrire 4 octets à
+        la fois.Ceci est plus éfficace pour les grandes variables, mais notez que vous devrez être
+        trés soigneux pour ne pas définir de chevauchement dans la même mémoire: avoir CV10L et
+        CV12L présent causera de la confusion, car nous aurons à la fois CV12L et CV13
+        présent.</li>
+
+        <li>nnnn^HH, exemple:123^80 - ( version 2 seulement ). Cela signifie une écriture masquée.
+        Seul les bits marqués à 1 dans les deux digits après le caractère "^", seront écrits dans
+        l'équipement. Dans l'exemple, cela signifie juste que le bit le plus significatif sera
+        écrit. LEs valeurs des autres bits actuelleemnt dans l'équipement ne seront pas changés.
+        C'est un peu subtil, aussi nous fournissons quelques exemples:
+          <table border="2" summary="">
+            <tr>
+              <th>CV<br>
+              Numéro</th>
+              <th>Prior<br>
+              Contenu</th>
+              <th>Valeur<br>
+              Écrite</th>
+              <th>Masqué<br>
+              Valeur</th>
+              <th>New<br>
+              Contenu</th>
+            </tr>
+
+            <tr>
+              <td>CV1^01</td>
+              <td>0x55</td>
+              <td>0x22</td>
+              <td>0x01</td>
+              <td>0x23</td>
+            </tr>
+
+            <tr>
+              <td>CV1^01</td>
+              <td>0x54</td>
+              <td>0x22</td>
+              <td>0x01</td>
+              <td>0x22</td>
+            </tr>
+
+            <tr>
+              <td>CV1^0F</td>
+              <td>0x55</td>
+              <td>0x33</td>
+              <td>0x03</td>
+              <td>0x53</td>
+            </tr>
+
+            <tr>
+              <td>CV1^F0</td>
+              <td>0x55</td>
+              <td>0x33</td>
+              <td>0x03</td>
+              <td>0x53</td>
+            </tr>
+
+            <tr>
+              <td>CV1^33</td>
+              <td>0xF0</td>
+              <td>0x77</td>
+              <td>0x30</td>
+              <td>0x37</td>
+            </tr>
+          </table>
+          Notez que, Contrairement à l'attribut "masque" JMRI, la valeur n'est pas décalée pour
+          correspondre aux bits de masque. C'est peut-être mieux utilisé pour les valeurs de bit
+          unique via des variables enum, où les choix spécifiés peuvent avoir le bon codage de
+          bits. Ou pas utilisé du tout, et compter sur DecoderPro pour écrire les valeurs combinées
+          des mots complets correctement.
+        </li>
+      </ul>
+
+      <h3>Adressage SV Carte Version 1</h3>
+
+      <p>Dans plusieurs documents, le protocole SV version utilise Une adresse en deux parties:
+      83/1, par exemple. (SV version 2 utilise un simple nombre avec jusqu'à 14 bits; 0 n'est pas
+      utilisé ). Il ne semble pas y avoir de méthode standard pour cartographier cela en un seul
+      nombre. JMRI cartographie A/B par (B-1)*256+A. La plupart des cartes semblent utiliser les
+      adresses N/1, ainsi ceci fait que cela corresponde tout juste à N dans JMRI. Pour résumé:</p>
+
+      <table border="2" summary="">
+        <tr>
+          <th width="80">Ancien<br>
+          Style</th>
+          <th width="80">JMRI<br>
+          Nombre</th>
+        </tr>
+
+        <tr>
+          <td>10/1</td>
+          <td>10</td>
+        </tr>
+
+        <tr>
+          <td>83/1</td>
+          <td>83</td>
+        </tr>
+
+        <tr>
+          <td>83/2</td>
+          <td>339</td>
+        </tr>
+
+        <tr>
+          <td>83/0</td>
+          <td>-173</td>
+        </tr>
+      </table>
+      Notez que les adresses N/0 font des opérations spéciales, et ne sont pas réellement des
+      adresses: Elles tournent les messages de programmation en commandes. Ils sont disponibles en
+      utilisant des nombres négatifs comme ci-dessus, mais ils ne sont vraiment pas recommandé!
+      <h3>Utilisation de ceci dans une carte de définition DecoderPro</h3>
+      Vous pouvez utilisez tous les outils DecderPro pour gérer une carte utilisant le protocole SV
+      LocoNet si vous fournissez un fichier de définition approprié. Ceuc-ci sont dans le
+      mêmeformat qu'un fichier de définition décodeur, ecepté que pour spcifier le protocole SV
+      LocoNet Version 2 Vous modifiez l'élément "programming pour ressembler à:
+      <code>&lt;programming direct="no" paged="no" register="no" ops="no"&gt;
+      &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt; &lt;/programming&gt;</code>
+      <p>lLe protocole SV LocoNet Version 1 est la même exception que vous spécifiez
+      LOCONETSV1MODE. Pour avoir plus d'information, voir le schema definition file.</p>
+
+      <p>Notez que le protocole version 1 n'est plus recommandée. Si vous écrivez une définition
+      décodeur pour un circuit qui peut utiliser les deux, vous sautereze la ver sion 1 par la
+      fourniture de l'option LOCONETSV2MODE.</p>
+
+      <p>LocoNet® est une marque enregistrée de <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

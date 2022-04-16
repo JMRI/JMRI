@@ -756,10 +756,13 @@
         <label>Dimming Rate</label>
         <label xml:lang="de">Dimmwert</label>
         <label xml:lang="it">valore di attenuazione</label>
+        <label xml:lang="cs">Míra ztmívání</label>
         <tooltip>Dimming: Controls function output voltage: 0=full on, 7=lowest</tooltip>
         <tooltip xml:lang="it">Oscuramento della luce: 0=più alta, 7=più bassa</tooltip>
+        <tooltip xml:lang="cs">Stmívání: Řídí napětí funkčního výstupu: 0=zcela zapnuto, 7=nejnižší</tooltip>
         <comment>Lighting Dimmer</comment>
         <comment xml:lang="it">Oscuramento della luce</comment>
+        <comment xml:lang="cs">Stmívání osvětlení</comment>
       </variable>
       <variable CV="56" mask="XXXXXXXV" default="0" item="Directional Headlights">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

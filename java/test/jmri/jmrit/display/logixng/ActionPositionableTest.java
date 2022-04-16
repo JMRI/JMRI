@@ -6,6 +6,7 @@ import jmri.jmrit.logixng.actions.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.display.*;
@@ -50,7 +51,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Log error%n");
+        return String.format("Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Use default%n");
     }
     
     @Override
@@ -59,7 +60,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Log error%n");
+                "         Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\" ::: Use default%n");
     }
     
     @Override
@@ -476,11 +477,6 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
         Assert.assertEquals("String matches", "Icon/Label on panel", _base.getShortDescription());
     }
@@ -553,7 +549,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         _base = actionPositionable;
         _baseMaleSocket = socket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

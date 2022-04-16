@@ -85,7 +85,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             // add help menu to window
             addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true); // fix this later
 
-            pack();
+            super.pack();
         }
     }
 
@@ -175,7 +175,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             }
             String[] sa = new String[displayList.size()];
             displayList.toArray(sa);
-            JComboBox<String> retv = new JComboBox<String>(sa);
+            JComboBox<String> retv = new JComboBox<>(sa);
             return (retv);
 
         }

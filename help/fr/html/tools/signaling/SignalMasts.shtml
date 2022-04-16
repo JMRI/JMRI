@@ -1,48 +1,46 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- Updated by Blorec Herv&#233; le 2016-09-15-->
-<title>JMRI: M&#226;ts de Signalisation</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233; le 2016-09-15-->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Mâts de Signalisation</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
-<h1>JMRI: M&#226;ts de Signalisation</h1>
-<p>
-    Informations g&#233;n&#233;rales sur les M&#226;ts Signal JMRI
-</p>
+      <!-- Page Body -->
 
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
-   <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png"
-        height="86" width="338" align="right"></a>
-Les objets JMRI "SignalMast"  vous permettent d'afficher des aspects r&#233;alistes sur les
-signaux. Pour plus d'information, consultez la page<a  href="AspectSignaling.shtml"> Aspect Signalisation </a>.
-<p>
-Les  M&#226;ts de Signalisation sont configur&#233;s via le
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau  M&#226;ts de Signalisation  </a>
-Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..."
-sur le tableau, qui vous emm&#232;ne &#224; la
-<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml"> fen&#234;tre "Ajouter  M&#226;ts de Signalisation" </a>.
-</p>
+      <h1>JMRI: Mâts de Signalisation</h1>
 
-<p>Du tableau, vous pouvez d&#233;finir des M&#226;ts de Signalisation individuels avec tous les aspects qu'ils sont capables
-d'afficher en cliquant dans la colonne  "Aspect".</p>
+      <p>Informations générales sur les Mâts Signal JMRI</p>
+      <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png"><img src=
+      "../../../package/jmri/jmrit/beantable/SignalMastTable.png" height="86" width="338" align=
+      "right" alt=""></a> Les objets JMRI "SignalMast" vous permettent d'afficher des aspects
+      réalistes sur les signaux. Pour plus d'information, consultez la page <a href=
+      "AspectSignaling.shtml">Aspect Signalisation</a> .
+      <p>Les Mâts de Signalisation sont configurés via le <a href=
+      "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau Mâts de
+      Signalisation</a> Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..." sur le
+      tableau, qui vous emmène à la <a href=
+      "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">fenêtre "Ajouter Mâts de
+      Signalisation"</a> .</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+      <p>Du tableau, vous pouvez définir des Mâts de Signalisation individuels avec tous les
+      aspects qu'ils sont capables d'afficher en cliquant dans la colonne "Aspect".</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-    </div>
+  </div>
 </body>
 </html>

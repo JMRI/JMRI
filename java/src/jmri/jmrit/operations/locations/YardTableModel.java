@@ -35,9 +35,18 @@ public class YardTableModel extends TrackTableModel {
         SwingUtilities.invokeLater(() -> {
             tef = new YardEditFrame();
             Track yard = _tracksList.get(row);
-            tef.initComponents(_location, yard);
-            tef.setTitle(Bundle.getMessage("EditYard"));
+            tef.initComponents(yard);
         });
+    }
+    
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("YardName");
+            default:
+                return super.getColumnName(col);
+        }
     }
 
     // this table listens for changes to a location and its yards

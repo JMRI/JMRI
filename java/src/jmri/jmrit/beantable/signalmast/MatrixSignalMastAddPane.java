@@ -25,6 +25,10 @@ import org.openide.util.lookup.ServiceProvider;
 public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
     public MatrixSignalMastAddPane() {
+        init();
+    }
+    
+    final void init() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // lit/unlit controls
         JPanel p = new JPanel();
@@ -51,7 +55,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     private DefaultSignalAppearanceMap map;
     private MatrixSignalMast currentMast; // mast being edited, null for new mast
     private JCheckBox resetPreviousState = new JCheckBox(Bundle.getMessage("ResetPrevious"));
-    private jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+    private UserPreferencesManager prefs = InstanceManager.getDefault(UserPreferencesManager.class);
     private String matrixBitNumSelectionCombo = this.getClass().getName() + ".matrixBitNumSelected";
     private JCheckBox allowUnLit = new JCheckBox();
 
@@ -177,34 +181,34 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
         columnChoice.setEnabled(false);
         // fill in the names of the outputs from mast:
-        if ( !currentMast.getOutputName(1).equals("")) {
+        if ( !currentMast.getOutputName(1).isEmpty()) {
             turnoutBox1.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(1))); // load input into turnoutBox1
         }
-        if (bitNum > 1 && !currentMast.getOutputName(2).equals("")) {
+        if (bitNum > 1 && !currentMast.getOutputName(2).isEmpty()) {
             turnoutBox2.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(2))); // load input into turnoutBox2
         }
-        if (bitNum > 2 && !currentMast.getOutputName(3).equals("")) {
+        if (bitNum > 2 && !currentMast.getOutputName(3).isEmpty()) {
             turnoutBox3.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(3))); // load input into turnoutBox3
         }
-        if (bitNum > 3 && !currentMast.getOutputName(4).equals("")) {
+        if (bitNum > 3 && !currentMast.getOutputName(4).isEmpty()) {
             turnoutBox4.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(4))); // load input into turnoutBox4
         }
-        if (bitNum > 4 && !currentMast.getOutputName(5).equals("")) {
+        if (bitNum > 4 && !currentMast.getOutputName(5).isEmpty()) {
             turnoutBox5.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(5))); // load input into turnoutBox5
         }
-        if (bitNum > 5 && !currentMast.getOutputName(6).equals("")) {
+        if (bitNum > 5 && !currentMast.getOutputName(6).isEmpty()) {
             turnoutBox6.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(6))); // load input into turnoutBox6
         }
-        if (bitNum > 6 && !currentMast.getOutputName(6).equals("")) {
+        if (bitNum > 6 && !currentMast.getOutputName(6).isEmpty()) {
             turnoutBox7.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(7))); // load input into turnoutBox6
         }
-        if (bitNum > 7 && !currentMast.getOutputName(6).equals("")) {
+        if (bitNum > 7 && !currentMast.getOutputName(6).isEmpty()) {
             turnoutBox8.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(8))); // load input into turnoutBox6
         }
-        if (bitNum > 8 && !currentMast.getOutputName(6).equals("")) {
+        if (bitNum > 8 && !currentMast.getOutputName(6).isEmpty()) {
             turnoutBox9.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(9))); // load input into turnoutBox6
         }
-        if (bitNum > 9 && !currentMast.getOutputName(6).equals("")) {
+        if (bitNum > 9 && !currentMast.getOutputName(6).isEmpty()) {
             turnoutBox10.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(10))); // load input into turnoutBox6
         }
         // repeat in order to extend MAXMATRIXBITS
@@ -272,7 +276,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             newMastName += ")" + "-" + bitNum + "t"; // for the number of t = "turnout-outputs"
             // TODO: add d = option for direct packets
             currentMast = new MatrixSignalMast(newMastName); // timedDelay is stored later on
-            InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
+            InstanceManager.getDefault(SignalMastManager.class).register(currentMast);
         } else {
             newMastName = currentMast.getSystemName();
         }
@@ -346,7 +350,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             log.error("failed to read and copy unLitPanelBits");
         }
         
-        if (!username.equals("")) {
+        if (!username.isEmpty()) {
             currentMast.setUserName(username);
         }
 
@@ -381,16 +385,13 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             bitNum = 4; // default to 4 col if out-of-range for some reason
         }
         columnChoice.setSelectedIndex(bitNum - 1);
-        columnChoice.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newBitnumString = (String) columnChoice.getSelectedItem();
-                if (newBitnumString == null) {
-                    newBitnumString = "4"; // error, fall back to default
-                    log.debug("null newBitnumString in makeMatrixMastBitnumPanel()");
-                }
-                bitNumChanged(Integer.valueOf(newBitnumString));
+        columnChoice.addActionListener((ActionEvent e) -> {
+            String newBitnumString = (String) columnChoice.getSelectedItem();
+            if (newBitnumString == null) {
+                newBitnumString = "4"; // error, fall back to default
+                log.debug("null newBitnumString in makeMatrixMastBitnumPanel()");
             }
+            bitNumChanged(Integer.valueOf(newBitnumString));
         });
         return bitnumpanel;
     }
@@ -548,7 +549,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     }
 
     private void copyFromAnotherMatrixMastAspect(String strMast) {
-        MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
+        MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.getDefault(SignalMastManager.class).getNamedBean(strMast);
         if (mast == null) {
             log.error("Cannot copy from mast {} which doesn't exist", strMast);
             return;
@@ -632,65 +633,35 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixUnLitPanel.setBorder(border);
         matrixUnLitPanel.setToolTipText(Bundle.getMessage("MatrixUnlitTooltip"));
 
-        unlitCheckArray[0].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(1, unlitCheckArray[0].isSelected());
-            }
+        unlitCheckArray[0].addActionListener((ActionEvent e) -> {
+            setUnLitBit(1, unlitCheckArray[0].isSelected());
         });
-        unlitCheckArray[1].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(2, unlitCheckArray[1].isSelected());
-            }
+        unlitCheckArray[1].addActionListener((ActionEvent e) -> {
+            setUnLitBit(2, unlitCheckArray[1].isSelected());
         });
-        unlitCheckArray[2].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(3, unlitCheckArray[2].isSelected());
-            }
+        unlitCheckArray[2].addActionListener((ActionEvent e) -> {
+            setUnLitBit(3, unlitCheckArray[2].isSelected());
         });
-        unlitCheckArray[3].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(4, unlitCheckArray[3].isSelected());
-            }
+        unlitCheckArray[3].addActionListener((ActionEvent e) -> {
+            setUnLitBit(4, unlitCheckArray[3].isSelected());
         });
-        unlitCheckArray[4].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(5, unlitCheckArray[4].isSelected());
-            }
+        unlitCheckArray[4].addActionListener((ActionEvent e) -> {
+            setUnLitBit(5, unlitCheckArray[4].isSelected());
         });
-        unlitCheckArray[5].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(6, unlitCheckArray[5].isSelected());
-            }
+        unlitCheckArray[5].addActionListener((ActionEvent e) -> {
+            setUnLitBit(6, unlitCheckArray[5].isSelected());
         });
-        unlitCheckArray[6].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(7, unlitCheckArray[6].isSelected());
-            }
+        unlitCheckArray[6].addActionListener((ActionEvent e) -> {
+            setUnLitBit(7, unlitCheckArray[6].isSelected());
         });
-        unlitCheckArray[7].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(8, unlitCheckArray[7].isSelected());
-            }
+        unlitCheckArray[7].addActionListener((ActionEvent e) -> {
+            setUnLitBit(8, unlitCheckArray[7].isSelected());
         });
-        unlitCheckArray[8].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(9, unlitCheckArray[8].isSelected());
-            }
+        unlitCheckArray[8].addActionListener((ActionEvent e) -> {
+            setUnLitBit(9, unlitCheckArray[8].isSelected());
         });
-        unlitCheckArray[9].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setUnLitBit(10, unlitCheckArray[9].isSelected());
-            }
+        unlitCheckArray[9].addActionListener((ActionEvent e) -> {
+            setUnLitBit(10, unlitCheckArray[9].isSelected());
         });
         // repeat in order to extend MAXMATRIXBITS
     }
@@ -698,7 +669,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
     private JComboBox<String> copyFromMastSelection() {
         JComboBox<String> mastSelect = new JComboBox<>();
-        for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
+        for (SignalMast mast : InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet()) {
             if (mast instanceof MatrixSignalMast){
                 mastSelect.addItem(mast.getDisplayName());
             }
@@ -708,15 +679,12 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         } else {
             mastSelect.insertItemAt("", 0);
             mastSelect.setSelectedIndex(0);
-            mastSelect.addActionListener(new ActionListener() {
+            mastSelect.addActionListener((ActionEvent e) -> {
                 @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JComboBox<String> eb = (JComboBox<String>) e.getSource();
-                    String sourceMast = (String) eb.getSelectedItem();
-                    if (sourceMast != null && !sourceMast.equals("")) {
-                        copyFromAnotherMatrixMastAspect(sourceMast);
-                    }
+                JComboBox<String> eb = (JComboBox<String>) e.getSource();
+                String sourceMast = (String) eb.getSelectedItem();
+                if (sourceMast != null && !sourceMast.isEmpty()) {
+                    copyFromAnotherMatrixMastAspect(sourceMast);
                 }
             });
         }
@@ -747,7 +715,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     private boolean identicalBits() {
         boolean identical = false;
         numberOfActiveAspects = 0;
-        Collection<String> seenBits = new HashSet<String>(); // a fast access, no duplicates Collection of bit combinations
+        Collection<String> seenBits = new HashSet<>(); // a fast access, no duplicates Collection of bit combinations
         for (Map.Entry<String, MatrixAspectPanel> entry : matrixAspect.entrySet()) {
             // check per aspect
             if (entry.getValue().isAspectDisabled()) {
@@ -1033,72 +1001,39 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
                 border.setTitle(aspect);
                 panel.setBorder(border);
 
-                disabledCheck.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setAspectDisabled(disabledCheck.isSelected());
-                    }
+                disabledCheck.addActionListener((ActionEvent e) -> {
+                    setAspectDisabled(disabledCheck.isSelected());
                 });
 
-                bitCheck1.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(1, bitCheck1.isSelected());
-                    }
+                bitCheck1.addActionListener((ActionEvent e) -> {
+                    setBit(1, bitCheck1.isSelected());
                 });
-                bitCheck2.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(2, bitCheck2.isSelected());
-                    }
+                bitCheck2.addActionListener((ActionEvent e) -> {
+                    setBit(2, bitCheck2.isSelected());
                 });
-                bitCheck3.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(3, bitCheck3.isSelected());
-                    }
+                bitCheck3.addActionListener((ActionEvent e) -> {
+                    setBit(3, bitCheck3.isSelected());
                 });
-                bitCheck4.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(4, bitCheck4.isSelected());
-                    }
+                bitCheck4.addActionListener((ActionEvent e) -> {
+                    setBit(4, bitCheck4.isSelected());
                 });
-                bitCheck5.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(5, bitCheck5.isSelected());
-                    }
+                bitCheck5.addActionListener((ActionEvent e) -> {
+                    setBit(5, bitCheck5.isSelected());
                 });
-                bitCheck6.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(6, bitCheck6.isSelected());
-                    }
+                bitCheck6.addActionListener((ActionEvent e) -> {
+                    setBit(6, bitCheck6.isSelected());
                 });
-                bitCheck7.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(7, bitCheck7.isSelected());
-                    }
+                bitCheck7.addActionListener((ActionEvent e) -> {
+                    setBit(7, bitCheck7.isSelected());
                 });
-                bitCheck8.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(8, bitCheck8.isSelected());
-                    }
+                bitCheck8.addActionListener((ActionEvent e) -> {
+                    setBit(8, bitCheck8.isSelected());
                 });
-                bitCheck9.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(9, bitCheck9.isSelected());
-                    }
+                bitCheck9.addActionListener((ActionEvent e) -> {
+                    setBit(9, bitCheck9.isSelected());
                 });
-                bitCheck10.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setBit(10, bitCheck10.isSelected());
-                    }
+                bitCheck10.addActionListener((ActionEvent e) -> {
+                    setBit(10, bitCheck10.isSelected());
                 });
                 // repeat in order to extend MAXMATRIXBITS
             }

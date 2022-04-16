@@ -47,8 +47,16 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultFemaleSocketManager();
         }
 
+        if (type == LogixNG_InitializationManager.class) {
+            return new DefaultLogixNGInitializationManager();
+        }
+
         if (type == LogixNG_Manager.class) {
             return new DefaultLogixNGManager();
+        }
+
+        if (type == LogixNGPreferences.class) {
+            return new DefaultLogixNGPreferences();
         }
 
         if (type == ModuleManager.class) {
@@ -57,10 +65,6 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == NamedTableManager.class) {
             return new DefaultNamedTableManager();
-        }
-
-        if (type == LogixNGPreferences.class) {
-            return new DefaultLogixNGPreferences();
         }
 
         return super.getDefault(type);
@@ -72,10 +76,11 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
         set.addAll(Arrays.asList(
                 ConditionalNG_Manager.class,
                 FemaleSocketManager.class,
+                LogixNG_InitializationManager.class,
                 LogixNG_Manager.class,
+                LogixNGPreferences.class,
                 ModuleManager.class,
-                NamedTableManager.class,
-                LogixNGPreferences.class
+                NamedTableManager.class
         ));
         return set;
     }

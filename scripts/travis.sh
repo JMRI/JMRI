@@ -22,7 +22,7 @@ export MAVEN_OPTS=-Xmx1536m
 if [[ "${HEADLESS}" == "true" ]] ; then
     if [[ "${STATIC}" == "true" ]] ; then
         # compile with ECJ for warnings or errors
-        #mvn -P test-warnings-check clean compile 
+        #mvn -P test-warnings-check clean compile
         mvn antrun:run -Danttarget=tests-warnings-check
         # run SpotBugs only on headless, failing build if bugs are found
         # SpotBugs configuration is in pom.xml
@@ -32,7 +32,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         # check html
         mvn exec:exec -P travis-scanhelp
         #run Architecture tests
-        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsTest test
+        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsCheck test
     else
         # run headless tests
         mvn test integration-test failsafe:verify -U -P travis-headless --batch-mode \
@@ -57,7 +57,7 @@ else
             -Djmri.skipschematests=true \
             -Dcucumber.options="--tags 'not @Ignore'" \
             -Dpython.cachedir=${PYTHON_CACHEDIR}
-    else        
+    else
         # run the SKIPINTERMITTENT tests separately
         mvn antrun:run -Danttarget=tests
         mvn antrun:run -Danttarget=run-sh

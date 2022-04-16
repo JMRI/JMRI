@@ -310,6 +310,7 @@ public class LayoutEditorConnectivityTest {
         cm = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
+        jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
         JUnitUtil.tearDown();
     }
 }

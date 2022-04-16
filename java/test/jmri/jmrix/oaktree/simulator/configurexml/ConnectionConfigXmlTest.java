@@ -24,11 +24,10 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
-
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.clearShutDownManager(); // remove shutdown tasks left behind.
+        JUnitUtil.tearDown();
     }
 }
 

@@ -1,8 +1,9 @@
 package jmri.jmrix.nce;
 
-import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.NmraPacket;
 
 /*
  
@@ -134,27 +135,28 @@ public class NceBinaryCommand {
 
     // NCE Command 0xA2 sends speed or function packets to a locomotive
     // 0xA2 sub commands speed and functions
-    public static final byte LOCO_CMD_REV_28SPEED = 0x01;  // set loco speed 28 steps reverse
-    public static final byte LOCO_CMD_FWD_28SPEED = 0x02;  // set loco speed 28 steps forward
-    public static final byte LOCO_CMD_REV_128SPEED = 0x03; // set loco speed 128 steps reverse
-    public static final byte LOCO_CMD_FWD_128SPEED = 0x04; // set loco speed 128 steps forward
-    public static final byte LOCO_CMD_REV_ESTOP = 0x05;    // emergency stop reverse
-    public static final byte LOCO_CMD_FWD_ESTOP = 0x06;    // emergency stop forward
-    public static final byte LOCO_CMD_FG1 = 0x07;          // function group 1
-    public static final byte LOCO_CMD_FG2 = 0x08;          // function group 2
-    public static final byte LOCO_CMD_FG3 = 0x09;          // function group 3
-    public static final byte LOCO_CMD_FG4 = 0x15;          // function group 4
-    public static final byte LOCO_CMD_FG5 = 0x16;          // function group 5
+//    public static final byte LOCO_CMD_SELECT_LOCO = 0x00;  // select loco
+//    public static final byte LOCO_CMD_REV_28SPEED = 0x01;  // set loco speed 28 steps reverse
+//    public static final byte LOCO_CMD_FWD_28SPEED = 0x02;  // set loco speed 28 steps forward
+//    public static final byte LOCO_CMD_REV_128SPEED = 0x03; // set loco speed 128 steps reverse
+//    public static final byte LOCO_CMD_FWD_128SPEED = 0x04; // set loco speed 128 steps forward
+//    public static final byte LOCO_CMD_REV_ESTOP = 0x05;    // emergency stop reverse
+//    public static final byte LOCO_CMD_FWD_ESTOP = 0x06;    // emergency stop forward
+//    public static final byte LOCO_CMD_FG1 = 0x07;          // function group 1
+//    public static final byte LOCO_CMD_FG2 = 0x08;          // function group 2
+//    public static final byte LOCO_CMD_FG3 = 0x09;          // function group 3
+//    public static final byte LOCO_CMD_FG4 = 0x15;          // function group 4
+//    public static final byte LOCO_CMD_FG5 = 0x16;          // function group 5
 
     // OxA2 sub commands consist
-    public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;    // reverse consist address for lead loco
-    public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;    // forward consist address for lead loco 
-    public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;    // reverse consist address for rear loco 
-    public static final byte LOCO_CMD_FWD_CONSIST_REAR = 0x0D;    // forward consist address for rear loco
-    public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;     // reverse consist address for additional loco 
-    public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;     // forward consist address for additional loco 
-    public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10; // Delete loco from consist
-    public static final byte LOCO_CMD_KILL_CONSIST = 0x11;        // Kill consist
+//    public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;    // reverse consist address for lead loco
+//    public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;    // forward consist address for lead loco 
+//    public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;    // reverse consist address for rear loco 
+//    public static final byte LOCO_CMD_FWD_CONSIST_REAR = 0x0D;    // forward consist address for rear loco
+//    public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;     // reverse consist address for additional loco 
+//    public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;     // forward consist address for additional loco 
+//    public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10; // Delete loco from consist
+//    public static final byte LOCO_CMD_KILL_CONSIST = 0x11;        // Kill consist
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
         justification = "Long-standing API, risky to update")
@@ -404,7 +406,7 @@ public class NceBinaryCommand {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
         justification = "Long-standing API, risky to update")
     public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
-        if (locoSubCmd < 1 || locoSubCmd > 0x17) {
+        if (locoSubCmd > 0x17) {
             log.error("invalid NCE loco command {}", locoSubCmd);
             return null;
         }
@@ -432,7 +434,7 @@ public class NceBinaryCommand {
         byte[] retVal = new byte[1];
         retVal[0] = (byte) (NceMessage.SW_REV_CMD);
         return retVal;
-    }
+    }  
 
     /**
      * Create a NCE USB compatible ops mode loco message.

@@ -96,12 +96,26 @@ public class ReferenceUtil {
      */
     static protected String getReferenceOrValue(SymbolTable symbolTable, String reference, int startIndex, IntRef endIndex) {
         
+        while ((startIndex < reference.length()-1)
+                && (Character.isSpaceChar(reference.charAt(startIndex)))) {
+            startIndex++;
+        }
+        
+        String result;
+        
         // Do we have a new reference?
         if (reference.charAt(startIndex) == '{') {
-            return getReference(symbolTable, reference, startIndex, endIndex);
+            result = getReference(symbolTable, reference, startIndex, endIndex);
         } else {
-            return getValue(reference, startIndex, endIndex);
+            result = getValue(reference, startIndex, endIndex);
         }
+        
+        // Skip spaces
+        while ((endIndex.v < reference.length()) && Character.isSpaceChar(reference.charAt(endIndex.v))) {
+            endIndex.v++;
+        }
+        
+        return result;
     }
     
     /**
@@ -140,17 +154,13 @@ public class ReferenceUtil {
         
         endIndex.v++;
         
-//        if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) != '[')) {
         if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) == '}')) {
-            
-//            SymbolTable symbolTable =
-//                    getCurrentConditionalNG().getSymbolTable();
             
             if ((symbolTable != null) && symbolTable.hasValue(leftValue)) {
                 return TypeConversionUtil.convertToString(symbolTable.getValue(leftValue), false);
             }
             MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-            Memory m = memoryManager.getNamedBean(leftValue);
+            Memory m = memoryManager.getNamedBean(leftValue.trim());
             if (m != null) {
                 if (m.getValue() != null) return m.getValue().toString();
                 else throw new IllegalArgumentException("Memory '"+leftValue+"' has no value");
@@ -169,10 +179,19 @@ public class ReferenceUtil {
         
         endIndex.v++;
         
-//        if ((endIndex.v+1 == reference.length()
-//                && (reference.charAt(endIndex.v-1) == ']')
-//                && (reference.charAt(endIndex.v) == '}'))) {
-        if ((reference.charAt(endIndex.v-1) == ']')
+        // Skip spaces
+        while ((endIndex.v-2 < reference.length()) && Character.isSpaceChar(reference.charAt(endIndex.v-1))) {
+            endIndex.v++;
+        }
+        
+        int lastEndIndV = endIndex.v;
+        
+        // Skip spaces
+        while ((endIndex.v < reference.length()) && Character.isSpaceChar(reference.charAt(endIndex.v))) {
+            endIndex.v++;
+        }
+        
+        if ((reference.charAt(lastEndIndV-1) == ']')
                 && (reference.charAt(endIndex.v) == '}')) {
             
             endIndex.v++;
@@ -182,32 +201,31 @@ public class ReferenceUtil {
             
             NamedTable table = tableManager.getNamedBean(leftValue);
             if (table != null) {
-                Object cell = table.getCell(row);
+                Object cell = table.getCell(row.trim());
                 return cell != null ? cell.toString() : null;
             } else {
                 throw new IllegalArgumentException("Table '"+leftValue+"' is not found");
             }
         }
         
-        if (endIndex.v == reference.length() || reference.charAt(endIndex.v-1) != ',') {
-//            System.out.format("getReference(%s,%d): %s, %d, length: %d%n",
-//                    reference,
-//                    startIndex,
-//                    reference.substring(startIndex, endIndex.v),
-//                    endIndex.v,
-//                    reference.length());
+        if (endIndex.v == reference.length() || reference.charAt(lastEndIndV-1) != ',') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
-//        endIndex.v++;
-        
         column = getReferenceOrValue(symbolTable, reference, endIndex.v, endIndex);
-        if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ']') {
-            throw new IllegalArgumentException("7Reference '"+reference+"' is not a valid reference");
+        
+        // Skip spaces
+        while ((endIndex.v < reference.length()) && Character.isSpaceChar(reference.charAt(endIndex.v))) {
+            endIndex.v++;
         }
         
-        if (((reference.charAt(endIndex.v) == ']')
-                && (reference.charAt(endIndex.v+1) == '}'))) {
+        if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ']') {
+            throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
+        }
+        
+//        if (((reference.charAt(endIndex.v) == ']')
+//                && (reference.charAt(endIndex.v+1) == '}'))) {
+        if ((reference.charAt(endIndex.v) == ']')) {
             
             endIndex.v++;
             
@@ -216,19 +234,19 @@ public class ReferenceUtil {
             
             NamedTable table = tableManager.getNamedBean(leftValue);
             if (table != null) {
-                Object cell = table.getCell(row,column);
+                Object cell = table.getCell(row.trim(),column.trim());
+                // Skip spaces
+                while ((endIndex.v < reference.length()) && Character.isSpaceChar(reference.charAt(endIndex.v))) {
+                    endIndex.v++;
+                }
                 endIndex.v++;
                 return cell != null ? cell.toString() : null;
             } else {
                 throw new IllegalArgumentException("Table '"+leftValue+"' is not found");
             }
-//            return "Testing 222....";
-//            return leftValue[row];
         }
         
         throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
-        
-//        throw new UnsupportedOperationException("Table is not yet supported");
     }
     
     @CheckReturnValue

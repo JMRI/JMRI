@@ -3,14 +3,14 @@ package apps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
-import java.util.EventObject;
-import java.util.Locale;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
@@ -222,7 +222,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                log.error("", e);
+                log.error("uexpected ", e);
             }
         }
 
@@ -238,7 +238,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                log.error("",e);
+                log.error("Unexpected:",e);
             }
         }
         // Now load deferred config items
@@ -357,7 +357,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // do final activation
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        
+
         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         logixNG_Manager.setupAllLogixNGs();
@@ -666,7 +666,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
         } catch (RuntimeException e) {
-            log.error("Unable to set JMRI property {} to {} due to execption {}", key, value, e);
+            log.error("Unable to set JMRI property {} to {} due to exception", key, value, e);
         }
     }
 
@@ -827,7 +827,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return configFilename;
     }
 
-    @SuppressWarnings("deprecation") // JmriPlugin.start(...)
     static protected void createFrame(Apps containedPane, JmriJFrame frame) {
         // create the main frame and menus
         // Create a WindowInterface object based on the passed-in Frame
@@ -839,9 +838,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         containedPane.createMenus(containedPane.menuBar, wi);
         // connect Help target now that globalHelpBroker has been instantiated
         containedPane.attachHelp();
-
-        // invoke plugin, if any
-        JmriPlugin.start(frame, containedPane.menuBar);
 
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);

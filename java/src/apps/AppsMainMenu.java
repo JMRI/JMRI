@@ -1,19 +1,10 @@
 package apps;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.EventObject;
 import java.util.ResourceBundle;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 
 import apps.jmrit.DebugMenu;
@@ -22,18 +13,13 @@ import apps.plaf.macosx.Application;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.jython.RunJythonScript;
 import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.roster.swing.RosterMenu;
-import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
-import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
-import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.WindowMenu;
 import jmri.util.swing.WindowInterface;
-import jmri.web.server.WebServerAction;
 
 /**
   * Create the main menu for PanelPro and related apps.  Includes opening PanelPro from
@@ -45,7 +31,7 @@ import jmri.web.server.WebServerAction;
   */
 public class AppsMainMenu {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");      // Link for script menu items  // NOI18N
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.jython.Bundle");      // Link for script menu items  // NOI18N
     static Action prefsAction;
 
     public AppsMainMenu() {
@@ -152,7 +138,7 @@ public class AppsMainMenu {
         scriptMenu.add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));  // NOI18N
         scriptMenu.add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));  // NOI18N
         scriptMenu.add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));  // NOI18N
-        scriptMenu.add(new jmri.jmrit.jython.InputWindowAction(rb.getString("MenuItemScriptInput")));  // NOI18N
+        scriptMenu.add(new jmri.script.swing.InputWindowAction(rb.getString("MenuItemScriptInput")));  // NOI18N
         menuBar.add(scriptMenu);
     }
 
@@ -180,38 +166,7 @@ public class AppsMainMenu {
     }
 
     static private void debugMenu(JMenuBar menuBar, WindowInterface wi, JPanel pane) {
-        JMenu d = new DebugMenu(pane);
-
-        // also add some tentative items from jmrix
-        d.add(new JSeparator());
-        d.add(new jmri.jmrix.pricom.PricomMenu());
-        d.add(new JSeparator());
-
-        d.add(new jmri.jmrix.jinput.treecontrol.TreeAction());
-        d.add(new jmri.jmrix.libusb.UsbViewAction());
-
-        d.add(new JSeparator());
-        try {
-            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));  // NOI18N
-        } catch (URISyntaxException | NullPointerException ex) {
-            log.error("Unable to load RailDriver Throttle", ex);  // NOI18N
-            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));  // NOI18N
-            i.setEnabled(false);
-            d.add(i);
-        }
-
-        // also add some tentative items from webserver
-        d.add(new JSeparator());
-        d.add(new WebServerAction());
-
-        d.add(new JSeparator());
-        d.add(new WiThrottleCreationAction());
-
-        d.add(new JSeparator());
-        d.add(new apps.TrainCrew.InstallFromURL());
-
-        // add final to menu bar
-        menuBar.add(d);
+        menuBar.add(new DebugMenu(pane));
     }
 
 //     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -230,9 +185,6 @@ public class AppsMainMenu {
         // create menu and standard items
         JMenu helpMenu = HelpUtil.makeHelpMenu(windowHelpID, true);
 
-        // tell help to use default browser for external types
-        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");  // NOI18N
-
         // use as main help menu
         menuBar.add(helpMenu);
     }
@@ -247,4 +199,5 @@ public class AppsMainMenu {
         return AppsBase.handleQuit();
     }
 
-     static private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsMainMenu.class);}
+//     static private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsMainMenu.class);
+}

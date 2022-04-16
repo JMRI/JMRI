@@ -111,12 +111,6 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
         for (ActionEntry actionEntry : _actionEntries) {
             actionEntry._socket.execute(hasChangedToTrue, hasChangedToFalse);

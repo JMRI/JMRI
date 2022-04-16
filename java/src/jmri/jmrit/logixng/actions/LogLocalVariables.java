@@ -38,17 +38,11 @@ public class LogLocalVariables extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() {
         ConditionalNG c = getConditionalNG();
         log.warn(Bundle.getMessage("LogLocalVariables_Start"));
         for (SymbolTable.Symbol s : c.getSymbolTable().getSymbols().values()) {
-            log.warn(Bundle.getMessage("LogLocalVariables_Variable", s.getName(), c.getSymbolTable().getValue(s.getName())));
+            log.warn("    "+Bundle.getMessage("LogLocalVariables_Variable", s.getName(), c.getSymbolTable().getValue(s.getName())));
         }
         log.warn(Bundle.getMessage("LogLocalVariables_End"));
     }

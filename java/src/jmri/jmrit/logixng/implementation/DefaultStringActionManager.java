@@ -69,18 +69,10 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     
     /** {@inheritDoc} */
     @Override
-    public void register(MaleSocket maleSocket) {
-        if (!(maleSocket instanceof MaleStringActionSocket)) {
-            throw new IllegalArgumentException("maleSocket is not a MaleStringActionSocket");
-        }
-        register((MaleStringActionSocket)maleSocket);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void register(MaleStringActionSocket maleSocket) {
-        super.register(maleSocket);
+    public MaleStringActionSocket registerBean(MaleStringActionSocket maleSocket) {
+        MaleStringActionSocket bean = super.registerBean(maleSocket);
         _lastRegisteredBean = maleSocket;
+        return bean;
     }
     
     /**
@@ -107,8 +99,7 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
         updateAutoNumber(action.getSystemName());
         
         MaleStringActionSocket maleSocket = createMaleActionSocket(action);
-        register(maleSocket);
-        return maleSocket;
+        return registerBean(maleSocket);
     }
     
     @Override

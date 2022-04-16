@@ -51,12 +51,13 @@ public class CbusNodeTest {
         Assert.assertTrue("default parameter 0",t.getNodeParamManager().getParameter(0)== -1 );
         Assert.assertTrue("default getNV 0",t.getNodeNvManager().getNV(0)== -1 );
         Assert.assertTrue("default getTotalNVs 0",t.getNodeNvManager().getTotalNVs()== 0 );
-        Assert.assertTrue("default getNodeCanId ",t.getNodeCanId()== -1 );
+        Assert.assertTrue("default getNodeCanId ",t.getNodeCanId()== 1 );
         Assert.assertTrue("default getNodeTypeName ",t.getNodeStats().getNodeTypeName().isEmpty() );
         Assert.assertTrue("default getNodeInFLiMMode",t.getNodeInFLiMMode() );
         Assert.assertFalse("default getNodeInSetupMode",t.getNodeInSetupMode() );
         Assert.assertEquals("default getNodeNumberName","256",t.getNodeStats().getNodeNumberName() );
         Assert.assertTrue("default getsendsWRACKonNVSET",t.getsendsWRACKonNVSET() );
+        Assert.assertFalse("default getsendsWRACKonNVSET",t.getnvWriteInLearnOnly() );
         Assert.assertTrue("default totalNodeBytes ",-1 == t.getNodeStats().totalNodeBytes() );
         Assert.assertTrue("default totalRemainingNodeBytes",-1 == t.getNodeStats().totalRemainingNodeBytes() );
         Assert.assertEquals("default toString ","256",t.toString() );
@@ -310,6 +311,7 @@ public class CbusNodeTest {
         Assert.assertEquals("Message sent is parameter 2 request", "[5f8] 73 30 39 02",
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         Assert.assertTrue("default getsendsWRACKonNVSET ",t.getsendsWRACKonNVSET() );
+        Assert.assertFalse("default getsendsWRACKonNVSET ",t.getnvWriteInLearnOnly() );
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -373,7 +375,7 @@ public class CbusNodeTest {
         t.getNodeEventManager().provideNodeEvent(321,654);
         Assert.assertTrue("after provide 321 645 getTotalNodeEvents 3",t.getNodeEventManager().getTotalNodeEvents()== 3 );
         
-        java.util.ArrayList _tArr = t.getNodeEventManager().getEventArray();
+        java.util.ArrayList<CbusNodeEvent> _tArr = t.getNodeEventManager().getEventArray();
         if (_tArr!=null){
             Assert.assertEquals("event array size 3",3,_tArr.size() );
         } else {

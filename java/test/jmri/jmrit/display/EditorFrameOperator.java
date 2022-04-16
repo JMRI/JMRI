@@ -23,6 +23,9 @@ public class EditorFrameOperator extends JFrameOperator {
        super(frame);
     }
 
+    private static final String hideThreadName = "EditorFrameOperator: Hide Dialog Close Thread";
+    private static final String deleteThreadName = "EditorFrameOperator: Delete Dialog Close Thread";
+
     public void closeFrameWithConfirmations(){
         // if OK to here, close window
         this.requestClose();
@@ -52,10 +55,9 @@ public class EditorFrameOperator extends JFrameOperator {
                 bo.push();
             } catch (Exception e) {
                 // exceptions in this thread are not considered an error.
-                return;
             }
         });
-        t.setName("Hide Dialog Close Thread");
+        t.setName(hideThreadName);
         t.start();
 
         Thread t2 = new Thread( () -> {
@@ -68,12 +70,19 @@ public class EditorFrameOperator extends JFrameOperator {
                 bo.push();
             } catch (Exception e) {
                 // exceptions in this thread are not considered an error.
-                return;
             }
         });
-        t2.setName("Delete Dialog Close Thread");
+        t2.setName(deleteThreadName);
         t2.start();
 
     }
 
+    /**
+     * Call this at the end of tests that have invoked dismissClosingDialogs
+     * to clean up any threads that have been left hanging.
+     */
+    public static void clearEditorFrameOperatorThreads() {
+        jmri.util.JUnitUtil.removeMatchingThreads(hideThreadName);
+        jmri.util.JUnitUtil.removeMatchingThreads(deleteThreadName);
+    }
 }

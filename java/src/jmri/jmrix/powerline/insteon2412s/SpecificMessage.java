@@ -24,13 +24,6 @@ import org.slf4j.LoggerFactory;
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 
-    /**
-     * Suppress the default ctor, as the length must always be specified
-     */
-    @SuppressWarnings("unused")
-    private SpecificMessage() {
-    }
-
     public SpecificMessage(int l) {
         super(l);
         setResponseLength(0);  // only polls require a response

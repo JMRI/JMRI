@@ -581,6 +581,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             lightControlPanel.dispose(); // closes any popup windows
             
             removePrefixBoxListener(prefixBox);
+            InstanceManager.getDefault(UserPreferencesManager.class).setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName()); // store user pref
             addFrame.dispose();
             addFrame = null;
             create.removePropertyChangeListener(colorChangeListener);

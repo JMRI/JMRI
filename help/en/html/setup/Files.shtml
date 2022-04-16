@@ -1,104 +1,69 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Configuration Files</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI Setup: Configuration Files</h1>
 
-      <p>This section attempts to explain where JMRI Configuration
-      (settings) Files are stored on your computer and what
-      information they contain.</p>
+      <p>This section attempts to explain where JMRI Configuration (settings) Files are stored on
+      your computer and what information they contain.</p>
 
       <dl>
-        <dd><a name="location" id="location"></a></dd>
-
-        <dt class="left">Configuration File Locations</dt>
+        <dt id="location" class="left">Configuration File Locations</dt>
 
         <dd class="first">
-          There are two places where JMRI Configuration Files can
-          be found:
-
+          There are two places where JMRI Configuration Files can be found:
           <ol>
-            <li>The originally-distributed versions of JMRI
-            Configuration Files live in an 'xml' directory in the
-            JMRI application package and its subdirectories. 
-            (The exact location depends on how you 
-            installed JMRI on your computer) 
-            <p>Note
-            that anything you modify here will be lost when you
-            update JMRI to a new version. 
-            This is not the right place to make changes!
+            <li>The originally-distributed versions of JMRI Configuration Files live in an 'xml'
+            directory in the JMRI application package and its subdirectories. (The exact location
+            depends on how you installed JMRI on your computer)
+              <p>Note that anything you modify here will be lost when you update JMRI to a new
+              version. This is not the right place to make changes!</p>
             </li>
 
-            <li>The user's JMRI Preferences directory and its
-            subdirectories is also of importance. JMRI looks here
-            first for any files it needs.<br>
-              You should put any locally-modified versions of files
-              here so they don't get overwritten by a JMRI update.
-              Any files that the program writes to containing local
-              information, e.g. Roster entries and Panel files, are
-              also written here.
-              <br>
-              The default user's Preferences location varies by
-              computer operating system. Normally, it's located:
-
+            <li>The user's JMRI Preferences directory and its subdirectories is also of importance.
+            JMRI looks here first for any files it needs.<br>
+              You should put any locally-modified versions of files here so they don't get
+              overwritten by a JMRI update. Any files that the program writes to containing local
+              information, e.g. Roster entries and Panel files, are also written here.<br>
+              The default user's Preferences location varies by computer operating system.
+              Normally, it's located:
               <ul>
-                <li>On a Linux machine, look for a <code>.jmri</code>
-                directory in your home directory.</li>
+                <li>On a Linux machine, look for a <code>.jmri</code> directory in your home
+                directory.</li>
 
-                <li>On macOS, Preferences are stored in a "JMRI"
-                folder in the /Users/me/Library/Preferences/
-                folder.</li>
+                <li>On macOS, Preferences are stored in a "JMRI" folder in the
+                /Users/me/Library/Preferences/ folder.</li>
 
-                <li>On Windows, this can be in a number of places
-                depending on the Windows version you're running and
-                whether you have multiple users configured. Start
-                by looking under "Documents" or "User Documents" or
-                "Users and Documents". You're looking for a folder
-                called "JMRI".</li>
+                <li>On Windows, this can be in a number of places depending on the Windows version
+                you're running and whether you have multiple users configured. Start by looking
+                under "Documents" or "User Documents" or "Users and Documents". You're looking for
+                a folder called "JMRI".</li>
               </ul>
+              The easiest way to find the preferences location is to start a JMRI program, e.g.
+              DecoderPro or PanelPro, select "Locations..." from the "Help" menu and click on [User
+              Files Location].<br>
+              A special treat for Windows users: if you go to the Windows Start Menu, in the JMRI
+              section, you can select "Preferences" to have it open that directory for you.
+            </li>
 
-              The easiest way to find the preferences location is to
-              start a JMRI program, e.g. DecoderPro or PanelPro, select
-              "Locations..." from the "Help" menu and click on [User Files
-              Location].<br>
-              A special treat for Windows users: if you go to the Windows
-              Start Menu, in the JMRI section, you can select
-              "Preferences" to have it open that directory for
-              you.</li>
-
-            <li>User files can be stored under the preferences location, 
-              but JMRI can also be configured to put them somewhere else.
-              <br>You may set or change the location scripts and
-              user files in the <a href=
-              "../../package/apps/TabbedPreferences.shtml#FileLocations">
-              Preferences... -&gt; File Locations</a> panel. Note
-              that changing the "User Files Location" will also
-              change the default location for Panels, Rosters
-              etc.
+            <li>User files can be stored under the preferences location, but JMRI can also be
+            configured to put them somewhere else.<br>
+              You may set or change the location scripts and user files in the <a href=
+              "../../package/apps/TabbedPreferences.shtml#FileLocations">Preferences... -&gt; File
+              Locations</a> panel. Note that changing the "User Files Location" will also change
+              the default location for Panels, Rosters etc.
             </li>
           </ol>
         </dd>
@@ -106,55 +71,47 @@
         <dt class="left">Types of Configuration Files</dt>
 
         <dd>
-          Inside your JMRI Preferences folder are a number of types
-          of configuration files used by DecoderPro:
-
+          Inside your JMRI Preferences folder are a number of types of configuration files used by
+          DecoderPro:
           <ul>
-            <li>Decoder definitions - Stored in the
-            <strong>decoders</strong> subdirectory, one for any
-            customized decoder; these define how a specific family
-            of decoders is configured.</li>
+            <li>Decoder definitions - Stored in the <strong>decoders</strong> subdirectory, one for
+            any customized decoder; these define how a specific family of decoders is
+            configured.</li>
 
-            <li>Locomotive configurations - Stored in the
-            <strong>roster</strong> subdirectory, one for each
-            Locomotive; these record the specific configuration of
-            each Locomotive in your Roster.</li>
+            <li>Locomotive configurations - Stored in the <strong>roster</strong> subdirectory, one
+            for each Locomotive; these record the specific configuration of each Locomotive in your
+            Roster.</li>
 
-            <li>Programmer definitions - Stored in the
-            <strong>programmers</strong> subdirectory when you've
-            used at least one Programmer; these define the formats
-            for the various programming sheets that are available
-            in DecoderPro.</li>
+            <li>Programmer definitions - Stored in the <strong>programmers</strong> subdirectory
+            when you've used at least one Programmer; these define the formats for the various
+            programming sheets that are available in DecoderPro.</li>
 
-            <li>The DecoderPro folder, containing your
-            profiles.</li>
+            <li>The DecoderPro folder, containing your profiles.</li>
           </ul>
         </dd>
 
         <dt class="left">General Configuration Files</dt>
 
         <dd>
-          There are many more JMRI Configuration Files, some shared
-          by applications, which live in the user's Preferences
-          directory:
-
+          There are many more JMRI Configuration Files, some shared by applications, which live in
+          the user's Preferences directory:
           <ul>
-            <li><tt>roster.xml</tt> - an index of your
-            Locomotives</li>
+            <li><code>roster.xml</code> - an index of your Locomotives</li>
 
-            <li><tt>decoderIndex.xml</tt> - an index of the
-            available decoder definition files. It also contains
-            the information on which specific decoder model uses
-            which file, how to identify them, and what options they
-            implement.</li>
+            <li><code>decoderIndex.xml</code> - an index of the available decoder definition files.
+            It also contains the information on which specific decoder model uses which file, how
+            to identify them, and what options they implement.</li>
 
-            <li><tt>names.xml</tt> - not used during normal
-            operation, this is a list of the standard Variable
-            Names for use in programmer definitions.</li>
+            <li><code>names.xml</code> - not used during normal operation, this is a list of the
+            standard Variable Names for use in programmer definitions.</li>
           </ul>
         </dd>
-      </dl><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

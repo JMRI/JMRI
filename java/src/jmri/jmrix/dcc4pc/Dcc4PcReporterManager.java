@@ -24,13 +24,9 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
         return (Dcc4PcSystemConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    @Override
-    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Reporter r = new Dcc4PcReporter(systemName, userName);
         register(r);
         return r;

@@ -29,7 +29,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     // Test the string constructor.
     @Test
     public void testStringCtor() {
-        msg = DCCppMessage.parseDCCppMessage("T 42 1");
+        msg = new DCCppMessage("T 42 1");
         Assert.assertEquals("length", 6, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 'T', msg.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
@@ -324,28 +324,18 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testMakesAndMonitors() {
-        msg = DCCppMessage.parseDCCppMessage("F 123 22 1");
+        msg = new DCCppMessage("F 123 22 1");
         Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 2, State: 1, (No Reply Expected)", msg.toMonitorString());
         msg = DCCppMessage.makeFunctionV2Message(123, 44, 1);
         Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 4, State: 1, (No Reply Expected)", msg.toMonitorString());
         msg = DCCppMessage.makeForgetCabMessage(1234);
         Assert.assertEquals("Monitor string", "Forget Cab: CAB: 1234, (No Reply Expected)", msg.toMonitorString());
-        msg = DCCppMessage.parseDCCppMessage("- 1234");
+        msg = new DCCppMessage("- 1234");
         Assert.assertEquals("Monitor string", "Forget Cab: CAB: 1234, (No Reply Expected)", msg.toMonitorString());
-        msg = DCCppMessage.parseDCCppMessage("-");
+        msg = new DCCppMessage("-");
         Assert.assertEquals("Monitor string", "Forget Cab: CAB: [ALL], (No Reply Expected)", msg.toMonitorString());
-        msg = DCCppMessage.parseDCCppMessage("- 12345");
-        Assert.assertNull("null on invalid address", msg);
-        msg = DCCppMessage.parseDCCppMessage("- xyz");
-        Assert.assertNull("null on invalid address", msg);
         msg = DCCppMessage.makeForgetCabMessage(12345);
         Assert.assertNull("null on invalid address", msg);
-        msg = DCCppMessage.parseDCCppMessage("F 123 222 1");
-        Assert.assertNull("null on invalid fn", msg);
-        msg = DCCppMessage.parseDCCppMessage("F 123 22 3");
-        Assert.assertNull("null on invalid fn state", msg);
-        msg = DCCppMessage.parseDCCppMessage("F 123 22 OFF");
-        Assert.assertNull("null on invalid fn state", msg);
     }
 
     @Test
@@ -384,6 +374,31 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testMonitorStringTurnoutCommandMsgClosed() {
         msg = DCCppMessage.makeTurnoutCommandMsg(23, false);
         Assert.assertEquals("Monitor string", "Turnout Cmd: ID: 23, State: CLOSED", msg.toMonitorString());
+    }
+
+    @Test
+    public void testTurnoutAddCommands() { /* test turnout add commands (new in DCC++EX 3.1.7) */
+        msg = new DCCppMessage("T 23 DCC 5 0");
+        Assert.assertEquals("Monitor string", "Add Turnout DCC: ID:23, Address:5, Subaddr:0", msg.toMonitorString());
+        msg = new DCCppMessage("T 24 SERVO 100 410 205 2");
+        Assert.assertEquals("Monitor string", "Add Turnout Servo: ID:24, Pin:100, ThrownPos:410, ClosedPos:205, Profile:2"
+                , msg.toMonitorString());
+        msg = new DCCppMessage("T 25 VPIN 50");
+        Assert.assertEquals("Monitor string", "Add Turnout Vpin: ID:25, Pin:50", msg.toMonitorString());
+        msg = new DCCppMessage("T 23 DCC 5 T");
+        Assert.assertEquals("Monitor string", "Unmatched Turnout Cmd: T 23 DCC 5 T", msg.toMonitorString());
+    }
+
+    @Test
+    public void testDiagAndControlCommands() { /* test diagnostic and control commands (new in DCC++EX 3.1.7) */
+        msg = new DCCppMessage("D EXRAIL ON");
+        Assert.assertEquals("Monitor string", "Diag Cmd: 'D EXRAIL ON'",       msg.toMonitorString());
+        msg = new DCCppMessage("/START 1224 4");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/START 1224 4'",  msg.toMonitorString());
+        msg = new DCCppMessage("/ START 1224 4");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/ START 1224 4'", msg.toMonitorString());
+        msg = new DCCppMessage("/PAUSE");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/PAUSE'",         msg.toMonitorString());
     }
 
     @Test

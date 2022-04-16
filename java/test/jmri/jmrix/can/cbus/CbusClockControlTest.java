@@ -322,7 +322,7 @@ public class CbusClockControlTest {
         
         send.setElement(3, 0x00);
         assertThat(CbusClockControl.dateFromCanFrame(send)).
-            isEqualTo("Stopped 51:237  27 Incorrect month (0) Temp: -37");
+            isEqualTo("Stopped 51:237 Saturday 27 Incorrect month (0) Temp: -37");
         
         send.setElement(3, 0xff);
         assertThat(CbusClockControl.dateFromCanFrame(send)).
@@ -356,6 +356,14 @@ public class CbusClockControlTest {
         send.setElement(6, 0xa0);
         assertThat(CbusClockControl.dateFromCanFrame(send)).
             isEqualTo("Stopped 51:237 Thursday 208 May Temp: -96");
+        
+        send = new CanReply(new int[] {0xCF,0x1C,0x15,0x76,0x01,0x09,0xA3});
+        assertThat(CbusClockControl.dateFromCanFrame(send)).
+            isEqualTo("Speed: x1 21:28 Friday 9 July Temp: -93");
+        
+        send = new CanReply(new int[] {0xCF,0x2C,0x02,0x70,0x0A,0x0A,0x23});
+        assertThat(CbusClockControl.dateFromCanFrame(send)).
+            isEqualTo("Speed: x10 02:44 Saturday 10 July Temp: 35");
         
     }
     

@@ -49,15 +49,9 @@ public class ActionPower extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         AtomicReference<JmriException> exception = new AtomicReference<>();
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnLayoutWithJmriException(() -> {
             try {
                 InstanceManager.getDefault(PowerManager.class).setPower(_powerState.getID());
             } catch (JmriException e) {

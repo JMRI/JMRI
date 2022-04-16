@@ -1,80 +1,60 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: webThrottle - Web control for locos, panels,
-  turnouts and routes</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: webThrottle - Web control for locos, panels, turnouts and routes</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI: webThrottle - Web control for locos, panels,
-      turnouts and routes</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: webThrottle - Web control for locos, panels, turnouts and routes</h1>
 
-      <p>Usage: &lt;your JMRI server
-      IP&gt;:&lt;port&gt;/web/webThrottle.html</p>
+      <p>Usage: &lt;your JMRI server IP&gt;:&lt;port&gt;/web/webThrottle.html</p>
 
-      <p>This application shows feedback and controls not only
-      locomotives, but also turnouts, routes, lights and other
-      devices through JMRI panels.</p>
+      <p>This application shows feedback and controls not only locomotives, but also turnouts,
+      routes, lights and other devices through JMRI panels.</p>
 
-      <p><b>webThrottle</b> is completely resizable and it adjusts
-      automatically to the size and orientation of the device
-      screen.</p>
+      <p><strong>webThrottle</strong> is completely resizable and it adjusts automatically to the
+      size and orientation of the device screen.</p>
 
-      <p>It runs on the most recent browsers on computers,
-      smartphones and tablets.<br>
-      Your device and browser must support HTML5 and
-      websockets.<br>
-      Tested on Safari, Firefox and Google Chrome running on
-      Windows, MAC, iPad/iPhone and Android - it should run on
-      Internet Explorer 10.<br>
-      <b>There is nothing to install on your device !</b></p>
+      <p>It runs on the most recent browsers on computers, smartphones and tablets.<br>
+      Your device and browser must support HTML5 and websockets.<br>
+      Tested on Safari, Firefox and Google Chrome running on Windows, MAC, iPad/iPhone and Android
+      - it should run on Internet Explorer 10.<br>
+      <strong>There is nothing to install on your device !</strong></p>
 
-      <p>To start using JMRI through a web browser, you just need
-      to activate the included <b>Web Server</b>. You may found
-      additional information <a href=
+      <p>To start using JMRI through a web browser, you just need to activate the included
+      <strong>Web Server</strong>. You may found additional information <a href=
       "/help/en/html/web/index.shtml">here</a>.</p>
 
       <p>To get help, please click '?' at each page top right.<br>
       You will find important and useful information there.<br>
-      There is specific Help for each page type (Roster, Loco,
-      Panel, ...).</p>
+      There is specific Help for each page type (Roster, Loco, Panel, ...).</p>
 
       <h3>Screen samples...</h3>
 
-      <p><img src="images/JMRI_webThrottle.png" height="300" title=
-      "The default screen"></p>
+      <p><img src="images/JMRI_webThrottle.png" height="300" alt="The default screen">
+      </p>
 
-      <p><img src="images/JMRI_webThrottle-(loco).png" height="300"
-      title="A loco throttle"></p>
+      <p><img src="images/JMRI_webThrottle-(loco).png" height="300" alt="A loco throttle">
+      </p>
 
-      <p><img src="images/JMRI_webThrottle-(panel).png" height=
-      "300" title="An interactive panel"></p>
+      <p><img src="images/JMRI_webThrottle-(panel).png" height="300" alt="An interactive panel">
+      </p>
 
-      <p><img src="images/JMRI_webThrottle-(iframes).png" height=
-      "300" title="Multi throttle screens in iframes"></p>
+      <p><img src="images/JMRI_webThrottle-(iframes).png" height="300" alt=
+      "Multi throttle screens in iframes">
+      </p>
 
-      <p>This is the package/jmri/jmrit/webThrottle/webThrottle
-      help page</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>This is the package/jmri/jmrit/webThrottle/webThrottle help page</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,77 +1,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!--  Translated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-13 -->
 
-  <title>JMRI: Outil Moniteur M&eacute;moire</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: Outil Moniteur Mémoire</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h1>JMRI: Outil Moniteur M&eacute;moire</h1><a href=
-      "MemoryFrameAction.jpg"><img width="194" height="56" src=
-      "MemoryFrameAction.jpg" align="left"></a> L'Outil Moniteur de
-      M&eacute;moire vous permet de voir la quantit&eacute; de
-      m&eacute;moire que JMRI utilise dans votre ordinateur.
-
+      <h1>JMRI: Outil Moniteur Mémoire</h1>
+      <a href="MemoryFrameAction.jpg"><img width="194" height="56" src="MemoryFrameAction.jpg"
+      align="left" alt=""></a> L'Outil Moniteur de Mémoire vous permet de voir la quantité de
+      mémoire que JMRI utilise dans votre ordinateur.
       <p>Il ya trois colonnes dans l'affichage en haut :</p>
 
       <ul>
-        <li>"Mise &agrave; jour" - met une nouvelle s&eacute;rie de
-        valeurs dans l'affichage</li>
+        <li>"Mise à jour" - met une nouvelle série de valeurs dans l'affichage</li>
 
-        <li>"r&eacute;cup&eacute;r&eacute; m&eacute;moire" -
-        r&eacute;duire la quantit&eacute; de m&eacute;moire
-        utilis&eacute;e au minimum possible en demandant Java pour
-        ex&eacute;cuter un garbage collection.</li>
+        <li>"récupéré mémoire" - réduire la quantité de mémoire utilisée au minimum possible en
+        demandant Java pour exécuter un garbage collection.</li>
 
-        <li>"Test" - Ex&eacute;cuter un test de l'allocation de
-        m&eacute;moire et de processus de collecte (pas
-        n&eacute;cessaire par les utilisateurs
-        r&eacute;guliers).</li>
+        <li>"Test" - Exécuter un test de l'allocation de mémoire et de processus de collecte (pas
+        nécessaire par les utilisateurs réguliers).</li>
       </ul>
 
-      <p>La partie sup&eacute;rieure affiche des informations sur
-      la m&eacute;moire. Chaque fois que vous appuyez sur le bouton
-      "Mise &agrave; jour", la ligne de fond obtient de nouvelles
-      valeurs et les valeurs anciennes sont d&eacute;plac&eacute;s
-      vers le haut. Ceci est la page d'aide
-      help/fr/package/jmri/jmrit/</p>
+      <p>La partie supérieure affiche des informations sur la mémoire. Chaque fois que vous appuyez
+      sur le bouton "Mise à jour", la ligne de fond obtient de nouvelles valeurs et les valeurs
+      anciennes sont déplacés vers le haut. Ceci est la page d'aide help/fr/package/jmri/jmrit/</p>
 
       <ul>
-        <li>La colonne de gauche est la quantit&eacute; de
-        m&eacute;moire utilis&eacute;e.</li>
+        <li>La colonne de gauche est la quantité de mémoire utilisée.</li>
 
-        <li>La colonne du milieu indique la quantit&eacute; de
-        m&eacute;moire actuellement allou&eacute; &agrave; JMRI,
-        mais n'est pas utilis&eacute;. Cette information est libre
-        pour une utilisation ult&eacute;rieure.</li>
+        <li>La colonne du milieu indique la quantité de mémoire actuellement alloué à JMRI, mais
+        n'est pas utilisé. Cette information est libre pour une utilisation ultérieure.</li>
 
-        <li>La colonne de droite est la m&eacute;moire totale
-        disponible pour JMRI.</li>
-      </ul>Au sommet de la colonne de gauche, la m&eacute;moire
-      maximale qui peut &ecirc;tre disponible pour JMRI est
-      affich&eacute;.
-
-      <p>Ceci est la page d'aide
-      help/fr/package/jmri/jmrit/MemoryFrameAction.shtml</p>
+        <li>La colonne de droite est la mémoire totale disponible pour JMRI.</li>
+      </ul>
+      Au sommet de la colonne de gauche, la mémoire maximale qui peut être disponible pour JMRI est
+      affiché.
+      <p>Ceci est la page d'aide help/fr/package/jmri/jmrit/MemoryFrameAction.shtml</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

@@ -43,7 +43,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         re = r;
         initGUI();
     }
-    
+
     private void initGUI() {
         maxfunction = re.getMAXFNNUM();
         GridBagLayout gbLayout = new GridBagLayout();
@@ -120,7 +120,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             _imageFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
             _imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
-            _imageFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
+            _imageFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons"));
             add(_imageFilePath[i], cL);
             cL.gridx++;
 
@@ -129,7 +129,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             _imagePressedFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
             _imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
-            _imagePressedFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
+            _imagePressedFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons"));
             add(_imagePressedFilePath[i], cL);
             cL.gridx++;
 
@@ -382,7 +382,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             w.writeBorders();
             w.write(s, 0, s.length());
         } catch (IOException e) {
-            log.warn("error during printing: {}", e);
+            log.warn("error during printing", e);
         }
 
     }

@@ -48,7 +48,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Many ::: Log error%n" +
+                "Many ::: Use default%n" +
                 "   ! A1%n" +
                 "      Socket not connected%n");
     }
@@ -59,7 +59,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Many ::: Log error%n" +
+                "         Many ::: Use default%n" +
                 "            ! A1%n" +
                 "               Socket not connected%n");
     }
@@ -263,11 +263,6 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
     }
     
-    @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
     // Test the methods connected(FemaleSocket) and getActionSystemName(int)
     @Test
     public void testConnected_getActionSystemName() throws SocketAlreadyConnectedException {
@@ -339,7 +334,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
         _base = action;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.setEnabled(true);
     }
 

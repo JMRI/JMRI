@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <variables include="SwitchPilot,SwitchPilot V2.0">
-        <variable label="Configuration output 1" CV="3" default="8" item="SwitchPilot Function Output 1 effect generated">
+        <variable label="Configuration output 1" CV="3" default="8" item="SwitchPilot FnOut 1 Mode">
             <decVal max="64"/>
         </variable>
-        <variable CV="3" default="8" item="SwitchPilot Function Output 1 Option 1">
+        <variable CV="3" default="8" item="SwitchPilot FnOut 1 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
@@ -14,7 +14,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
-        <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 2">
+        <variable label="" CV="3" default="8" item="SwitchPilot FnOut 1 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
@@ -22,7 +22,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
-        <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 3">
+        <variable label="" CV="3" default="8" item="SwitchPilot FnOut 1 Option 3">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -34,14 +34,14 @@
                 </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="3" default="8" item="SwitchPilot Function Output 1 Choices 1">
+        <variable label="Pulse Duration" CV="3" default="8" item="SwitchPilot FnOut 1 Choices 1">
             <qualifier>
-                <variableref>Configuration output 1</variableref>
+                <variableref>SwitchPilot FnOut 1 Mode</variableref>
                 <relation>ge</relation>
                 <value>2</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 1</variableref>
+                <variableref>SwitchPilot FnOut 1 Mode</variableref>
                 <relation>le</relation>
                 <value>31</value>
             </qualifier>
@@ -49,7 +49,7 @@
             <tooltip>Units = 65 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
-        <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 4">
+        <variable label="" CV="3" default="8" item="SwitchPilot FnOut 1 Option 4">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -63,14 +63,14 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="3" default="8" item="SwitchPilot Function Output 1 Choices 2">
+        <variable label="ON Duration" CV="3" default="8" item="SwitchPilot FnOut 1 Choices 2">
             <qualifier>
-                <variableref>Configuration output 1</variableref>
+                <variableref>SwitchPilot FnOut 1 Mode</variableref>
                 <relation>ge</relation>
                 <value>32</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 1</variableref>
+                <variableref>SwitchPilot FnOut 1 Mode</variableref>
                 <relation>le</relation>
                 <value>63</value>
             </qualifier>
@@ -78,7 +78,7 @@
             <tooltip>Units = 130 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
-        <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 5">
+        <variable label="" CV="3" default="8" item="SwitchPilot FnOut 1 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
@@ -86,10 +86,10 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">K84-kompatibel: Entweder Out A oder Out B aktiv, Dauerausgang</tooltip>
         </variable>
-        <variable label="Configuration output 2" CV="4" default="8" item="SwitchPilot Function Output 2 effect generated">
+        <variable label="Configuration output 2" CV="4" default="8" item="SwitchPilot FnOut 2 Mode">
             <decVal max="64"/>
         </variable>
-        <variable CV="4" default="8" item="SwitchPilot Function Output 2 Option 1">
+        <variable CV="4" default="8" item="SwitchPilot FnOut 2 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
@@ -99,7 +99,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
-        <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 2">
+        <variable label="" CV="4" default="8" item="SwitchPilot FnOut 2 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
@@ -107,7 +107,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
-        <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 3">
+        <variable label="" CV="4" default="8" item="SwitchPilot FnOut 2 Option 3">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -119,14 +119,14 @@
                 </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="4" default="8" item="SwitchPilot Function Output 2 Choices 1">
+        <variable label="Pulse Duration" CV="4" default="8" item="SwitchPilot FnOut 2 Choices 1">
             <qualifier>
-                <variableref>Configuration output 2</variableref>
+                <variableref>SwitchPilot FnOut 2 Mode</variableref>
                 <relation>ge</relation>
                 <value>2</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 2</variableref>
+                <variableref>SwitchPilot FnOut 2 Mode</variableref>
                 <relation>le</relation>
                 <value>31</value>
             </qualifier>
@@ -134,7 +134,7 @@
             <tooltip>Units = 65 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
-        <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 4">
+        <variable label="" CV="4" default="8" item="SwitchPilot FnOut 2 Option 4">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -148,14 +148,14 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="4" default="8" item="SwitchPilot Function Output 2 Choices 2">
+        <variable label="ON Duration" CV="4" default="8" item="SwitchPilot FnOut 2 Choices 2">
             <qualifier>
-                <variableref>Configuration output 2</variableref>
+                <variableref>SwitchPilot FnOut 2 Mode</variableref>
                 <relation>ge</relation>
                 <value>32</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 2</variableref>
+                <variableref>SwitchPilot FnOut 2 Mode</variableref>
                 <relation>le</relation>
                 <value>63</value>
             </qualifier>
@@ -163,7 +163,7 @@
             <tooltip>Units = 130 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
-        <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 5">
+        <variable label="" CV="4" default="8" item="SwitchPilot FnOut 2 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
@@ -171,10 +171,10 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">K84-kompatibel: Entweder Out A oder Out B aktiv, Dauerausgang</tooltip>
         </variable>
-        <variable label="Configuration output 3" CV="5" default="8" item="SwitchPilot Function Output 3 effect generated">
+        <variable label="Configuration output 3" CV="5" default="8" item="SwitchPilot FnOut 3 Mode">
             <decVal max="64"/>
         </variable>
-        <variable CV="5" default="8" item="SwitchPilot Function Output 3 Option 1">
+        <variable CV="5" default="8" item="SwitchPilot FnOut 3 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
@@ -184,7 +184,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
-        <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 2">
+        <variable label="" CV="5" default="8" item="SwitchPilot FnOut 3 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
@@ -192,7 +192,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
-        <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 3">
+        <variable label="" CV="5" default="8" item="SwitchPilot FnOut 3 Option 3">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -204,14 +204,14 @@
                 </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="5" default="8" item="SwitchPilot Function Output 3 Choices 1">
+        <variable label="Pulse Duration" CV="5" default="8" item="SwitchPilot FnOut 3 Choices 1">
             <qualifier>
-                <variableref>Configuration output 3</variableref>
+                <variableref>SwitchPilot FnOut 3 Mode</variableref>
                 <relation>ge</relation>
                 <value>2</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 3</variableref>
+                <variableref>SwitchPilot FnOut 3 Mode</variableref>
                 <relation>le</relation>
                 <value>31</value>
             </qualifier>
@@ -219,7 +219,7 @@
             <tooltip>Units = 65 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
-        <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 4">
+        <variable label="" CV="5" default="8" item="SwitchPilot FnOut 3 Option 4">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -233,14 +233,14 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="5" default="8" item="SwitchPilot Function Output 3 Choices 2">
+        <variable label="ON Duration" CV="5" default="8" item="SwitchPilot FnOut 3 Choices 2">
             <qualifier>
-                <variableref>Configuration output 3</variableref>
+                <variableref>SwitchPilot FnOut 3 Mode</variableref>
                 <relation>ge</relation>
                 <value>32</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 3</variableref>
+                <variableref>SwitchPilot FnOut 3 Mode</variableref>
                 <relation>le</relation>
                 <value>63</value>
             </qualifier>
@@ -248,7 +248,7 @@
             <tooltip>Units = 130 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
-        <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 5">
+        <variable label="" CV="5" default="8" item="SwitchPilot FnOut 3 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
@@ -256,10 +256,10 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">K84-kompatibel: Entweder Out A oder Out B aktiv, Dauerausgang</tooltip>
         </variable>
-        <variable label="Configuration output 4" CV="6" default="8" item="SwitchPilot Function Output 4 effect generated">
+        <variable label="Configuration output 4" CV="6" default="8" item="SwitchPilot FnOut 4 Mode">
             <decVal max="64"/>
         </variable>
-        <variable CV="6" default="8" item="SwitchPilot Function Output 4 Option 1">
+        <variable CV="6" default="8" item="SwitchPilot FnOut 4 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
@@ -269,7 +269,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
-        <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 2">
+        <variable label="" CV="6" default="8" item="SwitchPilot FnOut 4 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
@@ -277,7 +277,7 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
-        <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 3">
+        <variable label="" CV="6" default="8" item="SwitchPilot FnOut 4 Option 3">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -289,14 +289,14 @@
                 </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="6" default="8" item="SwitchPilot Function Output 4 Choices 1">
+        <variable label="Pulse Duration" CV="6" default="8" item="SwitchPilot FnOut 4 Choices 1">
             <qualifier>
-                <variableref>Configuration output 4</variableref>
+                <variableref>SwitchPilot FnOut 4 Mode</variableref>
                 <relation>ge</relation>
                 <value>2</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 4</variableref>
+                <variableref>SwitchPilot FnOut 4 Mode</variableref>
                 <relation>le</relation>
                 <value>31</value>
             </qualifier>
@@ -304,7 +304,7 @@
             <tooltip>Units = 65 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
-        <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 4">
+        <variable label="" CV="6" default="8" item="SwitchPilot FnOut 4 Option 4">
             <enumVal>
                 <enumChoice choice="" value="0">
                     <choice>.</choice>
@@ -318,14 +318,14 @@
             <tooltip> </tooltip>
             <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="6" default="8" item="SwitchPilot Function Output 4 Choices 2">
+        <variable label="ON Duration" CV="6" default="8" item="SwitchPilot FnOut 4 Choices 2">
             <qualifier>
-                <variableref>Configuration output 4</variableref>
+                <variableref>SwitchPilot FnOut 4 Mode</variableref>
                 <relation>ge</relation>
                 <value>32</value>
             </qualifier>
             <qualifier>
-                <variableref>Configuration output 4</variableref>
+                <variableref>SwitchPilot FnOut 4 Mode</variableref>
                 <relation>le</relation>
                 <value>63</value>
             </qualifier>
@@ -333,7 +333,7 @@
             <tooltip>Units = 130 msec</tooltip>
             <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
-        <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 5">
+        <variable label="" CV="6" default="8" item="SwitchPilot FnOut 4 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
@@ -343,16 +343,16 @@
         </variable>
     </variables>
     <variables include="SwitchPilot V2.0">
-        <variable label="PWM" CV="64" mask="XXXXXXVV" default="0"  item="SwitchPilot Function Output 1 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
+        <variable label="PWM" CV="64" mask="XXXXXXVV" default="0"  item="SwitchPilot FnOut 1 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
             <decVal max="3"/>
         </variable>
-        <variable label="PWM" CV="65" mask="XXXXXXVV" default="0"  item="SwitchPilot Function Output 2 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
+        <variable label="PWM" CV="65" mask="XXXXXXVV" default="0"  item="SwitchPilot FnOut 2 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
             <decVal max="3"/>
         </variable>
-        <variable label="PWM" CV="66" mask="XXXXXXVV" default="0"  item="SwitchPilot Function Output 3 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
+        <variable label="PWM" CV="66" mask="XXXXXXVV" default="0"  item="SwitchPilot FnOut 3 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
             <decVal max="3"/>
         </variable>
-        <variable label="PWM" CV="67" mask="XXXXXXVV" default="0"  item="SwitchPilot Function Output 4 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
+        <variable label="PWM" CV="67" mask="XXXXXXVV" default="0"  item="SwitchPilot FnOut 4 Slider 3" tooltip="0 = 100%, 1 = 75%, 2 = 50%, 1 = 25%,">
             <decVal max="3"/>
         </variable>
     </variables>

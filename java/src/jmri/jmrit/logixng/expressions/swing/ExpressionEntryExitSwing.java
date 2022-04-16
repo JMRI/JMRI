@@ -226,14 +226,18 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionEntryExit but is a: "+object.getClass().getName());
         }
         ExpressionEntryExit expression = (ExpressionEntryExit)object;
-        if (!destinationPointsBeanPanel.isEmpty() && (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect)) {
+        if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
             DestinationPoints entryExit = destinationPointsBeanPanel.getNamedBean();
             if (entryExit != null) {
                 NamedBeanHandle<DestinationPoints> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(entryExit.getDisplayName(), entryExit);
                 expression.setDestinationPoints(handle);
+            } else {
+                expression.removeDestinationPoints();
             }
+        } else {
+            expression.removeDestinationPoints();
         }
         try {
             if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {

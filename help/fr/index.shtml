@@ -21,6 +21,7 @@
   montre que beaucoup de personnes ont
   &Atilde;&copy;t&Atilde;&copy; en mesure de contribuer.</p>
 
+<!--
   <h2>Utilisation du Syst&Atilde;&uml;me d'Aide</h2>Si vous voyez
   ceci gr&Atilde;&cent;ce &Atilde;  un outil d'aide du programme,
   la section &Atilde;  gauche vous donne trois types
@@ -36,24 +37,15 @@
     <li>La "Loupe" vous permet de rechercher le contenu</li>
   </ul>Si vous voyez ceci sur le web, les liens ci-dessus vous
   permettent de vous rendre &Atilde; ux sections correspondantes.
+-->
 
   <h2>Information future</h2>La page web principale de JMRI
   <a href="https://jmri.org">https://jmri.org</a> est un bon point de
   d&Atilde;&copy;part pour obtenir des renseignements sur
   l'&Atilde;&copy;tat actuel, les mises &Atilde;  jour, etc (en
-  fonction sur votre ordinateur, vous pourriez avoir &Atilde; 
+  fonction sur votre ordinateur, vous pourriez avoir &Atilde;
   copier ce lien dans votre navigateur Web pour &Atilde;&ordf;tre
   en mesure de voir des sites ext&Atilde;&copy;rieurs correctement)
-
-  <p>La <a href=
-  "http://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a>
-  liste de diffusion comporte des annonces de nouvelles versions,
-  des changements majeurs, etc. Cette liste est
-  destin&Atilde;&copy;e &Atilde;  avoir un tr&Atilde;&uml;s faible
-  trafic, les d&Atilde;&copy;bats, etc. devraient avoir lieu
-  ailleurs. Vous pouvez vous abonner en envoyant le mot "subscribe
-  " dans le sujet ou le corps d'un e-mail &Atilde;  <a href=
-  "mailto:jmri-announce-request@lists.sourceforge.net">jmri-announce-request@lists.sourceforge.net</a>.</p>
 
   <p>Nous avons un groupe "JMRI utilisateurs" pour une
   discussion g&Atilde;&copy;n&Atilde;&copy;rale. Si vous souhaitez

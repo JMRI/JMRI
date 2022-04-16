@@ -39,20 +39,6 @@ public class StealingOrSharingThrottleManager extends DebugThrottleManager {
     }
     
     /**
-     * @deprecated since 4.15.7; use #responseThrottleDecision
-     */
-    @Deprecated
-    @Override
-    public void stealThrottleRequest(LocoAddress a, ThrottleListener l,boolean steal){
-        if (steal) {
-            responseThrottleDecision(a, l, ThrottleListener.DecisionType.STEAL_OR_SHARE);
-        } else {
-            cancelThrottleRequest(a,l);
-            failedThrottleRequest(a,"user declined to steal");
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

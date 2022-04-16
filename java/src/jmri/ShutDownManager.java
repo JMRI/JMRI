@@ -81,24 +81,9 @@ public interface ShutDownManager extends PropertyChangeProvider {
      */
     public void deregister(@CheckForNull Runnable task);
 
-    /**
-     * Provide access to the current registered shutdown tasks.
-     * <p>
-     * Note that implementations are free to provide a copy of the list of
-     * registered tasks and do not need to provide modifiable live access to the
-     * internal list of registered tasks.
-     *
-     * @return the list of shutdown tasks or an empty list if no shutdown tasks
-     *         are registered
-     * @deprecated since 4.21.1; use {@link #getCallables()} and {@link #getRunnables()} instead
-     */
-    @Nonnull
-    @Deprecated
-    public List<ShutDownTask> tasks();
-
     @Nonnull
     public List<Callable<Boolean>> getCallables();
-    
+
     @Nonnull
     public List<Runnable> getRunnables();
 
@@ -126,7 +111,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * continue to operate.
      * <p>
      * By exiting the program with status 210, the batch file (MS Windows) or
-     * shell script (Linux/macOS/UNIX) can catch the exit status and tell the 
+     * shell script (Linux/macOS/UNIX) can catch the exit status and tell the
      * operating system to restart.
      *
      * @return false if any shutdown task aborts restarting the application

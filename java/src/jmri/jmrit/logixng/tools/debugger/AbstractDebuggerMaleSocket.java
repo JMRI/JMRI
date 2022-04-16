@@ -104,7 +104,7 @@ public abstract class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
 
     @Override
     public void setEnabledFlag(boolean enable) {
-        throw new UnsupportedOperationException("Not supported");
+        ((MaleSocket)getObject()).setEnabledFlag(enable);
     }
 
     @Override

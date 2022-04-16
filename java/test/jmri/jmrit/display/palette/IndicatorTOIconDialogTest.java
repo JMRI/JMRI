@@ -30,6 +30,7 @@ public class IndicatorTOIconDialogTest {
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
         JUnitUtil.dispose(editor);
+        JUnitUtil.clearShutDownManager();
     }
 
     @BeforeEach

@@ -24,7 +24,7 @@ public interface SensorManager extends ProvidingManager<Sensor> {
 
     /**
      * Get the Sensor with the user name, then system name if needed; if that fails, create a
-     * new Sensor. 
+     * new Sensor.
      * If the name is a valid system name, it will be used for the new Sensor.
      * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
@@ -47,8 +47,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
-     * Get an existing Sensor or return null if it doesn't exist. 
-     * 
+     * Get an existing Sensor or return null if it doesn't exist.
+     *
      * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
@@ -98,8 +98,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
-     * Get an existing Sensor or return null if it doesn't exist. 
-     * 
+     * Get an existing Sensor or return null if it doesn't exist.
+     *
      * Locates via user name.
      *
      * @param name User name to match
@@ -111,8 +111,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     public Sensor getByUserName(@Nonnull String name);
 
     /**
-     * Get an existing Sensor or return null if it doesn't exist. 
-     * 
+     * Get an existing Sensor or return null if it doesn't exist.
+     *
      * Locates via system name
      *
      * @param name System name to match
@@ -146,34 +146,19 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
-     * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 addresses away
-     * from the initial address. Used when adding a range of Sensors.
-     *
-     * @param curAddress The hardware address of the sensor we wish to add
-     * @param prefix     The System Prefix used to make up the systemName
-     *                   check.
-     * @return next valid address.
-     * @throws jmri.JmriException if problem calculating next address or next 10 are in use.
-     * @deprecated since 4.21.3; use #getNextValidAddress(String, String, boolean) instead.
-     */
-    @Deprecated
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
-
-    /**
      * Get the Next valid Sensor address.
      * <p>
      * @param curAddress the starting hardware address to get the next valid from.
      * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it 
+     * @param ignoreInitialExisting false to return the starting address if it
      *                          does not exist, else true to force an increment.
      * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
+     * @throws JmriException    if unable to get the current / next address,
      *                          or more than 10 next addresses in use.
      */
     @Nonnull
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
-    
+
     /**
      * Get a system name for a given hardware address and system prefix.
      *

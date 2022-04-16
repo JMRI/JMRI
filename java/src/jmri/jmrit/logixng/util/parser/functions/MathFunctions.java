@@ -6,11 +6,7 @@ import java.util.Set;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.parser.CalculateException;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -35,6 +31,19 @@ public class MathFunctions implements FunctionFactory {
         functionClasses.add(new SinFunction());
         return functionClasses;
     }
+
+    @Override
+    public Set<Constant> getConstants() {
+        Set<Constant> constantClasses = new HashSet<>();
+        constantClasses.add(new Constant(getModule(), "MathPI", Math.PI));
+        constantClasses.add(new Constant(getModule(), "MathE", Math.E));
+        return constantClasses;
+    }
+
+    @Override
+    public String getConstantDescription() {
+        return Bundle.getMessage("Math.ConstantDescriptions");
+    }
     
     
     
@@ -43,6 +52,11 @@ public class MathFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new MathFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new MathFunctions().getConstantDescription();
         }
         
         @Override
@@ -89,6 +103,11 @@ public class MathFunctions implements FunctionFactory {
         }
         
         @Override
+        public String getConstantDescriptions() {
+            return new MathFunctions().getConstantDescription();
+        }
+        
+        @Override
         public String getName() {
             return "sin";
         }
@@ -119,7 +138,7 @@ public class MathFunctions implements FunctionFactory {
                     }
                 } else if (param1 instanceof Number) {
                     double p1 = TypeConversionUtil.convertToDouble(param1, false);
-                    double angle = param0 * p1 / 2 / Math.PI;
+                    double angle = param0 / p1 * 2.0 * Math.PI;
                     result = Math.sin(angle);
                 } else {
                     throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
@@ -133,7 +152,7 @@ public class MathFunctions implements FunctionFactory {
                                 parameterList.get(2).calculate(symbolTable), false);
                         double max = TypeConversionUtil.convertToDouble(
                                 parameterList.get(3).calculate(symbolTable), false);
-                        return result * (max-min) + min;
+                        return (result+1.0)/2.0 * (max-min) + min;
                     default:
                         throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
                 }

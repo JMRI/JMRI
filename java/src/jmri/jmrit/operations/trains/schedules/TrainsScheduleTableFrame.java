@@ -433,7 +433,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     private void updateSwitchListButton() {
-        log.debug("update switch list button");
         List<Location> locations = locationManager.getList();
         for (Location location : locations) {
             if (location != null && location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
@@ -455,7 +454,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (ts != null) {
             ts.setComment(commentTextArea.getText());
         }
-//        updateControlPanel();
         OperationsXml.save();
     }
 
@@ -520,6 +518,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
+            log.debug("update switch list button location ({})", e.getSource());
             updateSwitchListButton();
         }
         if (e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)) {

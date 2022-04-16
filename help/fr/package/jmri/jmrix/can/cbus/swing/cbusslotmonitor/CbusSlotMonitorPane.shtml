@@ -1,117 +1,168 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: CBUS&reg; Console Tool</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: CBUS® Console Tool</title>
   <meta name="author" content="Steve Young">
   <meta name="keywords" content="JMRI CBUS Command station throttle session monitor cancmd">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI : Moniteur de Centrale CBUS</h1>
 
-     <h1>JMRI : Moniteur de Centrale CBUS</h1>
-        <p>Tableau principal - Suivi des sessions de train.</p>
+      <p>Tableau principal - Suivi des sessions de train.</p>
 
-    <h3>Les &#233;l&#233;ments du menu sup&#233;rieur</h3>    
-        </p> <p>Bouton " Stop All " - Ce bouton est diff&#233;rent de celui du R&#233;gulateur JMRI " stop all " en ce sens qu'il envoie 
-        un arr&#234;t &#224; l'&#233;chelle du syst&#232;me, et pas seulement aux manettes de JMRI.</p> <p>
-        <p>Bouton d'Alimentation de la Voie - Marche / Arr&#234;t / Inconnu</p> <p>.
-        </p> <p>Bouton de donn&#233;es de signal - Marche / Arr&#234;t - Exp&#233;rimental</p> <p>.
-        </p> <p>D&#233;roulement des Colonnes de la Session - Choisissez les colonnes &#224; afficher dans le tableau</p> <p>.
-        
-    <h2>Tableau principal - Liste des Trains</h2>
-        <p>Chaque train roulant sur le r&#233;seau sera ajout&#233; au tableau, 
-        il y a une rang&#233;e par loco.</p> <p>
-        </p> <p>La vitesse et la direction des trains, l'&#233;tat des fonctions, etc. sont mis &#224; jour en temps r&#233;el 
-        en fonction de la derni&#232;re instruction donn&#233;e par 
-        un R&#233;gulateur JMRI, un contr&#244;leur de R&#233;gulateur MERG CANCAB, 
-        ou un poste de commande connect&#233; au CBUS.</p>
-        
-        <h3>Colonnes de session de train : </h3>
-        <img src="../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-session-626x179.png"
-        width="626" height="179" alt="CBUS Command Station Monitor Session Columns">
-        <ul>
-        <li>Num&#233;ro de session tel que d&#233;termin&#233; par la centrale</li>.
-        <li>Identification de l'adresse de la  Loco</li>
-        <li>Bouton E-Stop - Arr&#234;te la loco individuellement</li>
-        <li>Drapeau Adresse Longue Adresse vrai / faux </li>
-        <li>Vitesse (command&#233;e)</li>
+      <h3>Les éléments du menu supérieur</h3>
+
+      <p>Bouton " Stop All " - Ce bouton est différent de celui du Régulateur JMRI " stop all " en
+      ce sens qu'il envoie un arrêt à l'échelle du système, et pas seulement aux manettes de
+      JMRI.</p>
+
+      <p>Bouton d'Alimentation de la Voie - Marche / Arrêt / Inconnu</p>
+
+      <p>.</p>
+
+      <p>Bouton de données de signal - Marche / Arrêt - Expérimental</p>
+
+      <p>.</p>
+
+      <p>Déroulement des Colonnes de la Session - Choisissez les colonnes à afficher dans le
+      tableau</p>
+
+      <p>.</p>
+
+      <h2>Tableau principal - Liste des Trains</h2>
+
+      <p>Chaque train roulant sur le réseau sera ajouté au tableau, il y a une rangée par loco.</p>
+
+      <p>La vitesse et la direction des trains, l'état des fonctions, etc. sont mis à jour en temps
+      réel en fonction de la dernière instruction donnée par un Régulateur JMRI, un contrôleur de
+      Régulateur MERG CANCAB, ou un poste de commande connecté au CBUS.</p>
+
+      <h3>Colonnes de session de train :</h3>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-session-626x179.png"
+      width="626" height="179" alt="CBUS Command Station Monitor Session Columns">
+      <ul>
+        <li>Numéro de session tel que déterminé par la centrale</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>Identification de l'adresse de la Loco</li>
+
+        <li>Bouton E-Stop - Arrête la loco individuellement</li>
+
+        <li>Drapeau Adresse Longue Adresse vrai / faux</li>
+
+        <li>Vitesse (commandée)</li>
+
         <li>Direction ( loco )</li>
-        <li>Fonctions - Si une fonction de la loco est activ&#233;e, le num&#233;ro de la fonction s'affiche.</li>
-        <li>Cran de vitesse ( le syst&#232;me est par d&#233;faut &#224; 128 )</li>.
-        <li>ID Couplage </li>
+
+        <li>Fonctions - Si une fonction de la loco est activée, le numéro de la fonction
+        s'affiche.</li>
+
+        <li>Cran de vitesse ( le système est par défaut à 128 )</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>ID Couplage</li>
+
         <li>Drapeaux</li>
-        
-        </ul>
-        
-    <h3><a name="opc" id="opc">Codes d'Op&#233;ration pris en Charge</a></h3>.
+      </ul>
 
-    <p>Envoy&#233;s par le Moniteur de la Centrale</p>.
-    
-        <ul>
-        <li>QLOC </li>
-        <li>RSTAT </li>
+      <h3><a name="opc" id="opc">Codes d'Opération pris en Charge</a>
+      </h3>
+      .
+      <p>Envoyés par le Moniteur de la Centrale</p>
+      .
+      <ul>
+        <li>QLOC</li>
+
+        <li>RSTAT</li>
+
         <li>ESTOP</li>
+
         <li>RTON</li>
+
         <li>RTOF</li>
-        </ul>
+      </ul>
 
+      <p>Les Surveillants pour les messages envoyés, soit par JMRI lui-même, soit par des personnes
+      externes au JMRI</p>
+      .
+      <ul>
+        <li>PLOC</li>
 
-      <p>Les Surveillants pour les messages envoy&#233;s, soit par  JMRI lui-m&#234;me, soit par des personnes externes au JMRI</p>.
-    
-        <ul>
-        <li>PLOC </li>
-        <li>RLOC </li>
-        <li>DSPD </li>
-        <li>KLOC </li>
-        <li>DKEEP ( si la session n'est pas sur la table, envoie un QLOC ) </li>.
-        <li>STAT ( Utilis&#233; pour d&#233;terminer si la centrale est capable de protocole CBUS 8a ) </li>.
-        <li>GLOC </li>
-        <li>ERR </li>
-        <li>STMOD </li>
+        <li>RLOC</li>
+
+        <li>DSPD</li>
+
+        <li>KLOC</li>
+
+        <li>DKEEP ( si la session n'est pas sur la table, envoie un QLOC )</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>STAT ( Utilisé pour déterminer si la centrale est capable de protocole CBUS 8a )</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>GLOC</li>
+
+        <li>ERR</li>
+
+        <li>STMOD</li>
+
         <li>DFUN</li>
-        <li>DFNON</li>
-        <li>DFNOF</li>
-        <li>PCON</li>
-        <li>KCON</li>
-        <li>DFLG</li>
-        <li>ESTOP</li>
-        <li>RTON</li>
-        <li>RTOF</li>
-        <li>TON</li>
-        <li>TOF</li>
-        </ul>
 
-    <h3>Aide JMRI</h3>
-        
-        <p>L'outil de signalisation de Cabine <a name="cabdata" id="cabdata"></a>pr&#233;c&#233;demment au sein de ce moniteur.
-        a &#233;t&#233; d&#233;plac&#233; vers le site d&#233;di&#233; JMRI Cab Signal.</p>
-        
-        <p>Vous pouvez afficher cette page d'aide au sein de JMRI en s&#233;lectionnant Aide > Aide de la fen&#234;tre dans la barre sup&#233;rieure de la fen&#234;tre du 
-        Moniteur de la Centrale CBUS.</p>
-      
-        <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page d'aide principale de CBUS JMRI </a>.</p>
-        
-        </p> <p>Voir les informations de d&#233;bogage pour le Moniteur de Centrale en ajoutant . 
-        log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG 
-        &#224; votre fichier default.lcf.</p>
-        
-        
-        <h2></h2>
-        <p>CBUS&reg; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>.
-        <p></p>
-		<p>Traduction 2021-03-19</p>
+        <li>DFNON</li>
+
+        <li>DFNOF</li>
+
+        <li>PCON</li>
+
+        <li>KCON</li>
+
+        <li>DFLG</li>
+
+        <li>ESTOP</li>
+
+        <li>RTON</li>
+
+        <li>RTOF</li>
+
+        <li>TON</li>
+
+        <li>TOF</li>
+      </ul>
+
+      <h3>Aide JMRI</h3>
+
+      <p>L'outil de signalisation de Cabine <a name="cabdata" id="cabdata"></a>précédemment au sein
+      de ce moniteur. a été déplacé vers le site dédié JMRI Cab Signal.</p>
+
+      <p>Vous pouvez afficher cette page d'aide au sein de JMRI en sélectionnant Aide &gt; Aide de
+      la fenêtre dans la barre supérieure de la fenêtre du Moniteur de la Centrale CBUS.</p>
+
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page d'aide principale de
+      CBUS JMRI</a> .</p>
+
+      <p>Voir les informations de débogage pour le Moniteur de Centrale en ajoutant .
+      log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG à votre fichier
+      default.lcf.</p>
+
+      <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
+      .
+      <p>Traduction 2021-03-19</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

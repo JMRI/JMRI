@@ -1,199 +1,282 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help CBUS Simulator simulate offline command station emulate emulator">
-  <title>JMRI: CBUS&reg; Simulator</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta name="keywords" content=
+  "JMRI help CBUS Simulator simulate offline command station emulate emulator">
+  <title>JMRI: CBUS® Simulator</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI : Outil de simulation du réseau CBUS</h1>
 
-      <h1>JMRI : Outil de simulation du r&#233;seau CBUS</h1>
-      
       <ul class="snav">
-      <li><a href="#direction">Direction</a></li>
-      <li><a href="#cs">Centrales</a></li>
-      <li><a href="#ev">&#201;v&#233;nements de r&#233;ponse</a></li>
-      <li><a href="#nodes">N&#339;uds</a></li>
-      <li><a href="#opc">OPCs</a></li>
-      </ul>
-      
-      <img src="../../../../../../html/hardware/can/cbus/images/swing/simulator/cbus-network-simulation-pane-315x322.png"
-       alt="Capture d'&#233;cran du simulateur de r&#233;seau CBUS" width="315" height="322" align="right">
-       
-      <p>L'outil d&#233;marre en arri&#232;re-plan d'une connexion mat&#233;rielle du MERG de CAN Simulation.</p>
-      
-      <p>Vous pouvez &#233;galement d&#233;marrer le simulateur manuellement pour toutes les connexions en l'ouvrant via le menu principal du MERG.</p>
-      
-      </p> <p>Les options par d&#233;faut sont affich&#233;es &#224; droite.</p> 
-      
-      </p> <p>Vous pouvez ajouter des Centrales, des N&#339;uds ou des r&#233;pondeurs d'&#233;v&#233;nements suppl&#233;mentaires en s&#233;lectionnant Ajouter dans le menu sup&#233;rieur.</p> <p>.
+        <li><a href="#direction">Direction</a>
+        </li>
 
-      
-     <h2><a name="direction" id="direction">Direction et d&#233;lai</a></h2>.
-     <p>La direction et le d&#233;lai sont uniques &#224; chaque objet simul&#233;.</p>
+        <li><a href="#cs">Centrales</a>
+        </li>
+
+        <li><a href="#ev">Événements de réponse</a>
+        </li>
+
+        <li><a href="#nodes">Nœuds</a>
+        </li>
+
+        <li><a href="#opc">OPCs</a>
+        </li>
+      </ul>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/simulator/cbus-network-simulation-pane-315x322.png"
+      alt="Capture d'écran du simulateur de réseau CBUS" width="315" height="322" align="right">
+      <p>L'outil démarre en arrière-plan d'une connexion matérielle du MERG de CAN Simulation.</p>
+
+      <p>Vous pouvez également démarrer le simulateur manuellement pour toutes les connexions en
+      l'ouvrant via le menu principal du MERG.</p>
+
+      <p>Les options par défaut sont affichées à droite.</p>
+
+      <p>Vous pouvez ajouter des Centrales, des Nœuds ou des répondeurs d'événements
+      supplémentaires en sélectionnant Ajouter dans le menu supérieur.</p>
+
+      <p>.</p>
+
+      <h2><a name="direction" id="direction">Direction et délai</a>
+      </h2>
+      .
+      <p>La direction et le délai sont uniques à chaque objet simulé.</p>
+
       <ul>
-      <li>Listen Outgoing - par exemple, Surveillance d'un R&#233;gulateur JMRI</li>.
-      <li>Ecoute entrante - ex : &#233;coute d'un CANCAB</li>.
-      <li>Envoyer en tant que Incoming - exemple: envoyer &#224; un R&#233;gulateur JMRI</li>.
-      <li>Send as Outgoing - exemple: envoi vers CANCAB</li>
-      <li>Delay - D&#233;lai de r&#233;ponse de la simulation aux demandes ( ms )</li>.
+        <li>Listen Outgoing - par exemple, Surveillance d'un Régulateur JMRI</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>Ecoute entrante - ex : écoute d'un CANCAB</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>Envoyer en tant que Incoming - exemple: envoyer à un Régulateur JMRI</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>Send as Outgoing - exemple: envoi vers CANCAB</li>
+
+        <li>Delay - Délai de réponse de la simulation aux demandes ( ms )</li>
+
+        <li style="list-style: none">.</li>
       </ul>
 
+      <h2><a name="cs" id="cs">Centrales</a>
+      </h2>
 
-     <h2><a name="cs" id="cs">Centrales</a></h2>
-      <p>Vous pouvez choisir entre un Centrales standard, ainsi que la d&#233;sactivation de la Centrale.</p>
-      
-      <p>La d&#233;sactivation de la Centrale annule toutes les sessions en cours.</p>
-      
-      </p> <p>Le nombre &#224; droite de la liste d&#233;roulante indique le nombre actuel de sessions qu'elle g&#232;re.</p> 
-           
-      <p>Le bouton de r&#233;initialisation &#233;quivaut &#224; &#233;teindre et &#224; rallumer la Centrale (" hard reset ").</p>
+      <p>Vous pouvez choisir entre un Centrales standard, ainsi que la désactivation de la
+      Centrale.</p>
 
+      <p>La désactivation de la Centrale annule toutes les sessions en cours.</p>
 
+      <p>Le nombre à droite de la liste déroulante indique le nombre actuel de sessions qu'elle
+      gère.</p>
 
-     <h2><a name="ev" id="ev" >&#201;v&#233;nements de la r&#233;ponse</a></h2>>
-      <p>L'outil peut &#233;mettre des &#233;v&#233;nements de r&#233;ponse activ&#233;s ou d&#233;sactiv&#233;s &#224; toutes les demandes qu'il d&#233;tecte sur le r&#233;seau.
-        </p>
-        
-        <p>&#201;v&#233;nement de r&#233;ponse : </p>
-        
-        <ul>
-        <li>D&#233;sactiv&#233;</li>
-        <li>Mise en marche / arr&#234;t al&#233;atoire</li>
+      <p>Le bouton de réinitialisation équivaut à éteindre et à rallumer la Centrale (" hard reset
+      ").</p>
+
+      <h2><a name="ev" id="ev">Événements de la réponse</a>
+      </h2>
+      &gt;
+      <p>L'outil peut émettre des événements de réponse activés ou désactivés à toutes les demandes
+      qu'il détecte sur le réseau.</p>
+
+      <p>Événement de réponse :</p>
+
+      <ul>
+        <li>Désactivé</li>
+
+        <li>Mise en marche / arrêt aléatoire</li>
+
         <li>Odd On / Even Off</li>
+
         <li>On</li>
-        <li>D&#233;sactiv&#233;</li>
-        </ul>
-        
-        <p>Les demandes peuvent &#233;galement &#234;tre filtr&#233;es par n&#339;ud.</p>
-        
-        <ul>
-        <li> -1 : Pas de filtre</li>
-        <li>0 : Juste des &#233;v&#233;nements courts</li>
-        <li> >0 : Ne r&#233;pond qu'aux demandes pour un n&#339;ud particulier</li>.
-        </ul>
 
+        <li>Désactivé</li>
+      </ul>
 
-     <h2><a name="nodes" id="nodes" >N&#339;uds</a></h2><...
-        <p>Aucun n&#339;ud n'est simul&#233; par d&#233;faut.</p>
-        <p>Lorsque vous s&#233;lectionnez un n&#339;ud, en entrant en mode SLiM, vous devrez 
-        appuyer sur le bouton FLiM pour l'introduire dans le r&#233;seau.</p> <p>
-        </p> <p>Lorsque vous s&#233;lectionnez un nouveau n&#339;ud ( ou que vous le d&#233;sactivez en s&#233;lectionnant SLiM ),
-        tous les &#233;v&#233;nements ou variables de n&#339;ud existants seront r&#233;initialis&#233;s.</p> 
-        <p>Les N&#339;uds simul&#233;s fournissent actuellement des op&#233;rations d'administration de n&#339;ud,
-        cependant, ils ne prennent pas en charge les &#233;v&#233;nements entrants ou sortants r&#233;els.</p>
-         
-        
-        </p> <p>Les N&#339;uds simul&#233;s actuels comprennent : </p>
-        <ul>
-        <li>SLiM ( simulation d&#233;sactiv&#233;e )</li>
+      <p>Les demandes peuvent également être filtrées par nœud.</p>
+
+      <ul>
+        <li>-1 : Pas de filtre</li>
+
+        <li>0 : Juste des événements courts</li>
+
+        <li>&gt;0 : Ne répond qu'aux demandes pour un nœud particulier</li>
+
+        <li style="list-style: none">.</li>
+      </ul>
+
+      <h2><a name="nodes" id="nodes">Nœuds</a>
+      </h2>
+      &lt;...
+      <p>Aucun nœud n'est simulé par défaut.</p>
+
+      <p>Lorsque vous sélectionnez un nœud, en entrant en mode SLiM, vous devrez appuyer sur le
+      bouton FLiM pour l'introduire dans le réseau.</p>
+
+      <p>Lorsque vous sélectionnez un nouveau nœud ( ou que vous le désactivez en sélectionnant
+      SLiM ), tous les événements ou variables de nœud existants seront réinitialisés.</p>
+
+      <p>Les Nœuds simulés fournissent actuellement des opérations d'administration de nœud,
+      cependant, ils ne prennent pas en charge les événements entrants ou sortants réels.</p>
+
+      <p>Les Nœuds simulés actuels comprennent :</p>
+
+      <ul>
+        <li>SLiM ( simulation désactivée )</li>
+
         <li>CANPAN</li>
-        </ul>
+      </ul>
 
+      <h3><a name="opc" id="opc">Codes d'Opération Pris en Charge</a>
+      </h3>
+      .
+      <h4>Reçus par le simulateur ( depuis d'autres applications JMRI, et depuis l'extérieur de
+      JMRI )</h4>
+      .
+      <p>Centrale Standard ( basée sur le firmware CANCMD v3 )</p>
 
-
-      <h3><a name="opc" id="opc">Codes d'Op&#233;ration Pris en Charge</a></h3>.
-
-        <h4>Re&#231;us par le simulateur ( depuis d'autres applications JMRI, et depuis l'ext&#233;rieur de JMRI ) </h4>.
-
-        <p>Centrale Standard ( bas&#233;e sur le firmware CANCMD v3 )</p>
-        <ul>
+      <ul>
         <li>RTON</li>
+
         <li>RTOF</li>
+
         <li>RESTP</li>
+
         <li>RLOC</li>
+
         <li>QLOC</li>
+
         <li>DSPD</li>
+
         <li>DKEEP</li>
+
         <li>KLOC</li>
-        </ul>
-        
-        <p>Demandes de Statut d'&#201;v&#233;nement</p>
-        
-        <ul>
-        <li>ASRQ - Envoy&#233; lorsque l'utilisateur clique sur le bouton d'&#233;tat, num&#233;ro de n&#339;ud 0</li>.      
-        <li>AREQ - Envoy&#233; lorsque l'utilisateur clique sur le bouton d'&#233;tat, num&#233;ro de n&#339;ud > 0</li>.
-        </ul>
-        
-        <p>Simulation de n&#339;ud</p>
-        
-        <ul>
+      </ul>
+
+      <p>Demandes de Statut d'Événement</p>
+
+      <ul>
+        <li>ASRQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud 0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>AREQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud &gt;
+        0</li>
+
+        <li style="list-style: none">.</li>
+      </ul>
+
+      <p>Simulation de nœud</p>
+
+      <ul>
         <li>RQMN - Mode de configuration uniquement</li>
+
         <li>RQNP - Mode configuration uniquement</li>
+
         <li>SNN - Mode configuration uniquement</li>
+
         <li>QNN</li>
+
         <li>NNLRN</li>
+
         <li>NNULN</li>
+
         <li>NVRD</li>
+
         <li>NVSET</li>
+
         <li>RQEVN</li>
+
         <li>NERD</li>
+
         <li>REVAL</li>
+
         <li>EVLRN - Mode apprentissage seulement</li>
+
         <li>EVULN - Mode Apprentissage uniquement</li>
-        </ul>
+      </ul>
 
-        <h4>Envoy&#233; par le simulateur ( comme entrant vers d'autres applications JMRI, et vers le r&#233;seau externe) </h4>.
+      <h4>Envoyé par le simulateur ( comme entrant vers d'autres applications JMRI, et vers le
+      réseau externe)</h4>
+      .
+      <p>Centrale Standard</p>
 
-        <p>Centrale Standard </p>
-
-        <ul>
+      <ul>
         <li>TON</li>
+
         <li>TOF</li>
+
         <li>ESTOP</li>
+
         <li>ERR</li>
+
         <li>PLOC</li>
-        </ul>
+      </ul>
 
-        <p>Envoy&#233;s comme R&#233;ponses aux &#201;v&#233;nements</p>
-        <ul>
+      <p>Envoyés comme Réponses aux Événements</p>
+
+      <ul>
         <li>ARON</li>
+
         <li>AROF</li>
+
         <li>ARSON</li>
+
         <li>ARSOF</li>
-        </ul>
+      </ul>
 
+      <p>Envoyé dans les Simulations de Nœuds</p>
 
-        <p>Envoy&#233; dans les Simulations de N&#339;uds</p>
-
-
-        <ul>
+      <ul>
         <li>NAME</li>
+
         <li>NNACK</li>
+
         <li>RQNN</li>
+
         <li>WRACK</li>
+
         <li>NVANS</li>
+
         <li>PARAN</li>
-        <li>PNN  </li>
+
+        <li>PNN</li>
+
         <li>PARAMS</li>
+
         <li>NEVAL</li>
+
         <li>ENRSP</li>
+
         <li>NUMEV</li>
-        
-        </ul>
+      </ul>
 
-    <h3>Aide JMRI</h3>
-      
-    <p>Vous pouvez afficher cette page d'aide au sein de JMRI en s&#233;lectionnant Aide > Aide de la fen&#234;tre dans la barre sup&#233;rieure de la fen&#234;tre de capture d'&#233;v&#233;nements CBUS.</p>
-    
-    <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'assistance CBUS de JMRI</a>.</p>
+      <h3>Aide JMRI</h3>
 
-      <h2></h2>
-      <p>CBUS&reg; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>.
-      <p></p>
+      <p>Vous pouvez afficher cette page d'aide au sein de JMRI en sélectionnant Aide &gt; Aide de
+      la fenêtre dans la barre supérieure de la fenêtre de capture d'événements CBUS.</p>
 
-<P>Traduction 2021-03-19</P>
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale
+      d'assistance CBUS de JMRI</a>.</p>
 
+      <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
+      .
+      <p>Traduction 2021-03-19</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

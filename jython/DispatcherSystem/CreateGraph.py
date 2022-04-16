@@ -128,7 +128,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
                             path_weight = [x.getBlock().getLengthMm() for x in path]
-                            pweight = sum(path_weight) + 1  # add 1 so paths of equal length will have a maller weiht if the train stops less
+                            pweight = sum(path_weight) + 1  # add 1 so paths of equal length will have a smaller weiht if the train stops less
                             edge = le()     # le = LabelledEdge() set up outside CreateGraph.py
                             if self.logLevel > 0: print edge.to_string()
                             if self.logLevel > 0: print "adding edge ", station_block_name, destination
@@ -142,6 +142,19 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             edge.setItem(path = path)
                             edge.setItem(path_name = path_name)
                             edge.setItem(neighbor_name = neighbor_name)
+                            LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+                            firstLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[0])
+                            first_block_name = firstLayoutBlock.getUserName()
+                            edge.setItem(first_block_name = first_block_name)
+                            secondLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[1])
+                            second_block_name = secondLayoutBlock.getUserName()
+                            edge.setItem(second_block_name = second_block_name)
+                            lastLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-1])
+                            last_block_name = lastLayoutBlock.getUserName()
+                            edge.setItem(last_block_name = last_block_name)
+                            penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
+                            penultimate_block_name = penultimateLayoutBlock.getUserName()
+                            edge.setItem(penultimate_block_name = penultimate_block_name)                            
                             #edge.setItem(path_weight = path_weight)
                             
                             if self.logLevel > 0: print "path weight", path_weight, "pweight",pweight
@@ -174,6 +187,15 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                                 edge.setItem(path = path)
                                 edge.setItem(path_name = path_name)
                                 edge.setItem(neighbor_name = neighbor_name)
+                                firstLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[0])
+                                first_block_name = firstLayoutBlock.getUserName()
+                                edge.setItem(first_block_name = first_block_name)
+                                secondLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[1])
+                                second_block_name = secondLayoutBlock.getUserName()
+                                edge.setItem(second_block_name = second_block_name)
+                                lastLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-1])
+                                last_block_name = lastLayoutBlock.getUserName()
+                                edge.setItem(last_block_name = last_block_name)
                                 penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
                                 penultimate_block_name = penultimateLayoutBlock.getUserName()
                                 edge.setItem(penultimate_block_name = penultimate_block_name)

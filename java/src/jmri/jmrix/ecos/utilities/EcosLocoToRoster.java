@@ -274,7 +274,7 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW",
         justification = "TODO fill out the actions in these clauses")
     public void reply(EcosReply m) {
         int startval;
@@ -811,7 +811,6 @@ public class EcosLocoToRoster implements EcosListener {
         dTree.clearSelection();
     }
 
-    @SuppressWarnings("unchecked")
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
         log.warn(msg);
@@ -830,7 +829,6 @@ public class EcosLocoToRoster implements EcosListener {
 
     }
 
-    @SuppressWarnings("unchecked")
     void updateForDecoderTypeID(List<DecoderFile> pList) {
         // find and select the first item
         if (log.isDebugEnabled()) {
