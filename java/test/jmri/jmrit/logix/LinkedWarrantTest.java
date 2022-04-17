@@ -32,7 +32,7 @@ public class LinkedWarrantTest {
     private WarrantManager _warrantMgr;
 
     // tests a warrant launching itself. (origin, destination the same to make continuous loop)
-    @Disabled("This test fails on CI")
+//    @Disabled("This test fails on CI")
     @Test
     public void testLoopedWarrant() throws Exception {
         // load and display
@@ -72,7 +72,7 @@ public class LinkedWarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            return m.startsWith("Warrant");
+            return m.equals(Bundle.getMessage("warrantStart", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName()));
         }, "LoopDeLoop finished first leg");
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -84,7 +84,7 @@ public class LinkedWarrantTest {
 
         JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            return m.startsWith("Warrant");
+            return m.equals(Bundle.getMessage("warrantStart", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName()));
         }, "LoopDeLoop finished second leg");
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -94,8 +94,10 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after last leg").isEqualTo(block.getSensor().getDisplayName());
 
-        warrant.stopWarrant(true, false);
-        // passed test - cleanup.  Do it here so failure leaves traces.
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m = tableFrame.getStatus();
+            return m.equals(Bundle.getMessage("warrantComplete", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName()));
+        }, "LoopDeLoop finished third leg");
         
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
@@ -178,7 +180,7 @@ public class LinkedWarrantTest {
 
     // tests a warrant running a train out and launching a return train
     // Both warrants have the same address and origin of each is destination of the other
-    @Disabled("This test fails on CI")
+//    @Disabled("This test fails on CI")
     @Test
     public void testBackAndForth() throws Exception {
         // load and display
