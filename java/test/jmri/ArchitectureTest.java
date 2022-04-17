@@ -248,9 +248,20 @@ public class ArchitectureTest {
      * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
      */
     @ArchTest
-    public static final ArchRule checkLogixNGNotUsingNamedBeanHandle = noClasses()
+    public static final ArchRule checkLogixNGActionsNotUsingNamedBeanHandle = noClasses()
             .that()
-            .resideInAPackage("jmri.jmrit.logixng.actions")
+            .resideInAPackage("jmri.jmrit.logixng.actions..")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
+    /**
+     * No classes in jmri.jmrit.logixng.expressions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions..")
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
