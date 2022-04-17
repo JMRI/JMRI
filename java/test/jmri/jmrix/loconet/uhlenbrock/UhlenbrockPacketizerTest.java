@@ -13,7 +13,8 @@ public class UhlenbrockPacketizerTest {
 
     @Test
     public void testCTor() {
-        UhlenbrockPacketizer t = new UhlenbrockPacketizer();
+        UhlenbrockSystemConnectionMemo memo = new UhlenbrockSystemConnectionMemo();
+        UhlenbrockPacketizer t = new UhlenbrockPacketizer(memo);
         Assert.assertNotNull("exists",t);
     }
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <title>DecoderPro&reg; Main Window</title><!--#include virtual="/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Debug Menu</h1>
+      <h1>DecoderPro&reg; Tools Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
@@ -73,7 +73,7 @@
           <p>Please check the path to the folder of your VSD files in VSDecoder Preferences, before
           you start!</p>
 
-          <p>Navigate to Debug &gt;&gt; Virtual Sound Decoder &gt;&gt; VSDecoder Manager</p>
+          <p>Navigate to Tools-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager</p>
 
           <ol>
             <li>Add Decoder</li>

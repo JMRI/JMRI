@@ -27,7 +27,7 @@
       adapter (The PR2 has a standard RS232 25 pin connector; most computers now have a 9 pin RS232
       connector, and there are simple adapters available to convert the wiring.)</p>
 
-      <p>The PR2 is not a LocoNet® interface, and does not connect to the LocoNet on your layout in
+      <p>The PR2 is not a LocoNet&reg; interface, and does not connect to the LocoNet on your layout in
       any way. It cannot attach to a command station like the MS100, PR3, LocoBuffer,
       LocoBuffer-II, and LocoBuffer-USB do. The cable that comes with the PR2 is not a LocoNet
       cable, and you should not plug a LocoNet cable into the PR2.</p>
@@ -82,7 +82,7 @@
       to trip the PR2 internal circuit breakers. This will cause JMRI to mark track power as "off".
       Just wait a couple seconds and turn the track power back on to recover.</p>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

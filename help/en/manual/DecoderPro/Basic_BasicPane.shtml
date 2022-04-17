@@ -172,9 +172,9 @@
       not only to the decoder, but also saved to a computer file where they may be recalled in the
       future. .</p>
       <a id="DoMore"></a> But you say..."I want to change more than what's shown on the Basic
-      decoder pane." Well… there are other programmers that are available. But… first we need to
+      decoder pane." Well&hellip; there are other programmers that are available. But&hellip; first we need to
       look at the various options. In fact there are so many options the programmers had to use a
-      slider to get them all to show. Here are the option windows. Don't panic….Most are of no use
+      slider to get them all to show. Here are the option windows. Don't panic&hellip;.Most are of no use
       to the average user.
       <p class="dp-ctr"><img src="images/Basic_programmers.png" alt="Basic Programmers" height=
       "341" width="568"><br>
@@ -182,7 +182,7 @@
 
       <p><strong>Comprehensive</strong> and Advanced are the only other programmers
       "<strong><em>Normal Users</em>"</strong> will ever need, because it is,
-      well…<strong>Comprehensive</strong> and the <strong>Advanced</strong> adds features that are
+      well&hellip;<strong>Comprehensive</strong> and the <strong>Advanced</strong> adds features that are
       optional.. So why all the others?</p>
 
       <p>First of all eliminate the Manufacturer specific programmers (unless of course you have a
@@ -192,7 +192,7 @@
       programmers. They were put in to show folks that want to <strong>write their own</strong>
       programmer (not you right?) all the possible ways to gather input and to have a common
       starting point in the roster pane. Now if you wish to pursue writing a custom programmer go
-      to the JMRI® website.</p>
+      to the JMRI&reg; website.</p>
 
       <p>If you have need for a special situation programmer you might want to look at
       <strong>Sample Club</strong> or <strong>TrainShowBasic</strong> to see what panes can be

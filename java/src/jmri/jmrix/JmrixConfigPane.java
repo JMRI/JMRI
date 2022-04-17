@@ -13,6 +13,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import jmri.util.swing.JComboBoxUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,6 +159,8 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 manuBox.addItem(manuName);
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(manuBox);
+
         manuBox.addActionListener((ActionEvent evt) -> {
             updateComboConnection();
         });
@@ -211,6 +214,8 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 modeBox.setSelectedItem(p.getComboBoxLastSelection((String) manuBox.getSelectedItem()));
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(modeBox);
+
         modeBox.addActionListener((ActionEvent a) -> {
             if ((String) modeBox.getSelectedItem() != null) {
                 if (!((String) modeBox.getSelectedItem()).equals(NONE_SELECTED)) {

@@ -16,11 +16,11 @@
     <div id="mainContent">
       <h1>JMRI: Viewing XML Files</h1>
 
-      <p>JMRI stores information about its operations and information that you create in XML files. For 
-      example, when you use the PanelPro command <strong>File ⇒ Store</strong>, your tables and panels
-      are stored in an XML file. Other XML files hold preferences, control 
+      <p>JMRI stores information about its operations and information that you create in XML files. For
+      example, when you use the PanelPro command <strong>File &rArr; Store</strong>, your tables and panels
+      are stored in an XML file. Other XML files hold preferences, control
       information, operational information, decoder contents, your roster, and more. </p>
-      
+
       <p>Although XML is a structured text format, it is complicated and not particularly easy to read.
       Most JMRI-created XML files can be displayed with more formatting (easier to read and print) in a
       web browser using "XSLT stylesheets" (provided in the JMRI distribution). This <a href=
@@ -28,7 +28,7 @@
       this formatting looks.</p>
 
       <h2>Viewing Methods</h2>
-      
+
       <ul>
       <li>To view an XML file that JMRI has created, just open the file with your favorite web
       browser. In many cases, you should be able to just double-click the file name, or drag it to the web
@@ -41,9 +41,9 @@
       while Firefox seems to work properly on some platforms and not on others. (There might also be options
       that affect whether it works. Here's more <a href="https://jmri.org/xml/XSLT/README">technical background</a>)
       </li>
-      
-      <li>Use the <a href="../../web/index.shtml">JMRI mini web server</a> that is included in JMRI (version 
-      2.9.4 and later). The file you want to view must also have been stored with JMRI 2.9.4 or later (if it 
+
+      <li>Use the <a href="../../web/index.shtml">JMRI mini web server</a> that is included in JMRI (version
+      2.9.4 and later). The file you want to view must also have been stored with JMRI 2.9.4 or later (if it
       is older than that, load it into JMRI 2.9.4 or later and store it again).  Then:
 
       <ul>
@@ -51,11 +51,11 @@
 
         <li>Start the JMRI Web Server:
             <ul>
-               <li>PanelPro: <strong>Tools ⇒ Servers ⇒ Start JMRI Web Server</strong></li>
-               <li>DecoderPro: <strong>Actions ⇒ Start Web Server</strong>.</li>
+               <li>PanelPro: <strong>Tools &rArr; Servers &rArr; Start JMRI Web Server</strong></li>
+               <li>DecoderPro: <strong>Actions &rArr; Start Web Server</strong>.</li>
             </ul>
 
-        <li>Open any web browser on your computer and enter the URL "<a href="http://localhost:12080" 
+        <li>Open any web browser on your computer and enter the URL "<a href="http://localhost:12080"
         target="_blank">http://localhost:12080</a>"
         </li>
 
@@ -66,16 +66,16 @@
            <ul>
              <li>Panel files ([named by you].xml), containing details of any panels and tables you created within
              PanelPro</li>
-             <li>Roster (roster.xml), listing information about your locomotives from DecoderPro</li>          
-           </ul>      
+             <li>Roster (roster.xml), listing information about your locomotives from DecoderPro</li>
+           </ul>
         You can also click on any listed sub-directories to get to your files.
         </li>
 
-        <li>You can then use your browser to view, print, save, etc. as desired. 
+        <li>You can then use your browser to view, print, save, etc. as desired.
         <a href="images/Webstartxml.png"><img src="images/Webstartxml.png" alt="web server home page"></a>
         </li>
       </ul>
-      
+
       </li>
       </ul>
 

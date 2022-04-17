@@ -22,7 +22,7 @@
 
       <p>Walter Thompson walked through the details of this:</p>
 
-      <p>With the DS54 at defaults these are the LocoNet® msgs when either Switch A or Aux A goes
+      <p>With the DS54 at defaults these are the LocoNet&reg; msgs when either Switch A or Aux A goes
       positive causing the Turnout to "toggle" state:<br>
       When Switch A (blue lead) goes high loconet msg [b2 8 70 35].<br>
       When Aux A (orange lead) goes high loconet msg [b2 8 50 15]</p>
@@ -143,7 +143,7 @@
       <p>Technical details on this issue can be found in <a href="DigitraxPower.shtml">a discussion
       of power leads on Digitrax components</a>.</p>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -14,19 +14,20 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.*;
+import jmri.util.swing.JComboBoxUtil;
 
 import org.jdom2.Element;
 
 /**
  * JPanel to create a new Signal Mast.
- * 
+ *
  * "Driver" refers to a particular class of SignalMast implementation that's to be configured.
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010, 2016
  * @author Egbert Broerse Copyright (C) 2016
  */
 public class AddSignalMastPanel extends JPanel {
-    
+
     // head matter
     JTextField userName = new JTextField(20);
     JComboBox<String> sigSysBox = new JComboBox<>();  // the basic signal system
@@ -40,7 +41,7 @@ public class AddSignalMastPanel extends JPanel {
     JPanel centerPanel = new JPanel();
     CardLayout cl = new CardLayout();
     SignalMastAddPane currentPane;
-    
+
     // rest of structure
     JPanel signalHeadPanel = new JPanel();
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel")); // NOI18N
@@ -52,7 +53,7 @@ public class AddSignalMastPanel extends JPanel {
     private String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected"; // NOI18N
     private String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // NOI18N
     private String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected"; // NOI18N
-    
+
     /**
      * Constructor providing a blank panel to configure a new signal mast after
      * pressing 'Add...' on the Signal Mast Table.
@@ -70,7 +71,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
         );
-        
+
         // scoping for temporary variables
         String[] tempMastNamesArray = new String[panes.size()];
         int i = 0;
@@ -80,7 +81,7 @@ public class AddSignalMastPanel extends JPanel {
         signalMastDriver = new JComboBox<>(tempMastNamesArray);
         init();
     }
-    
+
     final void init() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -96,14 +97,17 @@ public class AddSignalMastPanel extends JPanel {
         l = new JLabel(Bundle.getMessage("SigSys") + ": "); // NOI18N
         p.add(l);
         p.add(sigSysBox);
+        JComboBoxUtil.setupComboBoxMaxRows(sigSysBox);
 
         l = new JLabel(Bundle.getMessage("MastType") + ": "); // NOI18N
         p.add(l);
         p.add(mastBox);
+        JComboBoxUtil.setupComboBoxMaxRows(mastBox);
 
         l = new JLabel(Bundle.getMessage("DriverType") + ": "); // NOI18N
         p.add(l);
         p.add(signalMastDriver);
+        JComboBoxUtil.setupComboBoxMaxRows(signalMastDriver);
 
         add(p);
 
@@ -117,7 +121,7 @@ public class AddSignalMastPanel extends JPanel {
             log.trace("about to call selection() from signalMastDriver itemStateChanged");
             selection((String)evt.getItem());
         });
-        
+
         // button region
         JPanel buttonHolder = new JPanel();
         buttonHolder.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -142,18 +146,19 @@ public class AddSignalMastPanel extends JPanel {
 
         // default to 1st pane
         currentPane = panes.get(0);
-        
+
         // load the list of signal systems
         SignalSystemManager man = InstanceManager.getDefault(SignalSystemManager.class);
         SortedSet<SignalSystem> systems = man.getNamedBeanSet();
         for (SignalSystem system : systems) {
             sigSysBox.addItem(system.getUserName());
         }
+
         if (prefs.getComboBoxLastSelection(systemSelectionCombo) != null) {
             sigSysBox.setSelectedItem(prefs.getComboBoxLastSelection(systemSelectionCombo));
         }
         log.trace("  preferences set {} into sigSysBox", sigSysBox.getSelectedItem());
-        
+
         loadMastDefinitions();
 
         // select the 1st one
@@ -163,12 +168,12 @@ public class AddSignalMastPanel extends JPanel {
         if (prefs.getComboBoxLastSelection(driverSelectionCombo) != null) {
             signalMastDriver.setSelectedItem(prefs.getComboBoxLastSelection(driverSelectionCombo));
         }
-        
+
         sigSysBox.addItemListener((ItemEvent e) -> {
             loadMastDefinitions();
             updateSelectedDriver();
         });
-    }    
+    }
 
     /**
      * Select a particular signal implementation to display.
@@ -182,10 +187,10 @@ public class AddSignalMastPanel extends JPanel {
                 currentPane = pane;
             }
         }
-        
+
         // update that selected pane before display.
         updateSelectedDriver();
-        
+
         // and show
         cl.show(centerPanel, view);
         log.trace(" selection({}) end", view);
@@ -206,19 +211,19 @@ public class AddSignalMastPanel extends JPanel {
         // switch buttons
         apply.setVisible(true);
         create.setVisible(false);
-        
+
         // can't change some things from original settings
         sigSysBox.setEnabled(false);
         mastBox.setEnabled(false);
         signalMastDriver.setEnabled(false);
         userName.setEnabled(false);
-       
+
         //load prior content
-        userName.setText(mast.getUserName()); 
+        userName.setText(mast.getUserName());
         log.trace("Prior content system name: {}  mast type: {}", mast.getSignalSystem().getUserName(), mast.getMastType());
         if (mast.getMastType() == null) log.error("MastType was null, and never should be");
         sigSysBox.setSelectedItem(mast.getSignalSystem().getUserName());  // signal system
-                
+
         // select and show
         for (SignalMastAddPane pane : panes) {
             if (pane.canHandleMast(mast)) {
@@ -241,7 +246,7 @@ public class AddSignalMastPanel extends JPanel {
                 break;
             }
         }
-        
+
         // set mast type, suppress notification
         mastBoxPassive = true;
         String newMastType = mapTypeToName.get(mast.getMastType());
@@ -251,7 +256,7 @@ public class AddSignalMastPanel extends JPanel {
 
         log.debug("AddSignalMastPanel({}) end", mast);
     }
-    
+
     // signal system definition variables
     private String sigsysname;
     private ArrayList<File> mastFiles = new ArrayList<>(); // signal system definition files
@@ -296,11 +301,11 @@ public class AddSignalMastPanel extends JPanel {
             URL pathProfileDir = FileUtil.findURL("resources/signals/" + sigsysname, FileUtil.Location.USER); // NOI18N
             if (pathProfileDir != null) profileDirArray = new File(pathProfileDir.toURI()).listFiles();
             if (profileDirArray == null) profileDirArray = new File[0];
-            
+
             // create a composite list of files
             File[] apps = Arrays.copyOf(programDirArray, programDirArray.length + profileDirArray.length);
             System.arraycopy(profileDirArray, 0, apps, programDirArray.length, profileDirArray.length);
-            
+
             if (apps !=null) {
                 for (File app : apps) {
                     if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) { // NOI18N
@@ -319,7 +324,7 @@ public class AddSignalMastPanel extends JPanel {
                                 .getChild("appearance") // NOI18N
                                 .getChildren("show") // NOI18N
                                 .size());
-                        
+
                     }
                 }
             } else {
@@ -446,7 +451,7 @@ public class AddSignalMastPanel extends JPanel {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     void issueWarningUserNameAsSystem(String nam) {
         log.error("User Name \"{}\" already exists as a System name", nam);
         if (!GraphicsEnvironment.isHeadless()) {
@@ -466,8 +471,8 @@ public class AddSignalMastPanel extends JPanel {
     private void okPressed() {
         log.trace(" okPressed() start");
         boolean success;
-        
-        // get and validate entered global information 
+
+        // get and validate entered global information
         if ( (mastBox.getSelectedIndex() < 0) || ( mastFiles.get(mastBox.getSelectedIndex()) == null) ) {
             issueDialogFailMessage(new RuntimeException("There's something wrong with the mast type selection"));
             return;
@@ -483,7 +488,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
         }
-        
+
         // ask top-most pane to make a signal
         try {
             success = currentPane.createMast(sigsysname, mastname, user);
@@ -495,7 +500,7 @@ public class AddSignalMastPanel extends JPanel {
             // should have already provided user feedback via dialog
             return;
         }
-        
+
         clearPanel();
         log.trace(" okPressed() end");
     }
@@ -505,7 +510,7 @@ public class AddSignalMastPanel extends JPanel {
                 Bundle.getMessage("SignalMastEmptyUserNameDialogTitle"),  // NOI18N
                 JOptionPane.YES_NO_OPTION);
     }
-    
+
     void issueDialogFailMessage(RuntimeException ex) {
         // This is intrinsically swing, so pop a dialog
         log.error("Failed during createMast", ex); // NOI18N
@@ -514,7 +519,7 @@ public class AddSignalMastPanel extends JPanel {
             Bundle.getMessage("DialogFailTitle"),  // title of box // NOI18N
             JOptionPane.ERROR_MESSAGE);
     }
-    
+
     /**
      * Called when an already-initialized AddSignalMastPanel is being
      * displayed again, right before it's set visible.
@@ -526,7 +531,7 @@ public class AddSignalMastPanel extends JPanel {
         for (SignalMastAddPane pane : panes) {
             centerPanel.add(pane, pane.getPaneName()); // assumes names are systemwide-unique
         }
-        
+
         // select pane to match current combobox
         log.trace("about to call selection from refresh");
         selection(signalMastDriver.getItemAt(signalMastDriver.getSelectedIndex()));

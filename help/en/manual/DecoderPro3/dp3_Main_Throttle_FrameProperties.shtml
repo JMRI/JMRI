@@ -23,9 +23,9 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">DecoderPro® Main Menu Bar</h1>
+      <h1 id="Top">DecoderPro&reg; Main Menu Bar</h1>
 
-      <h2>JMRI® Throttle Window - Frame Properties</h2>
+      <h2>JMRI&reg; Throttle Window - Frame Properties</h2>
 
       <div class="dp-right">
         <p><a href="dp3_Main_Throttle.shtml">Back</a>

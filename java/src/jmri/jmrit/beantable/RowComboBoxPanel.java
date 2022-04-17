@@ -17,6 +17,9 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableCellRenderer;
+
+import jmri.util.swing.JComboBoxUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -179,6 +182,8 @@ public abstract class RowComboBoxPanel
         if (value != null) {
             editorbox.setSelectedItem(value); // display current Value
         }
+        JComboBoxUtil.setupComboBoxMaxRows(editorbox);
+
         editorbox.addActionListener((ActionEvent evt) -> {
             Object choice = editorbox.getSelectedItem();
             log.debug("actionPerformed (event={}, choice={}", evt.toString(), choice.toString());
