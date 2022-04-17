@@ -56,7 +56,11 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
 
     @Override
     public void notifyAddressReleased(LocoAddress addr) {
-        fireTableDataChanged();
+        if (addr instanceof DccLocoAddress ) {
+            DccLocoAddress la = (DccLocoAddress) addr;
+            fireTableDataChanged();
+            jmri.InstanceManager.throttleManagerInstance().removeListener(la, this);
+         }
     }
 
     @Override
