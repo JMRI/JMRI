@@ -459,7 +459,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     // Highlights track icons to show that block is allocated.
-    protected void ShowAllocated(Warrant warrant, String pathName) {
+    protected void showAllocated(Warrant warrant, String pathName) {
         if (_warrant != null && !_warrant.equals(warrant)) {
             return;
         }

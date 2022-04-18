@@ -840,7 +840,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _student = null;
         }
         _curSignalAspect = null;
-        cancelDelayRamp();
+        cancelDelayRamp(true);
         // insulate possible non-GUI thread making a block state change
         ThreadingUtil.runOnGUI(()-> deAllocate());
 
@@ -1196,13 +1196,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     break;
                 case HALT:
                 case STOP:
-                    cancelDelayRamp();
+                    cancelDelayRamp(true);
                     _engineer.setSpeedToType(Stop); // sets _halt
                     _engineer.setHalt(true);
                     ret = true;
                     break;
                 case ESTOP:
-                    cancelDelayRamp();
+                    cancelDelayRamp(true);
                     _engineer.setSpeedToType(EStop); // E-stop & halt
                     _engineer.setHalt(true);
                     ret = true;
@@ -1723,7 +1723,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     if (speedType.equals(Warrant.Stop)) {
                         _waitForSignal = true;
                     }
-                    if (!doDelayRamp(availDist, changeDist, _idxProtectSignal, speedType)) {
+                    int cmdStartIdx = _engineer.getCurrentCommandIndex(); // blkSpeedInfo.getFirstIndex();
+                    if (!doDelayRamp(availDist, changeDist, _idxProtectSignal, speedType, cmdStartIdx)) {
                         log.info("No room for train {} to ramp to \"{}\" from \"{}\" for signal \"{}\"!. availDist={}, changeDist={} on warrant {}",
                                 getTrainName(), speedType, curSpeedType, _protectSignal.getDisplayName(),
                                 availDist,  changeDist, getDisplayName());
@@ -2365,14 +2366,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    synchronized private void cancelDelayRamp() {
-        if (_delayCommand != null) {
-            _delayCommand.interrupt();
-            _delayCommand = null;
-            log.debug("{}: cancelDelayRamp called.", getDisplayName());
-        }
-    }
-
     @Override
     public void dispose() {
         if (_runMode != MODE_NONE) {
@@ -2425,13 +2418,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             break; // stop ramping beyond this speed
                         }
                         try {
-                            wait(50);
+                            wait(100);
                         } catch (InterruptedException ie) {
                             if (log.isDebugEnabled()) {
                                 log.debug("CommandDelay interrupt.  Ramp to {} not done. warrant {}",
                                         nextSpeedType, getDisplayName());
                             }
-                            quit = true;
                         }
                         time += 50;
                     }
@@ -2443,7 +2435,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             log.debug("CommandDelay interrupt.  Ramp to {} not done. warrant {}",
                                     nextSpeedType, getDisplayName());
                         }
-                        quit = true;
                     }
                 }
 
@@ -2453,6 +2444,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 }
             }
             endDelayCommand();
+        }
+    }
+
+    synchronized private void cancelDelayRamp(boolean quit) {
+        if (_delayCommand != null) {
+            _delayCommand.quit = quit;
+            _delayCommand.interrupt();
+            _delayCommand = null;
+            log.debug("{}: cancelDelayRamp called.", getDisplayName());
         }
     }
 
@@ -2552,6 +2552,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 log.debug("{}: _message ({}) ", getDisplayName(), _message);
             }
         }
+        // Delayed ramps must begin within the blocks where there were made
+        cancelDelayRamp(false); // interrupts and launches ramp
 
         if (_noRamp) {
             if (_idxCurrentOrder < _orders.size() - 1) {
@@ -2746,7 +2748,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         availDist += getAvailableDistanceAt(_idxCurrentOrder);   // Add available length in this block
 
-        if (!doDelayRamp(availDist, changeDist, idxSpeedChange, speedType)) {
+        int cmdStartIdx = _speedUtil.getBlockSpeedInfo(_idxCurrentOrder).getFirstIndex();
+        if (!doDelayRamp(availDist, changeDist, idxSpeedChange, speedType, cmdStartIdx)) {
             log.warn("No room for train {} to ramp to \"{}\" from \"{}\" in block \"{}\"!. availDist={}, changeDist={} on warrant {}",
                     getTrainName(), speedType, currentSpeedType, getBlockAt(_idxCurrentOrder).getDisplayName(),
                     availDist,  changeDist, getDisplayName());
@@ -2756,7 +2759,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /*
      * if there is sufficient room calculate a wait time, otherwise ramp immediately.
      */
-    private boolean doDelayRamp(float availDist, float changeDist, int idxSpeedChange, String speedType) {
+    private boolean doDelayRamp(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
         String currentSpeedType = _engineer.getSpeedType(true); // current or pending speed type
         if (changeDist > availDist && _idxCurrentOrder > 0) {
             _engineer.rampSpeedTo(speedType, idxSpeedChange);
@@ -2767,7 +2770,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         getDisplayName(), speedType, currentSpeedType, getBlockAt(idxSpeedChange).getDisplayName(), 
                         availDist, changeDist);
             }
-            makespeedChange(availDist, changeDist, idxSpeedChange, speedType);
+            makespeedChange(availDist, changeDist, idxSpeedChange, speedType, cmdStartIdx);
             return true;
         }
     }
@@ -2788,11 +2791,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param availDist     distance available to make the ramp
      * @param changeDist    distance needed for the rmp
      * @param idxSpeedChange block order index of block to complete change before entry
-     * @param speedType     speed aspect of spped change
+     * @param speedType     speed aspect of speed change
+     * @param cmdStartIdx   command index of delay  
      */
-    private long makespeedChange(float availDist, float changeDist, int idxSpeedChange, String speedType) {
+    private long makespeedChange(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
 
-        int cmdStartIdx = _engineer.getCurrentCommandIndex(); // blkSpeedInfo.getFirstIndex();
         int cmdEndIdx = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1).getLastIndex();
         float scriptSpeed = _engineer.getScriptSpeed();  // script throttle setting
         float speedSetting = _engineer.getSpeedSetting();       // current speed
@@ -2825,6 +2828,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         boolean messageFlag = false;
         for (int i = cmdStartIdx; i <= cmdEndIdx; i++) {
             ThrottleSetting ts = _commands.get(i);
+            ThrottleSetting.CommandValue cmdVal = ts.getValue();
+            if (cmdVal.getType().equals(ThrottleSetting.ValueType.VAL_FLOAT)) {
+                scriptSpeed = cmdVal.getFloat();
+                modSetting = _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
+                changeDist = getRampLengthForEntry(speedSetting, modSetting) + bufDist;
+                trackSpeed = _speedUtil.getTrackSpeed(modSetting);
+                timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / trackSpeed;
+            }
             accumDist += trackSpeed * ts.getTime() * timeRatio;
             accumTime += ts.getTime() * timeRatio;
             if (changeDist + accumDist >= availDist) {
@@ -2839,18 +2850,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 deltaTime = accumTime;
                 break;
             }
-            ThrottleSetting.CommandValue cmdVal = ts.getValue();
             if (cmdVal.getType().equals(ThrottleSetting.ValueType.VAL_NOOP)) {
                 break;  // speed change is supposed to start in current block
             }
-            if (cmdVal.getType().equals(ThrottleSetting.ValueType.VAL_FLOAT)) {
-                scriptSpeed = cmdVal.getFloat();
-                modSetting = _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
-                changeDist = getRampLengthForEntry(speedSetting, modSetting) + bufDist;
-                trackSpeed = _speedUtil.getTrackSpeed(modSetting);
-                timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / trackSpeed;
-           }
-           log.debug("{}: cmd#{} accumTime= {} accumDist= {} changeDist= {}", getDisplayName(), i+1, accumTime, accumDist, changeDist);
+            log.debug("{}: cmd#{} accumTime= {} accumDist= {} changeDist= {}", getDisplayName(), i+1, accumTime, accumDist, changeDist);
         }
 
         int waitTime = Math.round(deltaTime);
@@ -2877,7 +2880,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (_delayCommand.isDuplicate(speedType, waitTime, endBlockIdx)) {
                 return;
             }
-            cancelDelayRamp();
+            cancelDelayRamp(true);
         }
         _delayCommand = new CommandDelay(speedType, waitTime, waitSpeed, endBlockIdx);
         _delayCommand.start();

@@ -136,10 +136,10 @@ public class BlockOrder {
         if (msg != null) {
             return new TrainOrder(Warrant.Stop, Cause.WARRANT, _index, _index, msg);
         }
-        if (log.isDebugEnabled()) { 
-            log.debug("{}:  block \"{}\" allocated.",
-                    warrant.getDisplayName(), _block.getDisplayName()); 
-        }
+//        if (log.isDebugEnabled()) { 
+//            log.debug("{}:  block \"{}\" allocated.",
+//                    warrant.getDisplayName(), _block.getDisplayName()); 
+//        }
 
         // Check if next block can be allocated
         BlockOrder bo1 = warrant.getBlockOrderAt(_index + 1);
@@ -148,7 +148,7 @@ public class BlockOrder {
             to = findStopCondition(bo1, warrant);
             if (to == null) { // Train may enter block of bo1
                 nextBlock.allocate(warrant);
-                nextBlock.ShowAllocated(warrant, bo1._pathName);
+                nextBlock.showAllocated(warrant, bo1._pathName);
                 to = checkForSharedTO(nextBlock, bo1,  warrant);
             }
             // Crossovers typically have both switches controlled by one TO, 
@@ -172,9 +172,9 @@ public class BlockOrder {
         msg = _block.setPath(_pathName, warrant);
         if (msg != null) {      // should not happen. Block is allocated.
             to = new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, msg);
-        } else if (log.isDebugEnabled()) { 
-            log.debug("{}: set path \"{}\" in block \"{}\"",
-                    warrant.getDisplayName(), _pathName, _block.getDisplayName(), _pathName); 
+//       } else if (log.isDebugEnabled()) { 
+//            log.debug("{}: set path \"{}\" in block \"{}\"",
+//                    warrant.getDisplayName(), _pathName, _block.getDisplayName(), _pathName); 
         }
 
         if (to != null) {
@@ -261,16 +261,16 @@ public class BlockOrder {
     private String pathsConnect(OPath path1, Portal exit, BlockOrder bo2, Cause cause) {
         OPath path2 = bo2._block.getPath();
         if (path2 == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("No path found at non-enterable block \"{}\"", bo2._block.getDisplayName());
-            }
+//            if (log.isDebugEnabled()) {
+//                log.debug("No path found at non-enterable block \"{}\"", bo2._block.getDisplayName());
+//            }
             return null;
         }
         if (exit.equals(path2.getToPortal()) || exit.equals(path2.getFromPortal())) {
-            if (log.isDebugEnabled()) {
-                log.debug("Path \"{}\" and \"{}\" in block \"{}\" connect at portal \"{}\"",
-                        path1.getName(), path2.getName(), bo2._block.getDisplayName(), exit.getName());
-            }
+//            if (log.isDebugEnabled()) {
+//                log.debug("Path \"{}\" and \"{}\" in block \"{}\" connect at portal \"{}\"",
+//                        path1.getName(), path2.getName(), bo2._block.getDisplayName(), exit.getName());
+//            }
             return null;
         }
         for (BeanSetting bs1 : path1.getSettings()) {
@@ -278,11 +278,11 @@ public class BlockOrder {
                 if (bs1.getBean().equals(bs2.getBean())) {
                     // TO is shared (same bean)
                     if (bs1.equals(bs2)) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Path \"{}\" and \"{}\" in block \"{}\" agree on setting of shared turnout \"{}\"",
-                                    path1.getName(), path2.getName(), bo2._block.getDisplayName(), 
-                                    bs1.getBean().getDisplayName());
-                        }
+//                        if (log.isDebugEnabled()) {
+//                            log.debug("Path \"{}\" and \"{}\" in block \"{}\" agree on setting of shared turnout \"{}\"",
+//                                    path1.getName(), path2.getName(), bo2._block.getDisplayName(), 
+//                                    bs1.getBean().getDisplayName());
+//                        }
                         return null;
                     } else {
                         if (log.isDebugEnabled()) {
@@ -295,11 +295,10 @@ public class BlockOrder {
                 }
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Path \"{}\" and \"{}\" in block \"{}\" of block \"{}\" do not share a turnout or portal",
-                    path1.getName(), path2.getName(), bo2._block.getDisplayName());
-        }
-//        return Bundle.getMessage("PathsDoNotConnect", path1.getName(), path2.getName(), bo2._block.getDisplayName());
+//        if (log.isDebugEnabled()) {
+//            log.debug("Path \"{}\" and \"{}\" in block \"{}\" of block \"{}\" do not share a turnout or portal",
+//                    path1.getName(), path2.getName(), bo2._block.getDisplayName());
+//        }
         return null;
     }
 
