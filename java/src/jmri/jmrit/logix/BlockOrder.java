@@ -99,7 +99,6 @@ public class BlockOrder {
         return _block.getPathByName(_pathName);
     }
 
-    @Deprecated
     protected String setPath(Warrant warrant) {
         String msg = _block.setPath(getPathName(), warrant);
         if (msg == null) {
@@ -113,10 +112,6 @@ public class BlockOrder {
     
     @Nonnull
     protected TrainOrder setPath(Warrant warrant, boolean show) {
-        /*
-        if (_block.getDisplayName().equals("FarWest")) {
-            log.debug("\"{}\" {}", _block.getDisplayName());
-        }*/
         if (_pathName == null) {
             log.error("setPath({}) - {}", warrant.getDisplayName(), Bundle.getMessage("NoPaths", _block.getDisplayName()));
             return new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, 
