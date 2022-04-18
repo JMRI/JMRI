@@ -22,6 +22,7 @@
         <choice xml:lang="fr">Inconnu</choice>
         <choice xml:lang="nl">Onbekend</choice>
     </enumChoice>
+    <enumChoice choice="MS500" value = "1"/>
     <enumChoice choice="MS480" value = "2"/>
     <enumChoice choice="MS490" value = "3"/>
     <enumChoice choice="MS440" value = "4"/>
