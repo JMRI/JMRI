@@ -201,12 +201,12 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+              <li>Added Kato EM13 in Digitrax family: newer versions of this decoder have a Digitrax manufacturer code and a full fledged Digitrax SW.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+              <li>Added PD10MU: This is a specific decoder for <a href=https://www.dm-toys.de/fr/produit-detail/DH_PD10MU-4.html target=_BLANK>ModellBahn Union / DM-Toys</a>. Same SW as PD12A, but N scale form factor.</li>
             </ul>
 
         <h4>ESU</h4>
@@ -341,7 +341,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+              <li>Added MX605N: Zimo non-sound decoder for Kato N ICE4 - same form factor as Kato EM13. <i>Note that MX605 (already in DecoderPro) is the sound-version of MX605N</i>.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
