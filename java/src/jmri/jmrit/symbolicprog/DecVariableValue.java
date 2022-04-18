@@ -96,8 +96,12 @@ public class DecVariableValue extends VariableValue
                 try {
                     int newVal = textToValue(_value.getText());
                     int oldVal = textToValue(oldContents);
-                    updatedTextField();
-                    prop.firePropertyChange("Value", oldVal, newVal);
+                    if (newVal < _minVal || newVal > _maxVal) {
+                        _value.setText(oldContents);
+                    } else {
+                        updatedTextField();
+                        prop.firePropertyChange("Value", oldVal, newVal);
+                    }
                 } catch (java.lang.NumberFormatException ex) {
                     _value.setText(oldContents);
                 }
@@ -142,8 +146,12 @@ public class DecVariableValue extends VariableValue
         log.debug("actionPerformed");
         try {
             int newVal = textToValue(_value.getText());
-            updatedTextField();
-            prop.firePropertyChange("Value", null, newVal);
+            if (newVal < _minVal || newVal > _maxVal) {
+                _value.setText(oldContents);
+            } else {
+                updatedTextField();
+                prop.firePropertyChange("Value", null, newVal);
+            }
         } catch (java.lang.NumberFormatException ex) {
             _value.setText(oldContents);
         }
