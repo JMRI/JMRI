@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -66,11 +67,36 @@ public class CbusOpCodesTest {
         m.setElement(3, 0x09);
         Assert.assertEquals("CBUS_ERR 9","",CbusOpCodes.decode(m));
     }
+
+    @Test
+    public void testLocoSessionSpeedDirMsg() {
+        CanMessage m = new CanMessage( 3, 0x12 );
+        m.setElement(0, CbusConstants.CBUS_DSPD);
+        m.setElement(1, 0x01);
+        m.setElement(2, 0x02);
+        Assert.assertEquals("CBUS_DSPD Translate","Session: 1 Speed 1 Reverse ",CbusOpCodes.decode(m));
+    }
+
+    @Test
+    public void testTimeFromClock() {
+        CanReply send = new CanReply(1);
+        send.setNumDataElements(7);
+        send.setElement(0, CbusConstants.CBUS_FCLK);
+        send.setElement(1, 41 ); // mins
+        send.setElement(2, 13 ); // hrs
+        send.setElement(3, 0b001010000 ); // month 5
+        send.setElement(4,  2); // time divider, 0 is stpeed, 1 is real time, 2 twice real, 3 thrice real
+        send.setElement(5, 27); // day of month, 0-31
+        send.setElement(6, 0xDB ); // Temperature as twos complement -127 to +127
+        
+        String testStr = CbusOpCodes.decode(send);
+        Assertions.assertTrue(testStr.startsWith("Speed: x2 13:41"),"CBUS_FCLK Translate");
+    }
     
     @Test
     public void testNodeEventMessage() {
     
-        CanMessage m = new CanMessage( 0x12 );
+        CanMessage m = new CanMessage( 1 );
         m.setElement(0, CbusConstants.CBUS_ACON);
         m.setElement(1, 0x01);
         m.setElement(2, 0x02);
@@ -438,7 +464,40 @@ public class CbusOpCodesTest {
             }
         }
     }
-    
+
+    @Test
+    public void testGetSpeedFromInt(){
+        Assert.assertEquals("speed 0","0",CbusOpCodes.getSpeedFromByte(0) );
+        Assert.assertEquals("speed 1","0 E Stop ",CbusOpCodes.getSpeedFromByte(1) );
+        Assert.assertEquals("speed 2","1",CbusOpCodes.getSpeedFromByte(2) );
+        Assert.assertEquals("speed 10","9",CbusOpCodes.getSpeedFromByte(10) );
+        Assert.assertEquals("speed 126","125",CbusOpCodes.getSpeedFromByte(126) );
+        Assert.assertEquals("speed 127","126",CbusOpCodes.getSpeedFromByte(127) );
+        Assert.assertEquals("speed 128","0",CbusOpCodes.getSpeedFromByte(128) );
+        Assert.assertEquals("speed 129","0 E Stop ",CbusOpCodes.getSpeedFromByte(129) );
+        Assert.assertEquals("speed 130","1",CbusOpCodes.getSpeedFromByte(130) );
+        Assert.assertEquals("speed 131","2",CbusOpCodes.getSpeedFromByte(131) );
+        Assert.assertEquals("speed 182","53",CbusOpCodes.getSpeedFromByte(182) );
+        Assert.assertEquals("speed 255","126",CbusOpCodes.getSpeedFromByte(255) );
+    }
+
+    @Test
+    public void testGetDirectionFromByte() {
+        Assert.assertTrue("0 rev",CbusOpCodes.getDirectionFromByte(0).contains("Rev"));
+        Assert.assertTrue("1 rev",CbusOpCodes.getDirectionFromByte(1).contains("Rev"));
+        Assert.assertTrue("77 rev",CbusOpCodes.getDirectionFromByte(77).contains("Rev"));
+        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(127).contains("Rev"));
+        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(128).contains("For"));
+        Assert.assertTrue("129 rev",CbusOpCodes.getDirectionFromByte(129).contains("For"));
+        Assert.assertTrue("211 rev",CbusOpCodes.getDirectionFromByte(211).contains("For"));
+        Assert.assertTrue("255 rev",CbusOpCodes.getDirectionFromByte(255).contains("For"));
+    }
+
+    @Test
+    public void testSpeedDirFromByte() {
+        Assert.assertEquals("speed 0"," Speed 0 Reverse ",CbusOpCodes.speedDirFromByte(0) );
+        Assert.assertEquals("speed 131"," Speed 2 Forward ",CbusOpCodes.speedDirFromByte(131) );
+    }
     
     private static final Set<Integer> eventOpcodes = createEventOPC();
     
