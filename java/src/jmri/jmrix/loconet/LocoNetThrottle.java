@@ -69,11 +69,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         layout_dirf = slot.dirf();
         layout_snd = slot.snd();
 
-        // save the last sent values for speed and direction
-        // in the new digitrax protocol, the throttle, with the right ID, is the authority, not the command station
-        // speed and direction are sent in a single message, so you must sent the same direction or speed as was done last time
-        throttle_spd = slot.speed();
-
         // cache settings
         synchronized(this) {
             this.speedSetting = floatSpeed(slot.speed());
