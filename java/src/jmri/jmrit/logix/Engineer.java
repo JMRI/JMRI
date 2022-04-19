@@ -1299,8 +1299,12 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                                     } else {
                                         executeComand(_currentCommand, timeIncrement);
                                     }
-                                    _currentCommand = _commands.get(++_idxCurrentCommand);
-                                    cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    if (_idxCurrentCommand < _commands.size() - 1) {
+                                        _currentCommand = _commands.get(++_idxCurrentCommand);
+                                        cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    } else {
+                                        cmdDist = 0;
+                                    }
                                     rampDist = 0;
                                     advanceToCommandIndex(_idxCurrentCommand); // skip up to this command
                                 }   // else Do not advance script commands of block ahead of train position
@@ -1396,8 +1400,12 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                                     } else {
                                         executeComand(_currentCommand, timeIncrement);
                                     }
-                                    _currentCommand = _commands.get(++_idxCurrentCommand);
-                                    cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    if (_idxCurrentCommand < _commands.size() - 1) {
+                                        _currentCommand = _commands.get(++_idxCurrentCommand);
+                                        cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    } else {
+                                        cmdDist = 0;
+                                    }
                                     rampDist = 0;
                                     advanceToCommandIndex(_idxCurrentCommand); // skip up to this command
                                 }   // else Do not advance script commands of block ahead of train position

@@ -151,7 +151,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (!getClass().equals(obj.getClass())) {
             return false;
         } else {
-            Block b = (Block) obj;
+            OBlock b = (OBlock) obj;
             return b.getSystemName().equals(this.getSystemName());
         }
     }

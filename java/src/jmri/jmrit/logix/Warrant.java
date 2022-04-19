@@ -2487,12 +2487,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private float getAvailableDistanceAt(int idxBlockOrder) {
         BlockOrder blkOrder = getBlockOrderAt(idxBlockOrder);
         float pathLength = blkOrder.getPath().getLengthMm();
-        if (idxBlockOrder == 0 || pathLength <= 1.0f) {
+        if (idxBlockOrder == 0 || pathLength <= 20.0f) {
             // Position in block is unknown. use calculated distances instead
             float blkDist = _speedUtil.getBlockSpeedInfo(idxBlockOrder).getDistance();
             if (log.isDebugEnabled()) {
                 log.debug("{}: getAvailableDistanceAt: block \"{}\" using calculated blkDist= {}, pathLength= {}",
                         getDisplayName(), blkOrder.getBlock().getDisplayName(), blkDist, pathLength);
+            }
+            if (blkDist <= 20.0f ) {
+                blkDist = pathLength / 2;
             }
             return blkDist;
         } else {
@@ -2761,7 +2764,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      */
     private boolean doDelayRamp(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
         String currentSpeedType = _engineer.getSpeedType(true); // current or pending speed type
-        if (changeDist > availDist && _idxCurrentOrder > 0) {
+        if (availDist == 0) {
+            _engineer.setSpeedToType(speedType);
+            return false;
+        } else if (changeDist > availDist && _idxCurrentOrder > 0) {
             _engineer.rampSpeedTo(speedType, idxSpeedChange);
             return false;
         } else {
@@ -2802,7 +2808,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         String currentSpeedType = _engineer.getSpeedType(false); // current or pending speed type
 
         float modSetting = speedSetting;      // _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
-        float trackSpeed = _speedUtil.getTrackSpeed(modSetting);   // mm/sec track speed at modSetting
+        float beginTrackSpeed = _speedUtil.getTrackSpeed(modSetting);   // mm/sec track speed at modSetting
+        float trackSpeed = beginTrackSpeed;
         if (_idxCurrentOrder == 0 && availDist > BUFFER_DISTANCE) {
             changeDist = 0;
         }
@@ -2814,13 +2821,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         float accumTime = 0;    // accumulated time of commands up to ramp start
         float accumDist = 0;
         float remDist = availDist - changeDist;
-        float deltaTime = 0;
         float timeRatio = 1; // time adjustment for current speed type
         if (trackSpeed > _speedUtil.getRampThrottleIncrement()) {
-            deltaTime = remDist / trackSpeed;
             timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / trackSpeed;
         } else {
-            deltaTime = 0;
             timeRatio = 1;
         }
         float bufDist = getEntranceBufferDist(idxSpeedChange);
@@ -2847,7 +2851,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     log.error("\"{}\" cannot make \"{}\" ramp at block \"{}\". trackSpeed= {} remDist= {}", getDisplayName(),
                             speedType, getBlockAt(idxSpeedChange).getDisplayName(), trackSpeed, remDist);
                 }
-                deltaTime = accumTime;
                 break;
             }
             if (cmdVal.getType().equals(ThrottleSetting.ValueType.VAL_NOOP)) {
@@ -2856,7 +2859,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             log.debug("{}: cmd#{} accumTime= {} accumDist= {} changeDist= {}", getDisplayName(), i+1, accumTime, accumDist, changeDist);
         }
 
-        int waitTime = Math.round(deltaTime);
+        if (accumTime == 0) {
+            accumTime = remDist / beginTrackSpeed;
+        }
+        int waitTime = Math.round(accumTime);
         if (messageFlag || log.isDebugEnabled()) {
             log.info("{}: RAMP waitTime={}, waitThrottle={}, availDist={}, enterLen={} accumDist={} for ramp start",
                     getDisplayName(), waitTime, modSetting, availDist, changeDist, accumDist);
