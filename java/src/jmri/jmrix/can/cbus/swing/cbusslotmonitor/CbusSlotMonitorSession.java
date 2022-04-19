@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
 import jmri.DccLocoAddress;
+import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 
 /**
  * Class to represent a session in the MERG CBUS Command Station Session Slot Monitor
@@ -48,53 +50,15 @@ public class CbusSlotMonitorSession  {
     protected void setDccSpeed( int speed) {
         _speed = speed;
     }
-    
-    protected int getCommandedSpeed() {
-        String speedflags = String.format("%8s", 
-        Integer.toBinaryString( _speed & 0xFF)).replace(' ', '0');
-        int directionSpeed = Integer.parseInt((speedflags.substring(1)), 2);
-        if ( directionSpeed == 1 ) {
-            return 0;
-        }
-        else {
-            return directionSpeed;
-        }
-        
+
+    protected String getCommandedSpeed() {
+        return CbusOpCodes.getSpeedFromByte(_speed);
     }
-    
+
     protected String getDirection() {
-        if ( _speed == 1 ){
-            return ( Bundle.getMessage("EStop" ) + Bundle.getMessage("REV") );
-        }
-        else if ( _speed == 129 ){
-            return ( Bundle.getMessage("EStop" ) + Bundle.getMessage("FWD"));
-        }
-        else if ( getSpeedSteps().equals("14") ){
-            if ( _speed > 13 ){
-                return (Bundle.getMessage("FWD"));
-            }
-            else {
-                return (Bundle.getMessage("REV"));
-            }
-        }
-        else if ( getSpeedSteps().equals("28") || getSpeedSteps().equals("28I") ) {
-            if ( _speed > 27 ){
-                return (Bundle.getMessage("FWD"));
-            }
-            else {
-                return (Bundle.getMessage("REV"));
-            }
-        }
-        else { // default to 128 ( 126 ) steps
-            if ( _speed > 127 ){
-                return (Bundle.getMessage("FWD"));
-            }
-            else {
-                return (Bundle.getMessage("REV"));
-            }
-        }
+        return CbusOpCodes.getDirectionFromByte(_speed );
     }
-    
+
     protected void setSpeedSteps ( String steps ) {
         _speedSteps = steps;
     }
@@ -125,19 +89,19 @@ public class CbusSlotMonitorSession  {
     
     protected void setFlags( int flags ){
         _flags = flags;
-        boolean sm0 = ((flags >> 0 ) & 1) != 0;
-        boolean sm1 = ((flags >> 1 ) & 1) != 0;
-        if ((!sm0) && (!sm1)){
-            _speedSteps="128";
-        }
-        else if ((!sm0) && (sm1)){
-            _speedSteps="14";
-        }        
-        else if ((sm0) && (!sm1)){
-            _speedSteps="28I";
-        }        
-        else if ((sm0) && (sm1)){
-            _speedSteps="28";
+        int mask = 0b11; // last 2 bits
+        switch (flags & mask){
+            case CbusConstants.CBUS_SS_14:
+                _speedSteps="14";
+                break;
+            case CbusConstants.CBUS_SS_28_INTERLEAVE:
+                _speedSteps="28I";
+                break;
+            case CbusConstants.CBUS_SS_28:
+                _speedSteps="28";
+                break;
+            default:
+                _speedSteps="128";
         }
     }
     

@@ -237,7 +237,7 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Set the parent for all the children.
-     * 
+     *
      * @param errors a list of potential errors
      * @return true if success, false otherwise
      */
@@ -560,9 +560,26 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
+    /**
+     * Do something on every item in the sub tree of this item.
+     * @param r the action to do on all items.
+     * @throws Exception if an exception occurs
+     */
+    public default void forEntireTreeWithException(RunnableWithBaseThrowException r) throws Exception {
+        r.run(this);
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).forEntireTreeWithException(r);
+        }
+    }
+
 
     public interface RunnableWithBase {
         public void run(@Nonnull Base b);
+    }
+
+
+    public interface RunnableWithBaseThrowException {
+        public void run(@Nonnull Base b) throws Exception;
     }
 
 
@@ -573,6 +590,7 @@ public interface Base extends PropertyChangeProvider {
     public static class PrintTreeSettings {
         public boolean _printLineNumbers = false;
         public boolean _printDisplayName = false;
+        public boolean _hideUserName = false;           // Used for tests
         public boolean _printErrorHandling = true;
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;

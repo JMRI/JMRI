@@ -14,6 +14,7 @@ import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.beans.PropertyVetoException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -279,6 +280,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             }
             // and finally load all preferences
             setXml(conf);
+        } catch (FileNotFoundException ex) {
+            // Don't show error dialog if file is not found
+            log.debug("Loading throttle exception: {}", ex.getMessage());
+            log.info("Couldn't load throttle file "+sfile+" , reverting to default one, if any");
+            loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.info("Couldn't load throttle file "+sfile+" , reverting to default one, if any");

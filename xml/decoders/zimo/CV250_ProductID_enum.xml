@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!--                                                                        -->
+<!-- version 1 - Alain Le Marchand - 2022-04-17                             -->
+<!--    include file for Zimo decoder - Product IDs of CV250                -->
+<!--                                                                        -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="Unknown" value ="0">
+        <choice>Unknown</choice>
+        <choice xml:lang="de">Unbekannt</choice>
+        <choice xml:lang="fr">Inconnu</choice>
+        <choice xml:lang="nl">Onbekend</choice>
+    </enumChoice>
+    <enumChoice choice="MS500" value = "1"/>
+    <enumChoice choice="MS480" value = "2"/>
+    <enumChoice choice="MS490" value = "3"/>
+    <enumChoice choice="MS440" value = "4"/>
+    <enumChoice choice="MS580" value = "5"/>
+    <enumChoice choice="MS450" value = "6"/>
+    <enumChoice choice="MS990" value = "7"/>
+    <enumChoice choice="MS590" value = "8"/>
+    <enumChoice choice="MS950" value = "9"/>
+    <enumChoice choice="MS560" value = "10"/>
+    <enumChoice choice="MX630 (2020)" value = "130"/>
+    <enumChoice choice="MX623 (2022)" value = "132"/>
+    <enumChoice choice="MX633 (2020)" value = "133"/>
+    <enumChoice choice="MX634 (2020)" value = "134"/>
+    <enumChoice choice="MX635" value = "135"/>
+    <enumChoice choice="MX636" value = "136"/>
+    <enumChoice choice="MX637" value = "137"/>
+    <enumChoice choice="MDS442" value = "142"/>
+    <enumChoice choice="MX660" value = "160"/>
+    <enumChoice choice="REE_DU65" value = "165"/>
+    <enumChoice choice="MX600 (2021)" value = "166"/>
+    <enumChoice choice="MX671" value = "171"/>
+    <enumChoice choice="MX675" value = "175"/>
+    <enumChoice choice="R72016" value = "176"/>
+    <enumChoice choice="MX617" value = "177"/>
+    <enumChoice choice="MX688 (2022)" value = "180"/>
+    <enumChoice choice="MX618" value = "181"/>
+    <enumChoice choice="MX682" value = "182"/>
+    <enumChoice choice="MX689" value = "183"/>
+    <enumChoice choice="MX685 (2020)" value = "185"/>
+    <enumChoice choice="MX605N" value = "186"/>
+    <enumChoice choice="MX605FL" value = "187"/>
+    <enumChoice choice="MX605SL" value = "188"/>
+    <enumChoice choice="MX605" value = "189"/>
+    <enumChoice choice="MX659" value = "190"/>
+    <enumChoice choice="MX622 (2020)" value = "192"/>
+    <enumChoice choice="MX638" value = "193"/>
+    <enumChoice choice="MX615" value = "194"/>
+    <enumChoice choice="MX616" value = "195"/>
+    <enumChoice choice="MXKISS" value = "196"/>
+    <enumChoice choice="MX617" value = "197"/>
+    <enumChoice choice="FLM_E69" value = "198"/>
+    <enumChoice choice="MX600" value = "199"/>
+    <enumChoice choice="MX82" value = "200"/>
+    <enumChoice choice="MX620" value = "201"/>
+    <enumChoice choice="MX62" value = "202"/>
+    <enumChoice choice="MX63" value = "203"/>
+    <enumChoice choice="MX64" value = "204"/>
+    <enumChoice choice="MX64H" value = "205"/>
+    <enumChoice choice="MX64D" value = "206"/>
+    <enumChoice choice="MX680" value = "207"/>
+    <enumChoice choice="MX690" value = "208"/>
+    <enumChoice choice="MX69" value = "209"/>
+    <enumChoice choice="MX640" value = "210"/>
+    <enumChoice choice="MX630-P2520" value = "211"/>
+    <enumChoice choice="MX632" value = "212"/>
+    <enumChoice choice="MX631" value = "213"/>
+    <enumChoice choice="MX642" value = "214"/>
+    <enumChoice choice="MX643" value = "215"/>
+    <enumChoice choice="MX647" value = "216"/>
+    <enumChoice choice="MX646" value = "217"/>
+    <enumChoice choice="MX630 (2011)" value = "218"/>
+    <enumChoice choice="MX631 (2011)" value = "219"/>
+    <enumChoice choice="MX632 (2011)" value = "220"/>
+    <enumChoice choice="MX645" value = "221"/>
+    <enumChoice choice="MX644" value = "222"/>
+    <enumChoice choice="MX621" value = "223"/>
+    <enumChoice choice="MX695 RevB" value = "224"/>
+    <enumChoice choice="MX648" value = "225"/>
+    <enumChoice choice="MX685" value = "226"/>
+    <enumChoice choice="MX695 RevC" value = "227"/>
+    <enumChoice choice="MX681" value = "228"/>
+    <enumChoice choice="MX695N" value = "229"/>
+    <enumChoice choice="MX696" value = "230"/>
+    <enumChoice choice="MX696N" value = "231"/>
+    <enumChoice choice="MX686" value = "232"/>
+    <enumChoice choice="MX622" value = "233"/>
+    <enumChoice choice="MX623" value = "234"/>
+    <enumChoice choice="MX687" value = "235"/>
+    <enumChoice choice="MX621-FLM" value = "236"/>
+    <enumChoice choice="MX633" value = "237"/>
+    <enumChoice choice="MX820 RevA" value = "238"/>
+    <enumChoice choice="MX634" value = "240"/>
+    <enumChoice choice="MX686B" value = "241"/>
+    <enumChoice choice="MX820 RevB" value = "242"/>
+    <enumChoice choice="MX618" value = "243"/>
+    <enumChoice choice="Roco NextG" value = "244"/>
+    <enumChoice choice="MX697 RevA" value = "245"/>
+    <enumChoice choice="MX658" value = "246"/>
+    <enumChoice choice="MX688" value = "247"/>
+    <enumChoice choice="MX821" value = "248"/>
+    <enumChoice choice="MX648 RevC,D" value = "249"/>
+    <enumChoice choice="MX699" value = "250"/>
+    <enumChoice choice="Roco 2067" value = "251"/>
+    <enumChoice choice="Roco ICE" value = "252"/>
+    <enumChoice choice="MX649" value = "253"/>
+    <enumChoice choice="MX697 RevB" value = "254"/>
+</enumVal>
