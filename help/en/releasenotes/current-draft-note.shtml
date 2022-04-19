@@ -551,7 +551,36 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Any warrant, regular or shared, will not allocate blocks beyond a restricted block.
+                A block is restricted if it is:
+                <ul>
+                   <li>Allocated to another warrant.</li>
+                    <li>Occupied by an unknown train.</li>
+                    <li>Signal protects it from entry.</li>
+                </ul>
+            </li> 
+            <li>
+                When entering a block, the warrant will allocate as many blocks as it can up to the 
+                next restricted block or its limit. 
+                Shared warrants only allocate up to a maximum of 2 blocks. (limit is 2)
+                Regular warrants will allocate the full route if no restricted block is found. (unlimited)
+            </li>
+            <li>
+                Crossovers typically use one turnout to control both switches. Often, each switch is 
+                track in different blocks. For such shared turnouts, throwing the switch in one block 
+                may change the path in another block and could cause a derailment.
+                Warrants now detect shared turnouts. Should the set paths in the respective 
+                block have different settings for the turnout, the warrant will allocate the block
+                sharing the turnout but not set its path. The warrant will stop the train before 
+                entering the block. The train will continue when the conflict is resolved.
+            </li>
+            <li>
+                Block status of OUT_OF_SERVICE is informational. Warrants can allocate OUT_OF_SERVICE blocks.
+            </li>
+            <li>
+                The "Set" column of the Warrant List Table is removed. The "Allocate" column indicates the route.
+                The path also set if the block is not restricted.
+            </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
