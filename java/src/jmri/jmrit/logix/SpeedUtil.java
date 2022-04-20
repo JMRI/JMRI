@@ -597,6 +597,9 @@ public class SpeedUtil {
         if (speed1 == null) {
             return true;
         }
+        if (speed1.equals(speed2)) {
+            return false;
+        }
         float s1 = _signalSpeedMap.getSpeed(speed1);
         float s2 = _signalSpeedMap.getSpeed(speed2);
         return (s1 < s2);

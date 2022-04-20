@@ -415,6 +415,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.getStatus(block, state);
+        log.debug("setStatus _status= {} state= {} block= \"{}\"", _status, state, block.getDisplayName());
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             ThreadingUtil.runOnLayoutEventually(() -> {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
