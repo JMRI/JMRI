@@ -20,6 +20,7 @@ public class BlockOrderTest {
     public void testCTor() {
         BlockOrder t = new BlockOrder(new OBlock("OB1", "Test"));
         assertThat(t).withFailMessage("exists").isNotNull();
+        assertThat(t.toString().startsWith("BlockOrder: Block")).withFailMessage("toString").isTrue();
     }
 
     /* for the sake of code coverage */
