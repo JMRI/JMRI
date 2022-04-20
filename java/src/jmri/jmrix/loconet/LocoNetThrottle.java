@@ -36,11 +36,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected int layout_snd;
     protected int layout_stat1 = 0;
 
-    // with extendedslots the slots may not have been updated by the echo 
+    // with extended slots the slots may not have been updated by the echo
     // before the next message needs sending.So we must save and send what
     // we believe to be the correct speed and direction.
     // remember in expanded mode 2 throttle cannot be in control of a loco
-    protected int throttle_spd;
+
+    protected int new_spd;
     protected boolean throttle_isFwd;
 
     // slot status to be warned if slot released or dispatched
@@ -67,11 +68,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         layout_spd = slot.speed();
         layout_dirf = slot.dirf();
         layout_snd = slot.snd();
-
-        // save the last sent values for speed and direction
-        // in the new digitrax protocol, the throttle, with the right ID, is the authority, not the command station
-        // speed and direction are sent in a single message, so you must sent the same direction or speed as was done last time
-        throttle_spd = slot.speed();
 
         // cache settings
         synchronized(this) {
@@ -312,7 +308,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * functions F0, F1, F2, F3, F4, F5, F6
      */
     protected void sendExpFunctionGroup1() {
-            sendExpSpeedAndDirection();
             int new_F0F6 = ((getF5() ? 0b00100000 : 0) | (getF6() ? 0b01000000 : 0)
                 | (getF0() ? LnConstants.DIRF_F0 : 0)
                 | (getF1() ? LnConstants.DIRF_F1 : 0)
@@ -395,14 +390,15 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Send the expanded slot command for speed and direction.
      * Note we send our stored values as slot is updated via an echo
      * and may not have been updated yet when sending rapid commands
+     * @param new_spd the speed to set
      */
-    protected void sendExpSpeedAndDirection() {
+    protected void sendExpSpeedAndDirection(int new_spd) {
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
         msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (throttle_isFwd ? 0x00 : 0x08));
         msg.setElement(2, slot.getSlot() & 0x7f);
         msg.setElement(3, (slot.id() & 0x7f));
-        msg.setElement(4, throttle_spd);   // last sent speed. Cannot use slot as it may not be uptodate.
+        msg.setElement(4, new_spd);
         network.sendLocoNetMessage(msg);
     }
     /**
@@ -462,14 +458,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             }
         }
 
-        int new_spd = intSpeed(speed);
+        new_spd = intSpeed(speed);
 
         // decide whether to send a new LocoNet message
         boolean sendLoconetMessage = false;
-        if (new_spd != layout_spd || new_spd != throttle_spd) {
+        if (new_spd != layout_spd ) {
             // the new speed is different - send a message
             sendLoconetMessage = true;
-            throttle_spd = new_spd;       // save for a direction change before slot updated.
         } else if (allowDuplicates) {
             // calling method wants a new message sent regardless
             sendLoconetMessage = true;
@@ -488,7 +483,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 msg.setElement(2, new_spd);
                 network.sendLocoNetMessage(msg);
             } else {
-                sendExpSpeedAndDirection();
+                sendExpSpeedAndDirection(new_spd);
             }
 
             // reset timeout - but only if something sent on net
@@ -525,7 +520,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             sendFunctionGroup1();
         } else {
             throttle_isFwd = forward;
-            sendExpSpeedAndDirection();
+            sendExpSpeedAndDirection(new_spd);
         }
         firePropertyChange(ISFORWARD, old, this.isForward);
     }
