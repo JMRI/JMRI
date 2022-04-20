@@ -25,6 +25,7 @@ import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
@@ -382,7 +383,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         addressPanel.addAddressListener(functionPanel);
         addressPanel.addAddressListener(speedPanel);
         addressPanel.addAddressListener(this);
-        addressPanel.addAddressListener(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel());
+        addressPanel.addAddressListener(new ThrottleAdressListener());
 
         add(controlPanel, PANEL_LAYER_FRAME);
         add(functionPanel, PANEL_LAYER_FRAME);
@@ -1066,6 +1067,45 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             } catch (Exception e) {
                 // Do nothing, just go on
             }
+        }
+    }
+
+
+    private class ThrottleAdressListener implements jmri.jmrit.throttle.AddressListener {
+
+        private final ThrottlesTableModel tableModel =
+                InstanceManager.getDefault(ThrottleFrameManager.class)
+                        .getThrottlesListPanel().getTableModel();
+
+        @Override
+        public void notifyAddressChosen(LocoAddress la) {
+        }
+
+        @Override
+        public void notifyAddressReleased(LocoAddress addr) {
+            if (addr instanceof DccLocoAddress ) {
+               DccLocoAddress la = (DccLocoAddress) addr;
+               tableModel.fireTableDataChanged();
+               throttleManager.removeListener(la, tableModel);
+            }
+        }
+
+        @Override
+        public void notifyAddressThrottleFound(DccThrottle throttle) {
+            tableModel.fireTableDataChanged();
+            throttle.addPropertyChangeListener(tableModel);
+        }
+
+        @Override
+        public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+        }
+
+        @Override
+        public void notifyConsistAddressReleased(int address, boolean isLong) {
+        }
+
+        @Override
+        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
         }
     }
 
