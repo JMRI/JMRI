@@ -10818,8 +10818,20 @@
     </ActionBlock>
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0021</systemName>
-      <clockState>SetClock</clockState>
-      <setTime>0</setTime>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>SetClock</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>0</value>
+        <reference />
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10880,7 +10892,20 @@
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0022</systemName>
       <comment>StartClock</comment>
-      <clockState>StartClock</clockState>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>StartClock</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>0</value>
+        <reference />
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10941,7 +10966,20 @@
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0023</systemName>
       <comment>StopClock</comment>
-      <clockState>StopClock</clockState>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>StopClock</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>0</value>
+        <reference />
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11002,8 +11040,20 @@
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0024</systemName>
       <comment>SetClock</comment>
-      <clockState>SetClock</clockState>
-      <setTime>720</setTime>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>SetClock</enum>
+        <reference />
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>720</value>
+        <reference />
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
