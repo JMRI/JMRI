@@ -131,8 +131,7 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jsoup-1.13.1.jar"/>
-        <pathelement location="${libdir}/jsoup-1.13.1-javadoc.jar"/>
+        <pathelement location="${libdir}/jsoup-1.14.3.jar"/>
         <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
@@ -492,6 +491,8 @@
             <!-- .gitignore transient artifacts -->
             <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
+            <fileset file="pom.xml.back"/>
+            <fileset file="release.properties.bak"/>
             <fileset file="release.zip"/>
             <fileset file="spotbugs.html"/>
             <fileset file="spotbugs-check.html"/>
@@ -2642,9 +2643,14 @@
     <!-- several steps are involved in creating a new test release
     branch from the head of the ${release.branch} (often master) branch.
     This target intends to manage as  many of those as possible.
-    ${release.branch} should be set in the release.properties file. -->
+    ${release.branch} should be set in the release.properties file.
+    See scripts/scripts/HOWTO-distribution.md for more information. -->
     <target name="make-test-release-branch"
             description="Make a new test release branch in Git from the head of the ${release.branch} branch">
+
+        <!-- this target's contents are not consistent with current practice,
+            see scripts/scripts/HOWTO-distribution.md for more information. -->
+        <fail>This target is not currently in use by the release process.</fail>
 
         <!-- make sure on ${release.branch} branch and
          it's up to date-->

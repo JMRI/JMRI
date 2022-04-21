@@ -558,9 +558,9 @@
                     <li>Occupied by an unknown train.</li>
                     <li>Signal protects it from entry.</li>
                 </ul>
-            </li> 
+            </li>
             <li>
-                When entering a block, the warrant will allocate as many blocks as it can up to the 
+                When entering a block, the warrant will allocate as many blocks as it can up to the
                 next restricted block or its limit.
                  <ul>
                     <li>Shared warrants only allocate up to a maximum of 2 blocks. (limit is 2)</li>
@@ -568,14 +568,14 @@
                 </ul>
             </li>
             <li>
-                Crossovers typically use one turnout to control both switches. Often, each switch is 
-                track in different blocks. For such shared turnouts, throwing the switch in one block 
+                Crossovers typically use one turnout to control both switches. Often, each switch is
+                track in different blocks. For such shared turnouts, throwing the switch in one block
                 may change the path in another block and could cause a derailment.
                  <ul>
-                    <li>Warrants now detect shared turnouts. Should the paths in the respective 
+                    <li>Warrants now detect shared turnouts. Should the paths in the respective
                     blocks have different settings for the turnout, the warrant will allocate the block
                     sharing the turnout but <b>not</b> set its path.</li>
-                    <li>The warrant will stop the train before 
+                    <li>The warrant will stop the train before
                      entering the block. The train will continue when the conflict is resolved.</li>
                  </ul>
             </li>
@@ -609,6 +609,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Updated jsoup library to 1.14.3 from 1.13.1. JMRI uses this when rebuilding help metadata.</li>
         </ul>
 
