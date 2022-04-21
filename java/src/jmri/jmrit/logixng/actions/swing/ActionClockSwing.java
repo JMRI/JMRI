@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions.swing;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionClock;
 import jmri.jmrit.logixng.actions.ActionClock.ClockState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.util.swing.JComboBoxUtil;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectIntegerSwing;
 
 /**
  * Configures an ActionClock object with a Swing JPanel.
@@ -24,43 +26,41 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionClockSwing extends AbstractDigitalActionSwing {
 
-    private JComboBox<ClockState> _stateComboBox;
-    private JTextField _timeTextField;
-    private int _minutes = 0;
+    private LogixNG_SelectEnumSwing<ClockState> _selectEnumSwing;
+    private LogixNG_SelectIntegerSwing _selectTimeSwing;
 
+
+    public ActionClockSwing() {
+    }
+
+    public ActionClockSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionClock action = (ActionClock) object;
 
+        _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+        _selectTimeSwing = new LogixNG_SelectIntegerSwing(
+                getJDialog(), this, new TimeFormatterParserValidator());
+
         panel = new JPanel();
-
-        _stateComboBox = new JComboBox<>();
-        for (ClockState e : ClockState.values()) {
-            _stateComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-        _stateComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
-            setTimeField(action == null ? 0 : action.getClockTime());
-        });
-
-        _timeTextField = new JTextField(4);
-        setTimeField(0);
+        JPanel _tabbedPaneClockState;
+        JPanel _tabbedPaneTime;
 
         if (action != null) {
-            _stateComboBox.setSelectedItem(action.getBeanState());
-            setTimeField(action.getClockTime());
+            _tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
+            _tabbedPaneTime = _selectTimeSwing.createPanel(action.getSelectTime());
+        } else {
+            _tabbedPaneClockState = _selectEnumSwing.createPanel(null, ClockState.values());
+            _tabbedPaneTime = _selectTimeSwing.createPanel(null);
         }
-
-        JPanel timeField = new JPanel();
-        JLabel timelabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ActionClock_TimeLabel")));
-        timeField.add(timelabel);
-        timeField.add(_timeTextField);
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.add(_stateComboBox);
-        container.add(timeField);
+        container.add(_tabbedPaneClockState);
+        container.add(_tabbedPaneTime);
 
         JComponent[] components = new JComponent[]{
             container};
@@ -71,34 +71,16 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
         for (JComponent c : componentList) panel.add(c);
     }
 
-    private void setTimeField(int time) {
-        if (_stateComboBox.getSelectedItem() == ClockState.SetClock) {
-            _timeTextField.setEnabled(true);
-            _timeTextField.setText(ActionClock.formatTime(time));
-        } else {
-            _timeTextField.setEnabled(false);
-            _timeTextField.setText("");
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        if (_stateComboBox.getSelectedItem() == ClockState.SetClock) {
-            LocalTime newHHMM;
-            try {
-                newHHMM = LocalTime.parse(_timeTextField.getText().trim(), DateTimeFormatter.ofPattern("H:mm"));
-                _minutes = newHHMM.getHour() * 60 + newHHMM.getMinute();
-                if (_minutes < 0 || _minutes > 1439) {
-                    errorMessages.add(Bundle.getMessage("ActionClock_RangeError"));
-                }
-            } catch (java.time.format.DateTimeParseException ex) {
-                errorMessages.add(Bundle.getMessage("ActionClock_ParseError", ex.getParsedString()));
-            }
-        }
+        // Create a temporary action to test formula
+        ActionClock action = new ActionClock("IQDA1", null);
 
-        if (!errorMessages.isEmpty()) return false;
-        return true;
+        _selectEnumSwing.validate(action.getSelectEnum(), errorMessages);
+        _selectTimeSwing.validate(action.getSelectTime(), errorMessages);
+
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -122,11 +104,9 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionClock but is a: "+object.getClass().getName());
         }
         ActionClock action = (ActionClock) object;
-        action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
 
-        if (_stateComboBox.getSelectedItem() == ClockState.SetClock) {
-                action.setClockTime(_minutes);
-        }
+        _selectEnumSwing.updateObject(action.getSelectEnum());
+        _selectTimeSwing.updateObject(action.getSelectTime());
     }
 
     /** {@inheritDoc} */
@@ -137,6 +117,56 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
+        _selectEnumSwing.dispose();
+        _selectTimeSwing.dispose();
+    }
+
+
+    private static class TimeFormatterParserValidator
+            implements LogixNG_SelectIntegerSwing.FormatterParserValidator {
+
+        @Override
+        public int getInitialValue() {
+            return 0;
+        }
+
+        @Override
+        public String format(int value) {
+            return ActionClock.formatTime(value);
+        }
+
+        @Override
+        public int parse(String str) {
+            int minutes;
+            LocalTime newHHMM;
+            try {
+                newHHMM = LocalTime.parse(str.trim(), DateTimeFormatter.ofPattern("H:mm"));
+                minutes = newHHMM.getHour() * 60 + newHHMM.getMinute();
+                if (minutes < 0 || minutes > 1439) {
+                    return 0;
+                }
+                return minutes;
+            } catch (DateTimeParseException ex) {
+                return 0;
+            }
+        }
+
+        @Override
+        public String validate(String str) {
+            int minutes;
+            LocalTime newHHMM;
+            try {
+                newHHMM = LocalTime.parse(str.trim(), DateTimeFormatter.ofPattern("H:mm"));
+                minutes = newHHMM.getHour() * 60 + newHHMM.getMinute();
+                if (minutes < 0 || minutes > 1439) {
+                    return Bundle.getMessage("ActionClock_RangeError");
+                }
+            } catch (DateTimeParseException ex) {
+                return Bundle.getMessage("ActionClock_ParseError", ex.getParsedString());
+            }
+            return null;
+        }
+
     }
 
 

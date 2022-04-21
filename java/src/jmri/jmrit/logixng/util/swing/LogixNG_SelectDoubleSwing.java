@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
+import jmri.jmrit.logixng.util.LogixNG_SelectDouble;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectIntegerSwing {
+public class LogixNG_SelectDoubleSwing {
 
     private final JDialog _dialog;
     private final LogixNG_SelectTableSwing _selectTableSwing;
@@ -34,7 +34,7 @@ public class LogixNG_SelectIntegerSwing {
     private JTextField _formulaTextField;
 
 
-    public LogixNG_SelectIntegerSwing(
+    public LogixNG_SelectDoubleSwing(
             @Nonnull JDialog dialog,
             @Nonnull SwingConfiguratorInterface swi) {
         _dialog = dialog;
@@ -42,7 +42,7 @@ public class LogixNG_SelectIntegerSwing {
         _formatterParserValidator = new DefaultFormatterParserValidator();
     }
 
-    public LogixNG_SelectIntegerSwing(
+    public LogixNG_SelectDoubleSwing(
             @Nonnull JDialog dialog,
             @Nonnull SwingConfiguratorInterface swi,
             @Nonnull FormatterParserValidator formatterParserValidator) {
@@ -51,7 +51,7 @@ public class LogixNG_SelectIntegerSwing {
         _formatterParserValidator = formatterParserValidator;
     }
 
-    public JPanel createPanel(@CheckForNull LogixNG_SelectInteger selectStr) {
+    public JPanel createPanel(@CheckForNull LogixNG_SelectDouble selectStr) {
 
         JPanel panel = new JPanel();
 
@@ -110,7 +110,7 @@ public class LogixNG_SelectIntegerSwing {
     }
 
     public boolean validate(
-            @Nonnull LogixNG_SelectInteger selectStr,
+            @Nonnull LogixNG_SelectDouble selectStr,
             @Nonnull List<String> errorMessages) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
@@ -152,7 +152,7 @@ public class LogixNG_SelectIntegerSwing {
         return errorMessages.isEmpty();
     }
 
-    public void updateObject(@Nonnull LogixNG_SelectInteger selectStr) {
+    public void updateObject(@Nonnull LogixNG_SelectDouble selectStr) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
             selectStr.setValue(_formatterParserValidator.parse(_valueTextField.getText()));
@@ -196,21 +196,21 @@ public class LogixNG_SelectIntegerSwing {
          * Get the initial value
          * @return the initial value
          */
-        public int getInitialValue();
+        public double getInitialValue();
 
         /**
          * Format the value
          * @param value the value
          * @return the formatted string
          */
-        public String format(int value);
+        public String format(double value);
 
         /**
          * Parse the string
          * @param str the string
          * @return the parsed value
          */
-        public int parse(String str);
+        public double parse(String str);
 
         /**
          * Validates the string
@@ -225,19 +225,19 @@ public class LogixNG_SelectIntegerSwing {
             implements FormatterParserValidator {
 
         @Override
-        public int getInitialValue() {
+        public double getInitialValue() {
             return 0;
         }
 
         @Override
-        public String format(int value) {
-            return Integer.toString(value);
+        public String format(double value) {
+            return Double.toString(value);
         }
 
         @Override
-        public int parse(String str) {
+        public double parse(String str) {
             try {
-                return Integer.parseInt(str);
+                return Double.parseDouble(str);
             } catch (NumberFormatException e) {
                 return getInitialValue();
             }
@@ -248,7 +248,7 @@ public class LogixNG_SelectIntegerSwing {
             try {
                 return null;
             } catch (NumberFormatException e) {
-                return Bundle.getMessage("LogixNG_SelectIntegerSwing_MustBeValidInteger");
+                return Bundle.getMessage("LogixNG_SelectDoubleSwing_MustBeValidInteger");
             }
         }
 

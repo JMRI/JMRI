@@ -5,24 +5,25 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
-import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
+import jmri.jmrit.logixng.util.LogixNG_SelectDouble;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.ThreadingUtil;
 
 /**
- * This action provides the ability to set the fast clock time and start and stop the fast clock.
+ * This action provides the ability to set the fast clock speed.
  *
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
+ * @author Daniel Bergqvist Copyright 2022
  */
-public class ActionClock extends AbstractDigitalAction {
+public class ActionClockSpeed extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<ClockState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClock);
-    private final LogixNG_SelectInteger _selectValue = new LogixNG_SelectInteger(this);
+            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockSpeed);
+    private final LogixNG_SelectDouble _selectSpeed = new LogixNG_SelectDouble(this, 3);
 
 
-    public ActionClock(String sys, String user)
+    public ActionClockSpeed(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -33,10 +34,10 @@ public class ActionClock extends AbstractDigitalAction {
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionClock copy = new ActionClock(sysName, userName);
+        ActionClockSpeed copy = new ActionClockSpeed(sysName, userName);
         copy.setComment(getComment());
         _selectEnum.copy(copy._selectEnum);
-        _selectValue.copy(copy._selectValue);
+        _selectSpeed.copy(copy._selectSpeed);
         return manager.registerAction(copy);
     }
 
@@ -44,23 +45,17 @@ public class ActionClock extends AbstractDigitalAction {
         return _selectEnum;
     }
 
-    public LogixNG_SelectInteger getSelectTime() {
-        return _selectValue;
+    public LogixNG_SelectDouble getSelectSpeed() {
+        return _selectSpeed;
     }
 
     /**
-     * Convert minutes since midnight to hh:mm.
-     * @param minutes The number of minutes from 0 to 1439.
-     * @return time formatted as hh:mm.
+     * Convert speed to a decimal string.
+     * @param speed The speed
+     * @return speed formatted as %1.3f
      */
-    public static String formatTime(int minutes) {
-        String hhmm = "00:00";
-        if (minutes >= 0 && minutes < 1440) {
-            hhmm = String.format("%02d:%02d",
-                    minutes / 60,
-                    minutes % 60);
-        }
-        return hhmm;
+    public static String formatSpeed(double speed) {
+        return String.format("%1.3f", speed);
     }
 
     /** {@inheritDoc} */
@@ -74,27 +69,34 @@ public class ActionClock extends AbstractDigitalAction {
     public void execute() throws JmriException {
 
         ClockState theState = _selectEnum.evaluateEnum(getConditionalNG());
-        int theValue = _selectValue.evaluateValue(getConditionalNG());
+        double theValue = _selectSpeed.evaluateValue(getConditionalNG());
 
         jmri.Timebase timebase = InstanceManager.getDefault(jmri.Timebase.class);
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch(theState) {
-                case SetClock:
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(timebase.getTime());
-                    cal.set(Calendar.HOUR_OF_DAY, theValue / 60);
-                    cal.set(Calendar.MINUTE, theValue % 60);
-                    cal.set(Calendar.SECOND, 0);
-                    timebase.userSetTime(cal.getTime());
+                case SetClockSpeed:
+                    try {
+                        timebase.setRate(theValue);
+                    } catch (TimebaseRateException e) {
+                        // Do nothing. This error is already logged as an error
+                    }
                     break;
 
-                case StartClock:
-                    timebase.setRun(true);
+                case IncreaseClockSpeed:
+                    try {
+                        timebase.setRate(timebase.getRate() + theValue);
+                    } catch (TimebaseRateException e) {
+                        // Do nothing. This error is already logged as an error
+                    }
                     break;
 
-                case StopClock:
-                    timebase.setRun(false);
+                case DecreaseClockSpeed:
+                    try {
+                        timebase.setRate(timebase.getRate() - theValue);
+                    } catch (TimebaseRateException e) {
+                        // Do nothing. This error is already logged as an error
+                    }
                     break;
 
                 default:
@@ -115,24 +117,24 @@ public class ActionClock extends AbstractDigitalAction {
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionClock_Short");
+        return Bundle.getMessage(locale, "ActionClockSpeed_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
         String value;
-        if (_selectValue.getAddressing() == NamedBeanAddressing.Direct) {
-            value = formatTime(_selectValue.getValue());
+        if (_selectSpeed.getAddressing() == NamedBeanAddressing.Direct) {
+            value = formatSpeed(_selectSpeed.getValue());
         } else {
-            value = _selectValue.getDescription(locale);
+            value = _selectSpeed.getDescription(locale);
         }
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
-            if (_selectEnum.getEnum() == ClockState.SetClock) {
-                return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale), value);
+            if (_selectEnum.getEnum() == ClockState.SetClockSpeed) {
+                return Bundle.getMessage(locale, "ActionClockSpeed_LongTo", _selectEnum.getDescription(locale), value);
             }
-            return Bundle.getMessage(locale, "ActionClock_Long", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClockSpeed_LongWith", _selectEnum.getDescription(locale), value);
         } else {
-            return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClockSpeed_LongTo", _selectEnum.getDescription(locale), value);
         }
     }
 
@@ -159,9 +161,9 @@ public class ActionClock extends AbstractDigitalAction {
 
 
     public enum ClockState {
-        SetClock(Bundle.getMessage("ActionClock_SetClock")),
-        StartClock(Bundle.getMessage("ActionClock_StartClock")),
-        StopClock(Bundle.getMessage("ActionClock_StopClock"));
+        SetClockSpeed(Bundle.getMessage("ActionClockSpeed_SetClockSpeed")),
+        IncreaseClockSpeed(Bundle.getMessage("ActionClockSpeed_IncreaseClockSpeed")),
+        DecreaseClockSpeed(Bundle.getMessage("ActionClockSpeed_DecreaseClockSpeed"));
 
         private final String _text;
 

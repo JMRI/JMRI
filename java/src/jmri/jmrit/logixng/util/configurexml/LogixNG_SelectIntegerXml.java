@@ -106,18 +106,18 @@ public class LogixNG_SelectIntegerXml {
 
         try {
             Element elem = shared.getChild(addressingElementName);
-            if (elem != null) {
+            if (addressingElementName != null && elem != null) {
                 selectInt.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
 
             elem = shared.getChild(referenceElementName);
-            if (elem != null) selectInt.setReference(elem.getTextTrim());
+            if (referenceElementName != null && elem != null) selectInt.setReference(elem.getTextTrim());
 
             elem = shared.getChild(localVariableElementName);
-            if (elem != null) selectInt.setLocalVariable(elem.getTextTrim());
+            if (localVariableElementName != null && elem != null) selectInt.setLocalVariable(elem.getTextTrim());
 
             elem = shared.getChild(formulaElementName);
-            if (elem != null) selectInt.setFormula(elem.getTextTrim());
+            if (formulaElementName != null && elem != null) selectInt.setFormula(elem.getTextTrim());
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);

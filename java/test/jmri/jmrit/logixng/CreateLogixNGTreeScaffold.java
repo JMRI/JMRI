@@ -407,7 +407,7 @@ public class CreateLogixNGTreeScaffold {
 // StartClock
         actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
         actionClock.setComment("StartClock");
-        actionClock.setBeanState(ActionClock.ClockState.StartClock);
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.StartClock);
 
         maleSocket = digitalActionManager.registerAction(actionClock);
         maleSocket.setEnabled(false);
@@ -416,7 +416,7 @@ public class CreateLogixNGTreeScaffold {
 // StopClock
         actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
         actionClock.setComment("StopClock");
-        actionClock.setBeanState(ActionClock.ClockState.StopClock);
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.StopClock);
 
         maleSocket = digitalActionManager.registerAction(actionClock);
         maleSocket.setEnabled(false);
@@ -425,10 +425,46 @@ public class CreateLogixNGTreeScaffold {
 // SetClock
         actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
         actionClock.setComment("SetClock");
-        actionClock.setBeanState(ActionClock.ClockState.SetClock);
-        actionClock.setClockTime(720);
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.SetClock);
+        actionClock.getSelectTime().setValue(720);
 
         maleSocket = digitalActionManager.registerAction(actionClock);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionClockSpeed actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionClockSpeed);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// StartClock
+        actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        actionClockSpeed.setComment("StartClock");
+        actionClockSpeed.getSelectEnum().setEnum(ActionClockSpeed.ClockState.SetClockSpeed);
+        actionClockSpeed.getSelectSpeed().setValue(4.234);
+
+        maleSocket = digitalActionManager.registerAction(actionClockSpeed);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// StopClock
+        actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        actionClockSpeed.setComment("StopClock");
+        actionClockSpeed.getSelectEnum().setEnum(ActionClockSpeed.ClockState.IncreaseClockSpeed);
+        actionClockSpeed.getSelectSpeed().setValue(0.5);
+
+        maleSocket = digitalActionManager.registerAction(actionClockSpeed);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// SetClock
+        actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        actionClockSpeed.setComment("SetClock");
+        actionClockSpeed.getSelectEnum().setEnum(ActionClockSpeed.ClockState.DecreaseClockSpeed);
+        actionClockSpeed.getSelectSpeed().setValue(1.22);
+
+        maleSocket = digitalActionManager.registerAction(actionClockSpeed);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

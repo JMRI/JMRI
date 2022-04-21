@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionClockType">
+    <xs:complexType name="LogixNG_DigitalAction_ActionClockSpeedType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionClock class.
+          Define the XML stucture for storing the contents of a ActionClockSpeed class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionClockXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionClockSpeedXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -41,21 +41,8 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-			  <xs:element name="state" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
-			  <xs:element name="time" type="LogixNG_SelectIntegerType" minOccurs="0" maxOccurs="1" />
-
-              <!-- These are for backwards compability up until JMRI 4.99.4 -->
-              <xs:element name="clockState" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="SetClock"/>
-                    <xs:enumeration value="StartClock"/>
-                    <xs:enumeration value="StopClock"/>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="setTime" type="xs:integer" minOccurs="0" maxOccurs="1"/>
-              <!-- These are for backwards compability up until JMRI 4.99.4 -->
+			  <xs:element name="state" type="LogixNG_SelectEnumType" minOccurs="1" maxOccurs="1" />
+			  <xs:element name="speed" type="LogixNG_SelectDoubleType" minOccurs="1" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
