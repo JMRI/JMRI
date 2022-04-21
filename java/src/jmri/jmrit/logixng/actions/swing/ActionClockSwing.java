@@ -46,29 +46,41 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
                 getJDialog(), this, new TimeFormatterParserValidator());
 
         panel = new JPanel();
-        JPanel _tabbedPaneClockState;
-        JPanel _tabbedPaneTime;
+        JPanel tabbedPaneClockState;
+        JPanel tabbedPaneTime;
 
         if (action != null) {
-            _tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
-            _tabbedPaneTime = _selectTimeSwing.createPanel(action.getSelectTime());
+            tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
+            tabbedPaneTime = _selectTimeSwing.createPanel(action.getSelectTime());
         } else {
-            _tabbedPaneClockState = _selectEnumSwing.createPanel(null, ClockState.values());
-            _tabbedPaneTime = _selectTimeSwing.createPanel(null);
+            tabbedPaneClockState = _selectEnumSwing.createPanel(null, ClockState.values());
+            tabbedPaneTime = _selectTimeSwing.createPanel(null);
         }
+
+        JComponent[] operationComponents = new JComponent[]{
+            tabbedPaneClockState};
+
+        List<JComponent> operationComponentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionClock_OperationComponents"), operationComponents);
+
+        JPanel panelOperation = new JPanel();
+        for (JComponent c : operationComponentList) panelOperation.add(c);
+
+        JComponent[] timeComponents = new JComponent[]{
+            tabbedPaneTime};
+
+        List<JComponent> timeComponentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionClock_TimeComponents"), timeComponents);
+
+        JPanel panelTime = new JPanel();
+        for (JComponent c : timeComponentList) panelTime.add(c);
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.add(_tabbedPaneClockState);
-        container.add(_tabbedPaneTime);
+        container.add(panelOperation);
+        container.add(panelTime);
 
-        JComponent[] components = new JComponent[]{
-            container};
-
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClock_Components"), components);
-
-        for (JComponent c : componentList) panel.add(c);
+        panel.add(container);
     }
 
     /** {@inheritDoc} */
@@ -138,6 +150,17 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
         @Override
         public int parse(String str) {
             int minutes;
+
+            try {
+                minutes = Integer.parseInt(str);
+                if (minutes < 0 || minutes > 1439) {
+                    return 0;
+                }
+                return minutes;
+            } catch (NumberFormatException e) {
+                // Do nothing
+            }
+
             LocalTime newHHMM;
             try {
                 newHHMM = LocalTime.parse(str.trim(), DateTimeFormatter.ofPattern("H:mm"));
@@ -154,6 +177,17 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
         @Override
         public String validate(String str) {
             int minutes;
+
+            try {
+                minutes = Integer.parseInt(str);
+                if (minutes < 0 || minutes > 1439) {
+                    return Bundle.getMessage("ActionClock_RangeError");
+                }
+                return null;
+            } catch (NumberFormatException e) {
+                // Do nothing
+            }
+
             LocalTime newHHMM;
             try {
                 newHHMM = LocalTime.parse(str.trim(), DateTimeFormatter.ofPattern("H:mm"));

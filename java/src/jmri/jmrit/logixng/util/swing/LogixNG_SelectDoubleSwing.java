@@ -103,6 +103,9 @@ public class LogixNG_SelectDoubleSwing {
             _referenceTextField.setText(selectStr.getReference());
             _localVariableTextField.setText(selectStr.getLocalVariable());
             _formulaTextField.setText(selectStr.getFormula());
+        } else {
+            _valueTextField.setText(_formatterParserValidator.format(
+                    _formatterParserValidator.getInitialValue()));
         }
 
         panel.add(_tabbedPane);

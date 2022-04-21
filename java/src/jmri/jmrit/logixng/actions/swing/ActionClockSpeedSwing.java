@@ -44,29 +44,41 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
                 getJDialog(), this, new DefaultFormatterParserValidator());
 
         panel = new JPanel();
-        JPanel _tabbedPaneClockState;
-        JPanel _tabbedPaneTime;
+        JPanel tabbedPaneClockState;
+        JPanel tabbedPaneSpeed;
 
         if (action != null) {
-            _tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
-            _tabbedPaneTime = _selectSpeedSwing.createPanel(action.getSelectSpeed());
+            tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
+            tabbedPaneSpeed = _selectSpeedSwing.createPanel(action.getSelectSpeed());
         } else {
-            _tabbedPaneClockState = _selectEnumSwing.createPanel(null, ClockState.values());
-            _tabbedPaneTime = _selectSpeedSwing.createPanel(null);
+            tabbedPaneClockState = _selectEnumSwing.createPanel(null, ClockState.values());
+            tabbedPaneSpeed = _selectSpeedSwing.createPanel(null);
         }
+
+        JComponent[] operationComponents = new JComponent[]{
+            tabbedPaneClockState};
+
+        List<JComponent> operationComponentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionClockSpeed_OperationComponents"), operationComponents);
+
+        JPanel panelOperation = new JPanel();
+        for (JComponent c : operationComponentList) panelOperation.add(c);
+
+        JComponent[] timeComponents = new JComponent[]{
+            tabbedPaneSpeed};
+
+        List<JComponent> timeComponentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionClockSpeed_SpeedComponents"), timeComponents);
+
+        JPanel panelTime = new JPanel();
+        for (JComponent c : timeComponentList) panelTime.add(c);
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.add(_tabbedPaneClockState);
-        container.add(_tabbedPaneTime);
+        container.add(panelOperation);
+        container.add(panelTime);
 
-        JComponent[] components = new JComponent[]{
-            container};
-
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClockSpeed_Components"), components);
-
-        for (JComponent c : componentList) panel.add(c);
+        panel.add(container);
     }
 
     /** {@inheritDoc} */
@@ -125,7 +137,7 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
 
         @Override
         public double getInitialValue() {
-            return MINIMUM_RATE;
+            return 1.0;
         }
 
         @Override
@@ -146,7 +158,8 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
             try {
                 double value = Double.parseDouble(str);
                 if (value < MINIMUM_RATE || value > MAXIMUM_RATE) {
-                    return Bundle.getMessage("ActionClockSpeed_RangeError");
+                    return Bundle.getMessage("ActionClockSpeed_RangeError",
+                            MINIMUM_RATE, MAXIMUM_RATE);
                 }
                 return null;
             } catch (NumberFormatException ex) {
