@@ -28,6 +28,7 @@ public class ClockFunctions implements FunctionFactory {
         functionClasses.add(new SystemClockFunction());
         functionClasses.add(new FastClockFunction());
         functionClasses.add(new FastClockRateFunction());
+        functionClasses.add(new IsFastClockRunningFunction());
         return functionClasses;
     }
 
@@ -189,6 +190,43 @@ public class ClockFunctions implements FunctionFactory {
         @Override
         public String getDescription() {
             return Bundle.getMessage("Clock.fastClockRate_Descr");
+        }
+
+    }
+
+    public static class IsFastClockRunningFunction implements Function {
+
+        private final Timebase _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+
+        @Override
+        public String getModule() {
+            return new ClockFunctions().getModule();
+        }
+
+        @Override
+        public String getConstantDescriptions() {
+            return new ClockFunctions().getConstantDescription();
+        }
+
+        @Override
+        public String getName() {
+            return "isFastClockRunning";
+        }
+
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+
+            boolean rate = _fastClock.getRun();
+
+            if (parameterList.isEmpty()) return rate;
+
+            throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+        }
+
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Clock.isFastClockRunning_Descr");
         }
 
     }
