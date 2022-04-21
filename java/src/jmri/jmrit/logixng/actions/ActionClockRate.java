@@ -16,14 +16,14 @@ import jmri.util.ThreadingUtil;
  * @author Dave Sand Copyright 2021
  * @author Daniel Bergqvist Copyright 2022
  */
-public class ActionClockSpeed extends AbstractDigitalAction {
+public class ActionClockRate extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<ClockState> _selectEnum =
             new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockSpeed);
     private final LogixNG_SelectDouble _selectSpeed = new LogixNG_SelectDouble(this, 3);
 
 
-    public ActionClockSpeed(String sys, String user)
+    public ActionClockRate(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -34,7 +34,7 @@ public class ActionClockSpeed extends AbstractDigitalAction {
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionClockSpeed copy = new ActionClockSpeed(sysName, userName);
+        ActionClockRate copy = new ActionClockRate(sysName, userName);
         copy.setComment(getComment());
         _selectEnum.copy(copy._selectEnum);
         _selectSpeed.copy(copy._selectSpeed);
@@ -117,7 +117,7 @@ public class ActionClockSpeed extends AbstractDigitalAction {
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionClockSpeed_Short");
+        return Bundle.getMessage(locale, "ActionClockRate_Short");
     }
 
     @Override
@@ -130,11 +130,11 @@ public class ActionClockSpeed extends AbstractDigitalAction {
         }
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
             if (_selectEnum.getEnum() == ClockState.SetClockSpeed) {
-                return Bundle.getMessage(locale, "ActionClockSpeed_LongTo", _selectEnum.getDescription(locale), value);
+                return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale), value);
             }
-            return Bundle.getMessage(locale, "ActionClockSpeed_LongWith", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClockRate_LongWith", _selectEnum.getDescription(locale), value);
         } else {
-            return Bundle.getMessage(locale, "ActionClockSpeed_LongTo", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale), value);
         }
     }
 
@@ -161,9 +161,9 @@ public class ActionClockSpeed extends AbstractDigitalAction {
 
 
     public enum ClockState {
-        SetClockSpeed(Bundle.getMessage("ActionClockSpeed_SetClockSpeed")),
-        IncreaseClockSpeed(Bundle.getMessage("ActionClockSpeed_IncreaseClockSpeed")),
-        DecreaseClockSpeed(Bundle.getMessage("ActionClockSpeed_DecreaseClockSpeed"));
+        SetClockSpeed(Bundle.getMessage("ActionClockRate_SetClockSpeed")),
+        IncreaseClockSpeed(Bundle.getMessage("ActionClockRate_IncreaseClockSpeed")),
+        DecreaseClockSpeed(Bundle.getMessage("ActionClockRate_DecreaseClockSpeed"));
 
         private final String _text;
 

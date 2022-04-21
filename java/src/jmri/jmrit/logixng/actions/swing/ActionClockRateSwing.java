@@ -8,8 +8,8 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionClockSpeed;
-import jmri.jmrit.logixng.actions.ActionClockSpeed.ClockState;
+import jmri.jmrit.logixng.actions.ActionClockRate;
+import jmri.jmrit.logixng.actions.ActionClockRate.ClockState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectDoubleSwing;
@@ -17,27 +17,27 @@ import static jmri.jmrit.simpleclock.SimpleTimebase.MAXIMUM_RATE;
 import static jmri.jmrit.simpleclock.SimpleTimebase.MINIMUM_RATE;
 
 /**
- * Configures an ActionClockSpeed object with a Swing JPanel.
+ * Configures an ActionClockRate object with a Swing JPanel.
  *
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
+public class ActionClockRateSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectEnumSwing<ClockState> _selectEnumSwing;
     private LogixNG_SelectDoubleSwing _selectSpeedSwing;
 
 
-    public ActionClockSpeedSwing() {
+    public ActionClockRateSwing() {
     }
 
-    public ActionClockSpeedSwing(JDialog dialog) {
+    public ActionClockRateSwing(JDialog dialog) {
         super.setJDialog(dialog);
     }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        ActionClockSpeed action = (ActionClockSpeed) object;
+        ActionClockRate action = (ActionClockRate) object;
 
         _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
         _selectSpeedSwing = new LogixNG_SelectDoubleSwing(
@@ -59,7 +59,7 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
             tabbedPaneClockState};
 
         List<JComponent> operationComponentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClockSpeed_OperationComponents"), operationComponents);
+                Bundle.getMessage("ActionClockRate_OperationComponents"), operationComponents);
 
         JPanel panelOperation = new JPanel();
         for (JComponent c : operationComponentList) panelOperation.add(c);
@@ -68,7 +68,7 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
             tabbedPaneSpeed};
 
         List<JComponent> timeComponentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClockSpeed_SpeedComponents"), timeComponents);
+                Bundle.getMessage("ActionClockRate_SpeedComponents"), timeComponents);
 
         JPanel panelTime = new JPanel();
         for (JComponent c : timeComponentList) panelTime.add(c);
@@ -85,7 +85,7 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        ActionClockSpeed action = new ActionClockSpeed("IQDA1", null);
+        ActionClockRate action = new ActionClockRate("IQDA1", null);
 
         _selectEnumSwing.validate(action.getSelectEnum(), errorMessages);
         _selectSpeedSwing.validate(action.getSelectSpeed(), errorMessages);
@@ -102,7 +102,7 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ActionClockSpeed action = new ActionClockSpeed(systemName, userName);
+        ActionClockRate action = new ActionClockRate(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -110,10 +110,10 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof ActionClockSpeed)) {
-            throw new IllegalArgumentException("object must be an ActionClockSpeed but is a: "+object.getClass().getName());
+        if (! (object instanceof ActionClockRate)) {
+            throw new IllegalArgumentException("object must be an ActionClockRate but is a: "+object.getClass().getName());
         }
-        ActionClockSpeed action = (ActionClockSpeed) object;
+        ActionClockRate action = (ActionClockRate) object;
 
         _selectEnumSwing.updateObject(action.getSelectEnum());
         _selectSpeedSwing.updateObject(action.getSelectSpeed());
@@ -122,7 +122,7 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("ActionClockSpeed_Short");
+        return Bundle.getMessage("ActionClockRate_Short");
     }
 
     @Override
@@ -158,18 +158,18 @@ public class ActionClockSpeedSwing extends AbstractDigitalActionSwing {
             try {
                 double value = Double.parseDouble(str);
                 if (value < MINIMUM_RATE || value > MAXIMUM_RATE) {
-                    return Bundle.getMessage("ActionClockSpeed_RangeError",
+                    return Bundle.getMessage("ActionClockRate_RangeError",
                             MINIMUM_RATE, MAXIMUM_RATE);
                 }
                 return null;
             } catch (NumberFormatException ex) {
-                return Bundle.getMessage("ActionClockSpeed_ParseError");
+                return Bundle.getMessage("ActionClockRate_ParseError");
             }
         }
 
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClockSpeedSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClockRateSwing.class);
 
 }

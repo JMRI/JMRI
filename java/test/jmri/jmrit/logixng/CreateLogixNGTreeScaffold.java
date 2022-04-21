@@ -433,15 +433,15 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        ActionClockSpeed actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        ActionClockRate actionClockSpeed = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionClockSpeed);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // StartClock
-        actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        actionClockSpeed = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         actionClockSpeed.setComment("StartClock");
-        actionClockSpeed.getSelectEnum().setEnum(ActionClockSpeed.ClockState.SetClockSpeed);
+        actionClockSpeed.getSelectEnum().setEnum(ActionClockRate.ClockState.SetClockSpeed);
         actionClockSpeed.getSelectSpeed().setValue(4.234);
 
         maleSocket = digitalActionManager.registerAction(actionClockSpeed);
@@ -449,9 +449,9 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // StopClock
-        actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        actionClockSpeed = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         actionClockSpeed.setComment("StopClock");
-        actionClockSpeed.getSelectEnum().setEnum(ActionClockSpeed.ClockState.IncreaseClockSpeed);
+        actionClockSpeed.getSelectEnum().setEnum(ActionClockRate.ClockState.IncreaseClockSpeed);
         actionClockSpeed.getSelectSpeed().setValue(0.5);
 
         maleSocket = digitalActionManager.registerAction(actionClockSpeed);
@@ -459,9 +459,9 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // SetClock
-        actionClockSpeed = new ActionClockSpeed(digitalActionManager.getAutoSystemName(), null);
+        actionClockSpeed = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         actionClockSpeed.setComment("SetClock");
-        actionClockSpeed.getSelectEnum().setEnum(ActionClockSpeed.ClockState.DecreaseClockSpeed);
+        actionClockSpeed.getSelectEnum().setEnum(ActionClockRate.ClockState.DecreaseClockSpeed);
         actionClockSpeed.getSelectSpeed().setValue(1.22);
 
         maleSocket = digitalActionManager.registerAction(actionClockSpeed);
