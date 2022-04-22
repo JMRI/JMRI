@@ -66,6 +66,7 @@
          <xs:element name="name" type="beanNameType" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -79,6 +80,7 @@
          <xs:element name="enum" type="xs:string" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -92,6 +94,7 @@
          <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -105,6 +108,7 @@
          <xs:element name="value" type="xs:int" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -118,6 +122,7 @@
          <xs:element name="value" type="xs:double" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>

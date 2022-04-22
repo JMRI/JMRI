@@ -37,6 +37,7 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
         if (memory != null) {
             enumElement.addContent(new Element("memory").addContent(memory.getName()));
         }
+        enumElement.addContent(new Element("listenToMemory").addContent(selectEnum.getListenToMemory() ? "yes" : "no"));
         enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
         enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
 
@@ -73,6 +74,11 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectEnum.setMemory(m);
                     else selectEnum.removeMemory();
+                }
+
+                Element listenToMemoryElem = enumElement.getChild("listenToMemory");
+                if (listenToMemoryElem != null) {
+                    selectEnum.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
                 }
 
                 elem = enumElement.getChild("localVariable");

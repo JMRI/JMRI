@@ -35,6 +35,7 @@ public class LogixNG_SelectStringXml {
         if (memory != null) {
             enumElement.addContent(new Element("memory").addContent(memory.getName()));
         }
+        enumElement.addContent(new Element("listenToMemory").addContent(selectStr.getListenToMemory() ? "yes" : "no"));
         enumElement.addContent(new Element("localVariable").addContent(selectStr.getLocalVariable()));
         enumElement.addContent(new Element("formula").addContent(selectStr.getFormula()));
 
@@ -45,42 +46,47 @@ public class LogixNG_SelectStringXml {
         return enumElement;
     }
 
-    public void load(Element enumElement, LogixNG_SelectString selectStr)
+    public void load(Element strElement, LogixNG_SelectString selectStr)
             throws JmriConfigureXmlException {
 
-        if (enumElement != null) {
+        if (strElement != null) {
 
             LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
             try {
-                Element elem = enumElement.getChild("addressing");
+                Element elem = strElement.getChild("addressing");
                 if (elem != null) {
                     selectStr.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
                 }
 
-                elem = enumElement.getChild("value");
+                elem = strElement.getChild("value");
                 if (elem != null) {
                     selectStr.setValue(elem.getTextTrim());
                 }
 
-                elem = enumElement.getChild("reference");
+                elem = strElement.getChild("reference");
                 if (elem != null) selectStr.setReference(elem.getTextTrim());
 
-                Element memoryName = enumElement.getChild("memory");
+                Element memoryName = strElement.getChild("memory");
                 if (memoryName != null) {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectStr.setMemory(m);
                     else selectStr.removeMemory();
                 }
 
-                elem = enumElement.getChild("localVariable");
+                Element listenToMemoryElem = strElement.getChild("listenToMemory");
+                if (listenToMemoryElem != null) {
+                    selectStr.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
+                }
+
+                elem = strElement.getChild("localVariable");
                 if (elem != null) selectStr.setLocalVariable(elem.getTextTrim());
 
-                elem = enumElement.getChild("formula");
+                elem = strElement.getChild("formula");
                 if (elem != null) selectStr.setFormula(elem.getTextTrim());
 
-                if (enumElement.getChild("table") != null) {
-                    selectTableXml.load(enumElement.getChild("table"), selectStr.getSelectTable());
+                if (strElement.getChild("table") != null) {
+                    selectTableXml.load(strElement.getChild("table"), selectStr.getSelectTable());
                 }
 
             } catch (ParserException e) {
