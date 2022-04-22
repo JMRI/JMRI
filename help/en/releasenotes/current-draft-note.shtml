@@ -609,6 +609,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Update commons-io library to version 2.11.0 from 2.6. JMRI uses this for file selectors.</li>
             <li>Updated jsoup library to 1.14.3 from 1.13.1. JMRI uses this when rebuilding help metadata.</li>
         </ul>
 
