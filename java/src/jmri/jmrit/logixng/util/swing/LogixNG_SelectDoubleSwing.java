@@ -114,6 +114,7 @@ public class LogixNG_SelectDoubleSwing {
             }
             _valueTextField.setText(_formatterParserValidator.format(selectDouble.getValue()));
             _referenceTextField.setText(selectDouble.getReference());
+            _memoryPanel.setDefaultNamedBean(selectDouble.getMemory());
             _listenToMemoryCheckBox.setSelected(selectDouble.getListenToMemory());
             _localVariableTextField.setText(selectDouble.getLocalVariable());
             _formulaTextField.setText(selectDouble.getFormula());

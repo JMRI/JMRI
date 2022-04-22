@@ -111,6 +111,7 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                 _namedBeanPanel.setDefaultNamedBean(selectNamedBean.getNamedBean().getBean());
             }
             _referenceTextField.setText(selectNamedBean.getReference());
+            _memoryPanel.setDefaultNamedBean(selectNamedBean.getMemory());
             _listenToMemoryCheckBox.setSelected(selectNamedBean.getListenToMemory());
             _localVariableTextField.setText(selectNamedBean.getLocalVariable());
             _formulaTextField.setText(selectNamedBean.getFormula());

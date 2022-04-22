@@ -115,6 +115,7 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
                 _enumComboBox.setSelectedItem(selectEnum.getEnum());
             }
             _referenceTextField.setText(selectEnum.getReference());
+            _memoryPanel.setDefaultNamedBean(selectEnum.getMemory());
             _listenToMemoryCheckBox.setSelected(selectEnum.getListenToMemory());
             _localVariableTextField.setText(selectEnum.getLocalVariable());
             _formulaTextField.setText(selectEnum.getFormula());

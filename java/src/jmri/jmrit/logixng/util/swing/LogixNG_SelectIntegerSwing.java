@@ -114,6 +114,7 @@ public class LogixNG_SelectIntegerSwing {
             }
             _valueTextField.setText(_formatterParserValidator.format(selectInteger.getValue()));
             _referenceTextField.setText(selectInteger.getReference());
+            _memoryPanel.setDefaultNamedBean(selectInteger.getMemory());
             _listenToMemoryCheckBox.setSelected(selectInteger.getListenToMemory());
             _localVariableTextField.setText(selectInteger.getLocalVariable());
             _formulaTextField.setText(selectInteger.getFormula());
