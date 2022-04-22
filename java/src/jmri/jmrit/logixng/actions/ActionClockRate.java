@@ -83,7 +83,7 @@ public class ActionClockRate extends AbstractDigitalAction
             switch(theState) {
                 case SetClockSpeed:
                     try {
-                        timebase.setRate(theValue);
+                        timebase.userSetRate(theValue);
                     } catch (TimebaseRateException e) {
                         // Do nothing. This error is already logged as an error
                     }
