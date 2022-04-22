@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.util;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.HashMap;
@@ -30,29 +31,35 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     private final Class<E> _class;
     private final Manager<E> _manager;
     private final LogixNG_SelectTable _selectTable;
+    private final PropertyChangeListener _listener;
+    private boolean _listenToMemory;
+    private boolean _listenersAreRegistered;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<E> _handle;
     private String _reference = "";
+    private NamedBeanHandle<Memory> _memoryHandle;
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager) {
+    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, PropertyChangeListener listener) {
         _base = base;
         _inUse = () -> true;
         _class = clazz;
         _manager = manager;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
+        _listener = listener;
     }
 
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, InUse inUse) {
+    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, InUse inUse, PropertyChangeListener listener) {
         _base = base;
         _inUse = inUse;
         _class = clazz;
         _manager = manager;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
+        _listener = listener;
     }
 
 
@@ -61,6 +68,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         if (_handle != null) copy.setNamedBean(_handle);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
+        copy.setMemory(_memoryHandle);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
     }
@@ -124,6 +132,46 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _reference;
     }
 
+    public void setMemory(@Nonnull String memoryName) {
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setMemory(memory);
+        } else {
+            removeMemory();
+            log.warn("memory \"{}\" is not found", memoryName);
+        }
+    }
+
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        _memoryHandle = handle;
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+        addRemoveVetoListener();
+    }
+
+    public void setMemory(@Nonnull Memory memory) {
+        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+
+    public void removeMemory() {
+        if (_memoryHandle != null) {
+            _memoryHandle = null;
+            addRemoveVetoListener();
+        }
+    }
+
+    public NamedBeanHandle<Memory> getMemory() {
+        return _memoryHandle;
+    }
+
+    public void setListenToMemory(boolean listenToMemory) {
+        _listenToMemory = listenToMemory;
+    }
+
+    public boolean getListenToMemory() {
+        return _listenToMemory;
+    }
+
     public void setLocalVariable(@Nonnull String localVariable) {
         _localVariable = localVariable;
     }
@@ -156,6 +204,14 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _selectTable;
     }
 
+    private void addRemoveVetoListener() {
+        if (_memoryHandle != null) {
+            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
+        } else {
+            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
+        }
+    }
+
     public E evaluateNamedBean(ConditionalNG conditionalNG) throws JmriException {
 
         if (_addressing == NamedBeanAddressing.Direct) {
@@ -173,6 +229,11 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                     SymbolTable symbolNamedBean = conditionalNG.getSymbolTable();
                     name = TypeConversionUtil
                             .convertToString(symbolNamedBean.getValue(_localVariable), false);
+                    break;
+
+                case Memory:
+                    name = TypeConversionUtil
+                            .convertToString(_memoryHandle.getBean().getValue(), false);
                     break;
 
                 case Formula:
@@ -202,6 +263,14 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
     public String getDescription(Locale locale) {
         String namedBean;
+
+        String memoryName;
+        if (_memoryHandle != null) {
+            memoryName = _memoryHandle.getName();
+        } else {
+            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
         switch (_addressing) {
             case Direct:
                 String namedBeanName;
@@ -215,6 +284,10 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
             case Reference:
                 namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
+
+            case Memory:
+                namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -240,18 +313,57 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return namedBean;
     }
 
+    /**
+     * Register listeners if this object needs that.
+     */
+    public void registerListeners() {
+        if (!_listenersAreRegistered
+                && (_addressing == NamedBeanAddressing.Memory)
+                && (_memoryHandle != null)) {
+            _memoryHandle.getBean().addPropertyChangeListener("value", _listener);
+            _listenersAreRegistered = true;
+        }
+    }
+
+    /**
+     * Unregister listeners if this object needs that.
+     */
+    public void unregisterListeners() {
+        if (_listenersAreRegistered
+                && (_addressing == NamedBeanAddressing.Memory)
+                && (_memoryHandle != null)) {
+            _memoryHandle.getBean().removePropertyChangeListener("value", _listener);
+            _listenersAreRegistered = false;
+        }
+    }
+
     @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
             if (_inUse.isInUse() && (_class.isAssignableFrom(evt.getOldValue().getClass()))) {
                 if (evt.getOldValue().equals(getNamedBean().getBean())) {
                     throw new PropertyVetoException(_base.getDisplayName(), evt);
+                }
+            }
+            if (evt.getOldValue() instanceof Memory) {
+                boolean doVeto = false;
+                if ((_addressing == NamedBeanAddressing.Memory) && (_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if (doVeto) {
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("MemoryInUseMemoryExpressionVeto", _base.getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (_class.isAssignableFrom(evt.getOldValue().getClass())) {
                 if (evt.getOldValue().equals(getNamedBean().getBean())) {
                     removeNamedBean();
+                }
+            }
+            if (evt.getOldValue() instanceof Memory) {
+                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    removeMemory();
                 }
             }
         }

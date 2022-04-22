@@ -35,6 +35,10 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
             namedBeanElement.addContent(new Element("name").addContent(table.getName()));
         }
         namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
+        var memory = selectNamedBean.getMemory();
+        if (memory != null) {
+            namedBeanElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
         namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
         namedBeanElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
 
@@ -66,6 +70,13 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
                 elem = namedBeanElement.getChild("reference");
                 if (elem != null) selectNamedBean.setReference(elem.getTextTrim());
+
+                Element memoryName = namedBeanElement.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectNamedBean.setMemory(m);
+                    else selectNamedBean.removeMemory();
+                }
 
                 elem = namedBeanElement.getChild("localVariable");
                 if (elem != null) selectNamedBean.setLocalVariable(elem.getTextTrim());

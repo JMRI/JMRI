@@ -31,6 +31,7 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
     private final PropertyChangeListener _listener;
     private boolean _listenToMemory;
     private boolean _listenersAreRegistered;
+    private final FormatterParserValidator _formatterParserValidator;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private double _value;
@@ -41,14 +42,30 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectDouble(AbstractBase base, int numDecimals, PropertyChangeListener listener) {
+    public LogixNG_SelectDouble(
+            @Nonnull AbstractBase base,
+            int numDecimals,
+            @Nonnull PropertyChangeListener listener) {
         _base = base;
         _inUse = () -> true;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
         _numDecimals = numDecimals;
         _listener = listener;
+        _formatterParserValidator = new DefaultFormatterParserValidator();
     }
 
+    public LogixNG_SelectDouble(
+            @Nonnull AbstractBase base,
+            int numDecimals,
+            @Nonnull PropertyChangeListener listener,
+            @Nonnull FormatterParserValidator formatterParserValidator) {
+        _base = base;
+        _inUse = () -> true;
+        _selectTable = new LogixNG_SelectTable(_base, _inUse);
+        _numDecimals = numDecimals;
+        _listener = listener;
+        _formatterParserValidator = formatterParserValidator;
+    }
 
     public void copy(LogixNG_SelectDouble copy) throws ParserException {
         copy.setAddressing(_addressing);
@@ -58,6 +75,11 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
         copy.setReference(_reference);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
+    }
+
+    @Nonnull
+    public FormatterParserValidator getFormatterParserValidator() {
+        return _formatterParserValidator;
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
@@ -206,6 +228,10 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
                     throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
             }
 
+            if (val instanceof String) {
+                return _formatterParserValidator.parse(val.toString());
+            }
+
             return TypeConversionUtil.convertToDouble(val, false);
         }
     }
@@ -238,12 +264,12 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
                 enumName = Bundle.getMessage(locale, "AddressByReference", _reference);
                 break;
 
-            case LocalVariable:
-                enumName = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
             case Memory:
                 enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                break;
+
+            case LocalVariable:
+                enumName = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
 
             case Formula:
@@ -291,7 +317,7 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+        if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 boolean doVeto = false;
                 if ((_addressing == NamedBeanAddressing.Memory) && (_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
@@ -309,6 +335,74 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
                 }
             }
         }
+    }
+
+
+    /**
+     * Format, parse and validate.
+     */
+    public interface FormatterParserValidator {
+
+        /**
+         * Get the initial value
+         * @return the initial value
+         */
+        public double getInitialValue();
+
+        /**
+         * Format the value
+         * @param value the value
+         * @return the formatted string
+         */
+        public String format(double value);
+
+        /**
+         * Parse the string
+         * @param str the string
+         * @return the parsed value
+         */
+        public double parse(String str);
+
+        /**
+         * Validates the string
+         * @param str the string
+         * @return null if valid. An error message if not valid
+         */
+        public String validate(String str);
+    }
+
+
+    public static class DefaultFormatterParserValidator
+            implements FormatterParserValidator {
+
+        @Override
+        public double getInitialValue() {
+            return 0;
+        }
+
+        @Override
+        public String format(double value) {
+            return Double.toString(value);
+        }
+
+        @Override
+        public double parse(String str) {
+            try {
+                return Double.parseDouble(str);
+            } catch (NumberFormatException e) {
+                return getInitialValue();
+            }
+        }
+
+        @Override
+        public String validate(String str) {
+            try {
+                return null;
+            } catch (NumberFormatException e) {
+                return Bundle.getMessage("LogixNG_SelectDouble_MustBeValidInteger");
+            }
+        }
+
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectDouble.class);

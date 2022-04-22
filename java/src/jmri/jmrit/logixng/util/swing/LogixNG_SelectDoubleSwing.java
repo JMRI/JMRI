@@ -10,6 +10,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectDouble;
+import jmri.jmrit.logixng.util.NullBase;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 
@@ -22,7 +23,6 @@ public class LogixNG_SelectDoubleSwing {
 
     private final JDialog _dialog;
     private final LogixNG_SelectTableSwing _selectTableSwing;
-    private final FormatterParserValidator _formatterParserValidator;
 
     private JTabbedPane _tabbedPane;
     private JTextField _valueTextField;
@@ -44,19 +44,17 @@ public class LogixNG_SelectDoubleSwing {
             @Nonnull SwingConfiguratorInterface swi) {
         _dialog = dialog;
         _selectTableSwing = new LogixNG_SelectTableSwing(_dialog, swi);
-        _formatterParserValidator = new DefaultFormatterParserValidator();
     }
 
-    public LogixNG_SelectDoubleSwing(
-            @Nonnull JDialog dialog,
-            @Nonnull SwingConfiguratorInterface swi,
-            @Nonnull FormatterParserValidator formatterParserValidator) {
-        _dialog = dialog;
-        _selectTableSwing = new LogixNG_SelectTableSwing(_dialog, swi);
-        _formatterParserValidator = formatterParserValidator;
-    }
+    public JPanel createPanel(@CheckForNull LogixNG_SelectDouble selectDouble) {
 
-    public JPanel createPanel(@CheckForNull LogixNG_SelectDouble selectStr) {
+        LogixNG_SelectDouble.FormatterParserValidator _formatterParserValidator;
+        if (selectDouble != null) {
+            _formatterParserValidator = selectDouble.getFormatterParserValidator();
+        } else {
+            _formatterParserValidator = new LogixNG_SelectDouble(new NullBase(), 0, (evt)->{})
+                    .getFormatterParserValidator();
+        }
 
         JPanel panel = new JPanel();
 
@@ -66,8 +64,8 @@ public class LogixNG_SelectDoubleSwing {
         _panelMemory = new JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
-        if (selectStr != null) {
-            _panelTable = _selectTableSwing.createPanel(selectStr.getSelectTable());
+        if (selectDouble != null) {
+            _panelTable = _selectTableSwing.createPanel(selectDouble.getSelectTable());
         } else {
             _panelTable = _selectTableSwing.createPanel(null);
         }
@@ -104,21 +102,21 @@ public class LogixNG_SelectDoubleSwing {
         _panelFormula.add(_formulaTextField);
 
 
-        if (selectStr != null) {
-            switch (selectStr.getAddressing()) {
+        if (selectDouble != null) {
+            switch (selectDouble.getAddressing()) {
                 case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
                 case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
                 case Memory: _tabbedPane.setSelectedComponent(_panelMemory); break;
                 case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
                 case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + selectStr.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + selectDouble.getAddressing().name());
             }
-            _valueTextField.setText(_formatterParserValidator.format(selectStr.getValue()));
-            _referenceTextField.setText(selectStr.getReference());
-            _listenToMemoryCheckBox.setSelected(selectStr.getListenToMemory());
-            _localVariableTextField.setText(selectStr.getLocalVariable());
-            _formulaTextField.setText(selectStr.getFormula());
+            _valueTextField.setText(_formatterParserValidator.format(selectDouble.getValue()));
+            _referenceTextField.setText(selectDouble.getReference());
+            _listenToMemoryCheckBox.setSelected(selectDouble.getListenToMemory());
+            _localVariableTextField.setText(selectDouble.getLocalVariable());
+            _formulaTextField.setText(selectDouble.getFormula());
         } else {
             _valueTextField.setText(_formatterParserValidator.format(
                     _formatterParserValidator.getInitialValue()));
@@ -129,17 +127,18 @@ public class LogixNG_SelectDoubleSwing {
     }
 
     public boolean validate(
-            @Nonnull LogixNG_SelectDouble selectStr,
+            @Nonnull LogixNG_SelectDouble selectDouble,
             @Nonnull List<String> errorMessages) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-            String result = _formatterParserValidator.validate(_valueTextField.getText());
+            String result = selectDouble.getFormatterParserValidator()
+                    .validate(_valueTextField.getText());
             if (result != null) errorMessages.add(result);
         }
 
         try {
             if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectStr.setReference(_referenceTextField.getText());
+                selectDouble.setReference(_referenceTextField.getText());
             }
         } catch (IllegalArgumentException e) {
             errorMessages.add(e.getMessage());
@@ -147,19 +146,19 @@ public class LogixNG_SelectDoubleSwing {
         }
 
         try {
-            selectStr.setFormula(_formulaTextField.getText());
+            selectDouble.setFormula(_formulaTextField.getText());
             if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectStr.setAddressing(NamedBeanAddressing.Direct);
+                selectDouble.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectStr.setAddressing(NamedBeanAddressing.Reference);
+                selectDouble.setAddressing(NamedBeanAddressing.Reference);
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
-                selectStr.setAddressing(NamedBeanAddressing.Memory);
+                selectDouble.setAddressing(NamedBeanAddressing.Memory);
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectStr.setAddressing(NamedBeanAddressing.LocalVariable);
+                selectDouble.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectStr.setAddressing(NamedBeanAddressing.Formula);
+                selectDouble.setAddressing(NamedBeanAddressing.Formula);
             } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
-                selectStr.setAddressing(NamedBeanAddressing.Table);
+                selectDouble.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
@@ -168,35 +167,36 @@ public class LogixNG_SelectDoubleSwing {
             return false;
         }
 
-        _selectTableSwing.validate(selectStr.getSelectTable(), errorMessages);
+        _selectTableSwing.validate(selectDouble.getSelectTable(), errorMessages);
 
         return errorMessages.isEmpty();
     }
 
-    public void updateObject(@Nonnull LogixNG_SelectDouble selectStr) {
+    public void updateObject(@Nonnull LogixNG_SelectDouble selectDouble) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-            selectStr.setValue(_formatterParserValidator.parse(_valueTextField.getText()));
+            selectDouble.setValue(selectDouble.getFormatterParserValidator()
+                    .parse(_valueTextField.getText()));
         }
 
         try {
             if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectStr.setAddressing(NamedBeanAddressing.Direct);
+                selectDouble.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectStr.setAddressing(NamedBeanAddressing.Reference);
-                selectStr.setReference(_referenceTextField.getText());
+                selectDouble.setAddressing(NamedBeanAddressing.Reference);
+                selectDouble.setReference(_referenceTextField.getText());
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
-                selectStr.setAddressing(NamedBeanAddressing.Memory);
-                selectStr.setMemory(_memoryPanel.getNamedBean());
-                selectStr.setListenToMemory(_listenToMemoryCheckBox.isSelected());
+                selectDouble.setAddressing(NamedBeanAddressing.Memory);
+                selectDouble.setMemory(_memoryPanel.getNamedBean());
+                selectDouble.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectStr.setAddressing(NamedBeanAddressing.LocalVariable);
-                selectStr.setLocalVariable(_localVariableTextField.getText());
+                selectDouble.setAddressing(NamedBeanAddressing.LocalVariable);
+                selectDouble.setLocalVariable(_localVariableTextField.getText());
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectStr.setAddressing(NamedBeanAddressing.Formula);
-                selectStr.setFormula(_formulaTextField.getText());
+                selectDouble.setAddressing(NamedBeanAddressing.Formula);
+                selectDouble.setFormula(_formulaTextField.getText());
             } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
-                selectStr.setAddressing(NamedBeanAddressing.Table);
+                selectDouble.setAddressing(NamedBeanAddressing.Table);
             } else {
                 throw new IllegalArgumentException("_tabbedPaneEnum has unknown selection");
             }
@@ -204,79 +204,11 @@ public class LogixNG_SelectDoubleSwing {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
 
-        _selectTableSwing.updateObject(selectStr.getSelectTable());
+        _selectTableSwing.updateObject(selectDouble.getSelectTable());
     }
 
     public void dispose() {
         _selectTableSwing.dispose();
-    }
-
-
-    /**
-     * Format, parse and validate.
-     */
-    public interface FormatterParserValidator {
-
-        /**
-         * Get the initial value
-         * @return the initial value
-         */
-        public double getInitialValue();
-
-        /**
-         * Format the value
-         * @param value the value
-         * @return the formatted string
-         */
-        public String format(double value);
-
-        /**
-         * Parse the string
-         * @param str the string
-         * @return the parsed value
-         */
-        public double parse(String str);
-
-        /**
-         * Validates the string
-         * @param str the string
-         * @return null if valid. An error message if not valid
-         */
-        public String validate(String str);
-    }
-
-
-    public static class DefaultFormatterParserValidator
-            implements FormatterParserValidator {
-
-        @Override
-        public double getInitialValue() {
-            return 0;
-        }
-
-        @Override
-        public String format(double value) {
-            return Double.toString(value);
-        }
-
-        @Override
-        public double parse(String str) {
-            try {
-                return Double.parseDouble(str);
-            } catch (NumberFormatException e) {
-                return getInitialValue();
-            }
-        }
-
-        @Override
-        public String validate(String str) {
-            try {
-                return null;
-            } catch (NumberFormatException e) {
-                return Bundle.getMessage("LogixNG_SelectDoubleSwing_MustBeValidInteger");
-            }
-        }
-
     }
 
 }

@@ -42,8 +42,7 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
         ActionClock action = (ActionClock) object;
 
         _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
-        _selectTimeSwing = new LogixNG_SelectIntegerSwing(
-                getJDialog(), this, new TimeFormatterParserValidator());
+        _selectTimeSwing = new LogixNG_SelectIntegerSwing(getJDialog(), this);
 
         panel = new JPanel();
         JPanel tabbedPaneClockState;
@@ -131,76 +130,6 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
     public void dispose() {
         _selectEnumSwing.dispose();
         _selectTimeSwing.dispose();
-    }
-
-
-    private static class TimeFormatterParserValidator
-            implements LogixNG_SelectIntegerSwing.FormatterParserValidator {
-
-        @Override
-        public int getInitialValue() {
-            return 0;
-        }
-
-        @Override
-        public String format(int value) {
-            return ActionClock.formatTime(value);
-        }
-
-        @Override
-        public int parse(String str) {
-            int minutes;
-
-            try {
-                minutes = Integer.parseInt(str);
-                if (minutes < 0 || minutes > 1439) {
-                    return 0;
-                }
-                return minutes;
-            } catch (NumberFormatException e) {
-                // Do nothing
-            }
-
-            LocalTime newHHMM;
-            try {
-                newHHMM = LocalTime.parse(str.trim(), DateTimeFormatter.ofPattern("H:mm"));
-                minutes = newHHMM.getHour() * 60 + newHHMM.getMinute();
-                if (minutes < 0 || minutes > 1439) {
-                    return 0;
-                }
-                return minutes;
-            } catch (DateTimeParseException ex) {
-                return 0;
-            }
-        }
-
-        @Override
-        public String validate(String str) {
-            int minutes;
-
-            try {
-                minutes = Integer.parseInt(str);
-                if (minutes < 0 || minutes > 1439) {
-                    return Bundle.getMessage("ActionClock_RangeError");
-                }
-                return null;
-            } catch (NumberFormatException e) {
-                // Do nothing
-            }
-
-            LocalTime newHHMM;
-            try {
-                newHHMM = LocalTime.parse(str.trim(), DateTimeFormatter.ofPattern("H:mm"));
-                minutes = newHHMM.getHour() * 60 + newHHMM.getMinute();
-                if (minutes < 0 || minutes > 1439) {
-                    return Bundle.getMessage("ActionClock_RangeError");
-                }
-            } catch (DateTimeParseException ex) {
-                return Bundle.getMessage("ActionClock_ParseError", ex.getParsedString());
-            }
-            return null;
-        }
-
     }
 
 

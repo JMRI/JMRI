@@ -9,6 +9,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectDouble;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import static jmri.jmrit.simpleclock.SimpleTimebase.MAXIMUM_RATE;
+import static jmri.jmrit.simpleclock.SimpleTimebase.MINIMUM_RATE;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -22,8 +24,9 @@ public class ActionClockRate extends AbstractDigitalAction
         implements PropertyChangeListener {
 
     private final LogixNG_SelectEnum<ClockState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockSpeed);
-    private final LogixNG_SelectDouble _selectSpeed = new LogixNG_SelectDouble(this, 3, this);
+            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockSpeed, this);
+    private final LogixNG_SelectDouble _selectSpeed =
+            new LogixNG_SelectDouble(this, 3, this, new DefaultFormatterParserValidator());
 
 
     public ActionClockRate(String sys, String user)
@@ -185,6 +188,44 @@ public class ActionClockRate extends AbstractDigitalAction
         @Override
         public String toString() {
             return _text;
+        }
+
+    }
+
+
+    private static class DefaultFormatterParserValidator
+            extends LogixNG_SelectDouble.DefaultFormatterParserValidator {
+
+        @Override
+        public double getInitialValue() {
+            return 1.0;
+        }
+
+        @Override
+        public double parse(String str) {
+            try {
+                double value = Double.parseDouble(str);
+                if (value < MINIMUM_RATE || value > MAXIMUM_RATE) {
+                    return MINIMUM_RATE;
+                }
+                return value;
+            } catch (NumberFormatException ex) {
+                return MINIMUM_RATE;
+            }
+        }
+
+        @Override
+        public String validate(String str) {
+            try {
+                double value = Double.parseDouble(str);
+                if (value < MINIMUM_RATE || value > MAXIMUM_RATE) {
+                    return Bundle.getMessage("ActionClockRate_RangeError",
+                            MINIMUM_RATE, MAXIMUM_RATE);
+                }
+                return null;
+            } catch (NumberFormatException ex) {
+                return Bundle.getMessage("ActionClockRate_ParseError");
+            }
         }
 
     }

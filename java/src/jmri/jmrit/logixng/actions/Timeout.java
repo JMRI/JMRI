@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -15,12 +17,12 @@ import jmri.util.TimerUtil;
  * @author Daniel Bergqvist Copyright 2021
  */
 public class Timeout extends AbstractDigitalAction
-        implements FemaleSocketListener {
+        implements FemaleSocketListener, PropertyChangeListener {
 
     private ProtectedTimerTask _timerTask;
-    private final LogixNG_SelectInteger _selectDelay = new LogixNG_SelectInteger(this);
+    private final LogixNG_SelectInteger _selectDelay = new LogixNG_SelectInteger(this, this);
     private final LogixNG_SelectEnum<TimerUnit> _selectTimerUnit =
-            new LogixNG_SelectEnum<>(this, TimerUnit.values(), TimerUnit.MilliSeconds);
+            new LogixNG_SelectEnum<>(this, TimerUnit.values(), TimerUnit.MilliSeconds, this);
     private String _expressionSocketSystemName;
     private String _actionSocketSystemName;
     private final FemaleDigitalExpressionSocket _expressionSocket;
@@ -276,11 +278,21 @@ public class Timeout extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectDelay.registerListeners();
+        _selectTimerUnit.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectDelay.unregisterListeners();
+        _selectTimerUnit.unregisterListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
@@ -323,7 +335,6 @@ public class Timeout extends AbstractDigitalAction
         }
 
     }
-
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Timeout.class);
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.configurexml;
 
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
@@ -32,6 +33,10 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
         enumElement.addContent(new Element("addressing").addContent(selectEnum.getAddressing().name()));
         enumElement.addContent(new Element("enum").addContent(selectEnum.getEnum().name()));
         enumElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
+        var memory = selectEnum.getMemory();
+        if (memory != null) {
+            enumElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
         enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
         enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
 
@@ -62,6 +67,13 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
 
                 elem = enumElement.getChild("reference");
                 if (elem != null) selectEnum.setReference(elem.getTextTrim());
+
+                Element memoryName = enumElement.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectEnum.setMemory(m);
+                    else selectEnum.removeMemory();
+                }
 
                 elem = enumElement.getChild("localVariable");
                 if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());

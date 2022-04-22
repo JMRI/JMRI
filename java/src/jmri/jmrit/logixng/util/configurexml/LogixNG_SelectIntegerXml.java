@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.configurexml;
 
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
@@ -30,6 +31,10 @@ public class LogixNG_SelectIntegerXml {
         enumElement.addContent(new Element("addressing").addContent(selectInt.getAddressing().name()));
         enumElement.addContent(new Element("value").addContent(Integer.toString(selectInt.getValue())));
         enumElement.addContent(new Element("reference").addContent(selectInt.getReference()));
+        var memory = selectInt.getMemory();
+        if (memory != null) {
+            enumElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
         enumElement.addContent(new Element("localVariable").addContent(selectInt.getLocalVariable()));
         enumElement.addContent(new Element("formula").addContent(selectInt.getFormula()));
 
@@ -60,6 +65,13 @@ public class LogixNG_SelectIntegerXml {
 
                 elem = enumElement.getChild("reference");
                 if (elem != null) selectInt.setReference(elem.getTextTrim());
+
+                Element memoryName = enumElement.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectInt.setMemory(m);
+                    else selectInt.removeMemory();
+                }
 
                 elem = enumElement.getChild("localVariable");
                 if (elem != null) selectInt.setLocalVariable(elem.getTextTrim());
