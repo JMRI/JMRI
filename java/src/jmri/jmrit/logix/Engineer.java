@@ -418,16 +418,17 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             _ramp.quit(false);
         }
         long time = 0;
-        int pause = 2 *_speedUtil.getRampTimeIncrement() + 20;
+        int pause = 2 *_speedUtil.getRampTimeIncrement();
         do {
             // may need a bit of time for quit() or start() to get ready
             try {
-                wait(20);
-                time += 20;
+                wait(40);
+                time += 40;
+                _ramp.quit(false);
             }
             catch (InterruptedException ie) { // ignore
             }
-        } while (time < pause && _isRamping);
+        } while (time <= pause && _isRamping);
 
         if (!_isRamping) {
             if (_warrant._trace || log.isDebugEnabled()) {
@@ -443,7 +444,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
         } else {
             log.error("Can't launch ramp for speed {}! _ramp Thread.State= {}. Waited {}ms",
-                    endSpeedType, _ramp.getState(), time-20);
+                    endSpeedType, _ramp.getState(), time);
             _warrant.debugInfo();
         }
     }
@@ -547,14 +548,14 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (log.isDebugEnabled())  {
             log.debug("{}: setSpeedToType({}) speed={} scriptSpeed={}", _warrant.getDisplayName(), speedType, speed, _normalSpeed);
         }
-        if (speed <= 0.0f || speedType.equals(getSpeedType(true))) {
-            return;
+        if (speedType.equals(Warrant.Stop)) {
+            setStop(false);
+            advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
         } else if (speedType.equals(Warrant.EStop)) {
             setStop(true);
             advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
-        } else if (speedType.equals(Warrant.Stop)) {
-            setStop(false);
-            advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
+        } else if (speedType.equals(getSpeedType(true))) {
+            return;
         } else {
             _speedType = speedType;     // set speedType regardless
             setSpeedRatio(speedType);
@@ -574,9 +575,8 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (!halt) {    // resume normal running
             _halt = false;
             if (!_atClear) {
-                if (log.isDebugEnabled())
-                    log.debug("setHalt calls notify()");
-                notifyAll();   // free wait at _atHalt or _atClear
+                log.debug("setHalt calls notify()");
+                notifyAll();   // free wait at _atHalt
             }
         } else {
             _halt = true;
@@ -1101,15 +1101,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
          @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called by another thread to clear all ramp waits")
          void quit(boolean die) {
              stop = true;
+             synchronized (this) {
+                 notifyAll();    // free waits at the ramping time intervals
+             }
              if (die) { // once set to true, do not allow resetting to false
                  _die = die;    // permanent shutdown, warrant running ending
+                 synchronized (_rampLockObject) {
+                     _rampLockObject.notifyAll(); // free wait at ramp run
+                 }
              }
-             synchronized (this) {
-                 notifyAll();    // free waits at ramping time intervals
-             }
-             synchronized (_rampLockObject) {
-                 _rampLockObject.notifyAll(); // free wait at ramp run
-            }
              log.debug("{}: ThrottleRamp clears _ramp waits", _warrant.getDisplayName());
          }
 
@@ -1299,8 +1299,12 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                                     } else {
                                         executeComand(_currentCommand, timeIncrement);
                                     }
-                                    _currentCommand = _commands.get(++_idxCurrentCommand);
-                                    cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    if (_idxCurrentCommand < _commands.size() - 1) {
+                                        _currentCommand = _commands.get(++_idxCurrentCommand);
+                                        cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    } else {
+                                        cmdDist = 0;
+                                    }
                                     rampDist = 0;
                                     advanceToCommandIndex(_idxCurrentCommand); // skip up to this command
                                 }   // else Do not advance script commands of block ahead of train position
@@ -1335,11 +1339,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                             setSpeed(speed);
 
                             if (_endBlockIdx >= 0) {    // correction code for ramps that are too long or too short
-                                if ( _warrant.getCurrentOrderIndex() > _endBlockIdx) {
+                                int curIdx = _warrant.getCurrentOrderIndex();
+                                if (curIdx > _endBlockIdx) {
                                     // loco overran end block.  Set end speed and leave ramp
                                     setSpeed(endSpeed);
                                     stop = true;
-                                } else if ( _warrant.getCurrentOrderIndex() < _endBlockIdx &&
+                                    log.warn("\"{}\" Ramp to speed \"{}\" ended due to overrun into block \"{}\". throttle {} set to {}.\"{}\"",
+                                            _warrant.getTrainName(), _endSpeedType, _warrant.getBlockAt(curIdx).getDisplayName(), 
+                                            speed, endSpeed, _warrant.getDisplayName());
+                                } else if ( curIdx < _endBlockIdx &&
                                         _endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
                                     // At last speed change to set throttle was endSpeed, but train has not
                                     // reached the last block. Let loco creep to end block at current setting.
@@ -1392,8 +1400,12 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                                     } else {
                                         executeComand(_currentCommand, timeIncrement);
                                     }
-                                    _currentCommand = _commands.get(++_idxCurrentCommand);
-                                    cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    if (_idxCurrentCommand < _commands.size() - 1) {
+                                        _currentCommand = _commands.get(++_idxCurrentCommand);
+                                        cmdDist = scriptTrackSpeed * _currentCommand.getTime();
+                                    } else {
+                                        cmdDist = 0;
+                                    }
                                     rampDist = 0;
                                     advanceToCommandIndex(_idxCurrentCommand); // skip up to this command
                                 }   // else Do not advance script commands of block ahead of train position
