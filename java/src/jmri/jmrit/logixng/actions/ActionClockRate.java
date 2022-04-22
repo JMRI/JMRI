@@ -224,7 +224,7 @@ public class ActionClockRate extends AbstractDigitalAction
                 }
                 return null;
             } catch (NumberFormatException ex) {
-                return Bundle.getMessage("ActionClockRate_ParseError");
+                return Bundle.getMessage("ActionClockRate_ParseError", str);
             }
         }
 

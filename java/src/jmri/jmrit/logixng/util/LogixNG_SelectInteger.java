@@ -223,10 +223,12 @@ public class LogixNG_SelectInteger implements VetoableChangeListener {
             }
 
             if (val instanceof String) {
+                String validateResult = _formatterParserValidator.validate(val.toString());
+                if (validateResult != null) throw new JmriException(validateResult);
                 return _formatterParserValidator.parse(val.toString());
             }
 
-            return (int) TypeConversionUtil.convertToLong(val);
+            return (int) TypeConversionUtil.convertToLong(val, true, true);
         }
     }
 
