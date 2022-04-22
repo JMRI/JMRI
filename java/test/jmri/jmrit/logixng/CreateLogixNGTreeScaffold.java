@@ -448,6 +448,18 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+// StartClock
+        actionClockSpeed = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
+        actionClockSpeed.setComment("StartClock");
+        actionClockSpeed.getSelectEnum().setEnum(ActionClockRate.ClockState.SetClockSpeed);
+        actionClockSpeed.getSelectSpeed().setAddressing(NamedBeanAddressing.Memory);
+        actionClockSpeed.getSelectSpeed().setMemory(memory1);
+        actionClockSpeed.getSelectSpeed().setListenToMemory(true);
+
+        maleSocket = digitalActionManager.registerAction(actionClockSpeed);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
 // StopClock
         actionClockSpeed = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         actionClockSpeed.setComment("StopClock");
