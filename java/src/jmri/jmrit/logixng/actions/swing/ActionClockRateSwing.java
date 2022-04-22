@@ -25,6 +25,8 @@ public class ActionClockRateSwing extends AbstractDigitalActionSwing {
     private LogixNG_SelectEnumSwing<ClockState> _selectEnumSwing;
     private LogixNG_SelectDoubleSwing _selectSpeedSwing;
 
+    private final JLabel labelToWith = new JLabel(Bundle.getMessage("ActionClock_LabelTo"));
+
 
     public ActionClockRateSwing() {
     }
@@ -52,30 +54,16 @@ public class ActionClockRateSwing extends AbstractDigitalActionSwing {
             tabbedPaneSpeed = _selectSpeedSwing.createPanel(null);
         }
 
-        JComponent[] operationComponents = new JComponent[]{
-            tabbedPaneClockState};
 
-        List<JComponent> operationComponentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClockRate_OperationComponents"), operationComponents);
-
-        JPanel panelOperation = new JPanel();
-        for (JComponent c : operationComponentList) panelOperation.add(c);
-
-        JComponent[] timeComponents = new JComponent[]{
+        JComponent[] components = new JComponent[]{
+            tabbedPaneClockState,
+            labelToWith,
             tabbedPaneSpeed};
 
-        List<JComponent> timeComponentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClockRate_SpeedComponents"), timeComponents);
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionClock_Components"), components);
 
-        JPanel panelTime = new JPanel();
-        for (JComponent c : timeComponentList) panelTime.add(c);
-
-        JPanel container = new JPanel();
-        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.add(panelOperation);
-        container.add(panelTime);
-
-        panel.add(container);
+        for (JComponent c : componentList) panel.add(c);
     }
 
     /** {@inheritDoc} */

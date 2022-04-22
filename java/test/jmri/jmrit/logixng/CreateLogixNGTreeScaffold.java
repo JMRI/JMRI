@@ -453,7 +453,7 @@ public class CreateLogixNGTreeScaffold {
 // StartClock
         actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         actionClockRate.setComment("StartClock");
-        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.SetClockSpeed);
+        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.SetClockRate);
         actionClockRate.getSelectSpeed().setValue(4.234);
 
         maleSocket = digitalActionManager.registerAction(actionClockRate);
@@ -476,7 +476,7 @@ public class CreateLogixNGTreeScaffold {
 // StopClock
         actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         actionClockRate.setComment("StopClock");
-        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.IncreaseClockSpeed);
+        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.IncreaseClockRate);
         actionClockRate.getSelectSpeed().setValue(0.5);
 
         maleSocket = digitalActionManager.registerAction(actionClockRate);
@@ -486,7 +486,7 @@ public class CreateLogixNGTreeScaffold {
 // SetClock
         actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
         actionClockRate.setComment("SetClock");
-        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.DecreaseClockSpeed);
+        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.DecreaseClockRate);
         actionClockRate.getSelectSpeed().setValue(1.22);
 
         maleSocket = digitalActionManager.registerAction(actionClockRate);

@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -28,6 +24,9 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectEnumSwing<ClockState> _selectEnumSwing;
     private LogixNG_SelectIntegerSwing _selectTimeSwing;
+
+    private final JLabel labelTo = new JLabel(Bundle.getMessage("ActionClock_LabelTo"));
+    private final JLabel labelTimeFormat = new JLabel(Bundle.getMessage("ActionClock_LabelTimeFormat"));
 
 
     public ActionClockSwing() {
@@ -60,36 +59,34 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
         _selectEnumSwing.addEnumListener((evt) -> { setSelectTimeEnabled(); });
         setSelectTimeEnabled();
 
-        JComponent[] operationComponents = new JComponent[]{
-            tabbedPaneClockState};
 
-        List<JComponent> operationComponentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClock_OperationComponents"), operationComponents);
+        JPanel innerPanel = new JPanel();
 
-        JPanel panelOperation = new JPanel();
-        for (JComponent c : operationComponentList) panelOperation.add(c);
-
-        JComponent[] timeComponents = new JComponent[]{
+        JComponent[] components = new JComponent[]{
+            tabbedPaneClockState,
+            labelTo,
             tabbedPaneTime};
 
-        List<JComponent> timeComponentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("ActionClock_TimeComponents"), timeComponents);
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionClock_Components"), components);
 
-        JPanel panelTime = new JPanel();
-        for (JComponent c : timeComponentList) panelTime.add(c);
+        for (JComponent c : componentList) innerPanel.add(c);
+
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.add(panelOperation);
-        container.add(panelTime);
+        container.add(innerPanel);
+        container.add(labelTimeFormat);
 
         panel.add(container);
     }
 
     private void setSelectTimeEnabled() {
-        _selectTimeSwing.setEnabled(
+        boolean enabled =
                 _selectEnumSwing.getAddressing() != NamedBeanAddressing.Direct
-                        || _selectEnumSwing.getEnum() == ClockState.SetClock);
+                || _selectEnumSwing.getEnum() == ClockState.SetClock;
+        _selectTimeSwing.setEnabled(enabled);
+        labelTo.setEnabled(enabled);
     }
 
     /** {@inheritDoc} */

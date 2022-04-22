@@ -24,7 +24,7 @@ public class ActionClockRate extends AbstractDigitalAction
         implements PropertyChangeListener {
 
     private final LogixNG_SelectEnum<ClockState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockSpeed, this);
+            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockRate, this);
     private final LogixNG_SelectDouble _selectSpeed =
             new LogixNG_SelectDouble(this, 3, this, new DefaultFormatterParserValidator());
 
@@ -81,7 +81,7 @@ public class ActionClockRate extends AbstractDigitalAction
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch(theState) {
-                case SetClockSpeed:
+                case SetClockRate:
                     try {
                         timebase.userSetRate(theValue);
                     } catch (TimebaseRateException e) {
@@ -89,7 +89,7 @@ public class ActionClockRate extends AbstractDigitalAction
                     }
                     break;
 
-                case IncreaseClockSpeed:
+                case IncreaseClockRate:
                     try {
                         timebase.setRate(timebase.getRate() + theValue);
                     } catch (TimebaseRateException e) {
@@ -97,7 +97,7 @@ public class ActionClockRate extends AbstractDigitalAction
                     }
                     break;
 
-                case DecreaseClockSpeed:
+                case DecreaseClockRate:
                     try {
                         timebase.setRate(timebase.getRate() - theValue);
                     } catch (TimebaseRateException e) {
@@ -135,7 +135,7 @@ public class ActionClockRate extends AbstractDigitalAction
             value = _selectSpeed.getDescription(locale);
         }
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
-            if (_selectEnum.getEnum() == ClockState.SetClockSpeed) {
+            if (_selectEnum.getEnum() == ClockState.SetClockRate) {
                 return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale), value);
             }
             return Bundle.getMessage(locale, "ActionClockRate_LongWith", _selectEnum.getDescription(locale), value);
@@ -175,9 +175,9 @@ public class ActionClockRate extends AbstractDigitalAction
 
 
     public enum ClockState {
-        SetClockSpeed(Bundle.getMessage("ActionClockRate_SetClockSpeed")),
-        IncreaseClockSpeed(Bundle.getMessage("ActionClockRate_IncreaseClockSpeed")),
-        DecreaseClockSpeed(Bundle.getMessage("ActionClockRate_DecreaseClockSpeed"));
+        SetClockRate(Bundle.getMessage("ActionClockRate_SetClockRate")),
+        IncreaseClockRate(Bundle.getMessage("ActionClockRate_IncreaseClockRate")),
+        DecreaseClockRate(Bundle.getMessage("ActionClockRate_DecreaseClockRate"));
 
         private final String _text;
 
