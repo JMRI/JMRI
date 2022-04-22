@@ -11,7 +11,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.jmrit.logixng.util.swing.Bundle;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
