@@ -207,6 +207,17 @@ public class LogixNG_SelectIntegerSwing {
         _selectTableSwing.updateObject(selectInteger.getSelectTable());
     }
 
+    public void setEnabled(boolean enabled) {
+        _tabbedPane.setEnabled(enabled);
+        _valueTextField.setEnabled(enabled);
+        _referenceTextField.setEnabled(enabled);
+        _memoryPanel.getBeanCombo().setEnabled(enabled);
+        _listenToMemoryCheckBox.setEnabled(enabled);
+        _localVariableTextField.setEnabled(enabled);
+        _formulaTextField.setEnabled(enabled);
+        _selectTableSwing.setEnabled(enabled);
+    }
+
     public void dispose() {
         _selectTableSwing.dispose();
     }

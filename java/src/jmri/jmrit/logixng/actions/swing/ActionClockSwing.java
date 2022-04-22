@@ -56,6 +56,10 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
             tabbedPaneTime = _selectTimeSwing.createPanel(null);
         }
 
+        _selectEnumSwing.addAddressingListener((evt) -> { setSelectTimeEnabled(); });
+        _selectEnumSwing.addEnumListener((evt) -> { setSelectTimeEnabled(); });
+        setSelectTimeEnabled();
+
         JComponent[] operationComponents = new JComponent[]{
             tabbedPaneClockState};
 
@@ -80,6 +84,12 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
         container.add(panelTime);
 
         panel.add(container);
+    }
+
+    private void setSelectTimeEnabled() {
+        _selectTimeSwing.setEnabled(
+                _selectEnumSwing.getAddressing() != NamedBeanAddressing.Direct
+                        || _selectEnumSwing.getEnum() == ClockState.SetClock);
     }
 
     /** {@inheritDoc} */

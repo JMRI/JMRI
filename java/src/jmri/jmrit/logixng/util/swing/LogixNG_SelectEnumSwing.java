@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng.util.swing;
 
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -122,6 +124,14 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         return panel;
     }
 
+    public void addAddressingListener(ChangeListener listener) {
+        _tabbedPane.addChangeListener(listener);
+    }
+
+    public void addEnumListener(ActionListener listener) {
+        _enumComboBox.addActionListener(listener);
+    }
+
     public boolean validate(
             @Nonnull LogixNG_SelectEnum<E> selectEnum,
             @Nonnull List<String> errorMessages) {
@@ -136,21 +146,7 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
         try {
             selectEnum.setFormula(_formulaTextField.getText());
-            if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectEnum.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
-                selectEnum.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
-                selectEnum.setAddressing(NamedBeanAddressing.Memory);
-            } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectEnum.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectEnum.setAddressing(NamedBeanAddressing.Formula);
-            } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
-                selectEnum.setAddressing(NamedBeanAddressing.Table);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
+            selectEnum.setAddressing(getAddressing());
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
             return false;
@@ -193,6 +189,28 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         }
 
         _selectTableSwing.updateObject(selectEnum.getSelectTable());
+    }
+
+    public NamedBeanAddressing getAddressing() {
+        if (_tabbedPane.getSelectedComponent() == _panelDirect) {
+            return NamedBeanAddressing.Direct;
+        } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
+            return NamedBeanAddressing.Reference;
+        } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
+            return NamedBeanAddressing.Memory;
+        } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
+            return NamedBeanAddressing.LocalVariable;
+        } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
+            return NamedBeanAddressing.Formula;
+        } else if (_tabbedPane.getSelectedComponent() == _panelTable) {
+            return NamedBeanAddressing.Table;
+        } else {
+            throw new IllegalArgumentException("_tabbedPane has unknown selection");
+        }
+    }
+
+    public E getEnum() {
+        return _enumComboBox.getItemAt(_enumComboBox.getSelectedIndex());
     }
 
     public void dispose() {
