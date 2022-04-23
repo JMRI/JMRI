@@ -78,7 +78,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<>();
+        List<ProgrammingMode> ret = new ArrayList<>(1);
         ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }

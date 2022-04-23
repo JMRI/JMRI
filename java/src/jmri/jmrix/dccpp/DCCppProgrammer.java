@@ -297,6 +297,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         return _controller;
     }
 
+    @Override
     public void dispose() {
         controller().removeDCCppListener(LISTENER_MASK, this);
     }

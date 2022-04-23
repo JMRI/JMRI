@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
+import jmri.Disposable;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.can.CanListener;
@@ -16,7 +17,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author Andrew Crosland Copyright (C) 2009
  */
-public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
+public class CbusDccProgrammer extends AbstractProgrammer implements CanListener, Disposable {
 
     public CbusDccProgrammer(jmri.jmrix.can.TrafficController tc) {
         this.tc = tc;
@@ -40,7 +41,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<>();
+        List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
         ret.add(ProgrammingMode.PAGEMODE);
@@ -224,6 +225,11 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
         notifyProgListenerEnd(temp,value,status);
+    }
+
+    @Override
+    public void dispose() {
+        removeTc(tc);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccProgrammer.class);
