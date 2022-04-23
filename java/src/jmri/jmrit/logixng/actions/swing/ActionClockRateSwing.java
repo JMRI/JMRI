@@ -25,7 +25,7 @@ public class ActionClockRateSwing extends AbstractDigitalActionSwing {
     private LogixNG_SelectEnumSwing<ClockState> _selectEnumSwing;
     private LogixNG_SelectDoubleSwing _selectSpeedSwing;
 
-    private final JLabel labelToWith = new JLabel(Bundle.getMessage("ActionClock_LabelTo"));
+    private final JLabel labelToWith = new JLabel(Bundle.getMessage("ActionClockRate_LabelTo"));
 
 
     public ActionClockRateSwing() {
