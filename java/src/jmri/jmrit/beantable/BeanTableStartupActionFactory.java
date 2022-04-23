@@ -7,7 +7,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Factory for BeanTable startup actions.
- * 
+ *
  * @author Randall Wood Copyright 2020
  */
 @ServiceProvider(service = StartupActionFactory.class)
@@ -29,6 +29,8 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             return Bundle.getMessage(locale, "StartupLogixTableAction"); // NOI18N
         } else if (clazz.equals(LogixNGTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLogixNGTableAction"); // NOI18N
+        } else if (clazz.equals(LogixNGGlobalVariableTableAction.class)) {
+            return Bundle.getMessage(locale, "StartupLogixNGGlobalVariableTableAction"); // NOI18N
         } else if (clazz.equals(LogixNGModuleTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLogixNGModuleTableAction"); // NOI18N
         } else if (clazz.equals(LogixNGTableTableAction.class)) {
@@ -70,6 +72,7 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             ListedTableAction.class,
             LogixTableAction.class,
             LogixNGTableAction.class,
+            LogixNGGlobalVariableTableAction.class,
             LogixNGModuleTableAction.class,
             LogixNGTableTableAction.class,
             LRouteTableAction.class,
@@ -85,5 +88,5 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             TransitTableAction.class,
             TurnoutTableAction.class};
     }
-    
+
 }
