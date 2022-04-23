@@ -91,7 +91,7 @@ public class ActionClockRate extends AbstractDigitalAction
 
                 case IncreaseClockRate:
                     try {
-                        timebase.setRate(timebase.getRate() + theValue);
+                        timebase.userSetRate(timebase.userGetRate() + theValue);
                     } catch (TimebaseRateException e) {
                         // Do nothing. This error is already logged as an error
                     }
@@ -99,7 +99,7 @@ public class ActionClockRate extends AbstractDigitalAction
 
                 case DecreaseClockRate:
                     try {
-                        timebase.setRate(timebase.getRate() - theValue);
+                        timebase.userSetRate(timebase.userGetRate() - theValue);
                     } catch (TimebaseRateException e) {
                         // Do nothing. This error is already logged as an error
                     }

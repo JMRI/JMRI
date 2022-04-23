@@ -180,7 +180,7 @@ public class ClockFunctions implements FunctionFactory {
         public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
                 throws JmriException {
 
-            double rate = _fastClock.getRate();
+            double rate = _fastClock.userGetRate();
 
             if (parameterList.isEmpty()) return rate;
 

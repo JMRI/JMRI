@@ -41,8 +41,8 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-			  <xs:element name="state" type="LogixNG_SelectEnumType" minOccurs="1" maxOccurs="1" />
-			  <xs:element name="rate" type="LogixNG_SelectDoubleType" minOccurs="1" maxOccurs="1" />
+              <xs:element name="state" type="LogixNG_SelectEnumType" minOccurs="1" maxOccurs="1" />
+              <xs:element name="rate" type="LogixNG_SelectDoubleType" minOccurs="1" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
