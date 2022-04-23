@@ -114,12 +114,14 @@ public class DefaultSymbolTable implements SymbolTable {
     public void setValue(String name, Object value) {
         if (_symbols.get(name) != null) {
             _stack.setValueAtIndex(_firstSymbolIndex + _symbols.get(name).getIndex(), value);
+        } else {
+            GlobalVariable globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).getByUserName(name);
+            if (globalVariable != null) {
+                globalVariable.setValue(value);
+            } else {
+                throw new IllegalArgumentException("The symbol "+name+" does not exist in the symbol table");
+            }
         }
-        GlobalVariable globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).getByUserName(name);
-        if (globalVariable != null) {
-            globalVariable.setValue(value);
-        }
-        throw new IllegalArgumentException("The symbol "+name+" does not exist in the symbol table");
     }
 
     /** {@inheritDoc} */

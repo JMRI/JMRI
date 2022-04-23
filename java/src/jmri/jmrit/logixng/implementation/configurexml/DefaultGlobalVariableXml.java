@@ -35,7 +35,10 @@ public class DefaultGlobalVariableXml extends jmri.managers.configurexml.Abstrac
         storeCommon(p, element);
 
         element.addContent(new Element("initialValueType").addContent(p.getInitialValueType().name()));
-        element.addContent(new Element("initialValueData").addContent(p.getInitialValueData()));
+
+        if (p.getInitialValueData() != null) {
+            element.addContent(new Element("initialValueData").addContent(p.getInitialValueData()));
+        }
 
         return element;
     }
