@@ -29,12 +29,12 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             return Bundle.getMessage(locale, "StartupLogixTableAction"); // NOI18N
         } else if (clazz.equals(LogixNGTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLogixNGTableAction"); // NOI18N
-        } else if (clazz.equals(LogixNGGlobalVariableTableAction.class)) {
-            return Bundle.getMessage(locale, "StartupLogixNGGlobalVariableTableAction"); // NOI18N
         } else if (clazz.equals(LogixNGModuleTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLogixNGModuleTableAction"); // NOI18N
         } else if (clazz.equals(LogixNGTableTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLogixNGTableTableAction"); // NOI18N
+        } else if (clazz.equals(LogixNGGlobalVariableTableAction.class)) {
+            return Bundle.getMessage(locale, "StartupLogixNGGlobalVariableTableAction"); // NOI18N
         } else if (clazz.equals(LRouteTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLRouteTableAction"); // NOI18N
         } else if (clazz.equals(MemoryTableAction.class)) {
@@ -72,9 +72,9 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             ListedTableAction.class,
             LogixTableAction.class,
             LogixNGTableAction.class,
-            LogixNGGlobalVariableTableAction.class,
             LogixNGModuleTableAction.class,
             LogixNGTableTableAction.class,
+            LogixNGGlobalVariableTableAction.class,
             LRouteTableAction.class,
             MemoryTableAction.class,
             OBlockTableAction.class,

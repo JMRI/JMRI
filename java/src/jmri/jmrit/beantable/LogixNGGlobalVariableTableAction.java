@@ -11,13 +11,16 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.util.JmriJFrame;
 
 
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
+import jmri.jmrit.logixng.tools.swing.LocalVariableTableModel;
 // import jmri.jmrit.logixng.tools.swing.GlobalVariableEditor;
 
 /**
@@ -52,6 +55,16 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
      */
     public LogixNGGlobalVariableTableAction() {
         this(Bundle.getMessage("TitleLogixNGGlobalVariablesTable"));
+    }
+
+    @Override
+    protected void setTitle() {
+        f.setTitle(Bundle.getMessage("TitleLogixNGGlobalVariablesTable"));
+    }
+
+    @Override
+    public String getClassDescription() {
+        return Bundle.getMessage("TitleLogixNGGlobalVariablesTable");        // NOI18N
     }
 
     @Override
@@ -142,8 +155,8 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
     @Override
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
-        addLogixNGFrame.addHelpMenu(
-                "package.jmri.jmrit.beantable.LogixNGTable", true);     // NOI18N
+//        addLogixNGFrame.addHelpMenu(
+//                "package.jmri.jmrit.beantable.LogixNGGlobalVariableTable", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -178,8 +191,8 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName, c);
-        _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
-        _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
+        _addUserName.setToolTipText(Bundle.getMessage("LogixNGGlobalVariableUserNameHint"));    // NOI18N
+        _systemName.setToolTipText(Bundle.getMessage("LogixNGGlobalVariableSystemNameHint"));   // NOI18N
         contentPane.add(p);
         // set up message
         JPanel panel3 = new JPanel();
@@ -202,7 +215,7 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
         cancel.addActionListener(this::cancelAddPressed);
-        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGButtonHint"));      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGGlobalVariableButtonHint"));      // NOI18N
 
         addLogixNGFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -228,6 +241,127 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
     protected boolean hasChildren(GlobalVariable globalVariable) {
         return false;
     }
+
+    /**
+     * Create the JTable DataModel, along with the changes (overrides of
+     * BeanTableDataModel) for the specific case of a LogixNG table.
+     */
+    @Override
+    protected void createModel() {
+        m = new TableModel();
+    }
+
+
+    protected class TableModel extends AbstractLogixNGTableAction.TableModel {
+
+        // overlay the state column with the edit column
+        static public final int VARIABLE_TYPE_COL = NUMCOLUMN;
+        static public final int VARIABLE_INIT_VALUE_COL = NUMCOLUMN + 1;
+        static public final int NUM_COLUMNS = VARIABLE_INIT_VALUE_COL + 1;
+
+        @Override
+        public int getColumnCount() {
+            return NUM_COLUMNS;
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            if (col == VARIABLE_TYPE_COL) {
+                return Bundle.getMessage("LogixNGGlobalVariableColumnHeadInitialType");
+            }
+            if (col == VARIABLE_INIT_VALUE_COL) {
+                return Bundle.getMessage("LogixNGGlobalVariableColumnHeadInitialValue");
+            }
+            return super.getColumnName(col);
+        }
+
+        @Override
+        public Class<?> getColumnClass(int col) {
+            if (col == VARIABLE_TYPE_COL) {
+                return InitialValueType.class;
+            }
+            if (col == VARIABLE_INIT_VALUE_COL) {
+                return String.class;
+            }
+            return super.getColumnClass(col);
+        }
+
+        @Override
+        public int getPreferredWidth(int col) {
+            // override default value for SystemName and UserName columns
+            if (col == VARIABLE_TYPE_COL) {
+                return new JTextField(12).getPreferredSize().width;
+            }
+            if (col == VARIABLE_INIT_VALUE_COL) {
+                return new JTextField(17).getPreferredSize().width;
+            }
+            return super.getPreferredWidth(col);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            if (col == VARIABLE_TYPE_COL) {
+                return true;
+            }
+            if (col == VARIABLE_INIT_VALUE_COL) {
+                return true;
+            }
+            return super.isCellEditable(row, col);
+        }
+
+        @Override
+        public Object getValueAt(int row, int col) {
+            if (col == VARIABLE_TYPE_COL) {
+                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                if (x == null) {
+                    return null;
+                }
+                return x.getInitialValueType();
+            } else if (col == VARIABLE_INIT_VALUE_COL) {
+                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                if (x == null) {
+                    return null;
+                }
+                return x.getInitialValueData();
+            } else {
+                return super.getValueAt(row, col);
+            }
+        }
+
+        @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            if (col == VARIABLE_TYPE_COL) {
+                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                x.setInitialValueType((InitialValueType) value);
+            } else if (col == VARIABLE_INIT_VALUE_COL) {
+                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                x.setInitialValueData((String) value);
+            } else {
+                super.setValueAt(value, row, col);
+            }
+        }
+
+        @Override
+        public void configureTable(JTable table) {
+/*
+            table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+            table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+            table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+            if (!(getManager() instanceof jmri.jmrit.logixng.LogixNG_Manager)) {
+                table.getColumnModel().getColumn(2).setMinWidth(0);
+                table.getColumnModel().getColumn(2).setMaxWidth(0);
+            }
+*/
+            table.setDefaultRenderer(InitialValueType.class,
+                    new LocalVariableTableModel.TypeCellRenderer());
+            table.setDefaultEditor(InitialValueType.class,
+                    new LocalVariableTableModel.TypeCellEditor());
+
+            super.configureTable(table);
+        }
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGGlobalVariableTableAction.class);
 
