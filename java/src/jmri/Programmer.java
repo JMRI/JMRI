@@ -261,4 +261,9 @@ public interface Programmer {
     @Nonnull
     String decodeErrorCode(int i);
 
+    /**
+     * Free up system resources.
+     */
+    default void dispose() {}
+
 }
