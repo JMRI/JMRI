@@ -23,7 +23,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
  * Class providing the basic logic of the GlobalVariable_Manager interface.
  *
  * @author Dave Duchamp       Copyright (C) 2007
- * @author Daniel Bergqvist   Copyright (C) 2018
+ * @author Daniel Bergqvist   Copyright (C) 2022
  */
 public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable>
         implements GlobalVariableManager {
@@ -161,6 +161,19 @@ public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable
         InstanceManager.getDefault(GlobalVariable_InitializationManager.class).printTree(locale, writer, indent);
     }
 */
+
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(Locale locale, PrintWriter writer, String indent) {
+        for (GlobalVariable globalVariable : getNamedBeanSet()) {
+            writer.append(String.format(
+                    "Global variable: System name: %s, User name: %s, Initial value type: %s, Initial value data: %s",
+                    globalVariable.getSystemName(), globalVariable.getUserName(),
+                    globalVariable.getInitialValueType().toString(), globalVariable.getInitialValueData()));
+            writer.println();
+        }
+        writer.println();
+    }
 
     static volatile DefaultGlobalVariableManager _instance = null;
 

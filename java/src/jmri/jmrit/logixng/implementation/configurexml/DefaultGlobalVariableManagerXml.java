@@ -10,40 +10,40 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.implementation.DefaultModuleManager;
+import jmri.jmrit.logixng.GlobalVariable;
+import jmri.jmrit.logixng.implementation.DefaultGlobalVariableManager;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
 
 /**
- * Provides the functionality for configuring DefaultModuleManager
+ * Provides the functionality for configuring DefaultGlobalVariableManager
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018
  */
-public class DefaultModuleManagerXml extends AbstractManagerXml {
+public class DefaultGlobalVariableManagerXml extends AbstractManagerXml {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
 
-    public DefaultModuleManagerXml() {
+    public DefaultGlobalVariableManagerXml() {
     }
 
     /**
-     * Default implementation for storing the contents of a ModuleManager
+     * Default implementation for storing the contents of a GlobalVariableManager
      *
      * @param o Object to store, of type LogixManager
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        Element expressions = new Element("LogixNGModules");
+        Element expressions = new Element("LogixNGGlobalVariables");
         setStoreElementClass(expressions);
-        DefaultModuleManager tm = (DefaultModuleManager) o;
+        DefaultGlobalVariableManager tm = (DefaultGlobalVariableManager) o;
         if (tm != null) {
             if (tm.getNamedBeanSet().isEmpty()) return null;
-            for (Module module : tm.getNamedBeanSet()) {
+            for (GlobalVariable module : tm.getNamedBeanSet()) {
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(module);
                     if (e != null) {
@@ -69,7 +69,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
     }
 
     /**
-     * Create a ModuleManager object of the correct class, then
+     * Create a GlobalVariableManager object of the correct class, then
      * register and fill it.
      *
      * @param sharedExpression  Shared top level Element to unpack.
@@ -136,40 +136,40 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
     }
 
     /**
-     * Replace the current ModuleManager, if there is one, with one newly created
+     * Replace the current GlobalVariableManager, if there is one, with one newly created
      * during a load operation. This is skipped if they are of the same absolute
      * type.
      */
     protected void replaceExpressionManager() {
-        if (InstanceManager.getDefault(ModuleManager.class).getClass().getName()
-                .equals(DefaultModuleManager.class.getName())) {
+        if (InstanceManager.getDefault(GlobalVariableManager.class).getClass().getName()
+                .equals(DefaultGlobalVariableManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getNullableDefault(ModuleManager.class) != null) {
+        if (InstanceManager.getNullableDefault(GlobalVariableManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.deregister(InstanceManager.getDefault(ModuleManager.class));
+                cmOD.deregister(InstanceManager.getDefault(GlobalVariableManager.class));
             }
 
         }
 
         ThreadingUtil.runOnGUI(() -> {
             // register new one with InstanceManager
-            DefaultModuleManager pManager = DefaultModuleManager.instance();
-            InstanceManager.store(pManager, ModuleManager.class);
+            DefaultGlobalVariableManager pManager = DefaultGlobalVariableManager.instance();
+            InstanceManager.store(pManager, GlobalVariableManager.class);
             // register new one for configuration
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_MODULES);
+                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_GLOBAL_VARIABLES);
             }
         });
     }
 
     @Override
     public int loadOrder() {
-        return InstanceManager.getDefault(ModuleManager.class).getXMLOrder();
+        return InstanceManager.getDefault(GlobalVariableManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModuleManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariableManagerXml.class);
 }

@@ -13,7 +13,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
  * Manager for GlobalVariable
  *
  * @author Dave Duchamp       Copyright (C) 2007
- * @author Daniel Bergqvist   Copyright (C) 2018
+ * @author Daniel Bergqvist   Copyright (C) 2022
  */
 public interface GlobalVariableManager extends Manager<GlobalVariable> {
 
@@ -141,4 +141,14 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
             String indent,
             MutableInt lineNumber);
 */
+
+    /**
+     * Print the tree to a stream.
+     *
+     * @param locale The locale to be used
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(Locale locale, PrintWriter writer, String indent);
+
 }
