@@ -4,14 +4,8 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -252,7 +246,7 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
     }
 
 
-    protected class TableModel extends AbstractLogixNGTableAction.TableModel {
+    protected class TableModel extends AbstractLogixNGTableAction<GlobalVariable>.TableModel {
 
         // overlay the state column with the edit column
         static public final int VARIABLE_TYPE_COL = NUMCOLUMN;
