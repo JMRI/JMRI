@@ -562,13 +562,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
-                // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(0,
-                        getTime(), (!internalMaster && !startSetTime));
+                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                    cc.initializeHardwareClock( 0, getTime(), (!internalMaster && !startSetTime)) );
             } else {
-                // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(mFactor,
-                        getTime(), (!internalMaster && !startSetTime));
+                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                    cc.initializeHardwareClock( mFactor, getTime(), (!internalMaster && !startSetTime)) );
             }
         } else if (!internalMaster) {
             if (startStopped) {
@@ -619,9 +617,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             timer.stop();
 
             ActionListener listeners[] = timer.getListeners(ActionListener.class);
-            for (ActionListener listener : listeners)
+            for (ActionListener listener : listeners) {
                 timer.removeActionListener(listener);
-
+            }
             timer = null;
         }
         if ( clockSensor != null ) {
