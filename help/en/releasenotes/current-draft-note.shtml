@@ -463,7 +463,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>The order of presenting these elements in combo boxes
+                has been changed to make it more consistent.  They now
+                list all user names first, followed by ones with just system
+                names.  This also fixes a problem where some items are
+                not listed in the combo box.</li>
         </ul>
 
     <h3>Scripting</h3>

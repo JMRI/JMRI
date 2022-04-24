@@ -495,6 +495,12 @@ public class LogixNG_SelectTableSwing {
         return true;
     }
 
+    public void setEnabled(boolean enabled) {
+        _selectTableNameButton.setEnabled(enabled);
+        _selectRowNameButton.setEnabled(enabled);
+        _selectColumnNameButton.setEnabled(enabled);
+    }
+
     public void dispose() {
         _logixNG_DataDialog.dispose();
         _dialog.removeWindowFocusListener(_focusListener);
