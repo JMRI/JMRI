@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.*;
@@ -26,7 +28,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
         implements GlobalVariable {
 
     private Object _value;
-    private InitialValueType _initialValueType;
+    private InitialValueType _initialValueType = InitialValueType.None;
     private String _initialValueData;
 
 
@@ -38,6 +40,18 @@ public class DefaultGlobalVariable extends AbstractNamedBean
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setUserName(String s) throws BadUserNameException {
+        if (! SymbolTable.validateName(s)) {
+            throw new BadUserNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "VariableNameIsNotValid", s),
+                    Bundle.getMessage(Locale.getDefault(), "VariableNameIsNotValid", s));
+        }
+        super.setUserName(s);
     }
 
     /** {@inheritDoc} */
@@ -372,7 +386,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());
 
-        level++;
+//        level++;
 //        for (int i=0; i < this.getNumConditionalNGs(); i++) {
 //            getConditionalNG(i).getUsageTree(level, bean, report, getConditionalNG(i));
 //        }

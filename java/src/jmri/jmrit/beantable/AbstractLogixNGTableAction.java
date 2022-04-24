@@ -16,6 +16,8 @@ import javax.swing.table.TableColumn;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBean.BadSystemNameException;
+import jmri.NamedBean.BadUserNameException;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
@@ -509,7 +511,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             if (!checkLogixNGUserName(uName)) {
                 return;
             }
-            _curNamedBean = createBean(uName);
+            try {
+                _curNamedBean = createBean(uName);
+            } catch (BadSystemNameException | BadUserNameException ex) {
+                JOptionPane.showMessageDialog(addLogixNGFrame, ex.getLocalizedMessage(),
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (_curNamedBean == null) {
                 log.error("Failure to create bean with System Name: {}", "none");  // NOI18N
                 return;

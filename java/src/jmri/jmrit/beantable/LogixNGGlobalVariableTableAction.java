@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
@@ -338,15 +339,6 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
 
         @Override
         public void configureTable(JTable table) {
-/*
-            table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
-            table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-            table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-            if (!(getManager() instanceof jmri.jmrit.logixng.LogixNG_Manager)) {
-                table.getColumnModel().getColumn(2).setMinWidth(0);
-                table.getColumnModel().getColumn(2).setMaxWidth(0);
-            }
-*/
             table.setDefaultRenderer(InitialValueType.class,
                     new LocalVariableTableModel.TypeCellRenderer());
             table.setDefaultEditor(InitialValueType.class,

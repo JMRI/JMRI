@@ -847,7 +847,15 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             return;  // NOI18N
         }
 
-        nBean.setUserName(newName);
+        try {
+            nBean.setUserName(newName);
+        } catch (NamedBean.BadSystemNameException | NamedBean.BadUserNameException ex) {
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         fireTableRowsUpdated(row, row);
         if (!newName.isEmpty()) {
             if (oldName == null || oldName.isEmpty()) {
