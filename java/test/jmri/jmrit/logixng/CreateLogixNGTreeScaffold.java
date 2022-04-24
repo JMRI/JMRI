@@ -712,6 +712,20 @@ public class CreateLogixNGTreeScaffold {
         Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
         Assert.assertTrue(ref.getListenOnAllProperties());
 
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference(new NamedBeanReference("MyGlobalVariable", NamedBeanType.GlobalVariable, false));
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        for (NamedBeanType namedBeanType : NamedBeanType.values()) {
+            actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+            actionListenOnBeans.setComment("A comment");
+            actionListenOnBeans.addReference(new NamedBeanReference("MyBean"+namedBeanType.name(), namedBeanType, false));
+            maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+            actionManySocket.getChild(indexAction++).connect(maleSocket);
+        }
+
 
         ActionListenOnBeansTable actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);

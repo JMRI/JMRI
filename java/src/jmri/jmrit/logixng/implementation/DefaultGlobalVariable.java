@@ -170,6 +170,10 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     @Override
     public void setValue(Object value) {
         _value = value;
+        Object old = _value;
+        _value = value;
+        // notify
+        firePropertyChange("value", old, _value);
     }
 
     /** {@inheritDoc} */
