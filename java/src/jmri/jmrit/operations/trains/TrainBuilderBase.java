@@ -2059,8 +2059,9 @@ public class TrainBuilderBase extends TrainCommon {
                     log.debug("Car ({}) can be droped by train to track ({})", car.toString(), track.getName());
                 } else {
                     addLine(_buildReport, SEVEN,
-                            MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"), new Object[] {
-                                    car.toString(), _train.getName(), track.getTrackTypeName(), track.getName() }));
+                            MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"), new Object[]{
+                                    car.toString(), _train.getName(), track.getTrackTypeName(),
+                                    track.getLocation().getName(), track.getName()}));
                     return false;
                 }
             }
@@ -2070,8 +2071,8 @@ public class TrainBuilderBase extends TrainCommon {
                 } else {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildCanNotDropCarRoute"),
-                                    new Object[] { car.toString(), _train.getRoute().getName(),
-                                            track.getTrackTypeName(), track.getName() }));
+                                    new Object[]{car.toString(), _train.getRoute().getName(),
+                                            track.getTrackTypeName(), track.getLocation().getName(), track.getName()}));
                     return false;
                 }
             }
