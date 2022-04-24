@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import jmri.Disposable;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.can.CanListener;
@@ -17,7 +16,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author Andrew Crosland Copyright (C) 2009
  */
-public class CbusDccProgrammer extends AbstractProgrammer implements CanListener, Disposable {
+public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
     public CbusDccProgrammer(jmri.jmrix.can.TrafficController tc) {
         this.tc = tc;
