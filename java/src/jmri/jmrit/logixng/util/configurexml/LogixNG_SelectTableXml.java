@@ -35,6 +35,10 @@ public class LogixNG_SelectTableXml {
             tableNameElement.addContent(new Element("name").addContent(table.getName()));
         }
         tableNameElement.addContent(new Element("reference").addContent(selectTable.getTableNameReference()));
+        var memory = selectTable.getTableNameMemory();
+        if (memory != null) {
+            tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
         tableNameElement.addContent(new Element("localVariable").addContent(selectTable.getTableNameLocalVariable()));
         tableNameElement.addContent(new Element("formula").addContent(selectTable.getTableNameFormula()));
         if (selectTable.getTableNameAddressing() == NamedBeanAddressing.Table) {
@@ -46,6 +50,10 @@ public class LogixNG_SelectTableXml {
         tableRowElement.addContent(new Element("addressing").addContent(selectTable.getTableRowAddressing().name()));
         tableRowElement.addContent(new Element("name").addContent(selectTable.getTableRowName()));
         tableRowElement.addContent(new Element("reference").addContent(selectTable.getTableRowReference()));
+        memory = selectTable.getTableRowMemory();
+        if (memory != null) {
+            tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
         tableRowElement.addContent(new Element("localVariable").addContent(selectTable.getTableRowLocalVariable()));
         tableRowElement.addContent(new Element("formula").addContent(selectTable.getTableRowFormula()));
         if (selectTable.getTableRowAddressing() == NamedBeanAddressing.Table) {
@@ -57,6 +65,10 @@ public class LogixNG_SelectTableXml {
         tableColumnElement.addContent(new Element("addressing").addContent(selectTable.getTableColumnAddressing().name()));
         tableColumnElement.addContent(new Element("name").addContent(selectTable.getTableColumnName()));
         tableColumnElement.addContent(new Element("reference").addContent(selectTable.getTableColumnReference()));
+        memory = selectTable.getTableColumnMemory();
+        if (memory != null) {
+            tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
         tableColumnElement.addContent(new Element("localVariable").addContent(selectTable.getTableColumnLocalVariable()));
         tableColumnElement.addContent(new Element("formula").addContent(selectTable.getTableColumnFormula()));
         if (selectTable.getTableColumnAddressing() == NamedBeanAddressing.Table) {
@@ -93,6 +105,13 @@ public class LogixNG_SelectTableXml {
                 elem = tableName.getChild("reference");
                 if (elem != null) selectTable.setTableNameReference(elem.getTextTrim());
 
+                Element memoryName = tableName.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectTable.setTableNameMemory(m);
+                    else selectTable.removeTableNameMemory();
+                }
+
                 elem = tableName.getChild("localVariable");
                 if (elem != null) selectTable.setTableNameLocalVariable(elem.getTextTrim());
 
@@ -121,6 +140,13 @@ public class LogixNG_SelectTableXml {
                 elem = tableRow.getChild("reference");
                 if (elem != null) selectTable.setTableRowReference(elem.getTextTrim());
 
+                memoryName = tableName.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectTable.setTableRowMemory(m);
+                    else selectTable.removeTableRowMemory();
+                }
+
                 elem = tableRow.getChild("localVariable");
                 if (elem != null) selectTable.setTableRowLocalVariable(elem.getTextTrim());
 
@@ -148,6 +174,13 @@ public class LogixNG_SelectTableXml {
 
                 elem = tableColumn.getChild("reference");
                 if (elem != null) selectTable.setTableColumnReference(elem.getTextTrim());
+
+                memoryName = tableName.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectTable.setTableColumnMemory(m);
+                    else selectTable.removeTableColumnMemory();
+                }
 
                 elem = tableColumn.getChild("localVariable");
                 if (elem != null) selectTable.setTableColumnLocalVariable(elem.getTextTrim());

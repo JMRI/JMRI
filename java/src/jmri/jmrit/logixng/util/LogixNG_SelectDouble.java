@@ -18,63 +18,68 @@ import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.TypeConversionUtil;
 
 /**
- * Select namedBean for LogixNG actions and expressions.
- *
- * @param <E> the type of the named bean
+ * Select a double for LogixNG actions and expressions.
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableChangeListener {
+public class LogixNG_SelectDouble implements VetoableChangeListener {
 
     private final AbstractBase _base;
     private final InUse _inUse;
-    private final Class<E> _class;
-    private final Manager<E> _manager;
     private final LogixNG_SelectTable _selectTable;
+    private final int _numDecimals;
     private final PropertyChangeListener _listener;
     private boolean _listenToMemory;
     private boolean _listenersAreRegistered;
+    private final FormatterParserValidator _formatterParserValidator;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<E> _handle;
+    private double _value;
     private String _reference = "";
-    private NamedBeanHandle<Memory> _memoryHandle;
     private String _localVariable = "";
+    private NamedBeanHandle<Memory> _memoryHandle;
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, PropertyChangeListener listener) {
+    public LogixNG_SelectDouble(
+            @Nonnull AbstractBase base,
+            int numDecimals,
+            @Nonnull PropertyChangeListener listener) {
         _base = base;
         _inUse = () -> true;
-        _class = clazz;
-        _manager = manager;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
+        _numDecimals = numDecimals;
         _listener = listener;
+        _formatterParserValidator = new DefaultFormatterParserValidator();
     }
 
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, InUse inUse, PropertyChangeListener listener) {
+    public LogixNG_SelectDouble(
+            @Nonnull AbstractBase base,
+            int numDecimals,
+            @Nonnull PropertyChangeListener listener,
+            @Nonnull FormatterParserValidator formatterParserValidator) {
         _base = base;
-        _inUse = inUse;
-        _class = clazz;
-        _manager = manager;
+        _inUse = () -> true;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
+        _numDecimals = numDecimals;
         _listener = listener;
+        _formatterParserValidator = formatterParserValidator;
     }
 
-
-    public void copy(LogixNG_SelectNamedBean<E> copy) throws ParserException {
+    public void copy(LogixNG_SelectDouble copy) throws ParserException {
         copy.setAddressing(_addressing);
-        if (_handle != null) copy.setNamedBean(_handle);
+        copy.setValue(_value);
         copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
         copy.setMemory(_memoryHandle);
+        copy.setReference(_reference);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
     }
 
-    public Manager<E> getManager() {
-        return _manager;
+    @Nonnull
+    public FormatterParserValidator getFormatterParserValidator() {
+        return _formatterParserValidator;
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
@@ -86,39 +91,13 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _addressing;
     }
 
-    public void setNamedBean(@Nonnull String name) {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        E namedBean = _manager.getNamedBean(name);
-        if (namedBean != null) {
-            setNamedBean(namedBean);
-        } else {
-            removeNamedBean();
-            log.error("{} \"{}\" is not found", _manager.getBeanTypeHandled(), name);
-        }
+    public void setValue(double value) {
+        _base.assertListenersAreNotRegistered(log, "setEnum");
+        _value = value;
     }
 
-    public void setNamedBean(@Nonnull NamedBeanHandle<E> handle) {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        _handle = handle;
-        _manager.addVetoableChangeListener(this);
-    }
-
-    public void setNamedBean(@Nonnull E namedBean) {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        setNamedBean(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(namedBean.getDisplayName(), namedBean));
-    }
-
-    public void removeNamedBean() {
-        _base.assertListenersAreNotRegistered(log, "setNamedBean");
-        if (_handle != null) {
-            _manager.removeVetoableChangeListener(this);
-            _handle = null;
-        }
-    }
-
-    public NamedBeanHandle<E> getNamedBean() {
-        return _handle;
+    public double getValue() {
+        return _value;
     }
 
     public void setReference(@Nonnull String reference) {
@@ -130,6 +109,14 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
     public String getReference() {
         return _reference;
+    }
+
+    public void setLocalVariable(@Nonnull String localVariable) {
+        _localVariable = localVariable;
+    }
+
+    public String getLocalVariable() {
+        return _localVariable;
     }
 
     public void setMemory(@Nonnull String memoryName) {
@@ -172,14 +159,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _listenToMemory;
     }
 
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
     public void setFormula(@Nonnull String formula) throws ParserException {
         _formula = formula;
         parseFormula();
@@ -212,57 +191,64 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         }
     }
 
-    public E evaluateNamedBean(ConditionalNG conditionalNG) throws JmriException {
+    public double evaluateValue(ConditionalNG conditionalNG) throws JmriException {
 
         if (_addressing == NamedBeanAddressing.Direct) {
-            return _handle != null ? _handle.getBean() : null;
+            return _value;
         } else {
-            String name;
+            Object val;
+
+            SymbolTable symbolNamedBean = conditionalNG.getSymbolTable();
 
             switch (_addressing) {
                 case Reference:
-                    name = ReferenceUtil.getReference(
+                    val = ReferenceUtil.getReference(
                             conditionalNG.getSymbolTable(), _reference);
                     break;
 
                 case LocalVariable:
-                    SymbolTable symbolNamedBean = conditionalNG.getSymbolTable();
-                    name = TypeConversionUtil
-                            .convertToString(symbolNamedBean.getValue(_localVariable), false);
+                    val = symbolNamedBean.getValue(_localVariable);
                     break;
 
                 case Memory:
-                    name = TypeConversionUtil
-                            .convertToString(_memoryHandle.getBean().getValue(), false);
+                    val = _memoryHandle.getBean().getValue();
                     break;
 
                 case Formula:
-                    name = _expressionNode  != null
-                            ? TypeConversionUtil.convertToString(
-                                    _expressionNode.calculate(
-                                            conditionalNG.getSymbolTable()), false)
+                    val = _expressionNode != null
+                            ? _expressionNode.calculate(conditionalNG.getSymbolTable())
                             : null;
                     break;
 
                 case Table:
-                    name = TypeConversionUtil.convertToString(
-                            _selectTable.evaluateTableData(conditionalNG), false);
+                    val = _selectTable.evaluateTableData(conditionalNG);
                     break;
 
                 default:
                     throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
             }
 
-            E namedBean = null;
-            if (name != null) {
-                namedBean = _manager.getNamedBean(name);
+            if (val instanceof String) {
+                String validateResult = _formatterParserValidator.validate(val.toString());
+                if (validateResult != null) throw new JmriException(validateResult);
+                return _formatterParserValidator.parse(val.toString());
             }
-            return namedBean;
+
+            return TypeConversionUtil.convertToDouble(val, false, true, true);
         }
     }
 
+    /**
+     * Format the value
+     * @param value The value
+     * @return speed formatted as %1.3f
+     */
+    public String formatValue(double value) {
+        return String.format(String.format("%%1.%df", _numDecimals), value);
+    }
+
     public String getDescription(Locale locale) {
-        String namedBean;
+        String enumName;
 
         String memoryName;
         if (_memoryHandle != null) {
@@ -273,33 +259,27 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
         switch (_addressing) {
             case Direct:
-                String namedBeanName;
-                if (_handle != null) {
-                    namedBeanName = _handle.getBean().getDisplayName();
-                } else {
-                    namedBeanName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", namedBeanName);
+                enumName = Bundle.getMessage(locale, "AddressByDirect", _value);
                 break;
 
             case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                enumName = Bundle.getMessage(locale, "AddressByReference", _reference);
                 break;
 
             case Memory:
-                namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                enumName = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
 
             case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                enumName = Bundle.getMessage(locale, "AddressByFormula", _formula);
                 break;
 
             case Table:
-                namedBean = Bundle.getMessage(
+                enumName = Bundle.getMessage(
                         locale,
                         "AddressByTable",
                         _selectTable.getTableNameDescription(locale),
@@ -310,7 +290,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
             default:
                 throw new IllegalArgumentException("invalid _addressing: " + _addressing.name());
         }
-        return namedBean;
+        return enumName;
     }
 
     /**
@@ -342,11 +322,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
-            if (_inUse.isInUse() && (_class.isAssignableFrom(evt.getOldValue().getClass()))) {
-                if (evt.getOldValue().equals(getNamedBean().getBean())) {
-                    throw new PropertyVetoException(_base.getDisplayName(), evt);
-                }
-            }
             if (evt.getOldValue() instanceof Memory) {
                 boolean doVeto = false;
                 if ((_addressing == NamedBeanAddressing.Memory) && (_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
@@ -358,11 +333,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (_class.isAssignableFrom(evt.getOldValue().getClass())) {
-                if (evt.getOldValue().equals(getNamedBean().getBean())) {
-                    removeNamedBean();
-                }
-            }
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(_memoryHandle.getBean())) {
                     removeMemory();
@@ -371,5 +341,73 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectNamedBean.class);
+
+    /**
+     * Format, parse and validate.
+     */
+    public interface FormatterParserValidator {
+
+        /**
+         * Get the initial value
+         * @return the initial value
+         */
+        public double getInitialValue();
+
+        /**
+         * Format the value
+         * @param value the value
+         * @return the formatted string
+         */
+        public String format(double value);
+
+        /**
+         * Parse the string
+         * @param str the string
+         * @return the parsed value
+         */
+        public double parse(String str);
+
+        /**
+         * Validates the string
+         * @param str the string
+         * @return null if valid. An error message if not valid
+         */
+        public String validate(String str);
+    }
+
+
+    public static class DefaultFormatterParserValidator
+            implements FormatterParserValidator {
+
+        @Override
+        public double getInitialValue() {
+            return 0;
+        }
+
+        @Override
+        public String format(double value) {
+            return Double.toString(value);
+        }
+
+        @Override
+        public double parse(String str) {
+            try {
+                return Double.parseDouble(str);
+            } catch (NumberFormatException e) {
+                return getInitialValue();
+            }
+        }
+
+        @Override
+        public String validate(String str) {
+            try {
+                return null;
+            } catch (NumberFormatException e) {
+                return Bundle.getMessage("LogixNG_SelectDouble_MustBeValidInteger");
+            }
+        }
+
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectDouble.class);
 }

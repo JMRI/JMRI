@@ -407,7 +407,7 @@ public class CreateLogixNGTreeScaffold {
 // StartClock
         actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
         actionClock.setComment("StartClock");
-        actionClock.setBeanState(ActionClock.ClockState.StartClock);
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.StartClock);
 
         maleSocket = digitalActionManager.registerAction(actionClock);
         maleSocket.setEnabled(false);
@@ -416,7 +416,7 @@ public class CreateLogixNGTreeScaffold {
 // StopClock
         actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
         actionClock.setComment("StopClock");
-        actionClock.setBeanState(ActionClock.ClockState.StopClock);
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.StopClock);
 
         maleSocket = digitalActionManager.registerAction(actionClock);
         maleSocket.setEnabled(false);
@@ -425,10 +425,71 @@ public class CreateLogixNGTreeScaffold {
 // SetClock
         actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
         actionClock.setComment("SetClock");
-        actionClock.setBeanState(ActionClock.ClockState.SetClock);
-        actionClock.setClockTime(720);
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.SetClock);
+        actionClock.getSelectTime().setValue(720);
 
         maleSocket = digitalActionManager.registerAction(actionClock);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// SetClock
+        actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
+        actionClock.setComment("SetClock");
+        actionClock.getSelectEnum().setAddressing(NamedBeanAddressing.Memory);
+        actionClock.getSelectEnum().setMemory(memory2);
+        actionClock.getSelectTime().setAddressing(NamedBeanAddressing.Memory);
+        actionClock.getSelectTime().setMemory(memory1);
+
+        maleSocket = digitalActionManager.registerAction(actionClock);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionClockRate actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionClockRate);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// StartClock
+        actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
+        actionClockRate.setComment("StartClock");
+        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.SetClockRate);
+        actionClockRate.getSelectSpeed().setValue(4.234);
+
+        maleSocket = digitalActionManager.registerAction(actionClockRate);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// StartClock
+        actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
+        actionClockRate.setComment("StartClock");
+        actionClockRate.getSelectEnum().setAddressing(NamedBeanAddressing.Memory);
+        actionClockRate.getSelectEnum().setMemory(memory2);
+        actionClockRate.getSelectSpeed().setAddressing(NamedBeanAddressing.Memory);
+        actionClockRate.getSelectSpeed().setMemory(memory1);
+        actionClockRate.getSelectSpeed().setListenToMemory(true);
+
+        maleSocket = digitalActionManager.registerAction(actionClockRate);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// StopClock
+        actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
+        actionClockRate.setComment("StopClock");
+        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.IncreaseClockRate);
+        actionClockRate.getSelectSpeed().setValue(0.5);
+
+        maleSocket = digitalActionManager.registerAction(actionClockRate);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+// SetClock
+        actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
+        actionClockRate.setComment("SetClock");
+        actionClockRate.getSelectEnum().setEnum(ActionClockRate.ClockState.DecreaseClockRate);
+        actionClockRate.getSelectSpeed().setValue(1.22);
+
+        maleSocket = digitalActionManager.registerAction(actionClockRate);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1550,6 +1611,27 @@ public class CreateLogixNGTreeScaffold {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Toggle);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionTurnout.getSelectNamedBean().setMemory(memory3);
+        actionTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionTurnout.getSelectNamedBean().setReference("{IM1}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.LocalVariable);
+        actionTurnout.getSelectEnum().setAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectEnum().setFormula("\"IT\"+index2");
+        actionTurnout.getSelectEnum().setMemory(memory2);
+        actionTurnout.getSelectEnum().setLocalVariable("index2");
+        actionTurnout.getSelectEnum().setReference("{IM2}");
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
+                NamedBeanAddressing.Reference);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
         actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Unknown);
         actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         actionTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
@@ -2377,6 +2459,13 @@ public class CreateLogixNGTreeScaffold {
         timeout.setComment("A comment");
         timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Direct);
         timeout.getSelectDelay().setValue(100);
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.getSelectDelay().setAddressing(NamedBeanAddressing.Memory);
+        timeout.getSelectDelay().setMemory(memory3);
         maleSocket = digitalActionManager.registerAction(timeout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
