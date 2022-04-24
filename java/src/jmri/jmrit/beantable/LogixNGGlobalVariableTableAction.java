@@ -228,8 +228,7 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
 
     @Override
     protected void getListenerRefsIncludingChildren(GlobalVariable globalVariable, java.util.List<String> list) {
-        throw new UnsupportedOperationException("Not supported yet");
-//        logixNG.getListenerRefsIncludingChildren(list);
+        globalVariable.getListenerRefsIncludingChildren(list);
     }
 
     @Override

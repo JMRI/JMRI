@@ -407,13 +407,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void getListenerRefsIncludingChildren(List<String> list) {
-        throw new UnsupportedOperationException("Not supported");
-/*
         list.addAll(getListenerRefs());
-        for (int i=0; i < getNumConditionalNGs(); i++) {
-            getConditionalNG(i).getListenerRefsIncludingChildren(list);
-        }
-*/
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariable.class);
