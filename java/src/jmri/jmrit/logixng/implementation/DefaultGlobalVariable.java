@@ -47,7 +47,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     @Override
     @OverridingMethodsMustInvokeSuper
     public void setUserName(@CheckForNull String s) throws BadUserNameException {
-        if (! SymbolTable.validateName(s)) {
+        if ((s != null) && !SymbolTable.validateName(s)) {
             throw new BadUserNameException(
                     Bundle.getMessage(Locale.ENGLISH, "VariableNameIsNotValid", s),
                     Bundle.getMessage(Locale.getDefault(), "VariableNameIsNotValid", s));
