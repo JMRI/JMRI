@@ -1469,16 +1469,16 @@ public class ImportConditional {
 
         switch (ca.getType()) {
             case START_FAST_CLOCK:
-                action.setBeanState(ActionClock.ClockState.StartClock);
+                action.getSelectEnum().setEnum(ActionClock.ClockState.StartClock);
                 break;
 
             case STOP_FAST_CLOCK:
-                action.setBeanState(ActionClock.ClockState.StopClock);
+                action.getSelectEnum().setEnum(ActionClock.ClockState.StopClock);
                 break;
 
             case SET_FAST_CLOCK_TIME:
-                action.setBeanState(ActionClock.ClockState.SetClock);
-                action.setClockTime(ca.getActionData());
+                action.getSelectEnum().setEnum(ActionClock.ClockState.SetClock);
+                action.getSelectTime().setValue(ca.getActionData());
                 break;
 
             default:
