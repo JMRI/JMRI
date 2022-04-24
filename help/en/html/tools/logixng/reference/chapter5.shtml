@@ -213,13 +213,18 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Clock</h4>
+      <h4>Clock<span class="since">updated 4.99.7</span></h4>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_action.png"><img src="images/chapter5/clock_action.png"
+        alt="Chapter 5 clock action"></a>
+      </div>
 
       <ul>
         <li><strong>Set Fast Clock:</strong> Sets the time on the fast clock to the entered time.
-        The time is entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock. This
-        action sets the fast clock to the specified time regardless of whether the fast clock is
-        running or stopped.</li>
+        The time can entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock or as
+        the number of minutes since midnight, such as 720 for noon. This action sets the fast clock
+        to the specified time regardless of whether the fast clock is running or stopped.</li>
 
         <li><strong>Start Fast Clock:</strong> Starts the JMRI fast clock running. If the fast
         clock is already running, this action has no effect.</li>
@@ -227,6 +232,44 @@
         <li><strong>Stop Fast Clock:</strong> Pauses the JMRI fast clock. If the fast clock is not
         running, this action has no effect.</li>
       </ul>
+
+      <p>In addition to setting the time using a constant value, the other LogixNG modes can be
+      used.   For example, the new time can be in a memory variable which will be used to set the
+      fast clock time.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_memory.png"><img src="images/chapter5/clock_memory.png"
+        alt="Chapter 5 clock memory source"></a>
+      </div>
+
+      <p>The Memory <strong><em>listen</em></strong> option can used to automatically update the
+      fast clock time when the memory variable changes.  This eliminates the need to have a separate
+      expression to invoke the <strong>Set Fast Clock</strong> action.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Clock Rate<span class="since">since 4.99.7</span></h4>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_rate_action.png"><img src="images/chapter5/clock_rate_action.png"
+        alt="Chapter 5 clock rate action"></a>
+      </div>
+
+      <ul>
+        <li><strong>Set Clock Rate:</strong> Sets the rate for the fast clock to the entered value.
+        For example, a value of 4 will set the fast clock rate to 4:1, which is 15 real minutes for
+        a fast clock hour.</li>
+
+        <li><strong>Increase Clock Rate:</strong> Increase the fast clock speed by the entered
+        value.</li>
+
+        <li><strong>Decrease Clock Rate:</strong> Decrease the fast clock speed by the entered
+        value.</li>
+      </ul>
+
+      <p>The rate values can be whole numbers or decimals, such as .5.  The rate values can also
+      be supplied from the other LogixNG modes, such as a memory variable.</p>
+
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
