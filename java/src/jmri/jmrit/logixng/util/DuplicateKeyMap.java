@@ -88,6 +88,22 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
     }
 
     /**
+     * {@inheritDoc}
+     * @return always null
+     */
+    @Override
+    public boolean remove(Object key, Object value) {
+        List<V> l = _internalMap.get((K)key);
+        if (l != null) {
+            if (l.remove((V)value)) {
+                if (l.isEmpty()) _internalMap.remove((K)key);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Remove a value.
      * @param key the key
      * @param value the value
