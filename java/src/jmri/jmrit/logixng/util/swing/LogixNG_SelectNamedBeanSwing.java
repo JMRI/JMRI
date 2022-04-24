@@ -30,10 +30,13 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
     private BeanSelectPanel<E> _namedBeanPanel;
     private JPanel _panelDirect;
     private JPanel _panelReference;
+    private JPanel _panelMemory;
     private JPanel _panelLocalVariable;
     private JPanel _panelFormula;
     private JPanel _panelTable;
     private JTextField _referenceTextField;
+    private BeanSelectPanel<Memory> _memoryPanel;
+    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -55,6 +58,7 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         _tabbedPane = new JTabbedPane();
         _panelDirect = new javax.swing.JPanel();
         _panelReference = new javax.swing.JPanel();
+        _panelMemory = new JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
         if (selectNamedBean != null) {
@@ -63,8 +67,16 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
             _panelTable = _selectTableSwing.createPanel(null);
         }
 
+        _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
+
+        _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
+        _panelMemory.add(_memoryPanel);
+        _panelMemory.add(_listenToMemoryCheckBox);
+
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
+        _tabbedPane.addTab(NamedBeanAddressing.Memory.toString(), _panelMemory);
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
         _tabbedPane.addTab(NamedBeanAddressing.Table.toString(), _panelTable);
@@ -89,6 +101,7 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
             switch (selectNamedBean.getAddressing()) {
                 case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
                 case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
+                case Memory: _tabbedPane.setSelectedComponent(_panelMemory); break;
                 case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
                 case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
@@ -98,6 +111,8 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                 _namedBeanPanel.setDefaultNamedBean(selectNamedBean.getNamedBean().getBean());
             }
             _referenceTextField.setText(selectNamedBean.getReference());
+            _memoryPanel.setDefaultNamedBean(selectNamedBean.getMemory());
+            _listenToMemoryCheckBox.setSelected(selectNamedBean.getListenToMemory());
             _localVariableTextField.setText(selectNamedBean.getLocalVariable());
             _formulaTextField.setText(selectNamedBean.getFormula());
         }
@@ -124,6 +139,8 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                 selectNamedBean.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
+                selectNamedBean.setAddressing(NamedBeanAddressing.Memory);
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
@@ -165,6 +182,10 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.Reference);
                 selectNamedBean.setReference(_referenceTextField.getText());
+            } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
+                selectNamedBean.setAddressing(NamedBeanAddressing.Memory);
+                selectNamedBean.setMemory(_memoryPanel.getNamedBean());
+                selectNamedBean.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectNamedBean.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectNamedBean.setLocalVariable(_localVariableTextField.getText());

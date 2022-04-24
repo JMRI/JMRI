@@ -109,9 +109,9 @@ public class NamedIcon extends ImageIcon {
 
                 int numFrames = gifReader.getNumImages(true);
 
-                // No need to keep the GIF info if it's not animated, the old code works
-                // in that case.
-                if (numFrames > 1) {
+                // Treat all icons as animated since some might be tagged as animated even
+                // though they only have 1 frame.
+                if (numFrames > 0) {
                     gifState.mStreamMd = gifReader.getStreamMetadata();
                     gifState.mFrames = new IIOImage[numFrames];
                     gifState.mWidth = 0;
