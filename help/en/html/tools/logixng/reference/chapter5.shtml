@@ -222,9 +222,9 @@
 
       <ul>
         <li><strong>Set Fast Clock:</strong> Sets the time on the fast clock to the entered time.
-        The time can entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock or as
-        the number of minutes since midnight, such as 720 for noon. This action sets the fast clock
-        to the specified time regardless of whether the fast clock is running or stopped.</li>
+        The time can be entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock or
+        as the number of minutes since midnight, such as 720 for noon. This action sets the fast
+        clock to the specified time regardless of whether the fast clock is running or stopped.</li>
 
         <li><strong>Start Fast Clock:</strong> Starts the JMRI fast clock running. If the fast
         clock is already running, this action has no effect.</li>
