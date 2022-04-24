@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.*;
@@ -45,7 +46,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setUserName(String s) throws BadUserNameException {
+    public void setUserName(@CheckForNull String s) throws BadUserNameException {
         if (! SymbolTable.validateName(s)) {
             throw new BadUserNameException(
                     Bundle.getMessage(Locale.ENGLISH, "VariableNameIsNotValid", s),

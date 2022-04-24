@@ -246,6 +246,16 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
         m = new TableModel();
     }
 
+    @Override
+    public void addToFrame(@Nonnull BeanTableFrame<GlobalVariable> f) {
+        f.addToBottomBox(new JLabel(Bundle.getMessage("LogixNGGlobalVariable_InfoAboutGlobalVariables")), null);
+    }
+
+    @Override
+    public void addToFrame(@Nonnull ListedTableFrame.TabbedTableItem<GlobalVariable> tti) {
+        tti.addToBottomBox(new JLabel(Bundle.getMessage("LogixNGGlobalVariable_InfoAboutGlobalVariables")));
+    }
+
 
     protected class TableModel extends AbstractLogixNGTableAction<GlobalVariable>.TableModel {
 
