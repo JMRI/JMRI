@@ -105,6 +105,30 @@ public class DCCppCommandStationTest {
     }
 
     @Test
+    public void testIsThrottleRegisterRequired() {
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-4.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("v4+ doesn't need registers", c.isThrottleRegisterRequired());
+
+        c = new DCCppCommandStation();
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("unknown version requires throttle registers", c.isThrottleRegisterRequired());
+
+        c = new DCCppCommandStation();
+        r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.1.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("< v4 requires throttle registers", c.isThrottleRegisterRequired());
+    }
+
+    @Test
     public void testIsServoTurnoutCreationSupported() {
         //added at 3.2.0
         DCCppCommandStation c = new DCCppCommandStation();
