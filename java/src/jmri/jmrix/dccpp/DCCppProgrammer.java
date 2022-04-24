@@ -299,7 +299,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
     @Override
     public void dispose() {
-        controller().removeDCCppListener(LISTENER_MASK, this);
+        if ( _controller != null ) {
+            _controller.removeDCCppListener(LISTENER_MASK, this);
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppProgrammer.class);
