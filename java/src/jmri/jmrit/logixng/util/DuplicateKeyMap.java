@@ -87,10 +87,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    /**
-     * {@inheritDoc}
-     * @return always null
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean remove(Object key, Object value) {
         // NetBeans complains about suspicious call to Map.get(), but

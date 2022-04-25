@@ -1,23 +1,17 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.awt.GraphicsEnvironment;
 import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.Base.PrintTreeSettings;
-import jmri.jmrit.logixng.Module;
 import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
-
-import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Class providing the basic logic of the GlobalVariable_Manager interface.
@@ -131,36 +125,6 @@ public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable
         deregister(x);
         x.dispose();
     }
-
-    /*.* {@inheritDoc} *./
-    @Override
-    public void printTree(
-            PrintTreeSettings settings,
-            PrintWriter writer,
-            String indent,
-            MutableInt lineNumber) {
-
-        printTree(settings, Locale.getDefault(), writer, indent, lineNumber);
-    }
-
-    /*.* {@inheritDoc} *./
-    @Override
-    public void printTree(
-            PrintTreeSettings settings,
-            Locale locale,
-            PrintWriter writer,
-            String indent,
-            MutableInt lineNumber) {
-
-        for (GlobalVariable globalVariable : getNamedBeanSet()) {
-            globalVariable.printTree(settings, locale, writer, indent, "", lineNumber);
-            writer.println();
-        }
-        InstanceManager.getDefault(ModuleManager.class).printTree(settings, locale, writer, indent, lineNumber);
-        InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
-        InstanceManager.getDefault(GlobalVariable_InitializationManager.class).printTree(locale, writer, indent);
-    }
-*/
 
     /** {@inheritDoc} */
     @Override

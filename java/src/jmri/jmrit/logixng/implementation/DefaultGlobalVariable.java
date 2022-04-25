@@ -297,21 +297,6 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     @Override
     public void unregisterListeners() {
     }
-/*
-    protected void printTreeRow(
-            PrintTreeSettings settings,
-            Locale locale,
-            PrintWriter writer,
-            String currentIndent,
-            MutableInt lineNumber) {
-
-        if (settings._printLineNumbers) {
-            writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
-        }
-        writer.append(currentIndent);
-        writer.append(getLongDescription(locale));
-        writer.println();
-    }
 
     /** {@inheritDoc} */
     @Override
@@ -345,14 +330,8 @@ public class DefaultGlobalVariable extends AbstractNamedBean
             String indent,
             String currentIndent,
             MutableInt lineNumber) {
-/*
-        printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
-        for (int i=0; i < this.getNumConditionalNGs(); i++) {
-            getConditionalNG(i).printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
-//            writer.println();
-        }
-*/
+        throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
@@ -374,13 +353,6 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     @Override
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         throw new UnsupportedOperationException("Not supported");
-/*
-        List<NamedBeanUsageReport> report = new ArrayList<>();
-        if (bean != null) {
-            getUsageTree(0, bean, report, null);
-        }
-        return report;
-*/
     }
 
     /** {@inheritDoc} */
@@ -390,10 +362,6 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());
 
-//        level++;
-//        for (int i=0; i < this.getNumConditionalNGs(); i++) {
-//            getConditionalNG(i).getUsageTree(level, bean, report, getConditionalNG(i));
-//        }
         throw new UnsupportedOperationException("Not supported");
     }
 
