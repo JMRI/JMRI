@@ -69,6 +69,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableFrame<E> f, BeanTableDataModel<E> m, String sName);
 
+    protected boolean isEditSupported() {
+        return true;
+    }
+
     @Nonnull
     @Override
     protected abstract Manager<E> getManager();
@@ -1153,7 +1157,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         protected void configDeleteColumn(JTable table) {
             JComboBox<String> editCombo = new JComboBox<>();
             editCombo.addItem(Bundle.getMessage("ButtonSelect"));  // NOI18N
-            editCombo.addItem(Bundle.getMessage("ButtonEdit"));  // NOI18N
+            if (isEditSupported()) editCombo.addItem(Bundle.getMessage("ButtonEdit"));  // NOI18N
             editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
             if (isCopyBeanSupported()) editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
             editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N

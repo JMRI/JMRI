@@ -64,8 +64,12 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
 
     @Override
     protected AbstractLogixNGEditor<GlobalVariable> getEditor(BeanTableFrame<GlobalVariable> f, BeanTableDataModel<GlobalVariable> m, String sName) {
-//        return new LogixNGEditor(f, m, sName);
         return null;
+    }
+
+    @Override
+    protected boolean isEditSupported() {
+        return false;
     }
 
     @Override
