@@ -4,7 +4,9 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.ActionTurnoutLock;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -38,13 +40,10 @@ public class ActionTurnoutLockXml extends jmri.managers.configurexml.AbstractNam
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionTurnoutLock.TurnoutLock>();
 
-        element.addContent(new Element("stateAddressing").addContent(p.getLockAddressing().name()));
-        element.addContent(new Element("turnoutLock").addContent(p.getTurnoutLock().name()));
-        element.addContent(new Element("stateReference").addContent(p.getLockReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getLockLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getLockFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         return element;
     }
@@ -58,32 +57,19 @@ public class ActionTurnoutLockXml extends jmri.managers.configurexml.AbstractNam
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionTurnoutLock.TurnoutLock>();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "turnout");
 
-        try {
-            Element elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setLockAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element turnoutLock = shared.getChild("turnoutLock");
-            if (turnoutLock != null) {
-                h.setTurnoutLock(ActionTurnoutLock.TurnoutLock.valueOf(turnoutLock.getTextTrim()));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setLockReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setLockLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setLockFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "stateAddressing",
+                "turnoutLock",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

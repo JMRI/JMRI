@@ -6,7 +6,9 @@ import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.ActionWarrant;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -41,13 +43,10 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Warrant>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionWarrant.DirectOperation>();
 
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
-        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getOperFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
         element.addContent(new Element("dataReference").addContent(p.getDataReference()));
@@ -69,31 +68,22 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Warrant>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionWarrant.DirectOperation>();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "warrant");
 
+        selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "operationAddressing",
+                "operationDirect",
+                "operationReference",
+                "operationLocalVariable",
+                "operationFormula");
+
         try {
-            Element elem = shared.getChild("operationAddressing");
-            if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("operationDirect");
-            if (elem != null) {
-                h.setOperationDirect(ActionWarrant.DirectOperation.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("operationReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-
-            elem = shared.getChild("operationLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("operationFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("dataAddressing");
+            Element elem = shared.getChild("dataAddressing");
             if (elem != null) {
                 h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

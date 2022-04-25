@@ -5,6 +5,8 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionSensor;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -38,13 +40,10 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionSensor.SensorState>();
 
-        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("sensorState").addContent(p.getBeanState().name()));
-        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         return element;
     }
@@ -58,32 +57,19 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionSensor.SensorState>();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "sensor");
 
-        try {
-            Element elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element sensorState = shared.getChild("sensorState");
-            if (sensorState != null) {
-                h.setBeanState(ActionSensor.SensorState.valueOf(sensorState.getTextTrim()));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setStateReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "stateAddressing",
+                "sensorState",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

@@ -201,21 +201,21 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
 
         // Test to set sensor to inactive
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Inactive);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.INACTIVE);
 
         // Test to set sensor to toggle
-        actionSensor.setBeanState(ActionSensor.SensorState.Toggle);
+        actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
 
         // Test to set sensor to toggle
-        actionSensor.setBeanState(ActionSensor.SensorState.Toggle);
+        actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
@@ -235,7 +235,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Sensor t4 = InstanceManager.getDefault(SensorManager.class).provide("IS104");
         Sensor t5 = InstanceManager.getDefault(SensorManager.class).provide("IS105");
 
-        actionSensor.setBeanState(ActionSensor.SensorState.Active);
+        actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Active);
         actionSensor.getSelectNamedBean().setNamedBean(t1.getSystemName());
         actionSensor.getSelectNamedBean().setReference("{IM1}");    // Points to "IS102"
         actionSensor.getSelectNamedBean().setLocalVariable("mySensor");
@@ -336,17 +336,17 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
 
         // Test direct addressing
-        actionSensor.setStateAddressing(NamedBeanAddressing.Direct);
+        actionSensor.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         // Test Inactive
         sensor.setState(Sensor.ACTIVE);
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Inactive);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
         Assert.assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
         // Test Inactive
         sensor.setState(Sensor.INACTIVE);
-        actionSensor.setBeanState(ActionSensor.SensorState.Active);
+        actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Active);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
@@ -354,8 +354,8 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
 
         // Test reference by memory addressing
-        actionSensor.setStateAddressing(NamedBeanAddressing.Reference);
-        actionSensor.setStateReference("{IM1}");
+        actionSensor.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionSensor.getSelectEnum().setReference("{IM1}");
         // Test Inactive
         m1.setValue("Inactive");
         sensor.setState(Sensor.ACTIVE);
@@ -373,8 +373,8 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
 
         // Test reference by local variable addressing
-        actionSensor.setStateAddressing(NamedBeanAddressing.Reference);
-        actionSensor.setStateReference("{refVariable}");
+        actionSensor.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionSensor.getSelectEnum().setReference("{refVariable}");
         // Test Inactive
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Inactive");
@@ -394,8 +394,8 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
 
         // Test local variable addressing
-        actionSensor.setStateAddressing(NamedBeanAddressing.Reference);
-        actionSensor.setStateLocalVariable("myVariable");
+        actionSensor.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionSensor.getSelectEnum().setLocalVariable("myVariable");
         // Test Inactive
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Inactive");
@@ -415,8 +415,8 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
 
         // Test formula addressing
-        actionSensor.setStateAddressing(NamedBeanAddressing.Formula);
-        actionSensor.setStateFormula("refVariable + myVariable");
+        actionSensor.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
+        actionSensor.getSelectEnum().setFormula("refVariable + myVariable");
         // Test Inactive
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Ina");
@@ -532,7 +532,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunDelayed(false);
         actionSensor = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionSensor.getSelectNamedBean().setNamedBean(sensor);
-        actionSensor.setBeanState(ActionSensor.SensorState.Active);
+        actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Active);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);
         conditionalNG.getChild(0).connect(socket);
 

@@ -7,10 +7,8 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
-import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
@@ -29,12 +27,10 @@ public class ActionEntryExit extends AbstractDigitalAction {
     private final LogixNG_SelectNamedBean<DestinationPoints> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
                     this, DestinationPoints.class, InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class));
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private Operation _operationDirect = Operation.SetNXPairEnabled;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+
+    private final LogixNG_SelectEnum<Operation> _selectEnum =
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.SetNXPairEnabled);
+
 
     public ActionEntryExit(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -50,11 +46,7 @@ public class ActionEntryExit extends AbstractDigitalAction {
         ActionEntryExit copy = new ActionEntryExit(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
-        copy.setOperationDirect(_operationDirect);
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationFormula(_operationFormula);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationReference(_operationReference);
+        _selectEnum.copy(copy._selectEnum);
         return manager.registerAction(copy);
     }
 
@@ -62,60 +54,8 @@ public class ActionEntryExit extends AbstractDigitalAction {
         return _selectNamedBean;
     }
 
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseLockFormula();
-    }
-
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperationDirect(Operation state) {
-        _operationDirect = state;
-    }
-
-    public Operation getOperationDirect() {
-        return _operationDirect;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseLockFormula();
-    }
-
-    public String getLockFormula() {
-        return _operationFormula;
-    }
-
-    private void parseLockFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
+    public LogixNG_SelectEnum<Operation> getSelectEnum() {
+        return _selectEnum;
     }
 
     /** {@inheritDoc} */
@@ -124,49 +64,14 @@ public class ActionEntryExit extends AbstractDigitalAction {
         return Category.ITEM;
     }
 
-    private String getNewLock() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         DestinationPoints entryExit = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-        if (entryExit == null) {
-//            log.error("entryExit is null");
-            return;
-        }
+        if (entryExit == null) return;
 
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewLock() : null;
-
-        Operation oper;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            oper = _operationDirect;
-        } else {
-            oper = Operation.valueOf(name);
-        }
+        Operation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
         // Variables used in lambda must be effectively final
         Operation theOper = oper;
@@ -207,28 +112,7 @@ public class ActionEntryExit extends AbstractDigitalAction {
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
-        String state;
-
-        switch (_operationAddressing) {
-            case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
-        }
+        String state = _selectEnum.getDescription(locale);
 
         return Bundle.getMessage(locale, "ActionEntryExit_Long", namedBean, state);
     }

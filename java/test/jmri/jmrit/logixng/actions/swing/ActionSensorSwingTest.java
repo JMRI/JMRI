@@ -72,7 +72,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
 
         Assert.assertEquals("IS1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
-        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getBeanState());
+        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getSelectEnum().getEnum());
     }
 
     // The minimal setup for log4J

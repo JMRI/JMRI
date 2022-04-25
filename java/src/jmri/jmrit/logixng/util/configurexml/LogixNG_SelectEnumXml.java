@@ -107,19 +107,29 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
         }
 
         try {
-            Element elem = shared.getChild(addressingElementName);
-            if (elem != null) {
-                selectEnum.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            Element elem;
+
+            if (addressingElementName != null) {
+                elem = shared.getChild(addressingElementName);
+                if (elem != null) {
+                    selectEnum.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
             }
 
-            elem = shared.getChild(referenceElementName);
-            if (elem != null) selectEnum.setReference(elem.getTextTrim());
+            if (referenceElementName != null) {
+                elem = shared.getChild(referenceElementName);
+                if (elem != null) selectEnum.setReference(elem.getTextTrim());
+            }
 
-            elem = shared.getChild(localVariableElementName);
-            if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
+            if (localVariableElementName != null) {
+                elem = shared.getChild(localVariableElementName);
+                if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
+            }
 
-            elem = shared.getChild(formulaElementName);
-            if (elem != null) selectEnum.setFormula(elem.getTextTrim());
+            if (formulaElementName != null) {
+                elem = shared.getChild(formulaElementName);
+                if (elem != null) selectEnum.setFormula(elem.getTextTrim());
+            }
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);

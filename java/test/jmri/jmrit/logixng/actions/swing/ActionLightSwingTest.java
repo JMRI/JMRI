@@ -80,10 +80,10 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
         JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
-        JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getBeanState();});
+        JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getSelectEnum().getEnum();});
 
         Assert.assertEquals("IL1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
-        Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
+        Assert.assertEquals(ActionLight.LightState.Off, action.getSelectEnum().getEnum());
     }
 
     // The minimal setup for log4J

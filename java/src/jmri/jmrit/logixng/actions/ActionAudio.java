@@ -2,17 +2,14 @@ package jmri.jmrit.logixng.actions;
 
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -26,12 +23,10 @@ public class ActionAudio extends AbstractDigitalAction {
     private final LogixNG_SelectNamedBean<Audio> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
                     this, Audio.class, InstanceManager.getDefault(AudioManager.class));
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private Operation _operation = Operation.Play;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+
+    private final LogixNG_SelectEnum<Operation> _selectEnum =
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play);
+
 
     public ActionAudio(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -47,11 +42,7 @@ public class ActionAudio extends AbstractDigitalAction {
         ActionAudio copy = new ActionAudio(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
-        copy.setOperation(_operation);
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationFormula(_operationFormula);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationReference(_operationReference);
+        _selectEnum.copy(copy._selectEnum);
         return manager.registerAction(copy);
     }
 
@@ -59,60 +50,8 @@ public class ActionAudio extends AbstractDigitalAction {
         return _selectNamedBean;
     }
 
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseOperationFormula();
-    }
-
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperation(Operation state) {
-        _operation = state;
-    }
-
-    public Operation getOperation() {
-        return _operation;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseOperationFormula();
-    }
-
-    public String getOperationFormula() {
-        return _operationFormula;
-    }
-
-    private void parseOperationFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
+    public LogixNG_SelectEnum<Operation> getSelectEnum() {
+        return _selectEnum;
     }
 
     /** {@inheritDoc} */
@@ -121,48 +60,14 @@ public class ActionAudio extends AbstractDigitalAction {
         return Category.ITEM;
     }
 
-    private String getNewState() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         Audio audio = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-        if (audio == null) {
-//            log.warn("audio is null");
-            return;
-        }
+        if (audio == null) return;
 
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewState() : null;
-
-        Operation operation;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            operation = _operation;
-        } else {
-            operation = Operation.valueOf(name);
-        }
+        Operation operation = _selectEnum.evaluateEnum(getConditionalNG());
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (audio.getSubType() == Audio.SOURCE) {
@@ -232,28 +137,7 @@ public class ActionAudio extends AbstractDigitalAction {
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
-        String operation;
-
-        switch (_operationAddressing) {
-            case Direct:
-                operation = Bundle.getMessage(locale, "AddressByDirect", _operation._text);
-                break;
-
-            case Reference:
-                operation = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                operation = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                operation = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
-        }
+        String operation = _selectEnum.getDescription(locale);
 
         return Bundle.getMessage(locale, "ActionAudio_Long", operation, namedBean);
     }

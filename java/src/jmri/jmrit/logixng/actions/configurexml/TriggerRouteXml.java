@@ -4,7 +4,9 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.TriggerRoute;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -38,13 +40,10 @@ public class TriggerRouteXml extends jmri.managers.configurexml.AbstractNamedBea
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Route>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        var selectEnumXml = new LogixNG_SelectEnumXml<TriggerRoute.Operation>();
 
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
-        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getLockFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         return element;
     }
@@ -58,32 +57,19 @@ public class TriggerRouteXml extends jmri.managers.configurexml.AbstractNamedBea
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Route>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<TriggerRoute.Operation>();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "route");
 
-        try {
-            Element elem = shared.getChild("operationAddressing");
-            if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element routeLock = shared.getChild("operationDirect");
-            if (routeLock != null) {
-                h.setOperationDirect(TriggerRoute.Operation.valueOf(routeLock.getTextTrim()));
-            }
-
-            elem = shared.getChild("operationReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-
-            elem = shared.getChild("operationLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("operationFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "operationAddressing",
+                "operationDirect",
+                "operationReference",
+                "operationLocalVariable",
+                "operationFormula");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

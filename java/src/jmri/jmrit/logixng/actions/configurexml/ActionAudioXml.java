@@ -5,6 +5,8 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionAudio;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -38,13 +40,10 @@ public class ActionAudioXml extends jmri.managers.configurexml.AbstractNamedBean
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Audio>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionAudio.Operation>();
 
-        element.addContent(new Element("stateAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("audioState").addContent(p.getOperation().name()));
-        element.addContent(new Element("stateReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getOperationFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         return element;
     }
@@ -58,32 +57,19 @@ public class ActionAudioXml extends jmri.managers.configurexml.AbstractNamedBean
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Audio>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionAudio.Operation>();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "audio");
 
-        try {
-            Element elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element audioState = shared.getChild("audioState");
-            if (audioState != null) {
-                h.setOperation(ActionAudio.Operation.valueOf(audioState.getTextTrim()));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "stateAddressing",
+                "audioState",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

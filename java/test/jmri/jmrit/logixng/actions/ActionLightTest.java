@@ -202,21 +202,21 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
 
         // Test to set light to off
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.Off);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
         Assert.assertTrue("light is on",light.getCommandedState() == Light.OFF);
 
         // Test to set light to toggle
-        actionLight.setBeanState(ActionLight.LightState.Toggle);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
         Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
 
         // Test to set light to toggle
-        actionLight.setBeanState(ActionLight.LightState.Toggle);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
@@ -236,7 +236,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Light t4 = InstanceManager.getDefault(LightManager.class).provide("IL104");
         Light t5 = InstanceManager.getDefault(LightManager.class).provide("IL105");
 
-        actionLight.setBeanState(ActionLight.LightState.On);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.On);
         actionLight.getSelectNamedBean().setNamedBean(t1.getSystemName());
         actionLight.getSelectNamedBean().setReference("{IM1}");    // Points to "IL102"
         actionLight.getSelectNamedBean().setLocalVariable("myLight");
@@ -337,17 +337,17 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
 
         // Test direct addressing
-        actionLight.setStateAddressing(NamedBeanAddressing.Direct);
+        actionLight.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         // Test Off
         light.setState(Light.ON);
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.Off);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
         Assert.assertEquals(Light.OFF, light.getCommandedState());
         // Test On
         light.setState(Light.OFF);
-        actionLight.setBeanState(ActionLight.LightState.On);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.On);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
@@ -355,8 +355,8 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
 
         // Test reference by memory addressing
-        actionLight.setStateAddressing(NamedBeanAddressing.Reference);
-        actionLight.setStateReference("{IM1}");
+        actionLight.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionLight.getSelectEnum().setReference("{IM1}");
         // Test Off
         m1.setValue("Off");
         light.setState(Light.ON);
@@ -374,8 +374,8 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
 
         // Test reference by local variable addressing
-        actionLight.setStateAddressing(NamedBeanAddressing.Reference);
-        actionLight.setStateReference("{refVariable}");
+        actionLight.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionLight.getSelectEnum().setReference("{refVariable}");
         // Test Off
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Off");
@@ -395,8 +395,8 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
 
         // Test local variable addressing
-        actionLight.setStateAddressing(NamedBeanAddressing.Reference);
-        actionLight.setStateLocalVariable("myVariable");
+        actionLight.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionLight.getSelectEnum().setLocalVariable("myVariable");
         // Test Off
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Off");
@@ -416,8 +416,8 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
 
         // Test formula addressing
-        actionLight.setStateAddressing(NamedBeanAddressing.Formula);
-        actionLight.setStateFormula("refVariable + myVariable");
+        actionLight.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
+        actionLight.getSelectEnum().setFormula("refVariable + myVariable");
         // Test Off
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "O");
@@ -533,7 +533,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionLight.getSelectNamedBean().setNamedBean(light);
-        actionLight.setBeanState(ActionLight.LightState.On);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.On);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
         conditionalNG.getChild(0).connect(socket);
 

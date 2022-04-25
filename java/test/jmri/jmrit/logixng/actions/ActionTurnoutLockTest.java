@@ -190,21 +190,21 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue(turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test to set turnout to closed
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Unlock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Unlock);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue(!turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test to set turnout to toggle
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Toggle);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue(turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test to set turnout to toggle
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Toggle);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
@@ -224,7 +224,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Turnout t4 = new MyTurnout("IT104"); InstanceManager.getDefault(TurnoutManager.class).register(t4);
         Turnout t5 = new MyTurnout("IT105"); InstanceManager.getDefault(TurnoutManager.class).register(t5);
 
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Lock);
         actionTurnoutLock.getSelectNamedBean().setNamedBean(t1.getSystemName());
         actionTurnoutLock.getSelectNamedBean().setReference("{IM1}");    // Points to "IT102"
         actionTurnoutLock.getSelectNamedBean().setLocalVariable("myTurnout");
@@ -325,25 +325,25 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test direct addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Direct);
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         // Test Unlock
         turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Unlock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Unlock);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertFalse(turnout.getLocked(Turnout.CABLOCKOUT));
         // Test Lock
         turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Lock);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertTrue(turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test reference by memory addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Reference);
-        actionTurnoutLock.setLockReference("{IM1}");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectEnum().setReference("{IM1}");
         // Test Unlock
         m1.setValue("Unlock");
         turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
@@ -361,8 +361,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test reference by local variable addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Reference);
-        actionTurnoutLock.setLockReference("{refVariable}");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectEnum().setReference("{refVariable}");
         // Test Unlock
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Unlock");
@@ -382,8 +382,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test local variable addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Reference);
-        actionTurnoutLock.setLockLocalVariable("myVariable");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectEnum().setLocalVariable("myVariable");
         // Test Unlock
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Unlock");
@@ -403,8 +403,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test formula addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Formula);
-        actionTurnoutLock.setLockFormula("refVariable + myVariable");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
+        actionTurnoutLock.getSelectEnum().setFormula("refVariable + myVariable");
         // Test Unlock
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Unlo");
@@ -522,7 +522,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         actionTurnoutLock = new ActionTurnoutLock(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionTurnoutLock.getSelectNamedBean().setNamedBean(turnout);
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Lock);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnoutLock);
         conditionalNG.getChild(0).connect(socket);
 

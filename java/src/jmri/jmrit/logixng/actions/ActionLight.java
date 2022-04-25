@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -29,12 +30,8 @@ public class ActionLight extends AbstractDigitalAction {
             new LogixNG_SelectNamedBean<>(
                     this, Light.class, InstanceManager.getDefault(LightManager.class));
 
-    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
-    private LightState _lightState = LightState.On;
-    private String _stateReference = "";
-    private String _stateLocalVariable = "";
-    private String _stateFormula = "";
-    private ExpressionNode _stateExpressionNode;
+    private final LogixNG_SelectEnum<LightState> _selectEnum =
+            new LogixNG_SelectEnum<>(this, LightState.values(), LightState.On);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -42,7 +39,8 @@ public class ActionLight extends AbstractDigitalAction {
     private String _dataFormula = "";
     private ExpressionNode _dataExpressionNode;
 
-    private int _lightValue= 0;
+    private int _lightValue = 0;
+
 
     public ActionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -58,12 +56,7 @@ public class ActionLight extends AbstractDigitalAction {
         ActionLight copy = new ActionLight(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
-        copy.setBeanState(_lightState);
-
-        copy.setStateAddressing(_stateAddressing);
-        copy.setStateFormula(_stateFormula);
-        copy.setStateLocalVariable(_stateLocalVariable);
-        copy.setStateReference(_stateReference);
+        _selectEnum.copy(copy._selectEnum);
 
         copy.setDataAddressing(_dataAddressing);
         copy.setDataReference(_dataReference);
@@ -79,62 +72,9 @@ public class ActionLight extends AbstractDigitalAction {
         return _selectNamedBean;
     }
 
-    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _stateAddressing = addressing;
-        parseStateFormula();
+    public LogixNG_SelectEnum<LightState> getSelectEnum() {
+        return _selectEnum;
     }
-
-    public NamedBeanAddressing getStateAddressing() {
-        return _stateAddressing;
-    }
-
-    public void setBeanState(LightState state) {
-        _lightState = state;
-    }
-
-    public LightState getBeanState() {
-        return _lightState;
-    }
-
-    public void setStateReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _stateReference = reference;
-    }
-
-    public String getStateReference() {
-        return _stateReference;
-    }
-
-    public void setStateLocalVariable(@Nonnull String localVariable) {
-        _stateLocalVariable = localVariable;
-    }
-
-    public String getStateLocalVariable() {
-        return _stateLocalVariable;
-    }
-
-    public void setStateFormula(@Nonnull String formula) throws ParserException {
-        _stateFormula = formula;
-        parseStateFormula();
-    }
-
-    public String getStateFormula() {
-        return _stateFormula;
-    }
-
-    private void parseStateFormula() throws ParserException {
-        if (_stateAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _stateExpressionNode = parser.parseExpression(_stateFormula);
-        } else {
-            _stateExpressionNode = null;
-        }
-    }
-
 
     public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
         _dataAddressing = addressing;
@@ -199,30 +139,6 @@ public class ActionLight extends AbstractDigitalAction {
         return Category.ITEM;
     }
 
-    private String getNewState() throws JmriException {
-
-        switch (_stateAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
-
-            case Formula:
-                return _stateExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _stateExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
-        }
-    }
-
     private int getNewData() throws JmriException {
         String newValue = "";
 
@@ -267,20 +183,9 @@ public class ActionLight extends AbstractDigitalAction {
     public void execute() throws JmriException {
         Light light = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-        if (light == null) {
-//            log.warn("light is null");
-            return;
-        }
+        if (light == null) return;
 
-        String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState() : null;
-
-        LightState state;
-        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
-            state = _lightState;
-        } else {
-            state = LightState.valueOf(name);
-        }
+        LightState state = _selectEnum.evaluateEnum(getConditionalNG());
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == LightState.Toggle) {
@@ -324,46 +229,27 @@ public class ActionLight extends AbstractDigitalAction {
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
-        String state;
+        String state = _selectEnum.getDescription(locale);
 
-        switch (_stateAddressing) {
-            case Direct:
-                if (_lightState == LightState.Intensity || _lightState == LightState.Interval) {
-                    String bundleKey = "Light_Long_Value";
-                    switch (_dataAddressing) {
-                        case Direct:
-                            String type = _lightState == LightState.Intensity ?
-                                     Bundle.getMessage("Light_Intensity_Value") :
-                                     Bundle.getMessage("Light_Interval_Value");
-                            return Bundle.getMessage(locale, bundleKey, namedBean, type, _lightValue);
-                        case Reference:
-                            return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByReference", _dataReference));
-                        case LocalVariable:
-                            return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
-                        case Formula:
-                            return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByFormula", _dataFormula));
-                        default:
-                            throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
-                    }
-                } else {
-                    state = Bundle.getMessage(locale, "AddressByDirect", _lightState._text);
+        if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
+            if (_selectEnum.getEnum() == LightState.Intensity || _selectEnum.getEnum() == LightState.Interval) {
+                String bundleKey = "Light_Long_Value";
+                switch (_dataAddressing) {
+                    case Direct:
+                        String type = _selectEnum.getEnum() == LightState.Intensity ?
+                                 Bundle.getMessage("Light_Intensity_Value") :
+                                 Bundle.getMessage("Light_Interval_Value");
+                        return Bundle.getMessage(locale, bundleKey, namedBean, type, _lightValue);
+                    case Reference:
+                        return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByReference", _dataReference));
+                    case LocalVariable:
+                        return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+                    case Formula:
+                        return Bundle.getMessage(locale, bundleKey, namedBean, "", Bundle.getMessage("AddressByFormula", _dataFormula));
+                    default:
+                        throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
                 }
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
+            }
         }
 
         return Bundle.getMessage(locale, "Light_Long", namedBean, state);

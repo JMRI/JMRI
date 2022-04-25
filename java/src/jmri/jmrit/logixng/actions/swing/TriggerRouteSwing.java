@@ -7,18 +7,14 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.TriggerRoute;
 import jmri.jmrit.logixng.actions.TriggerRoute.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
-import jmri.util.swing.BeanSelectPanel;
-import jmri.util.swing.JComboBoxUtil;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 
 /**
  * Configures an TriggerRoute object with a Swing JPanel.
@@ -28,17 +24,15 @@ import jmri.util.swing.JComboBoxUtil;
 public class TriggerRouteSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectNamedBeanSwing<Route> _selectNamedBeanSwing;
+    private LogixNG_SelectEnumSwing<Operation> _selectOperationSwing;
 
-    private JTabbedPane _tabbedPaneOperation;
-    private JComboBox<Operation> _stateComboBox;
-    private JPanel _panelOperationDirect;
-    private JPanel _panelOperationReference;
-    private JPanel _panelOperationLocalVariable;
-    private JPanel _panelOperationFormula;
-    private JTextField _routeLockReferenceTextField;
-    private JTextField _routeLockLocalVariableTextField;
-    private JTextField _routeLockFormulaTextField;
 
+    public TriggerRouteSwing() {
+    }
+
+    public TriggerRouteSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -47,60 +41,19 @@ public class TriggerRouteSwing extends AbstractDigitalActionSwing {
         _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
                 InstanceManager.getDefault(RouteManager.class), getJDialog(), this);
 
+        _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+
         panel = new JPanel();
 
         JPanel _tabbedPaneNamedBean;
+        JPanel _tabbedPaneOperation;
+
         if (action != null) {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), Operation.values());
         } else {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
-        }
-
-
-        _tabbedPaneOperation = new JTabbedPane();
-        _panelOperationDirect = new javax.swing.JPanel();
-        _panelOperationReference = new javax.swing.JPanel();
-        _panelOperationLocalVariable = new javax.swing.JPanel();
-        _panelOperationFormula = new javax.swing.JPanel();
-
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationDirect);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationReference);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationLocalVariable);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (Operation e : Operation.values()) {
-            _stateComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-
-        _panelOperationDirect.add(_stateComboBox);
-
-        _routeLockReferenceTextField = new JTextField();
-        _routeLockReferenceTextField.setColumns(30);
-        _panelOperationReference.add(_routeLockReferenceTextField);
-
-        _routeLockLocalVariableTextField = new JTextField();
-        _routeLockLocalVariableTextField.setColumns(30);
-        _panelOperationLocalVariable.add(_routeLockLocalVariableTextField);
-
-        _routeLockFormulaTextField = new JTextField();
-        _routeLockFormulaTextField.setColumns(30);
-        _panelOperationFormula.add(_routeLockFormulaTextField);
-
-
-        if (action != null) {
-            switch (action.getOperationAddressing()) {
-                case Direct: _tabbedPaneOperation.setSelectedComponent(_panelOperationDirect); break;
-                case Reference: _tabbedPaneOperation.setSelectedComponent(_panelOperationReference); break;
-                case LocalVariable: _tabbedPaneOperation.setSelectedComponent(_panelOperationLocalVariable); break;
-                case Formula: _tabbedPaneOperation.setSelectedComponent(_panelOperationFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getOperationAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getOperationDirect());
-            _routeLockReferenceTextField.setText(action.getOperationReference());
-            _routeLockLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _routeLockFormulaTextField.setText(action.getLockFormula());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, Operation.values());
         }
 
         JComponent[] components = new JComponent[]{
@@ -119,16 +72,9 @@ public class TriggerRouteSwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         TriggerRoute action = new TriggerRoute("IQDA1", null);
 
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationReference(_routeLockReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-
         _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
+
         return errorMessages.isEmpty();
     }
 
@@ -148,25 +94,7 @@ public class TriggerRouteSwing extends AbstractDigitalActionSwing {
         }
         TriggerRoute action = (TriggerRoute)object;
         _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_routeLockReferenceTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_routeLockLocalVariableTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_routeLockFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneRoute has unknown selection");
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+        _selectOperationSwing.updateObject(action.getSelectEnum());
     }
 
     /** {@inheritDoc} */
@@ -177,7 +105,8 @@ public class TriggerRouteSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        // Do nothing
+        _selectNamedBeanSwing.dispose();
+        _selectOperationSwing.dispose();
     }
 
 

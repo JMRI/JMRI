@@ -12,9 +12,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionEntryExit;
 import jmri.jmrit.logixng.actions.ActionEntryExit.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
-import jmri.util.swing.JComboBoxUtil;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 
 /**
  * Configures an EntryExit object with a Swing JPanel.
@@ -24,17 +23,15 @@ import jmri.util.swing.JComboBoxUtil;
 public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectNamedBeanSwing<DestinationPoints> _selectNamedBeanSwing;
+    private LogixNG_SelectEnumSwing<Operation> _selectOperationSwing;
 
-    private JTabbedPane _tabbedPaneOperation;
-    private JComboBox<Operation> _stateComboBox;
-    private JPanel _panelOperationDirect;
-    private JPanel _panelOperationReference;
-    private JPanel _panelOperationLocalVariable;
-    private JPanel _panelOperationFormula;
-    private JTextField _entryExitLockReferenceTextField;
-    private JTextField _entryExitLockLocalVariableTextField;
-    private JTextField _entryExitLockFormulaTextField;
 
+    public ActionEntryExitSwing() {
+    }
+
+    public ActionEntryExitSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -43,60 +40,19 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
                 InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), getJDialog(), this);
 
+        _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+
         panel = new JPanel();
 
         JPanel _tabbedPaneNamedBean;
+        JPanel _tabbedPaneOperation;
+
         if (action != null) {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), Operation.values());
         } else {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
-        }
-
-
-        _tabbedPaneOperation = new JTabbedPane();
-        _panelOperationDirect = new javax.swing.JPanel();
-        _panelOperationReference = new javax.swing.JPanel();
-        _panelOperationLocalVariable = new javax.swing.JPanel();
-        _panelOperationFormula = new javax.swing.JPanel();
-
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationDirect);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationReference);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationLocalVariable);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (Operation e : Operation.values()) {
-            _stateComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-
-        _panelOperationDirect.add(_stateComboBox);
-
-        _entryExitLockReferenceTextField = new JTextField();
-        _entryExitLockReferenceTextField.setColumns(30);
-        _panelOperationReference.add(_entryExitLockReferenceTextField);
-
-        _entryExitLockLocalVariableTextField = new JTextField();
-        _entryExitLockLocalVariableTextField.setColumns(30);
-        _panelOperationLocalVariable.add(_entryExitLockLocalVariableTextField);
-
-        _entryExitLockFormulaTextField = new JTextField();
-        _entryExitLockFormulaTextField.setColumns(30);
-        _panelOperationFormula.add(_entryExitLockFormulaTextField);
-
-
-        if (action != null) {
-            switch (action.getOperationAddressing()) {
-                case Direct: _tabbedPaneOperation.setSelectedComponent(_panelOperationDirect); break;
-                case Reference: _tabbedPaneOperation.setSelectedComponent(_panelOperationReference); break;
-                case LocalVariable: _tabbedPaneOperation.setSelectedComponent(_panelOperationLocalVariable); break;
-                case Formula: _tabbedPaneOperation.setSelectedComponent(_panelOperationFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getOperationAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getOperationDirect());
-            _entryExitLockReferenceTextField.setText(action.getOperationReference());
-            _entryExitLockLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _entryExitLockFormulaTextField.setText(action.getLockFormula());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, Operation.values());
         }
 
         JComponent[] components = new JComponent[]{
@@ -115,16 +71,9 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ActionEntryExit action = new ActionEntryExit("IQDA1", null);
 
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationReference(_entryExitLockReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-
         _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
+
         return errorMessages.isEmpty();
     }
 
@@ -144,25 +93,7 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         }
         ActionEntryExit action = (ActionEntryExit)object;
         _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_entryExitLockReferenceTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_entryExitLockLocalVariableTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_entryExitLockFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneEntryExit has unknown selection");
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+        _selectOperationSwing.updateObject(action.getSelectEnum());
     }
 
     /** {@inheritDoc} */
@@ -173,7 +104,8 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        // Do nothing
+        _selectNamedBeanSwing.dispose();
+        _selectOperationSwing.dispose();
     }
 
 

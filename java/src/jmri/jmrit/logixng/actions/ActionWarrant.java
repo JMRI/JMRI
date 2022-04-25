@@ -8,7 +8,7 @@ import jmri.*;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -28,12 +28,8 @@ public class ActionWarrant extends AbstractDigitalAction {
             new LogixNG_SelectNamedBean<>(
                     this, Warrant.class, InstanceManager.getDefault(WarrantManager.class));
 
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.AllocateWarrantRoute;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+    private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.AllocateWarrantRoute);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -58,12 +54,7 @@ public class ActionWarrant extends AbstractDigitalAction {
         ActionWarrant copy = new ActionWarrant(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
-
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationDirect(_operationDirect);
-        copy.setOperationReference(_operationReference);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationFormula(_operationFormula);
+        _selectEnum.copy(copy._selectEnum);
 
         copy.setDataAddressing(_dataAddressing);
         copy.setDataReference(_dataReference);
@@ -80,62 +71,9 @@ public class ActionWarrant extends AbstractDigitalAction {
         return _selectNamedBean;
     }
 
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseOperFormula();
+    public LogixNG_SelectEnum<DirectOperation> getSelectEnum() {
+        return _selectEnum;
     }
-
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperationDirect(DirectOperation state) {
-        _operationDirect = state;
-    }
-
-    public DirectOperation getOperationDirect() {
-        return _operationDirect;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseOperFormula();
-    }
-
-    public String getOperFormula() {
-        return _operationFormula;
-    }
-
-    private void parseOperFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
-    }
-
 
     public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
         _dataAddressing = addressing;
@@ -209,35 +147,11 @@ public class ActionWarrant extends AbstractDigitalAction {
     }
 
 
-    private String getNewOper() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
-    }
-
-    private String getNewData() throws JmriException {
+    private String getNewData(DirectOperation theOper) throws JmriException {
 
         switch (_dataAddressing) {
             case Direct:
-                switch(_operationDirect) {
+                switch(theOper) {
                     case SetTrainId:
                     case SetTrainName:
                         return _trainIdName;
@@ -257,14 +171,14 @@ public class ActionWarrant extends AbstractDigitalAction {
                         .convertToString(symbolTable.getValue(_dataLocalVariable), false);
 
             case Formula:
-                return _operationExpressionNode != null
+                return _dataExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _dataExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)
                         : null;
 
             default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
+                throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
         }
     }
 
@@ -278,15 +192,7 @@ public class ActionWarrant extends AbstractDigitalAction {
             return;
         }
 
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewOper() : null;
-
-        DirectOperation oper;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            oper = _operationDirect;
-        } else {
-            oper = DirectOperation.valueOf(name);
-        }
+        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
         // Variables used in lambda must be effectively final
         DirectOperation theOper = oper;
@@ -353,12 +259,12 @@ public class ActionWarrant extends AbstractDigitalAction {
                     }
                     break;
                 case SetTrainId:
-                    if(!warrant.getSpeedUtil().setAddress(getNewData())) {
+                    if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
                         throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
                     }
                     break;
                 case SetTrainName:
-                    warrant.setTrainName(getNewData());
+                    warrant.setTrainName(getNewData(theOper));
                     break;
 
                 default:
@@ -385,35 +291,19 @@ public class ActionWarrant extends AbstractDigitalAction {
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
-        String state = "";
+        String state = _selectEnum.getDescription(locale);
 
-        switch (_operationAddressing) {
-            case Direct:
-                if (_operationDirect == DirectOperation.SetTrainId) {
-                    return getLongDataDescription(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainIdName);
-                } else if (_operationDirect == DirectOperation.SetTrainName) {
-                    return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainIdName);
-                } else if (_operationDirect == DirectOperation.ControlAutoTrain) {
-                    return getLongDataDescription(locale, "ActionWarrant_Long_Control", namedBean, _controlAutoTrain.name());
-                } else {
-                    state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
+        if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
+            if (_selectEnum.getEnum() != null) {
+                switch (_selectEnum.getEnum()) {
+                    case SetTrainId:
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainIdName);
+                    case SetTrainName:
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainIdName);
+                    case ControlAutoTrain:
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Control", namedBean, _controlAutoTrain.name());
                 }
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
+            }
         }
 
         return Bundle.getMessage(locale, "ActionWarrant_Long", namedBean, state);
