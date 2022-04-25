@@ -93,10 +93,12 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
      */
     @Override
     public boolean remove(Object key, Object value) {
-        List<V> l = _internalMap.get((K)key);
+        // NetBeans complains about suspicious call to Map.get(), but
+        // JMRI Static analysis doesn't allow casting to (K)key
+        List<V> l = _internalMap.get(key);
         if (l != null) {
-            if (l.remove((V)value)) {
-                if (l.isEmpty()) _internalMap.remove((K)key);
+            if (l.remove(value)) {
+                if (l.isEmpty()) _internalMap.remove(key);
                 return true;
             }
         }
