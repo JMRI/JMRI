@@ -563,7 +563,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-3.1.7 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.0 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }
