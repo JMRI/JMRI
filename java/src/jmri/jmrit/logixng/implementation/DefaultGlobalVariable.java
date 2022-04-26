@@ -60,20 +60,23 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     public void initialize() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable();
 
+        Object value;
+
         switch (_initialValueType) {
             case None:
+                value = null;
                 break;
 
             case Integer:
-                _value = Long.parseLong(_initialValueData);
+                value = Long.parseLong(_initialValueData);
                 break;
 
             case FloatingNumber:
-                _value = Double.parseDouble(_initialValueData);
+                value = Double.parseDouble(_initialValueData);
                 break;
 
             case String:
-                _value = _initialValueData;
+                value = _initialValueData;
                 break;
 
             case Array:
@@ -115,42 +118,46 @@ public class DefaultGlobalVariable extends AbstractNamedBean
                     }
                 }
                 // https://howtodoinjava.com/java/collections/arraylist/synchronize-arraylist/
-                _value = new CopyOnWriteArrayList<>(array);
+                value = new CopyOnWriteArrayList<>(array);
                 break;
 
             case Map:
                 // https://crunchify.com/hashmap-vs-concurrenthashmap-vs-synchronizedmap-how-a-hashmap-can-be-synchronized-in-java/
-                _value = new ConcurrentHashMap<>();
+                value = new ConcurrentHashMap<>();
                 break;
 
             case LocalVariable:
-                _value = symbolTable.getValue(_initialValueData);
+                value = symbolTable.getValue(_initialValueData);
                 break;
 
             case Memory:
                 Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(_initialValueData);
-                if (m != null) _value = m.getValue();
+                if (m != null) value = m.getValue();
+                else return;
                 break;
 
             case Reference:
                 if (ReferenceUtil.isReference(_initialValueData)) {
-                    _value = ReferenceUtil.getReference(
+                    value = ReferenceUtil.getReference(
                             symbolTable, _initialValueData);
                 } else {
                     log.error("\"{}\" is not a reference", _initialValueData);
+                    return;
                 }
                 break;
 
             case Formula:
                 RecursiveDescentParser parser = createParser(symbolTable);
                 ExpressionNode expressionNode = parser.parseExpression(_initialValueData);
-                _value = expressionNode.calculate(symbolTable);
+                value = expressionNode.calculate(symbolTable);
                 break;
 
             default:
                 log.error("definition._initialValueType has invalid value: {}", _initialValueType.name());
                 throw new IllegalArgumentException("definition._initialValueType has invalid value: " + _initialValueType.name());
         }
+
+        setValue(value);
     }
 
     private RecursiveDescentParser createParser(SymbolTable symbolTable)

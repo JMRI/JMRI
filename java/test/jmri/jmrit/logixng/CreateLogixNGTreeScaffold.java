@@ -152,7 +152,7 @@ public class CreateLogixNGTreeScaffold {
         // Create global variables
         GlobalVariable globalVariable =
                 InstanceManager.getDefault(GlobalVariableManager.class)
-                        .createGlobalVariable("IQGV1", null);
+                        .createGlobalVariable("IQGV1", "index");
         globalVariable.setInitialValueType(InitialValueType.String);
         globalVariable.setInitialValueData("Something");
 

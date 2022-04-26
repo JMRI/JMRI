@@ -263,9 +263,10 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
     protected class TableModel extends AbstractLogixNGTableAction<GlobalVariable>.TableModel {
 
         // overlay the state column with the edit column
-        static public final int VARIABLE_TYPE_COL = NUMCOLUMN;
-        static public final int VARIABLE_INIT_VALUE_COL = NUMCOLUMN + 1;
-        static public final int NUM_COLUMNS = VARIABLE_INIT_VALUE_COL + 1;
+        static private final int VARIABLE_TYPE_COL = NUMCOLUMN;
+        static private final int VARIABLE_INIT_VALUE_COL = NUMCOLUMN + 1;
+        static private final int SET_TO_INIT_VALUE_COL = VARIABLE_INIT_VALUE_COL + 1;
+        static private final int NUM_COLUMNS = SET_TO_INIT_VALUE_COL + 1;
 
         @Override
         public int getColumnCount() {
@@ -274,79 +275,113 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
 
         @Override
         public String getColumnName(int col) {
-            if (col == VARIABLE_TYPE_COL) {
-                return Bundle.getMessage("LogixNGGlobalVariableColumnHeadInitialType");
+            switch (col) {
+                case VARIABLE_TYPE_COL:
+                    return Bundle.getMessage("LogixNGGlobalVariableColumnHeadInitialType");
+                case VARIABLE_INIT_VALUE_COL:
+                    return Bundle.getMessage("LogixNGGlobalVariableColumnHeadInitialValue");
+                case SET_TO_INIT_VALUE_COL:
+                    return Bundle.getMessage("LogixNGGlobalVariableColumnHeadSetToInitValue");
+                default:
+                    return super.getColumnName(col);
             }
-            if (col == VARIABLE_INIT_VALUE_COL) {
-                return Bundle.getMessage("LogixNGGlobalVariableColumnHeadInitialValue");
-            }
-            return super.getColumnName(col);
         }
 
         @Override
         public Class<?> getColumnClass(int col) {
-            if (col == VARIABLE_TYPE_COL) {
-                return InitialValueType.class;
+            switch (col) {
+                case VARIABLE_TYPE_COL:
+                    return InitialValueType.class;
+                case VARIABLE_INIT_VALUE_COL:
+                    return String.class;
+                case SET_TO_INIT_VALUE_COL:
+                    return JButton.class;
+                default:
+                    return super.getColumnClass(col);
             }
-            if (col == VARIABLE_INIT_VALUE_COL) {
-                return String.class;
-            }
-            return super.getColumnClass(col);
         }
 
         @Override
         public int getPreferredWidth(int col) {
-            // override default value for SystemName and UserName columns
-            if (col == VARIABLE_TYPE_COL) {
-                return new JTextField(12).getPreferredSize().width;
+            switch (col) {
+                case VARIABLE_TYPE_COL:
+                    return new JTextField(12).getPreferredSize().width;
+                case VARIABLE_INIT_VALUE_COL:
+                    return new JTextField(17).getPreferredSize().width;
+                case SET_TO_INIT_VALUE_COL:
+                    return new JButton(Bundle.getMessage(
+                            "LogixNGGlobalVariableColumnHeadSetToInitValue"))
+                            .getPreferredSize().width;
+                default:
+                    return super.getPreferredWidth(col);
             }
-            if (col == VARIABLE_INIT_VALUE_COL) {
-                return new JTextField(17).getPreferredSize().width;
-            }
-            return super.getPreferredWidth(col);
         }
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (col == VARIABLE_TYPE_COL) {
-                return true;
+            switch (col) {
+                case VARIABLE_TYPE_COL:
+                case VARIABLE_INIT_VALUE_COL:
+                case SET_TO_INIT_VALUE_COL:
+                    return true;
+                default:
+                    return super.isCellEditable(row, col);
             }
-            if (col == VARIABLE_INIT_VALUE_COL) {
-                return true;
-            }
-            return super.isCellEditable(row, col);
         }
 
         @Override
         public Object getValueAt(int row, int col) {
-            if (col == VARIABLE_TYPE_COL) {
-                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
-                if (x == null) {
-                    return null;
-                }
-                return x.getInitialValueType();
-            } else if (col == VARIABLE_INIT_VALUE_COL) {
-                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
-                if (x == null) {
-                    return null;
-                }
-                return x.getInitialValueData();
-            } else {
-                return super.getValueAt(row, col);
+            GlobalVariable gv;
+            switch (col) {
+                case VARIABLE_TYPE_COL:
+                    gv = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                    if (gv == null) { return null; }     // Error
+                    return gv.getInitialValueType();
+
+                case VARIABLE_INIT_VALUE_COL:
+                    gv = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                    if (gv == null) { return null; }     // Error
+                    return gv.getInitialValueData();
+
+                case SET_TO_INIT_VALUE_COL:
+                    return Bundle.getMessage(
+                            "LogixNGGlobalVariableColumnHeadSetToInitValue");
+
+                default:
+                    return super.getValueAt(row, col);
             }
         }
 
         @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
         @Override
         public void setValueAt(Object value, int row, int col) {
-            if (col == VARIABLE_TYPE_COL) {
-                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
-                x.setInitialValueType((InitialValueType) value);
-            } else if (col == VARIABLE_INIT_VALUE_COL) {
-                GlobalVariable x = (GlobalVariable) getValueAt(row, SYSNAMECOL);
-                x.setInitialValueData((String) value);
-            } else {
-                super.setValueAt(value, row, col);
+            GlobalVariable gv;
+            switch (col) {
+                case VARIABLE_TYPE_COL:
+                    gv = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                    gv.setInitialValueType((InitialValueType) value);
+                    break;
+
+                case VARIABLE_INIT_VALUE_COL:
+                    gv = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                    gv.setInitialValueData((String) value);
+                    break;
+
+                case SET_TO_INIT_VALUE_COL:
+                    gv = (GlobalVariable) getValueAt(row, SYSNAMECOL);
+                    try {
+                        gv.initialize();
+                    } catch (JmriException | RuntimeException e) {
+                        JOptionPane.showMessageDialog(null,
+                                e.getLocalizedMessage(),
+                                Bundle.getMessage("ErrorTitle"), // NOI18N
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+
+                default:
+                    super.setValueAt(value, row, col);
+                    break;
             }
         }
 
