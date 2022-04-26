@@ -36,7 +36,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         try {
             initComponents();
         } catch (Exception e) {
-            log.error(e.toString());
+            log.error("Cannot initComponents, {}", e.toString());
         }
     }
 
