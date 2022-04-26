@@ -10846,8 +10846,22 @@
     </ActionBlock>
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0021</systemName>
-      <clockState>SetClock</clockState>
-      <setTime>0</setTime>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>SetClock</enum>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>0</value>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10908,7 +10922,22 @@
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0022</systemName>
       <comment>StartClock</comment>
-      <clockState>StartClock</clockState>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>StartClock</enum>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>0</value>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10969,7 +10998,22 @@
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0023</systemName>
       <comment>StopClock</comment>
-      <clockState>StopClock</clockState>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>StopClock</enum>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>0</value>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11030,8 +11074,22 @@
     <ActionClock class="jmri.jmrit.logixng.actions.configurexml.ActionClockXml">
       <systemName>IQDA:AUTO:0024</systemName>
       <comment>SetClock</comment>
-      <clockState>SetClock</clockState>
-      <setTime>720</setTime>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>SetClock</enum>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </state>
+      <time>
+        <addressing>Direct</addressing>
+        <value>720</value>
+        <reference />
+        <listenToMemory>no</listenToMemory>
+        <localVariable />
+        <formula />
+      </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18021,6 +18079,7 @@
       <namedBean>
         <addressing>Direct</addressing>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </namedBean>
@@ -18028,6 +18087,7 @@
         <addressing>Direct</addressing>
         <enum>Thrown</enum>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </state>
@@ -18095,6 +18155,7 @@
         <addressing>Direct</addressing>
         <name>IT1</name>
         <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
@@ -18102,6 +18163,7 @@
         <addressing>LocalVariable</addressing>
         <enum>Closed</enum>
         <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
       </state>
@@ -18169,6 +18231,7 @@
         <addressing>LocalVariable</addressing>
         <name>IT1</name>
         <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
@@ -18176,6 +18239,7 @@
         <addressing>Formula</addressing>
         <enum>Thrown</enum>
         <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
       </state>
@@ -18243,6 +18307,7 @@
         <addressing>Formula</addressing>
         <name>IT1</name>
         <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
@@ -18250,6 +18315,7 @@
         <addressing>Reference</addressing>
         <enum>Toggle</enum>
         <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
       </state>
@@ -18317,6 +18383,7 @@
         <addressing>Reference</addressing>
         <name>IT1</name>
         <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
         <formula>"IT"+index</formula>
       </namedBean>
@@ -18324,6 +18391,7 @@
         <addressing>Direct</addressing>
         <enum>Unknown</enum>
         <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable>index2</localVariable>
         <formula>"IT"+index2</formula>
       </state>
@@ -18390,6 +18458,7 @@
         <addressing>Direct</addressing>
         <name>IT1</name>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </namedBean>
@@ -18397,6 +18466,7 @@
         <addressing>Direct</addressing>
         <enum>Inconsistent</enum>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </state>
@@ -23480,6 +23550,7 @@
         <addressing>Direct</addressing>
         <value>0</value>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timeToDelay>
@@ -23487,6 +23558,7 @@
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timerUnit>
@@ -23560,6 +23632,7 @@
         <addressing>Direct</addressing>
         <value>100</value>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timeToDelay>
@@ -23567,6 +23640,7 @@
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timerUnit>
@@ -23640,6 +23714,7 @@
         <addressing>LocalVariable</addressing>
         <value>0</value>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable>MyVar</localVariable>
         <formula />
       </timeToDelay>
@@ -23647,6 +23722,7 @@
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timerUnit>
@@ -23720,6 +23796,7 @@
         <addressing>Reference</addressing>
         <value>0</value>
         <reference>{MyMemory}</reference>
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timeToDelay>
@@ -23727,6 +23804,7 @@
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timerUnit>
@@ -23800,6 +23878,7 @@
         <addressing>Formula</addressing>
         <value>0</value>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula>MyVar + 10</formula>
       </timeToDelay>
@@ -23807,6 +23886,7 @@
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
         <reference />
+        <listenToMemory>no</listenToMemory>
         <localVariable />
         <formula />
       </timerUnit>

@@ -261,7 +261,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 break;
             case DCCppConstants.LOCO_STATE_REPLY:
                 text = "Loco State: Cab:"+ getCabInt();
-                text += " Slot:"         + getRegisterString();
                 text += " Dir:"          + getDirectionString();
                 text += " Speed:"        + getSpeedInt();
                 text += " F0-28:"        + getFunctionsString();
@@ -793,8 +792,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public int getRegisterInt() {
         if (this.isThrottleReply()) {
             return (this.getValueInt(1));
-        } else if (this.isLocoStateReply()) {
-            return (this.getValueInt(2));
         } else {
             log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
             return (0);
