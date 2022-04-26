@@ -173,23 +173,38 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
                 speed = (float) 1.0;
             }
             /* we're sending a speed to the locomotive */
-            DCCppMessage msg = DCCppMessage.makeSpeedAndDirectionMsg(
-            getRegisterNum(),
-            getDccAddress(),
-            speed,
-            this.isForward);
+            DCCppMessage msg;
+            //older version includes register
+            if (tc.getCommandStation().isThrottleRegisterRequired()) {
+                msg = DCCppMessage.makeSpeedAndDirectionMsg(
+                getRegisterNum(),
+                getDccAddress(),
+                speed,
+                this.isForward);
+            } else {
+                //newer version does not need register passed
+                msg = DCCppMessage.makeSpeedAndDirectionMsg(
+                getDccAddress(),
+                speed,
+                this.isForward);               
+            }
             // now, queue the message for sending to the command station
             //queueMessage(msg, THROTTLESPEEDSENT);
             queueMessage(msg, THROTTLEIDLE);
         }
     }
 
-    /* Since DCC++ has a seperate Opcode for emergency stop,
-     * We're setting this up as a seperate protected function
+    /* Since DCC++ has a separate Opcode for emergency stop,
+     * We're setting this up as a separate protected function
      */
     protected void sendEmergencyStop() {
         /* Emergency stop sent */
-        DCCppMessage msg = DCCppMessage.makeAddressedEmergencyStop(this.getRegisterNum(), this.getDccAddress());
+        DCCppMessage msg;
+        if (tc.getCommandStation().isThrottleRegisterRequired()) {
+            msg = DCCppMessage.makeAddressedEmergencyStop(this.getRegisterNum(), this.getDccAddress());
+        } else {
+            msg = DCCppMessage.makeAddressedEmergencyStop(this.getDccAddress());            
+        }
         // now, queue the message for sending to the command station
         //queueMessage(msg, THROTTLESPEEDSENT);
         queueMessage(msg, THROTTLEIDLE);
