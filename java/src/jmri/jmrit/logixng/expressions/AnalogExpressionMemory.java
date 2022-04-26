@@ -18,7 +18,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     public AnalogExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {

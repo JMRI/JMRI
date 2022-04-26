@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -22,14 +24,15 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class TriggerRoute extends AbstractDigitalAction {
+public class TriggerRoute extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<Route> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Route.class, InstanceManager.getDefault(RouteManager.class));
+                    this, Route.class, InstanceManager.getDefault(RouteManager.class), this);
 
     private final LogixNG_SelectEnum<Operation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.TriggerRoute);
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.TriggerRoute, this);
 
 
     public TriggerRoute(String sys, String user)
@@ -147,6 +150,12 @@ public class TriggerRoute extends AbstractDigitalAction {
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRoute.class);

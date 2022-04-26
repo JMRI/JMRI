@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -18,14 +20,15 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionAudio extends AbstractDigitalAction {
+public class ActionAudio extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<Audio> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Audio.class, InstanceManager.getDefault(AudioManager.class));
+                    this, Audio.class, InstanceManager.getDefault(AudioManager.class), this);
 
     private final LogixNG_SelectEnum<Operation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play);
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play, this);
 
 
     public ActionAudio(String sys, String user)
@@ -193,6 +196,12 @@ public class ActionAudio extends AbstractDigitalAction {
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionAudio.class);

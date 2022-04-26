@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -19,15 +21,16 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionReporter extends AbstractDigitalAction {
+public class ActionReporter extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class));
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private ReporterValue _reporterValue = ReporterValue.CopyCurrentReport;
 
@@ -312,6 +315,12 @@ public class ActionReporter extends AbstractDigitalAction {
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
         _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionReporter.class);

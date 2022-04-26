@@ -24,11 +24,11 @@ public class ExpressionReporter extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class));
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private ReporterValue _reporterValue = ReporterValue.CurrentReport;
     private ReporterOperation _reporterOperation = ReporterOperation.Equal;

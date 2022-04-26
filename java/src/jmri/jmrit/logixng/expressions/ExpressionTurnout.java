@@ -24,7 +24,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private TurnoutState _turnoutState = TurnoutState.Thrown;

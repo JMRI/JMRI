@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -11,13 +13,14 @@ import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class AnalogActionLightIntensity extends AbstractAnalogAction {
+public class AnalogActionLightIntensity extends AbstractAnalogAction
+        implements PropertyChangeListener {
 
     public static final int INTENSITY_SOCKET = 0;
 
     private final LogixNG_SelectNamedBean<VariableLight> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, VariableLight.class, InstanceManager.getDefault(VariableLightManager.class));
+                    this, VariableLight.class, InstanceManager.getDefault(VariableLightManager.class), this);
 
 
     public AnalogActionLightIntensity(String sys, String user) {
@@ -107,6 +110,12 @@ public class AnalogActionLightIntensity extends AbstractAnalogAction {
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionLightIntensity.class);

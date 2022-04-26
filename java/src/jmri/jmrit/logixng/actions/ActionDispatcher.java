@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -19,7 +21,8 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionDispatcher extends AbstractDigitalAction {
+public class ActionDispatcher extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private String _trainInfoFileName = "";
@@ -29,7 +32,7 @@ public class ActionDispatcher extends AbstractDigitalAction {
     private ExpressionNode _expressionNode;
 
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.None);
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.None, this);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -486,6 +489,12 @@ public class ActionDispatcher extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionDispatcher.class);

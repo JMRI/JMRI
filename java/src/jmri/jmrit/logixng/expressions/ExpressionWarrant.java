@@ -26,7 +26,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Warrant> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Warrant.class, InstanceManager.getDefault(WarrantManager.class));
+                    this, Warrant.class, InstanceManager.getDefault(WarrantManager.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private WarrantState _warrantState = WarrantState.RouteAllocated;

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -24,14 +26,15 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ActionLight extends AbstractDigitalAction {
+public class ActionLight extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<Light> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Light.class, InstanceManager.getDefault(LightManager.class));
+                    this, Light.class, InstanceManager.getDefault(LightManager.class), this);
 
     private final LogixNG_SelectEnum<LightState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, LightState.values(), LightState.On);
+            new LogixNG_SelectEnum<>(this, LightState.values(), LightState.On, this);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -338,6 +341,12 @@ public class ActionLight extends AbstractDigitalAction {
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLight.class);

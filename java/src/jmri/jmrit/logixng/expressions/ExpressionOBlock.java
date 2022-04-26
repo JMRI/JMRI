@@ -26,7 +26,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<OBlock> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class));
+                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private OBlock.OBlockStatus _oblockState = OBlock.OBlockStatus.Unoccupied;

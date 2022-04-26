@@ -18,7 +18,7 @@ public class StringExpressionMemory extends AbstractStringExpression
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     public StringExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {

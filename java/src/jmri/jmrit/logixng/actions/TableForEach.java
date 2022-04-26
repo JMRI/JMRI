@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -17,11 +19,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class TableForEach extends AbstractDigitalAction
-        implements FemaleSocketListener {
+        implements FemaleSocketListener, PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class));
+                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class), this);
     private NamedBeanAddressing _rowOrColumnAddressing = NamedBeanAddressing.Direct;
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnName = "";
@@ -380,6 +382,11 @@ public class TableForEach extends AbstractDigitalAction
     public void disposeMe() {
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEach.class);
 

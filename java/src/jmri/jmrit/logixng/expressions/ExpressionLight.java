@@ -24,7 +24,7 @@ public class ExpressionLight extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Light> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Light.class, InstanceManager.getDefault(LightManager.class));
+                    this, Light.class, InstanceManager.getDefault(LightManager.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private LightState _lightState = LightState.On;

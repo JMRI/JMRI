@@ -36,7 +36,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Block> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Block.class, InstanceManager.getDefault(BlockManager.class));
+                    this, Block.class, InstanceManager.getDefault(BlockManager.class), this);
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 

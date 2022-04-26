@@ -24,10 +24,10 @@ public class ActionMemory extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
     private final LogixNG_SelectNamedBean<Memory> _selectOtherMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 //    private NamedBeanHandle<Memory> _otherMemoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.SetToString;
     private String _otherConstantValue = "";

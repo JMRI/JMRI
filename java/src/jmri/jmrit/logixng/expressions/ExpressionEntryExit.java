@@ -25,7 +25,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<DestinationPoints> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, DestinationPoints.class, InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class));
+                    this, DestinationPoints.class, InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private EntryExitState _entryExitState = EntryExitState.Active;

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -21,14 +23,15 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionOBlock extends AbstractDigitalAction {
+public class ActionOBlock extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<OBlock> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class));
+                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class), this);
 
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.Deallocate);
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.Deallocate, this);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -288,6 +291,12 @@ public class ActionOBlock extends AbstractDigitalAction {
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionOBlock.class);

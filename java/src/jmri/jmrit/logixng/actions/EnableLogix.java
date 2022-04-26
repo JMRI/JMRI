@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -18,14 +20,15 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class EnableLogix extends AbstractDigitalAction {
+public class EnableLogix extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<Logix> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Logix.class, InstanceManager.getDefault(LogixManager.class));
+                    this, Logix.class, InstanceManager.getDefault(LogixManager.class), this);
 
     private final LogixNG_SelectEnum<Operation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Disable);
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Disable, this);
 
 
     public EnableLogix(String sys, String user)
@@ -137,6 +140,12 @@ public class EnableLogix extends AbstractDigitalAction {
             return _text;
         }
 
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EnableLogix.class);

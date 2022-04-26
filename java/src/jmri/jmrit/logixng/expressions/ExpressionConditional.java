@@ -24,7 +24,7 @@ public class ExpressionConditional extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Conditional> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Conditional.class, InstanceManager.getDefault(ConditionalManager.class));
+                    this, Conditional.class, InstanceManager.getDefault(ConditionalManager.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private ConditionalState _conditionalState = ConditionalState.False;

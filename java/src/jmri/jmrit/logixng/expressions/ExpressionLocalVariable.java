@@ -29,7 +29,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     private String _constantValue = "";
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
     private String _otherLocalVariable = "";
     private String _regEx = "";
     private boolean _listenToMemory = true;

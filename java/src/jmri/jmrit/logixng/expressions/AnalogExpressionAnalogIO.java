@@ -18,7 +18,7 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
 
     private final LogixNG_SelectNamedBean<AnalogIO> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, AnalogIO.class, InstanceManager.getDefault(AnalogIOManager.class));
+                    this, AnalogIO.class, InstanceManager.getDefault(AnalogIOManager.class), this);
 
     public AnalogExpressionAnalogIO(String sys, String user)
             throws BadUserNameException, BadSystemNameException {

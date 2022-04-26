@@ -24,11 +24,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private final LogixNG_SelectNamedBean<Memory> _selectOtherMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private MemoryOperation _memoryOperation = MemoryOperation.Equal;
     private CompareTo _compareTo = CompareTo.Value;

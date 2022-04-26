@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -17,14 +19,15 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionTurnoutLock extends AbstractDigitalAction {
+public class ActionTurnoutLock extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
 
     private final LogixNG_SelectEnum<TurnoutLock> _selectEnum =
-            new LogixNG_SelectEnum<>(this, TurnoutLock.values(), TurnoutLock.Unlock);
+            new LogixNG_SelectEnum<>(this, TurnoutLock.values(), TurnoutLock.Unlock, this);
 
 
     public ActionTurnoutLock(String sys, String user)
@@ -155,6 +158,12 @@ public class ActionTurnoutLock extends AbstractDigitalAction {
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnoutLock.class);

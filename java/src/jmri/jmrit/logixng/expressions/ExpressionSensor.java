@@ -24,7 +24,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class));
+                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private SensorState _sensorState = SensorState.Active;
