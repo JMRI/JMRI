@@ -70,7 +70,7 @@ public class SampleScriptTest {
         if (file.toPath().endsWith("LoggingTest.py")) {
             JUnitAppender.assertWarnMessage("This WARN is OK, it's emitted from LoggingTest.py on purpose");
         }
-        if (file.toPath().endsWith("JavaScriptTest.js")) {
+        else if (file.toPath().endsWith("JavaScriptTest.js")) {
             JUnitAppender.assertWarnMessage("JavaScriptTest: Turnout.THROWN is 4 (WARN OK here)");
         }
 
