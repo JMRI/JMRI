@@ -204,6 +204,13 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
         }
     }
 
+    /**
+     * Dispose of System Connection.
+     * <p>
+     * Removes objects from classObjectMap after
+     * calling dispose if Disposable.
+     * Removes these objects from InstanceManager.
+     */
     @Override
     public void dispose() {
         Set<Class<?>> keySet = new HashSet<>(classObjectMap.keySet());
@@ -211,6 +218,14 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
         SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
+    /**
+     * Remove single class object.
+     * Removes from InstanceManager
+     * Removes from Memo class list
+     * Call object dispose if class implements Disposable
+     * @param <T> class Type
+     * @param c actual class
+     */
     private <T> void removeRegisteredObject(Class<T> c) {
         T object = get(c);
         if (object != null) {
@@ -330,10 +345,30 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
         jmri.InstanceManager.store(c, ConsistManager.class);
     }
 
+    /**
+     * Store a class object to the system connection memo.
+     * <p>
+     * Does NOT register the class with InstanceManager.
+     * <p>
+     * On memo dispose, each class will be removed from InstanceManager,
+     * and if the class implements disposable, the dispose method is called.
+     * @param <T> Class type obtained from item object.
+     * @param item the class object to store, eg. mySensorManager
+     * @param type Class type, eg. SensorManager.class
+     */
     public <T> void store(@Nonnull T item, @Nonnull Class<T> type){
         classObjectMap.put(type,item);
     }
 
+    /**
+     * Remove a class object from the system connection memo classObjectMap.
+     * <p>
+     * Does NOT remove the class from InstanceManager.
+     * <p>
+     * @param <T> Class type obtained from item object.
+     * @param item the class object to store, eg. mySensorManager
+     * @param type Class type, eg. SensorManager.class
+     */
     public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type){
         classObjectMap.remove(type,item);
     }

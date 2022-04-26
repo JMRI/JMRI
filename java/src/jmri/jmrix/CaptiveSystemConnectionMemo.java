@@ -16,10 +16,11 @@ import jmri.util.NamedBeanPreferNumericComparator;
  * by providing connection memo services without being connected to a particular system
  * instantiation.
  * <p>
- * An object of this classe does not get registered
+ * An object of this class does not get registered
  * with the {@link jmri.InstanceManager} and is likely to have a system prefix
  * and user name that conflict with the default values of another, user
- * controllable, manager. This SystemConnectionMemo is not intended to be
+ * controllable, manager.
+ * This SystemConnectionMemo is not intended to be
  * invoked on any system connection that is configurable by the user.
  * Note that this is handled as a special case in
  * {@link DefaultSystemConnectionMemo}.

@@ -48,6 +48,11 @@ public enum SpeedStepMode {
     public final float increment;
     public final String description;
 
+    /**
+     * Get a locale friendly Step Mode Description.
+     * For just "128" use name()
+     * @return e.g. "128 SS"
+     */
     @Override
     public String toString() {
         return description;
