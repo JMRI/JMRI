@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.jmrit.logixng.implementation.DefaultGlobalVariable;
@@ -44,7 +46,8 @@ public class DefaultGlobalVariableXml extends jmri.managers.configurexml.Abstrac
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode)
+            throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
 
@@ -59,6 +62,13 @@ public class DefaultGlobalVariableXml extends jmri.managers.configurexml.Abstrac
         Element elementInitialValueData = shared.getChild("initialValueData");
         if (elementInitialValueData != null) {
             h.setInitialValueData(elementInitialValueData.getTextTrim());
+        }
+
+        try {
+            // Initialize the value of the global variable
+            h.initialize();
+        } catch (JmriException e) {
+            throw new JmriConfigureXmlException(e);
         }
 
         return true;
