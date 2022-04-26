@@ -3,6 +3,8 @@ package jmri.jmrit.logixng.tools;
 import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -13,6 +15,8 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.*;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 import org.junit.*;
 
 /**
@@ -218,11 +222,15 @@ public class ImportEntryExitTest {
 
     @After
     public void tearDown() {
-        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0001C1' to LogixNG 'IQ:AUTO:0001'");
-        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0002C1' to LogixNG 'IQ:AUTO:0002'");
-        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0003C1' to LogixNG 'IQ:AUTO:0003'");
-        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0004C1' to LogixNG 'IQ:AUTO:0004'");
-        JUnitAppender.assertWarnMessage("Import Conditional 'IX:RTXINITIALIZER1T' to LogixNG 'IQ:AUTO:0005'");
+        List<LoggingEvent> list = new ArrayList<>(JUnitAppender.getBacklog());
+        for (LoggingEvent event : list) {
+            if ((event.getLevel() == Level.WARN)
+                    && (event.getMessage().toString().startsWith("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:000'")
+                        || event.getMessage().toString().equals("Import Conditional 'IX:RTXINITIALIZER1T' to LogixNG 'IQ:AUTO:0005'"))
+                    ) {
+                JUnitAppender.suppressErrorMessage(event.getMessage().toString());
+            }
+        }
 
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.clearTurnoutThreads();
