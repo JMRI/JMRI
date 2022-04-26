@@ -167,7 +167,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         left.add(useCurrentSpeedStepsCheckBox);
         right = new JPanel();
         addRow(main, gb, c, 7, left, right);
-        
+
 
         JPanel testDataPanel = new JPanel();
         testDataPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TestProfileData")));
@@ -319,7 +319,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     RosterSpeedProfile rosterSpeedProfile;
 
     protected float profileSpeedAtStart;
-    
+
     void setupProfile() {
         String text;
         finishSpeedStep = 0;
@@ -472,7 +472,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         for ( var speedEntry : re.getSpeedProfile().getProfileSpeeds().entrySet() ) {
             speedSettingsToUse.add(speedEntry.getKey());
         }
-        
+
         boolean ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this, true); // we have a mechanism for steal / share
         if (!ok) {
             log.warn("Throttle for locomotive {} could not be set up.", re.getId());
@@ -519,8 +519,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     javax.swing.Timer overRunTimer = null;
 
-    private volatile int throttleState = 0;   // zero waiting, -1 no throttle (message already shown), 1 
-            
+    private volatile int throttleState = 0;   // zero waiting, -1 no throttle (message already shown), 1
+
     @Override
     public void notifyThrottleFound(DccThrottle _throttle) {
         t = _throttle;
@@ -663,7 +663,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         setButtonStates(true);
         throttleState = -1;
     }
-    
+
     /**
     * Profiling on a stolen or shared throttle is invalid
     * <p>
@@ -742,13 +742,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         stepCalculated = true;
         finishSensor.removePropertyChangeListener(finishListener);
         sourceLabel.setText(Bundle.getMessage("StatusLabelCalculating"));
-        
+
         if (profileSpeed/2 > profileSpeedAtStart) {
             t.setSpeedSetting(profileSpeed / 2);
         } else {
             t.setSpeedSetting(profileSpeedAtStart);
         }
-        
+
         calculateSpeed();
         sourceLabel.setText(Bundle.getMessage("StatusLabelWaitingToClear"));
     }
@@ -775,7 +775,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             }
         }
 
-        if (( !useCurrentSpeedSteps && profileStep > finishSpeedStep) 
+        if (( !useCurrentSpeedSteps && profileStep > finishSpeedStep)
                 || (useCurrentSpeedSteps && useCurrentSpeedSteps_index >= speedSettingsToUse.size())) {
             t.setSpeedSetting(0.0f);
             if (!profile) {
@@ -1073,7 +1073,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
 
     TreeMap<Integer, SpeedStep> speeds = new TreeMap<>();
-    
+
     static class SpeedStep {
 
         float forward = 0.0f;
