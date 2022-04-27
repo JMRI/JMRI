@@ -11,6 +11,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 
@@ -160,6 +161,12 @@ public class ImportTest {
 
         // Test route
         runTestSetRoute(turnout101, turnout102, sensor210);
+
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0001C1' to LogixNG 'IQ:AUTO:0001'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0002C1' to LogixNG 'IQ:AUTO:0002'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0003C1' to LogixNG 'IQ:AUTO:0003'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0004C1' to LogixNG 'IQ:AUTO:0004'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:RTXINITIALIZER1T' to LogixNG 'IQ:AUTO:0005'");
     }
 
 
