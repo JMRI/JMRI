@@ -230,8 +230,8 @@ public interface SymbolTable {
 
         if (expandArraysAndMaps) {
             if (value instanceof Map) {
+                var map = (Map<? extends Object, ? extends Object>) value;
                 log.warn("{}{}: {},", pad, headerName, name);
-                var map = ((Map<? extends Object, ? extends Object>)value);
                 for (var entry : map.entrySet()) {
                     log.warn("{}{}{} -> {},", pad, pad, entry.getKey(), entry.getValue());
                 }
@@ -239,8 +239,8 @@ public interface SymbolTable {
             }
 
             if (value instanceof List) {
+                var list = (List<? extends Object>) value;
                 log.warn("{}{}: {},", pad, headerName, name);
-                var list = ((List<? extends Object>)value);
                 for (int i=0; i < list.size(); i++) {
                     log.warn("{}{}{}: {},", pad, pad, i, list.get(i));
                 }
