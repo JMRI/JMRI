@@ -228,21 +228,26 @@ public interface SymbolTable {
             String headerName,
             String headerValue) {
 
-        if (expandArraysAndMaps && (value instanceof Map)) {
-            log.warn("{}{}: {},", pad, headerName, name);
-            var map = ((Map<? extends Object, ? extends Object>)value);
-            for (var entry : map.entrySet()) {
-                log.warn("{}{}{} -> {},", pad, pad, entry.getKey(), entry.getValue());
+        if (expandArraysAndMaps) {
+            if (value instanceof Map) {
+                log.warn("{}{}: {},", pad, headerName, name);
+                var map = ((Map<? extends Object, ? extends Object>)value);
+                for (var entry : map.entrySet()) {
+                    log.warn("{}{}{} -> {},", pad, pad, entry.getKey(), entry.getValue());
+                }
+                return;
+
+            } else if (value instanceof List) {
+                log.warn("{}{}: {},", pad, headerName, name);
+                var list = ((List<? extends Object>)value);
+                for (int i=0; i < list.size(); i++) {
+                    log.warn("{}{}{}: {},", pad, pad, i, list.get(i));
+                }
+                return;
             }
-        } else if (expandArraysAndMaps && (value instanceof List)) {
-            log.warn("{}{}: {},", pad, headerName, name);
-            var list = ((List<? extends Object>)value);
-            for (int i=0; i < list.size(); i++) {
-                log.warn("{}{}{}: {},", pad, pad, i, list.get(i));
-            }
-        } else  {
-            log.warn("{}{}: {}, {}: {}", pad, headerName, name, headerValue, value);
         }
+
+        log.warn("{}{}: {}, {}: {}", pad, headerName, name, headerValue, value);
     }
 
 

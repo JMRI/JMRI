@@ -67,7 +67,7 @@ public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
         LogLocalVariables action = (LogLocalVariables)object;
 
         action.setIncludeGlobalVariables(_includeGlobalVariables.isSelected());
-        action.setExpandArraysAndMaps(_includeGlobalVariables.isSelected());
+        action.setExpandArraysAndMaps(_expandArraysAndMaps.isSelected());
     }
 
     /** {@inheritDoc} */
