@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -220,6 +222,7 @@ public interface SymbolTable {
      * @param headerValue  header for the variable value
      */
     @SuppressWarnings("unchecked")  // Checked cast is not possible due to type erasure
+    @SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT", justification="The code prints a complex variable, like a map, to the log")
     public static void printVariable(
             Logger log,
             String pad,
