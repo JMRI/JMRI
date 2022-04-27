@@ -1788,8 +1788,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * Format: {@code <W CV VALUE CALLBACKNUM CALLBACKSUB>}
      * <p>
-     * ID: the numeric ID (0-32767) of the turnout to control THROW: 0
-     * (unthrown) or 1 (thrown) CV: the number of the Configuration Variable
+     * CV: the number of the Configuration Variable
      * memory location in the decoder to write to (1-1024) VALUE: the value to
      * be written to the Configuration Variable memory location (0-255)
      * CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base
