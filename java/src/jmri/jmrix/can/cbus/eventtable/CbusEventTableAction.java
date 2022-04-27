@@ -68,7 +68,7 @@ public class CbusEventTableAction implements PropertyChangeListener {
         _model._mainArray.forEach((n) -> n.resetBeans() );
         fireAllJmriCellsChanged();
         for (Class<?> classType : classTypes) {
-            jmri.Manager<?> sm = (jmri.Manager<?>) InstanceManager.getDefault(classType);
+            jmri.Manager<?> sm = (jmri.Manager<?>) InstanceManager.getDefault(classType); // proxy manager
             sm.getNamedBeanSet().forEach((nb) -> {
                 if (nb instanceof CbusEventInterface) {
                     linkHwaddtoEvent( nb, true, ((CbusEventInterface)nb).getBeanOnMessage());
