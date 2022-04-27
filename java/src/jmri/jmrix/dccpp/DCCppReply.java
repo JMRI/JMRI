@@ -442,9 +442,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
                     log.debug("Matches ProgBitReply");
                     r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_V2_REGEX)) {
+                    log.debug("Matches ProgBitReplyV2");
+                    r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_V2_REGEX;
                 } else if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
                     log.debug("Matches ProgReply");
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.PROGRAM_REPLY_V2_REGEX)) {
+                    log.debug("Matches ProgReplyV2");
+                    r.myRegex = DCCppConstants.PROGRAM_REPLY_V2_REGEX;
                 } else {
                     log.debug("Does not match ProgReply Regex");
                 }
@@ -1018,7 +1024,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public String getCVString() {
         if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(3));
-        } else if (this.isVerifyReply() ) {
+        } else if (this.isVerifyReply() || this.isProgramReplyV2() ) {
             return(this.getValueString(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -1029,8 +1035,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public int getCVInt() {
         if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(3));
-        } else if (this.isVerifyReply() ) {
+        } else if (this.isVerifyReply()) {
             return(this.getValueInt(1));
+        } else if (this.isProgramReplyV2()) {
+            return(this.getValueInt(0));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
             return(0);
@@ -1062,6 +1070,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             } else {
                 return(this.getValueString(4));
             }
+        } else if (this.isProgramReplyV2() ) {
+            return(this.getValueString(1));
         } else if (this.isVerifyReply() ) {
             return(this.getValueString(2));
         } else {
@@ -1452,6 +1462,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isTurnoutReply() { return (this.getOpCodeChar() == DCCppConstants.TURNOUT_REPLY); }
     public boolean isTurnoutCmdReply() { return (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)); }
     public boolean isProgramReply() { return (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)); }
+    public boolean isProgramReplyV2() { return (this.matches(DCCppConstants.PROGRAM_REPLY_V2_REGEX)); }
     public boolean isVerifyReply()  { return (this.matches(DCCppConstants.PROGRAM_VERIFY_REGEX)); }
     public boolean isProgramBitReply() { return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)); }
     public boolean isPowerReply() { return (this.getOpCodeChar() == DCCppConstants.POWER_REPLY); }
@@ -1484,6 +1495,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) ||
+            (this.matches(DCCppConstants.PROGRAM_REPLY_V2_REGEX)) ||
             (this.matches(DCCppConstants.PROGRAM_VERIFY_REGEX)) ||
             (this.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX)) ||

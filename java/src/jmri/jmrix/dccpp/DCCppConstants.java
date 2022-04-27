@@ -133,8 +133,11 @@ public final class DCCppConstants {
     public static final String OPS_WRITE_BIT_REGEX = "\\s*b\\s*(\\d+)\\s+(\\d+)\\s+([0-7])\\s+([01])\\s*"; // TODO
 
     public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
+    public static final String PROG_WRITE_BYTE_V2_REGEX =  "W\\s*(\\d+)\\s(\\d+)";
     public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
+    public static final String PROG_WRITE_BIT_V2_REGEX =   "B\\s*(\\d+)\\s([0-7])\\s([1,0])";
     public static final String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
+    public static final String PROG_READ_V2_REGEX =        "R\\s*(\\d+)";
     public static final String PROG_VERIFY_REGEX = "V\\s*(\\d+)\\s+(\\d+)\\s*";
     public static final String TRACK_POWER_REGEX = "\\s*[0,1]\\s*"; // <1> or <0>
     public static final String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*"; // <c>
@@ -157,8 +160,10 @@ public final class DCCppConstants {
     public static final String TURNOUT_DEF_VPIN_REPLY_REGEX ="\\s*H\\s(\\d+)\\sVPIN\\s(\\d+)\\s+([0|1]).*";                            // <H id VPIN pin thrown>
     public static final String TURNOUT_DEF_LCN_REPLY_REGEX = "\\s*H\\s(\\d+)\\sLCN\\s+([0|1]).*";                                      // <H id LCN thrown>
     public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
+    public static final String PROGRAM_REPLY_V2_REGEX =    "\\s*r\\s*(\\d+)\\s+([-]*\\d+)\\s*";
     public static final String PROGRAM_VERIFY_REGEX =      "\\s*v\\s*(\\d+)\\s*([-]*\\d+)\\s*";
     public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
+    public static final String PROGRAM_BIT_REPLY_V2_REGEX ="\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
     public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*([\\S\\s]*)\\*$"; //matches anything between leading and trailing asterisks, left-trimmed
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";

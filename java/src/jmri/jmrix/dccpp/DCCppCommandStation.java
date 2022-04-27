@@ -225,6 +225,18 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return ret;  
     }
 
+    /**
+     * Can this command station handle the newer (V2) program message formats?
+     * @return true if yes or false if no
+     */
+    public boolean isProgramV2Supported() {
+        boolean ret = false;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.0.2") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
 
     // A few utility functions
     /**
