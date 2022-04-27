@@ -236,8 +236,9 @@ public interface SymbolTable {
                     log.warn("{}{}{} -> {},", pad, pad, entry.getKey(), entry.getValue());
                 }
                 return;
+            }
 
-            } else if (value instanceof List) {
+            if (value instanceof List) {
                 log.warn("{}{}: {},", pad, headerName, name);
                 var list = ((List<? extends Object>)value);
                 for (int i=0; i < list.size(); i++) {
