@@ -234,7 +234,7 @@ public class CbusNodeNVManager {
             }
         }
         
-        log.info( Bundle.getMessage("NdCompleteNVar", String.valueOf(_node.getNodeTimerManager()._sendNVErrorCount) , _node ) );
+        log.info( "TEACH NV COMPLETE {}", Bundle.getMessage("NdCompleteNVar", String.valueOf(_node.getNodeTimerManager()._sendNVErrorCount) , _node ) );
         TEACH_OUTSTANDING_NVS = false;
         _node.notifyPropertyChangeListener("TEACHNVCOMPLETE", null, _node.getNodeTimerManager()._sendNVErrorCount);
         
