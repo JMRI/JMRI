@@ -760,6 +760,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * Is a bean allowed to have the user name cleared?
+     * @return true if clear is allowed, false otherwise
+     */
+    protected boolean isClearUserNameAllowed() {
+        return true;
+    }
+
+    /**
      * Display popup menu when right clicked on table cell.
      * <p>
      * Copy UserName
@@ -788,9 +796,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem.addActionListener((ActionEvent e1) -> renameBean(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
-        menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
-        popupMenu.add(menuItem);
+        if (isClearUserNameAllowed()) {
+            menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
+            menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
+            popupMenu.add(menuItem);
+        }
 
         menuItem = new JMenuItem(Bundle.getMessage("MoveName"));
         menuItem.addActionListener((ActionEvent e1) -> moveBean(rowindex, 0));

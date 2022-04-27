@@ -269,6 +269,11 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
         static private final int NUM_COLUMNS = SET_TO_INIT_VALUE_COL + 1;
 
         @Override
+        protected boolean isClearUserNameAllowed() {
+            return false;
+        }
+
+        @Override
         public int getColumnCount() {
             return NUM_COLUMNS;
         }
