@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Updated to take advantage of Version 4 changes</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -76,7 +76,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>The DCS240 command station type was defaulting to the standalone programmer mode.
+                If a user was not paying attention, they would have issues trying to use all of the
+                command station capability.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -166,7 +168,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>Added multiple SUSI accessory decoder definitions.</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -352,7 +354,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Improved handling of improper input in variables.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -382,7 +384,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Fixed an error when an anchor point only had one track segment assigned.</li>
+            <li>Improved display of certain images when rotated for display.<li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -411,19 +414,19 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improved the build report</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Improved display of certain images when rotated for display.<li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Improved display of certain images when rotated for display.<li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -543,18 +546,6 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
-        </ul>
-
-   <h3>Web Access</h3>
-        <a id="WA" name="WA"></a>
-        <ul>
-            <li></li>
-        </ul>
-
-    <h3>Where Used</h3>
-        <a id="WhereUsed" name="WhereUsed"></a>
-        <ul>
             <li>Any warrant, regular or shared, will not allocate blocks beyond a restricted block.
                 A block is <b>restricted</b> if it is:
                 <ul>
@@ -592,6 +583,18 @@
             </li>
         </ul>
 
+   <h3>Web Access</h3>
+        <a id="WA" name="WA"></a>
+        <ul>
+            <li>Multiple updates to JavaScript libraries shipped with JMRI.</li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
@@ -615,5 +618,6 @@
         <ul>
             <li>Update commons-io library to version 2.11.0 from 2.6. JMRI uses this for file selectors.</li>
             <li>Updated jsoup library to 1.14.3 from 1.13.1. JMRI uses this when rebuilding help metadata.</li>
+            <li>Update for multiple hardware clocks.</li>
         </ul>
 
