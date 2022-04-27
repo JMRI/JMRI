@@ -322,19 +322,15 @@
         <li>Virtual Sound Decoder
           <ul>
             <li>
-              <a href="../../../package/jmri/jmrit/vsdecoder/swing/VSDManagerFrame.shtml">VSDecoder
-              Manager</a>
+              <a href="../../../html/tools/vsd/VSDManager.shtml">VSDecoder Manager</a>
             </li>
 
             <li>
-              <a href=
-              "../../../package/jmri/jmrit/vsdecoder/swing/ManageLocationsFrame.shtml">Manage VSD
-              Locations</a>
+              <a href="../../../html/tools/vsd/VSDLocationsMgr.shtml">Manage VSD Locations</a>
             </li>
 
             <li>
-              <a href="../../../package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">VSDecoder
-              Preferences</a>
+              <a href="../../../html/tools/vsd/VSDMain.shtml#preferences">VSDecoder Preferences</a>
             </li>
           </ul>
         </li>
