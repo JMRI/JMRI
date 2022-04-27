@@ -212,6 +212,20 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return ret;  
     }
 
+    /**
+     * Can this command station handle the newer (V2) function message format?
+     * @return true if yes or false if no
+     */
+    public boolean isFunctionV2Supported() {
+        boolean ret = false;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.0.0") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+
     // A few utility functions
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive
