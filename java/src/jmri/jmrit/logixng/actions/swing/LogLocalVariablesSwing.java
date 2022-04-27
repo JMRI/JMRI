@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -21,20 +20,27 @@ import jmri.jmrit.logixng.actions.LogLocalVariables;
 public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
 
     private JCheckBox _includeGlobalVariables;
+    private JCheckBox _expandArraysAndMaps;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         LogLocalVariables action = (LogLocalVariables)object;
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         _includeGlobalVariables = new JCheckBox(Bundle.getMessage("LogLocalVariablesSwing_IncludeGlobalVariables"));
         panel.add(_includeGlobalVariables);
 
+        _expandArraysAndMaps = new JCheckBox(Bundle.getMessage("LogLocalVariablesSwing_ExpandArraysAndMaps"));
+        panel.add(_expandArraysAndMaps);
+
         if (action != null) {
             _includeGlobalVariables.setSelected(action.isIncludeGlobalVariables());
+            _expandArraysAndMaps.setSelected(action.isExpandArraysAndMaps());
         } else {
             _includeGlobalVariables.setSelected(true);
+            _expandArraysAndMaps.setSelected(false);
         }
     }
 
@@ -61,6 +67,7 @@ public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
         LogLocalVariables action = (LogLocalVariables)object;
 
         action.setIncludeGlobalVariables(_includeGlobalVariables.isSelected());
+        action.setExpandArraysAndMaps(_includeGlobalVariables.isSelected());
     }
 
     /** {@inheritDoc} */

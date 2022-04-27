@@ -2259,6 +2259,15 @@ public class CreateLogixNGTreeScaffold {
 
         logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
         logLocalVariables.setComment("A comment");
+        logLocalVariables.setIncludeGlobalVariables(true);
+        logLocalVariables.setExpandArraysAndMaps(false);
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        logLocalVariables.setComment("A comment");
+        logLocalVariables.setIncludeGlobalVariables(false);
+        logLocalVariables.setExpandArraysAndMaps(true);
         maleSocket = digitalActionManager.registerAction(logLocalVariables);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

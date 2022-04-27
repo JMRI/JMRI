@@ -34,6 +34,7 @@ public class LogLocalVariablesXml extends jmri.managers.configurexml.AbstractNam
         storeCommon(p, element);
 
         element.addContent(new Element("includeGlobalVariables").addContent(p.isIncludeGlobalVariables()? "yes" : "no"));
+        element.addContent(new Element("expandArraysAndMaps").addContent(p.isExpandArraysAndMaps()? "yes" : "no"));
 
         return element;
     }
@@ -52,6 +53,13 @@ public class LogLocalVariablesXml extends jmri.managers.configurexml.AbstractNam
             h.setIncludeGlobalVariables("yes".equals(includeGlobalVariables.getTextTrim()));
         } else {
             h.setIncludeGlobalVariables(true);
+        }
+
+        Element _expand = shared.getChild("expandArraysAndMaps");
+        if (_expand != null) {
+            h.setExpandArraysAndMaps("yes".equals(_expand.getTextTrim()));
+        } else {
+            h.setExpandArraysAndMaps(false);
         }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

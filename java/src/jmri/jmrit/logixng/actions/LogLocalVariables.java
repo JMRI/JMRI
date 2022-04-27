@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.*;
 public class LogLocalVariables extends AbstractDigitalAction {
 
     private boolean _includeGlobalVariables = true;
+    private boolean _expandArraysAndMaps = false;
+
 
     public LogLocalVariables(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -39,6 +41,14 @@ public class LogLocalVariables extends AbstractDigitalAction {
         return _includeGlobalVariables;
     }
 
+    public void setExpandArraysAndMaps(boolean value) {
+        _expandArraysAndMaps = value;
+    }
+
+    public boolean isExpandArraysAndMaps() {
+        return _expandArraysAndMaps;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -51,12 +61,26 @@ public class LogLocalVariables extends AbstractDigitalAction {
         ConditionalNG c = getConditionalNG();
         log.warn(Bundle.getMessage("LogLocalVariables_Start"));
         for (SymbolTable.Symbol s : c.getSymbolTable().getSymbols().values()) {
-            log.warn("    "+Bundle.getMessage("LogLocalVariables_Variable", s.getName(), c.getSymbolTable().getValue(s.getName())));
+            SymbolTable.printVariable(
+                    log,
+                    "    ",
+                    s.getName(),
+                    c.getSymbolTable().getValue(s.getName()),
+                    _expandArraysAndMaps,
+                    Bundle.getMessage("LogLocalVariables_VariableName"),
+                    Bundle.getMessage("LogLocalVariables_VariableValue"));
         }
         if (_includeGlobalVariables) {
             log.warn(Bundle.getMessage("LogLocalVariables_GlobalVariables_Start"));
             for (GlobalVariable gv : InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet()) {
-                log.warn("    "+Bundle.getMessage("LogLocalVariables_GlobalVariable", gv.getUserName(), gv.getValue()));
+                SymbolTable.printVariable(
+                        log,
+                        "    ",
+                        gv.getUserName(),
+                        gv.getValue(),
+                        _expandArraysAndMaps,
+                        Bundle.getMessage("LogLocalVariables_GlobalVariableName"),
+                        Bundle.getMessage("LogLocalVariables_GlobalVariableValue"));
             }
         }
         log.warn(Bundle.getMessage("LogLocalVariables_End"));
