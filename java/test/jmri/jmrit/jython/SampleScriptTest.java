@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.util.JUnitUtil;
 import jmri.script.JmriScriptEngineManager;
+import jmri.util.JUnitAppender;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -65,6 +66,14 @@ public class SampleScriptTest {
             log.error("IOException during test of {}", file, ex2);
             Assert.fail("IOException during test of " + file);
         }
+
+        if (file.toPath().endsWith("LoggingTest.py")) {
+            JUnitAppender.assertWarnMessage("This WARN is OK, it's emitted from LoggingTest.py on purpose");
+        }
+        else if (file.toPath().endsWith("JavaScriptTest.js")) {
+            JUnitAppender.assertWarnMessage("JavaScriptTest: Turnout.THROWN is 4 (WARN OK here)");
+        }
+
     }
 
     @BeforeAll
