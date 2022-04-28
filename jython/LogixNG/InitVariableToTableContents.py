@@ -28,7 +28,7 @@ print "Table: " + myTable.getSystemName()
 
 column = myTable.getColumnNumber(columnName)
 
-for row in range(1, myTable.numRows()):
+for row in range(1, myTable.numRows()+1):
     key = myTable.getCell(row, 0)
     value = myTable.getCell(row, column)
     myMap.put(key, value)
