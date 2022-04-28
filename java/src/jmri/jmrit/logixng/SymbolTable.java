@@ -271,9 +271,13 @@ public interface SymbolTable {
                 "variable.set(" + initialData + ")";
 
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
+
         Bindings bindings = new SimpleBindings();
+        LogixNG_ScriptBindings.addScriptBindings(bindings);
+
         var variable = new Reference<Object>();
         bindings.put("variable", variable);
+
         try {
             String theScript = String.format("import jmri%n") + script;
             scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
@@ -286,8 +290,12 @@ public interface SymbolTable {
     }
 
     private static Object runScriptFile(String initialData) {
+
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
+
         Bindings bindings = new SimpleBindings();
+        LogixNG_ScriptBindings.addScriptBindings(bindings);
+
         var variable = new Reference<Object>();
         bindings.put("variable", variable);
 
@@ -424,6 +432,7 @@ public interface SymbolTable {
     }
 
 
+    @SuppressFBWarnings(value="SLF4J_LOGGER_SHOULD_BE_PRIVATE", justification="Interfaces cannot have private fields")
     final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SymbolTable.class);
 
 }

@@ -246,6 +246,21 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         // This may take a long time so it must not be done on the GUI thread.
         // Therefore we create a new thread for this task.
         Runnable runnable = () -> {
+
+            // Activate and execute the initialization LogixNGs first.
+            Set<GlobalVariable> globalVariables =
+                    InstanceManager.getDefault(GlobalVariableManager.class)
+                            .getNamedBeanSet();
+
+            // Initialize the value of the global variable
+            for (GlobalVariable gv : globalVariables) {
+                try {
+                    gv.initialize();
+                } catch (JmriException e) {
+                    log.warn("Variable {} could not be initialized", gv.getUserName(), e);
+                }
+            }
+
             Set<LogixNG> activeLogixNGs = new HashSet<>();
 
             // Activate and execute the initialization LogixNGs first.

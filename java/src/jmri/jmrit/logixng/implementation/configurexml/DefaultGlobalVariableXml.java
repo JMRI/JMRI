@@ -64,13 +64,6 @@ public class DefaultGlobalVariableXml extends jmri.managers.configurexml.Abstrac
             h.setInitialValueData(elementInitialValueData.getTextTrim());
         }
 
-        try {
-            // Initialize the value of the global variable
-            h.initialize();
-        } catch (JmriException e) {
-            throw new JmriConfigureXmlException(e);
-        }
-
         return true;
     }
 
