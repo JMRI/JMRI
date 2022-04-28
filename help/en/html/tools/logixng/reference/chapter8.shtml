@@ -323,6 +323,40 @@ WARN  - Log local variables done [JMRI LogixNGThread]
       but another tool is the action <strong>Log local variables</strong>. Each time it's executed,
       it prints all the local variables and their values to the JMRI Sytem Console.</p>
 
+      <p>Options:</p>
+
+      <ul>
+        <li><strong>Include global variables</strong> &mdash; The global variables will be
+        listed after the local variables.</li>
+        <li><strong>Expand arrays and maps</strong> &mdash; the contents of each array and map
+        will be listed.</li>
+      </ul>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/log_variables.png"><img src=
+        "images/chapter8/log_variables.png" alt="Chapter 8 log variables"></a>
+      </div>
+
+      <div style="margin-left: 2em;">
+        <pre>
+WARN  - Log local variables: [JMRI LogixNGThread]
+WARN  -     Name: time, Value: Time is 13:02 [JMRI LogixNGThread]
+WARN  - Global variables: [JMRI LogixNGThread]
+WARN  -     Global Name: gHour, value: 13 [JMRI LogixNGThread]
+WARN  -     Global Name: gMin, value: 2 [JMRI LogixNGThread]
+WARN  -     Global Name: timeMap, [JMRI LogixNGThread]
+WARN  -         theHour -> 13, [JMRI LogixNGThread]
+WARN  -         theMin -> 2, [JMRI LogixNGThread]
+WARN  -         theTime -> The map time is 13:02, [JMRI LogixNGThread]
+WARN  -     Global Name: timeArray, [JMRI LogixNGThread]
+WARN  -         0: 13, [JMRI LogixNGThread]
+WARN  -         1: 2, [JMRI LogixNGThread]
+WARN  -         2: The array time is 13:02, [JMRI LogixNGThread]
+WARN  -     Global Name: null, value: null [JMRI LogixNGThread]
+WARN  - Log local variables done [JMRI LogixNGThread]
+        </pre>
+      </div>
+
       <hr>
 
       <p><a href="chapter9.shtml">Chapter 9 - Formula</a>
