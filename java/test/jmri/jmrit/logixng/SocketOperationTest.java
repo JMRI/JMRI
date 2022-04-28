@@ -190,6 +190,10 @@ public class SocketOperationTest {
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+
+        // Delete all the LogixNGs, ConditionalNGs, and so on.
+        CreateLogixNGTreeScaffold.cleanup();
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
