@@ -411,6 +411,8 @@
           with a script expression or a script file.</li>
           <li>The action <i>Listen on beans</i> now protects against
           removal of the beans it's listening to.</li>
+          <li>The <i>Edit local variables</i> dialog can now be resized
+          so that the table grows and shrinks when it's resized.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
