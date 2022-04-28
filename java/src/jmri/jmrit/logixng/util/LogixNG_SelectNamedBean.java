@@ -360,7 +360,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                 }
             }
             if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
+                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
                     removeMemory();
                 }
             }
