@@ -43,7 +43,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         try {
             newAddress = CbusAddress.validateSysName(addr);
         } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
+            log.error("Unable to create CbusSensor, {}", e.getMessage());
             throw e;
         }
         // OK, make

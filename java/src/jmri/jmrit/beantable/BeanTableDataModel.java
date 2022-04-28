@@ -760,6 +760,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * Is a bean allowed to have the user name cleared?
+     * @return true if clear is allowed, false otherwise
+     */
+    protected boolean isClearUserNameAllowed() {
+        return true;
+    }
+
+    /**
      * Display popup menu when right clicked on table cell.
      * <p>
      * Copy UserName
@@ -788,9 +796,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem.addActionListener((ActionEvent e1) -> renameBean(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
-        menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
-        popupMenu.add(menuItem);
+        if (isClearUserNameAllowed()) {
+            menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
+            menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
+            popupMenu.add(menuItem);
+        }
 
         menuItem = new JMenuItem(Bundle.getMessage("MoveName"));
         menuItem.addActionListener((ActionEvent e1) -> moveBean(rowindex, 0));
@@ -847,7 +857,15 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             return;  // NOI18N
         }
 
-        nBean.setUserName(newName);
+        try {
+            nBean.setUserName(newName);
+        } catch (NamedBean.BadSystemNameException | NamedBean.BadUserNameException ex) {
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         fireTableRowsUpdated(row, row);
         if (!newName.isEmpty()) {
             if (oldName == null || oldName.isEmpty()) {
