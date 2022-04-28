@@ -407,6 +407,8 @@
           <li><i>Global Variables</i> has been added. A Global Variable
           is similar to a Local Variable, except that it is shared among
           the ConditionalNGs.</li>
+          <li>Global variables and Local variables can now be initialized
+          with a script expression or a script file.</li>
           <li>The action <i>Listen on beans</i> now protects against
           removal of the beans it's listening to.</li>
         </ul>
