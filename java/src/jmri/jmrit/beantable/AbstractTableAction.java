@@ -90,15 +90,15 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         f.pack();
         f.setVisible(true);
     }
-    
+
     /**
      * Notification that column visibility for the JTable has updated.
      * <p>
      * This is overridden by classes which have column visibility Checkboxes on bottom bar.
      * <p>
-     * 
+     *
      * Called on table startup and whenever a column goes hidden / visible.
-     * 
+     *
      * @param colsVisible   array of ALL table columns and their visibility
      *                      status in order of main Table Model, NOT XTableColumnModel.
      */
@@ -129,6 +129,15 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     }
 
     /**
+     * Allow subclasses to add to the frame without having to actually subclass
+     * the BeanTableDataFrame.
+     *
+     * @param tti the TabbedTableItem to add to
+     */
+    public void addToFrame(@Nonnull ListedTableFrame.TabbedTableItem<E> tti) {
+    }
+
+    /**
      * If the subClass is being included in a greater tabbed frame, then this
      * method is used to add the details to the tabbed frame.
      *
@@ -146,7 +155,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected void setManager(@Nonnull Manager<E> man) {
     }
-    
+
     /**
      * Get the Bean Manager in use by the TableAction.
      * @return Bean Manager, could be Proxy or normal Manager, may be null.
@@ -168,7 +177,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     public JPanel getPanel() {
         return null;
     }
-    
+
     /**
      * Perform configuration of the JTable as required by a specific TableAction.
      * @param table The table to configure.

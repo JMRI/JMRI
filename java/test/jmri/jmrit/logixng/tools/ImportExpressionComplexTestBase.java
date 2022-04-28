@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.tools;
 
-import java.util.ArrayList;
-import java.util.SortedSet;
+import java.util.*;
 
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
@@ -10,6 +9,8 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,11 +24,11 @@ import org.junit.Test;
  * deletes the original Logix and then test that the new LogixNG works.
  * <P>
  * This class is base class for the expression tests
- * 
+ *
  * @author Daniel Bergqvist (C) 2020
  */
 public abstract class ImportExpressionComplexTestBase {
-    
+
     public enum Setup {
         Init,
         Fail1,
@@ -38,14 +39,14 @@ public abstract class ImportExpressionComplexTestBase {
         Succeed3,
         Succeed4,
     }
-    
+
     private LogixManager logixManager;
     protected Logix logix;
     protected Conditional conditional;
     private ArrayList<ConditionalVariable> variables;
     private ArrayList<ConditionalAction> actions;
     private Turnout t1;
-    
+
     /**
      * Some NamedBeans, for example Light, does not support other states than ON and OFF
      * @return true if other states than ON and OFF is allowed
@@ -53,27 +54,27 @@ public abstract class ImportExpressionComplexTestBase {
     public boolean isStateOtherAllowed() {
         return true;
     }
-    
+
     /**
      * Set the sensor, turnout, or other bean to the desired state.
      * <P>
      * If the parameter expectSuccess is true, this method should setup the
      * bean so that the Logix/LogixNG will be successfull if the Logix/LogixNG
      * is executed.
-     * 
+     *
      * @param e the enum
      * @param setup the setup
      * @throws jmri.JmriException in case of an exception
      */
     abstract public void setNamedBeanState(Enum e, Setup setup) throws JmriException;
-    
+
     /**
      * Create a new conditional variable of the desired type
      * @return the conditional variable
      */
     abstract public ConditionalVariable newConditionalVariable();
-    
-    
+
+
     public void assertBoolean(String message, boolean expectSuccess, boolean result) {
         if (expectSuccess) {
             Assert.assertTrue(message, result);
@@ -81,44 +82,44 @@ public abstract class ImportExpressionComplexTestBase {
             Assert.assertFalse(message, result);
         }
     }
-    
+
     abstract public Enum[] getEnums();
-    
+
     public Enum getOtherEnum(Enum e) {
         Enum[] enums = getEnums();
         int value = e.ordinal() + 1;
         if (value >= enums.length) value -= enums.length;
         return enums[value];
     }
-    
+
     public Enum getThirdEnum(Enum e) {
         Enum[] enums = getEnums();
         int value = e.ordinal() + 2;
         if (value >= enums.length) value -= enums.length;
         return enums[value];
     }
-    
+
     public void testEnum(Enum e) throws JmriException {
 //        Enum otherE = getOtherEnum(e);
 //        Enum thirdE = getThirdEnum(e);
-        
+
         RunTestScaffold check = (message, expectSuccess) -> {
             setNamedBeanState(e, Setup.Init);
 //            setConditionalVariableState(e);
             t1.setState(Turnout.CLOSED);
-            
+
             // This should not throw the turnout
             setNamedBeanState(e, Setup.Fail1);
             assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
-            
+
             // This should not throw the turnout
             setNamedBeanState(e, Setup.Fail2);
             assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
-            
+
             // This should not throw the turnout
             setNamedBeanState(e, Setup.Fail3);
             assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
-            
+
 //            setNamedBeanState(e, Setup.Init);
 //            setConditionalVariableState(e);
             setNamedBeanState(e, Setup.Fail1);
@@ -133,14 +134,14 @@ public abstract class ImportExpressionComplexTestBase {
             setNamedBeanState(e, Setup.Succeed2);
             if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
-            
+
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed3);
             if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
-            
+
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
@@ -148,45 +149,45 @@ public abstract class ImportExpressionComplexTestBase {
             if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
         };
-        
-        
+
+
         check.runTest("Logix is not activated. Enum: "+e.name(), false);
-        
+
         logixManager.activateAllLogixs();
-        
+
         check.runTest("Logix is activated. Enum: "+e.name(), true);
-        
+
         logix.deActivateLogix();
         conditional = null;
-        
+
         // Import the logix to LogixNG
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
-        
+
 //        logix.setEnabled(false);
 //        logixManager.deleteLogix(logix);
 //        ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
 //        SortedSet<Conditional> set = conditionalManager.getNamedBeanSet();
 //        for (Conditional c : set) conditionalManager.deleteConditional(c);
-        
+
         check.runTest("Logix is deactivated and LogixNG is not activated. Enum: "+e.name(), false);
 //        check.runTest("Logix is removed and LogixNG is not activated. Enum: "+e.name(), false);
-        
+
         // We want the conditionalNGs run immediately during this test
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
-        
+
         importLogix.getLogixNG().setEnabled(true);
         InstanceManager.getDefault(LogixNG_Manager.class)
                 .activateAllLogixNGs(false, false);
-        
+
         check.runTest("LogixNG is activated. Enum: "+e.name(), true);
-        
+
         importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
-        
+
         check.runTest("LogixNG is removed. Enum: "+e.name(), false);
     }
-    
+
     @Test
     public void testAll() throws JmriException {
         for (Enum e : getEnums()) {
@@ -201,7 +202,7 @@ public abstract class ImportExpressionComplexTestBase {
             teardownTest();
         }
     }
-    
+
 //    // The minimal setup for log4J
 //    @Before
 //    public void setUp() {
@@ -214,21 +215,21 @@ public abstract class ImportExpressionComplexTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixManager();
         JUnitUtil.initLogixNGManager();
-        
+
         t1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        
+
         logixManager = InstanceManager.getDefault(LogixManager.class);
         ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
-        
+
         logix = logixManager.createNewLogix("IX1", null);
         logix.setEnabled(true);
-        
+
         conditional = conditionalManager.createNewConditional("IX1C1", "First conditional");
         logix.addConditional(conditional.getSystemName(), 0);
-        
+
         conditional.setTriggerOnChange(true);
         conditional.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
-        
+
         variables = new ArrayList<>();
         ConditionalVariable cv = newConditionalVariable();
         cv.setTriggerActions(true);
@@ -239,7 +240,7 @@ public abstract class ImportExpressionComplexTestBase {
         cv.setType(Conditional.Type.SENSOR_ACTIVE);
         variables.add(cv);
         conditional.setStateVariables(variables);
-        
+
         actions = new ArrayList<>();
         ConditionalAction ca = new DefaultConditionalAction();
         ca.setType(Conditional.Action.SET_TURNOUT);
@@ -247,7 +248,7 @@ public abstract class ImportExpressionComplexTestBase {
         ca.setDeviceName("IT1");
         actions.add(ca);
         conditional.setAction(actions);
-        
+
         InstanceManager.getDefault(LogixNG_Manager.class)
                 .activateAllLogixNGs(false, false);
     }
@@ -256,10 +257,19 @@ public abstract class ImportExpressionComplexTestBase {
 //    public void tearDown() {
     public void teardownTest() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
-        
+
+        List<LoggingEvent> list = new ArrayList<>(JUnitAppender.getBacklog());
+        for (LoggingEvent event : list) {
+            if ((event.getLevel() == Level.WARN)
+                    && event.getMessage().toString().equals(
+                            "Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'")) {
+                JUnitAppender.suppressErrorMessage(event.getMessage().toString());
+            }
+        }
+
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

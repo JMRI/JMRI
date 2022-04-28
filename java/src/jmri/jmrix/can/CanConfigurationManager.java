@@ -40,9 +40,6 @@ public class CanConfigurationManager extends ConfigurationManager {
      */
     @Override
     public boolean provides(Class<?> type) {
-        if (adapterMemo.getDisabled()) {
-            return false;
-        }
         return false; // nothing, by default
     }
 
@@ -52,9 +49,6 @@ public class CanConfigurationManager extends ConfigurationManager {
      */
     @Override
     public <T> T get(Class<?> T) {
-        if (adapterMemo.getDisabled()) {
-            return null;
-        }
         return null;
     }
 

@@ -21771,6 +21771,8 @@
     </LogData>
     <LogLocalVariables class="jmri.jmrit.logixng.actions.configurexml.LogLocalVariablesXml">
       <systemName>IQDA:AUTO:0168</systemName>
+      <includeGlobalVariables>yes</includeGlobalVariables>
+      <expandArraysAndMaps>no</expandArraysAndMaps>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -21831,6 +21833,8 @@
     <LogLocalVariables class="jmri.jmrit.logixng.actions.configurexml.LogLocalVariablesXml">
       <systemName>IQDA:AUTO:0169</systemName>
       <comment>A comment</comment>
+      <includeGlobalVariables>yes</includeGlobalVariables>
+      <expandArraysAndMaps>no</expandArraysAndMaps>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22481,6 +22485,8 @@
     </ShowDialog>
     <LogLocalVariables class="jmri.jmrit.logixng.actions.configurexml.LogLocalVariablesXml">
       <systemName>IQDA:AUTO:0178</systemName>
+      <includeGlobalVariables>yes</includeGlobalVariables>
+      <expandArraysAndMaps>no</expandArraysAndMaps>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">

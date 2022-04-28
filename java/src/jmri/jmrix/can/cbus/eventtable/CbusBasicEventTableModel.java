@@ -65,8 +65,13 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
         EVENT_DAT_1, EVENT_DAT_2, EVENT_DAT_3 };
 
     public CbusBasicEventTableModel(CanSystemConnectionMemo memo) {
+        this(memo, 1);
+    }
+
+    public CbusBasicEventTableModel(CanSystemConnectionMemo memo, int initialArray) {
+        super();
         _memo = memo;
-        _mainArray = new ArrayList<>();
+        _mainArray = new ArrayList<>(initialArray);
         ta = new CbusEventTableAction( this);
     }
 
