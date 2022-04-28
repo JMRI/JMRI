@@ -14,8 +14,6 @@ import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -57,68 +55,24 @@ public class DefaultGlobalVariable extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("unchecked")  // Checked cast is not possible due to type erasure
     public void initialize() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable();
 
         Object value;
 
         switch (_initialValueType) {
-            case None:
-                value = null;
-                break;
-
-            case Integer:
-                value = Long.parseLong(_initialValueData);
-                break;
-
-            case FloatingNumber:
-                value = Double.parseDouble(_initialValueData);
-                break;
-
-            case String:
-                value = _initialValueData;
-                break;
 
             case Array:
-                List<Object> array = new java.util.ArrayList<>();
-                String initialValueData = _initialValueData;
-                if (!initialValueData.isEmpty()) {
-                    Object data = "";
-                    String[] parts = initialValueData.split(":", 2);
-                    if (parts.length > 1) {
-                        initialValueData = parts[0];
-                        if (Character.isDigit(parts[1].charAt(0))) {
-                            try {
-                                data = Long.parseLong(parts[1]);
-                            } catch (NumberFormatException e) {
-                                try {
-                                    data = Double.parseDouble(parts[1]);
-                                } catch (NumberFormatException e2) {
-                                    throw new IllegalArgumentException("Data is not a number", e2);
-                                }
-                            }
-                        } else if ((parts[1].charAt(0) == '"') && (parts[1].charAt(parts[1].length()-1) == '"')) {
-                            data = parts[1].substring(1,parts[1].length()-1);
-                        } else {
-                            // Assume initial value is a local variable
-                            data = symbolTable.getValue(parts[1]).toString();
-                        }
-                    }
-                    try {
-                        int count;
-                        if (Character.isDigit(initialValueData.charAt(0))) {
-                            count = Integer.parseInt(initialValueData);
-                        } else {
-                            // Assume size is a local variable
-                            count = Integer.parseInt(symbolTable.getValue(initialValueData).toString());
-                        }
-                        for (int i=0; i < count; i++) array.add(data);
-                    } catch (NumberFormatException e) {
-                        throw new IllegalArgumentException("Initial capacity is not an integer", e);
-                    }
-                }
+                var newArray = SymbolTable.getInitialValue(
+                        _initialValueType,
+                        _initialValueData,
+                        symbolTable,
+                        symbolTable.getSymbols());
+
+                // Convert the array to a thread safe array
                 // https://howtodoinjava.com/java/collections/arraylist/synchronize-arraylist/
-                value = new CopyOnWriteArrayList<>(array);
+                value = new CopyOnWriteArrayList<>((List)newArray);
                 break;
 
             case Map:
@@ -126,51 +80,15 @@ public class DefaultGlobalVariable extends AbstractNamedBean
                 value = new ConcurrentHashMap<>();
                 break;
 
-            case LocalVariable:
-                value = symbolTable.getValue(_initialValueData);
-                break;
-
-            case Memory:
-                Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(_initialValueData);
-                if (m != null) value = m.getValue();
-                else return;
-                break;
-
-            case Reference:
-                if (ReferenceUtil.isReference(_initialValueData)) {
-                    value = ReferenceUtil.getReference(
-                            symbolTable, _initialValueData);
-                } else {
-                    log.error("\"{}\" is not a reference", _initialValueData);
-                    return;
-                }
-                break;
-
-            case Formula:
-                RecursiveDescentParser parser = createParser(symbolTable);
-                ExpressionNode expressionNode = parser.parseExpression(_initialValueData);
-                value = expressionNode.calculate(symbolTable);
-                break;
-
             default:
-                log.error("definition._initialValueType has invalid value: {}", _initialValueType.name());
-                throw new IllegalArgumentException("definition._initialValueType has invalid value: " + _initialValueType.name());
+                value = SymbolTable.getInitialValue(
+                        _initialValueType,
+                        _initialValueData,
+                        symbolTable,
+                        symbolTable.getSymbols());
         }
 
-        setValue(value);
-    }
-
-    private RecursiveDescentParser createParser(SymbolTable symbolTable)
-            throws ParserException {
-
-        Map<String, Variable> variables = new HashMap<>();
-
-        for (SymbolTable.Symbol symbol : symbolTable.getSymbols().values()) {
-            variables.put(symbol.getName(),
-                    new LocalVariableExpressionVariable(symbol.getName()));
-        }
-
-        return new RecursiveDescentParser(variables);
+        if (value != _value) setValue(value);
     }
 
     /** {@inheritDoc} */

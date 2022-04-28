@@ -4,9 +4,16 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
 
+import jmri.*;
 import jmri.JmriException;
+import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
 
 import org.slf4j.Logger;
 
@@ -249,6 +256,111 @@ public interface SymbolTable {
         }
     }
 
+    public static Object getInitialValue(
+            InitialValueType initialType,
+            String initialData,
+            SymbolTable symbolTable,
+            Map<String, Symbol> symbols)
+            throws ParserException, JmriException {
+
+        switch (initialType) {
+            case None:
+                return null;
+
+            case Integer:
+                return Long.parseLong(initialData);
+
+            case FloatingNumber:
+                return Double.parseDouble(initialData);
+
+            case String:
+                return initialData;
+
+            case Array:
+                List<Object> array = new java.util.ArrayList<>();
+                Object initialValue = array;
+                String initialValueData = initialData;
+                if (!initialValueData.isEmpty()) {
+                    Object data = "";
+                    String[] parts = initialValueData.split(":", 2);
+                    if (parts.length > 1) {
+                        initialValueData = parts[0];
+                        if (Character.isDigit(parts[1].charAt(0))) {
+                            try {
+                                data = Long.parseLong(parts[1]);
+                            } catch (NumberFormatException e) {
+                                try {
+                                    data = Double.parseDouble(parts[1]);
+                                } catch (NumberFormatException e2) {
+                                    throw new IllegalArgumentException("Data is not a number", e2);
+                                }
+                            }
+                        } else if ((parts[1].charAt(0) == '"') && (parts[1].charAt(parts[1].length()-1) == '"')) {
+                            data = parts[1].substring(1,parts[1].length()-1);
+                        } else {
+                            // Assume initial value is a local variable
+                            data = symbolTable.getValue(parts[1]).toString();
+                        }
+                    }
+                    try {
+                        int count;
+                        if (Character.isDigit(initialValueData.charAt(0))) {
+                            count = Integer.parseInt(initialValueData);
+                        } else {
+                            // Assume size is a local variable
+                            count = Integer.parseInt(symbolTable.getValue(initialValueData).toString());
+                        }
+                        for (int i=0; i < count; i++) array.add(data);
+                    } catch (NumberFormatException e) {
+                        throw new IllegalArgumentException("Initial capacity is not an integer", e);
+                    }
+                }
+                return initialValue;
+
+            case Map:
+                return new java.util.HashMap<>();
+
+            case LocalVariable:
+                return symbolTable.getValue(initialData);
+
+            case Memory:
+                Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(initialData);
+                if (m != null) return m.getValue();
+                else return null;
+
+            case Reference:
+                if (ReferenceUtil.isReference(initialData)) {
+                    return ReferenceUtil.getReference(
+                            symbolTable, initialData);
+                } else {
+                    log.error("\"{}\" is not a reference", initialData);
+                    return null;
+                }
+
+            case Formula:
+                RecursiveDescentParser parser = createParser(symbols);
+                ExpressionNode expressionNode = parser.parseExpression(
+                        initialData);
+                return expressionNode.calculate(symbolTable);
+
+            default:
+                log.error("definition._initialValueType has invalid value: {}", initialType.name());
+                throw new IllegalArgumentException("definition._initialValueType has invalid value: " + initialType.name());
+        }
+    }
+
+    private static RecursiveDescentParser createParser(Map<String, Symbol> symbols)
+            throws ParserException {
+        Map<String, Variable> variables = new HashMap<>();
+
+        for (SymbolTable.Symbol symbol : Collections.unmodifiableMap(symbols).values()) {
+            variables.put(symbol.getName(),
+                    new LocalVariableExpressionVariable(symbol.getName()));
+        }
+
+        return new RecursiveDescentParser(variables);
+    }
+
 
 
     public static class SymbolNotFound extends IllegalArgumentException {
@@ -257,5 +369,8 @@ public interface SymbolTable {
             super(message);
         }
     }
+
+
+    final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SymbolTable.class);
 
 }
