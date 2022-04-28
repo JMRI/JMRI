@@ -305,6 +305,8 @@ public class ActionWarrant extends AbstractDigitalAction
                         return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainIdName);
                     case ControlAutoTrain:
                         return getLongDataDescription(locale, "ActionWarrant_Long_Control", namedBean, _controlAutoTrain.name());
+                    default:
+                        // Fall thru and handle it in the end of the method
                 }
             }
         }
