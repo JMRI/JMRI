@@ -252,6 +252,14 @@
           meets.</dd>
 
           <dd>
+            <h3><a href="vsd/index.shtml">Virtual Sound Decoder</a>
+            </h3>
+          </dd>
+
+          <dd>Provides throttle-controlled locomotive sound simulation without the need of an
+          on-board sound decoder.</dd>
+
+          <dd>
             <h3><a href="../../package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used</a>
             </h3>
           </dd>

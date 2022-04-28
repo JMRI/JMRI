@@ -57,6 +57,133 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
+     * Test sending speed and directions for expected message formats, 
+     *   various command station versions, fkeys, states. 
+     *   Set up commandstation to set version, set speed and direction, 
+     *   then verify the syntax of the last message added to the queue
+     */    
+    @Test
+    public void testSpeedSettingAndDirection(){
+        DCCppCommandStation cs = tc.getCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-4.0.1 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        cs.setCommandStationInfo(r);
+
+        instance.setSpeedSetting(0.5f);
+        instance.setIsForward(true);
+        Assert.assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
+        Assert.assertTrue(instance.getIsForward());
+        DCCppMessage lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "t 3 63 1");
+
+        instance.setSpeedSetting(0.0f);
+        instance.setIsForward(false);
+        Assert.assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
+        Assert.assertFalse(instance.getIsForward());
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "t 3 0 0");
+
+        instance.setSpeedSetting(1.0f);
+        instance.setIsForward(false);
+        Assert.assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
+        Assert.assertFalse(instance.getIsForward());
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "t 3 126 0");
+
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        cs.setCommandStationInfo(r);
+
+        instance.setSpeedSetting(0.5f);
+        instance.setIsForward(true);
+        Assert.assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
+        Assert.assertTrue(instance.getIsForward());
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "t -1 3 63 1");
+
+        instance.setSpeedSetting(0.0f);
+        instance.setIsForward(false);
+        Assert.assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
+        Assert.assertFalse(instance.getIsForward());
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "t -1 3 0 0");
+
+        instance.setSpeedSetting(1.0f);
+        instance.setIsForward(false);
+        Assert.assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
+        Assert.assertFalse(instance.getIsForward());
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "t -1 3 126 0");
+
+    }
+
+    /**
+     * Test sending FKeys for expected message formats, various commandstation
+     *   versions, fkeys, states. 
+     *   Set up commandstation to get version, set a function, 
+     *   then verify the syntax of the last message added to the queue
+     *   turn off after each test, since old syntax sends groups
+     */    
+    @Test
+    public void testFunctionFormats(){
+        DCCppCommandStation cs = tc.getCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-4.0.1 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        cs.setCommandStationInfo(r);
+
+        instance.setFunction(0, true);
+        Assert.assertTrue(instance.getFunction(0));
+        DCCppMessage lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "F 3 0 1");
+        instance.setFunction(0, false);
+
+        instance.setFunction(22, false);
+        Assert.assertFalse(instance.getFunction(22));
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "F 3 22 0");
+
+        instance.setFunction(28, true);
+        Assert.assertTrue(instance.getFunction(28));
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "F 3 28 1");
+        instance.setFunction(28, false);
+
+        instance.setFunction(61, true);
+        Assert.assertFalse(instance.getFunction(61));
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "F 3 61 1");
+        instance.setFunction(61, false);
+
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        cs.setCommandStationInfo(r);
+
+        instance.setFunction(0, true);
+        Assert.assertTrue(instance.getFunction(0));
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "f 3 144");
+        instance.setFunction(0, false);
+
+        instance.setFunction(21, false);
+        Assert.assertFalse(instance.getFunction(21));
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "f 3 223 0");
+
+        instance.setFunction(4, true);
+        Assert.assertTrue(instance.getFunction(4));
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "f 3 136");
+        instance.setFunction(4, false);
+
+        instance.setFunction(28, true);
+        Assert.assertTrue(instance.getFunction(28));
+        lm = tc.outbound.get(tc.outbound.size()-1);
+        Assert.assertEquals(lm.toString(), "f 3 223 128");
+        instance.setFunction(28, false);
+
+    }
+
+    /**
      * Test of setF0 method, of class AbstractThrottle.
      */
     @Test

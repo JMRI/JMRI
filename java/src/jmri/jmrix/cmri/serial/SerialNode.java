@@ -217,7 +217,7 @@ public class SerialNode extends AbstractNode {
         int byteNumber = (bitNumber - 1) / 8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards() * (bitsPerCard / 8))) {
-            warn("C/MRI - Output bit out-of-range for defined node");
+            warn("Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) {
             byteNumber = 255;
@@ -246,7 +246,7 @@ public class SerialNode extends AbstractNode {
         int byteNumber = (bitNumber - 1) / 8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards() * (bitsPerCard / 8))) {
-            warn("C/MRI - Output bit out-of-range for defined node");
+            warn("Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) {
             byteNumber = 255;
@@ -304,17 +304,17 @@ public class SerialNode extends AbstractNode {
         {
           case SMINI:      if (result!=1)
                            {
-                            warn("C/MRI SMINI with "+result+" INPUT cards");
+                            warn("SMINI with "+result+" INPUT cards");
                            }
           break;
           case USIC_SUSIC: if(result>=MAXCARDLOCATIONBYTES)
-                            warn("C/MRI USIC/SUSIC node with "+result+" INPUT cards");
+                            warn("USIC/SUSIC node with "+result+" INPUT cards");
           break;
           case CPNODE:     if(result<2)  //c2
-                            warn("C/MRI CPNODE node with "+result+" INPUT cards");
+                            warn("CPNODE node with "+result+" INPUT cards");
           break;
           case CPMEGA:    if(result<1)  //c2
-                            warn("C/MRI CPMEGA node with "+result+" INPUT cards");
+                            warn("CPMEGA node with "+result+" INPUT cards");
           break;
           default:
           break;
@@ -348,20 +348,20 @@ public class SerialNode extends AbstractNode {
          {
            case SMINI:     if (result!=2)
                            {
-                            warn("C/MRI SMINI with "+result+" OUTPUT cards");
+                            warn("SMINI with "+result+" OUTPUT cards");
                            }
            break;
            case USIC_SUSIC:
             if(result>=MAXCARDLOCATIONBYTES)
-             warn("C/MRI  USIC/SUSIC node with "+result+" OUTPUT cards");
+             warn("USIC/SUSIC node with "+result+" OUTPUT cards");
            break;
            case CPNODE:     //c2
            if(result<2)
-             warn("C/MRI  CPNODE node with "+result+" OUTPUT cards");
+             warn("CPNODE node with "+result+" OUTPUT cards");
            break;
            case CPMEGA:     //c2
            if(result<1)
-             warn("C/MRI  CPMEGA node with "+result+" OUTPUT cards");
+             warn("CPMEGA node with "+result+" OUTPUT cards");
            break;
            default:
          }
@@ -724,7 +724,7 @@ public class SerialNode extends AbstractNode {
      */
     public boolean isOutputCard(int cardNum) {
         if (cardNum > 63) {
-            warn("C/MRI - isOutputCard - cardNum out of range");
+            warn("isOutputCard - cardNum out of range");
             return (false);
         }
         if (nodeType == SMINI) {
@@ -746,7 +746,7 @@ public class SerialNode extends AbstractNode {
      */
     public boolean isInputCard(int cardNum) {
         if (cardNum > 63) {
-            warn("C/MRI - isInputCard - cardNum out of range");
+            warn("isInputCard - cardNum out of range");
             return (false);
         }
         if (nodeType == SMINI) {
@@ -786,7 +786,7 @@ public class SerialNode extends AbstractNode {
             }
         }
         // Here if error - cardNum is not an
-        warn("C/MRI - input card to getOutputCardIndex is not an Output Card");
+        warn("input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
 
@@ -818,7 +818,7 @@ public class SerialNode extends AbstractNode {
             }
         }
         // Here if error - cardNum is not an
-        warn("C/MRI - input card to getOutputCardIndex is not an Output Card");
+        warn("input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
 
@@ -1189,7 +1189,7 @@ public class SerialNode extends AbstractNode {
             return;
         }
         warned = true;
-        log.warn(s);
+        log.warn("C/MRI - {}", s);
     }
 
     /**

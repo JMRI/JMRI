@@ -34,15 +34,6 @@ public class StoreAndLoadTest {
         CreateLogixNGTreeScaffold.createLogixNGTree();
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
-        AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
-        AnalogExpressionManager analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
-        DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
-        DigitalBooleanActionManager digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
-        DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
-        StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
-        StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
-        LogixNG_InitializationManager logixNG_InitializationManager = InstanceManager.getDefault(LogixNG_InitializationManager.class);
 
         // Store panels
         jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -83,76 +74,7 @@ public class StoreAndLoadTest {
             //**********************************
             // Delete all the LogixNGs, ConditionalNGs, and so on before reading the file.
             //**********************************
-
-            java.util.Set<LogixNG> logixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
-            for (LogixNG aLogixNG : logixNG_Set) {
-                logixNG_Manager.deleteLogixNG(aLogixNG);
-            }
-
-            java.util.Set<ConditionalNG> conditionalNGSet = new java.util.HashSet<>(conditionalNGManager.getNamedBeanSet());
-            for (ConditionalNG aConditionalNG : conditionalNGSet) {
-                conditionalNGManager.deleteConditionalNG(aConditionalNG);
-            }
-
-            java.util.Set<MaleAnalogActionSocket> analogActionSet = new java.util.HashSet<>(analogActionManager.getNamedBeanSet());
-            for (MaleAnalogActionSocket aAnalogAction : analogActionSet) {
-                analogActionManager.deleteAnalogAction(aAnalogAction);
-            }
-
-            java.util.Set<MaleAnalogExpressionSocket> analogExpressionSet = new java.util.HashSet<>(analogExpressionManager.getNamedBeanSet());
-            for (MaleAnalogExpressionSocket aAnalogExpression : analogExpressionSet) {
-                analogExpressionManager.deleteAnalogExpression(aAnalogExpression);
-            }
-
-            java.util.Set<MaleDigitalActionSocket> digitalActionSet = new java.util.HashSet<>(digitalActionManager.getNamedBeanSet());
-            for (MaleDigitalActionSocket aDigitalActionSocket : digitalActionSet) {
-                digitalActionManager.deleteDigitalAction(aDigitalActionSocket);
-            }
-
-            java.util.Set<MaleDigitalBooleanActionSocket> digitalBooleanActionSet = new java.util.HashSet<>(digitalBooleanActionManager.getNamedBeanSet());
-            for (MaleDigitalBooleanActionSocket aDigitalBooleanAction : digitalBooleanActionSet) {
-                digitalBooleanActionManager.deleteDigitalBooleanAction(aDigitalBooleanAction);
-            }
-
-            java.util.Set<MaleDigitalExpressionSocket> digitalExpressionSet = new java.util.HashSet<>(digitalExpressionManager.getNamedBeanSet());
-            for (MaleDigitalExpressionSocket aDigitalExpression : digitalExpressionSet) {
-                digitalExpressionManager.deleteDigitalExpression(aDigitalExpression);
-            }
-
-            java.util.Set<MaleStringActionSocket> stringActionSet = new java.util.HashSet<>(stringActionManager.getNamedBeanSet());
-            for (MaleStringActionSocket aStringAction : stringActionSet) {
-                stringActionManager.deleteStringAction(aStringAction);
-            }
-
-            java.util.Set<MaleStringExpressionSocket> stringExpressionSet = new java.util.HashSet<>(stringExpressionManager.getNamedBeanSet());
-            for (MaleStringExpressionSocket aStringExpression : stringExpressionSet) {
-                stringExpressionManager.deleteStringExpression(aStringExpression);
-            }
-
-            java.util.Set<Module> moduleSet = new java.util.HashSet<>(InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet());
-            for (Module aModule : moduleSet) {
-                InstanceManager.getDefault(ModuleManager.class).deleteModule(aModule);
-            }
-
-            java.util.Set<NamedTable> tableSet = new java.util.HashSet<>(InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet());
-            for (NamedTable aTable : tableSet) {
-                InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(aTable);
-            }
-
-            while (! logixNG_InitializationManager.getList().isEmpty()) {
-                logixNG_InitializationManager.delete(0);
-            }
-
-            Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
-            Assert.assertEquals(0, analogActionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, analogExpressionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, digitalActionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, stringActionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, stringExpressionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
-            Assert.assertEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
-            Assert.assertEquals(0, logixNG_InitializationManager.getList().size());
+            CreateLogixNGTreeScaffold.cleanup();
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -276,6 +198,10 @@ public class StoreAndLoadTest {
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+
+        // Delete all the LogixNGs, ConditionalNGs, and so on.
+        CreateLogixNGTreeScaffold.cleanup();
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

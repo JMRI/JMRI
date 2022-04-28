@@ -4,6 +4,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,12 +84,29 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFunction(int functionNum, boolean newState) {
+        if (tc.getCommandStation().isFunctionV2Supported()) {
+            //send the newer <F CAB FUNC STATE> message
+            DCCppMessage msg = DCCppMessage.makeFunctionV2Message(this.getDccAddress(), functionNum, newState);
+            queueMessage(msg, THROTTLEIDLE);
+            updateFunction(functionNum, newState); //update throttle and broadcast change
+        } else {
+            //or send the older <f ADDR BYTE1 (BYTE2)> message
+            super.setFunction(functionNum, newState);
+        }
+    }
+
+   
+    /**
      * Send the DCC++  message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
      */
     @Override
     protected void sendFunctionGroup1() {
-        log.debug("sendFunctionGroup1(): f0 {} f1 {} f2 {} f3 {} f4{}",
+        log.debug("sendFunctionGroup1(): f0 {} f1 {} f2 {} f3 {} f4 {}",
             getFunction(0), getFunction(1), getFunction(2), getFunction(3), getFunction(4));
         DCCppMessage msg = DCCppMessage.makeFunctionGroup1OpsMsg(this.getDccAddress(),
             getFunction(0), getFunction(1), getFunction(2), getFunction(3), getFunction(4));

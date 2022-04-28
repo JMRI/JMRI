@@ -149,6 +149,32 @@ public class CreateLogixNGTreeScaffold {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many901);
         module.getRootSocket().connect(manySocket901);
 
+        // Create global variables
+        GlobalVariable globalVariable =
+                InstanceManager.getDefault(GlobalVariableManager.class)
+                        .createGlobalVariable("IQGV1", "index");
+        globalVariable.setInitialValueType(InitialValueType.String);
+        globalVariable.setInitialValueData("Something");
+
+        globalVariable =
+                InstanceManager.getDefault(GlobalVariableManager.class)
+                        .createGlobalVariable("IQGV2", "MyVariable");
+        globalVariable.setInitialValueType(InitialValueType.Formula);
+        globalVariable.setInitialValueData("\"Variable\" + str(index)");
+
+        globalVariable =
+                InstanceManager.getDefault(GlobalVariableManager.class)
+                        .createGlobalVariable("IQGV15", "AnotherGlobalVariable");
+        globalVariable.setInitialValueType(InitialValueType.Array);
+        globalVariable.setInitialValueData("");
+
+        globalVariable =
+                InstanceManager.getDefault(GlobalVariableManager.class)
+                        .createGlobalVariable(InstanceManager.getDefault(GlobalVariableManager.class)
+                                .getAutoSystemName(), "SomeOtherGlobalVariable");
+        globalVariable.setInitialValueType(InitialValueType.Map);
+        globalVariable.setInitialValueData(null);
+
 
 
 
@@ -746,6 +772,20 @@ public class CreateLogixNGTreeScaffold {
         Assert.assertEquals(turnout2.getUserName(), ref.getName());
         Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
         Assert.assertTrue(ref.getListenOnAllProperties());
+
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference(new NamedBeanReference("MyGlobalVariable", NamedBeanType.GlobalVariable, false));
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        for (NamedBeanType namedBeanType : NamedBeanType.values()) {
+            actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+            actionListenOnBeans.setComment("A comment");
+            actionListenOnBeans.addReference(new NamedBeanReference("MyBean"+namedBeanType.name(), namedBeanType, false));
+            maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+            actionManySocket.getChild(indexAction++).connect(maleSocket);
+        }
 
 
         ActionListenOnBeansTable actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
@@ -2219,6 +2259,15 @@ public class CreateLogixNGTreeScaffold {
 
         logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
         logLocalVariables.setComment("A comment");
+        logLocalVariables.setIncludeGlobalVariables(true);
+        logLocalVariables.setExpandArraysAndMaps(false);
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        logLocalVariables.setComment("A comment");
+        logLocalVariables.setIncludeGlobalVariables(false);
+        logLocalVariables.setExpandArraysAndMaps(true);
         maleSocket = digitalActionManager.registerAction(logLocalVariables);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -3924,6 +3973,7 @@ public class CreateLogixNGTreeScaffold {
         Assert.assertNotEquals(0, stringExpressionManager.getNamedBeanSet().size());
         Assert.assertNotEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
         Assert.assertNotEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
+        Assert.assertNotEquals(0, InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet().size());
 
 
 
@@ -4061,6 +4111,100 @@ public class CreateLogixNGTreeScaffold {
             s.append(c);
         }
         return s.toString();
+    }
+
+
+    /**
+     * Delete all the LogixNGs, ConditionalNGs, and so on.
+     */
+    public static void cleanup() {
+
+        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+        ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
+        AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
+        AnalogExpressionManager analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
+        DigitalBooleanActionManager digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
+        StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        LogixNG_InitializationManager logixNG_InitializationManager = InstanceManager.getDefault(LogixNG_InitializationManager.class);
+
+        java.util.Set<LogixNG> logixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
+        for (LogixNG aLogixNG : logixNG_Set) {
+            logixNG_Manager.deleteLogixNG(aLogixNG);
+        }
+
+        java.util.Set<ConditionalNG> conditionalNGSet = new java.util.HashSet<>(conditionalNGManager.getNamedBeanSet());
+        for (ConditionalNG aConditionalNG : conditionalNGSet) {
+            conditionalNGManager.deleteConditionalNG(aConditionalNG);
+        }
+
+        java.util.Set<MaleAnalogActionSocket> analogActionSet = new java.util.HashSet<>(analogActionManager.getNamedBeanSet());
+        for (MaleAnalogActionSocket aAnalogAction : analogActionSet) {
+            analogActionManager.deleteAnalogAction(aAnalogAction);
+        }
+
+        java.util.Set<MaleAnalogExpressionSocket> analogExpressionSet = new java.util.HashSet<>(analogExpressionManager.getNamedBeanSet());
+        for (MaleAnalogExpressionSocket aAnalogExpression : analogExpressionSet) {
+            analogExpressionManager.deleteAnalogExpression(aAnalogExpression);
+        }
+
+        java.util.Set<MaleDigitalActionSocket> digitalActionSet = new java.util.HashSet<>(digitalActionManager.getNamedBeanSet());
+        for (MaleDigitalActionSocket aDigitalActionSocket : digitalActionSet) {
+            digitalActionManager.deleteDigitalAction(aDigitalActionSocket);
+        }
+
+        java.util.Set<MaleDigitalBooleanActionSocket> digitalBooleanActionSet = new java.util.HashSet<>(digitalBooleanActionManager.getNamedBeanSet());
+        for (MaleDigitalBooleanActionSocket aDigitalBooleanAction : digitalBooleanActionSet) {
+            digitalBooleanActionManager.deleteDigitalBooleanAction(aDigitalBooleanAction);
+        }
+
+        java.util.Set<MaleDigitalExpressionSocket> digitalExpressionSet = new java.util.HashSet<>(digitalExpressionManager.getNamedBeanSet());
+        for (MaleDigitalExpressionSocket aDigitalExpression : digitalExpressionSet) {
+            digitalExpressionManager.deleteDigitalExpression(aDigitalExpression);
+        }
+
+        java.util.Set<MaleStringActionSocket> stringActionSet = new java.util.HashSet<>(stringActionManager.getNamedBeanSet());
+        for (MaleStringActionSocket aStringAction : stringActionSet) {
+            stringActionManager.deleteStringAction(aStringAction);
+        }
+
+        java.util.Set<MaleStringExpressionSocket> stringExpressionSet = new java.util.HashSet<>(stringExpressionManager.getNamedBeanSet());
+        for (MaleStringExpressionSocket aStringExpression : stringExpressionSet) {
+            stringExpressionManager.deleteStringExpression(aStringExpression);
+        }
+
+        java.util.Set<Module> moduleSet = new java.util.HashSet<>(InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet());
+        for (Module aModule : moduleSet) {
+            InstanceManager.getDefault(ModuleManager.class).deleteModule(aModule);
+        }
+
+        java.util.Set<NamedTable> tableSet = new java.util.HashSet<>(InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet());
+        for (NamedTable aTable : tableSet) {
+            InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(aTable);
+        }
+
+        java.util.Set<GlobalVariable> globalVariableSet = new java.util.HashSet<>(InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet());
+        for (GlobalVariable globalVariable : globalVariableSet) {
+            InstanceManager.getDefault(GlobalVariableManager.class).deleteGlobalVariable(globalVariable);
+        }
+
+        while (! logixNG_InitializationManager.getList().isEmpty()) {
+            logixNG_InitializationManager.delete(0);
+        }
+
+        Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
+        Assert.assertEquals(0, analogActionManager.getNamedBeanSet().size());
+        Assert.assertEquals(0, analogExpressionManager.getNamedBeanSet().size());
+        Assert.assertEquals(0, digitalActionManager.getNamedBeanSet().size());
+        Assert.assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
+        Assert.assertEquals(0, stringActionManager.getNamedBeanSet().size());
+        Assert.assertEquals(0, stringExpressionManager.getNamedBeanSet().size());
+        Assert.assertEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
+        Assert.assertEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
+        Assert.assertEquals(0, InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet().size());
+        Assert.assertEquals(0, logixNG_InitializationManager.getList().size());
     }
 
 
