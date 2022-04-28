@@ -34,7 +34,7 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
 
     @Override
     public <T> Object getDefault(Class<T> type) {
-        
+
         // In order for getDefault() to be called for a particular manager,
         // the manager also needs to be added to the method getInitalizes()
         // below.
@@ -67,6 +67,10 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultNamedTableManager();
         }
 
+        if (type == GlobalVariableManager.class) {
+            return new DefaultGlobalVariableManager();
+        }
+
         return super.getDefault(type);
     }
 
@@ -80,7 +84,8 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
                 LogixNG_Manager.class,
                 LogixNGPreferences.class,
                 ModuleManager.class,
-                NamedTableManager.class
+                NamedTableManager.class,
+                GlobalVariableManager.class
         ));
         return set;
     }
