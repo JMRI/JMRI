@@ -4087,6 +4087,8 @@ public class CreateLogixNGTreeScaffold {
         "IM2",          // Memory
         "{IM3}",        // Reference
         "index * 2",    // Formula
+        "sensors.provide(\"mySensor)\"",    // Script expression
+        "scripts:InitLogixNGVariable",      // Script file
     };
 
 

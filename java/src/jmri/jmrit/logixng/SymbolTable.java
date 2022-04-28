@@ -2,11 +2,17 @@ package jmri.jmrit.logixng;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
+
+import javax.script.Bindings;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 
 import jmri.*;
 import jmri.JmriException;
@@ -14,6 +20,7 @@ import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
+import jmri.script.JmriScriptEngineManager;
 
 import org.slf4j.Logger;
 
@@ -132,7 +139,9 @@ public interface SymbolTable {
         LocalVariable(Bundle.getMessage("InitialValueType_LocalVariable"), true),
         Memory(Bundle.getMessage("InitialValueType_Memory"), true),
         Reference(Bundle.getMessage("InitialValueType_Reference"), true),
-        Formula(Bundle.getMessage("InitialValueType_Formula"), true);
+        Formula(Bundle.getMessage("InitialValueType_Formula"), true),
+        ScriptExpression(Bundle.getMessage("InitialValueType_ScriptExpression"), true),
+        ScriptFile(Bundle.getMessage("InitialValueType_ScriptFile"), true);
 
         private final String _descr;
         private final boolean _isValidAsParameter;
@@ -256,6 +265,44 @@ public interface SymbolTable {
         }
     }
 
+    private static Object runScriptExpression(String initialData) {
+        String script =
+                "import jmri\n" +
+                "variable.set(" + initialData + ")";
+
+        JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
+        Bindings bindings = new SimpleBindings();
+        var variable = new Reference<Object>();
+        bindings.put("variable", variable);
+        try {
+            String theScript = String.format("import jmri%n") + script;
+            scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
+                    .eval(theScript, bindings);
+        } catch (ScriptException e) {
+            log.warn("cannot execute script", e);
+            return null;
+        }
+        return variable.get();
+    }
+
+    private static Object runScriptFile(String initialData) {
+        JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
+        Bindings bindings = new SimpleBindings();
+        var variable = new Reference<Object>();
+        bindings.put("variable", variable);
+
+        try (InputStreamReader reader = new InputStreamReader(
+                new FileInputStream(jmri.util.FileUtil.getExternalFilename(initialData)),
+                StandardCharsets.UTF_8)) {
+            scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
+                    .eval(reader, bindings);
+        } catch (IOException | ScriptException e) {
+            log.warn("cannot execute script \"{}\"", initialData, e);
+            return null;
+        }
+        return variable.get();
+    }
+
     public static Object getInitialValue(
             InitialValueType initialType,
             String initialData,
@@ -342,6 +389,12 @@ public interface SymbolTable {
                 ExpressionNode expressionNode = parser.parseExpression(
                         initialData);
                 return expressionNode.calculate(symbolTable);
+
+            case ScriptExpression:
+                return runScriptExpression(initialData);
+
+            case ScriptFile:
+                return runScriptFile(initialData);
 
             default:
                 log.error("definition._initialValueType has invalid value: {}", initialType.name());

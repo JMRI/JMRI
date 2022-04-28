@@ -55,7 +55,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("unchecked")  // Checked cast is not possible due to type erasure
+    @SuppressWarnings({"unchecked", "rawtypes"})    // Checked cast is not possible due to type erasure
     public void initialize() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable();
 
